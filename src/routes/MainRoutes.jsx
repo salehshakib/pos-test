@@ -6,7 +6,7 @@ import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: (
       <PrivateRoute>
         <MainLayout />

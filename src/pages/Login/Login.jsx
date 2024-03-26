@@ -1,16 +1,16 @@
 import { Button } from "antd";
-import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import CustomInput from "../../components/Shared/Form/CustomInput";
+import CustomForm from "../../components/Shared/Form/CustomForm";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -21,7 +21,7 @@ const Login = () => {
       const user = verifyToken(res.access);
       dispatch(setUser({ user: user, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       toast.error("Invalid credentials. Please try again!", {
         id: toastId,
@@ -32,35 +32,28 @@ const Login = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 w-full max-w-xl"
-      >
-        <input
-          type="text"
-          name="email"
-          required
-          placeholder="Email"
-          {...register("email")}
-          className="outline outline-1 rounded py-2 outline-gray-400 px-4"
+      <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6">
+        <CustomInput
+          label="Email"
+          type={"email"}
+          name={"email"}
+          placeholder={"Email"}
         />
-        <input
-          type="text"
-          id="password"
-          required
-          placeholder="Password"
-          {...register("password")}
-          className="outline outline-1 rounded py-2 outline-gray-400 px-4"
+        <CustomInput
+          label="Password"
+          type={"password"}
+          name={"password"}
+          placeholder={"Password"}
         />
         <Button
           htmlType="submit"
           loading={isLoading}
-          className="font-bold bg-blue-500"
-          type="primary"
+          className="font-bold w-full bg-blue-500 pt-2 pb-8 text-white"
+          type="default"
         >
           Submit
         </Button>
-      </form>
+      </CustomForm>
     </div>
   );
 };

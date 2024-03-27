@@ -1,20 +1,31 @@
-import { Button } from "antd";
+import { Avatar, Button, Popover } from "antd";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/services/auth/authSlice";
 import { toast } from "sonner";
+import { UserOutlined } from "@ant-design/icons";
 
-const Header = () => {
+const Profile = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
     toast.success("Logged out successfully!", { duration: 2000 });
   };
-  return (
-    <div className="flex justify-between items-center px-4">
-      <div>Logo</div>
+  const content = (
+    <div className="">
       <Button onClick={handleLogout}>Log Out</Button>
+    </div>
+  );
+
+  return (
+    <div className="flex justify-between items-center mt-3">
+      <div className="font-bold text-2xl text-secondary -ml-5">
+        POS Inventory
+      </div>
+      <Popover placement="bottomLeft" content={content} className="-mr-6">
+        <Avatar className="bg-secondary" size={40} icon={<UserOutlined />} />
+      </Popover>
     </div>
   );
 };
 
-export default Header;
+export default Profile;

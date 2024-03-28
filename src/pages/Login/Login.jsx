@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-primary">
+    <div className="h-screen flex justify-center items-center bg-primary/20">
       <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6">
         <CustomInput
           label="Email"

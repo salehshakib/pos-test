@@ -1,6 +1,7 @@
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
+import { TbArrowBadgeRight } from "react-icons/tb";
 
 const { Sider } = Layout;
 
@@ -9,7 +10,7 @@ const userRole = {
   MANAGER: "manager",
 };
 
-const SideBar = () => {
+const SideBar = ({ collapsed, setCollapsed }) => {
   const role = "admin";
 
   let sidebarItems;
@@ -23,20 +24,38 @@ const SideBar = () => {
       break;
   }
   return (
-    <Sider
-      className="border-r border-gray-200 drop-shadow-primary"
-      theme="light"
-      breakpoint="lg"
-      collapsedWidth="0"
-    >
-      <Menu
+    <div className="relative">
+      <Sider
+        className="border-r border-gray-200 drop-shadow-primary h-screen"
         theme="light"
-        mode="inline"
-        className="mt-5"
-        defaultSelectedKeys={["4"]}
-        items={sidebarItems}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
+        <Menu
+          theme="light"
+          mode="inline"
+          className="mt-5"
+          defaultSelectedKeys={["4"]}
+          items={sidebarItems}
+        />
+      </Sider>
+      <Button
+        className="absolute top-0 -right-5 mt-2 mr-2 bg-white border border-gray-200 rounded-full"
+        type="text"
+        icon={
+          collapsed ? (
+            <TbArrowBadgeRight className="text-xl" />
+          ) : (
+            <TbArrowBadgeRight className="rotate-180 text-xl" />
+          )
+        }
+        onClick={() => setCollapsed(!collapsed)}
+        style={{
+          fontSize: "16px",
+        }}
       />
-    </Sider>
+    </div>
   );
 };
 

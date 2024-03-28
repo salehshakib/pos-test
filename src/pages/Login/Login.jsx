@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "../../components/Shared/Form/CustomInput";
 import CustomForm from "../../components/Shared/Form/CustomForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginValidationSchema } from "../../utilities/validationSchemas/loginValidation.schema";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,28 +34,36 @@ const Login = () => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-primary/20">
-      <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6">
-        <CustomInput
-          label="Email"
-          type={"email"}
-          name={"email"}
-          placeholder={"Email"}
-        />
-        <CustomInput
-          label="Password"
-          type={"password"}
-          name={"password"}
-          placeholder={"Password"}
-        />
-        <Button
-          htmlType="submit"
-          loading={isLoading}
-          className="font-bold w-full bg-secondary pt-2 pb-8 text-white"
-          type="default"
+      <div className="lg:w-[500px]">
+        <CustomForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(loginValidationSchema)}
+          className="flex flex-col gap-6"
         >
-          Submit
-        </Button>
-      </CustomForm>
+          <CustomInput
+            label="Email"
+            type={"email"}
+            required={true}
+            name={"email"}
+            placeholder={"Email"}
+          />
+          <CustomInput
+            label="Password"
+            type={"password"}
+            name={"password"}
+            required={true}
+            placeholder={"Password"}
+          />
+          <Button
+            htmlType="submit"
+            loading={isLoading}
+            className="font-bold w-full bg-secondary pt-2 pb-8 text-white"
+            type="default"
+          >
+            Submit
+          </Button>
+        </CustomForm>
+      </div>
     </div>
   );
 };

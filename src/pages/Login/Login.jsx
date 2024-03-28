@@ -21,7 +21,7 @@ const Login = () => {
       const user = verifyToken(res.access);
       dispatch(setUser({ user: user, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
-      navigate("/");
+      navigate("/admin/dashboard");
     } catch (error) {
       toast.error("Invalid credentials. Please try again!", {
         id: toastId,
@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center bg-primary/20">
       <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6">
         <CustomInput
           label="Email"
@@ -48,7 +48,7 @@ const Login = () => {
         <Button
           htmlType="submit"
           loading={isLoading}
-          className="font-bold w-full bg-blue-500 pt-2 pb-8 text-white"
+          className="font-bold w-full bg-secondary pt-2 pb-8 text-white"
           type="default"
         >
           Submit

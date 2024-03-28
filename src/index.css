@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  /* Define styles for the scrollbar track */
+  background: #dcbfff;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Define styles for the scrollbar thumb */
+  background: #51258f;
+}

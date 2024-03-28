@@ -1,29 +1,27 @@
+import { useState } from "react";
 import { Layout } from "antd";
-import { Outlet } from "react-router-dom";
-import Profile from "../components/AllSection/Header/Header";
 import SideBar from "./SideBar";
+import { Outlet } from "react-router-dom";
+import Profile from "../components/AllSection/Header/Profile";
 const { Header, Content } = Layout;
-
 const MainLayout = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <Layout>
-      <Header className="bg-primary">
-        <Profile />
+    <Layout className="h-screen">
+      <Header className="bg-primary p-0">
+        <Profile collapsed={collapsed} setCollapsed={setCollapsed} />
       </Header>
-      <Layout className="h-screen">
-        <SideBar />
-        <Layout>
-          <Content className="bg-white rounded">
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              <Outlet />
-            </div>
-          </Content>
-        </Layout>
+      <Layout>
+        <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        <Content
+          style={{
+            padding: 24,
+            minHeight: 280,
+          }}
+        >
+          <Outlet />
+        </Content>
       </Layout>
     </Layout>
   );

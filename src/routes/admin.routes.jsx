@@ -13,22 +13,31 @@ import Reports from "../pages/Dashboard/Reports/Reports";
 import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import Settings from "../pages/Dashboard/Settings/Settings";
 import Documents from "../pages/Dashboard/Documents/Documents";
+import Hrm from "../pages/Dashboard/Hrm/Hrm";
 
 //icons
 import { TbDashboard } from "react-icons/tb";
+import { AiOutlineDashboard } from "react-icons/ai";
 import { BsBoxSeam } from "react-icons/bs";
-import { MdProductionQuantityLimits } from "react-icons/md";
+import {
+  MdProductionQuantityLimits,
+  MdAccountBalance,
+  MdPeopleAlt,
+} from "react-icons/md";
 import { GoCreditCard } from "react-icons/go";
 import { FaCartShopping, FaMoneyBillWave } from "react-icons/fa6";
 import { LuClipboardList } from "react-icons/lu";
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
-import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import { IoPeopleCircle, IoDocumentTextOutline } from "react-icons/io5";
+import { TbReport } from "react-icons/tb";
+import { VscDiffAdded } from "react-icons/vsc";
+import { MdOutlineSettings } from "react-icons/md";
 
 export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
-    icon: TbDashboard,
+    icon: AiOutlineDashboard,
     element: <AdminDashboard />,
   },
   {
@@ -117,7 +126,7 @@ export const adminPaths = [
   },
   {
     name: "Accounting",
-    icon: RiArrowGoBackFill,
+    icon: MdAccountBalance,
     children: [
       {
         name: "Accounting",
@@ -129,7 +138,7 @@ export const adminPaths = [
   },
   {
     name: "HRM",
-    icon: RiArrowGoBackFill,
+    icon: IoPeopleCircle,
     children: [
       {
         name: "HRM",
@@ -141,7 +150,7 @@ export const adminPaths = [
   },
   {
     name: "People",
-    icon: RiArrowGoBackFill,
+    icon: MdPeopleAlt,
     children: [
       {
         name: "Peoples",
@@ -153,7 +162,7 @@ export const adminPaths = [
   },
   {
     name: "Reports",
-    icon: RiArrowGoBackFill,
+    icon: TbReport,
     children: [
       {
         name: "Reports",
@@ -165,7 +174,7 @@ export const adminPaths = [
   },
   {
     name: "AddOns",
-    icon: RiArrowGoBackFill,
+    icon: VscDiffAdded,
     children: [
       {
         name: "AddOns",
@@ -177,7 +186,7 @@ export const adminPaths = [
   },
   {
     name: "Settings",
-    icon: RiArrowGoBackFill,
+    icon: MdOutlineSettings,
     children: [
       {
         name: "Settings",
@@ -189,7 +198,7 @@ export const adminPaths = [
   },
   {
     name: "Documents",
-    icon: RiArrowGoBackFill,
+    icon: IoDocumentTextOutline,
     children: [
       {
         name: "Documents",

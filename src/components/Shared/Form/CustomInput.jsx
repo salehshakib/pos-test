@@ -19,7 +19,7 @@ const CustomInput = ({ type, name, label, placeholder }) => {
                 {...field}
                 size="large"
                 placeholder={placeholder}
-                className="mt-2"
+                className="mt-2 hover:border-secondary border-2 focus:border-secondary"
               />
             )) ||
               (type === "textarea" && (
@@ -27,15 +27,16 @@ const CustomInput = ({ type, name, label, placeholder }) => {
                   {...field}
                   size="large"
                   placeholder={placeholder}
-                  className="mt-2"
+                  className="mt-2 hover:border-secondary border-2 focus:border-secondary"
                 />
               )) || (
                 <Input
                   {...field}
                   type={type}
                   size="large"
+                  color=""
                   placeholder={placeholder}
-                  className="mt-2"
+                  className="mt-2 hover:border-secondary border-2 focus:border-secondary"
                 />
               )}
           </Form.Item>

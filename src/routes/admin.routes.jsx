@@ -1,10 +1,28 @@
+//components
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import CreateProduct from "../pages/Dashboard/Product/CreateProduct";
 import Product from "../pages/Dashboard/Product/Product";
-import CreatePurchase from "../pages/Dashboard/Purchase/CreatePurchase";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
+import Sale from "../pages/Dashboard/Sale/Sale";
+import Expense from "../pages/Dashboard/Expense/Expense";
+import Quotation from "../pages/Dashboard/Quotations/Quotation";
+import Transfer from "../pages/Dashboard/Transfer/Transfer";
+import Return from "../pages/Dashboard/Return/Return";
+import Accounting from "../pages/Dashboard/Accounting/Accounting";
+import People from "../pages/Dashboard/People/People";
+import Reports from "../pages/Dashboard/Reports/Reports";
+import AddOns from "../pages/Dashboard/AddOns/AddOns";
+import Settings from "../pages/Dashboard/Settings/Settings";
+import Documents from "../pages/Dashboard/Documents/Documents";
 
+//icons
 import { TbDashboard } from "react-icons/tb";
+import { BsBoxSeam } from "react-icons/bs";
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { GoCreditCard } from "react-icons/go";
+import { FaCartShopping, FaMoneyBillWave } from "react-icons/fa6";
+import { LuClipboardList } from "react-icons/lu";
+import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
+import Hrm from "../pages/Dashboard/Hrm/Hrm";
 
 export const adminPaths = [
   {
@@ -15,25 +33,19 @@ export const adminPaths = [
   },
   {
     name: "Product",
-    icon: TbDashboard,
+    icon: BsBoxSeam,
     children: [
       {
         name: "Products",
         path: "products",
-        icon: TbDashboard,
+        icon: MdProductionQuantityLimits,
         element: <Product />,
-      },
-      {
-        name: "Create Product",
-        path: "create-product",
-        icon: TbDashboard,
-        element: <CreateProduct />,
       },
     ],
   },
   {
     name: "Purchase",
-    icon: TbDashboard,
+    icon: GoCreditCard,
     children: [
       {
         name: "Purchases",
@@ -41,11 +53,149 @@ export const adminPaths = [
         icon: TbDashboard,
         element: <Purchase />,
       },
+    ],
+  },
+  {
+    name: "Sale",
+    icon: FaCartShopping,
+    children: [
       {
-        name: "Create Purchase",
-        path: "create-purchase",
+        name: "Sales",
+        path: "sales",
         icon: TbDashboard,
-        element: <CreatePurchase />,
+        element: <Sale />,
+      },
+    ],
+  },
+  {
+    name: "Expense",
+    icon: FaMoneyBillWave,
+    children: [
+      {
+        name: "Expenses",
+        path: "expenses",
+        icon: TbDashboard,
+        element: <Expense />,
+      },
+    ],
+  },
+  {
+    name: "Quotation",
+    icon: LuClipboardList,
+    children: [
+      {
+        name: "Quotations",
+        path: "quotations",
+        icon: TbDashboard,
+        element: <Quotation />,
+      },
+    ],
+  },
+  {
+    name: "Transfer",
+    icon: RiArrowGoForwardFill,
+    children: [
+      {
+        name: "Transfers",
+        path: "transfers",
+        icon: TbDashboard,
+        element: <Transfer />,
+      },
+    ],
+  },
+  {
+    name: "Return",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Returns",
+        path: "returns",
+        icon: TbDashboard,
+        element: <Return />,
+      },
+    ],
+  },
+  {
+    name: "Accounting",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Accounting",
+        path: "accounting",
+        icon: TbDashboard,
+        element: <Accounting />,
+      },
+    ],
+  },
+  {
+    name: "HRM",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "HRM",
+        path: "hrm",
+        icon: TbDashboard,
+        element: <Hrm />,
+      },
+    ],
+  },
+  {
+    name: "People",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Peoples",
+        path: "peoples",
+        icon: TbDashboard,
+        element: <People />,
+      },
+    ],
+  },
+  {
+    name: "Reports",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Reports",
+        path: "reports",
+        icon: TbDashboard,
+        element: <Reports />,
+      },
+    ],
+  },
+  {
+    name: "AddOns",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "AddOns",
+        path: "addons",
+        icon: TbDashboard,
+        element: <AddOns />,
+      },
+    ],
+  },
+  {
+    name: "Settings",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Settings",
+        path: "settings",
+        icon: TbDashboard,
+        element: <Settings />,
+      },
+    ],
+  },
+  {
+    name: "Documents",
+    icon: RiArrowGoBackFill,
+    children: [
+      {
+        name: "Documents",
+        path: "documents",
+        icon: TbDashboard,
+        element: <Documents />,
       },
     ],
   },

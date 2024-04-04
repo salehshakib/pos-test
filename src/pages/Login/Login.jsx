@@ -57,7 +57,7 @@ const Login = () => {
           <Button
             htmlType="submit"
             loading={isLoading}
-            className="font-bold w-full bg-secondary pt-2 pb-8 text-white"
+            className="font-bold w-full bg-secondary pt-2 pb-8 text-white cursor-pointer"
             type="default"
           >
             Submit

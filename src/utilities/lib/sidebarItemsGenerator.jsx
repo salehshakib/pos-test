@@ -29,7 +29,7 @@ export const sidebarItemsGenerator = (items, role) => {
         label: item.name,
         children: item.children.map((child) => ({
           key: child.name,
-          icon: React.createElement(item.icon, {
+          icon: React.createElement(child.icon, {
             className: "size-5",
           }),
           label: (

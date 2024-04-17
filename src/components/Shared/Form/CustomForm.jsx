@@ -1,10 +1,17 @@
+import { Form } from "antd";
 import { FormProvider, useForm } from "react-hook-form";
 
-const CustomForm = ({ onSubmit, children }) => {
-  const methods = useForm();
+const CustomForm = ({ onSubmit, children, resolver }) => {
+  const formConfig = {};
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
+  const methods = useForm(formConfig);
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+        {children}
+      </Form>
     </FormProvider>
   );
 };

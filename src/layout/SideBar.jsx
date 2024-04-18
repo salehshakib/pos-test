@@ -27,7 +27,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       <Sider
         className="border-r border-gray-200 drop-shadow-primary"
         theme="light"
-        width={220}
+        // width={220}
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -35,6 +35,14 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         style={{
           minHeight: "100vh",
         }}
+        breakpoint="md"
+        collapsedWidth="70"
+        onBreakpoint={(broken) => {
+          console.log(broken);
+        }}
+        // onCollapse={(collapsed, type) => {
+        //   console.log(collapsed, type);
+        // }}
       >
         <Menu
           theme="light"

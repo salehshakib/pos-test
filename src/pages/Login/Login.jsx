@@ -10,6 +10,8 @@ import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
 import { loginValidationSchema } from "../../utilities/validationSchemas/loginValidation.schema";
 
+// const loginBg = import("../../assets/images/blob.svg");
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,36 +37,41 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-primary/20">
-      <div className="lg:w-[500px]">
-        <CustomForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(loginValidationSchema)}
-          className="flex flex-col gap-6"
-        >
-          <CustomInput
-            label="Email"
-            type={"email"}
-            required={true}
-            name={"email"}
-            placeholder={"Email"}
-          />
-          <CustomInput
-            label="Password"
-            type={"password"}
-            name={"password"}
-            required={true}
-            placeholder={"Password"}
-          />
-          <Button
-            htmlType="submit"
-            loading={isLoading}
-            className="font-bold w-full bg-secondary pt-2 pb-8 text-white cursor-pointer"
-            type="default"
+    <div className="h-screen">
+      <div className="flex justify-center items-center h-[600px] bg-wave bg-no-repeat  bg-cover">
+        <div className="lg:w-[500px] md:w-[400px] p-10 bg-white shadow-lg space-y-10">
+          <div className="text-center font-bold text-xl border-b-2 pb-2 border-gray-500">
+            Sign In to POS Inventory
+          </div>
+          <CustomForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(loginValidationSchema)}
+            className="flex flex-col gap-6 "
           >
-            Submit
-          </Button>
-        </CustomForm>
+            <CustomInput
+              label="Email"
+              type={"email"}
+              required={true}
+              name={"email"}
+              placeholder={"Email"}
+            />
+            <CustomInput
+              label="Password"
+              type={"password"}
+              name={"password"}
+              required={true}
+              placeholder={"Password"}
+            />
+            <Button
+              htmlType="submit"
+              loading={isLoading}
+              className="font-bold w-full bg-secondary pt-2 pb-8 text-white cursor-pointer"
+              type="default"
+            >
+              Sign In
+            </Button>
+          </CustomForm>
+        </div>
       </div>
     </div>
   );

@@ -129,7 +129,7 @@ export const adminPaths = [
     icon: MdAccountBalance,
     children: [
       {
-        name: "Accounting",
+        name: "Sub Accounting",
         path: "accounting",
         icon: TbDashboard,
         element: <Accounting />,
@@ -141,7 +141,7 @@ export const adminPaths = [
     icon: IoPeopleCircle,
     children: [
       {
-        name: "HRM",
+        name: "Sub HRM",
         path: "hrm",
         icon: TbDashboard,
         element: <Hrm />,
@@ -165,7 +165,7 @@ export const adminPaths = [
     icon: TbReport,
     children: [
       {
-        name: "Reports",
+        name: "Sub Reports",
         path: "reports",
         icon: TbDashboard,
         element: <Reports />,
@@ -177,7 +177,7 @@ export const adminPaths = [
     icon: VscDiffAdded,
     children: [
       {
-        name: "AddOns",
+        name: "Sub AddOns",
         path: "addons",
         icon: TbDashboard,
         element: <AddOns />,
@@ -189,7 +189,7 @@ export const adminPaths = [
     icon: MdOutlineSettings,
     children: [
       {
-        name: "Settings",
+        name: "Sub Settings",
         path: "settings",
         icon: TbDashboard,
         element: <Settings />,
@@ -201,7 +201,7 @@ export const adminPaths = [
     icon: IoDocumentTextOutline,
     children: [
       {
-        name: "Documents",
+        name: "Sub Documents",
         path: "documents",
         icon: TbDashboard,
         element: <Documents />,

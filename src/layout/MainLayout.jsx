@@ -1,10 +1,11 @@
 import { Button, Layout } from "antd";
+import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { Outlet } from "react-router-dom";
+import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import SideBar from "./SideBar";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Footer } from "antd/es/layout/layout";
 const { Header, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,27 +16,15 @@ const MainLayout = () => {
         minHeight: "100vh",
       }}
     >
-      <Header className="bg-primary flex  justify-between items-center">
-        <div className="flex items-center ml-4 gap-10 text-2xl">
+      <Header className="bg-primary flex  justify-between items-center px-5">
+        <div className="flex items-center gap-6 text-2xl">
           <Button
-            className="-ml-10 p-0 bg-transparent border border-none rounded-full flex items-center justify-center "
+            className="p-0 bg-transparent  border border-none rounded-full flex items-center justify-center text-[20px] "
             type="text"
-            icon={
-              <RxHamburgerMenu
-                // className="hover:cursor-pointer"
-                onClick={() => setCollapsed(!collapsed)}
-              />
-            }
+            icon={<RxHamburgerMenu />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "20px",
-            }}
           />
-          {/* <RxHamburgerMenu
-            className="-ml-10 hover:cursor-pointer"
-            onClick={() => setCollapsed(!collapsed)}
-          /> */}
-          <div className="font-bold  text-secondary">POS Inventory</div>
+          <Logo />
         </div>
         <Profile />
       </Header>

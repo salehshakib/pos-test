@@ -1,13 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "antd";
-import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import CustomForm from "../../components/Shared/Form/CustomForm";
+import CustomInput from "../../components/Shared/Form/CustomInput";
+import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import CustomInput from "../../components/Shared/Form/CustomInput";
-import CustomForm from "../../components/Shared/Form/CustomForm";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { loginValidationSchema } from "../../utilities/validationSchemas/loginValidation.schema";
 
 const Login = () => {
@@ -18,6 +18,8 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const toastId = toast.loading("Logging in...");
+
+    console.log(toastId);
     try {
       const res = await login(data).unwrap();
       const user = verifyToken(res.access);

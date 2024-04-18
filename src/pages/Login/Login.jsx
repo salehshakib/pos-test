@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import CustomButton from "../../components/Shared/Button/CustomButton";
 import CustomForm from "../../components/Shared/Form/CustomForm";
 import CustomInput from "../../components/Shared/Form/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
@@ -36,9 +36,9 @@ const Login = () => {
 
   return (
     <div className="h-screen">
-      <div className="flex justify-center items-center h-[600px] bg-wave bg-no-repeat  bg-cover">
+      <div className="flex justify-center items-center h-[600px] bg-wave bg-no-repeat bg-cover">
         <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
-          <div className="text-center font-bold text-xl  border-gray-500">
+          <div className="text-center font-bold text-xl border-gray-500">
             POS INVENTORY
           </div>
           <CustomForm
@@ -60,15 +60,15 @@ const Login = () => {
               required={true}
               placeholder={"Password"}
             />
-            {/* <Button
+            <Button
               htmlType="submit"
               loading={isLoading}
-              className="font-bold w-full pt-2 pb-8 bg-secondary"
-              type="primary"
+              className="w-full"
+              type="default"
+              size="large"
             >
               Enter
-            </Button> */}
-            <CustomButton isLoading={isLoading} btnContent={"Enter"} />
+            </Button>
           </CustomForm>
         </div>
       </div>

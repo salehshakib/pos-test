@@ -16,10 +16,10 @@ const MainLayout = () => {
         minHeight: "100vh",
       }}
     >
-      <Header className="bg-primary flex  justify-between items-center px-5">
+      <Header className="bg-primary flex justify-between items-center px-5">
         <div className="flex items-center gap-6 text-2xl">
           <Button
-            className="p-0 bg-transparent  border border-none rounded-full flex items-center justify-center text-[20px] "
+            className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
             type="text"
             icon={<RxHamburgerMenu />}
             onClick={() => setCollapsed(!collapsed)}

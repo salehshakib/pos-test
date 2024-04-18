@@ -11,29 +11,36 @@ import { persistor, store } from "./redux/store.js";
 import { router } from "./routes/routes.jsx";
 
 const theme = {
+  token: {
+    colorPrimary: "#DCBFFF",
+    colorPrimaryHover: "#51258F",
+    colorBorder: "#DCBFFF",
+    colorPrimaryBorder: "#51258F",
+  },
   components: {
     Input: {
       hoverBorderColor: "#DCBFFF",
       activeBorderColor: "#51258F",
     },
     Button: {
-      // colorPrimary: "#DCBFFF",
-      // colorText: "#FFFFFF",
-      // colorBg: "#DCBFFF",
-      // groupBorderColor: "#51258F",
-      // primaryColor: "#51258F",
+      //font weight
+      fontWeight: 700,
+
+      defaultHoverBg: "#51258F",
+      defaultHoverBorderColor: "#51258F",
+      defaultHoverColor: "#FFFFFF",
     },
-  },
-  token: {
-    colorPrimary: "#DCBFFF",
-    colorPrimaryHover: "#51258F",
-    colorBorder: "#DCBFFF",
   },
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ConfigProvider theme={theme}>
+    <ConfigProvider
+      theme={theme}
+      button={{
+        className: "text-secondary",
+      }}
+    >
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <RouterProvider router={router}>

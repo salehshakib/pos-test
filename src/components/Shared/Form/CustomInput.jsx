@@ -19,7 +19,7 @@ const CustomInput = ({ type, name, label, placeholder }) => {
                 {...field}
                 size="large"
                 placeholder={placeholder}
-                className="mt-2 hover:border-secondary border-2 focus:border-secondary border-primary"
+                className="mt-2 border-2"
                 allowClear
               />
             )) ||
@@ -28,7 +28,7 @@ const CustomInput = ({ type, name, label, placeholder }) => {
                   {...field}
                   size="large"
                   placeholder={placeholder}
-                  className="mt-2 hover:border-secondary border-2 focus:border-secondary border-primary"
+                  className="mt-2 border-2"
                   allowClear
                 />
               )) || (

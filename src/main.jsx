@@ -17,22 +17,31 @@ const theme = {
       activeBorderColor: "#51258F",
     },
     Button: {
-      colorPrimary: "#DCBFFF",
+      // colorPrimary: "#DCBFFF",
+      // colorText: "#FFFFFF",
+      // colorBg: "#DCBFFF",
+      // groupBorderColor: "#51258F",
+      // primaryColor: "#51258F",
     },
+  },
+  token: {
+    colorPrimary: "#DCBFFF",
+    colorPrimaryHover: "#51258F",
+    colorBorder: "#DCBFFF",
   },
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <RouterProvider router={router}>
-          <ConfigProvider theme={theme}>
+    <ConfigProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <RouterProvider router={router}>
             <App />
-          </ConfigProvider>
-        </RouterProvider>
-      </PersistGate>
-      <Toaster position="top-center" richColors />
-    </Provider>
+          </RouterProvider>
+        </PersistGate>
+        <Toaster position="top-center" richColors />
+      </Provider>
+    </ConfigProvider>
   </React.StrictMode>
 );

@@ -12,7 +12,9 @@ import { router } from "./routes/routes.jsx";
 
 const theme = {
   token: {
-    colorPrimary: "#DCBFFF",
+    // colorPrimary: "#DCBFFF",
+    colorPrimary: "#51258F",
+
     colorPrimaryHover: "#51258F",
     colorBorder: "#DCBFFF",
     colorPrimaryBorder: "#51258F",
@@ -39,6 +41,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       theme={theme}
       button={{
         className: "text-secondary",
+      }}
+      locale={{
+        locale: "en-US",
       }}
     >
       <Provider store={store}>

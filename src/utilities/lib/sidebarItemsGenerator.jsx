@@ -22,8 +22,6 @@ export const sidebarItemsGenerator = (items) => {
     }
 
     if (item.children) {
-      console.log(item);
-
       acc.push({
         key: item.name,
         icon: React.createElement(item.icon, {

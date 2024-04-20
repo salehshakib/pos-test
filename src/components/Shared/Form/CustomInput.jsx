@@ -52,17 +52,18 @@
 
 import { Form, Input } from "antd";
 
-const CustomInput = ({ type, name, label, placeholder }) => {
+const CustomInput = ({ type, name, label, placeholder, required = false }) => {
   return (
     <Form.Item
       label={label}
       name={name}
-      rules={[{ required: true, message: `Please input your ${label}!` }]}
+      rules={[{ required: required, message: `Please input your ${name}!` }]}
     >
       {(type === "password" && (
         <Input.Password
           placeholder={placeholder}
           className="mt-2 border-2"
+          size="large"
           allowClear
         />
       )) ||
@@ -70,6 +71,7 @@ const CustomInput = ({ type, name, label, placeholder }) => {
           <Input.TextArea
             placeholder={placeholder}
             className="mt-2 border-2"
+            size="large"
             allowClear
           />
         )) || (
@@ -77,6 +79,7 @@ const CustomInput = ({ type, name, label, placeholder }) => {
             type={type}
             placeholder={placeholder}
             className="mt-2 border-2"
+            size="large"
             allowClear
           />
         )}

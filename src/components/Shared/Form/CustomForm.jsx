@@ -18,14 +18,18 @@
 
 // export default CustomForm;
 
-import { Form } from "antd";
-import { useForm } from "antd/es/form/Form";
+import { Form, message } from "antd";
 
 const CustomForm = ({ onSubmit, children }) => {
-  const [form] = useForm();
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    onSubmit(values);
+    try {
+      onSubmit(values);
+    } catch (error) {
+      console.error("Validation error:", error);
+      message.error("Please correct the errors in the form.");
+    }
   };
 
   return (

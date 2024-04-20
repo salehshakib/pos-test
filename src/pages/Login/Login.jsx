@@ -17,9 +17,9 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data) => {
+    // console.log(data);
     const toastId = toast.loading("Logging in...");
 
-    console.log(toastId);
     try {
       const res = await login(data).unwrap();
       const user = verifyToken(res.access);

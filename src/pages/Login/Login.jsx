@@ -1,4 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,6 @@ import CustomInput from "../../components/Shared/Form/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
-import { loginValidationSchema } from "../../utilities/validationSchemas/loginValidation.schema";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,10 +19,12 @@ const Login = () => {
 
     try {
       const res = await login(data).unwrap();
-      const user = verifyToken(res.access);
-      dispatch(setUser({ user: user, token: res.access }));
+
+      const user = verifyToken(res.user);
+      const userData = user?.data?.[0];
+      dispatch(setUser({ user: userData, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
-      navigate("/admin/dashboard");
+      navigate(`/dashboard`);
     } catch (error) {
       toast.error("Invalid credentials. Please try again!", {
         id: toastId,
@@ -42,7 +42,7 @@ const Login = () => {
           </div>
           <CustomForm
             onSubmit={onSubmit}
-            resolver={zodResolver(loginValidationSchema)}
+            // resolver={zodResolver(loginValidationSchema)}
             className="flex flex-col gap-6 "
           >
             <CustomInput

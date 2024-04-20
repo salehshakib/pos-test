@@ -1,5 +1,8 @@
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 
 export const verifyToken = (token) => {
-  return jwtDecode(token);
+  console.log(token);
+
+  return token;
+  // return jwtDecode(token);
 };

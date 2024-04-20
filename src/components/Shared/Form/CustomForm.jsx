@@ -18,22 +18,32 @@
 
 // export default CustomForm;
 
-import { Form, message } from "antd";
+import { Form } from "antd";
 
 const CustomForm = ({ onSubmit, children }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     try {
+      // const values = form.getFieldsValue();
       onSubmit(values);
     } catch (error) {
       console.error("Validation error:", error);
-      message.error("Please correct the errors in the form.");
     }
   };
 
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
-    <Form form={form} onFinish={onFinish} layout="vertical">
+    <Form
+      form={form}
+      onFinish={onFinish}
+      layout="vertical"
+      autoComplete="on"
+      onFinishFailed={onFinishFailed}
+    >
       {children}
     </Form>
   );

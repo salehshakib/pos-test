@@ -1,37 +1,36 @@
 //components
+import Accounting from "../pages/Dashboard/Accounting/Accounting";
+import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
+import Documents from "../pages/Dashboard/Documents/Documents";
+import Expense from "../pages/Dashboard/Expense/Expense";
+import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import People from "../pages/Dashboard/People/People";
 import Product from "../pages/Dashboard/Product/Product";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import Sale from "../pages/Dashboard/Sale/Sale";
-import Expense from "../pages/Dashboard/Expense/Expense";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
-import Return from "../pages/Dashboard/Return/Return";
-import Accounting from "../pages/Dashboard/Accounting/Accounting";
-import People from "../pages/Dashboard/People/People";
 import Reports from "../pages/Dashboard/Reports/Reports";
-import AddOns from "../pages/Dashboard/AddOns/AddOns";
+import Return from "../pages/Dashboard/Return/Return";
+import Sale from "../pages/Dashboard/Sale/Sale";
 import Settings from "../pages/Dashboard/Settings/Settings";
-import Documents from "../pages/Dashboard/Documents/Documents";
-import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
 //icons
-import { TbDashboard } from "react-icons/tb";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { BsBoxSeam } from "react-icons/bs";
-import {
-  MdProductionQuantityLimits,
-  MdAccountBalance,
-  MdPeopleAlt,
-} from "react-icons/md";
-import { GoCreditCard } from "react-icons/go";
 import { FaCartShopping, FaMoneyBillWave } from "react-icons/fa6";
+import { GoCreditCard } from "react-icons/go";
+import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
+import {
+  MdAccountBalance,
+  MdOutlineSettings,
+  MdPeopleAlt,
+  MdProductionQuantityLimits,
+} from "react-icons/md";
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
-import { IoPeopleCircle, IoDocumentTextOutline } from "react-icons/io5";
-import { TbReport } from "react-icons/tb";
+import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
-import { MdOutlineSettings } from "react-icons/md";
 
 export const adminPaths = [
   {
@@ -181,6 +180,18 @@ export const adminPaths = [
         path: "addons",
         icon: TbDashboard,
         element: <AddOns />,
+      },
+    ],
+  },
+  {
+    name: "Roles",
+    icon: IoPeopleCircle,
+    children: [
+      {
+        name: "Role",
+        path: "role",
+        icon: TbDashboard,
+        element: <Hrm />,
       },
     ],
   },

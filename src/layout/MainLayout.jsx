@@ -23,7 +23,7 @@ const MainLayout = () => {
             type="text"
             icon={<RxHamburgerMenu />}
             onClick={() => setCollapsed(!collapsed)}
-          />
+          ></Button>
           <Logo />
         </div>
         <Profile />

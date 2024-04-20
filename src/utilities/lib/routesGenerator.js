@@ -19,5 +19,7 @@ export const routeGenerator = (items) => {
     return acc;
   }, []);
 
+  console.log(routes);
+
   return routes;
 };

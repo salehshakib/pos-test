@@ -1,27 +1,26 @@
 import { Layout, Menu } from "antd";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
 
 const { Sider } = Layout;
 
-const userRole = {
-  ADMIN: "admin",
-  MANAGER: "manager",
-};
-
 const SideBar = ({ collapsed, setCollapsed }) => {
-  const role = "admin";
+  const userData = useSelector(useCurrentUser);
+  const menu = userData?.roles?.menu;
 
-  let sidebarItems;
+  const filteredPaths = adminPaths.filter((item) => {
+    return menu?.some(
+      (menuItem) => menuItem?.name.toLowerCase() === item.name.toLowerCase()
+    );
+  });
 
-  switch (role) {
-    case userRole.ADMIN:
-      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
-      break;
+  const sidebarItems = sidebarItemsGenerator(
+    // !userData?.is_admin ? filteredPaths : adminPaths
+    filteredPaths
+  );
 
-    default:
-      break;
-  }
   return (
     <div className="relative">
       <Sider
@@ -48,21 +47,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           items={sidebarItems}
         />
       </Sider>
-      {/* <Button
-        className="absolute top-0 -right-5 mt-2 mr-2 bg-white border border-gray-200 rounded-full"
-        type="text"
-        icon={
-          collapsed ? (
-            <TbLayoutSidebarLeftExpandFilled className="text-xl" />
-          ) : (
-            <TbLayoutSidebarRightExpandFilled className=" text-xl" />
-          )
-        }
-        onClick={() => setCollapsed(!collapsed)}
-        style={{
-          fontSize: "16px",
-        }}
-      /> */}
     </div>
   );
 };

@@ -140,8 +140,26 @@ export const adminPaths = [
     icon: IoPeopleCircle,
     children: [
       {
-        name: "Sub HRM",
-        path: "hrm",
+        name: "Department",
+        path: "department",
+        icon: TbDashboard,
+        element: <Hrm />,
+      },
+      {
+        name: "Employee",
+        path: "employee",
+        icon: TbDashboard,
+        element: <Hrm />,
+      },
+      {
+        name: "Payroll",
+        path: "payroll",
+        icon: TbDashboard,
+        element: <Hrm />,
+      },
+      {
+        name: "Holidays",
+        path: "holidays",
         icon: TbDashboard,
         element: <Hrm />,
       },
@@ -161,11 +179,12 @@ export const adminPaths = [
   },
   {
     name: "Reports",
+    path: "reports",
     icon: TbReport,
     children: [
       {
         name: "Sub Reports",
-        path: "reports",
+        path: "sub-reports",
         icon: TbDashboard,
         element: <Reports />,
       },
@@ -173,50 +192,26 @@ export const adminPaths = [
   },
   {
     name: "AddOns",
+    path: "addons",
     icon: VscDiffAdded,
-    children: [
-      {
-        name: "Sub AddOns",
-        path: "addons",
-        icon: TbDashboard,
-        element: <AddOns />,
-      },
-    ],
+    element: <AddOns />,
   },
   {
     name: "Roles",
+    path: "roles",
     icon: IoPeopleCircle,
-    children: [
-      {
-        name: "Role",
-        path: "role",
-        icon: TbDashboard,
-        element: <Hrm />,
-      },
-    ],
-  },
-  {
-    name: "Settings",
-    icon: MdOutlineSettings,
-    children: [
-      {
-        name: "Sub Settings",
-        path: "settings",
-        icon: TbDashboard,
-        element: <Settings />,
-      },
-    ],
+    element: <People />,
   },
   {
     name: "Documents",
+    path: "documents",
     icon: IoDocumentTextOutline,
-    children: [
-      {
-        name: "Sub Documents",
-        path: "documents",
-        icon: TbDashboard,
-        element: <Documents />,
-      },
-    ],
+    element: <Documents />,
+  },
+  {
+    name: "Settings",
+    path: "settings",
+    icon: MdOutlineSettings,
+    element: <Settings />,
   },
 ];

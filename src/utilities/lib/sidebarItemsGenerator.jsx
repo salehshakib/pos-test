@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 
 export const sidebarItemsGenerator = (items) => {
   const sidebarItems = items.reduce((acc, item) => {
-    if (item.path && item.name) {
+    // if (item.path && item.name) {
+    if (!item.children) {
       acc.push({
         key: item.name,
         icon: React.createElement(item.icon, {
@@ -21,6 +22,8 @@ export const sidebarItemsGenerator = (items) => {
     }
 
     if (item.children) {
+      console.log(item);
+
       acc.push({
         key: item.name,
         icon: React.createElement(item.icon, {
@@ -35,7 +38,7 @@ export const sidebarItemsGenerator = (items) => {
           label: (
             <NavLink
               className={({ isActive }) => (isActive ? "font-bold" : "")}
-              to={`/${child.path}`}
+              to={`/${item.path}/${child.path}`}
             >
               {child.name}
             </NavLink>

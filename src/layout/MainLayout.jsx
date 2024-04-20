@@ -36,12 +36,14 @@ const MainLayout = () => {
           <Content
             style={{
               margin: "8px 8px",
+              padding: 24,
+              backgroundColor: "white",
             }}
             className="min-h-90vh"
           >
             <Outlet />
           </Content>
-          <Footer
+          {/* <Footer
             style={{
               textAlign: "center",
               // backgroundColor: "white",
@@ -49,7 +51,7 @@ const MainLayout = () => {
           >
             POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
             Solutions
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
     </Layout>

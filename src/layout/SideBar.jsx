@@ -37,8 +37,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
 
   const sidebarItems = sidebarItemsGenerator(
     // !userData?.is_admin ? filteredPaths : adminPaths
-    filteredPaths
-    // adminPaths
+    // filteredPaths
+    adminPaths
   );
 
   const levelKeys = getLevelKeys(sidebarItems);

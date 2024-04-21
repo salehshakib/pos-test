@@ -5,6 +5,7 @@ import { MdDelete, MdEditSquare } from "react-icons/md";
 import PageComponent from "../../../../components/Shared/PageComponent/PageComponent";
 import fakeData from "../fakeData";
 import CreateDepartment from "./CreateDepartment";
+import { useGetDepartmentsQuery } from "../../../../redux/services/department/departmentApi";
 
 const columns = [
   {
@@ -140,9 +141,13 @@ const rowSelection = {
 };
 
 const Department = () => {
-  const handleEdit = () => {};
+  // const handleEdit = () => {};
 
-  const handleDelete = () => {};
+  // const handleDelete = () => {};
+
+  const { data } = useGetDepartmentsQuery({ pageSize: 10, page: 1 });
+
+  console.log(data);
 
   return (
     <div className="h-full ">

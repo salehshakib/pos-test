@@ -18,17 +18,25 @@ import Settings from "../pages/Dashboard/Settings/Settings";
 import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
 //icons
-import { AiOutlineDashboard } from "react-icons/ai";
 import { BsBoxSeam } from "react-icons/bs";
-import { FaCartShopping, FaMoneyBillWave } from "react-icons/fa6";
+import {
+  FaBuilding,
+  FaCartShopping,
+  FaMoneyBillWave,
+  FaUsers,
+  FaUsersGear,
+} from "react-icons/fa6";
 import { GoCreditCard } from "react-icons/go";
 import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
   MdOutlineSettings,
+  MdPayment,
   MdPeopleAlt,
   MdProductionQuantityLimits,
+  MdSpaceDashboard,
+  MdTimeToLeave,
 } from "react-icons/md";
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
@@ -38,7 +46,7 @@ export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
-    icon: AiOutlineDashboard,
+    icon: MdSpaceDashboard,
     element: <AdminDashboard />,
   },
   {
@@ -148,30 +156,30 @@ export const adminPaths = [
   {
     name: "HRM",
     path: "human-resources",
-    icon: IoPeopleCircle,
+    icon: FaUsersGear,
     children: [
       {
         name: "Department",
         path: "department",
-        icon: TbDashboard,
+        icon: FaBuilding,
         element: <Department />,
       },
       {
         name: "Employee",
         path: "employee",
-        icon: TbDashboard,
+        icon: FaUsers,
         element: <Employee />,
       },
       {
         name: "Payroll",
         path: "payroll",
-        icon: TbDashboard,
+        icon: MdPayment,
         element: <Hrm />,
       },
       {
         name: "Holidays",
         path: "holidays",
-        icon: TbDashboard,
+        icon: MdTimeToLeave,
         element: <Hrm />,
       },
     ],

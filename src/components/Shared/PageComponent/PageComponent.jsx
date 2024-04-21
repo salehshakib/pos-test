@@ -27,7 +27,7 @@ const PageComponent = ({ pageTitle, children }) => {
         <div
           key="search"
           // type="text"
-          className="px-4 py-2 w-48 border rounded-md border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center"
+          className="px-4 py-2 w-48 border rounded-md border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary "
           // placeholder="Search"
           // value={searchUser}
           // onChange={handleSearchUser}
@@ -47,7 +47,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "16px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"view"}>
@@ -56,7 +56,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"download"}>
@@ -65,7 +65,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"pdf"}>
@@ -74,7 +74,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"excel"}>
@@ -83,7 +83,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"csv"}>
@@ -92,7 +92,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"print"}>
@@ -101,7 +101,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         <div key={"delete"}>
@@ -110,7 +110,7 @@ const PageComponent = ({ pageTitle, children }) => {
               fontSize: "24px",
               color: "#000",
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer hover:scale-110 duration-300"
           />
         </div>,
         //   <Input

@@ -1,6 +1,6 @@
 // import { PageHeader } from "@ant-design/pro-layout";
 
-import { Button, Table } from "antd";
+import { Table } from "antd";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import PageComponent from "../../../../components/Shared/PageComponent/PageComponent";
 import fakeData from "../fakeData";
@@ -113,19 +113,12 @@ const columns = [
     fixed: "right",
     render: () => (
       <div className="flex justify-center items-center gap-3 ">
-        <Button
-          type="text"
-          className="flex items-center justify-center text-black border-none  hover:bg-none hover:text-posPurple p-0 hover:cursor-pointer"
-        >
-          <MdEditSquare className="text-2xl" />
-        </Button>
-
-        <Button
-          type="text"
-          className="flex items-center justify-center text-black border-none bg-transparent hover:bg-none hover:text-posPurple p-0 hover:cursor-pointer"
-        >
-          <MdDelete className="text-2xl" />
-        </Button>
+        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
+          <MdEditSquare className="text-xl" />
+        </button>
+        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
+          <MdDelete className="text-xl" />
+        </button>
       </div>
     ),
   },

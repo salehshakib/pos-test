@@ -25,9 +25,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   );
 
   return (
-    <div className="relative">
+    <div className="absolute md:relative z-50 h-fit">
       <Sider
-        className="border-r border-gray-200 drop-shadow-primary"
+        className="border-r border-gray-200 drop-shadow-primary "
         theme="light"
         trigger={null}
         collapsible

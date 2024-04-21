@@ -1,136 +1,100 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button } from "antd";
+import { Button, DatePicker } from "antd";
+import dayjs from "dayjs";
 import {
   FaCirclePlus,
   FaDownload,
   FaEye,
   FaFileCsv,
-  FaFileExcel,
   FaFilePdf,
   FaPrint,
   FaTrash,
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 
+const { RangePicker } = DatePicker;
+const disabledDate = (current) => {
+  // Can not select days after today
+  return current > dayjs().endOf("day");
+};
+
 const PageComponent = ({ pageTitle, children }) => {
   return (
     <PageContainer
-      title=<div className="text-xl md:text-3xl">{pageTitle}</div>
-      subTitle={
+      title=<div className="text-xl lg:text-3xl">{pageTitle}</div>
+      subTitle=<div className="flex gap-5 justify-between items-center">
         <Button
+          key={"create"}
           type="text"
-          icon={<FaCirclePlus />}
-          className="flex justify-center items-center text-xl md:text-3xl hover:bg-none"
+          icon={<FaCirclePlus className="" />}
+          className="flex justify-center items-center text-xl lg:text-3xl border-none"
         />
-      }
-      extra={[
         <div
           key="search"
-          // type="text"
-          className="px-4 py-2 w-48 border rounded-md border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary "
-          // placeholder="Search"
-          // value={searchUser}
-          // onChange={handleSearchUser}
-          // suffix={
-          //   <IoSearch
-          //     style={{
-          //       fontSize: "16px",
-          //       color: "#000",
-          //     }}
-          //   />
-          // }
-          // allowClear
+          className="px-4 py-[5px] w-48 border rounded-md border-primary hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary text-sm "
         >
           Search
           <IoSearch
             style={{
-              fontSize: "16px",
               color: "#000",
             }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
+            className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
           />
-        </div>,
+        </div>
+        <div key={"date"} className="w-60">
+          <RangePicker
+            className="w-full"
+            disabledDate={disabledDate}
+            allowClear
+          />
+        </div>
+      </div>
+      extra=<div
+        key={"user-control"}
+        className="flex justify-center items-center gap-2"
+      >
         <div key={"view"}>
-          <FaEye
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaEye className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"download"}>
-          <FaDownload
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaDownload className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"pdf"}>
-          <FaFilePdf
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaFilePdf className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"excel"}>
-          <FaFileExcel
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaDownload className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"csv"}>
-          <FaFileCsv
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaFileCsv className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"print"}>
-          <FaPrint
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaPrint className="lg:text-xl" />
+          </button>
+        </div>
+
         <div key={"delete"}>
-          <FaTrash
-            style={{
-              fontSize: "24px",
-              color: "#000",
-            }}
-            className="hover:cursor-pointer hover:scale-110 duration-300"
-          />
-        </div>,
-        //   <Input
-        //     type="text"
-        //     key="search"
-        //     className="px-4 w-full border  rounded-sm border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary"
-        //     placeholder="Search"
-        //     // value={searchUser}
-        //     // onChange={handleSearchUser}
-        //     suffix={
-        //       <IoSearch
-        //         style={{
-        //           fontSize: "16px",
-        //           color: "#000",
-        //         }}
-        //       />
-        //     }
-        //     allowClear
-        //   />,
-      ]}
+          <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
+            <FaTrash className="lg:text-xl" />
+          </button>
+        </div>
+      </div>
     >
       {children}
     </PageContainer>

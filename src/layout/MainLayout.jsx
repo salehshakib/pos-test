@@ -32,7 +32,7 @@ const MainLayout = () => {
       <Layout>
         <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-        <Layout>
+        <Layout className=" ml-16 md:ml-0">
           <Content
             style={{
               margin: "8px 8px",
@@ -46,7 +46,6 @@ const MainLayout = () => {
           <Footer
             style={{
               textAlign: "center",
-              // backgroundColor: "white",
             }}
           >
             POS Inventory ©{new Date().getFullYear()} Created by Vitasoft

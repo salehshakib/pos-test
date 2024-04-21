@@ -142,6 +142,7 @@ const Department = () => {
     <div className="h-full ">
       <PageComponent pageTitle="Department">
         <Table
+          rowKey={(record) => record.id}
           rowSelection={{
             type: "checkbox",
             ...rowSelection,

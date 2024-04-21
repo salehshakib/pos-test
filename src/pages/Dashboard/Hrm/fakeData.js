@@ -1,8 +1,8 @@
 const fakeData = [
   {
     id: "1",
-    key: "1",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "John Doe",
     email: "john@example.com",
     address: "123 Main St, Anytown USA",
@@ -12,8 +12,8 @@ const fakeData = [
   },
   {
     id: "2",
-    key: "2",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "Jane Doe",
     email: "jane@example.com",
     address: "123 Main St, Anytown USA",
@@ -21,7 +21,28 @@ const fakeData = [
     department: "IT",
     action: "Delete",
   },
-  // Add more fake data as needed
+  {
+    id: "3",
+    image:
+      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Mark Doe",
+    email: "mark@example.com",
+    address: "123 Main St, Anytown USA",
+    phone: "+1234567890",
+    department: "Sales",
+    action: "Edit",
+  },
+  {
+    id: "4",
+    image:
+      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Sarah Doe",
+    email: "sarah@example.com",
+    address: "123 Main St, Anytown USA",
+    phone: "+1234567890",
+    department: "Marketing",
+    action: "Edit",
+  },
 ];
 
 export default fakeData;

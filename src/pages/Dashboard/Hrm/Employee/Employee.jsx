@@ -140,6 +140,7 @@ const Employee = () => {
     <div className="h-full ">
       <PageComponent pageTitle="Employee">
         <Table
+          rowKey={(record) => record.id}
           rowSelection={{
             type: "checkbox",
             ...rowSelection,

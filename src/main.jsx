@@ -10,6 +10,8 @@ import "./index.css";
 import { persistor, store } from "./redux/store.js";
 import { router } from "./routes/routes.jsx";
 
+// const colors1 = ["#6253E1", "#04BEFE"];
+
 const theme = {
   token: {
     // colorPrimary: "#DCBFFF",
@@ -18,6 +20,8 @@ const theme = {
     colorPrimaryHover: "#51258F",
     colorBorder: "#DCBFFF",
     colorPrimaryBorder: "#51258F",
+
+    // colorBgContainer: "#51258F",
   },
   components: {
     Input: {
@@ -31,6 +35,12 @@ const theme = {
       defaultHoverBg: "#51258F",
       defaultHoverBorderColor: "#51258F",
       defaultHoverColor: "#FFFFFF",
+    },
+    Table: {
+      headerBg: "#DCBFFF",
+      headerSplitColor: "#51258F",
+      stickyScrollBarBg: "#DCBFFF",
+      stickyScrollBarBorderRadius: "0 0 10px 10px",
     },
   },
 };

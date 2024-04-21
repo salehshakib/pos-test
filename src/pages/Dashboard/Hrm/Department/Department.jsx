@@ -145,7 +145,7 @@ const Department = () => {
 
   // const handleDelete = () => {};
 
-  const { data } = useGetDepartmentsQuery({
+  const { data, isLoading } = useGetDepartmentsQuery({
     params: { pageSize: 10, page: 1 },
   });
 
@@ -173,6 +173,7 @@ const Department = () => {
           scroll={{
             x: "max-content",
           }}
+          loading={isLoading}
         />
       </PageComponent>
     </div>

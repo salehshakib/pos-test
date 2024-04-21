@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import PageComponent from "../../../../components/Shared/PageComponent/PageComponent";
 import fakeData from "../fakeData";
+import { useGetAllDataQuery } from "../../../../redux/services/api";
 
 const columns = [
   {
@@ -121,21 +122,28 @@ const columns = [
     ),
   },
 ];
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      "selectedRows: ",
+      selectedRows
+    );
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === "Disabled User",
+    name: record.name,
+  }),
+};
 
 const Employee = () => {
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      name: record.name,
-    }),
-  };
+  const { data, isLoading } = useGetAllDataQuery({
+    url: "/human-resource/employee",
+    params: { pageSize: 10, page: 1 },
+  });
+
+  console.log(data);
+
   return (
     <div className="h-full ">
       <PageComponent pageTitle="Employee">
@@ -155,6 +163,7 @@ const Employee = () => {
           scroll={{
             x: "max-content",
           }}
+          loading={isLoading}
         />
       </PageComponent>
     </div>

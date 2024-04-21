@@ -1,56 +1,60 @@
 import { baseApi } from "../api/baseApi";
 
+let tags = "";
+
 const api = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllData: build.query({
       query: ({ url, params }) => {
-        console.log(url, params);
+        console.log(url);
 
-        // return {
-        //   //   url,
-        //   params,
-        // };
-
+        tags = url.split("/")[2];
         return {
-          url: `/human-resources/department/`,
+          url: `/${url}`,
           method: "GET",
           params,
         };
       },
+      providesTags: [tags],
     }),
-    // getSingleData: build.query({
-
-    // })
-    create: build.mutation({
-      query: ({ url, data }) => {
-        console.log(data);
+    getDetails: build.query({
+      query: ({ url, id }) => {
         return {
-          //   url: "/department/",
-          //   method: "POST",
-          body: data,
+          url: `/${url}/${id}`,
+          method: "GET",
         };
       },
     }),
-    update: build.mutation({
-      query: ({ url, data }) => {
-        console.log(data);
-        return {
-          //   url: "/department/",
-          //   method: "PUT",
-          body: data,
-        };
-      },
-    }),
-    delete: build.mutation({
-      query: ({ url, data }) => {
-        console.log(data);
-        return {
-          //   url: "/department/",
-          //   method: "DELETE",
-          body: data,
-        };
-      },
-    }),
+    // create: build.mutation({
+    //   query: ({ url, data }) => {
+    //     console.log(data);
+    //     return {
+    //       //   url: "/department/",
+    //       //   method: "POST",
+    //       body: data,
+    //     };
+    //   },
+    // }),
+    // update: build.mutation({
+    //   query: ({ url, data }) => {
+    //     console.log(data);
+    //     return {
+    //       //   url: "/department/",
+    //       //   method: "PUT",
+    //       body: data,
+    //     };
+    //   },
+    // }),
+    // delete: build.mutation({
+    //   query: ({ url, data }) => {
+    //     console.log(data);
+    //     return {
+    //       //   url: "/department/",
+    //       //   method: "DELETE",
+    //       body: data,
+    //     };
+    //   },
+    // }),
   }),
 });
 

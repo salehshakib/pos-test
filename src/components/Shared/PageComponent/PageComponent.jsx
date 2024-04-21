@@ -1,5 +1,5 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Dropdown } from "antd";
+import { Button, Checkbox, Divider, Dropdown } from "antd";
 import { useState } from "react";
 import {
   FaCirclePlus,
@@ -21,50 +21,10 @@ import CustomDrawer from "../Drawer/CustomDrawer";
 //   return current > dayjs().endOf("day");
 // };
 
-const items = [
-  {
-    label: "View",
-    key: "view",
-    icon: <FaEye className="text-xl" />,
-  },
-  {
-    label: "Download",
-    key: "download",
-    icon: <FaDownload className="text-xl" />,
-  },
-  {
-    //pdf
-    label: "PDF",
-    key: "pdf",
-    icon: <FaFilePdf className="text-xl" />,
-  },
-  {
-    //excel
-    label: "Excel",
-    key: "excel",
-    icon: <FaFileCsv className="text-xl" />,
-  },
-  {
-    //csv
-    label: "CSV",
-    key: "csv",
-    icon: <FaFileCsv className="text-xl" />,
-  },
-  {
-    label: "Print",
-    key: "print",
-    icon: <FaPrint className="text-xl" />,
-  },
-
-  {
-    label: "Delete",
-    key: "delete",
-    icon: <FaTrash className="text-xl" />,
-  },
-];
-
 const PageComponent = ({ pageTitle, children, drawerComponent }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropDownOpen] = useState(false);
+  // const [isTableView, setIsTableView] = useState(false);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -72,6 +32,110 @@ const PageComponent = ({ pageTitle, children, drawerComponent }) => {
   const hideDrawer = () => {
     setIsDrawerOpen(false);
   };
+
+  const [checkedList, setCheckedList] = useState([]);
+
+  const options = [
+    {
+      label: "Apple",
+      value: "Apple",
+    },
+    {
+      label: "Pear",
+      value: "Pear",
+    },
+    {
+      label: "Orange",
+      value: "Orange",
+    },
+  ];
+
+  const checkAll = options.length === checkedList.length;
+  const indeterminate =
+    checkedList.length > 0 && checkedList.length < options.length;
+
+  const onChange = (list) => {
+    setCheckedList(list);
+    // setIsTableView(true);
+  };
+  const onCheckAllChange = (e) => {
+    setCheckedList(e.target.checked ? options : []);
+  };
+
+  const items = [
+    {
+      key: "view",
+      label: (
+        <Dropdown
+          // open={isTableView}
+          // onClose={() => setIsTableView(false)}
+          key="dropdown"
+          trigger={["click"]}
+          menu={{
+            items: [
+              {
+                key: "checkbox",
+                label: (
+                  <>
+                    {/* <Checkbox
+                      indeterminate={indeterminate}
+                      onChange={onCheckAllChange}
+                      checked={checkAll}
+                    >
+                      Check all
+                    </Checkbox> */}
+                    {/* <Divider /> */}
+                    <Checkbox.Group
+                      options={options}
+                      value={checkedList}
+                      onChange={onChange}
+                    />
+                  </>
+                ),
+              },
+            ],
+          }}
+          placement="left"
+        >
+          <div>View</div>
+        </Dropdown>
+      ),
+      icon: <FaEye className="text-xl" />,
+    },
+    {
+      label: "Download",
+      key: "download",
+      icon: <FaDownload className="text-xl" />,
+    },
+    {
+      //pdf
+      label: "PDF",
+      key: "pdf",
+      icon: <FaFilePdf className="text-xl" />,
+    },
+    {
+      //excel
+      label: "Excel",
+      key: "excel",
+      icon: <FaFileCsv className="text-xl" />,
+    },
+    {
+      //csv
+      label: "CSV",
+      key: "csv",
+      icon: <FaFileCsv className="text-xl" />,
+    },
+    {
+      label: "Print",
+      key: "print",
+      icon: <FaPrint className="text-xl" />,
+    },
+    {
+      label: "Delete",
+      key: "delete",
+      icon: <FaTrash className="text-xl" />,
+    },
+  ];
 
   return (
     <GlobalUtilityStyle>
@@ -147,8 +211,16 @@ const PageComponent = ({ pageTitle, children, drawerComponent }) => {
 
           <Dropdown
             key="dropdown"
-            trigger={["click"]}
-            menu={{ items, selectable: true }}
+            menu={{
+              items,
+              selectable: true,
+              onSelect: (value) => {
+                console.log(value.key);
+                if (value.key === "view") {
+                  // setIsTableView(true);
+                }
+              },
+            }}
             placement="bottomRight"
           >
             <Button style={{ padding: "0 12px" }} size="large">

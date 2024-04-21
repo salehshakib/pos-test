@@ -6,15 +6,13 @@
   width: 2px;
 }
 
-/* Define styles for the scrollbar track */
-/* ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #dcbfff;
-} */
+}
 
-/* Define styles for the scrollbar thumb */
-/* ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #51258f;
-} */
+}
 
 .ant-menu-item-selected { 
   background-color: #dcbfff !important;

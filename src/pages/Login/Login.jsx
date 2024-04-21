@@ -7,6 +7,7 @@ import CustomInput from "../../components/Shared/Form/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,8 +21,10 @@ const Login = () => {
     try {
       const res = await login(data).unwrap();
 
-      const user = verifyToken(res.user);
-      const userData = user?.data?.[0];
+      const user = jwtDecode(res.user);
+      const userData = user?.data?.data?.[0];
+
+      console.log(user);
       dispatch(setUser({ user: userData, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
       navigate(`/dashboard`);

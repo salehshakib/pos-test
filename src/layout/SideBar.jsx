@@ -16,10 +16,12 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     );
   });
 
+  console.log(filteredPaths);
+
   const sidebarItems = sidebarItemsGenerator(
     // !userData?.is_admin ? filteredPaths : adminPaths
-    // filteredPaths
-    adminPaths
+    filteredPaths
+    // adminPaths
   );
 
   return (

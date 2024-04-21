@@ -4,6 +4,8 @@ import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import Expense from "../pages/Dashboard/Expense/Expense";
+import Department from "../pages/Dashboard/Hrm/Department/Department";
+import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
 import Hrm from "../pages/Dashboard/Hrm/Hrm";
 import People from "../pages/Dashboard/People/People";
 import Product from "../pages/Dashboard/Product/Product";
@@ -41,6 +43,7 @@ export const adminPaths = [
   },
   {
     name: "Product",
+    path: "product",
     icon: BsBoxSeam,
     children: [
       {
@@ -53,6 +56,7 @@ export const adminPaths = [
   },
   {
     name: "Purchase",
+    path: "purchase",
     icon: GoCreditCard,
     children: [
       {
@@ -65,6 +69,7 @@ export const adminPaths = [
   },
   {
     name: "Sale",
+    path: "sale",
     icon: FaCartShopping,
     children: [
       {
@@ -77,6 +82,7 @@ export const adminPaths = [
   },
   {
     name: "Expense",
+    path: "expense",
     icon: FaMoneyBillWave,
     children: [
       {
@@ -89,6 +95,7 @@ export const adminPaths = [
   },
   {
     name: "Quotation",
+    path: "quotation",
     icon: LuClipboardList,
     children: [
       {
@@ -101,6 +108,7 @@ export const adminPaths = [
   },
   {
     name: "Transfer",
+    path: "transfer",
     icon: RiArrowGoForwardFill,
     children: [
       {
@@ -113,6 +121,7 @@ export const adminPaths = [
   },
   {
     name: "Return",
+    path: "return",
     icon: RiArrowGoBackFill,
     children: [
       {
@@ -125,11 +134,12 @@ export const adminPaths = [
   },
   {
     name: "Accounting",
+    path: "accounting",
     icon: MdAccountBalance,
     children: [
       {
         name: "Sub Accounting",
-        path: "accounting",
+        path: "sub-accounting",
         icon: TbDashboard,
         element: <Accounting />,
       },
@@ -137,19 +147,20 @@ export const adminPaths = [
   },
   {
     name: "HRM",
+    path: "hrm",
     icon: IoPeopleCircle,
     children: [
       {
         name: "Department",
         path: "department",
         icon: TbDashboard,
-        element: <Hrm />,
+        element: <Department />,
       },
       {
         name: "Employee",
         path: "employee",
         icon: TbDashboard,
-        element: <Hrm />,
+        element: <Employee />,
       },
       {
         name: "Payroll",
@@ -167,6 +178,7 @@ export const adminPaths = [
   },
   {
     name: "People",
+    path: "people",
     icon: MdPeopleAlt,
     children: [
       {

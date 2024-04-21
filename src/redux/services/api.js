@@ -1,20 +1,28 @@
-import { baseApi } from "../../api/baseApi";
+import { baseApi } from "../api/baseApi";
 
-const departmentApi = baseApi.injectEndpoints({
+const api = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getDepartments: build.query({
+    getAllData: build.query({
       query: ({ url, params }) => {
         console.log(url, params);
 
+        // return {
+        //   //   url,
+        //   params,
+        // };
+
         return {
-          url: `/human-resource/department`,
+          url: `/human-resources/department/`,
           method: "GET",
           params,
         };
       },
     }),
-    createDepartment: build.mutation({
-      query: (data) => {
+    // getSingleData: build.query({
+
+    // })
+    create: build.mutation({
+      query: ({ url, data }) => {
         console.log(data);
         return {
           //   url: "/department/",
@@ -23,8 +31,8 @@ const departmentApi = baseApi.injectEndpoints({
         };
       },
     }),
-    updateDepartment: build.mutation({
-      query: (data) => {
+    update: build.mutation({
+      query: ({ url, data }) => {
         console.log(data);
         return {
           //   url: "/department/",
@@ -33,8 +41,8 @@ const departmentApi = baseApi.injectEndpoints({
         };
       },
     }),
-    deleteDepartment: build.mutation({
-      query: (data) => {
+    delete: build.mutation({
+      query: ({ url, data }) => {
         console.log(data);
         return {
           //   url: "/department/",
@@ -47,8 +55,8 @@ const departmentApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetDepartmentsQuery,
-  useCreateDepartmentMutation,
-  useUpdateDepartmentMutation,
-  useDeleteDepartmentMutation,
-} = departmentApi;
+  useGetAllDataQuery,
+  useCreateMutation,
+  useUpdateMutation,
+  useDeleteMutation,
+} = api;

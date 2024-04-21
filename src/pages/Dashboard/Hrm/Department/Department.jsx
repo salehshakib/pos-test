@@ -145,7 +145,9 @@ const Department = () => {
 
   // const handleDelete = () => {};
 
-  const { data } = useGetDepartmentsQuery({ pageSize: 10, page: 1 });
+  const { data } = useGetDepartmentsQuery({
+    params: { pageSize: 10, page: 1 },
+  });
 
   console.log(data);
 

@@ -1,6 +1,7 @@
 import { PageContainer } from "@ant-design/pro-layout";
 import { Button, DatePicker } from "antd";
 import dayjs from "dayjs";
+import { useState } from "react";
 import {
   FaCirclePlus,
   FaDownload,
@@ -11,6 +12,7 @@ import {
   FaTrash,
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import CustomDrawer from "../Drawer/CustomDrawer";
 
 const { RangePicker } = DatePicker;
 const disabledDate = (current) => {
@@ -18,7 +20,16 @@ const disabledDate = (current) => {
   return current > dayjs().endOf("day");
 };
 
-const PageComponent = ({ pageTitle, children }) => {
+const PageComponent = ({ pageTitle, children, drawerComponent }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+  const hideDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
   return (
     <PageContainer
       title=<div className="text-xl lg:text-3xl">{pageTitle}</div>
@@ -27,6 +38,7 @@ const PageComponent = ({ pageTitle, children }) => {
           key={"create"}
           type="text"
           icon={<FaCirclePlus className="" />}
+          onClick={openDrawer}
           className="flex justify-center items-center text-xl lg:text-3xl border-none"
         />
         <div
@@ -97,6 +109,15 @@ const PageComponent = ({ pageTitle, children }) => {
       </div>
     >
       {children}
+      {drawerComponent && (
+        <CustomDrawer
+          open={isDrawerOpen}
+          onClose={hideDrawer}
+          title={"Login Drawer Test"}
+        >
+          {drawerComponent}
+        </CustomDrawer>
+      )}
     </PageContainer>
   );
 };

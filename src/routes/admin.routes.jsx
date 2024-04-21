@@ -147,7 +147,7 @@ export const adminPaths = [
   },
   {
     name: "HRM",
-    path: "hrm",
+    path: "human-resources",
     icon: IoPeopleCircle,
     children: [
       {

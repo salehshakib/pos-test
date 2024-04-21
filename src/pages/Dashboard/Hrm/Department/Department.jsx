@@ -4,6 +4,7 @@ import { Table } from "antd";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import PageComponent from "../../../../components/Shared/PageComponent/PageComponent";
 import fakeData from "../fakeData";
+import CreateDepartment from "./CreateDepartment";
 
 const columns = [
   {
@@ -124,23 +125,31 @@ const columns = [
   },
 ];
 
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      "selectedRows: ",
+      selectedRows
+    );
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === "Disabled User",
+    name: record.name,
+  }),
+};
+
 const Department = () => {
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      name: record.name,
-    }),
-  };
+  const handleEdit = () => {};
+
+  const handleDelete = () => {};
+
   return (
     <div className="h-full ">
-      <PageComponent pageTitle="Department">
+      <PageComponent
+        pageTitle="Department"
+        drawerComponent={<CreateDepartment />}
+      >
         <Table
           rowKey={(record) => record.id}
           rowSelection={{

@@ -10,11 +10,13 @@ const CustomDrawer = ({
   return (
     <Drawer
       key={title}
+      width={600}
       title={title}
       placement={placement}
       closable={true}
       onClose={onClose}
       open={open}
+      destroyOnClose
     >
       {children}
     </Drawer>

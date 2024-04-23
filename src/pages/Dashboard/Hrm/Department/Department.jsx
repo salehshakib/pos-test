@@ -13,19 +13,6 @@ import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import CreateDepartment from "./CreateDepartment";
 
 const columns = [
-  // {
-  //   title: "ID",
-  //   dataIndex: "id",
-  //   key: "id",
-  //   fixed: "left",
-  //   align: "center",
-  //   width: 80,
-  //   render: (id) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {id}
-  //     </span>
-  //   ),
-  // },
   {
     //department
     title: "Department",
@@ -93,7 +80,7 @@ const columns = [
 ];
 
 const Department = () => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const [fields, setFields] = useState([]);
@@ -217,6 +204,7 @@ const Department = () => {
         pagination={{
           showTotal: (total) => `Total ${total} items`,
           defaultCurrent: 1,
+          defaultPageSize: pagination.perPage,
           total: total,
           showSizeChanger: true,
           current: pagination.page,

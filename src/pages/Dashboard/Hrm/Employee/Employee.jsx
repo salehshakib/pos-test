@@ -2,7 +2,7 @@ import { Table } from "antd";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { useGetAllDataQuery } from "../../../../redux/services/api";
+import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
 import fakeData from "../fakeData";
 
 const columns = [

@@ -1,41 +1,34 @@
+import { notification } from "antd";
 import { baseApi } from "../api/baseApi";
 
-const api = baseApi.injectEndpoints({
+const mutationApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllData: build.query({
-      query: ({ url, params }) => {
-        return {
-          url: `/${url}`,
-          method: "GET",
-          params,
-        };
-      },
-      transformResponse: (response) => response.data,
-      providesTags: (result, error, { url }) => {
-        const tags = url?.split("/")[2];
-        return [{ tags }];
-      },
-    }),
-    getDetails: build.query({
-      query: ({ url, id }) => {
-        return {
-          url: `/${url}/${id}`,
-          method: "GET",
-        };
-      },
-      providesTags: (result, error, { url }) => {
-        const tags = url?.split("/")[2];
-        return [{ tags }];
-      },
-    }),
-    create: build.mutation({
+    storeData: build.mutation({
       query: ({ url, data }) => {
-        console.log(data);
         return {
           url: `/${url}/store`,
           method: "POST",
           body: data,
         };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          notification?.success({
+            message: "Task Completed Successfully",
+            description:
+              response?.message ??
+              "No Message is provided. Task Completed Successfully",
+          });
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        notification?.error({
+          message: "Task Failed",
+          description:
+            response?.data?.message ?? "No Message is provided. Task Failed",
+        });
+        return response;
       },
       invalidatesTags: (result, error, { url }) => {
         const tags = url?.split("/")[2];
@@ -65,9 +58,4 @@ const api = baseApi.injectEndpoints({
   }),
 });
 
-export const {
-  useGetAllDataQuery,
-  useCreateMutation,
-  useUpdateMutation,
-  useDeleteMutation,
-} = api;
+export const { useStoreDataMutation } = mutationApi;

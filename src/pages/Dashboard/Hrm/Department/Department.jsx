@@ -1,16 +1,13 @@
-// import { PageHeader } from "@ant-design/pro-layout";
-
 import { Table } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import {
-  useCreateMutation,
-  useGetAllDataQuery,
-} from "../../../../redux/services/api";
-import CreateDepartment from "./CreateDepartment";
-import dayjs from "dayjs";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
+import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
+import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
+import { DEPARTMENT } from "../../../../utilities/configs/Api";
+import CreateDepartment from "./CreateDepartment";
 
 const columns = [
   {
@@ -26,67 +23,6 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "",
-  //   dataIndex: "image",
-  //   key: "image",
-  //   fixed: "left",
-  //   align: "center",
-  //   width: 70,
-  //   render: (img) => (
-  //     <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
-  //       <img
-  //         src={img}
-  //         alt="defaultUser"
-  //         className="w-full h-full object-cover"
-  //       />
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   title: "Name",
-  //   dataIndex: "name",
-  //   key: "name",
-  //   // fixed: "left",
-  //   render: (name) => (
-  //     //   <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //     //     {name}
-  //     //   </span>
-  //     <div className="flex flex-col cursor-pointer ">
-  //       {/* <Link className="inline-block" to={`/profile/${record.key}/overview`} key={record.key}> */}
-  //       <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
-  //         {name}
-  //       </span>
-  //       {/* </Link> */}
-  //       <span className="text-xs dark:text-white60 text-posPurple ">
-  //         admin@gmail.com
-  //       </span>
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   //adress
-  //   title: "Address",
-  //   dataIndex: "address",
-  //   key: "address",
-  //   render: (address) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {address}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   //phone
-  //   title: "Phone",
-  //   dataIndex: "phone",
-  //   key: "phone",
-  //   align: "center",
-  //   render: (phone) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {phone}
-  //     </span>
-  //   ),
-  // },
   {
     //department
     title: "Department",
@@ -141,13 +77,11 @@ const Department = () => {
 
   //get all data query
   const { data, isLoading } = useGetAllDataQuery({
-    url: "human-resource/department",
+    url: DEPARTMENT,
     params: pagination,
   });
 
-  const [create] = useCreateMutation();
-
-  console.log(data, isLoading);
+  const [storeData, { isLoading: isMutating }] = useStoreDataMutation();
 
   const departmentData =
     data?.results?.department?.map((item) => {
@@ -190,13 +124,14 @@ const Department = () => {
   };
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    const res = await create({
-      url: "human-resource/department",
+    const res = await storeData({
+      url: DEPARTMENT,
       data: values,
     });
 
-    console.log(res);
+    if (res?.data?.success) {
+      hideDrawer();
+    }
   };
 
   return (
@@ -238,7 +173,11 @@ const Department = () => {
         onClose={hideDrawer}
         title={"Create Department"}
       >
-        <CreateDepartment onClose={hideDrawer} handleSubmit={handleSubmit} />
+        <CreateDepartment
+          onClose={hideDrawer}
+          handleSubmit={handleSubmit}
+          isLoading={isMutating}
+        />
       </CustomDrawer>
     </GlobalContainer>
     // </div>

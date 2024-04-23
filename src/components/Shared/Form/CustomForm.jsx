@@ -4,16 +4,19 @@ const CustomForm = ({ handleSubmit, children }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    try {
-      // const values = form.getFieldsValue();
-      handleSubmit(values);
-    } catch (error) {
-      console.error("Validation error:", error);
-    }
+    form
+      .validateFields()
+      .then(() => {
+        console.log(values);
+        handleSubmit(values);
+      })
+      .catch((error) => {
+        console.error("Validation error:", error);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log(errorInfo);
   };
 
   return (

@@ -2,7 +2,7 @@ import { Button } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 
-const CreateDepartment = ({ onClose, handleSubmit }) => {
+const CreateDepartment = ({ onClose, handleSubmit, isLoading }) => {
   return (
     <CustomForm handleSubmit={handleSubmit} className="flex flex-col gap-6">
       <CustomInput
@@ -20,6 +20,7 @@ const CreateDepartment = ({ onClose, handleSubmit }) => {
         <Button
           htmlType="submit"
           className="bg-secondary hover:bg-posPurple text-white"
+          loading={isLoading}
         >
           Submit
         </Button>

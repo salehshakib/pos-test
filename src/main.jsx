@@ -10,8 +10,6 @@ import "./index.css";
 import { persistor, store } from "./redux/store.js";
 import { router } from "./routes/routes.jsx";
 
-// const colors1 = ["#6253E1", "#04BEFE"];
-
 const theme = {
   token: {
     // colorPrimary: "#DCBFFF",

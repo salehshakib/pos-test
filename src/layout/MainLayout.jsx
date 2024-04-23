@@ -32,7 +32,7 @@ const MainLayout = () => {
       <Layout>
         <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-        <Layout className=" ml-16 md:ml-0">
+        <Layout className="ml-[4.3rem] md:ml-0">
           <Content
             style={{
               margin: "8px 8px",

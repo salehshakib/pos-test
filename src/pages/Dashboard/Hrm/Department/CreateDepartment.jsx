@@ -2,13 +2,9 @@ import { Button } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 
-const CreateDepartment = ({ onClose }) => {
+const CreateDepartment = ({ onClose, handleSubmit }) => {
   return (
-    <CustomForm
-      // onSubmit={onSubmit}
-      // resolver={zodResolver(loginValidationSchema)}
-      className="flex flex-col gap-6"
-    >
+    <CustomForm handleSubmit={handleSubmit} className="flex flex-col gap-6">
       <CustomInput
         label="Department Name"
         type={"text"}

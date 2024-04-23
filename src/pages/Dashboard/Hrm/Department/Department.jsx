@@ -4,7 +4,10 @@ import { Table } from "antd";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { useGetAllDataQuery } from "../../../../redux/services/api";
+import {
+  useCreateMutation,
+  useGetAllDataQuery,
+} from "../../../../redux/services/api";
 import CreateDepartment from "./CreateDepartment";
 import dayjs from "dayjs";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
@@ -142,6 +145,8 @@ const Department = () => {
     params: pagination,
   });
 
+  const [create] = useCreateMutation();
+
   console.log(data, isLoading);
 
   const departmentData =
@@ -184,6 +189,16 @@ const Department = () => {
     }));
   };
 
+  const handleSubmit = async (values) => {
+    console.log(values);
+    const res = await create({
+      url: "human-resource/department",
+      data: values,
+    });
+
+    console.log(res);
+  };
+
   return (
     <GlobalContainer
       pageTitle="Department"
@@ -223,7 +238,7 @@ const Department = () => {
         onClose={hideDrawer}
         title={"Create Department"}
       >
-        <CreateDepartment onClose={hideDrawer} />
+        <CreateDepartment onClose={hideDrawer} handleSubmit={handleSubmit} />
       </CustomDrawer>
     </GlobalContainer>
     // </div>

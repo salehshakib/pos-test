@@ -28,16 +28,20 @@ const api = baseApi.injectEndpoints({
         return [{ tags }];
       },
     }),
-    // create: build.mutation({
-    //   query: ({ url, data }) => {
-    //     console.log(data);
-    //     return {
-    //       //   url: "/department/",
-    //       //   method: "POST",
-    //       body: data,
-    //     };
-    //   },
-    // }),
+    create: build.mutation({
+      query: ({ url, data }) => {
+        console.log(data);
+        return {
+          url: `/${url}/store`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: (result, error, { url }) => {
+        const tags = url?.split("/")[2];
+        return [{ tags }];
+      },
+    }),
     // update: build.mutation({
     //   query: ({ url, data }) => {
     //     console.log(data);

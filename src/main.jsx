@@ -37,9 +37,10 @@ const theme = {
       defaultHoverColor: "#FFFFFF",
     },
     Table: {
-      headerBg: "#DCBFFF",
+      // headerBg: "#DCBFFF",
+      headerBg: "#F2E8FF",
       headerSplitColor: "#51258F",
-      stickyScrollBarBg: "#DCBFFF",
+      stickyScrollBarBg: "#F2E8FF",
       stickyScrollBarBorderRadius: "0 0 10px 10px",
     },
   },

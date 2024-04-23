@@ -1,5 +1,5 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Checkbox, Divider, Dropdown } from "antd";
+import { Button, Checkbox, Dropdown } from "antd";
 import { useState } from "react";
 import {
   FaCirclePlus,
@@ -50,17 +50,17 @@ const PageComponent = ({ pageTitle, children, drawerComponent }) => {
     },
   ];
 
-  const checkAll = options.length === checkedList.length;
-  const indeterminate =
-    checkedList.length > 0 && checkedList.length < options.length;
+  // const checkAll = options.length === checkedList.length;
+  // const indeterminate =
+  //   checkedList.length > 0 && checkedList.length < options.length;
 
   const onChange = (list) => {
     setCheckedList(list);
     // setIsTableView(true);
   };
-  const onCheckAllChange = (e) => {
-    setCheckedList(e.target.checked ? options : []);
-  };
+  // const onCheckAllChange = (e) => {
+  //   setCheckedList(e.target.checked ? options : []);
+  // };
 
   const items = [
     {

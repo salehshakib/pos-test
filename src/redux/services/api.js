@@ -1,21 +1,20 @@
 import { baseApi } from "../api/baseApi";
 
-let tags = "";
-
 const api = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllData: build.query({
       query: ({ url, params }) => {
-        console.log(url);
-
-        tags = url.split("/")[2];
         return {
           url: `/${url}`,
           method: "GET",
           params,
         };
       },
-      providesTags: [tags],
+      transformResponse: (response) => response.data,
+      providesTags: (result, error, { url }) => {
+        const tags = url?.split("/")[2];
+        return [{ tags }];
+      },
     }),
     getDetails: build.query({
       query: ({ url, id }) => {
@@ -23,6 +22,10 @@ const api = baseApi.injectEndpoints({
           url: `/${url}/${id}`,
           method: "GET",
         };
+      },
+      providesTags: (result, error, { url }) => {
+        const tags = url?.split("/")[2];
+        return [{ tags }];
       },
     }),
     // create: build.mutation({

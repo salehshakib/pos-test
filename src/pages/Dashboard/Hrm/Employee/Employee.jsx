@@ -1,8 +1,9 @@
 import { Table } from "antd";
+import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import PageComponent from "../../../../components/Shared/PageComponent/PageComponent";
-import fakeData from "../fakeData";
+import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { useGetAllDataQuery } from "../../../../redux/services/api";
+import fakeData from "../fakeData";
 
 const columns = [
   {
@@ -19,7 +20,7 @@ const columns = [
     ),
   },
   {
-    title: "",
+    title: "Image",
     dataIndex: "image",
     key: "image",
     fixed: "left",
@@ -39,34 +40,17 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    // fixed: "left",
     render: (name) => (
-      //   <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-      //     {name}
-      //   </span>
       <div className="flex flex-col cursor-pointer ">
-        {/* <Link className="inline-block" to={`/profile/${record.key}/overview`} key={record.key}> */}
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
           {name}
         </span>
-        {/* </Link> */}
         <span className="text-xs dark:text-white60 text-posPurple ">
           admin@gmail.com
         </span>
       </div>
     ),
   },
-  //   {
-  //     //email
-  //     title: "Email",
-  //     dataIndex: "email",
-  //     key: "email",
-  //     render: (email) => (
-  //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //         {email}
-  //       </span>
-  //     ),
-  //   },
   {
     //adress
     title: "Address",
@@ -122,31 +106,60 @@ const columns = [
     ),
   },
 ];
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === "Disabled User",
-    name: record.name,
-  }),
-};
 
 const Employee = () => {
+  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const [newColumns, setNewColumns] = useState(columns);
+  const [selectedRows, setSelectedRows] = useState([]);
+
   const { data, isLoading } = useGetAllDataQuery({
     url: "/human-resource/employee",
-    params: { pageSize: 10, page: 1 },
+    params: pagination,
   });
 
-  console.log(data);
+  console.log(data, isLoading);
+
+  // const employeeData =
+  //   data?.list?.department?.map((item) => {
+  //     const { id, name, created_at } = item;
+  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+
+  //     return {
+  //       id,
+  //       department: name,
+  //       created_at: date,
+  //     };
+  //   }) ?? [];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRows(selectedRows);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === "Disabled User",
+      name: record.name,
+    }),
+  };
+
+  const updatePage = (newPage) => {
+    setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
+  };
+
+  const updatePageSize = (newPageSize) => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      perPage: newPageSize,
+    }));
+  };
 
   return (
     <div className="h-full ">
-      <PageComponent pageTitle="Employee">
+      <GlobalContainer
+        pageTitle="Employee"
+        columns={columns}
+        selectedRows={selectedRows}
+        setNewColumns={setNewColumns}
+      >
         <Table
           rowKey={(record) => record.id}
           rowSelection={{
@@ -154,18 +167,24 @@ const Employee = () => {
             ...rowSelection,
           }}
           size="small"
-          columns={columns}
+          columns={newColumns}
           dataSource={fakeData}
           pagination={{
             showTotal: (total) => `Total ${total} items`,
             showSizeChanger: true,
+            onShowSizeChange: (current, size) => {
+              updatePageSize(size);
+            },
+            onChange: (page) => {
+              updatePage(page);
+            },
           }}
           scroll={{
             x: "max-content",
           }}
           loading={isLoading}
         />
-      </PageComponent>
+      </GlobalContainer>
     </div>
   );
 };

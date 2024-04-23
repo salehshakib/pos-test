@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { PageContainer } from "@ant-design/pro-layout";
 import { Button, Checkbox, Dropdown } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaCirclePlus,
   FaDownload,
@@ -12,19 +13,37 @@ import {
   FaTrash,
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
-import CustomDrawer from "../Drawer/CustomDrawer";
+import CustomDrawer from "../../components/Shared/Drawer/CustomDrawer";
 import { GlobalUtilityStyle } from "../Styled";
 
-// const { RangePicker } = DatePicker;
-// const disabledDate = (current) => {
-//   // Can not select days after today
-//   return current > dayjs().endOf("day");
-// };
-
-const GlobalContainer = ({ pageTitle, children, drawerComponent }) => {
+const GlobalContainer = ({
+  pageTitle,
+  columns,
+  selectedRows,
+  children,
+  drawerComponent,
+  setNewColumns,
+}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // const [isDropdownOpen, setIsDropDownOpen] = useState(false);
-  // const [isTableView, setIsTableView] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
+
+  const handleMenuClick = (e) => {
+    if (e.key !== "tableColumns") {
+      setCheckedMenuOpen(false);
+    }
+  };
+  const handleOpenChange = (nextOpen, info) => {
+    if (info.source === "trigger" || nextOpen) {
+      setOpen(nextOpen);
+    }
+  };
+
+  const handleCheckedOpenChange = (nextOpen, info) => {
+    if (info.source === "trigger" || nextOpen) {
+      setCheckedMenuOpen(nextOpen);
+    }
+  };
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -33,64 +52,48 @@ const GlobalContainer = ({ pageTitle, children, drawerComponent }) => {
     setIsDrawerOpen(false);
   };
 
-  const [checkedList, setCheckedList] = useState([]);
+  const defaultCheckedList = columns.map((item) => item.key);
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
 
-  const options = [
-    {
-      label: "Apple",
-      value: "Apple",
-    },
-    {
-      label: "Pear",
-      value: "Pear",
-    },
-    {
-      label: "Orange",
-      value: "Orange",
-    },
-  ];
+  const options = columns.map(({ key, title }) => ({
+    label: title,
+    value: key,
+  }));
 
-  //   const checkAll = options.length === checkedList.length;
-  //   const indeterminate =
-  //     checkedList.length > 0 && checkedList.length < options.length;
+  useEffect(() => {
+    const newColumns = columns.map((item) => ({
+      ...item,
+      hidden: !checkedList.includes(item.key),
+    }));
+
+    setNewColumns(newColumns);
+  }, [checkedList, columns, setNewColumns]);
 
   const onChange = (list) => {
     setCheckedList(list);
-    // setIsTableView(true);
   };
-  //   const onCheckAllChange = (e) => {
-  //     setCheckedList(e.target.checked ? options : []);
-  //   };
 
   const items = [
     {
       key: "view",
       label: (
         <Dropdown
-          // open={isTableView}
-          // onClose={() => setIsTableView(false)}
+          open={checkedMenuOpen}
+          onOpenChange={handleCheckedOpenChange}
           key="dropdown"
-          trigger={["click"]}
           menu={{
+            onClick: handleMenuClick,
+            className: "-translate-x-[34px] translate-y-1/4",
             items: [
               {
-                key: "checkbox",
+                key: "tableColumns",
                 label: (
-                  <>
-                    {/* <Checkbox
-                      indeterminate={indeterminate}
-                      onChange={onCheckAllChange}
-                      checked={checkAll}
-                    >
-                      Check all
-                    </Checkbox> */}
-                    {/* <Divider /> */}
-                    <Checkbox.Group
-                      options={options}
-                      value={checkedList}
-                      onChange={onChange}
-                    />
-                  </>
+                  <Checkbox.Group
+                    className="flex flex-col"
+                    options={options}
+                    value={checkedList}
+                    onChange={onChange}
+                  />
                 ),
               },
             ],
@@ -148,53 +151,6 @@ const GlobalContainer = ({ pageTitle, children, drawerComponent }) => {
           onClick={openDrawer}
           className="flex justify-center items-center text-2xl lg:text-3xl border-none"
         />
-        // extra=<div
-        //   key={"user-control"}
-        //   className="flex justify-center items-center gap-2"
-        // >
-        // <div key={"view"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaEye className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"download"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaDownload className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"pdf"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaFilePdf className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"excel"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaDownload className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"csv"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaFileCsv className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"print"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaPrint className="lg:text-xl" />
-        //   </button>
-        // </div>
-
-        // <div key={"delete"}>
-        //   <button className="bg-secondary p-2 rounded-xl text-white hover:scale-110 duration-300">
-        //     <FaTrash className="lg:text-xl" />
-        //   </button>
-        // </div>
-        // </div>
-
         extra={[
           <div
             key="search"
@@ -211,13 +167,15 @@ const GlobalContainer = ({ pageTitle, children, drawerComponent }) => {
 
           <Dropdown
             key="dropdown"
+            trigger={["click"]}
+            open={open}
+            onOpenChange={handleOpenChange}
             menu={{
               items,
               selectable: true,
               onSelect: (value) => {
-                console.log(value.key);
-                if (value.key === "view") {
-                  // setIsTableView(true);
+                if (value.key !== "view") {
+                  setOpen(false);
                 }
               },
             }}
@@ -227,9 +185,18 @@ const GlobalContainer = ({ pageTitle, children, drawerComponent }) => {
               <FaEllipsis />
             </Button>
           </Dropdown>,
+
+          selectedRows.length !== 0 && (
+            <div key={"delete"}>
+              <button className="bg-secondary p-2 rounded-xl  text-white hover:scale-110 duration-300 ">
+                <FaTrash className="lg:text-xl" />
+              </button>
+            </div>
+          ),
         ]}
       >
         {children}
+
         {drawerComponent && (
           <CustomDrawer
             open={isDrawerOpen}

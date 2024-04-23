@@ -22,14 +22,6 @@ const mutationApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        notification?.error({
-          message: "Task Failed",
-          description:
-            response?.data?.message ?? "No Message is provided. Task Failed",
-        });
-        return response;
-      },
       invalidatesTags: (result, error, { url }) => {
         const tags = url?.split("/")[2];
         return [{ tags }];

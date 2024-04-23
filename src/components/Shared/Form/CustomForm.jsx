@@ -1,6 +1,6 @@
 import { Form } from "antd";
 
-const CustomForm = ({ handleSubmit, children }) => {
+const CustomForm = ({ handleSubmit, children, fields }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -22,6 +22,7 @@ const CustomForm = ({ handleSubmit, children }) => {
   return (
     <Form
       form={form}
+      fields={fields}
       onFinish={onFinish}
       layout="vertical"
       autoComplete="on"

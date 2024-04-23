@@ -123,21 +123,30 @@ const Department = () => {
     }));
   };
 
+  const [fields, setFields] = useState([]);
   const handleSubmit = async (values) => {
-    const res = await storeData({
+    const { data, error } = await storeData({
       url: DEPARTMENT,
       data: values,
     });
 
-    if (res?.data?.success) {
+    if (data?.success) {
       hideDrawer();
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+
+      setFields(errorFields);
     }
   };
 
   return (
     <GlobalContainer
       pageTitle="Department"
-      // drawerComponent={<CreateDepartment />}
       openDrawer={openDrawer}
       columns={columns}
       selectedRows={selectedRows}
@@ -177,6 +186,7 @@ const Department = () => {
           onClose={hideDrawer}
           handleSubmit={handleSubmit}
           isLoading={isMutating}
+          fields={fields}
         />
       </CustomDrawer>
     </GlobalContainer>

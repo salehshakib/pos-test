@@ -72,6 +72,7 @@ const Department = () => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [fields, setFields] = useState([]);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -123,7 +124,6 @@ const Department = () => {
     }));
   };
 
-  const [fields, setFields] = useState([]);
   const handleSubmit = async (values) => {
     const { data, error } = await storeData({
       url: DEPARTMENT,
@@ -190,7 +190,6 @@ const Department = () => {
         />
       </CustomDrawer>
     </GlobalContainer>
-    // </div>
   );
 };
 

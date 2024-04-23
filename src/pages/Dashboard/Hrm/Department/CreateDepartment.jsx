@@ -2,7 +2,7 @@ import { Button } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 
-const CreateDepartment = () => {
+const CreateDepartment = ({ onClose }) => {
   return (
     <CustomForm
       // onSubmit={onSubmit}
@@ -10,28 +10,24 @@ const CreateDepartment = () => {
       className="flex flex-col gap-6"
     >
       <CustomInput
-        label="Email"
-        type={"email"}
+        label="Department Name"
+        type={"text"}
         required={true}
-        name={"email"}
-        placeholder={"Email"}
+        name={"name"}
+        placeholder={"Department Name"}
       />
-      <CustomInput
-        label="Password"
-        type={"password"}
-        name={"password"}
-        required={true}
-        placeholder={"Password"}
-      />
-      <Button
-        htmlType="submit"
-        // loading={isLoading}
-        className="w-full"
-        type="default"
-        size="large"
-      >
-        Enter
-      </Button>
+
+      <div className="w-full flex gap-3 justify-end items-center">
+        <Button type="default" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          htmlType="submit"
+          className="bg-secondary hover:bg-posPurple text-white"
+        >
+          Submit
+        </Button>
+      </div>
     </CustomForm>
   );
 };

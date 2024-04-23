@@ -7,6 +7,7 @@ import GlobalContainer from "../../../../container/GlobalContainer/GlobalContain
 import { useGetAllDataQuery } from "../../../../redux/services/api";
 import CreateDepartment from "./CreateDepartment";
 import dayjs from "dayjs";
+import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 
 const columns = [
   {
@@ -133,6 +134,9 @@ const Department = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  //get all data query
   const { data, isLoading } = useGetAllDataQuery({
     url: "human-resource/department",
     params: pagination,
@@ -141,7 +145,7 @@ const Department = () => {
   console.log(data, isLoading);
 
   const departmentData =
-    data?.list?.department?.map((item) => {
+    data?.results?.department?.map((item) => {
       const { id, name, created_at } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
@@ -162,6 +166,13 @@ const Department = () => {
     }),
   };
 
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+  const hideDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
   const updatePage = (newPage) => {
     setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
   };
@@ -174,40 +185,48 @@ const Department = () => {
   };
 
   return (
-    <div className="h-full ">
-      <GlobalContainer
-        pageTitle="Department"
-        drawerComponent={<CreateDepartment />}
-        columns={columns}
-        selectedRows={selectedRows}
-        setNewColumns={setNewColumns}
+    <GlobalContainer
+      pageTitle="Department"
+      // drawerComponent={<CreateDepartment />}
+      openDrawer={openDrawer}
+      columns={columns}
+      selectedRows={selectedRows}
+      setNewColumns={setNewColumns}
+    >
+      <Table
+        rowKey={(record) => record.id}
+        rowSelection={{
+          type: "checkbox",
+          ...rowSelection,
+        }}
+        size="small"
+        columns={newColumns}
+        dataSource={departmentData}
+        pagination={{
+          showTotal: (total) => `Total ${total} items`,
+          showSizeChanger: true,
+          onShowSizeChange: (current, size) => {
+            updatePageSize(size);
+          },
+          onChange: (page) => {
+            updatePage(page);
+          },
+        }}
+        scroll={{
+          x: "max-content",
+        }}
+        loading={isLoading}
+      />
+
+      <CustomDrawer
+        open={isDrawerOpen}
+        onClose={hideDrawer}
+        title={"Create Department"}
       >
-        <Table
-          rowKey={(record) => record.id}
-          rowSelection={{
-            type: "checkbox",
-            ...rowSelection,
-          }}
-          size="small"
-          columns={newColumns}
-          dataSource={departmentData}
-          pagination={{
-            showTotal: (total) => `Total ${total} items`,
-            showSizeChanger: true,
-            onShowSizeChange: (current, size) => {
-              updatePageSize(size);
-            },
-            onChange: (page) => {
-              updatePage(page);
-            },
-          }}
-          scroll={{
-            x: "max-content",
-          }}
-          loading={isLoading}
-        />
-      </GlobalContainer>
-    </div>
+        <CreateDepartment onClose={hideDrawer} />
+      </CustomDrawer>
+    </GlobalContainer>
+    // </div>
   );
 };
 

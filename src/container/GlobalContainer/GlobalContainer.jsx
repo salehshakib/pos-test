@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { PageContainer } from "@ant-design/pro-layout";
 import { Button, Checkbox, Dropdown } from "antd";
 import { useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import {
   FaTrash,
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
-import CustomDrawer from "../../components/Shared/Drawer/CustomDrawer";
 import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
@@ -21,10 +19,9 @@ const GlobalContainer = ({
   columns,
   selectedRows,
   children,
-  drawerComponent,
   setNewColumns,
+  openDrawer,
 }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
 
@@ -43,13 +40,6 @@ const GlobalContainer = ({
     if (info.source === "trigger" || nextOpen) {
       setCheckedMenuOpen(nextOpen);
     }
-  };
-
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
-  const hideDrawer = () => {
-    setIsDrawerOpen(false);
   };
 
   const defaultCheckedList = columns.map((item) => item.key);
@@ -142,71 +132,69 @@ const GlobalContainer = ({
 
   return (
     <GlobalUtilityStyle>
-      <PageContainer
-        title=<div className="text-2xl lg:text-3xl">{pageTitle}</div>
-        subTitle=<Button
-          key={"create"}
-          type="text"
-          icon={<FaCirclePlus className="" />}
-          onClick={openDrawer}
-          className="flex justify-center items-center text-2xl lg:text-3xl border-none"
-        />
-        extra={[
-          <div
-            key="search"
-            className="px-4 py-2 w-48 md:w-60 border rounded-md border-primary hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary text-md "
-          >
-            Search
-            <IoSearch
-              style={{
-                color: "#000",
-              }}
-              className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
+      <div className="h-full ">
+        <PageContainer
+          title=<div className="text-2xl lg:text-3xl">{pageTitle}</div>
+          subTitle=<div className="">
+            <Button
+              key={"create"}
+              type="text"
+              icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full " />}
+              onClick={openDrawer}
+              className="flex justify-center items-center border-none w-full"
             />
-          </div>,
+          </div>
+          extra={[
+            <div
+              key="search"
+              className="px-4 py-2 w-48 md:w-60 border rounded-md border-primary hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary text-md "
+            >
+              Search
+              <IoSearch
+                style={{
+                  color: "#000",
+                }}
+                className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
+              />
+            </div>,
 
-          <Dropdown
-            key="dropdown"
-            trigger={["click"]}
-            open={open}
-            onOpenChange={handleOpenChange}
-            menu={{
-              items,
-              selectable: true,
-              onSelect: (value) => {
-                if (value.key !== "view") {
-                  setOpen(false);
-                }
-              },
-            }}
-            placement="bottomRight"
-          >
-            <Button style={{ padding: "0 12px" }} size="large">
-              <FaEllipsis />
-            </Button>
-          </Dropdown>,
+            <Dropdown
+              key="dropdown"
+              trigger={["click"]}
+              open={open}
+              onOpenChange={handleOpenChange}
+              menu={{
+                items,
+                selectable: true,
+                onSelect: (value) => {
+                  if (value.key !== "view") {
+                    setOpen(false);
+                  }
+                },
+              }}
+              placement="bottomRight"
+            >
+              <Button style={{ padding: "0 12px" }} size="large">
+                <FaEllipsis />
+              </Button>
+            </Dropdown>,
 
-          selectedRows.length !== 0 && (
-            <div key={"delete"}>
-              <button className="bg-secondary p-2 rounded-xl  text-white hover:scale-110 duration-300 ">
-                <FaTrash className="lg:text-xl" />
-              </button>
-            </div>
-          ),
-        ]}
-      >
-        {children}
+            selectedRows.length !== 0 && (
+              <div key={"delete"}>
+                <button className="bg-secondary p-2 rounded-xl  text-white hover:scale-110 duration-300 ">
+                  <FaTrash className="lg:text-xl" />
+                </button>
+              </div>
+            ),
+          ]}
+        >
+          {children}
 
-        {drawerComponent && (
-          <CustomDrawer
-            open={isDrawerOpen}
-            onClose={hideDrawer}
-            title={"Login Drawer Test"}
-          >
-            {drawerComponent}
-          </CustomDrawer>
-        )}
-      </PageContainer>
+          {/* {drawerComponent && (
+         
+        )} */}
+        </PageContainer>
+      </div>
     </GlobalUtilityStyle>
   );
 };

@@ -77,9 +77,9 @@ const CustomInput = ({ type, name, label, placeholder, required = false }) => {
         )) || (
           <Input
             type={type}
-            placeholder={placeholder}
+            placeholder={`Enter ${placeholder}`}
             className="mt-2 border-2"
-            size="large"
+            // size="large"
             allowClear
           />
         )}

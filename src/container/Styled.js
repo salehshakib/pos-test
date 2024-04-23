@@ -17,6 +17,19 @@ const GlobalUtilityStyle = styled.div`
     align-items: center;
     justify-content: center;
   }
+
+  .custom-placeholder {
+    .ant-input-affix-wrapper-lg {
+      font-size: 14px;
+    }
+  }
+
+  .ant-input-affix-wrapper > input.ant-input {
+    padding: 7px 11px;
+    font-size: 5px;
+    line-height: 1.5;
+    border-radius: 8px;
+  }
 `;
 
 export { GlobalUtilityStyle };

@@ -113,14 +113,15 @@ const Employee = () => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const { data, isLoading } = useGetAllDataQuery({
-    url: "/human-resource/employee",
+    // url: "human-resource/employee",
+    url: "inventory/category",
     params: pagination,
   });
 
   console.log(data, isLoading);
 
   // const employeeData =
-  //   data?.list?.department?.map((item) => {
+  //   data?.result?.department?.map((item) => {
   //     const { id, name, created_at } = item;
   //     const date = dayjs(created_at).format("DD-MM-YYYY");
 

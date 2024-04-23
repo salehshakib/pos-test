@@ -14,7 +14,7 @@ const mutationApi = baseApi.injectEndpoints({
       transformResponse: (response) => {
         if (response?.success) {
           notification?.success({
-            message: "Task Completed Successfully",
+            message: "Success",
             description:
               response?.message ??
               "No Message is provided. Task Completed Successfully",

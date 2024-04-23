@@ -18,13 +18,16 @@ const fetchApi = baseApi.injectEndpoints({
     }),
     getDetails: build.query({
       query: ({ url, id }) => {
+        console.log(url, id);
         return {
-          url: `/${url}/${id}`,
+          url: `${url}/show/${id}`,
           method: "GET",
         };
       },
+      transformResponse: (response) => response.data,
       providesTags: (result, error, { url }) => {
         const tags = url?.split("/")[2];
+
         return [{ tags }];
       },
     }),

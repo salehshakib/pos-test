@@ -1,28 +1,31 @@
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
+import {
+  useGetAllDataQuery,
+  useGetDetailsQuery,
+} from "../../../../redux/services/fetchApi";
 import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import CreateDepartment from "./CreateDepartment";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
+  // {
+  //   title: "ID",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 80,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
     //department
     title: "Department",
@@ -48,6 +51,22 @@ const columns = [
     ),
   },
   {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: (status) =>
+      status === 1 ? (
+        <Tag color="#22C55E">
+          <span className="font-medium text-white text-md ">Active</span>
+        </Tag>
+      ) : (
+        <Tag color="#ff0000">Inactive</Tag>
+      ),
+  },
+
+  {
     //action
     title: "Action",
     dataIndex: "action",
@@ -55,16 +74,21 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: () => (
-      <div className="flex justify-center items-center gap-3 ">
-        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
-          <MdEditSquare className="text-xl" />
-        </button>
-        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
-          <MdDelete className="text-xl" />
-        </button>
-      </div>
-    ),
+    render: (getDetails, record) => {
+      return (
+        <div className="flex justify-center items-center gap-3 ">
+          <button
+            onClick={() => getDetails(record.id)}
+            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdEditSquare className="text-xl" />
+          </button>
+          <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
+            <MdDelete className="text-xl" />
+          </button>
+        </div>
+      );
+    },
   },
 ];
 
@@ -75,24 +99,46 @@ const Department = () => {
   const [fields, setFields] = useState([]);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+
+  const [id, setId] = useState(undefined);
 
   //get all data query
-  const { data, isLoading } = useGetAllDataQuery({
+  const { data, isFetching } = useGetAllDataQuery({
     url: DEPARTMENT,
     params: pagination,
   });
 
-  const [storeData, { isLoading: isMutating }] = useStoreDataMutation();
+  const total = data?.meta?.total;
+
+  console.log(data);
+  console.log(isFetching);
+
+  const { data: details } = useGetDetailsQuery(
+    { url: DEPARTMENT, id },
+    { skip: !id }
+  );
+
+  console.log(details);
+
+  const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
+
+  const getDetails = (id) => {
+    setId(id);
+    setIsEditDrawerOpen(true);
+  };
 
   const departmentData =
     data?.results?.department?.map((item) => {
-      const { id, name, created_at } = item;
+      const { id, name, created_at, is_active } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         department: name,
+        status: is_active,
         created_at: date,
+        action: getDetails,
       };
     }) ?? [];
 
@@ -103,6 +149,7 @@ const Department = () => {
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
       name: record.name,
+      // action: getDetails,
     }),
   };
 
@@ -111,6 +158,8 @@ const Department = () => {
   };
   const hideDrawer = () => {
     setIsDrawerOpen(false);
+    setIsEditDrawerOpen(false);
+    setId(undefined);
   };
 
   const updatePage = (newPage) => {
@@ -144,6 +193,10 @@ const Department = () => {
     }
   };
 
+  const handleUpdate = async (values) => {
+    console.log(values);
+  };
+
   return (
     <GlobalContainer
       pageTitle="Department"
@@ -163,7 +216,10 @@ const Department = () => {
         dataSource={departmentData}
         pagination={{
           showTotal: (total) => `Total ${total} items`,
+          defaultCurrent: 1,
+          total: total,
           showSizeChanger: true,
+          current: pagination.page,
           onShowSizeChange: (current, size) => {
             updatePageSize(size);
           },
@@ -174,9 +230,10 @@ const Department = () => {
         scroll={{
           x: "max-content",
         }}
-        loading={isLoading}
+        loading={isFetching}
       />
 
+      {/* create department */}
       <CustomDrawer
         open={isDrawerOpen}
         onClose={hideDrawer}
@@ -185,7 +242,21 @@ const Department = () => {
         <CreateDepartment
           onClose={hideDrawer}
           handleSubmit={handleSubmit}
-          isLoading={isMutating}
+          isLoading={isCreating}
+          fields={fields}
+        />
+      </CustomDrawer>
+
+      {/* edit department */}
+      <CustomDrawer
+        open={isEditDrawerOpen}
+        onClose={hideDrawer}
+        title={"Edit Department"}
+      >
+        <CreateDepartment
+          onClose={hideDrawer}
+          handleSubmit={handleUpdate}
+          // isLoading={isMutating}
           fields={fields}
         />
       </CustomDrawer>

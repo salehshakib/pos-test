@@ -1,4 +1,7 @@
 import { Button } from "antd";
+import { jwtDecode } from "jwt-decode";
+import { IoMdMail } from "react-icons/io";
+import { MdLockPerson } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -6,8 +9,6 @@ import CustomForm from "../../components/Shared/Form/CustomForm";
 import CustomInput from "../../components/Shared/Form/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
-import { verifyToken } from "../../utilities/lib/verifyToken";
-import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -43,17 +44,14 @@ const Login = () => {
           <div className="text-center font-bold text-xl border-gray-500">
             POS INVENTORY
           </div>
-          <CustomForm
-            onSubmit={onSubmit}
-            // resolver={zodResolver(loginValidationSchema)}
-            className="flex flex-col gap-6 "
-          >
+          <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6 ">
             <CustomInput
               label="Email"
               type={"email"}
               required={true}
               name={"email"}
               placeholder={"Email"}
+              prefix={<IoMdMail className="text-lg" />}
             />
             <CustomInput
               label="Password"
@@ -61,6 +59,7 @@ const Login = () => {
               name={"password"}
               required={true}
               placeholder={"Password"}
+              prefix={<MdLockPerson className="text-lg" />}
             />
             <Button
               htmlType="submit"

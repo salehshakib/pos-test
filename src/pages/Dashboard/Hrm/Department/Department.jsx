@@ -10,10 +10,13 @@ import {
   useGetDetailsQuery,
 } from "../../../../redux/services/fetchApi";
 import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
-import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
+import {
+  useStoreDataMutation,
+  useUpdateMutation,
+} from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
-import CreateDepartment from "./CreateDepartment";
 import fakeData from "../fakeData";
+import CreateDepartment from "./CreateDepartment";
 
 const columns = [
   // {
@@ -107,7 +110,6 @@ const Department = () => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
 
   const [id, setId] = useState(undefined);
 
@@ -130,6 +132,7 @@ const Department = () => {
   console.log(details);
 
   const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
+  const [update, { isLoading: isUpdating }] = useUpdateMutation();
 
   const getDetails = (id) => {
     console.log(id);
@@ -188,12 +191,30 @@ const Department = () => {
         errors: error?.data?.errors[fieldName],
       }));
 
-      setErrorFields(errorFields);
+      setFields(errorFields);
     }
   };
 
   const handleUpdate = async (values) => {
     console.log(values);
+
+    const { data, error } = await update({
+      url: DEPARTMENT,
+      data: { id, ...values },
+    });
+
+    if (data?.success) {
+      setId(undefined);
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+
+      setFields(errorFields);
+    }
   };
 
   return (
@@ -236,7 +257,7 @@ const Department = () => {
         <CreateDepartment
           handleSubmit={handleSubmit}
           isLoading={isCreating}
-          fields={errorFields}
+          fields={fields}
           //error fields
         />
       </CustomDrawer>
@@ -244,6 +265,7 @@ const Department = () => {
       <CustomDrawer open={isEditDrawerOpen} title={"Edit Department"}>
         <CreateDepartment
           handleSubmit={handleUpdate}
+          isLoading={isUpdating}
           fields={fields}
           //initial values fields
         />

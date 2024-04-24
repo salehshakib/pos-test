@@ -27,16 +27,31 @@ const mutationApi = baseApi.injectEndpoints({
         return [{ tags }];
       },
     }),
-    // update: build.mutation({
-    //   query: ({ url, data }) => {
-    //     console.log(data);
-    //     return {
-    //       //   url: "/department/",
-    //       //   method: "PUT",
-    //       body: data,
-    //     };
-    //   },
-    // }),
+    update: build.mutation({
+      query: ({ url, data }) => {
+        console.log(data);
+        return {
+          url: `/${url}/update/${data?.id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          notification?.success({
+            message: "Success",
+            description:
+              response?.message ??
+              "No Message is provided. Task Completed Successfully",
+          });
+          return response;
+        }
+      },
+      invalidatesTags: (result, error, { url }) => {
+        const tags = url?.split("/")[2];
+        return [{ tags }];
+      },
+    }),
     // delete: build.mutation({
     //   query: ({ url, data }) => {
     //     console.log(data);
@@ -50,4 +65,4 @@ const mutationApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useStoreDataMutation } = mutationApi;
+export const { useStoreDataMutation, useUpdateMutation } = mutationApi;

@@ -1,6 +1,7 @@
 export const routeGenerator = (items) => {
   const routes = items.reduce((acc, item) => {
-    if (item.path && item.element) {
+    // if (item.path && item.element) {
+    if (!item.children) {
       acc.push({
         path: item.path,
         element: item.element,
@@ -10,7 +11,7 @@ export const routeGenerator = (items) => {
     if (item.children) {
       item.children.forEach((child) => {
         acc.push({
-          path: child.path,
+          path: `${item.path}/${child.path}`,
           element: child.element,
         });
       });

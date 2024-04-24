@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export const sidebarItemsGenerator = (items, role) => {
+export const sidebarItemsGenerator = (items) => {
   const sidebarItems = items.reduce((acc, item) => {
-    if (item.path && item.name) {
+    // if (item.path && item.name) {
+    if (!item.children) {
       acc.push({
         key: item.name,
         icon: React.createElement(item.icon, {
@@ -12,7 +13,7 @@ export const sidebarItemsGenerator = (items, role) => {
         label: (
           <NavLink
             className={({ isActive }) => (isActive ? "font-bold" : "")}
-            to={`/${role}/${item.path}`}
+            to={`/${item.path}`}
           >
             {item.name}
           </NavLink>
@@ -35,7 +36,7 @@ export const sidebarItemsGenerator = (items, role) => {
           label: (
             <NavLink
               className={({ isActive }) => (isActive ? "font-bold" : "")}
-              to={`/${role}/${child.path}`}
+              to={`/${item.path}/${child.path}`}
             >
               {child.name}
             </NavLink>

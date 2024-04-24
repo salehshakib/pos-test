@@ -1,14 +1,13 @@
 import { Button } from "antd";
-import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import CustomForm from "../../components/Shared/Form/CustomForm";
+import CustomInput from "../../components/Shared/Form/CustomInput";
+import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
 import { verifyToken } from "../../utilities/lib/verifyToken";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import CustomInput from "../../components/Shared/Form/CustomInput";
-import CustomForm from "../../components/Shared/Form/CustomForm";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginValidationSchema } from "../../utilities/validationSchemas/loginValidation.schema";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -18,12 +17,17 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const toastId = toast.loading("Logging in...");
+
     try {
       const res = await login(data).unwrap();
-      const user = verifyToken(res.access);
-      dispatch(setUser({ user: user, token: res.access }));
+
+      const user = jwtDecode(res.user);
+      const userData = user?.data?.data?.[0];
+
+      console.log(user);
+      dispatch(setUser({ user: userData, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
-      navigate("/admin/dashboard");
+      navigate(`/dashboard`);
     } catch (error) {
       toast.error("Invalid credentials. Please try again!", {
         id: toastId,
@@ -33,36 +37,42 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-primary/20">
-      <div className="lg:w-[500px]">
-        <CustomForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(loginValidationSchema)}
-          className="flex flex-col gap-6"
-        >
-          <CustomInput
-            label="Email"
-            type={"email"}
-            required={true}
-            name={"email"}
-            placeholder={"Email"}
-          />
-          <CustomInput
-            label="Password"
-            type={"password"}
-            name={"password"}
-            required={true}
-            placeholder={"Password"}
-          />
-          <Button
-            htmlType="submit"
-            loading={isLoading}
-            className="font-bold w-full bg-secondary pt-2 pb-8 text-white cursor-pointer"
-            type="default"
+    <div className="h-screen">
+      <div className="flex justify-center items-center h-[600px] bg-wave bg-no-repeat bg-cover">
+        <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
+          <div className="text-center font-bold text-xl border-gray-500">
+            POS INVENTORY
+          </div>
+          <CustomForm
+            onSubmit={onSubmit}
+            // resolver={zodResolver(loginValidationSchema)}
+            className="flex flex-col gap-6 "
           >
-            Submit
-          </Button>
-        </CustomForm>
+            <CustomInput
+              label="Email"
+              type={"email"}
+              required={true}
+              name={"email"}
+              placeholder={"Email"}
+            />
+            <CustomInput
+              label="Password"
+              type={"password"}
+              name={"password"}
+              required={true}
+              placeholder={"Password"}
+            />
+            <Button
+              htmlType="submit"
+              loading={isLoading}
+              className="w-full"
+              type="default"
+              size="large"
+            >
+              Enter
+            </Button>
+          </CustomForm>
+        </div>
       </div>
     </div>
   );

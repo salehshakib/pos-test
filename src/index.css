@@ -3,15 +3,22 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 2px;
 }
 
 ::-webkit-scrollbar-track {
-  /* Define styles for the scrollbar track */
   background: #dcbfff;
 }
 
 ::-webkit-scrollbar-thumb {
-  /* Define styles for the scrollbar thumb */
   background: #51258f;
+}
+
+.ant-menu-item-selected { 
+  background-color: #dcbfff !important;
+  color: #51258f !important;
+}
+
+.ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: #51258f !important;
 }

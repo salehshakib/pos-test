@@ -1,47 +1,57 @@
 //components
+import Accounting from "../pages/Dashboard/Accounting/Accounting";
+import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
+import Documents from "../pages/Dashboard/Documents/Documents";
+import Expense from "../pages/Dashboard/Expense/Expense";
+import Department from "../pages/Dashboard/Hrm/Department/Department";
+import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
+import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import People from "../pages/Dashboard/People/People";
 import Product from "../pages/Dashboard/Product/Product";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import Sale from "../pages/Dashboard/Sale/Sale";
-import Expense from "../pages/Dashboard/Expense/Expense";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
-import Return from "../pages/Dashboard/Return/Return";
-import Accounting from "../pages/Dashboard/Accounting/Accounting";
-import People from "../pages/Dashboard/People/People";
 import Reports from "../pages/Dashboard/Reports/Reports";
-import AddOns from "../pages/Dashboard/AddOns/AddOns";
+import Return from "../pages/Dashboard/Return/Return";
+import Sale from "../pages/Dashboard/Sale/Sale";
 import Settings from "../pages/Dashboard/Settings/Settings";
-import Documents from "../pages/Dashboard/Documents/Documents";
-import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
 //icons
-import { TbDashboard } from "react-icons/tb";
-import { AiOutlineDashboard } from "react-icons/ai";
 import { BsBoxSeam } from "react-icons/bs";
 import {
-  MdProductionQuantityLimits,
-  MdAccountBalance,
-  MdPeopleAlt,
-} from "react-icons/md";
+  FaBuilding,
+  FaCartShopping,
+  FaMoneyBillWave,
+  FaUsers,
+  FaUsersGear,
+} from "react-icons/fa6";
 import { GoCreditCard } from "react-icons/go";
-import { FaCartShopping, FaMoneyBillWave } from "react-icons/fa6";
+import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
+import {
+  MdAccountBalance,
+  MdOutlineSettings,
+  MdPayment,
+  MdPeopleAlt,
+  MdProductionQuantityLimits,
+  MdSpaceDashboard,
+  MdTimeToLeave,
+} from "react-icons/md";
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
-import { IoPeopleCircle, IoDocumentTextOutline } from "react-icons/io5";
-import { TbReport } from "react-icons/tb";
+import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
-import { MdOutlineSettings } from "react-icons/md";
 
 export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
-    icon: AiOutlineDashboard,
+    icon: MdSpaceDashboard,
     element: <AdminDashboard />,
   },
   {
     name: "Product",
+    path: "product",
     icon: BsBoxSeam,
     children: [
       {
@@ -54,6 +64,7 @@ export const adminPaths = [
   },
   {
     name: "Purchase",
+    path: "purchase",
     icon: GoCreditCard,
     children: [
       {
@@ -66,6 +77,7 @@ export const adminPaths = [
   },
   {
     name: "Sale",
+    path: "sale",
     icon: FaCartShopping,
     children: [
       {
@@ -78,6 +90,7 @@ export const adminPaths = [
   },
   {
     name: "Expense",
+    path: "expense",
     icon: FaMoneyBillWave,
     children: [
       {
@@ -90,6 +103,7 @@ export const adminPaths = [
   },
   {
     name: "Quotation",
+    path: "quotation",
     icon: LuClipboardList,
     children: [
       {
@@ -102,6 +116,7 @@ export const adminPaths = [
   },
   {
     name: "Transfer",
+    path: "transfer",
     icon: RiArrowGoForwardFill,
     children: [
       {
@@ -114,6 +129,7 @@ export const adminPaths = [
   },
   {
     name: "Return",
+    path: "return",
     icon: RiArrowGoBackFill,
     children: [
       {
@@ -126,11 +142,12 @@ export const adminPaths = [
   },
   {
     name: "Accounting",
+    path: "accounting",
     icon: MdAccountBalance,
     children: [
       {
-        name: "Accounting",
-        path: "accounting",
+        name: "Sub Accounting",
+        path: "sub-accounting",
         icon: TbDashboard,
         element: <Accounting />,
       },
@@ -138,18 +155,38 @@ export const adminPaths = [
   },
   {
     name: "HRM",
-    icon: IoPeopleCircle,
+    path: "human-resources",
+    icon: FaUsersGear,
     children: [
       {
-        name: "HRM",
-        path: "hrm",
-        icon: TbDashboard,
+        name: "Department",
+        path: "department",
+        icon: FaBuilding,
+        element: <Department />,
+      },
+      {
+        name: "Employee",
+        path: "employee",
+        icon: FaUsers,
+        element: <Employee />,
+      },
+      {
+        name: "Payroll",
+        path: "payroll",
+        icon: MdPayment,
+        element: <Hrm />,
+      },
+      {
+        name: "Holidays",
+        path: "holidays",
+        icon: MdTimeToLeave,
         element: <Hrm />,
       },
     ],
   },
   {
     name: "People",
+    path: "people",
     icon: MdPeopleAlt,
     children: [
       {
@@ -162,11 +199,12 @@ export const adminPaths = [
   },
   {
     name: "Reports",
+    path: "reports",
     icon: TbReport,
     children: [
       {
-        name: "Reports",
-        path: "reports",
+        name: "Sub Reports",
+        path: "sub-reports",
         icon: TbDashboard,
         element: <Reports />,
       },
@@ -174,38 +212,26 @@ export const adminPaths = [
   },
   {
     name: "AddOns",
+    path: "addons",
     icon: VscDiffAdded,
-    children: [
-      {
-        name: "AddOns",
-        path: "addons",
-        icon: TbDashboard,
-        element: <AddOns />,
-      },
-    ],
+    element: <AddOns />,
   },
   {
-    name: "Settings",
-    icon: MdOutlineSettings,
-    children: [
-      {
-        name: "Settings",
-        path: "settings",
-        icon: TbDashboard,
-        element: <Settings />,
-      },
-    ],
+    name: "Roles",
+    path: "roles",
+    icon: IoPeopleCircle,
+    element: <People />,
   },
   {
     name: "Documents",
+    path: "documents",
     icon: IoDocumentTextOutline,
-    children: [
-      {
-        name: "Documents",
-        path: "documents",
-        icon: TbDashboard,
-        element: <Documents />,
-      },
-    ],
+    element: <Documents />,
+  },
+  {
+    name: "Settings",
+    path: "settings",
+    icon: MdOutlineSettings,
+    element: <Settings />,
   },
 ];

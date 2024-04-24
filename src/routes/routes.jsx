@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Login/Login";
-import PrivateRoute from "./PrivateRoute";
 import App from "../App";
-import { adminPaths } from "./admin.routes";
+import Login from "../pages/Login/Login";
 import { routeGenerator } from "../utilities/lib/routesGenerator";
+import { adminPaths } from "./admin.routes";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -15,16 +15,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin",
-    element: (
-      <PrivateRoute>
-        <App />
-      </PrivateRoute>
-    ),
-    children: routeGenerator(adminPaths),
-  },
-  {
-    path: "/manager",
+    path: "/",
     element: (
       <PrivateRoute>
         <App />

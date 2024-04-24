@@ -17,14 +17,9 @@ const Profile = () => {
   );
 
   return (
-    <div className="flex justify-between items-center mt-3">
-      <div className="flex items-center ml-4">
-        <div className="font-bold text-2xl text-secondary">POS Inventory</div>
-      </div>
-      <Popover placement="bottomLeft" content={content} className="mr-4">
-        <Avatar className="bg-secondary" size={40} icon={<UserOutlined />} />
-      </Popover>
-    </div>
+    <Popover placement="bottomLeft" content={content} className="">
+      <Avatar className="bg-secondary" size={40} icon={<UserOutlined />} />
+    </Popover>
   );
 };
 

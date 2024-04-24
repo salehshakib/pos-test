@@ -16,7 +16,7 @@ const Login = () => {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  const onSubmit = async (data) => {
+  const handleSubmit = async (data) => {
     const toastId = toast.loading("Logging in...");
 
     try {
@@ -44,7 +44,11 @@ const Login = () => {
           <div className="text-center font-bold text-xl border-gray-500">
             POS INVENTORY
           </div>
-          <CustomForm onSubmit={onSubmit} className="flex flex-col gap-6 ">
+          <CustomForm
+            handleSubmit={handleSubmit}
+            className="flex flex-col gap-6"
+            submitBtn={false}
+          >
             <CustomInput
               label="Email"
               type={"email"}

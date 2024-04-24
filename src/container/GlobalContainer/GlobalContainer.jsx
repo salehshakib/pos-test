@@ -19,11 +19,10 @@ import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
   pageTitle,
-  columns,
+  columns = [],
   selectedRows,
   children,
   setNewColumns,
-  // openDrawer,
   searchFilterContent,
 }) => {
   const dispatch = useDispatch();
@@ -51,7 +50,7 @@ const GlobalContainer = ({
     }
   };
 
-  const defaultCheckedList = columns.map((item) => item.key);
+  const defaultCheckedList = columns?.map((item) => item.key);
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
 
   const options = columns.map(({ key, title }) => ({
@@ -60,7 +59,7 @@ const GlobalContainer = ({
   }));
 
   useEffect(() => {
-    const newColumns = columns.map((item) => ({
+    const newColumns = columns?.map((item) => ({
       ...item,
       hidden: !checkedList.includes(item.key),
     }));
@@ -221,7 +220,7 @@ const GlobalContainer = ({
               </Button>
             </Dropdown>,
 
-            selectedRows.length !== 0 && (
+            selectedRows?.length !== 0 && (
               <div key={"delete"}>
                 <button className="bg-secondary p-2 rounded-xl  text-white hover:scale-110 duration-300 ">
                   <FaTrash className="lg:text-xl" />

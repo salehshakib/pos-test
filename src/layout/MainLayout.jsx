@@ -29,17 +29,21 @@ const MainLayout = () => {
         <Profile />
       </Header>
 
-      <Layout>
+      <Layout
+        style={{
+          minHeight: "100vh",
+        }}
+        className=""
+      >
         <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <Layout className="ml-[4.3rem] md:ml-0">
           <Content
             style={{
               margin: "8px 8px",
-              // padding: 24,
               backgroundColor: "white",
             }}
-            className="min-h-90vh"
+            className="min-h-90vh "
           >
             <Outlet />
           </Content>

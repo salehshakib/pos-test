@@ -15,7 +15,6 @@ import {
   useUpdateMutation,
 } from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
-import fakeData from "../fakeData";
 import CreateDepartment from "./CreateDepartment";
 
 const columns = [
@@ -232,7 +231,7 @@ const Department = () => {
         }}
         size="small"
         columns={newColumns}
-        dataSource={fakeData}
+        dataSource={departmentData}
         pagination={{
           showTotal: (total) => `Total ${total} items`,
           defaultCurrent: 1,

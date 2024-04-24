@@ -5,7 +5,13 @@ import {
   closeEditDrawer,
 } from "../../../redux/services/global/globalSlice";
 
-const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
+const CustomForm = ({
+  handleSubmit,
+  children,
+  fields,
+  isLoading,
+  submitBtn = true,
+}) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -41,19 +47,20 @@ const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
       onFinishFailed={onFinishFailed}
     >
       {children}
-
-      <div className="w-full flex gap-3 justify-end items-center">
-        <Button type="default" onClick={handleDrawerClose}>
-          Cancel
-        </Button>
-        <Button
-          htmlType="submit"
-          className="bg-secondary hover:bg-posPurple text-white"
-          loading={isLoading}
-        >
-          Submit
-        </Button>
-      </div>
+      {submitBtn && (
+        <div className="w-full flex gap-3 justify-end items-center">
+          <Button type="default" onClick={handleDrawerClose}>
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            className="bg-secondary hover:bg-posPurple text-white"
+            loading={isLoading}
+          >
+            Submit
+          </Button>
+        </div>
+      )}
     </Form>
   );
 };

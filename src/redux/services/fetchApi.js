@@ -26,10 +26,10 @@ const fetchApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { url }) => {
+      providesTags: (result, error, { url, id }) => {
         const tags = url?.split("/")[2];
 
-        return [{ tags }];
+        return [{ tags, id }];
       },
     }),
   }),

@@ -32,7 +32,7 @@ const mutationApi = baseApi.injectEndpoints({
         console.log(data);
         return {
           url: `/${url}/update/${data?.id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },
@@ -44,6 +44,7 @@ const mutationApi = baseApi.injectEndpoints({
               response?.message ??
               "No Message is provided. Task Completed Successfully",
           });
+
           return response;
         }
       },

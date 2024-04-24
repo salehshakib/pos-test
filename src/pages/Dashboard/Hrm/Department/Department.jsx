@@ -1,6 +1,6 @@
 import { Table, Tag } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
@@ -9,7 +9,10 @@ import {
   useGetAllDataQuery,
   useGetDetailsQuery,
 } from "../../../../redux/services/fetchApi";
-import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
+import {
+  closeEditDrawer,
+  openEditDrawer,
+} from "../../../../redux/services/global/globalSlice";
 import {
   useStoreDataMutation,
   useUpdateMutation,
@@ -109,35 +112,42 @@ const Department = () => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [fields, setFields] = useState([]);
+  // const [errorFields, setErrorFields] = useState([]);
 
   const [id, setId] = useState(undefined);
 
   //get all data query
-  const { data, isFetching } = useGetAllDataQuery({
+  const { data, isLoading: isFetching } = useGetAllDataQuery({
     url: DEPARTMENT,
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  console.log(data);
-  console.log(isFetching);
-
-  const { data: details } = useGetDetailsQuery(
-    { url: DEPARTMENT, id },
-    { skip: !id }
-  );
-
-  console.log(details);
+  const {
+    data: details,
+    isLoading,
+    // isFetching: isFetchingDetails,
+  } = useGetDetailsQuery({ url: DEPARTMENT, id }, { skip: !id });
 
   const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
   const [update, { isLoading: isUpdating }] = useUpdateMutation();
 
   const getDetails = (id) => {
-    console.log(id);
     setId(id);
     dispatch(openEditDrawer());
   };
+
+  useEffect(() => {
+    if (details) {
+      setFields([
+        {
+          name: "name",
+          value: details?.name,
+        },
+      ]);
+    }
+  }, [details]);
 
   const departmentData =
     data?.results?.department?.map((item) => {
@@ -175,6 +185,8 @@ const Department = () => {
   };
 
   const handleSubmit = async (values) => {
+    setFields([]);
+
     const { data, error } = await storeData({
       url: DEPARTMENT,
       data: values,
@@ -195,8 +207,6 @@ const Department = () => {
   };
 
   const handleUpdate = async (values) => {
-    console.log(values);
-
     const { data, error } = await update({
       url: DEPARTMENT,
       data: { id, ...values },
@@ -204,13 +214,17 @@ const Department = () => {
 
     if (data?.success) {
       setId(undefined);
+      dispatch(closeEditDrawer());
     }
 
     if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+      const errorFields = Object.keys(error?.data?.errors)?.map(
+        (fieldName) => ({
+          name: fieldName,
+          value: fields.find((field) => field.name === fieldName).value,
+          errors: error?.data?.errors[fieldName],
+        })
+      );
 
       setFields(errorFields);
     }
@@ -261,7 +275,12 @@ const Department = () => {
         />
       </CustomDrawer>
 
-      <CustomDrawer open={isEditDrawerOpen} title={"Edit Department"}>
+      <CustomDrawer
+        open={isEditDrawerOpen}
+        title={"Edit Department"}
+        isLoading={isLoading}
+        // isFetching={isFetchingDetails}
+      >
         <CreateDepartment
           handleSubmit={handleUpdate}
           isLoading={isUpdating}

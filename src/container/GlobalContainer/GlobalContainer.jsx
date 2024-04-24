@@ -1,5 +1,5 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Checkbox, Dropdown } from "antd";
+import { Button, Checkbox, Dropdown, Input, Popover, Space } from "antd";
 import { useEffect, useState } from "react";
 import {
   FaCirclePlus,
@@ -12,6 +12,7 @@ import {
   FaTrash,
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import { TbFilterSearch } from "react-icons/tb";
 import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
@@ -21,6 +22,7 @@ const GlobalContainer = ({
   children,
   setNewColumns,
   openDrawer,
+  searchFilterContent,
 }) => {
   const [open, setOpen] = useState(false);
   const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
@@ -145,18 +147,51 @@ const GlobalContainer = ({
             />
           </div>
           extra={[
-            <div
-              key="search"
-              className="px-4 py-2 w-48 md:w-60 border rounded-md border-primary hover:border-primary-hover focus:outline-none focus:border-primary hover:cursor-pointer flex justify-between items-center hover:text-secondary text-md "
-            >
-              Search
-              <IoSearch
-                style={{
-                  color: "#000",
-                }}
-                className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
-              />
-            </div>,
+            <Space key="search">
+              <Space.Compact>
+                <Input
+                  type="text"
+                  key="search"
+                  size="large"
+                  className="w-full border rounded-md border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary"
+                  placeholder="Search"
+                  // value={searchUser}
+                  // onChange={handleSearchUser}
+                  prefix={
+                    <IoSearch
+                      style={{
+                        fontSize: "16px",
+                        color: "#000",
+                      }}
+                      className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
+                    />
+                  }
+                  allowClear
+                />
+                <Popover
+                  content={searchFilterContent}
+                  title="Advance Search"
+                  trigger="click"
+                  placement="bottomRight"
+                  arrow={false}
+                >
+                  <Button
+                    key="filter"
+                    size="large"
+                    className="hover:bg-white border border-gray-300 hover:border-primary-hover  "
+                    type="text"
+                  >
+                    <TbFilterSearch
+                      style={{
+                        fontSize: "16px",
+                        color: "#000",
+                      }}
+                      className="hover:scale-110 duration-300 text-xs lg:text-[16px]"
+                    />
+                  </Button>
+                </Popover>
+              </Space.Compact>
+            </Space>,
 
             <Dropdown
               key="dropdown"
@@ -189,10 +224,6 @@ const GlobalContainer = ({
           ]}
         >
           {children}
-
-          {/* {drawerComponent && (
-         
-        )} */}
         </PageContainer>
       </div>
     </GlobalUtilityStyle>

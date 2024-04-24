@@ -24,12 +24,12 @@ const GlobalUtilityStyle = styled.div`
     }
   }
 
-  .ant-input-affix-wrapper > input.ant-input {
-    padding: 7px 11px;
-    font-size: 5px;
-    line-height: 1.5;
-    border-radius: 8px;
-  }
+  // .ant-input-affix-wrapper > input.ant-input {
+  //   padding: 7px 11px;
+  //   font-size: 5px;
+  //   line-height: 1.5;
+  //   border-radius: 8px;
+  // }
 `;
 
 export { GlobalUtilityStyle };

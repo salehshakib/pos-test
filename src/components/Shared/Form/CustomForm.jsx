@@ -1,13 +1,14 @@
-import { Form } from "antd";
+import { Button, Form } from "antd";
 
-const CustomForm = ({ handleSubmit, children, fields }) => {
+const CustomForm = ({ handleSubmit, children, fields, isLoading, onClose }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     form
-      .validateFields()
+      .validateFields({
+        validateOnly: true,
+      })
       .then(() => {
-        console.log(values);
         handleSubmit(values);
       })
       .catch((error) => {
@@ -29,6 +30,19 @@ const CustomForm = ({ handleSubmit, children, fields }) => {
       onFinishFailed={onFinishFailed}
     >
       {children}
+
+      <div className="w-full flex gap-3 justify-end items-center">
+        <Button type="default" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          htmlType="submit"
+          className="bg-secondary hover:bg-posPurple text-white"
+          loading={isLoading}
+        >
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 };

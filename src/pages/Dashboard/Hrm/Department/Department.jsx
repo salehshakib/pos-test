@@ -13,8 +13,23 @@ import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
 import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import CreateDepartment from "./CreateDepartment";
+import fakeData from "../fakeData";
 
 const columns = [
+  // {
+  //   title: "",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   hidden: true,
+  //   width: 80,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
     //department
     title: "Department",
@@ -82,14 +97,17 @@ const columns = [
 ];
 
 const Department = () => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
-  const [newColumns, setNewColumns] = useState(columns);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [fields, setFields] = useState([]);
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
     (state) => state.globalState
   );
+
+  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const [newColumns, setNewColumns] = useState(columns);
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const [fields, setFields] = useState([]);
+  const [errorFields, setErrorFields] = useState([]);
 
   const [id, setId] = useState(undefined);
 
@@ -114,9 +132,9 @@ const Department = () => {
   const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
 
   const getDetails = (id) => {
+    console.log(id);
     setId(id);
     dispatch(openEditDrawer());
-    // setIsEditDrawerOpen(true);
   };
 
   const departmentData =
@@ -170,7 +188,7 @@ const Department = () => {
         errors: error?.data?.errors[fieldName],
       }));
 
-      setFields(errorFields);
+      setErrorFields(errorFields);
     }
   };
 
@@ -193,7 +211,7 @@ const Department = () => {
         }}
         size="small"
         columns={newColumns}
-        dataSource={departmentData}
+        dataSource={fakeData}
         pagination={{
           showTotal: (total) => `Total ${total} items`,
           defaultCurrent: 1,
@@ -218,12 +236,17 @@ const Department = () => {
         <CreateDepartment
           handleSubmit={handleSubmit}
           isLoading={isCreating}
-          fields={fields}
+          fields={errorFields}
+          //error fields
         />
       </CustomDrawer>
 
       <CustomDrawer open={isEditDrawerOpen} title={"Edit Department"}>
-        <CreateDepartment handleSubmit={handleUpdate} fields={fields} />
+        <CreateDepartment
+          handleSubmit={handleUpdate}
+          fields={fields}
+          //initial values fields
+        />
       </CustomDrawer>
     </GlobalContainer>
   );

@@ -1,7 +1,13 @@
 import { Button, Form } from "antd";
+import { useDispatch } from "react-redux";
+import {
+  closeCreateDrawer,
+  closeEditDrawer,
+} from "../../../redux/services/global/globalSlice";
 
-const CustomForm = ({ handleSubmit, children, fields, isLoading, onClose }) => {
+const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const onFinish = (values) => {
     form
@@ -20,6 +26,11 @@ const CustomForm = ({ handleSubmit, children, fields, isLoading, onClose }) => {
     console.log(errorInfo);
   };
 
+  const handleDrawerClose = () => {
+    dispatch(closeCreateDrawer());
+    dispatch(closeEditDrawer());
+  };
+
   return (
     <Form
       form={form}
@@ -32,7 +43,7 @@ const CustomForm = ({ handleSubmit, children, fields, isLoading, onClose }) => {
       {children}
 
       <div className="w-full flex gap-3 justify-end items-center">
-        <Button type="default" onClick={onClose}>
+        <Button type="default" onClick={handleDrawerClose}>
           Cancel
         </Button>
         <Button

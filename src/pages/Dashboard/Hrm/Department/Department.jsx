@@ -2,12 +2,14 @@ import { Table, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import {
   useGetAllDataQuery,
   useGetDetailsQuery,
 } from "../../../../redux/services/fetchApi";
+import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
 import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import CreateDepartment from "./CreateDepartment";
@@ -84,9 +86,10 @@ const Department = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const [fields, setFields] = useState([]);
-
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
+    (state) => state.globalState
+  );
 
   const [id, setId] = useState(undefined);
 
@@ -112,7 +115,8 @@ const Department = () => {
 
   const getDetails = (id) => {
     setId(id);
-    setIsEditDrawerOpen(true);
+    dispatch(openEditDrawer());
+    // setIsEditDrawerOpen(true);
   };
 
   const departmentData =
@@ -136,17 +140,7 @@ const Department = () => {
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
       name: record.name,
-      // action: getDetails,
     }),
-  };
-
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
-  const hideDrawer = () => {
-    setIsDrawerOpen(false);
-    setIsEditDrawerOpen(false);
-    setId(undefined);
   };
 
   const updatePage = (newPage) => {
@@ -167,7 +161,7 @@ const Department = () => {
     });
 
     if (data?.success) {
-      hideDrawer();
+      setId(undefined);
     }
 
     if (error) {
@@ -187,7 +181,6 @@ const Department = () => {
   return (
     <GlobalContainer
       pageTitle="Department"
-      openDrawer={openDrawer}
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
@@ -221,32 +214,16 @@ const Department = () => {
         loading={isFetching}
       />
 
-      {/* create department */}
-      <CustomDrawer
-        open={isDrawerOpen}
-        onClose={hideDrawer}
-        title={"Create Department"}
-      >
+      <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
         <CreateDepartment
-          onClose={hideDrawer}
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={fields}
         />
       </CustomDrawer>
 
-      {/* edit department */}
-      <CustomDrawer
-        open={isEditDrawerOpen}
-        onClose={hideDrawer}
-        title={"Edit Department"}
-      >
-        <CreateDepartment
-          onClose={hideDrawer}
-          handleSubmit={handleUpdate}
-          // isLoading={isMutating}
-          fields={fields}
-        />
+      <CustomDrawer open={isEditDrawerOpen} title={"Edit Department"}>
+        <CreateDepartment handleSubmit={handleUpdate} fields={fields} />
       </CustomDrawer>
     </GlobalContainer>
   );

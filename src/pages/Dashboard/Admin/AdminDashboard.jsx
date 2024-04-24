@@ -1,11 +1,11 @@
 const AdminDashboard = () => {
-  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const [isCreateDrawerOpen, setisCreateDrawerOpen] = useState(false);
 
   // const toggleDrawer = () => {
-  //   setIsDrawerOpen((prev) => !prev);
+  //   setisCreateDrawerOpen((prev) => !prev);
   // };
 
-  // console.log(isDrawerOpen);
+  // console.log(isCreateDrawerOpen);
   return (
     <div className="h-full ">
       <div>This is page header</div>

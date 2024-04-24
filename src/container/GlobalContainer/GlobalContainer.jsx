@@ -13,6 +13,8 @@ import {
 } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { TbFilterSearch } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { openCreateDrawer } from "../../redux/services/global/globalSlice";
 import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
@@ -21,11 +23,16 @@ const GlobalContainer = ({
   selectedRows,
   children,
   setNewColumns,
-  openDrawer,
+  // openDrawer,
   searchFilterContent,
 }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    dispatch(openCreateDrawer());
+  };
 
   const handleMenuClick = (e) => {
     if (e.key !== "tableColumns") {
@@ -142,7 +149,7 @@ const GlobalContainer = ({
               key={"create"}
               type="text"
               icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full " />}
-              onClick={openDrawer}
+              onClick={handleDrawerOpen}
               className="flex justify-center items-center border-none w-full"
             />
           </div>

@@ -8,7 +8,7 @@ import Department from "../pages/Dashboard/Hrm/Department/Department";
 import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
 import Hrm from "../pages/Dashboard/Hrm/Hrm";
 import People from "../pages/Dashboard/People/People";
-import Product from "../pages/Dashboard/Product/Product";
+import Category from "../pages/Dashboard/Product/Category/Category";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
@@ -31,10 +31,10 @@ import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
+  MdCategory,
   MdOutlineSettings,
   MdPayment,
   MdPeopleAlt,
-  MdProductionQuantityLimits,
   MdSpaceDashboard,
   MdTimeToLeave,
 } from "react-icons/md";
@@ -55,10 +55,10 @@ export const adminPaths = [
     icon: BsBoxSeam,
     children: [
       {
-        name: "Products",
-        path: "products",
-        icon: MdProductionQuantityLimits,
-        element: <Product />,
+        name: "Category",
+        path: "category",
+        icon: MdCategory,
+        element: <Category />,
       },
     ],
   },

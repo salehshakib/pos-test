@@ -26,19 +26,19 @@ import DepartmentForm from "./DepartmentForm";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
+  // {
+  //   title: "ID",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 80,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
     //department
     title: "Department",

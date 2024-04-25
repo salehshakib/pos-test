@@ -23,6 +23,7 @@ import {
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
+import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
   {
@@ -306,29 +307,12 @@ const Department = () => {
         isStatusUpdating={isStatusUpdating}
       />
 
-      <Modal
-        title={
-          <div className="flex items-center gap-3">
-            <RiErrorWarningFill
-              style={{
-                color: "red",
-                fontSize: "20px",
-              }}
-            />
-            <span>Delete Department</span>
-          </div>
-        }
-        open={deleteModal}
-        okText="Yes"
-        cancelText="No"
-        onOk={handleDeleteDepartment}
-        onCancel={() => setDeleteModal(false)}
-        confirmLoading={isDeleting}
-        centered
-        maskClosable
-      >
-        Do you want to delete this department?
-      </Modal>
+      <DeleteModal
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
+        handleDeleteDepartment={handleDeleteDepartment}
+        isDeleting={isDeleting}
+      />
     </GlobalContainer>
   );
 };

@@ -5,7 +5,7 @@ import GlobalContainer from "../../../../container/GlobalContainer/GlobalContain
 import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
 import fakeData from "../fakeData";
 import { useDispatch, useSelector } from "react-redux";
-import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
+import { openEditDrawer } from "../../../../redux/services/drawer/drawerSlice";
 
 const columns = [
   {
@@ -112,7 +112,7 @@ const columns = [
 const Employee = () => {
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.globalState
+    (state) => state.drawer
   );
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 20 });

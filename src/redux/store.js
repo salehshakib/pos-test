@@ -11,21 +11,21 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./api/baseApi";
-import authReducer from "./services/auth/authSlice";
-import globalReducer from "./services/global/globalSlice";
+import authSlice from "./services/auth/authSlice";
+import drawerSlice from "./services/drawer/drawerSlice";
 
 const persistConfig = {
   key: "auth",
   storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authSlice);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
-    globalState: globalReducer,
+    drawer: drawerSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

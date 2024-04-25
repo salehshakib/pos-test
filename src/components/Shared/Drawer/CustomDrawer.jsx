@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/global/globalSlice";
+} from "../../../redux/services/drawer/drawerSlice";
 
 const CustomDrawer = ({
   title,

@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import SideBar from "./SideBar";
+import { mode } from "../utilities/configs/base_url";
 const { Header, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -26,6 +27,9 @@ const MainLayout = () => {
           ></Button>
           <Logo />
         </div>
+        <span className="text-xs bg-white p-2 rounded-lg font-bold text-gray-500">
+          {mode.toUpperCase()} MODE
+        </span>
         <Profile />
       </Header>
 

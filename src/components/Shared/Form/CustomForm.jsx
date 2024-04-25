@@ -1,9 +1,9 @@
 import { Button, Form } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/global/globalSlice";
+} from "../../../redux/services/drawer/drawerSlice";
 
 const CustomForm = ({
   handleSubmit,
@@ -36,6 +36,12 @@ const CustomForm = ({
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
   };
+
+  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
+    (state) => state.drawer
+  );
+
+  console.log(isCreateDrawerOpen, isEditDrawerOpen);
 
   return (
     <Form

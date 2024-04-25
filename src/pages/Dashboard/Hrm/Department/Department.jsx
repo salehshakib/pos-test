@@ -12,13 +12,13 @@ import {
 import {
   closeEditDrawer,
   openEditDrawer,
-} from "../../../../redux/services/global/globalSlice";
+} from "../../../../redux/services/drawer/drawerSlice";
 import {
   useStoreDataMutation,
   useUpdateMutation,
 } from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
-import CreateDepartment from "./CreateDepartment";
+import DepartmentForm from "./DepartmentForm";
 
 const columns = [
   // {
@@ -104,7 +104,7 @@ const columns = [
 const Department = () => {
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.globalState
+    (state) => state.drawer
   );
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
@@ -112,23 +112,22 @@ const Department = () => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [fields, setFields] = useState([]);
-  // const [errorFields, setErrorFields] = useState([]);
+  const [errorFields, setErrorFields] = useState([]);
 
   const [id, setId] = useState(undefined);
 
   //get all data query
-  const { data, isLoading: isFetching } = useGetAllDataQuery({
+  const { data, isFetching } = useGetAllDataQuery({
     url: DEPARTMENT,
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const {
-    data: details,
-    isLoading,
-    // isFetching: isFetchingDetails,
-  } = useGetDetailsQuery({ url: DEPARTMENT, id }, { skip: !id });
+  const { data: details, isFetching: isDetailsFetching } = useGetDetailsQuery(
+    { url: DEPARTMENT, id },
+    { skip: !id }
+  );
 
   const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
   const [update, { isLoading: isUpdating }] = useUpdateMutation();
@@ -144,6 +143,7 @@ const Department = () => {
         {
           name: "name",
           value: details?.name,
+          errors: "",
         },
       ]);
     }
@@ -185,8 +185,6 @@ const Department = () => {
   };
 
   const handleSubmit = async (values) => {
-    setFields([]);
-
     const { data, error } = await storeData({
       url: DEPARTMENT,
       data: values,
@@ -202,7 +200,7 @@ const Department = () => {
         errors: error?.data?.errors[fieldName],
       }));
 
-      setFields(errorFields);
+      setErrorFields(errorFields);
     }
   };
 
@@ -267,10 +265,10 @@ const Department = () => {
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
-        <CreateDepartment
+        <DepartmentForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
-          fields={fields}
+          fields={errorFields}
           //error fields
         />
       </CustomDrawer>
@@ -278,10 +276,10 @@ const Department = () => {
       <CustomDrawer
         open={isEditDrawerOpen}
         title={"Edit Department"}
-        isLoading={isLoading}
+        isLoading={isDetailsFetching}
         // isFetching={isFetchingDetails}
       >
-        <CreateDepartment
+        <DepartmentForm
           handleSubmit={handleUpdate}
           isLoading={isUpdating}
           fields={fields}

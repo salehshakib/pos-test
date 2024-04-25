@@ -14,7 +14,7 @@ import {
 import { IoSearch } from "react-icons/io5";
 import { TbFilterSearch } from "react-icons/tb";
 import { useDispatch } from "react-redux";
-import { openCreateDrawer } from "../../redux/services/global/globalSlice";
+import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({

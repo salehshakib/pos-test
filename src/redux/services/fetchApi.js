@@ -12,10 +12,7 @@ const fetchApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { url }) => {
-        const tags = url?.split("/")[2];
-        return [{ tags }];
-      },
+      providesTags: (result, error, { url }) => [url],
     }),
     getDetails: build.query({
       query: ({ url, id }) => {
@@ -26,11 +23,7 @@ const fetchApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { url, id }) => {
-        const tags = url?.split("/")[2];
-
-        return [{ tags, id }];
-      },
+      providesTags: (result, error, { url }) => [url],
     }),
   }),
 });

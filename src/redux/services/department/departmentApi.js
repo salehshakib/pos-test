@@ -1,5 +1,5 @@
-import { notification } from "antd";
 import { DEPARTMENT } from "../../../utilities/configs/Api";
+import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -36,12 +36,7 @@ const departmentApi = baseApi.injectEndpoints({
       },
       transformResponse: (response) => {
         if (response?.success) {
-          notification?.success({
-            message: "Success",
-            description:
-              response?.message ??
-              "No Message is provided. Task Completed Successfully",
-          });
+          openNotification("success", response?.message);
           return response;
         }
       },
@@ -59,13 +54,7 @@ const departmentApi = baseApi.injectEndpoints({
       },
       transformResponse: (response) => {
         if (response?.success) {
-          notification?.success({
-            message: "Success",
-            description:
-              response?.message ??
-              "No Message is provided. Task Completed Successfully",
-          });
-
+          openNotification("success", response?.message);
           return response;
         }
       },
@@ -73,23 +62,17 @@ const departmentApi = baseApi.injectEndpoints({
         return result ? [DEPARTMENT] : [];
       },
     }),
-    updateDepartmentStatus: build.mutation({
+    updateStatus: build.mutation({
       query: ({ data }) => {
         return {
           url: `/${DEPARTMENT}/status/${data?.id}`,
           method: "POST",
-          body: data,
+          // body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          notification?.success({
-            message: "Success",
-            description:
-              response?.message ??
-              "No Message is provided. Task Completed Successfully",
-          });
-
+          openNotification("success", response?.message);
           return response;
         }
       },
@@ -105,5 +88,5 @@ export const {
   useGetDepartmentDetailsQuery,
   useCreateDepartmentMutation,
   useUpdateDepartmentMutation,
-  useUpdateDepartmentStatusMutation,
+  useUpdateStatusMutation,
 } = departmentApi;

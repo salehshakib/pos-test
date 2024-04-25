@@ -11,6 +11,7 @@ import {
   useGetDepartmentDetailsQuery,
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
+  useUpdateStatusMutation,
 } from "../../../../redux/services/department/departmentApi";
 import {
   closeEditDrawer,
@@ -18,8 +19,22 @@ import {
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
 
 const columns = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+    fixed: "left",
+    align: "center",
+    width: 80,
+    render: (id) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {id}
+      </span>
+    ),
+  },
   {
     //department
     title: "Department",
@@ -51,19 +66,16 @@ const columns = [
     width: "80px",
     align: "center",
     render: ({ status, handleStatus }, record) => {
-      return status === "1" ? (
+      console.log(status);
+      return (
         <button
-          className="p-0 bg-[#22C55E] rounded shadow-md"
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md`}
           onClick={() => handleStatus(record.id)}
         >
-          <span className="font-medium text-white text-xs px-2  w-full">
-            Active
-          </span>
-        </button>
-      ) : (
-        <button className="p-0 bg-[#ff0000] rounded  shadow-md">
-          <span className="font-medium text-white text-xs px-2  w-full">
-            Inactive
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
           </span>
         </button>
       );
@@ -125,8 +137,12 @@ const Department = () => {
 
   const [createDepartment, { isLoading: isCreating }] =
     useCreateDepartmentMutation();
+
   const [updateDepartment, { isLoading: isUpdating }] =
     useUpdateDepartmentMutation();
+
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateStatusMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -150,7 +166,18 @@ const Department = () => {
     setStatusId(id);
   };
 
-  // const handleStatusUpdate = () => {};
+  const handleStatusUpdate = async () => {
+    const { data, error } = await updateStatus({
+      data: {
+        id: statusId,
+      },
+    });
+
+    if (data?.success) {
+      setId(undefined);
+      setStatusModal(false);
+    }
+  };
 
   const departmentData =
     data?.results?.department?.map((item) => {
@@ -166,26 +193,26 @@ const Department = () => {
       };
     }) ?? [];
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows);
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      name: record.name,
-    }),
-  };
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     setSelectedRows(selectedRows);
+  //   },
+  //   getCheckboxProps: (record) => ({
+  //     disabled: record.name === "Disabled User",
+  //     name: record.name,
+  //   }),
+  // };
 
-  const updatePage = (newPage) => {
-    setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
-  };
+  // const updatePage = (newPage) => {
+  //   setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
+  // };
 
-  const updatePageSize = (newPageSize) => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      perPage: newPageSize,
-    }));
-  };
+  // const updatePageSize = (newPageSize) => {
+  //   setPagination((prevPagination) => ({
+  //     ...prevPagination,
+  //     perPage: newPageSize,
+  //   }));
+  // };
 
   const handleSubmit = async (values) => {
     const { data, error } = await createDepartment({
@@ -238,7 +265,7 @@ const Department = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <Table
+      {/* <Table
         rowKey={(record) => record.id}
         rowSelection={{
           type: "checkbox",
@@ -248,7 +275,8 @@ const Department = () => {
         columns={newColumns}
         dataSource={departmentData}
         pagination={{
-          showTotal: (total) => `Total ${total} items`,
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} of ${total} items`,
           defaultCurrent: 1,
           defaultPageSize: pagination.perPage,
           total: total,
@@ -260,11 +288,25 @@ const Department = () => {
           onChange: (page) => {
             updatePage(page);
           },
+          size: "default",
+          // style: {
+          //   marginTop: "20px",
+          // },
         }}
         scroll={{
           x: "max-content",
         }}
         loading={isFetching}
+      /> */}
+
+      <CustomTable
+        columns={newColumns}
+        dataSource={departmentData}
+        total={total}
+        pagination={pagination}
+        setPagination={setPagination}
+        setSelectedRows={setSelectedRows}
+        isLoading={isFetching}
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
@@ -291,14 +333,16 @@ const Department = () => {
       </CustomDrawer>
 
       <Modal
-        title="Status Upate"
+        title="Status Update"
         open={statusModal}
-        // onOk={handleStatusUpate}
+        maskClosable
+        okText="Yes"
+        cancelText="No"
+        onOk={handleStatusUpdate}
         onCancel={() => setStatusModal(false)}
+        confirmLoading={isStatusUpdating}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        Do you want to update your status?
       </Modal>
     </GlobalContainer>
   );

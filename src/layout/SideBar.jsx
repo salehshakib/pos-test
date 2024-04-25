@@ -71,9 +71,10 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
-          // minHeight: "100vh",
-          height: "100vh",
-          overflow: "auto",
+          minHeight: "100vh",
+          // maxHeight: "200vh",
+          // height: "100vh",
+          // overflow: "auto",
         }}
         breakpoint="md"
         collapsedWidth="70"

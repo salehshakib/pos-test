@@ -149,7 +149,7 @@ const GlobalContainer = ({
               type="text"
               icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full " />}
               onClick={handleDrawerOpen}
-              className="flex justify-center items-center border-none w-full"
+              className="flex justify-center items-center border-none w-full text-secondary"
             />
           </div>
           extra={[

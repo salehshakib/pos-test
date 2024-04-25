@@ -1,40 +1,44 @@
-import { Table, Tag } from "antd";
+/* eslint-disable no-unused-vars */
+import { Modal } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
+import StatusModal from "../../../../components/Shared/Modal/StatusModal";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import {
-  useGetAllDataQuery,
-  useGetDetailsQuery,
-} from "../../../../redux/services/fetchApi";
+  useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
+  useGetDepartmentDetailsQuery,
+  useGetDepartmentsQuery,
+  useUpdateDepartmentMutation,
+  useUpdateStatusMutation,
+} from "../../../../redux/services/department/departmentApi";
 import {
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
-import {
-  useStoreDataMutation,
-  useUpdateMutation,
-} from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
+import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
-  // {
-  //   title: "",
-  //   dataIndex: "id",
-  //   key: "id",
-  //   fixed: "left",
-  //   align: "center",
-  //   hidden: true,
-  //   width: 80,
-  //   render: (id) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {id}
-  //     </span>
-  //   ),
-  // },
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+    fixed: "left",
+    align: "center",
+    width: 80,
+    render: (id) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {id}
+      </span>
+    ),
+  },
   {
     //department
     title: "Department",
@@ -65,16 +69,21 @@ const columns = [
     key: "status",
     width: "80px",
     align: "center",
-    render: (status) =>
-      status === 1 ? (
-        <Tag color="#22C55E">
-          <span className="font-medium text-white text-md ">Active</span>
-        </Tag>
-      ) : (
-        <Tag color="#ff0000">Inactive</Tag>
-      ),
+    render: ({ status, handleStatus }, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-full`}
+          onClick={() => handleStatus(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
   },
-
   {
     //action
     title: "Action",
@@ -83,17 +92,20 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: (getDetails, record) => {
+    render: ({ getDetails, handleDelete }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
             onClick={() => getDetails(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
-            <MdEditSquare className="text-xl" />
+            <MdEditSquare className="text-lg md:text-xl" />
           </button>
-          <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
-            <MdDelete className="text-xl" />
+          <button
+            onClick={() => handleDelete(record.id)}
+            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdDelete className="text-lg md:text-xl" />
           </button>
         </div>
       );
@@ -116,21 +128,37 @@ const Department = () => {
 
   const [id, setId] = useState(undefined);
 
+  const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined);
+
   //get all data query
-  const { data, isFetching } = useGetAllDataQuery({
-    url: DEPARTMENT,
+  const {
+    data,
+    isFetching,
+    isLoading: isDepartmentsLoading,
+  } = useGetDepartmentsQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching: isDetailsFetching } = useGetDetailsQuery(
-    { url: DEPARTMENT, id },
-    { skip: !id }
-  );
+  const { data: details, isFetching: isDetailsFetching } =
+    useGetDepartmentDetailsQuery({ id }, { skip: !id });
 
-  const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
-  const [update, { isLoading: isUpdating }] = useUpdateMutation();
+  const [createDepartment, { isLoading: isCreating }] =
+    useCreateDepartmentMutation();
+
+  const [updateDepartment, { isLoading: isUpdating }] =
+    useUpdateDepartmentMutation();
+
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateStatusMutation();
+
+  const [deleteDepartment, { isLoading: isDeleting }] =
+    useDeleteDepartmentMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -149,6 +177,33 @@ const Department = () => {
     }
   }, [details]);
 
+  const handleStatus = (id) => {
+    setStatusModal(true);
+    setStatusId(id);
+  };
+
+  const handleStatusUpdate = async () => {
+    console.log(statusId);
+    const { data, error } = await updateStatus(statusId);
+
+    if (data?.success) {
+      setId(undefined);
+      setStatusModal(false);
+    }
+  };
+
+  const handleDelete = (id) => {
+    setDeleteModal(true);
+    setDeleteId(id);
+  };
+
+  const handleDeleteDepartment = async () => {
+    const { data, error } = await deleteDepartment(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
+
   const departmentData =
     data?.results?.department?.map((item) => {
       const { id, name, created_at, is_active } = item;
@@ -157,35 +212,14 @@ const Department = () => {
       return {
         id,
         department: name,
-        status: is_active,
+        status: { status: is_active, handleStatus },
         created_at: date,
-        action: getDetails,
+        action: { getDetails, handleDelete },
       };
     }) ?? [];
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows);
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      name: record.name,
-    }),
-  };
-
-  const updatePage = (newPage) => {
-    setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
-  };
-
-  const updatePageSize = (newPageSize) => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      perPage: newPageSize,
-    }));
-  };
-
   const handleSubmit = async (values) => {
-    const { data, error } = await storeData({
+    const { data, error } = await createDepartment({
       url: DEPARTMENT,
       data: values,
     });
@@ -205,7 +239,7 @@ const Department = () => {
   };
 
   const handleUpdate = async (values) => {
-    const { data, error } = await update({
+    const { data, error } = await updateDepartment({
       url: DEPARTMENT,
       data: { id, ...values },
     });
@@ -235,33 +269,15 @@ const Department = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <Table
-        rowKey={(record) => record.id}
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
-        size="small"
+      <CustomTable
         columns={newColumns}
         dataSource={departmentData}
-        pagination={{
-          showTotal: (total) => `Total ${total} items`,
-          defaultCurrent: 1,
-          defaultPageSize: pagination.perPage,
-          total: total,
-          showSizeChanger: true,
-          current: pagination.page,
-          onShowSizeChange: (current, size) => {
-            updatePageSize(size);
-          },
-          onChange: (page) => {
-            updatePage(page);
-          },
-        }}
-        scroll={{
-          x: "max-content",
-        }}
-        loading={isFetching}
+        total={total}
+        pagination={pagination}
+        setPagination={setPagination}
+        setSelectedRows={setSelectedRows}
+        // isLoading={isFetching}
+        isLoading={isDepartmentsLoading}
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
@@ -269,23 +285,34 @@ const Department = () => {
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
-          //error fields
         />
       </CustomDrawer>
 
       <CustomDrawer
-        open={isEditDrawerOpen}
         title={"Edit Department"}
+        open={isEditDrawerOpen}
         isLoading={isDetailsFetching}
-        // isFetching={isFetchingDetails}
       >
         <DepartmentForm
           handleSubmit={handleUpdate}
           isLoading={isUpdating}
           fields={fields}
-          //initial values fields
         />
       </CustomDrawer>
+
+      <StatusModal
+        statusModal={statusModal}
+        setStatusModal={setStatusModal}
+        handleStatusUpdate={handleStatusUpdate}
+        isStatusUpdating={isStatusUpdating}
+      />
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
+        handleDeleteDepartment={handleDeleteDepartment}
+        isDeleting={isDeleting}
+      />
     </GlobalContainer>
   );
 };

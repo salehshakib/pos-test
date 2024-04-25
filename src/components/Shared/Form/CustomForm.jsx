@@ -1,11 +1,17 @@
 import { Button, Form } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/global/globalSlice";
+} from "../../../redux/services/drawer/drawerSlice";
 
-const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
+const CustomForm = ({
+  handleSubmit,
+  children,
+  fields,
+  isLoading,
+  submitBtn = true,
+}) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -31,6 +37,12 @@ const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
     dispatch(closeEditDrawer());
   };
 
+  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
+    (state) => state.drawer
+  );
+
+  console.log(isCreateDrawerOpen, isEditDrawerOpen);
+
   return (
     <Form
       form={form}
@@ -41,19 +53,20 @@ const CustomForm = ({ handleSubmit, children, fields, isLoading }) => {
       onFinishFailed={onFinishFailed}
     >
       {children}
-
-      <div className="w-full flex gap-3 justify-end items-center">
-        <Button type="default" onClick={handleDrawerClose}>
-          Cancel
-        </Button>
-        <Button
-          htmlType="submit"
-          className="bg-secondary hover:bg-posPurple text-white"
-          loading={isLoading}
-        >
-          Submit
-        </Button>
-      </div>
+      {submitBtn && (
+        <div className="w-full flex gap-3 justify-end items-center">
+          <Button type="default" onClick={handleDrawerClose}>
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            className="bg-secondary hover:bg-posPurple text-white"
+            loading={isLoading}
+          >
+            Submit
+          </Button>
+        </div>
+      )}
     </Form>
   );
 };

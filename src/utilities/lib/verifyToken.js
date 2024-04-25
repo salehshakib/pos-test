@@ -1,13 +1,21 @@
 import { jwtDecode } from "jwt-decode";
-import { api_key } from "../configs/base_url";
+import { mode } from "../configs/base_url";
 
 export const verifyToken = (token) => {
-  const mode = "local";
+  // var jwt = require("jsonwebtoken");
 
-  if (mode === "local") {
-    return token;
+  // console.log(token);
+  // console.log(api_key);
+
+  if (mode !== "local") {
+    try {
+      const decodedData = jwtDecode(token);
+
+      return decodedData?.data;
+    } catch (error) {
+      console.error("Error decrypting token:", error);
+    }
   } else {
-    return jwtDecode(token, api_key);
+    return token;
   }
-  // return jwtDecode(token);
 };

@@ -1,6 +1,13 @@
 import { Form, Input } from "antd";
 
-const CustomInput = ({ type, name, label, placeholder, required = false }) => {
+const CustomInput = ({
+  type,
+  name,
+  label,
+  placeholder,
+  required = false,
+  prefix,
+}) => {
   return (
     <Form.Item
       label={label}
@@ -12,6 +19,7 @@ const CustomInput = ({ type, name, label, placeholder, required = false }) => {
           placeholder={placeholder}
           className="mt-2 border-2"
           size="large"
+          prefix={prefix}
           allowClear
         />
       )) ||
@@ -27,7 +35,8 @@ const CustomInput = ({ type, name, label, placeholder, required = false }) => {
             type={type}
             placeholder={`Enter ${placeholder}`}
             className="mt-2 border-2"
-            // size="large"
+            size="large"
+            prefix={prefix}
             allowClear
           />
         )}

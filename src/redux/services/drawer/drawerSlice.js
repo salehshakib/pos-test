@@ -5,7 +5,7 @@ const initialState = {
   isEditDrawerOpen: false,
 };
 
-const globalSlice = createSlice({
+const drawerSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
@@ -24,11 +24,11 @@ const globalSlice = createSlice({
   },
 });
 
-export default globalSlice.reducer;
+export default drawerSlice.reducer;
 
 export const {
   openCreateDrawer,
   closeCreateDrawer,
   openEditDrawer,
   closeEditDrawer,
-} = globalSlice.actions;
+} = drawerSlice.actions;

@@ -1,3 +1,4 @@
+import { verifyToken } from "../../utilities/lib/verifyToken";
 import { baseApi } from "../api/baseApi";
 
 const fetchApi = baseApi.injectEndpoints({
@@ -10,11 +11,8 @@ const fetchApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (response) => response.data,
-      providesTags: (result, error, { url }) => {
-        const tags = url?.split("/")[2];
-        return [{ tags }];
-      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { url }) => [url],
     }),
     getDetails: build.query({
       query: ({ url, id }) => {
@@ -24,12 +22,8 @@ const fetchApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (response) => response.data,
-      providesTags: (result, error, { url }) => {
-        const tags = url?.split("/")[2];
-
-        return [{ tags }];
-      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { url }) => [url],
     }),
   }),
 });

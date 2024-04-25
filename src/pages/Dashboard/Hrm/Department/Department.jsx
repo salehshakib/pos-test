@@ -1,6 +1,6 @@
 import { Table, Tag } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
@@ -9,12 +9,32 @@ import {
   useGetAllDataQuery,
   useGetDetailsQuery,
 } from "../../../../redux/services/fetchApi";
-import { openEditDrawer } from "../../../../redux/services/global/globalSlice";
-import { useStoreDataMutation } from "../../../../redux/services/mutationApi";
+import {
+  closeEditDrawer,
+  openEditDrawer,
+} from "../../../../redux/services/drawer/drawerSlice";
+import {
+  useStoreDataMutation,
+  useUpdateMutation,
+} from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
-import CreateDepartment from "./CreateDepartment";
+import DepartmentForm from "./DepartmentForm";
 
 const columns = [
+  // {
+  //   title: "",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   hidden: true,
+  //   width: 80,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
     //department
     title: "Department",
@@ -82,14 +102,17 @@ const columns = [
 ];
 
 const Department = () => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
-  const [newColumns, setNewColumns] = useState(columns);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [fields, setFields] = useState([]);
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.globalState
+    (state) => state.drawer
   );
+
+  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const [newColumns, setNewColumns] = useState(columns);
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const [fields, setFields] = useState([]);
+  const [errorFields, setErrorFields] = useState([]);
 
   const [id, setId] = useState(undefined);
 
@@ -101,23 +124,30 @@ const Department = () => {
 
   const total = data?.meta?.total;
 
-  console.log(data);
-  console.log(isFetching);
-
-  const { data: details } = useGetDetailsQuery(
+  const { data: details, isFetching: isDetailsFetching } = useGetDetailsQuery(
     { url: DEPARTMENT, id },
     { skip: !id }
   );
 
-  console.log(details);
-
   const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
+  const [update, { isLoading: isUpdating }] = useUpdateMutation();
 
   const getDetails = (id) => {
     setId(id);
     dispatch(openEditDrawer());
-    // setIsEditDrawerOpen(true);
   };
+
+  useEffect(() => {
+    if (details) {
+      setFields([
+        {
+          name: "name",
+          value: details?.name,
+          errors: "",
+        },
+      ]);
+    }
+  }, [details]);
 
   const departmentData =
     data?.results?.department?.map((item) => {
@@ -170,12 +200,32 @@ const Department = () => {
         errors: error?.data?.errors[fieldName],
       }));
 
-      setFields(errorFields);
+      setErrorFields(errorFields);
     }
   };
 
   const handleUpdate = async (values) => {
-    console.log(values);
+    const { data, error } = await update({
+      url: DEPARTMENT,
+      data: { id, ...values },
+    });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors)?.map(
+        (fieldName) => ({
+          name: fieldName,
+          value: fields.find((field) => field.name === fieldName).value,
+          errors: error?.data?.errors[fieldName],
+        })
+      );
+
+      setFields(errorFields);
+    }
   };
 
   return (
@@ -215,15 +265,26 @@ const Department = () => {
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
-        <CreateDepartment
+        <DepartmentForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
-          fields={fields}
+          fields={errorFields}
+          //error fields
         />
       </CustomDrawer>
 
-      <CustomDrawer open={isEditDrawerOpen} title={"Edit Department"}>
-        <CreateDepartment handleSubmit={handleUpdate} fields={fields} />
+      <CustomDrawer
+        open={isEditDrawerOpen}
+        title={"Edit Department"}
+        isLoading={isDetailsFetching}
+        // isFetching={isFetchingDetails}
+      >
+        <DepartmentForm
+          handleSubmit={handleUpdate}
+          isLoading={isUpdating}
+          fields={fields}
+          //initial values fields
+        />
       </CustomDrawer>
     </GlobalContainer>
   );

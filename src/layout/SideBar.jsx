@@ -62,16 +62,18 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute md:relative z-50 h-fit">
+    <div className="absolute md:relative z-50 lg:z-0 min-h-fit">
       <Sider
-        className="border-r border-gray-200 drop-shadow-primary "
+        className="border-r border-gray-200 drop-shadow-primary h-full"
         theme="light"
         trigger={null}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
-          minHeight: "100vh",
+          // minHeight: "100vh",
+          height: "100vh",
+          overflow: "auto",
         }}
         breakpoint="md"
         collapsedWidth="70"
@@ -79,9 +81,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         <Menu
           theme="light"
           mode="inline"
-          // defaultSelectedKeys={["1"]}
+          className="pb-10"
           style={{
-            height: "100%",
+            // height: "100%",
             borderRight: 0,
           }}
           items={sidebarItems}

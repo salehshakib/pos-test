@@ -4,6 +4,8 @@ import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
 import fakeData from "../fakeData";
+import { useDispatch, useSelector } from "react-redux";
+import { openEditDrawer } from "../../../../redux/services/drawer/drawerSlice";
 
 const columns = [
   {
@@ -108,29 +110,54 @@ const columns = [
 ];
 
 const Employee = () => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const dispatch = useDispatch();
+  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
+    (state) => state.drawer
+  );
+
+  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const { data, isLoading } = useGetAllDataQuery({
-    // url: "human-resource/employee",
+  const [fields, setFields] = useState([]);
+  const [errorFields, setErrorFields] = useState([]);
+
+  const [id, setId] = useState(undefined);
+
+  const { data, isFetching } = useGetAllDataQuery({
     url: "inventory/category",
     params: pagination,
   });
 
-  console.log(data, isLoading);
+  const total = data?.meta?.total;
 
-  // const employeeData =
-  //   data?.result?.department?.map((item) => {
-  //     const { id, name, created_at } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  console.log(data, isFetching);
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       created_at: date,
-  //     };
-  //   }) ?? [];
+  // const { data: details } = useGetDetailsQuery(
+  //   { url: DEPARTMENT, id },
+  //   { skip: !id }
+  // );
+
+  // console.log(details);
+
+  const getDetails = (id) => {
+    setId(id);
+    dispatch(openEditDrawer());
+  };
+
+  // const departmentData =
+  // data?.results?.department?.map((item) => {
+  //   const { id, name, created_at, is_active } = item;
+  //   const date = dayjs(created_at).format("DD-MM-YYYY");
+
+  //   return {
+  //     id,
+  //     department: name,
+  //     status: is_active,
+  //     created_at: date,
+  //     action: getDetails,
+  //   };
+  // }) ?? [];
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -153,6 +180,30 @@ const Employee = () => {
     }));
   };
 
+  // const handleSubmit = async (values) => {
+  //   const { data, error } = await storeData({
+  //     url: DEPARTMENT,
+  //     data: values,
+  //   });
+
+  //   if (data?.success) {
+  //     setId(undefined);
+  //   }
+
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+  //       name: fieldName,
+  //       errors: error?.data?.errors[fieldName],
+  //     }));
+
+  //     setErrorFields(errorFields);
+  //   }
+  // };
+
+  // const handleUpdate = async (values) => {
+  //   console.log(values);
+  // };
+
   return (
     <div className="h-full ">
       <GlobalContainer
@@ -172,7 +223,11 @@ const Employee = () => {
           dataSource={fakeData}
           pagination={{
             showTotal: (total) => `Total ${total} items`,
+            defaultCurrent: 1,
+            defaultPageSize: pagination.perPage,
+            total: total,
             showSizeChanger: true,
+            current: pagination.page,
             onShowSizeChange: (current, size) => {
               updatePageSize(size);
             },
@@ -183,7 +238,7 @@ const Employee = () => {
           scroll={{
             x: "max-content",
           }}
-          loading={isLoading}
+          loading={isFetching}
         />
       </GlobalContainer>
     </div>

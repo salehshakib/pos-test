@@ -1,13 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { Modal, Table } from "antd";
+import { Modal } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
+import StatusModal from "../../../../components/Shared/Modal/StatusModal";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import {
   useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
   useGetDepartmentDetailsQuery,
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
@@ -19,7 +23,6 @@ import {
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
 
 const columns = [
   {
@@ -66,12 +69,11 @@ const columns = [
     width: "80px",
     align: "center",
     render: ({ status, handleStatus }, record) => {
-      console.log(status);
       return (
         <button
           className={`p-0 ${
             status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-          } rounded shadow-md`}
+          } rounded shadow-md w-full`}
           onClick={() => handleStatus(record.id)}
         >
           <span className="font-medium text-white text-xs px-2 w-full">
@@ -89,17 +91,20 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: (getDetails, record) => {
+    render: ({ getDetails, handleDelete }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
             onClick={() => getDetails(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
-            <MdEditSquare className="text-xl" />
+            <MdEditSquare className="text-lg md:text-xl" />
           </button>
-          <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
-            <MdDelete className="text-xl" />
+          <button
+            onClick={() => handleDelete(record.id)}
+            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdDelete className="text-lg md:text-xl" />
           </button>
         </div>
       );
@@ -125,8 +130,15 @@ const Department = () => {
   const [statusModal, setStatusModal] = useState(false);
   const [statusId, setStatusId] = useState(undefined);
 
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined);
+
   //get all data query
-  const { data, isFetching } = useGetDepartmentsQuery({
+  const {
+    data,
+    isFetching,
+    isLoading: isDepartmentsLoading,
+  } = useGetDepartmentsQuery({
     params: pagination,
   });
 
@@ -143,6 +155,9 @@ const Department = () => {
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
     useUpdateStatusMutation();
+
+  const [deleteDepartment, { isLoading: isDeleting }] =
+    useDeleteDepartmentMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -167,15 +182,24 @@ const Department = () => {
   };
 
   const handleStatusUpdate = async () => {
-    const { data, error } = await updateStatus({
-      data: {
-        id: statusId,
-      },
-    });
+    console.log(statusId);
+    const { data, error } = await updateStatus(statusId);
 
     if (data?.success) {
       setId(undefined);
       setStatusModal(false);
+    }
+  };
+
+  const handleDelete = (id) => {
+    setDeleteModal(true);
+    setDeleteId(id);
+  };
+
+  const handleDeleteDepartment = async () => {
+    const { data, error } = await deleteDepartment(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
     }
   };
 
@@ -189,30 +213,9 @@ const Department = () => {
         department: name,
         status: { status: is_active, handleStatus },
         created_at: date,
-        action: getDetails,
+        action: { getDetails, handleDelete },
       };
     }) ?? [];
-
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     setSelectedRows(selectedRows);
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === "Disabled User",
-  //     name: record.name,
-  //   }),
-  // };
-
-  // const updatePage = (newPage) => {
-  //   setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
-  // };
-
-  // const updatePageSize = (newPageSize) => {
-  //   setPagination((prevPagination) => ({
-  //     ...prevPagination,
-  //     perPage: newPageSize,
-  //   }));
-  // };
 
   const handleSubmit = async (values) => {
     const { data, error } = await createDepartment({
@@ -265,40 +268,6 @@ const Department = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      {/* <Table
-        rowKey={(record) => record.id}
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
-        size="small"
-        columns={newColumns}
-        dataSource={departmentData}
-        pagination={{
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} of ${total} items`,
-          defaultCurrent: 1,
-          defaultPageSize: pagination.perPage,
-          total: total,
-          showSizeChanger: true,
-          current: pagination.page,
-          onShowSizeChange: (current, size) => {
-            updatePageSize(size);
-          },
-          onChange: (page) => {
-            updatePage(page);
-          },
-          size: "default",
-          // style: {
-          //   marginTop: "20px",
-          // },
-        }}
-        scroll={{
-          x: "max-content",
-        }}
-        loading={isFetching}
-      /> */}
-
       <CustomTable
         columns={newColumns}
         dataSource={departmentData}
@@ -306,7 +275,8 @@ const Department = () => {
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        isLoading={isFetching}
+        // isLoading={isFetching}
+        isLoading={isDepartmentsLoading}
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
@@ -314,35 +284,50 @@ const Department = () => {
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
-          //error fields
         />
       </CustomDrawer>
 
       <CustomDrawer
-        open={isEditDrawerOpen}
         title={"Edit Department"}
+        open={isEditDrawerOpen}
         isLoading={isDetailsFetching}
-        // isFetching={isFetchingDetails}
       >
         <DepartmentForm
           handleSubmit={handleUpdate}
           isLoading={isUpdating}
           fields={fields}
-          //initial values fields
         />
       </CustomDrawer>
 
+      <StatusModal
+        statusModal={statusModal}
+        setStatusModal={setStatusModal}
+        handleStatusUpdate={handleStatusUpdate}
+        isStatusUpdating={isStatusUpdating}
+      />
+
       <Modal
-        title="Status Update"
-        open={statusModal}
-        maskClosable
+        title={
+          <div className="flex items-center gap-3">
+            <RiErrorWarningFill
+              style={{
+                color: "red",
+                fontSize: "20px",
+              }}
+            />
+            <span>Delete Department</span>
+          </div>
+        }
+        open={deleteModal}
         okText="Yes"
         cancelText="No"
-        onOk={handleStatusUpdate}
-        onCancel={() => setStatusModal(false)}
-        confirmLoading={isStatusUpdating}
+        onOk={handleDeleteDepartment}
+        onCancel={() => setDeleteModal(false)}
+        confirmLoading={isDeleting}
+        centered
+        maskClosable
       >
-        Do you want to update your status?
+        Do you want to delete this department?
       </Modal>
     </GlobalContainer>
   );

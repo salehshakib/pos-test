@@ -14,7 +14,10 @@ const departmentApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [DEPARTMENT],
+      providesTags: (result, error, { params }) => [
+        { type: DEPARTMENT, params },
+        DEPARTMENT,
+      ],
     }),
     getDepartmentDetails: build.query({
       query: ({ id }) => {
@@ -63,11 +66,27 @@ const departmentApi = baseApi.injectEndpoints({
       },
     }),
     updateStatus: build.mutation({
-      query: ({ data }) => {
+      query: (id) => {
         return {
-          url: `/${DEPARTMENT}/status/${data?.id}`,
+          url: `/${DEPARTMENT}/status/${id}`,
           method: "POST",
-          // body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [DEPARTMENT] : [];
+      },
+    }),
+    deleteDepartment: build.mutation({
+      query: (id) => {
+        return {
+          url: `/${DEPARTMENT}/delete/${id}`,
+          method: "DELETE",
         };
       },
       transformResponse: (response) => {
@@ -89,4 +108,5 @@ export const {
   useCreateDepartmentMutation,
   useUpdateDepartmentMutation,
   useUpdateStatusMutation,
+  useDeleteDepartmentMutation,
 } = departmentApi;

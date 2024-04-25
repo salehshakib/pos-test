@@ -1,4 +1,5 @@
-import { Table, Tag } from "antd";
+/* eslint-disable no-unused-vars */
+import { Modal, Table } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
@@ -6,35 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import {
-  useGetAllDataQuery,
-  useGetDetailsQuery,
-} from "../../../../redux/services/fetchApi";
+  useCreateDepartmentMutation,
+  useGetDepartmentDetailsQuery,
+  useGetDepartmentsQuery,
+  useUpdateDepartmentMutation,
+} from "../../../../redux/services/department/departmentApi";
 import {
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
-import {
-  useStoreDataMutation,
-  useUpdateMutation,
-} from "../../../../redux/services/mutationApi";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
 
 const columns = [
-  // {
-  //   title: "",
-  //   dataIndex: "id",
-  //   key: "id",
-  //   fixed: "left",
-  //   align: "center",
-  //   hidden: true,
-  //   width: 80,
-  //   render: (id) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {id}
-  //     </span>
-  //   ),
-  // },
   {
     //department
     title: "Department",
@@ -65,16 +50,25 @@ const columns = [
     key: "status",
     width: "80px",
     align: "center",
-    render: (status) =>
-      status === 1 ? (
-        <Tag color="#22C55E">
-          <span className="font-medium text-white text-md ">Active</span>
-        </Tag>
+    render: ({ status, handleStatus }, record) => {
+      return status === "1" ? (
+        <button
+          className="p-0 bg-[#22C55E] rounded shadow-md"
+          onClick={() => handleStatus(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2  w-full">
+            Active
+          </span>
+        </button>
       ) : (
-        <Tag color="#ff0000">Inactive</Tag>
-      ),
+        <button className="p-0 bg-[#ff0000] rounded  shadow-md">
+          <span className="font-medium text-white text-xs px-2  w-full">
+            Inactive
+          </span>
+        </button>
+      );
+    },
   },
-
   {
     //action
     title: "Action",
@@ -116,21 +110,23 @@ const Department = () => {
 
   const [id, setId] = useState(undefined);
 
+  const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+
   //get all data query
-  const { data, isFetching } = useGetAllDataQuery({
-    url: DEPARTMENT,
+  const { data, isFetching } = useGetDepartmentsQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching: isDetailsFetching } = useGetDetailsQuery(
-    { url: DEPARTMENT, id },
-    { skip: !id }
-  );
+  const { data: details, isFetching: isDetailsFetching } =
+    useGetDepartmentDetailsQuery({ id }, { skip: !id });
 
-  const [storeData, { isLoading: isCreating }] = useStoreDataMutation();
-  const [update, { isLoading: isUpdating }] = useUpdateMutation();
+  const [createDepartment, { isLoading: isCreating }] =
+    useCreateDepartmentMutation();
+  const [updateDepartment, { isLoading: isUpdating }] =
+    useUpdateDepartmentMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -149,6 +145,13 @@ const Department = () => {
     }
   }, [details]);
 
+  const handleStatus = (id) => {
+    setStatusModal(true);
+    setStatusId(id);
+  };
+
+  // const handleStatusUpdate = () => {};
+
   const departmentData =
     data?.results?.department?.map((item) => {
       const { id, name, created_at, is_active } = item;
@@ -157,7 +160,7 @@ const Department = () => {
       return {
         id,
         department: name,
-        status: is_active,
+        status: { status: is_active, handleStatus },
         created_at: date,
         action: getDetails,
       };
@@ -185,7 +188,7 @@ const Department = () => {
   };
 
   const handleSubmit = async (values) => {
-    const { data, error } = await storeData({
+    const { data, error } = await createDepartment({
       url: DEPARTMENT,
       data: values,
     });
@@ -205,7 +208,7 @@ const Department = () => {
   };
 
   const handleUpdate = async (values) => {
-    const { data, error } = await update({
+    const { data, error } = await updateDepartment({
       url: DEPARTMENT,
       data: { id, ...values },
     });
@@ -286,6 +289,17 @@ const Department = () => {
           //initial values fields
         />
       </CustomDrawer>
+
+      <Modal
+        title="Status Upate"
+        open={statusModal}
+        // onOk={handleStatusUpate}
+        onCancel={() => setStatusModal(false)}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </GlobalContainer>
   );
 };

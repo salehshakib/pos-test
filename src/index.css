@@ -15,10 +15,19 @@
 }
 
 .ant-menu-item-selected { 
-  background-color: #dcbfff !important;
+  background-color: #F2E8FF !important;
   color: #51258f !important;
 }
 
 .ant-menu-submenu-selected > .ant-menu-submenu-title {
   color: #51258f !important;
+}
+
+.ant-btn-primary {
+  background-color: #51258f !important;
+}
+
+
+.ant-btn-primary:hover {
+  background-color: #482579 !important; /* Lighter color */
 }

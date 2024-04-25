@@ -7,7 +7,7 @@ export default {
         // primary: "#DCBFFF",
         primary: "#F2E8FF",
         "primary-hover": "#51258F",
-        secondary: "#51258F",
+        secondary: "#482579",
         posPurple: "#5B2676",
         warning: "#ffba08",
         pinkRed: "#eb3b5a",

@@ -1,25 +1,26 @@
-import { ConfigProvider } from "antd";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
+
+import "./index.css";
+import { ConfigProvider } from "antd";
+
+import { persistor, store } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "sonner";
-import App from "./App.jsx";
-import "./index.css";
-import { persistor, store } from "./redux/store.js";
 import { router } from "./routes/routes.jsx";
 
 const theme = {
   token: {
-    // colorPrimary: "#DCBFFF",
     colorPrimary: "#51258F",
 
     colorPrimaryHover: "#51258F",
+    // colorPrimaryHover: "#683fa0",
     colorBorder: "#DCBFFF",
     colorPrimaryBorder: "#51258F",
-
-    // colorBgContainer: "#51258F",
+    // color: "#51258F",
   },
   components: {
     Input: {
@@ -27,8 +28,9 @@ const theme = {
       activeBorderColor: "#51258F",
     },
     Button: {
-      //font weight
       fontWeight: 700,
+
+      defaultColor: "#51258F",
 
       defaultHoverBg: "#51258F",
       defaultHoverBorderColor: "#51258F",
@@ -49,7 +51,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ConfigProvider
       theme={theme}
       button={{
-        className: "text-secondary",
+        className: "hover:bg-[#5b3196]",
       }}
       locale={{
         locale: "en-US",

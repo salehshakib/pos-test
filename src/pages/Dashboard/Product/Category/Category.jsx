@@ -10,7 +10,7 @@ import {
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
   useGetCategoryDetailsQuery,
-  useGetCategoryQuery,
+  useGetCategoriesQuery,
   useUpdateCategoryMutation,
 } from "../../../../redux/services/category/categoryApi";
 import {
@@ -158,7 +158,7 @@ const Category = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
-  const { data, isLoading } = useGetCategoryQuery({
+  const { data, isLoading } = useGetCategoriesQuery({
     params: pagination,
   });
 

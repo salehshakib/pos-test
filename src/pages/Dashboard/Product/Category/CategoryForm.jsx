@@ -1,10 +1,12 @@
 import { Col, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
-import { useGetCategoryQuery } from "../../../../redux/services/category/categoryApi";
+import { useGetCategoriesQuery } from "../../../../redux/services/category/categoryApi";
 
 const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
-  const { data, isLoading: isParentCategoryLoading } = useGetCategoryQuery({});
+  const { data, isLoading: isParentCategoryLoading } = useGetCategoriesQuery(
+    {}
+  );
 
   console.log(data);
   console.log(isParentCategoryLoading);

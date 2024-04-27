@@ -27,9 +27,11 @@ const MainLayout = () => {
           ></Button>
           <Logo />
         </div>
-        <span className="text-xs bg-white p-2 rounded-lg font-bold text-gray-500">
-          {mode.toUpperCase()} MODE
-        </span>
+        {mode === "local" && (
+          <span className="text-xs bg-white p-2 rounded-lg font-bold text-gray-500">
+            {mode.toUpperCase()} MODE
+          </span>
+        )}
         <Profile />
       </Header>
 

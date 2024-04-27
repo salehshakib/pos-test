@@ -8,9 +8,6 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
     {}
   );
 
-  console.log(data);
-  console.log(isParentCategoryLoading);
-
   const options = data?.results?.category?.map((category) => ({
     value: category.id,
     label: category.name,
@@ -40,6 +37,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             name={"parent_id"}
             options={options}
             placeholder={"Parent Category"}
+            isSelectLoading={isParentCategoryLoading}
           />
         </Col>
         <Col xs={24} md={12} lg={8}>

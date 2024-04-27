@@ -19,6 +19,7 @@ import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
 //icons
 import { BsBoxSeam } from "react-icons/bs";
+import { FaWarehouse } from "react-icons/fa";
 import {
   FaBuilding,
   FaCartShopping,
@@ -41,6 +42,7 @@ import {
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
+import Warehouse from "../pages/Dashboard/Settings/Warehouse/Warehouse";
 
 export const adminPaths = [
   {
@@ -233,5 +235,13 @@ export const adminPaths = [
     path: "settings",
     icon: MdOutlineSettings,
     element: <Settings />,
+    children: [
+      {
+        name: "Warehouse",
+        path: "warehouse",
+        icon: FaWarehouse,
+        element: <Warehouse />,
+      },
+    ],
   },
 ];

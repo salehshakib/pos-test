@@ -19,6 +19,7 @@ import {
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
 import CategoryForm from "./CategoryForm";
+import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const columns = [
   {
@@ -185,21 +186,20 @@ const Category = () => {
 
   useEffect(() => {
     if (details) {
-      const fieldsToUpdate = Object.keys(details).map((key) => {
-        let value = details[key];
-        // Check if key includes "date"
-        if (key.includes("date")) {
-          // Parse date using dayjs
-          value = dayjs(value, "YYYY-MM-DD").toDate(); // Convert to Date object
-        }
-        return {
-          name: key,
-          value: value,
+      const fieldData = [
+        {
+          name: "name",
+          value: details?.name,
           errors: "",
-        };
-      });
+        },
+        {
+          name: "parent_id",
+          value: Number(details?.parent_id),
+          errors: "",
+        },
+      ];
 
-      setFields(fieldsToUpdate);
+      setFields(fieldData);
     }
   }, [details, setFields]);
 

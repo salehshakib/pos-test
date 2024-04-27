@@ -23,6 +23,7 @@ import {
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
+import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const columns = [
   // {
@@ -164,17 +165,17 @@ const Department = () => {
 
   useEffect(() => {
     if (details) {
-      const fieldsToUpdate = Object.keys(details).map((key) => {
-        let value = details[key];
+      // const fieldData = fieldsToUpdate(details);
 
-        return {
-          name: key,
-          value: value,
+      const fieldData = [
+        {
+          name: "name",
+          value: details?.name,
           errors: "",
-        };
-      });
+        },
+      ];
 
-      setFields(fieldsToUpdate);
+      setFields(fieldData);
     }
   }, [details, setFields]);
 

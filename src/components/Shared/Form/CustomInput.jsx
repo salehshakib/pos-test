@@ -9,6 +9,7 @@ const CustomInput = ({
   required = false,
   prefix,
   options = [],
+  isSelectLoading = false,
 }) => {
   return (
     <GlobalUtilityStyle>
@@ -31,8 +32,9 @@ const CustomInput = ({
               placeholder={placeholder}
               className="mt-2 custom-selector"
               size="large"
-              loading={false}
+              loading={isSelectLoading}
               options={options}
+              allowClear
             />
           )) ||
           (type === "number" && (
@@ -41,7 +43,6 @@ const CustomInput = ({
               placeholder={placeholder}
               className="mt-2 border-2 w-full "
               size="large"
-              allowClear
             />
           )) ||
           (type === "textarea" && (

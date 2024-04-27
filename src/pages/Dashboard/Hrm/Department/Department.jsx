@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Modal } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
+import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 import StatusModal from "../../../../components/Shared/Modal/StatusModal";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
@@ -15,7 +14,7 @@ import {
   useGetDepartmentDetailsQuery,
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
-  useUpdateStatusMutation,
+  useUpdateDepartmentStatusMutation,
 } from "../../../../redux/services/department/departmentApi";
 import {
   closeEditDrawer,
@@ -23,7 +22,6 @@ import {
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
-import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
   // {
@@ -155,7 +153,7 @@ const Department = () => {
     useUpdateDepartmentMutation();
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateStatusMutation();
+    useUpdateDepartmentStatusMutation();
 
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();

@@ -6,6 +6,7 @@ import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import StatusModal from "../../../../components/Shared/Modal/StatusModal";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
+import CategoryForm from "./CategoryForm";
 
 const columns = [
   {
@@ -153,12 +154,12 @@ const Category = () => {
         // isLoading={isDepartmentsLoading}
       />
 
-      <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
-        {/* <DepartmentForm
-          handleSubmit={handleSubmit}
-          isLoading={isCreating}
+      <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
+        <CategoryForm
+          // handleSubmit={handleSubmit}
+          // isLoading={isCreating}
           fields={errorFields}
-        /> */}
+        />
       </CustomDrawer>
 
       <CustomDrawer

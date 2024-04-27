@@ -1,23 +1,28 @@
+import { Col, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 
-const CreateDepartment = ({ handleSubmit, isLoading, fields }) => {
+const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
       handleSubmit={handleSubmit}
-      className="flex flex-col gap-6"
+      className=""
       fields={fields}
       isLoading={isLoading}
     >
-      <CustomInput
-        label="Department Name"
-        type={"text"}
-        required={true}
-        name={"name"}
-        placeholder={"Department Name"}
-      />
+      <Row gutter={25}>
+        <Col xs={24}>
+          <CustomInput
+            label="Department Name"
+            type={"text"}
+            required={true}
+            name={"name"}
+            placeholder={"Department Name"}
+          />
+        </Col>
+      </Row>
     </CustomForm>
   );
 };
 
-export default CreateDepartment;
+export default DepartmentForm;

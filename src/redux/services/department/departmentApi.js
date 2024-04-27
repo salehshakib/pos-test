@@ -65,7 +65,7 @@ const departmentApi = baseApi.injectEndpoints({
         return result ? [DEPARTMENT] : [];
       },
     }),
-    updateStatus: build.mutation({
+    updateDepartmentStatus: build.mutation({
       query: (id) => {
         return {
           url: `/${DEPARTMENT}/status/${id}`,
@@ -107,6 +107,6 @@ export const {
   useGetDepartmentDetailsQuery,
   useCreateDepartmentMutation,
   useUpdateDepartmentMutation,
-  useUpdateStatusMutation,
+  useUpdateDepartmentStatusMutation,
   useDeleteDepartmentMutation,
 } = departmentApi;

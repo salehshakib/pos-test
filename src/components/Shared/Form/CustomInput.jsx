@@ -1,4 +1,5 @@
-import { Form, Input } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
+import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const CustomInput = ({
   type,
@@ -7,40 +8,62 @@ const CustomInput = ({
   placeholder,
   required = false,
   prefix,
+  options = [],
+  isSelectLoading = false,
 }) => {
   return (
-    <Form.Item
-      label={label}
-      name={name}
-      rules={[{ required: required, message: `Please input ${label}!` }]}
-    >
-      {(type === "password" && (
-        <Input.Password
-          placeholder={placeholder}
-          className="mt-2 border-2"
-          size="large"
-          prefix={prefix}
-          allowClear
-        />
-      )) ||
-        (type === "textarea" && (
-          <Input.TextArea
+    <GlobalUtilityStyle>
+      <Form.Item
+        label={label}
+        name={name}
+        rules={[{ required: required, message: `Please input ${label}!` }]}
+      >
+        {(type === "password" && (
+          <Input.Password
             placeholder={placeholder}
-            className="mt-2 border-2"
-            size="large"
-            allowClear
-          />
-        )) || (
-          <Input
-            type={type}
-            placeholder={`Enter ${placeholder}`}
-            className="mt-2 border-2"
+            className="mt-2 border-2 "
             size="large"
             prefix={prefix}
             allowClear
           />
-        )}
-    </Form.Item>
+        )) ||
+          (type === "select" && (
+            <Select
+              placeholder={placeholder}
+              className="mt-2 custom-selector"
+              size="large"
+              loading={isSelectLoading}
+              options={options}
+              allowClear
+            />
+          )) ||
+          (type === "number" && (
+            <InputNumber
+              type="number"
+              placeholder={placeholder}
+              className="mt-2 border-2 w-full "
+              size="large"
+            />
+          )) ||
+          (type === "textarea" && (
+            <Input.TextArea
+              placeholder={placeholder}
+              className="mt-2 border-2"
+              size="large"
+              allowClear
+            />
+          )) || (
+            <Input
+              type={type}
+              placeholder={`Enter ${placeholder}`}
+              className="mt-2 border-2"
+              size="large"
+              prefix={prefix}
+              allowClear
+            />
+          )}
+      </Form.Item>
+    </GlobalUtilityStyle>
   );
 };
 

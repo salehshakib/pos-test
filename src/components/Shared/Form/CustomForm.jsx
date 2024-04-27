@@ -1,5 +1,5 @@
 import { Button, Form } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   closeCreateDrawer,
   closeEditDrawer,
@@ -36,12 +36,6 @@ const CustomForm = ({
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
   };
-
-  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.drawer
-  );
-
-  console.log(isCreateDrawerOpen, isEditDrawerOpen);
 
   return (
     <Form

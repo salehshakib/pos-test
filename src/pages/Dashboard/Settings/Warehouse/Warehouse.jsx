@@ -1,25 +1,23 @@
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import {
-  useCreateCategoryMutation,
-  useDeleteCategoryMutation,
-  useGetCategoryDetailsQuery,
-  useGetCategoriesQuery,
-  useUpdateCategoryMutation,
-} from "../../../../redux/services/category/categoryApi";
+  useCreateWarehouseMutation,
+  useDeleteWarehouseMutation,
+  useGetWarehouseDetailsQuery,
+  useGetWarehousesQuery,
+  useUpdateWarehouseMutation,
+} from "../../../../redux/services/warehouse/warehouseApi";
 import {
   closeCreateDrawer,
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
-import CategoryForm from "./CategoryForm";
-import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
+import dayjs from "dayjs";
 
 const columns = [
   {
@@ -28,7 +26,7 @@ const columns = [
     key: "id",
     fixed: "left",
     align: "center",
-    width: 60,
+    width: 80,
     render: (id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {id}
@@ -36,51 +34,51 @@ const columns = [
     ),
   },
   {
-    title: "Parent Category",
-    dataIndex: "parentCategory",
-    key: "parentCategory",
+    //department
+    title: "Warehouse",
+    dataIndex: "warehouse",
+    key: "warehouse",
     align: "center",
-    render: (parentCategory) => (
+    render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {parentCategory}
+        {warehouse}
       </span>
     ),
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
     align: "center",
-    render: (category) => (
+    render: (email) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {category}
+        {email}
       </span>
     ),
   },
   {
-    title: "Products",
-    dataIndex: "products",
-    key: "products",
+    title: "Phone",
+    dataIndex: "phone",
+    key: "phone",
     align: "center",
-    render: (products) => (
+    render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {products}
+        {phone}
       </span>
     ),
   },
   {
-    title: "Stock Quantity",
-    dataIndex: "stockQuantity",
-    key: "stockQuantity",
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
     align: "center",
-    render: (stockQuantity) => (
+    render: (address) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {stockQuantity?.price} USD / {stockQuantity?.cost} USD
+        {address}
       </span>
     ),
   },
   {
-    //created_at
     title: "Created At",
     dataIndex: "created_at",
     key: "created_at",
@@ -91,7 +89,6 @@ const columns = [
       </span>
     ),
   },
-
   // {
   //   title: "Status",
   //   dataIndex: "status",
@@ -121,27 +118,28 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ getDetails, handleDelete }, record) => {
-      return (
-        <div className="flex justify-center items-center gap-3 ">
-          <button
-            onClick={() => getDetails(record.id)}
-            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdEditSquare className="text-lg md:text-xl" />
-          </button>
-          <button
-            onClick={() => handleDelete(record.id)}
-            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdDelete className="text-lg md:text-xl" />
-          </button>
-        </div>
-      );
-    },
+    // render: ({ getDetails, handleDelete }, record) => {
+    //   return (
+    //     <div className="flex justify-center items-center gap-3 ">
+    //       <button
+    //         onClick={() => getDetails(record.id)}
+    //         className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+    //       >
+    //         <MdEditSquare className="text-lg md:text-xl" />
+    //       </button>
+    //       <button
+    //         onClick={() => handleDelete(record.id)}
+    //         className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+    //       >
+    //         <MdDelete className="text-lg md:text-xl" />
+    //       </button>
+    //     </div>
+    //   );
+    // },
   },
 ];
-const Category = () => {
+
+const Warehouse = () => {
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
     (state) => state.drawer
@@ -159,25 +157,25 @@ const Category = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
-  const { data, isLoading } = useGetCategoriesQuery({
+  const { data, isLoading } = useGetWarehousesQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching } = useGetCategoryDetailsQuery(
+  const { data: details, isFetching } = useGetWarehouseDetailsQuery(
     { id },
     { skip: !id }
   );
 
   const [createCategory, { isLoading: isCreating }] =
-    useCreateCategoryMutation();
+    useCreateWarehouseMutation();
 
   const [updateCategory, { isLoading: isUpdating }] =
-    useUpdateCategoryMutation();
+    useUpdateWarehouseMutation();
 
   const [deleteDepartment, { isLoading: isDeleting }] =
-    useDeleteCategoryMutation();
+    useDeleteWarehouseMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -186,18 +184,20 @@ const Category = () => {
 
   useEffect(() => {
     if (details) {
-      const fieldData = [
-        {
-          name: "name",
-          value: details?.name,
-          errors: "",
-        },
-        {
-          name: "parent_id",
-          value: Number(details?.parent_id),
-          errors: "",
-        },
-      ];
+      //   const fieldData = [
+      //     {
+      //       name: "name",
+      //       value: details?.name,
+      //       errors: "",
+      //     },
+      //     {
+      //       name: "parent_id",
+      //       value: Number(details?.parent_id),
+      //       errors: "",
+      //     },
+      //   ];
+
+      const fieldData = [];
 
       setFields(fieldData);
     }
@@ -214,6 +214,8 @@ const Category = () => {
       setDeleteModal(false);
     }
   };
+
+  console.log(data?.results);
 
   const dataSource =
     data?.results?.category?.map((item) => {
@@ -271,10 +273,9 @@ const Category = () => {
       setFields(errorFields);
     }
   };
-
   return (
     <GlobalContainer
-      pageTitle="Category"
+      pageTitle="Warehouse"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
@@ -289,12 +290,12 @@ const Category = () => {
         isLoading={isLoading}
       />
 
-      <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
-        <CategoryForm
-          handleSubmit={handleSubmit}
-          isLoading={isCreating}
-          fields={errorFields}
-        />
+      <CustomDrawer title={"Create Warehouse"} open={isCreateDrawerOpen}>
+        {/* <CategoryForm
+      handleSubmit={handleSubmit}
+      isLoading={isCreating}
+      fields={errorFields}
+    /> */}
       </CustomDrawer>
 
       <CustomDrawer
@@ -302,11 +303,11 @@ const Category = () => {
         open={isEditDrawerOpen}
         isLoading={isFetching}
       >
-        <CategoryForm
-          handleSubmit={handleUpdate}
-          isLoading={isUpdating}
-          fields={fields}
-        />
+        {/* <CategoryForm
+      handleSubmit={handleUpdate}
+      isLoading={isUpdating}
+      fields={fields}
+    /> */}
       </CustomDrawer>
 
       <DeleteModal
@@ -319,4 +320,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Warehouse;

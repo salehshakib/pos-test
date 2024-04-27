@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Modal } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
+import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 import StatusModal from "../../../../components/Shared/Modal/StatusModal";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
@@ -15,15 +14,16 @@ import {
   useGetDepartmentDetailsQuery,
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
-  useUpdateStatusMutation,
+  useUpdateDepartmentStatusMutation,
 } from "../../../../redux/services/department/departmentApi";
 import {
+  closeCreateDrawer,
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
 import { DEPARTMENT } from "../../../../utilities/configs/Api";
 import DepartmentForm from "./DepartmentForm";
-import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
+import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const columns = [
   // {
@@ -135,18 +135,16 @@ const Department = () => {
   const [deleteId, setDeleteId] = useState(undefined);
 
   //get all data query
-  const {
-    data,
-    isFetching,
-    isLoading: isDepartmentsLoading,
-  } = useGetDepartmentsQuery({
+  const { data, isLoading } = useGetDepartmentsQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching: isDetailsFetching } =
-    useGetDepartmentDetailsQuery({ id }, { skip: !id });
+  const { data: details, isFetching } = useGetDepartmentDetailsQuery(
+    { id },
+    { skip: !id }
+  );
 
   const [createDepartment, { isLoading: isCreating }] =
     useCreateDepartmentMutation();
@@ -155,7 +153,7 @@ const Department = () => {
     useUpdateDepartmentMutation();
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateStatusMutation();
+    useUpdateDepartmentStatusMutation();
 
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
@@ -167,15 +165,19 @@ const Department = () => {
 
   useEffect(() => {
     if (details) {
-      setFields([
+      // const fieldData = fieldsToUpdate(details);
+
+      const fieldData = [
         {
           name: "name",
           value: details?.name,
           errors: "",
         },
-      ]);
+      ];
+
+      setFields(fieldData);
     }
-  }, [details]);
+  }, [details, setFields]);
 
   const handleStatus = (id) => {
     setStatusModal(true);
@@ -204,7 +206,7 @@ const Department = () => {
     }
   };
 
-  const departmentData =
+  const dataSource =
     data?.results?.department?.map((item) => {
       const { id, name, created_at, is_active } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
@@ -220,12 +222,12 @@ const Department = () => {
 
   const handleSubmit = async (values) => {
     const { data, error } = await createDepartment({
-      url: DEPARTMENT,
       data: values,
     });
 
     if (data?.success) {
       setId(undefined);
+      dispatch(closeCreateDrawer());
     }
 
     if (error) {
@@ -240,7 +242,6 @@ const Department = () => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateDepartment({
-      url: DEPARTMENT,
       data: { id, ...values },
     });
 
@@ -271,13 +272,12 @@ const Department = () => {
     >
       <CustomTable
         columns={newColumns}
-        dataSource={departmentData}
+        dataSource={dataSource}
         total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isFetching}
-        isLoading={isDepartmentsLoading}
+        isLoading={isLoading}
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
@@ -291,7 +291,7 @@ const Department = () => {
       <CustomDrawer
         title={"Edit Department"}
         open={isEditDrawerOpen}
-        isLoading={isDetailsFetching}
+        isLoading={isFetching}
       >
         <DepartmentForm
           handleSubmit={handleUpdate}

@@ -1,11 +1,23 @@
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
-import StatusModal from "../../../../components/Shared/Modal/StatusModal";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import {
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation,
+  useGetCategoryDetailsQuery,
+  useGetCategoryQuery,
+  useUpdateCategoryMutation,
+} from "../../../../redux/services/category/categoryApi";
+import {
+  closeCreateDrawer,
+  closeEditDrawer,
+  openEditDrawer,
+} from "../../../../redux/services/drawer/drawerSlice";
 import CategoryForm from "./CategoryForm";
 
 const columns = [
@@ -66,6 +78,18 @@ const columns = [
       </span>
     ),
   },
+  {
+    //created_at
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
+    align: "center",
+    render: (created_at) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {created_at}
+      </span>
+    ),
+  },
 
   // {
   //   title: "Status",
@@ -100,13 +124,13 @@ const columns = [
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            // onClick={() => getDetails(record.id)}
+            onClick={() => getDetails(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            // onClick={() => handleDelete(record.id)}
+            onClick={() => handleDelete(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />
@@ -131,11 +155,122 @@ const Category = () => {
 
   const [id, setId] = useState(undefined);
 
-  const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
-
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
+
+  const { data, isLoading } = useGetCategoryQuery({
+    params: pagination,
+  });
+
+  const total = data?.meta?.total;
+
+  const { data: details, isFetching } = useGetCategoryDetailsQuery(
+    { id },
+    { skip: !id }
+  );
+
+  const [createCategory, { isLoading: isCreating }] =
+    useCreateCategoryMutation();
+
+  const [updateCategory, { isLoading: isUpdating }] =
+    useUpdateCategoryMutation();
+
+  const [deleteDepartment, { isLoading: isDeleting }] =
+    useDeleteCategoryMutation();
+
+  const getDetails = (id) => {
+    setId(id);
+    dispatch(openEditDrawer());
+  };
+
+  useEffect(() => {
+    if (details) {
+      const fieldsToUpdate = Object.keys(details).map((key) => {
+        let value = details[key];
+        // Check if key includes "date"
+        if (key.includes("date")) {
+          // Parse date using dayjs
+          value = dayjs(value, "YYYY-MM-DD").toDate(); // Convert to Date object
+        }
+        return {
+          name: key,
+          value: value,
+          errors: "",
+        };
+      });
+
+      setFields(fieldsToUpdate);
+    }
+  }, [details, setFields]);
+
+  const handleDelete = (id) => {
+    setDeleteModal(true);
+    setDeleteId(id);
+  };
+
+  const handleDeleteCategory = async () => {
+    const { data } = await deleteDepartment(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
+
+  const dataSource =
+    data?.results?.category?.map((item) => {
+      const { id, name, created_at, parent_id } = item;
+      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      return {
+        id,
+        category: name,
+        parentCategory: parent_id ?? "N/A",
+        created_at: date,
+        action: { getDetails, handleDelete },
+      };
+    }) ?? [];
+
+  const handleSubmit = async (values) => {
+    const { data, error } = await createCategory({
+      data: values,
+    });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeCreateDrawer());
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+
+      setErrorFields(errorFields);
+    }
+  };
+
+  const handleUpdate = async (values) => {
+    const { data, error } = await updateCategory({
+      data: { id, ...values },
+    });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors)?.map(
+        (fieldName) => ({
+          name: fieldName,
+          value: fields.find((field) => field.name === fieldName).value,
+          errors: error?.data?.errors[fieldName],
+        })
+      );
+
+      setFields(errorFields);
+    }
+  };
 
   return (
     <GlobalContainer
@@ -146,47 +281,40 @@ const Category = () => {
     >
       <CustomTable
         columns={newColumns}
-        // dataSource={departmentData}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isDepartmentsLoading}
+        isLoading={isLoading}
       />
 
       <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
         <CategoryForm
-          // handleSubmit={handleSubmit}
-          // isLoading={isCreating}
+          handleSubmit={handleSubmit}
+          isLoading={isCreating}
           fields={errorFields}
         />
       </CustomDrawer>
 
       <CustomDrawer
-        title={"Edit Department"}
+        title={"Edit Category"}
         open={isEditDrawerOpen}
-        // isLoading={isDetailsFetching}
+        isLoading={isFetching}
       >
-        {/* <DepartmentForm
+        <CategoryForm
           handleSubmit={handleUpdate}
           isLoading={isUpdating}
           fields={fields}
-        /> */}
+        />
       </CustomDrawer>
-
-      {/* <StatusModal
-        statusModal={statusModal}
-        setStatusModal={setStatusModal}
-        handleStatusUpdate={handleStatusUpdate}
-        isStatusUpdating={isStatusUpdating}
-      />
 
       <DeleteModal
         deleteModal={deleteModal}
         setDeleteModal={setDeleteModal}
-        handleDeleteDepartment={handleDeleteDepartment}
+        handleDeleteDepartment={handleDeleteCategory}
         isDeleting={isDeleting}
-      /> */}
+      />
     </GlobalContainer>
   );
 };

@@ -17,6 +17,7 @@ import {
   useUpdateDepartmentStatusMutation,
 } from "../../../../redux/services/department/departmentApi";
 import {
+  closeCreateDrawer,
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
@@ -133,18 +134,16 @@ const Department = () => {
   const [deleteId, setDeleteId] = useState(undefined);
 
   //get all data query
-  const {
-    data,
-    isFetching,
-    isLoading: isDepartmentsLoading,
-  } = useGetDepartmentsQuery({
+  const { data, isLoading } = useGetDepartmentsQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching: isDetailsFetching } =
-    useGetDepartmentDetailsQuery({ id }, { skip: !id });
+  const { data: details, isFetching } = useGetDepartmentDetailsQuery(
+    { id },
+    { skip: !id }
+  );
 
   const [createDepartment, { isLoading: isCreating }] =
     useCreateDepartmentMutation();
@@ -165,15 +164,19 @@ const Department = () => {
 
   useEffect(() => {
     if (details) {
-      setFields([
-        {
-          name: "name",
-          value: details?.name,
+      const fieldsToUpdate = Object.keys(details).map((key) => {
+        let value = details[key];
+
+        return {
+          name: key,
+          value: value,
           errors: "",
-        },
-      ]);
+        };
+      });
+
+      setFields(fieldsToUpdate);
     }
-  }, [details]);
+  }, [details, setFields]);
 
   const handleStatus = (id) => {
     setStatusModal(true);
@@ -202,7 +205,7 @@ const Department = () => {
     }
   };
 
-  const departmentData =
+  const dataSource =
     data?.results?.department?.map((item) => {
       const { id, name, created_at, is_active } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
@@ -218,12 +221,12 @@ const Department = () => {
 
   const handleSubmit = async (values) => {
     const { data, error } = await createDepartment({
-      url: DEPARTMENT,
       data: values,
     });
 
     if (data?.success) {
       setId(undefined);
+      dispatch(closeCreateDrawer());
     }
 
     if (error) {
@@ -238,7 +241,6 @@ const Department = () => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateDepartment({
-      url: DEPARTMENT,
       data: { id, ...values },
     });
 
@@ -269,13 +271,12 @@ const Department = () => {
     >
       <CustomTable
         columns={newColumns}
-        dataSource={departmentData}
+        dataSource={dataSource}
         total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isFetching}
-        isLoading={isDepartmentsLoading}
+        isLoading={isLoading}
       />
 
       <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
@@ -289,7 +290,7 @@ const Department = () => {
       <CustomDrawer
         title={"Edit Department"}
         open={isEditDrawerOpen}
-        isLoading={isDetailsFetching}
+        isLoading={isFetching}
       >
         <DepartmentForm
           handleSubmit={handleUpdate}

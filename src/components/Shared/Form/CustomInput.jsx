@@ -31,7 +31,6 @@ const CustomInput = ({
               placeholder={placeholder}
               className="mt-2 custom-selector"
               size="large"
-              allowClear
               loading={false}
               options={options}
             />

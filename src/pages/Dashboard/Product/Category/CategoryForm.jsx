@@ -1,8 +1,19 @@
 import { Col, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
+import { useGetCategoryQuery } from "../../../../redux/services/category/categoryApi";
 
 const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
+  const { data, isLoading: isParentCategoryLoading } = useGetCategoryQuery({});
+
+  console.log(data);
+  console.log(isParentCategoryLoading);
+
+  const options = data?.results?.category?.map((category) => ({
+    value: category.id,
+    label: category.name,
+  }));
+
   return (
     <CustomForm
       handleSubmit={handleSubmit}
@@ -19,39 +30,41 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             name={"name"}
             placeholder={"Category Name"}
           />
-          {/* <CustomInput
-            label="Category Name"
-            type={"text"}
-            required={true}
-            name={"name"}
-            placeholder={"Category Name"}
-          /> */}
         </Col>
         <Col xs={24} md={12} lg={8}>
           <CustomInput
-            label="Category Name"
-            type={"text"}
-            required={true}
-            name={"name"}
-            placeholder={"Category Name"}
+            label="Parent Category"
+            type={"select"}
+            name={"parent_id"}
+            options={options}
+            placeholder={"Parent Category"}
           />
         </Col>
         <Col xs={24} md={12} lg={8}>
           <CustomInput
-            label="Category Name"
-            type={"text"}
+            label="Number of Product"
+            type={"number"}
             required={true}
-            name={"name"}
-            placeholder={"Category Name"}
+            // name={"name"}
+            placeholder={"Number of Product"}
           />
         </Col>
         <Col xs={24} md={12} lg={8}>
           <CustomInput
-            label="Category Name"
-            type={"text"}
+            label="Stock Quantity"
+            type={"number"}
             required={true}
-            name={"name"}
-            placeholder={"Category Name"}
+            // name={"name"}
+            placeholder={"Stock Quantity"}
+          />
+        </Col>
+        <Col xs={24} md={12} lg={8}>
+          <CustomInput
+            label="Stock Worth"
+            type={"number"}
+            required={true}
+            // name={"name"}
+            placeholder={"Stock Worth"}
           />
         </Col>
       </Row>

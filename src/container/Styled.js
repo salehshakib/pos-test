@@ -18,18 +18,28 @@ const GlobalUtilityStyle = styled.div`
     justify-content: center;
   }
 
-  .custom-placeholder {
-    .ant-input-affix-wrapper-lg {
-      font-size: 14px;
-    }
+  .ant-input-number-input-wrap {
+    font-size: 14px;
   }
 
-  // .ant-input-affix-wrapper > input.ant-input {
-  //   padding: 7px 11px;
-  //   font-size: 5px;
-  //   line-height: 1.5;
-  //   border-radius: 8px;
-  // }
+  .ant-input-affix-wrapper-lg {
+    font-size: 14px;
+  }
+
+  .ant-select {
+    border: 2px solid #dcbfff !important;
+    border-radius: 8px;
+  }
+
+  .ant-select-focused {
+    border: 2px solid #51258f !important;
+    border-radius: 8px;
+  }
+
+  .ant-select-selector {
+    font-size: 14px !important;
+    border: none !important;
+  }
 `;
 
 export { GlobalUtilityStyle };

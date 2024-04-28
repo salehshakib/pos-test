@@ -11,7 +11,12 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const CustomUploader = ({ name, label, required = false }) => {
+const CustomUploader = ({
+  name,
+  label,
+  required = false,
+  multiple = false,
+}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -67,28 +72,32 @@ const CustomUploader = ({ name, label, required = false }) => {
             setFileList([...fileList, file]);
             return false;
           }}
+          multiple={multiple}
+          maxCount={multiple ? 20 : 2}
         >
-          <button
-            style={{
-              border: 0,
-              background: "none",
-            }}
-            type="button"
-            className="w-full flex flex-col items-center justify-center"
-          >
-            <BiImageAdd
+          {fileList.length < 2 && (
+            <button
               style={{
-                fontSize: 25,
+                border: 0,
+                background: "none",
               }}
-            />
-            <div
-              style={{
-                marginTop: 8,
-              }}
+              type="button"
+              className="w-full flex flex-col items-center justify-center"
             >
-              Upload
-            </div>
-          </button>
+              <BiImageAdd
+                style={{
+                  fontSize: 25,
+                }}
+              />
+              <div
+                style={{
+                  marginTop: 8,
+                }}
+              >
+                Upload
+              </div>
+            </button>
+          )}
         </Upload>
       </Form.Item>
     </GlobalUtilityStyle>

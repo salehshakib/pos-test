@@ -32,13 +32,11 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
         <Col xs={24}>
-          <CustomUploader label={"Brand Image"} name={"brand_image"} />
-        </Col>
-        <Col xs={24}>
-          <CustomUploader label={"local_image "} name={"local_image"} />
-        </Col>
-        <Col xs={24}>
-          <CustomUploader label={" local_image"} name={"user_image"} />
+          <CustomUploader
+            label={"Brand Image"}
+            name={"brand_image"}
+            // multiple={false}
+          />
         </Col>
       </Row>
     </CustomForm>

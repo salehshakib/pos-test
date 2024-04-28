@@ -16,7 +16,7 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
           <CustomInput
             label="Brand Name"
             type={"text"}
-            // required={true}
+            required={true}
             name={"name"}
             placeholder={"Brand Name"}
           />

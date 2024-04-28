@@ -1,10 +1,16 @@
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import {
+  closeCreateDrawer,
+  closeEditDrawer,
+  openEditDrawer,
+} from "../../../../redux/services/drawer/drawerSlice";
 import {
   useCreateWarehouseMutation,
   useDeleteWarehouseMutation,
@@ -12,12 +18,7 @@ import {
   useGetWarehousesQuery,
   useUpdateWarehouseMutation,
 } from "../../../../redux/services/warehouse/warehouseApi";
-import {
-  closeCreateDrawer,
-  closeEditDrawer,
-  openEditDrawer,
-} from "../../../../redux/services/drawer/drawerSlice";
-import dayjs from "dayjs";
+import WarehouseForm from "./WarehouseForm";
 
 const columns = [
   {
@@ -118,24 +119,24 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    // render: ({ getDetails, handleDelete }, record) => {
-    //   return (
-    //     <div className="flex justify-center items-center gap-3 ">
-    //       <button
-    //         onClick={() => getDetails(record.id)}
-    //         className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
-    //       >
-    //         <MdEditSquare className="text-lg md:text-xl" />
-    //       </button>
-    //       <button
-    //         onClick={() => handleDelete(record.id)}
-    //         className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
-    //       >
-    //         <MdDelete className="text-lg md:text-xl" />
-    //       </button>
-    //     </div>
-    //   );
-    // },
+    render: ({ getDetails, handleDelete }, record) => {
+      return (
+        <div className="flex justify-center items-center gap-3 ">
+          <button
+            onClick={() => getDetails(record.id)}
+            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdEditSquare className="text-lg md:text-xl" />
+          </button>
+          <button
+            onClick={() => handleDelete(record.id)}
+            className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdDelete className="text-lg md:text-xl" />
+          </button>
+        </div>
+      );
+    },
   },
 ];
 
@@ -219,14 +220,12 @@ const Warehouse = () => {
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, parent_id } = item;
+      const { id, name, created_at } = item || {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        category: name,
-        parentCategory: parent_id ?? "N/A",
-        created_at: date,
+
         action: { getDetails, handleDelete },
       };
     }) ?? [];
@@ -291,11 +290,11 @@ const Warehouse = () => {
       />
 
       <CustomDrawer title={"Create Warehouse"} open={isCreateDrawerOpen}>
-        {/* <CategoryForm
-      handleSubmit={handleSubmit}
-      isLoading={isCreating}
-      fields={errorFields}
-    /> */}
+        <WarehouseForm
+          handleSubmit={handleSubmit}
+          isLoading={isCreating}
+          fields={errorFields}
+        />
       </CustomDrawer>
 
       <CustomDrawer

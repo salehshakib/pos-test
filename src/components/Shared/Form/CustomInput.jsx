@@ -37,14 +37,6 @@ const CustomInput = ({
               allowClear
             />
           )) ||
-          (type === "number" && (
-            <InputNumber
-              type="number"
-              placeholder={placeholder}
-              className="mt-2 border-2 w-full "
-              size="large"
-            />
-          )) ||
           (type === "textarea" && (
             <Input.TextArea
               placeholder={placeholder}

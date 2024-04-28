@@ -7,19 +7,18 @@ import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import {
-  useCreateCategoryMutation,
-  useDeleteCategoryMutation,
-  useGetCategoryDetailsQuery,
-  useGetCategoriesQuery,
-  useUpdateCategoryMutation,
-} from "../../../../redux/services/category/categoryApi";
+  useCreateBrandMutation,
+  useDeleteBrandMutation,
+  useGetBrandDetailsQuery,
+  useGetBrandsQuery,
+  useUpdateBrandMutation,
+} from "../../../../redux/services/brand/brandApi";
 import {
   closeCreateDrawer,
   closeEditDrawer,
   openEditDrawer,
 } from "../../../../redux/services/drawer/drawerSlice";
-import CategoryForm from "./CategoryForm";
-import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
+import BrandForm from "./BrandForm";
 
 const columns = [
   {
@@ -36,49 +35,45 @@ const columns = [
     ),
   },
   {
-    title: "Parent Category",
-    dataIndex: "parentCategory",
-    key: "parentCategory",
+    title: "Image",
+    dataIndex: "image",
+    key: "image",
+    fixed: "left",
     align: "center",
-    render: (parentCategory) => (
+    width: 70,
+    render: (img) => (
+      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+        <img
+          src={img}
+          alt="defaultUser"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Brand",
+    dataIndex: "brand",
+    key: "brand",
+    // align: "center",
+    render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {parentCategory}
+        {brand}
       </span>
     ),
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-    align: "center",
-    render: (category) => (
+    title: "Product Name",
+    dataIndex: "productName",
+    key: "productName",
+    // align: "center",
+    render: (productName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {category}
+        {productName}
       </span>
     ),
   },
-  {
-    title: "Products",
-    dataIndex: "products",
-    key: "products",
-    align: "center",
-    render: (products) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {products}
-      </span>
-    ),
-  },
-  {
-    title: "Stock Quantity",
-    dataIndex: "stockQuantity",
-    key: "stockQuantity",
-    align: "center",
-    render: (stockQuantity) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {stockQuantity?.price} USD / {stockQuantity?.cost} USD
-      </span>
-    ),
-  },
+
   {
     //created_at
     title: "Created At",
@@ -141,7 +136,8 @@ const columns = [
     },
   },
 ];
-const Category = () => {
+
+const Brand = () => {
   const dispatch = useDispatch();
   const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
     (state) => state.drawer
@@ -152,32 +148,39 @@ const Category = () => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
+  const [errorFields, setErrorFields] = useState([
+    {
+      name: "brand_image",
+      value: [
+        {
+          url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+      ],
+      errors: "",
+    },
+  ]);
 
   const [id, setId] = useState(undefined);
 
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
-  const { data, isLoading } = useGetCategoriesQuery({
+  const { data, isLoading } = useGetBrandsQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const { data: details, isFetching } = useGetCategoryDetailsQuery(
+  const { data: details, isFetching } = useGetBrandDetailsQuery(
     { id },
     { skip: !id }
   );
 
-  const [createCategory, { isLoading: isCreating }] =
-    useCreateCategoryMutation();
+  const [createBrand, { isLoading: isCreating }] = useCreateBrandMutation();
 
-  const [updateCategory, { isLoading: isUpdating }] =
-    useUpdateCategoryMutation();
+  const [updateBrand, { isLoading: isUpdating }] = useUpdateBrandMutation();
 
-  const [deleteDepartment, { isLoading: isDeleting }] =
-    useDeleteCategoryMutation();
+  const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
 
   const getDetails = (id) => {
     setId(id);
@@ -193,8 +196,13 @@ const Category = () => {
           errors: "",
         },
         {
-          name: "parent_id",
-          value: Number(details?.parent_id),
+          name: "brand_image",
+          value: {
+            uid: "-1",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+          },
           errors: "",
         },
       ];
@@ -209,7 +217,7 @@ const Category = () => {
   };
 
   const handleDeleteCategory = async () => {
-    const { data } = await deleteDepartment(deleteId);
+    const { data } = await deleteBrand(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -217,40 +225,43 @@ const Category = () => {
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, parent_id } = item;
+      const { id, created_at } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      console.log(item);
 
       return {
         id,
-        category: name,
-        parentCategory: parent_id ?? "N/A",
+        // category: name,
+        // parentCategory: parent_id ?? "N/A",
         created_at: date,
         action: { getDetails, handleDelete },
       };
     }) ?? [];
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createCategory({
-      data: values,
-    });
+    console.log(values);
+    // const { data, error } = await createBrand({
+    //   data: values,
+    // });
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeCreateDrawer());
-    }
+    // if (data?.success) {
+    //   setId(undefined);
+    //   dispatch(closeCreateDrawer());
+    // }
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+    // if (error) {
+    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+    //     name: fieldName,
+    //     errors: error?.data?.errors[fieldName],
+    //   }));
 
-      setErrorFields(errorFields);
-    }
+    //   setErrorFields(errorFields);
+    // }
   };
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateCategory({
+    const { data, error } = await updateBrand({
       data: { id, ...values },
     });
 
@@ -274,7 +285,7 @@ const Category = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Category"
+      pageTitle="Brand"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
@@ -289,8 +300,8 @@ const Category = () => {
         isLoading={isLoading}
       />
 
-      <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
-        <CategoryForm
+      <CustomDrawer title={"Create Brand"} open={isCreateDrawerOpen}>
+        <BrandForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
@@ -301,8 +312,9 @@ const Category = () => {
         title={"Edit Category"}
         open={isEditDrawerOpen}
         isLoading={isFetching}
+        fields={fields}
       >
-        <CategoryForm
+        <BrandForm
           handleSubmit={handleUpdate}
           isLoading={isUpdating}
           fields={fields}
@@ -319,4 +331,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Brand;

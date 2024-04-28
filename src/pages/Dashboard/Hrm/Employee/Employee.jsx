@@ -9,7 +9,7 @@ import { openEditDrawer } from "../../../../redux/services/drawer/drawerSlice";
 
 const columns = [
   {
-    title: "Staff ID",
+    title: "ID",
     dataIndex: "id",
     key: "id",
     fixed: "left",

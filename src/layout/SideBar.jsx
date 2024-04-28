@@ -1,9 +1,9 @@
 import { Layout, Menu } from "antd";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
-import { useState } from "react";
 const { Sider } = Layout;
 
 const getLevelKeys = (items1) => {
@@ -27,6 +27,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const menu = userData?.roles?.menu;
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
 
+  // sidemenu by filtered paths
+
   const filteredPaths = adminPaths.filter((item) => {
     return menu?.some(
       (menuItem) => menuItem?.name.toLowerCase() === item.name.toLowerCase()
@@ -36,9 +38,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   // console.log(filteredPaths);
 
   const sidebarItems = sidebarItemsGenerator(
-    // !userData?.is_admin ? filteredPaths : adminPaths
-    // filteredPaths
-    adminPaths
+    userData?.is_admin ? filteredPaths : adminPaths
   );
 
   const levelKeys = getLevelKeys(sidebarItems);
@@ -64,7 +64,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   return (
     <div className="absolute md:relative z-50 lg:z-0 min-h-fit">
       <Sider
-        className="border-r border-gray-200 drop-shadow-primary h-full"
+        className=" border border-r-2 border-gray-200  h-full"
         theme="light"
         trigger={null}
         collapsible
@@ -72,6 +72,10 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         onCollapse={(value) => setCollapsed(value)}
         style={{
           minHeight: "100vh",
+          // box shadow right
+          boxShadow:
+            "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
+
           // maxHeight: "200vh",
           // height: "100vh",
           // overflow: "auto",
@@ -88,6 +92,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
             borderRight: 0,
           }}
           items={sidebarItems}
+          // defaultSelectedKeys={["dashboard"]}
+          // selectedKeys={selectedKeys ? [selectedKeys] : []}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}
         />

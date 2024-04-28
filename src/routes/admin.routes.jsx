@@ -7,8 +7,8 @@ import Expense from "../pages/Dashboard/Expense/Expense";
 import Department from "../pages/Dashboard/Hrm/Department/Department";
 import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
 import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import Category from "../pages/Dashboard/Inventory/Category/Category";
 import People from "../pages/Dashboard/People/People";
-import Category from "../pages/Dashboard/Product/Category/Category";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
@@ -21,6 +21,7 @@ import Transfer from "../pages/Dashboard/Transfer/Transfer";
 import { BsBoxSeam } from "react-icons/bs";
 import { FaWarehouse } from "react-icons/fa";
 import {
+  FaBagShopping,
   FaBuilding,
   FaCartShopping,
   FaMoneyBillWave,
@@ -33,6 +34,7 @@ import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
   MdCategory,
+  MdInventory2,
   MdOutlineSettings,
   MdPayment,
   MdPeopleAlt,
@@ -42,7 +44,8 @@ import {
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
-import Warehouse from "../pages/Dashboard/Settings/Warehouse/Warehouse";
+import Brand from "../pages/Dashboard/Inventory/Brand/Brand";
+import Warehouse from "../pages/Dashboard/Inventory/Warehouse/Warehouse";
 
 export const adminPaths = [
   {
@@ -55,12 +58,29 @@ export const adminPaths = [
     name: "Product",
     path: "product",
     icon: BsBoxSeam,
+  },
+  {
+    name: "Inventory",
+    path: "inventory",
+    icon: MdInventory2,
     children: [
       {
         name: "Category",
         path: "category",
         icon: MdCategory,
         element: <Category />,
+      },
+      {
+        name: "Brand",
+        path: "brand",
+        icon: FaBagShopping,
+        element: <Brand />,
+      },
+      {
+        name: "Warehouse",
+        path: "warehouse",
+        icon: FaWarehouse,
+        element: <Warehouse />,
       },
     ],
   },
@@ -235,13 +255,5 @@ export const adminPaths = [
     path: "settings",
     icon: MdOutlineSettings,
     element: <Settings />,
-    children: [
-      {
-        name: "Warehouse",
-        path: "warehouse",
-        icon: FaWarehouse,
-        element: <Warehouse />,
-      },
-    ],
   },
 ];

@@ -19,6 +19,7 @@
   color: #51258f !important;
 }
 
+
 .ant-menu-submenu-selected > .ant-menu-submenu-title {
   color: #51258f !important;
 }
@@ -31,4 +32,6 @@
 .ant-btn-primary:hover {
   background-color: #482579 !important; /* Lighter color */
 }
+
+
 

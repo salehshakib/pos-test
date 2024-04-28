@@ -17,7 +17,7 @@ const MainLayout = () => {
         minHeight: "100vh",
       }}
     >
-      <Header className="bg-primary flex justify-between items-center px-5">
+      <Header className="bg-white flex justify-between items-center px-5  border border-b-2">
         <div className="flex items-center gap-6 text-2xl">
           <Button
             className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
@@ -46,7 +46,8 @@ const MainLayout = () => {
         <Layout className="ml-[4.3rem] md:ml-0">
           <Content
             style={{
-              margin: "8px 8px",
+              // margin: "0px 8px",
+              marginLeft: "8px",
               backgroundColor: "white",
             }}
             className="min-h-90vh "

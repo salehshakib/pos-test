@@ -57,6 +57,10 @@ const MainLayout = () => {
           <Footer
             style={{
               textAlign: "center",
+              // position: "absolute",
+              // left: 0,
+              // bottom: 0,
+              // width: "100%",
             }}
           >
             POS Inventory ©{new Date().getFullYear()} Created by Vitasoft

@@ -47,9 +47,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     const currentOpenKey = openKeys.find(
       (key) => stateOpenKeys.indexOf(key) === -1
     );
-    console.log(openKeys);
 
-    console.log(currentOpenKey);
     if (currentOpenKey !== undefined) {
       const repeatIndex = openKeys
         .filter((key) => key !== currentOpenKey)
@@ -67,7 +65,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   return (
     <div className="absolute lg:relative z-50 lg:z-0 min-h-fit ">
       <Sider
-        className=" border border-r-2 border-gray-200  h-full"
+        className=" border border-r-2 border-gray-200 h-full"
         theme="light"
         width={220}
         trigger={null}
@@ -85,9 +83,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         <Menu
           theme="light"
           mode="inline"
-          className="pb-10"
+          className="h-[90vh] overflow-auto"
           style={{
-            // height: "100%",
             borderRight: 0,
           }}
           items={sidebarItems}

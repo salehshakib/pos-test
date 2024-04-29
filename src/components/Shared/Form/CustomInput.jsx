@@ -20,7 +20,7 @@ const CustomInput = ({
       >
         {(type === "password" && (
           <Input.Password
-            placeholder={placeholder}
+            placeholder={`Enter ${placeholder ?? label}`}
             className="mt-2 border-2 "
             size="large"
             prefix={prefix}
@@ -29,7 +29,7 @@ const CustomInput = ({
         )) ||
           (type === "select" && (
             <Select
-              placeholder={placeholder}
+              placeholder={`Select ${placeholder ?? label}`}
               className="mt-2 custom-selector"
               size="large"
               loading={isSelectLoading}
@@ -39,7 +39,7 @@ const CustomInput = ({
           )) ||
           (type === "textarea" && (
             <Input.TextArea
-              placeholder={placeholder}
+              placeholder={`Enter ${placeholder ?? label}`}
               className="mt-2 border-2"
               size="large"
               allowClear
@@ -47,7 +47,7 @@ const CustomInput = ({
           )) || (
             <Input
               type={type}
-              placeholder={`Enter ${placeholder}`}
+              placeholder={`Enter ${placeholder ?? label}`}
               className="mt-2 border-2"
               size="large"
               prefix={prefix}

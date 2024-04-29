@@ -1,0 +1,30 @@
+{
+    "invoiceFormats": [
+      {
+        "id": 1,
+        "name": "Standard ",
+        "description": "A basic invoice format with itemized list and total."
+      },
+      {
+        "id": 2,
+        "name": "Detailed ",
+        "description": "An invoice format with detailed breakdown of items, taxes, and discounts."
+      },
+      {
+        "id": 3,
+        "name": "Compact ",
+        "description": "A condensed invoice format with minimal information."
+      },
+      {
+        "id": 5,
+        "name": "A4 ",
+        "description": "A condensed invoice format with minimal information."
+      },
+      {
+        "id": 4,
+        "name": "Custom ",
+        "description": "An invoice format that can be customized with company logo, colors, and layout."
+      }
+    ]
+  }
+  

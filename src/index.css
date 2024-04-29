@@ -33,9 +33,28 @@
   background-color: #482579 !important; /* Lighter color */
 }
 
-.custom-upload .ant-upload  {
-    margin-inline-end: 0 !important;
+.custom-logo-upload .ant-upload  {
+    margin-inline: 0 !important;
+    width: 150px !important;
+    height: 150px !important;
   }
+.custom-logo-upload .ant-upload-list-item-container {
+    margin-inline: 0 !important;
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+.custom-upload .ant-upload  {
+    width: 130px !important;
+    height: 130px !important;
+  }
+.custom-upload .ant-upload-list-item-container {
+    width: 130px !important;
+    height: 130px !important;
+  }
+
+
+  
 
 
 /* .ant-layout-sider {

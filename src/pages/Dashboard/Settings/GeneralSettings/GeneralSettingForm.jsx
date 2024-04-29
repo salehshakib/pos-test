@@ -1,26 +1,11 @@
-import { Button, Col, Form, Image, Input, Row, Upload } from "antd";
-import { useState } from "react";
-import { LiaCloudUploadAltSolid } from "react-icons/lia";
+import { Col, Form, Radio, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
-
-// const formItemLayout = {
-//   labelCol: {
-//     xs: {
-//       span: 8,
-//     },
-//     // lg: {
-//     //   span: 8,
-//     // },
-//   },
-//   wrapperCol: {
-//     xs: {
-//       span: 16,
-//     },
-//     // lg: {
-//     //   span: 10,
-//     // },
-//   },
-// };
+import CustomInput from "../../../../components/Shared/Form/CustomInput";
+import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
+import timezones from "timezones.json";
+import dateFormats from "../../../../assets/data/dateFormats.json";
+import invoiceFormats from "../../../../assets/data/invoiceFormats.json";
+import { currencies } from "currencies.json";
 
 const rowLayout = {
   gutter: 25,
@@ -34,175 +19,142 @@ const colLayout = {
   lg: 8,
 };
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+const GeneralSettingForm = () => {
+  const timezone = timezones.map(({ text }) => {
+    return { label: text, value: text };
   });
 
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+  const dateFormatOptions = dateFormats.formats.map((item) => {
+    return { label: item, value: item };
+  });
 
-const GeneralSettingForm = () => {
-  const [form] = Form.useForm();
-
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState([]);
-
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+  const invoiceFormatOptions = invoiceFormats.invoiceFormats.map(
+    ({ id, name }) => {
+      return { label: name, value: id };
     }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-  };
+  );
 
-  const handleFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
+  const currenciesOptions = currencies.map(({ name, symbol, code }) => {
+    return { label: `${name} (${symbol})`, value: code };
+  });
 
   return (
     <CustomForm
       // handleSubmit={handleSubmit}
       className=""
+      submitBtnText="Update"
+
       // fields={fields}
       // isLoading={isLoading}
     >
-      <Row {...rowLayout} className="">
-        <Col xs={24} className="flex flex-col items-center justify-center">
-          {previewImage && (
-            <Image
-              wrapperStyle={{
-                display: "none",
-              }}
-              preview={{
-                visible: previewOpen,
-                onVisibleChange: (visible) => setPreviewOpen(visible),
-                afterOpenChange: (visible) => !visible && setPreviewImage(""),
-              }}
-              src={previewImage}
-            />
-          )}
-          <Form.Item
-            // label={}
-            name={name}
-            // rules={[{ required: required, message: `Please input ${label}!` }]}
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            className=""
-            style={{
-              marginBottom: 0,
-            }}
-          >
-            <Upload
-              listType="picture-circle"
-              name={"avatar"}
-              fileList={fileList}
-              onChange={handleFileChange}
-              onPreview={handlePreview}
-              beforeUpload={(file) => {
-                setFileList([...fileList, file]);
-                return false;
-              }}
-              maxCount={1}
-              className=" custom-upload"
-            >
-              {fileList.length === 0 && (
-                <button
-                  style={{
-                    // border: 0,
-                    background: "none",
-                  }}
-                  type="button"
-                  className="w-full flex flex-col items-center justify-center avatar-uploader "
-                >
-                  <LiaCloudUploadAltSolid
-                    style={{
-                      fontSize: 25,
-                    }}
-                  />
-                  <div
-                    style={{
-                      marginTop: 8,
-                    }}
-                  >
-                    Upload
-                  </div>
-                </button>
-              )}
-            </Upload>
-          </Form.Item>
-          <div className="text-center text-md md:text-xl pb-5">Logo</div>
-        </Col>
-      </Row>
+      <CustomLogoUploader />
 
       <Row {...rowLayout} className="">
         <Col {...colLayout}>
-          <Form.Item name={"systemTitle"} label={"System Title"}>
-            <Input
-              type={"text"}
-              placeholder={`Enter System Title`}
-              className="border-2"
-              size="large"
-              allowClear
-            />
-          </Form.Item>
+          <CustomInput
+            label={"System Title"}
+            type={"text"}
+            required={true}
+            name={"systemTitle"}
+          />
         </Col>
         <Col {...colLayout}>
-          <Form.Item name={"Company Name"} label={"Company Name"}>
-            <Input
-              type={"text"}
-              placeholder={`Enter Company Name`}
-              className="border-2"
-              size="large"
-              allowClear
-            />
+          <CustomInput
+            name={"companyName"}
+            label={"Company Name"}
+            type={"text"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Vat Registration Number"}
+            type={"text"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Time Zone"}
+            type={"select"}
+            options={timezone}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Date Format"}
+            type={"select"}
+            options={dateFormatOptions}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Invoice Format"}
+            type={"select"}
+            options={invoiceFormatOptions}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Currency"}
+            type={"select"}
+            options={currenciesOptions}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Digits After Decimal Point"}
+            type={"text"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Staff Access"}
+            type={"select"}
+            required={true}
+          />
+        </Col>
+
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Developed By"}
+            type={"text"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <Form.Item label="Current Position" name={"currentPosittion"}>
+            <Radio.Group>
+              <Radio value="preifx">Prefix</Radio>
+              <Radio value="suffix">Suffix</Radio>
+            </Radio.Group>
           </Form.Item>
         </Col>
         <Col {...colLayout}>
           <Form.Item
-            name={"vatRegistrationNumber"}
-            label={"Vat Registation Number"}
+            label="Sale and Quotion Without Stock"
+            name={"saleQuotationWithoutStock"}
           >
-            <Input
-              type={"text"}
-              placeholder={`Enter Vat Registation Number`}
-              className="border-2"
-              size="large"
-              allowClear
-            />
-          </Form.Item>
-        </Col>
-        <Col {...colLayout}>
-          <Form.Item label={"Currency"}>
-            <Input
-              type={"text"}
-              placeholder={`Enter Currency`}
-              className="border-2"
-              size="large"
-              allowClear
-            />
+            <Radio.Group>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </Radio.Group>
           </Form.Item>
         </Col>
       </Row>
-
-      <div className="w-full flex gap-3 justify-end items-center">
-        <Button type="default">Cancel</Button>
-        <Button
-          htmlType="submit"
-          className="bg-secondary hover:bg-posPurple text-white"
-          // loading={isLoading}
-        >
-          Update
-        </Button>
-      </div>
     </CustomForm>
   );
 };

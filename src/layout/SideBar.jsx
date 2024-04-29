@@ -47,6 +47,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     const currentOpenKey = openKeys.find(
       (key) => stateOpenKeys.indexOf(key) === -1
     );
+    console.log(openKeys);
+
+    console.log(currentOpenKey);
     if (currentOpenKey !== undefined) {
       const repeatIndex = openKeys
         .filter((key) => key !== currentOpenKey)
@@ -72,13 +75,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         onCollapse={(value) => setCollapsed(value)}
         style={{
           minHeight: "100vh",
-          // box shadow right
           boxShadow:
             "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
-
-          // maxHeight: "200vh",
-          // height: "100vh",
-          // overflow: "auto",
         }}
         breakpoint="md"
         collapsedWidth="70"
@@ -92,8 +90,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
             borderRight: 0,
           }}
           items={sidebarItems}
-          // defaultSelectedKeys={["dashboard"]}
-          // selectedKeys={selectedKeys ? [selectedKeys] : []}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}
         />

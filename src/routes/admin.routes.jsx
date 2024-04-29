@@ -7,16 +7,17 @@ import Expense from "../pages/Dashboard/Expense/Expense";
 import Department from "../pages/Dashboard/Hrm/Department/Department";
 import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
 import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import Brand from "../pages/Dashboard/Inventory/Brand/Brand";
 import Category from "../pages/Dashboard/Inventory/Category/Category";
+import Warehouse from "../pages/Dashboard/Inventory/Warehouse/Warehouse";
 import People from "../pages/Dashboard/People/People";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
 import Return from "../pages/Dashboard/Return/Return";
 import Sale from "../pages/Dashboard/Sale/Sale";
-import Settings from "../pages/Dashboard/Settings/Settings";
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
+import Transfer from "../pages/Dashboard/Transfer/Transfer";
 //icons
 import { BsBoxSeam } from "react-icons/bs";
 import { FaWarehouse } from "react-icons/fa";
@@ -44,8 +45,7 @@ import {
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
-import Brand from "../pages/Dashboard/Inventory/Brand/Brand";
-import Warehouse from "../pages/Dashboard/Inventory/Warehouse/Warehouse";
+import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
 
 export const adminPaths = [
   {
@@ -254,6 +254,13 @@ export const adminPaths = [
     name: "Settings",
     path: "settings",
     icon: MdOutlineSettings,
-    element: <Settings />,
+    children: [
+      {
+        name: "General Settings",
+        path: "general-settings",
+        icon: TbDashboard,
+        element: <GeneralSettings />,
+      },
+    ],
   },
 ];

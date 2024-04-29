@@ -75,7 +75,7 @@ const CustomUploader = ({
           multiple={multiple}
           maxCount={multiple ? 20 : 2}
         >
-          {fileList.length < 2 && (
+          {(fileList.length < 2 || multiple) && (
             <button
               style={{
                 border: 0,

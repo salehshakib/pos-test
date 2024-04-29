@@ -15,6 +15,7 @@ export const fieldsToUpdate = (details) => {
       if (key.includes("date")) {
         value = dayjs(value, "YYYY-MM-DD").toDate();
       }
+
       return {
         name: key,
         value: value,

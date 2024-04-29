@@ -11,6 +11,13 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
+const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
+
 const CustomUploader = ({
   name,
   label,
@@ -31,13 +38,6 @@ const CustomUploader = ({
 
   const handleFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-  };
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
   };
 
   return (
@@ -74,8 +74,9 @@ const CustomUploader = ({
           }}
           multiple={multiple}
           maxCount={multiple ? 20 : 2}
+          className="custom-upload"
         >
-          {fileList.length < 2 && (
+          {(fileList.length < 2 || multiple) && (
             <button
               style={{
                 border: 0,

@@ -11,6 +11,7 @@ const CustomForm = ({
   fields,
   isLoading,
   submitBtn = true,
+  submitBtnText = "Save",
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const CustomForm = ({
             className="bg-secondary hover:bg-posPurple text-white"
             loading={isLoading}
           >
-            Submit
+            {submitBtnText}
           </Button>
         </div>
       )}

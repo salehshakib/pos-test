@@ -142,16 +142,18 @@ const GlobalContainer = ({
     <GlobalUtilityStyle>
       <div className="h-full ">
         <PageContainer
-          title=<div className="text-2xl lg:text-3xl">{pageTitle}</div>
-          subTitle=<div className="">
-            <Button
-              key={"create"}
-              type="text"
-              icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full " />}
-              onClick={handleDrawerOpen}
-              className="flex justify-center items-center border-none w-full text-secondary"
-            />
-          </div>
+          header={{
+            title: <div className="text-2xl lg:text-3xl py-1">{pageTitle}</div>,
+            subTitle: (
+              <Button
+                key={"create"}
+                type="text"
+                icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
+                onClick={handleDrawerOpen}
+                className="flex justify-center items-center border-none w-full text-secondary py-1"
+              />
+            ),
+          }}
           extra={[
             <Space key="search">
               <Space.Compact>

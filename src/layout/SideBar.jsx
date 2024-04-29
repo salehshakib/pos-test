@@ -47,6 +47,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     const currentOpenKey = openKeys.find(
       (key) => stateOpenKeys.indexOf(key) === -1
     );
+
     if (currentOpenKey !== undefined) {
       const repeatIndex = openKeys
         .filter((key) => key !== currentOpenKey)
@@ -62,38 +63,31 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute md:relative z-50 lg:z-0 min-h-fit">
+    <div className="absolute lg:relative z-50 lg:z-0 min-h-fit ">
       <Sider
-        className=" border border-r-2 border-gray-200  h-full"
+        className=" border border-r-2 border-gray-200 h-full"
         theme="light"
+        width={220}
         trigger={null}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
           minHeight: "100vh",
-          // box shadow right
           boxShadow:
             "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
-
-          // maxHeight: "200vh",
-          // height: "100vh",
-          // overflow: "auto",
         }}
-        breakpoint="md"
+        breakpoint="lg"
         collapsedWidth="70"
       >
         <Menu
           theme="light"
           mode="inline"
-          className="pb-10"
+          className="h-[90vh] overflow-auto"
           style={{
-            // height: "100%",
             borderRight: 0,
           }}
           items={sidebarItems}
-          // defaultSelectedKeys={["dashboard"]}
-          // selectedKeys={selectedKeys ? [selectedKeys] : []}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}
         />

@@ -65,10 +65,11 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute md:relative z-50 lg:z-0 min-h-fit">
+    <div className="absolute lg:relative z-50 lg:z-0 min-h-fit ">
       <Sider
         className=" border border-r-2 border-gray-200  h-full"
         theme="light"
+        width={220}
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -78,7 +79,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           boxShadow:
             "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
         }}
-        breakpoint="md"
+        breakpoint="lg"
         collapsedWidth="70"
       >
         <Menu

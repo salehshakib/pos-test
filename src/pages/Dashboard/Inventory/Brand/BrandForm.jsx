@@ -3,6 +3,18 @@ import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 import CustomUploader from "../../../../components/Shared/Form/CustomUploader";
 
+const rowLayout = {
+  gutter: 25,
+  align: "middle",
+  justify: "start",
+};
+
+const colLayout = {
+  xs: 24,
+  md: 12,
+  lg: 12,
+};
+
 const BrandForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
@@ -11,8 +23,8 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
       fields={fields}
       isLoading={isLoading}
     >
-      <Row gutter={25}>
-        <Col xs={24} md={12} lg={12}>
+      <Row {...rowLayout}>
+        <Col {...colLayout}>
           <CustomInput
             label="Brand Name"
             type={"text"}
@@ -22,7 +34,7 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
 
-        <Col xs={24} md={12} lg={12}>
+        <Col {...colLayout}>
           <CustomInput
             label="Product Name"
             type={"text"}

@@ -1,46 +1,37 @@
 import { Button, Col, Form, Image, Input, Row, Upload } from "antd";
 import { useState } from "react";
 import { LiaCloudUploadAltSolid } from "react-icons/lia";
+import CustomForm from "../../../../components/Shared/Form/CustomForm";
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 6,
-    },
-    // lg: {
-    //   span: 8,
-    // },
-  },
-  wrapperCol: {
-    xs: {
-      span: 18,
-    },
-    // lg: {
-    //   span: 10,
-    // },
-  },
-};
+// const formItemLayout = {
+//   labelCol: {
+//     xs: {
+//       span: 8,
+//     },
+//     // lg: {
+//     //   span: 8,
+//     // },
+//   },
+//   wrapperCol: {
+//     xs: {
+//       span: 16,
+//     },
+//     // lg: {
+//     //   span: 10,
+//     // },
+//   },
+// };
 
 const rowLayout = {
   gutter: 25,
   align: "middle",
-  justify: "center",
+  justify: "start",
 };
-
-// const labelColLayout = {
-//   xs: 8,
-//   xl: 6,
-// };
-
-// const wrapperColLayout = {
-//   xs: 16,
-//   xl: 6,
-//   //   xl: 16,
-// };
 
 const colLayout = {
   xs: 24,
-  lg: 12,
+  md: 12,
+  lg: 8,
 };
 
 const getBase64 = (file) =>
@@ -78,22 +69,12 @@ const GeneralSettingForm = () => {
   };
 
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      // fields={fields}
-      // onFinish={onFinish}
-      layout="horizontal"
-      autoComplete="on"
-      // onFinishFailed={onFinishFailed}
+    <CustomForm
+      // handleSubmit={handleSubmit}
       className=""
-      style={
-        {
-          // maxWidth: 600,
-        }
-      }
+      // fields={fields}
+      // isLoading={isLoading}
     >
-      {/* <div className="space-y-3"> */}
       <Row {...rowLayout} className="">
         <Col xs={24} className="flex flex-col items-center justify-center">
           {previewImage && (
@@ -162,7 +143,7 @@ const GeneralSettingForm = () => {
         </Col>
       </Row>
 
-      <Row {...rowLayout}>
+      <Row {...rowLayout} className="">
         <Col {...colLayout}>
           <Form.Item name={"systemTitle"} label={"System Title"}>
             <Input
@@ -175,10 +156,10 @@ const GeneralSettingForm = () => {
           </Form.Item>
         </Col>
         <Col {...colLayout}>
-          <Form.Item name={"systemTitle"} label={"System Title"}>
+          <Form.Item name={"Company Name"} label={"Company Name"}>
             <Input
               type={"text"}
-              placeholder={`Enter System Title`}
+              placeholder={`Enter Company Name`}
               className="border-2"
               size="large"
               allowClear
@@ -186,10 +167,13 @@ const GeneralSettingForm = () => {
           </Form.Item>
         </Col>
         <Col {...colLayout}>
-          <Form.Item name={"systemTitle"} label={"System Title"}>
+          <Form.Item
+            name={"vatRegistrationNumber"}
+            label={"Vat Registation Number"}
+          >
             <Input
               type={"text"}
-              placeholder={`Enter System Title`}
+              placeholder={`Enter Vat Registation Number`}
               className="border-2"
               size="large"
               allowClear
@@ -197,10 +181,10 @@ const GeneralSettingForm = () => {
           </Form.Item>
         </Col>
         <Col {...colLayout}>
-          <Form.Item name={"systemTitle"} label={"System Title"}>
+          <Form.Item label={"Currency"}>
             <Input
               type={"text"}
-              placeholder={`Enter System Title`}
+              placeholder={`Enter Currency`}
               className="border-2"
               size="large"
               allowClear
@@ -219,7 +203,7 @@ const GeneralSettingForm = () => {
           Update
         </Button>
       </div>
-    </Form>
+    </CustomForm>
   );
 };
 

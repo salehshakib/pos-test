@@ -1,45 +1,6 @@
-import { Form, Image, Upload } from "antd";
-import { useState } from "react";
-import { BiImageAdd } from "react-icons/bi";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
-
-const CustomUploader = ({
-  name,
-  label,
-  required = false,
-  multiple = false,
-}) => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState([]);
-
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-  };
-
-  const handleFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
+const CustomLogoUploader = () => {
   return (
     <GlobalUtilityStyle>
       {previewImage && (
@@ -104,4 +65,4 @@ const CustomUploader = ({
   );
 };
 
-export default CustomUploader;
+export default CustomLogoUploader;

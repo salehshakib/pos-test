@@ -143,14 +143,14 @@ const GlobalContainer = ({
       <div className="h-full ">
         <PageContainer
           header={{
-            title: <div className="text-2xl lg:text-3xl">{pageTitle}</div>,
+            title: <div className="text-2xl lg:text-3xl py-1">{pageTitle}</div>,
             subTitle: (
               <Button
                 key={"create"}
                 type="text"
-                icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full " />}
+                icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
                 onClick={handleDrawerOpen}
-                className="flex justify-center items-center border-none w-full text-secondary"
+                className="flex justify-center items-center border-none w-full text-secondary py-1"
               />
             ),
           }}

@@ -33,6 +33,11 @@
   background-color: #482579 !important; /* Lighter color */
 }
 
+.custom-upload .ant-upload  {
+    margin-inline-end: 0 !important;
+  }
+
+
 /* .ant-layout-sider {
   width: 250px !important;
 } */

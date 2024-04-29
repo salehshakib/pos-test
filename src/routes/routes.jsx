@@ -1,23 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../layout/MainLayout";
-import HomeDashboard from "../pages/Dashboard/HomeDashboard/HomeDashboard";
+import App from "../App";
 import Login from "../pages/Login/Login";
+import { routeGenerator } from "../utilities/lib/routesGenerator";
+import { adminPaths } from "./admin.routes";
 import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: (
       <PrivateRoute>
-        <MainLayout />
+        <App />
       </PrivateRoute>
     ),
-    children: [
-      {
-        index: true,
-        element: <HomeDashboard />,
-      },
-    ],
+  },
+  {
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
+    children: routeGenerator(adminPaths),
   },
   {
     path: "/login",

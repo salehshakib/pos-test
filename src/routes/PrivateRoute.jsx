@@ -4,9 +4,10 @@ import { useCurrentToken } from "../redux/services/auth/authSlice";
 
 function PrivateRoute({ children }) {
   const token = useSelector(useCurrentToken);
-  if (!token) {
-    return <Navigate to={"/login"} replace={true} />;
-  }
+
+  // if (!token) {
+  //   return <Navigate to={"/login"} replace={true} />;
+  // }
 
   return children;
 }

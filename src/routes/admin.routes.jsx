@@ -35,6 +35,7 @@ import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
   MdCategory,
+  MdDisplaySettings,
   MdInventory2,
   MdOutlineSettings,
   MdPayment,
@@ -46,6 +47,9 @@ import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
 import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
+import Discount from "../pages/Dashboard/Settings/Discount/Discount";
+import { CiDiscount1 } from "react-icons/ci";
+import DiscountPlan from "../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
 
 export const adminPaths = [
   {
@@ -258,8 +262,20 @@ export const adminPaths = [
       {
         name: "General Settings",
         path: "general-settings",
-        icon: TbDashboard,
+        icon: MdDisplaySettings,
         element: <GeneralSettings />,
+      },
+      {
+        name: "Discount",
+        path: "discount",
+        icon: CiDiscount1,
+        element: <Discount />,
+      },
+      {
+        name: "Discount Plan",
+        path: "discount-plan",
+        icon: CiDiscount1,
+        element: <DiscountPlan />,
       },
     ],
   },

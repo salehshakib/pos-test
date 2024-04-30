@@ -275,12 +275,12 @@ export const adminPaths = [
         icon: CiDiscount1,
         element: <DiscountPlan />,
       },
-      // {
-      //   name: "Role Permission",
-      //   path: "role-permission",
-      //   icon: FaUserLock,
-      //   element: <DiscountPlan />,
-      // },
+      {
+        name: "Role Permission",
+        path: "role-permission",
+        icon: FaUserLock,
+        element: <DiscountPlan />,
+      },
     ],
   },
 ];

@@ -47,7 +47,6 @@ const customPanelRender = (_, { components: { Picker, Presets } }) => (
 
 const GeneralSettingForm = () => {
   //colors
-
   const { token } = theme.useToken();
   const presets = genPresets({
     primary: generate(token.colorPrimary),
@@ -57,7 +56,7 @@ const GeneralSettingForm = () => {
   });
   const [color, setColor] = useState(presets.primary);
 
-  console.log(color?.metaColor);
+  console.log(color);
 
   const timezone = timezones.map(({ text }) => {
     return { label: text, value: text };
@@ -84,7 +83,6 @@ const GeneralSettingForm = () => {
   return (
     <CustomForm
       // handleSubmit={handleSubmit}
-      className=""
       submitBtnText="Update"
 
       // fields={fields}
@@ -118,9 +116,12 @@ const GeneralSettingForm = () => {
           />
         </Col>
         <Col {...colLayout}>
-          <Form.Item label="Primary Color" name={"primaryColor"}>
+          <Form.Item
+            label="Primary Color"
+            name={"primaryColor"}
+            initialValue={token.secondaryColor}
+          >
             <ColorPicker
-              defaultValue={token.secondaryColor}
               styles={{
                 popupOverlayInner: {
                   width: 480,
@@ -130,14 +131,18 @@ const GeneralSettingForm = () => {
               panelRender={customPanelRender}
               size="large"
               showText
-              onChange={setColor}
+              onChangeComplete={(value) => setColor(value.toHexString())}
+              format="hex"
             />
           </Form.Item>
         </Col>
         <Col {...colLayout}>
-          <Form.Item label="Secondary Color" name={"secondaryColor"}>
+          <Form.Item
+            label="Secondary Color"
+            name={"secondaryColor"}
+            initialValue={token.colorPrimary}
+          >
             <ColorPicker
-              defaultValue={token.colorPrimary}
               styles={{
                 popupOverlayInner: {
                   width: 480,
@@ -147,7 +152,8 @@ const GeneralSettingForm = () => {
               panelRender={customPanelRender}
               size="large"
               showText
-              onChange={setColor}
+              onChangeComplete={(value) => setColor(value.toHexString())}
+              format="hex"
             />
           </Form.Item>
         </Col>

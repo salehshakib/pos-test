@@ -36,7 +36,9 @@ const GeneralSettings = () => {
       //   },
       // }}
     >
-      <GeneralSettingForm />
+      <div className="pt-10">
+        <GeneralSettingForm />
+      </div>
     </PageContainer>
   );
 };

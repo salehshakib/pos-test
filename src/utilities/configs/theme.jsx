@@ -1,40 +1,4 @@
-// export const theme = {
-// token: {
-//   secondaryColor: "#F2E8FF",
-//   colorPrimary: "#51258F",
-//   colorPrimaryHover: "#51258F",
-//   colorBorder: "#DCBFFF",
-//   colorPrimaryBorder: "#51258F",
-// },
-// components: {
-//   Input: {
-//     activeBorderColor: "#51258F",
-//   },
-//   Select: {
-//     activeBorderColor: "#51258F",
-//   },
-//   Button: {
-//     fontWeight: 700,
-//     defaultColor: "#51258F",
-//     defaultHoverBg: "#51258F",
-//     defaultHoverBorderColor: "#51258F",
-//     defaultHoverColor: "#FFFFFF",
-//   },
-//   Table: {
-//     headerBg: "#F2E8FF",
-//     headerSplitColor: "#51258F",
-//     stickyScrollBarBg: "#F2E8FF",
-//     stickyScrollBarBorderRadius: "0 0 10px 10px",
-//   },
-//   Menu: {
-//     itemHoverBg: "#F2E8FF",
-//   },
-// },
-// };
-
 export function theme(primaryColor = "#51258F", secondaryColor = "#F2E8FF") {
-  // const primaryColor = "#51258F";
-  // const secondaryColor = "#F2E8FF";
   return {
     token: {
       secondaryColor: secondaryColor || "#F2E8FF",

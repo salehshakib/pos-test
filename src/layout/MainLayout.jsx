@@ -14,12 +14,8 @@ const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Header className="bg-white flex justify-between items-center px-5  border border-b-2">
+    <Layout className="">
+      <Header className="bg-white flex justify-between items-center px-5 border border-b-2">
         <div className="flex items-center gap-6 text-2xl">
           <Button
             className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
@@ -37,32 +33,23 @@ const MainLayout = () => {
         <Profile />
       </Header>
 
-      <Layout
-        style={{
-          minHeight: "100vh",
-        }}
-        className=""
-      >
-        <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Layout className="relative min-h-screen">
+        <div className="">
+          <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        </div>
 
-        <Layout className="ml-[4.3rem] lg:ml-0">
+        <Layout className="ml-[4.3rem] lg:ml-0 ">
           <Content
             style={{
-              // margin: "0px 8px",
               marginLeft: "8px",
               backgroundColor: "white",
             }}
-            className="min-h-90vh "
           >
             <Outlet />
           </Content>
           <Footer
             style={{
               textAlign: "center",
-              // position: "absolute",
-              // left: 0,
-              // bottom: 0,
-              // width: "100%",
             }}
           >
             POS Inventory ©{new Date().getFullYear()} Created by Vitasoft

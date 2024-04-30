@@ -140,7 +140,7 @@ const GlobalContainer = ({
 
   return (
     <GlobalUtilityStyle>
-      <div className="h-full ">
+      <div className="h-full">
         <PageContainer
           header={{
             title: <div className="text-2xl lg:text-3xl py-1">{pageTitle}</div>,

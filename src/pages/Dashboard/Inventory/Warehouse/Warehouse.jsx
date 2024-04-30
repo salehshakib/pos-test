@@ -17,7 +17,7 @@ import {
   useGetWarehouseDetailsQuery,
   useGetWarehousesQuery,
   useUpdateWarehouseMutation,
-} from "../../../../redux/services/warehouse/warehouseApi";
+} from "../../../../redux/services/inventory/warehouse/warehouseApi";
 import WarehouseForm from "./WarehouseForm";
 
 const columns = [

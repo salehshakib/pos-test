@@ -1,7 +1,7 @@
-import { BRAND } from "../../../utilities/configs/Api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { BRAND } from "../../../../utilities/configs/Api";
+import { openNotification } from "../../../../utilities/lib/notification";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
 const brandApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

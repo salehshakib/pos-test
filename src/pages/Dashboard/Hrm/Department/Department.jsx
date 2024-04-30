@@ -15,7 +15,7 @@ import {
   useGetDepartmentsQuery,
   useUpdateDepartmentMutation,
   useUpdateDepartmentStatusMutation,
-} from "../../../../redux/services/department/departmentApi";
+} from "../../../../redux/services/hrm/department/departmentApi";
 import {
   closeCreateDrawer,
   closeEditDrawer,

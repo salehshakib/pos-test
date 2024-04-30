@@ -12,7 +12,7 @@ import {
   useGetCategoriesQuery,
   useGetCategoryDetailsQuery,
   useUpdateCategoryMutation,
-} from "../../../../redux/services/category/categoryApi";
+} from "../../../../redux/services/inventory/category/categoryApi";
 import {
   closeCreateDrawer,
   closeEditDrawer,

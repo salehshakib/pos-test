@@ -1,38 +1,38 @@
-import { WAREHOUSE } from "../../../utilities/configs/Api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { CATEGORY } from "../../../../utilities/configs/Api";
+import { openNotification } from "../../../../utilities/lib/notification";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const warehouseApi = baseApi.injectEndpoints({
+const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getWarehouses: build.query({
+    getCategories: build.query({
       query: ({ params }) => {
         return {
-          url: `/${WAREHOUSE}`,
+          url: `/${CATEGORY}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: WAREHOUSE, params },
-        WAREHOUSE,
+        { type: CATEGORY, params },
+        CATEGORY,
       ],
     }),
-    getWarehouseDetails: build.query({
+    getCategoryDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${WAREHOUSE}/show/${id}`,
+          url: `${CATEGORY}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [WAREHOUSE],
+      providesTags: [CATEGORY],
     }),
-    createWarehouse: build.mutation({
+    createCategory: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${WAREHOUSE}/store`,
+          url: `/${CATEGORY}/store`,
           method: "POST",
           body: data,
         };
@@ -44,13 +44,13 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [CATEGORY] : [];
       },
     }),
-    updateWarehouse: build.mutation({
+    updateCategory: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${WAREHOUSE}/update/${data?.id}`,
+          url: `/${CATEGORY}/update/${data?.id}`,
           method: "POST",
           body: data,
         };
@@ -62,13 +62,13 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [CATEGORY] : [];
       },
     }),
-    updateWarehouseStatus: build.mutation({
+    updateCategoryStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${WAREHOUSE}/status/${id}`,
+          url: `/${CATEGORY}/status/${id}`,
           method: "POST",
         };
       },
@@ -79,13 +79,13 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [CATEGORY] : [];
       },
     }),
-    deleteWarehouse: build.mutation({
+    deleteCategory: build.mutation({
       query: (id) => {
         return {
-          url: `/${WAREHOUSE}/delete/${id}`,
+          url: `/${CATEGORY}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -96,17 +96,17 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [CATEGORY] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetWarehousesQuery,
-  useGetWarehouseDetailsQuery,
-  useCreateWarehouseMutation,
-  useUpdateWarehouseMutation,
-  useUpdateWarehouseStatusMutation,
-  useDeleteWarehouseMutation,
-} = warehouseApi;
+  useGetCategoriesQuery,
+  useGetCategoryDetailsQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useUpdateCategoryStatusMutation,
+  useDeleteCategoryMutation,
+} = categoryApi;

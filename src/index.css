@@ -53,6 +53,15 @@
     height: 130px !important;
   }
 
+.custom-single-upload .ant-upload  {
+    width: 200px !important;
+    height: 130px !important;
+  }
+.custom-single-upload .ant-upload-list-item-container {
+    width: 200px !important;
+    height: 130px !important;
+  }
+
 
   
 

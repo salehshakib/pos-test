@@ -6,6 +6,7 @@ import { closeEditDrawer } from "../../../../redux/services/drawer/drawerSlice";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
+import DiscountPlanForm from "./DiscountPlanForm";
 
 const columns = [
   {
@@ -267,11 +268,11 @@ const DiscountPlan = () => {
       />
 
       <CustomDrawer title={"Create Discount Plan"} open={isCreateDrawerOpen}>
-        {/* <WarehouseForm
-        handleSubmit={handleSubmit}
-        isLoading={isCreating}
-        fields={errorFields}
-      /> */}
+        <DiscountPlanForm
+          handleSubmit={handleSubmit}
+          // isLoading={isCreating}
+          fields={errorFields}
+        />
       </CustomDrawer>
 
       <CustomDrawer
@@ -279,11 +280,11 @@ const DiscountPlan = () => {
         open={isEditDrawerOpen}
         //   isLoading={isFetching}
       >
-        {/* <CategoryForm
-    handleSubmit={handleUpdate}
-    isLoading={isUpdating}
-    fields={fields}
-  /> */}
+        <DiscountPlanForm
+          handleSubmit={handleUpdate}
+          // isLoading={isUpdating}
+          fields={fields}
+        />
       </CustomDrawer>
 
       <DeleteModal

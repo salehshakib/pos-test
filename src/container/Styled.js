@@ -40,6 +40,12 @@ const GlobalUtilityStyle = styled.div`
     font-size: 14px !important;
     border: none !important;
   }
+
+  .ant-btn-primary {
+    background-color: ${({ theme }) => {
+      return theme?.token?.colorPrimary;
+    }} !important;
+  }
 `;
 
 export { GlobalUtilityStyle };

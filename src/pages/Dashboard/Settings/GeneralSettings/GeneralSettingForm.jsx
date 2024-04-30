@@ -1,11 +1,14 @@
-import { Col, Form, Radio, Row } from "antd";
-import CustomForm from "../../../../components/Shared/Form/CustomForm";
-import CustomInput from "../../../../components/Shared/Form/CustomInput";
-import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
+import { cyan, generate, green, presetPalettes, red } from "@ant-design/colors";
+import { Col, ColorPicker, Divider, Form, Radio, Row, theme } from "antd";
+import { currencies } from "currencies.json";
 import timezones from "timezones.json";
 import dateFormats from "../../../../assets/data/dateFormats.json";
 import invoiceFormats from "../../../../assets/data/invoiceFormats.json";
-import { currencies } from "currencies.json";
+import CustomForm from "../../../../components/Shared/Form/CustomForm";
+import CustomInput from "../../../../components/Shared/Form/CustomInput";
+import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const rowLayout = {
   gutter: 25,
@@ -19,7 +22,43 @@ const colLayout = {
   lg: 8,
 };
 
+const genPresets = (presets = presetPalettes) =>
+  Object.entries(presets).map(([label, colors]) => ({
+    label,
+    colors,
+  }));
+
+const customPanelRender = (_, { components: { Picker, Presets } }) => (
+  <Row justify="space-between" wrap={false}>
+    <Col span={12}>
+      <Presets />
+    </Col>
+    <Divider
+      type="vertical"
+      style={{
+        height: "auto",
+      }}
+    />
+    <Col flex="auto">
+      <Picker />
+    </Col>
+  </Row>
+);
+
 const GeneralSettingForm = () => {
+  //colors
+
+  const { token } = theme.useToken();
+  const presets = genPresets({
+    primary: generate(token.colorPrimary),
+    red,
+    green,
+    cyan,
+  });
+  const [color, setColor] = useState(presets.primary);
+
+  console.log(color?.metaColor);
+
   const timezone = timezones.map(({ text }) => {
     return { label: text, value: text };
   });
@@ -37,6 +76,10 @@ const GeneralSettingForm = () => {
   const currenciesOptions = currencies.map(({ name, symbol, code }) => {
     return { label: `${name} (${symbol})`, value: code };
   });
+
+  const dispatch = useDispatch();
+
+  // const handlePrimaryColor =
 
   return (
     <CustomForm
@@ -73,6 +116,40 @@ const GeneralSettingForm = () => {
             type={"text"}
             required={true}
           />
+        </Col>
+        <Col {...colLayout}>
+          <Form.Item label="Primary Color" name={"primaryColor"}>
+            <ColorPicker
+              defaultValue={token.secondaryColor}
+              styles={{
+                popupOverlayInner: {
+                  width: 480,
+                },
+              }}
+              presets={presets}
+              panelRender={customPanelRender}
+              size="large"
+              showText
+              onChange={setColor}
+            />
+          </Form.Item>
+        </Col>
+        <Col {...colLayout}>
+          <Form.Item label="Secondary Color" name={"secondaryColor"}>
+            <ColorPicker
+              defaultValue={token.colorPrimary}
+              styles={{
+                popupOverlayInner: {
+                  width: 480,
+                },
+              }}
+              presets={presets}
+              panelRender={customPanelRender}
+              size="large"
+              showText
+              onChange={setColor}
+            />
+          </Form.Item>
         </Col>
         <Col {...colLayout}>
           <CustomInput

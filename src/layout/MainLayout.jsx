@@ -5,9 +5,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Outlet } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
-import SideBar from "./SideBar";
 import { mode } from "../utilities/configs/base_url";
+import SideBar from "./SideBar";
+
 const { Header, Content } = Layout;
+
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 

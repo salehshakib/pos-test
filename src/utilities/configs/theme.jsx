@@ -4,7 +4,7 @@ export function theme(primaryColor = "#51258F", secondaryColor = "#F2E8FF") {
       secondaryColor: secondaryColor || "#F2E8FF",
       colorPrimary: primaryColor || "#51258F",
       colorPrimaryHover: primaryColor || "#51258F",
-      colorBorder: "#DCBFFF",
+      colorBorder: secondaryColor || "#DCBFFF",
       colorPrimaryBorder: primaryColor || "#51258F",
     },
     components: {

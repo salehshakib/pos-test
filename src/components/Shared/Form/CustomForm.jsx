@@ -55,7 +55,8 @@ const CustomForm = ({
           </Button>
           <Button
             htmlType="submit"
-            className="bg-secondary hover:bg-posPurple text-white"
+            type="primary"
+            className=" text-white"
             loading={isLoading}
           >
             {submitBtnText}

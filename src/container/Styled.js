@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 const GlobalUtilityStyle = styled.div`
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => {
+      return theme?.token?.colorPrimary;
+    }};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => {
+      return theme?.token?.secondaryColor;
+    }};
+  }
+
   .ant-page-header-heading {
     display: flex;
     align-items: center;
@@ -44,6 +56,22 @@ const GlobalUtilityStyle = styled.div`
   .ant-btn-primary {
     background-color: ${({ theme }) => {
       return theme?.token?.colorPrimary;
+    }} !important;
+  }
+
+  .ant-menu-submenu-selected > .ant-menu-submenu-title {
+    color: ${({ theme }) => {
+      return theme?.token?.colorPrimary;
+    }} !important;
+  }
+
+  .ant-menu-item-selected {
+    background-color: ${({ theme }) => {
+      return theme?.token?.colorPrimary;
+    }} !important;
+
+    color: ${({ theme }) => {
+      return theme?.token?.secondaryColor;
     }} !important;
   }
 `;

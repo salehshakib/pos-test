@@ -9,6 +9,10 @@ import CustomInput from "../../../../components/Shared/Form/CustomInput";
 import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  setPrimaryColor,
+  setSecondaryColor,
+} from "../../../../redux/services/theme/themeSlice";
 
 const rowLayout = {
   gutter: 25,
@@ -50,9 +54,6 @@ const GeneralSettingForm = () => {
   const { token } = theme.useToken();
   const presets = genPresets({
     primary: generate(token.colorPrimary),
-    red,
-    green,
-    cyan,
   });
   const [color, setColor] = useState(presets.primary);
 
@@ -78,7 +79,13 @@ const GeneralSettingForm = () => {
 
   const dispatch = useDispatch();
 
-  // const handlePrimaryColor =
+  const handlePrimaryColor = (color) => {
+    dispatch(setPrimaryColor(color.toHexString()));
+  };
+
+  const handleSecondaryColor = (color) => {
+    dispatch(setSecondaryColor(color.toHexString()));
+  };
 
   return (
     <CustomForm
@@ -131,7 +138,7 @@ const GeneralSettingForm = () => {
               panelRender={customPanelRender}
               size="large"
               showText
-              onChangeComplete={(value) => setColor(value.toHexString())}
+              onChangeComplete={handlePrimaryColor}
               format="hex"
             />
           </Form.Item>
@@ -152,7 +159,7 @@ const GeneralSettingForm = () => {
               panelRender={customPanelRender}
               size="large"
               showText
-              onChangeComplete={(value) => setColor(value.toHexString())}
+              onChangeComplete={handleSecondaryColor}
               format="hex"
             />
           </Form.Item>

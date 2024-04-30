@@ -12,7 +12,7 @@ import {
   useGetBrandDetailsQuery,
   useGetBrandsQuery,
   useUpdateBrandMutation,
-} from "../../../../redux/services/brand/brandApi";
+} from "../../../../redux/services/inventory/brand/brandApi";
 import {
   closeCreateDrawer,
   closeEditDrawer,

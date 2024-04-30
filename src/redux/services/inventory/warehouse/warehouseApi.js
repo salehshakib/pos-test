@@ -1,38 +1,38 @@
-import { DEPARTMENT } from "../../../utilities/configs/Api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { WAREHOUSE } from "../../../../utilities/configs/Api";
+import { openNotification } from "../../../../utilities/lib/notification";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const departmentApi = baseApi.injectEndpoints({
+const warehouseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getDepartments: build.query({
+    getWarehouses: build.query({
       query: ({ params }) => {
         return {
-          url: `/${DEPARTMENT}`,
+          url: `/${WAREHOUSE}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: DEPARTMENT, params },
-        DEPARTMENT,
+        { type: WAREHOUSE, params },
+        WAREHOUSE,
       ],
     }),
-    getDepartmentDetails: build.query({
+    getWarehouseDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${DEPARTMENT}/show/${id}`,
+          url: `${WAREHOUSE}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [DEPARTMENT],
+      providesTags: [WAREHOUSE],
     }),
-    createDepartment: build.mutation({
+    createWarehouse: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${DEPARTMENT}/store`,
+          url: `/${WAREHOUSE}/store`,
           method: "POST",
           body: data,
         };
@@ -44,13 +44,13 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [WAREHOUSE] : [];
       },
     }),
-    updateDepartment: build.mutation({
+    updateWarehouse: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${DEPARTMENT}/update/${data?.id}`,
+          url: `/${WAREHOUSE}/update/${data?.id}`,
           method: "POST",
           body: data,
         };
@@ -62,13 +62,13 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [WAREHOUSE] : [];
       },
     }),
-    updateDepartmentStatus: build.mutation({
+    updateWarehouseStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${DEPARTMENT}/status/${id}`,
+          url: `/${WAREHOUSE}/status/${id}`,
           method: "POST",
         };
       },
@@ -79,13 +79,13 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [WAREHOUSE] : [];
       },
     }),
-    deleteDepartment: build.mutation({
+    deleteWarehouse: build.mutation({
       query: (id) => {
         return {
-          url: `/${DEPARTMENT}/delete/${id}`,
+          url: `/${WAREHOUSE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -96,17 +96,17 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [WAREHOUSE] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetDepartmentsQuery,
-  useGetDepartmentDetailsQuery,
-  useCreateDepartmentMutation,
-  useUpdateDepartmentMutation,
-  useUpdateDepartmentStatusMutation,
-  useDeleteDepartmentMutation,
-} = departmentApi;
+  useGetWarehousesQuery,
+  useGetWarehouseDetailsQuery,
+  useCreateWarehouseMutation,
+  useUpdateWarehouseMutation,
+  useUpdateWarehouseStatusMutation,
+  useDeleteWarehouseMutation,
+} = warehouseApi;

@@ -1,38 +1,38 @@
-import { CATEGORY } from "../../../utilities/configs/Api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { DEPARTMENT } from "../../../../utilities/configs/Api";
+import { openNotification } from "../../../../utilities/lib/notification";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const categoryApi = baseApi.injectEndpoints({
+const departmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query({
+    getDepartments: build.query({
       query: ({ params }) => {
         return {
-          url: `/${CATEGORY}`,
+          url: `/${DEPARTMENT}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: CATEGORY, params },
-        CATEGORY,
+        { type: DEPARTMENT, params },
+        DEPARTMENT,
       ],
     }),
-    getCategoryDetails: build.query({
+    getDepartmentDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${CATEGORY}/show/${id}`,
+          url: `${DEPARTMENT}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [CATEGORY],
+      providesTags: [DEPARTMENT],
     }),
-    createCategory: build.mutation({
+    createDepartment: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${CATEGORY}/store`,
+          url: `/${DEPARTMENT}/store`,
           method: "POST",
           body: data,
         };
@@ -44,13 +44,13 @@ const categoryApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [DEPARTMENT] : [];
       },
     }),
-    updateCategory: build.mutation({
+    updateDepartment: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${CATEGORY}/update/${data?.id}`,
+          url: `/${DEPARTMENT}/update/${data?.id}`,
           method: "POST",
           body: data,
         };
@@ -62,13 +62,13 @@ const categoryApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [DEPARTMENT] : [];
       },
     }),
-    updateCategoryStatus: build.mutation({
+    updateDepartmentStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${CATEGORY}/status/${id}`,
+          url: `/${DEPARTMENT}/status/${id}`,
           method: "POST",
         };
       },
@@ -79,13 +79,13 @@ const categoryApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [DEPARTMENT] : [];
       },
     }),
-    deleteCategory: build.mutation({
+    deleteDepartment: build.mutation({
       query: (id) => {
         return {
-          url: `/${CATEGORY}/delete/${id}`,
+          url: `/${DEPARTMENT}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -96,17 +96,17 @@ const categoryApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [DEPARTMENT] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetCategoriesQuery,
-  useGetCategoryDetailsQuery,
-  useCreateCategoryMutation,
-  useUpdateCategoryMutation,
-  useUpdateCategoryStatusMutation,
-  useDeleteCategoryMutation,
-} = categoryApi;
+  useGetDepartmentsQuery,
+  useGetDepartmentDetailsQuery,
+  useCreateDepartmentMutation,
+  useUpdateDepartmentMutation,
+  useUpdateDepartmentStatusMutation,
+  useDeleteDepartmentMutation,
+} = departmentApi;

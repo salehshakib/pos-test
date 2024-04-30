@@ -7,9 +7,11 @@ export const sidebarItemsGenerator = (items) => {
     if (!item.children) {
       acc.push({
         key: item.name,
-        icon: React.createElement(item.icon, {
-          className: "size-5",
-        }),
+        icon:
+          item?.icon &&
+          React.createElement(item?.icon, {
+            className: "size-5",
+          }),
         label: (
           <NavLink
             className={({ isActive }) => (isActive ? "font-bold" : "")}
@@ -24,15 +26,19 @@ export const sidebarItemsGenerator = (items) => {
     if (item.children) {
       acc.push({
         key: item.name,
-        icon: React.createElement(item.icon, {
-          className: "size-5",
-        }),
+        icon:
+          item?.icon &&
+          React.createElement(item?.icon, {
+            className: "size-5",
+          }),
         label: item.name,
         children: item.children.map((child) => ({
           key: child.name,
-          icon: React.createElement(child.icon, {
-            className: "size-5",
-          }),
+          icon:
+            child?.icon &&
+            React.createElement(child?.icon, {
+              className: "size-5",
+            }),
           label: (
             <NavLink
               className={({ isActive }) => (isActive ? "font-bold" : "")}

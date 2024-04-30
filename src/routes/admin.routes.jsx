@@ -1,26 +1,7 @@
 //components
-import Accounting from "../pages/Dashboard/Accounting/Accounting";
-import AddOns from "../pages/Dashboard/AddOns/AddOns";
-import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import Documents from "../pages/Dashboard/Documents/Documents";
-import Expense from "../pages/Dashboard/Expense/Expense";
-import Department from "../pages/Dashboard/Hrm/Department/Department";
-import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
-import Hrm from "../pages/Dashboard/Hrm/Hrm";
-import Brand from "../pages/Dashboard/Inventory/Brand/Brand";
-import Category from "../pages/Dashboard/Inventory/Category/Category";
-import Warehouse from "../pages/Dashboard/Inventory/Warehouse/Warehouse";
-import People from "../pages/Dashboard/People/People";
-import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import Quotation from "../pages/Dashboard/Quotations/Quotation";
-import Reports from "../pages/Dashboard/Reports/Reports";
-import Return from "../pages/Dashboard/Return/Return";
-import Sale from "../pages/Dashboard/Sale/Sale";
-
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
-//icons
 import { BsBoxSeam } from "react-icons/bs";
-import { FaWarehouse } from "react-icons/fa";
+import { CiDiscount1 } from "react-icons/ci";
+import { FaUserLock, FaWarehouse } from "react-icons/fa";
 import {
   FaBagShopping,
   FaBuilding,
@@ -46,10 +27,27 @@ import {
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
 import { VscDiffAdded } from "react-icons/vsc";
-import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
+import Accounting from "../pages/Dashboard/Accounting/Accounting";
+import AddOns from "../pages/Dashboard/AddOns/AddOns";
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
+import Documents from "../pages/Dashboard/Documents/Documents";
+import Expense from "../pages/Dashboard/Expense/Expense";
+import Department from "../pages/Dashboard/Hrm/Department/Department";
+import Employee from "../pages/Dashboard/Hrm/Employee/Employee";
+import Hrm from "../pages/Dashboard/Hrm/Hrm";
+import Brand from "../pages/Dashboard/Inventory/Brand/Brand";
+import Category from "../pages/Dashboard/Inventory/Category/Category";
+import Warehouse from "../pages/Dashboard/Inventory/Warehouse/Warehouse";
+import People from "../pages/Dashboard/People/People";
+import Purchase from "../pages/Dashboard/Purchase/Purchase";
+import Quotation from "../pages/Dashboard/Quotations/Quotation";
+import Reports from "../pages/Dashboard/Reports/Reports";
+import Return from "../pages/Dashboard/Return/Return";
+import Sale from "../pages/Dashboard/Sale/Sale";
 import Discount from "../pages/Dashboard/Settings/Discount/Discount";
-import { CiDiscount1 } from "react-icons/ci";
 import DiscountPlan from "../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
+import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
+import Transfer from "../pages/Dashboard/Transfer/Transfer";
 
 export const adminPaths = [
   {
@@ -275,6 +273,12 @@ export const adminPaths = [
         name: "Discount Plan",
         path: "discount-plan",
         icon: CiDiscount1,
+        element: <DiscountPlan />,
+      },
+      {
+        name: "Role Permission",
+        path: "role-permission",
+        icon: FaUserLock,
         element: <DiscountPlan />,
       },
     ],

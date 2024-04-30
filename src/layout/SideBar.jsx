@@ -1,5 +1,5 @@
 import { Layout, Menu } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
@@ -62,10 +62,33 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     }
   };
 
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(windowSize);
+
   return (
     <div className="absolute lg:relative z-50 lg:z-0 h-full">
       <Sider
-        className="pb-10 h-full"
+        className="pb-10 h-full overflow-auto"
         theme="light"
         width={220}
         trigger={null}
@@ -73,6 +96,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
+          // maxHeight: 1000,
           boxShadow:
             "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
         }}
@@ -83,9 +107,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           theme="light"
           mode="inline"
           className="h-full pb-10"
-          // style={{
-          //   borderRight: 0,
-          // }}
+          style={{
+            maxHeight: windowSize.height,
+          }}
           items={sidebarItems}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}

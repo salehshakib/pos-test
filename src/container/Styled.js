@@ -159,6 +159,12 @@ const GlobalUtilityStyle = styled.div`
       height: 130px !important;
     }
   }
+
+  .ant-upload-list-item-thumbnail {
+    img {
+      object-fit: cover !important;
+    }
+  }
 `;
 
 export { GlobalUtilityStyle };

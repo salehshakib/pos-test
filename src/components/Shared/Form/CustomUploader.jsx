@@ -40,6 +40,7 @@ const CustomUploader = ({
     setFileList(newFileList);
   };
 
+  console.log(fileList);
   return (
     <GlobalUtilityStyle>
       {previewImage && (
@@ -73,10 +74,10 @@ const CustomUploader = ({
             return false;
           }}
           multiple={multiple}
-          maxCount={multiple ? 20 : 2}
+          maxCount={multiple ? 20 : 1}
           className={`${multiple ? "custom-upload" : "custom-single-upload"}`}
         >
-          {(fileList.length < 2 || multiple) && (
+          {(fileList.length < 1 || multiple) && (
             <button
               style={{
                 border: 0,

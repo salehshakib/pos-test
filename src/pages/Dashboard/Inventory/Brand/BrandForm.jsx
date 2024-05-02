@@ -47,7 +47,7 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
           <CustomUploader
             label={"Brand Image"}
             name={"brand_image"}
-            // multiple={false}
+            multiple={true}
           />
         </Col>
       </Row>

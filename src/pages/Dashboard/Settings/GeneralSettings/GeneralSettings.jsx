@@ -1,8 +1,25 @@
 import { PageContainer } from "@ant-design/pro-layout";
 import GeneralSettingForm from "./GeneralSettingForm";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useGetGeneralSettingsQuery } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const GeneralSettings = () => {
+  const dispatch = useDispatch();
+
+  const [fields, setFields] = useState([]);
+  const { data, isLoading } = useGetGeneralSettingsQuery();
+  // const [defaultLogo, setLogo] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      const fieldData = fieldsToUpdate(data);
+      setFields(fieldData);
+    }
+  }, [data]);
+
   return (
     <GlobalUtilityStyle>
       <PageContainer
@@ -39,7 +56,7 @@ const GeneralSettings = () => {
         // }}
       >
         <div className="pt-10">
-          <GeneralSettingForm />
+          <GeneralSettingForm fields={fields} isLoading={isLoading} />
         </div>
       </PageContainer>
     </GlobalUtilityStyle>

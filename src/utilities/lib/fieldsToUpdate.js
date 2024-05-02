@@ -16,6 +16,23 @@ export const fieldsToUpdate = (details) => {
         value = dayjs(value, "YYYY-MM-DD").toDate();
       }
 
+      if (key.includes("attachments")) {
+        for (var i = 0; i < details[key].length; i++) {
+          const obj = details[key][i];
+
+          return {
+            name: obj.label,
+            value: [
+              {
+                // url: obj.url,
+                url: "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg",
+              },
+            ],
+            errors: "",
+          };
+        }
+      }
+
       return {
         name: key,
         value: value,

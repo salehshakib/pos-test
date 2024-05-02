@@ -40,21 +40,66 @@ const genPresets = (presets = presetPalettes) =>
     colors,
   }));
 
-const customPanelRender = (_, { components: { Picker, Presets } }) => (
-  <Row justify="space-between" wrap={false}>
-    <Col span={12}>
-      <Picker />
-    </Col>
-    <Divider
-      type="vertical"
+const customPrimaryPanelRender = (_, { components: { Picker, Presets } }) => (
+  <div>
+    <div
       style={{
-        height: "auto",
+        fontSize: 12,
+        color: "black",
+        lineHeight: "20px",
+        marginBottom: 8,
+        fontWeight: 500,
       }}
-    />
-    <Col flex="auto">
-      <Presets />
-    </Col>
-  </Row>
+    >
+      This is your base color. Choose a strong color to enhance the UI.
+    </div>
+
+    <Row justify="space-between" wrap={false}>
+      <Col span={12}>
+        <Picker />
+      </Col>
+      <Divider
+        type="vertical"
+        style={{
+          height: "auto",
+        }}
+      />
+      <Col flex="auto">
+        <Presets />
+      </Col>
+    </Row>
+  </div>
+);
+
+const customSecondaryPanelRender = (_, { components: { Picker, Presets } }) => (
+  <div>
+    <div
+      style={{
+        fontSize: 12,
+        color: "black",
+        lineHeight: "20px",
+        marginBottom: 8,
+        fontWeight: 500,
+      }}
+    >
+      This is your accent color. Choose a mild color to enhance the Base Color.
+    </div>
+
+    <Row justify="space-between" wrap={false}>
+      <Col span={12}>
+        <Picker />
+      </Col>
+      <Divider
+        type="vertical"
+        style={{
+          height: "auto",
+        }}
+      />
+      <Col flex="auto">
+        <Presets />
+      </Col>
+    </Row>
+  </div>
 );
 
 const GeneralSettingForm = () => {
@@ -102,6 +147,9 @@ const GeneralSettingForm = () => {
     >
       <CustomLogoUploader />
 
+      <Divider orientation="left" orientationMargin={0}>
+        Color Settings
+      </Divider>
       <Row {...rowLayout} className="">
         <Col {...colorColLayout}>
           <Form.Item
@@ -116,9 +164,9 @@ const GeneralSettingForm = () => {
                 },
               }}
               presets={presets}
-              panelRender={customPanelRender}
+              panelRender={customPrimaryPanelRender}
               size="large"
-              showText
+              showText={(color) => <span>{color.toHexString()}</span>}
               onChangeComplete={handlePrimaryColor}
               format="hex"
             />
@@ -137,15 +185,20 @@ const GeneralSettingForm = () => {
                 },
               }}
               presets={presets}
-              panelRender={customPanelRender}
+              panelRender={customSecondaryPanelRender}
               size="large"
-              showText
+              showText={(color) => <span>{color.toHexString()}</span>}
               onChangeComplete={handleSecondaryColor}
               format="hex"
             />
           </Form.Item>
         </Col>
+      </Row>
 
+      <Divider orientation="left" orientationMargin={0}>
+        Compnay Settings
+      </Divider>
+      <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
             label={"System Title"}
@@ -170,7 +223,12 @@ const GeneralSettingForm = () => {
             required={true}
           />
         </Col>
+      </Row>
 
+      <Divider orientation="left" orientationMargin={0}>
+        Time Settings
+      </Divider>
+      <Row {...rowLayout}>
         <Col {...colLayout2}>
           <CustomInput
             // name={"companyName"}
@@ -189,7 +247,12 @@ const GeneralSettingForm = () => {
             required={true}
           />
         </Col>
+      </Row>
 
+      <Divider orientation="left" orientationMargin={0}>
+        Currency Settings
+      </Divider>
+      <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
             // name={"companyName"}
@@ -215,6 +278,12 @@ const GeneralSettingForm = () => {
             </Radio.Group>
           </Form.Item>
         </Col>
+      </Row>
+
+      <Divider orientation="left" orientationMargin={0}>
+        Staff Settings
+      </Divider>
+      <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
             // name={"companyName"}
@@ -243,7 +312,12 @@ const GeneralSettingForm = () => {
             </Radio.Group>
           </Form.Item>
         </Col>
+      </Row>
 
+      <Divider orientation="left" orientationMargin={0}>
+        Developer Settings
+      </Divider>
+      <Row {...rowLayout}>
         <Col {...colLayout2}>
           <CustomInput
             // name={"companyName"}

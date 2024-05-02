@@ -1,34 +1,35 @@
-export function theme(primaryColor = "#51258F", secondaryColor = "#F2E8FF") {
+export function theme({ primaryColor, secondaryColor, textColor }) {
   return {
     token: {
-      secondaryColor: secondaryColor || "#F2E8FF",
-      colorPrimary: primaryColor || "#51258F",
-      colorPrimaryHover: primaryColor || "#51258F",
-      colorBorder: secondaryColor || "#DCBFFF",
-      colorPrimaryBorder: primaryColor || "#51258F",
+      secondaryColor: secondaryColor,
+
+      colorPrimary: primaryColor,
+      colorPrimaryHover: primaryColor,
+      colorBorder: primaryColor,
+      colorPrimaryBorder: primaryColor,
+      // colorText: textColor,
     },
     components: {
       Input: {
-        activeBorderColor: primaryColor || "#51258F",
+        activeBorderColor: secondaryColor,
+        hoverBorderColor: secondaryColor,
       },
-      Select: {
-        activeBorderColor: primaryColor || "#51258F",
-      },
+
       Button: {
         fontWeight: 700,
-        defaultColor: primaryColor || "#51258F",
-        defaultHoverBg: primaryColor || "#51258F",
-        defaultHoverBorderColor: primaryColor || "#51258F",
-        defaultHoverColor: "#FFFFFF",
+        defaultColor: textColor,
+        defaultHoverBg: secondaryColor,
+        defaultHoverBorderColor: secondaryColor,
+        // defaultHoverColor: "#FFFFFF",
       },
       Table: {
-        headerBg: secondaryColor || "#F2E8FF",
-        headerSplitColor: primaryColor || "#51258F",
-        stickyScrollBarBg: secondaryColor || "#F2E8FF",
+        headerBg: primaryColor,
+        headerSplitColor: secondaryColor,
+        stickyScrollBarBg: primaryColor,
         stickyScrollBarBorderRadius: "0 0 10px 10px",
       },
       Menu: {
-        itemHoverBg: secondaryColor || "#F2E8FF",
+        itemHoverBg: primaryColor,
       },
     },
   };

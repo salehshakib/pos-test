@@ -1,14 +1,13 @@
-import { cyan, generate, green, presetPalettes, red } from "@ant-design/colors";
+import { generate, presetPalettes } from "@ant-design/colors";
 import { Col, ColorPicker, Divider, Form, Radio, Row, theme } from "antd";
 import { currencies } from "currencies.json";
+import { useDispatch } from "react-redux";
 import timezones from "timezones.json";
 import dateFormats from "../../../../assets/data/dateFormats.json";
 import invoiceFormats from "../../../../assets/data/invoiceFormats.json";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import {
   setPrimaryColor,
   setSecondaryColor,
@@ -53,11 +52,14 @@ const GeneralSettingForm = () => {
   //colors
   const { token } = theme.useToken();
   const presets = genPresets({
-    primary: generate(token.colorPrimary),
+    Primary: generate(token.colorPrimary),
+    Secondary: generate(token.secondaryColor),
   });
-  const [color, setColor] = useState(presets.primary);
 
-  console.log(color);
+  // const primaryColor = generate(token.colorPrimary);
+  // const secondaryColor = generate(token.secondaryColor);
+
+  // console.log(color);
 
   const timezone = timezones.map(({ text }) => {
     return { label: text, value: text };
@@ -126,7 +128,7 @@ const GeneralSettingForm = () => {
           <Form.Item
             label="Primary Color"
             name={"primaryColor"}
-            initialValue={token.secondaryColor}
+            initialValue={token.colorPrimary}
           >
             <ColorPicker
               styles={{
@@ -147,7 +149,28 @@ const GeneralSettingForm = () => {
           <Form.Item
             label="Secondary Color"
             name={"secondaryColor"}
-            initialValue={token.colorPrimary}
+            initialValue={token.secondaryColor}
+          >
+            <ColorPicker
+              styles={{
+                popupOverlayInner: {
+                  width: 480,
+                },
+              }}
+              presets={presets}
+              panelRender={customPanelRender}
+              size="large"
+              showText
+              onChangeComplete={handleSecondaryColor}
+              format="hex"
+            />
+          </Form.Item>
+        </Col>
+        <Col {...colLayout}>
+          <Form.Item
+            label="Text Color"
+            name={"textColor"}
+            initialValue={token.colorText}
           >
             <ColorPicker
               styles={{

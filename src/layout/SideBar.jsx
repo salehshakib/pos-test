@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
+import { GlobalUtilityStyle } from "../container/Styled";
 const { Sider } = Layout;
 
 const getLevelKeys = (items1) => {
@@ -62,28 +63,28 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     }
   };
 
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  // const [windowSize, setWindowSize] = useState({
+  //   width: window.innerWidth,
+  //   height: window.innerHeight,
+  // });
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowSize({
+  //       width: window.innerWidth,
+  //       height: window.innerHeight,
+  //     });
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   // Cleanup the event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  console.log(windowSize);
+  // console.log(windowSize);
 
   return (
     <div className="absolute lg:relative z-50 lg:z-0 h-full">
@@ -107,9 +108,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           theme="light"
           mode="inline"
           className="h-full pb-10"
-          style={{
-            maxHeight: windowSize.height,
-          }}
+          // style={{
+          //   maxHeight: windowSize.height,
+          // }}
           items={sidebarItems}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}

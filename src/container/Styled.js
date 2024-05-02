@@ -1,16 +1,40 @@
 import styled from "styled-components";
 
+const primaryColor = ({ theme }) => {
+  return theme?.token?.colorPrimary;
+};
+
+const secondaryColor = ({ theme }) => {
+  return theme?.token?.secondaryColor;
+};
+
 const GlobalUtilityStyle = styled.div`
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => {
-      return theme?.token?.colorPrimary;
-    }};
+    background: ${primaryColor};
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => {
-      return theme?.token?.secondaryColor;
-    }};
+    background: ${secondaryColor};
+  }
+
+  .avatar-bg {
+    background: ${secondaryColor};
+  }
+
+  .primary-text {
+    color: ${primaryColor};
+  }
+
+  .primary-bg {
+    background: ${primaryColor};
+  }
+
+  .secondary-text {
+    color: ${secondaryColor};
+  }
+
+  .secondary-bg {
+    background: ${secondaryColor};
   }
 
   .ant-page-header-heading {
@@ -39,31 +63,18 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .ant-select {
-    border: 2px solid
-      ${({ theme }) => {
-        return theme?.token?.colorPrimary;
-      }} !important;
-
-    // #dcbfff !important;
-    border-radius: 8px;
+    border: 2px solid ${secondaryColor} !important;
+    border-radius: 8px !important;
   }
 
   .ant-select:hover {
-    border: 2px solid
-      ${({ theme }) => {
-        return theme?.token?.secondaryColor;
-      }} !important;
-    // #51258f !important;
-    // border-radius: 8px;
+    border: 2px solid ${primaryColor} !important;
+    border-radius: 8px !important;
   }
 
   .ant-select-focused {
-    border: 2px solid
-      ${({ theme }) => {
-        return theme?.token?.secondaryColor;
-      }} !important;
-    // #51258f !important;
-    border-radius: 8px;
+    border: 2px solid ${primaryColor} !important;
+    border-radius: 8px !important;
   }
 
   .ant-select-selector {
@@ -72,31 +83,81 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .ant-btn-primary {
-    background-color: ${({ theme }) => {
-      return theme?.token?.colorPrimary;
-    }} !important;
+    background-color: ${primaryColor} !important;
   }
 
-  .ant-menu-submenu-selected > .ant-menu-submenu-title {
-    color: ${({ theme }) => {
-      return theme?.token?.secondaryColor;
-    }} !important;
+  // .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  //   color: ${primaryColor} !important;
+  //   background-color: ${secondaryColor} !important;
+  // }
+
+  .ant-menu-submenu-active > .ant-menu-submenu-title {
+    color: ${primaryColor} !important;
+    background-color: ${secondaryColor} !important;
+  }
+
+  .ant-menu-submenu-vertical > .ant-menu-item-active {
+    color: ${primaryColor} !important;
+    background-color: ${secondaryColor} !important;
   }
 
   .ant-menu-item-selected {
-    background-color: ${({ theme }) => {
-      return theme?.token?.colorPrimary;
-    }} !important;
+    color: ${primaryColor} !important;
+    background-color: ${secondaryColor} !important;
+  }
 
-    color: ${({ theme }) => {
-      return theme?.token?.secondaryColor;
-    }} !important;
+  .ant-menu-item-active {
+    color: ${primaryColor} !important;
+    background-color: ${secondaryColor} !important;
   }
 
   .ant-btn-primary:hover {
-    background-color: ${({ theme }) => {
-      return theme?.token?.secondaryColor;
-    }} !important;
+    color: ${primaryColor} !important;
+    background-color: ${secondaryColor} !important;
+  }
+
+  .custom-logo-upload {
+    .ant-upload {
+      margin-inline: 0 !important;
+      width: 150px !important;
+      height: 150px !important;
+      // transition: transform 0.3s;
+    }
+
+    .ant-upload-list-item-container {
+      margin-inline: 0 !important;
+      width: 150px !important;
+      height: 150px !important;
+    }
+
+    .ant-upload-select:hover {
+      border: 1px dashed ${secondaryColor} !important;
+      border-radius: 99999px !important;
+    }
+  }
+
+  .custom-upload {
+    .ant-upload {
+      width: 130px !important;
+      height: 130px !important;
+    }
+
+    .ant-upload-list-item-container {
+      width: 130px !important;
+      height: 130px !important;
+    }
+  }
+
+  .custom-single-upload {
+    .ant-upload {
+      width: 200px !important;
+      height: 130px !important;
+    }
+
+    .ant-upload-list-item-container {
+      width: 200px !important;
+      height: 130px !important;
+    }
   }
 `;
 

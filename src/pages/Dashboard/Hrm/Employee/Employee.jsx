@@ -47,7 +47,7 @@ const columns = [
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
           {name}
         </span>
-        <span className="text-xs dark:text-white60 text-posPurple ">
+        <span className="text-xs dark:text-white60 primary-text">
           admin@gmail.com
         </span>
       </div>
@@ -98,10 +98,10 @@ const columns = [
     fixed: "right",
     render: () => (
       <div className="flex justify-center items-center gap-3 ">
-        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
+        <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
           <MdEditSquare className="text-xl" />
         </button>
-        <button className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300">
+        <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
           <MdDelete className="text-xl" />
         </button>
       </div>

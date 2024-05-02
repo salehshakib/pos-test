@@ -1,10 +1,10 @@
 import { Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
-import { GlobalUtilityStyle } from "../container/Styled";
 const { Sider } = Layout;
 
 const getLevelKeys = (items1) => {
@@ -27,16 +27,21 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const userData = useSelector(useCurrentUser);
   const menu = userData?.roles?.menu;
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const { pathname } = useLocation();
 
-  // sidemenu by filtered paths
+  useEffect(() => {
+    if (pathname === "/dashboard") {
+      setStateOpenKeys(["Dashboard"]);
+      setSelectedKeys(["Dashboard"]);
+    }
+  }, [pathname]);
 
   const filteredPaths = adminPaths.filter((item) => {
     return menu?.some(
       (menuItem) => menuItem?.name.toLowerCase() === item.name.toLowerCase()
     );
   });
-
-  // console.log(filteredPaths);
 
   const sidebarItems = sidebarItemsGenerator(
     userData?.is_admin ? filteredPaths : adminPaths
@@ -63,29 +68,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     }
   };
 
-  // const [windowSize, setWindowSize] = useState({
-  //   width: window.innerWidth,
-  //   height: window.innerHeight,
-  // });
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowSize({
-  //       width: window.innerWidth,
-  //       height: window.innerHeight,
-  //     });
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   // Cleanup the event listener on component unmount
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  // console.log(windowSize);
-
   return (
     <div className="absolute lg:relative z-50 lg:z-0 h-full">
       <Sider
@@ -97,7 +79,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
-          // maxHeight: 1000,
           boxShadow:
             "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
         }}
@@ -108,12 +89,12 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           theme="light"
           mode="inline"
           className="h-full pb-10"
-          // style={{
-          //   maxHeight: windowSize.height,
-          // }}
+          defaultSelectedKeys={["Dashboard"]}
           items={sidebarItems}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}
+          selectedKeys={selectedKeys}
+          onSelect={({ key }) => setSelectedKeys([key])}
         />
       </Sider>
     </div>

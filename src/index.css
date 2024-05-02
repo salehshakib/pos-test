@@ -33,34 +33,7 @@
   background-color: #482579 !important; 
 } */
 
-.custom-logo-upload .ant-upload  {
-    margin-inline: 0 !important;
-    width: 150px !important;
-    height: 150px !important;
-  }
-.custom-logo-upload .ant-upload-list-item-container {
-    margin-inline: 0 !important;
-    width: 150px !important;
-    height: 150px !important;
-  }
 
-.custom-upload .ant-upload  {
-    width: 130px !important;
-    height: 130px !important;
-  }
-.custom-upload .ant-upload-list-item-container {
-    width: 130px !important;
-    height: 130px !important;
-  }
-
-.custom-single-upload .ant-upload  {
-    width: 200px !important;
-    height: 130px !important;
-  }
-.custom-single-upload .ant-upload-list-item-container {
-    width: 200px !important;
-    height: 130px !important;
-  }
 
 
   

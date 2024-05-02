@@ -18,7 +18,7 @@ const Profile = () => {
 
   return (
     <Popover placement="bottomLeft" content={content} className="">
-      <Avatar className="bg-secondary" size={40} icon={<UserOutlined />} />
+      <Avatar className="avatar-bg" size={40} icon={<UserOutlined />} />
     </Popover>
   );
 };

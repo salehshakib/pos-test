@@ -1,31 +1,26 @@
-export function theme({ primaryColor, secondaryColor, textColor }) {
+export function theme({ primaryColor, secondaryColor }) {
   return {
     token: {
       secondaryColor: secondaryColor,
-
       colorPrimary: primaryColor,
-      colorPrimaryHover: primaryColor,
-      colorBorder: primaryColor,
-      colorPrimaryBorder: primaryColor,
-      // colorText: textColor,
+      colorBorder: secondaryColor,
+      colorPrimaryBorder: secondaryColor,
     },
     components: {
       Input: {
-        activeBorderColor: secondaryColor,
-        hoverBorderColor: secondaryColor,
+        activeBorderColor: primaryColor,
+        hoverBorderColor: primaryColor,
       },
 
       Button: {
         fontWeight: 700,
-        defaultColor: textColor,
+        defaultColor: primaryColor,
         defaultHoverBg: secondaryColor,
         defaultHoverBorderColor: secondaryColor,
-        // defaultHoverColor: "#FFFFFF",
       },
       Table: {
-        headerBg: primaryColor,
-        headerSplitColor: secondaryColor,
-        stickyScrollBarBg: primaryColor,
+        headerSplitColor: primaryColor,
+        stickyScrollBarBg: secondaryColor,
         stickyScrollBarBorderRadius: "0 0 10px 10px",
       },
       Menu: {

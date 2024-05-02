@@ -24,6 +24,15 @@ const colLayout = {
   md: 12,
   lg: 8,
 };
+const colorColLayout = {
+  xs: 12,
+  // lg: 8,
+};
+
+const colLayout2 = {
+  xs: 24,
+  md: 12,
+};
 
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
@@ -34,7 +43,7 @@ const genPresets = (presets = presetPalettes) =>
 const customPanelRender = (_, { components: { Picker, Presets } }) => (
   <Row justify="space-between" wrap={false}>
     <Col span={12}>
-      <Presets />
+      <Picker />
     </Col>
     <Divider
       type="vertical"
@@ -43,23 +52,19 @@ const customPanelRender = (_, { components: { Picker, Presets } }) => (
       }}
     />
     <Col flex="auto">
-      <Picker />
+      <Presets />
     </Col>
   </Row>
 );
 
 const GeneralSettingForm = () => {
+  const dispatch = useDispatch();
   //colors
   const { token } = theme.useToken();
   const presets = genPresets({
     Primary: generate(token.colorPrimary),
     Secondary: generate(token.secondaryColor),
   });
-
-  // const primaryColor = generate(token.colorPrimary);
-  // const secondaryColor = generate(token.secondaryColor);
-
-  // console.log(color);
 
   const timezone = timezones.map(({ text }) => {
     return { label: text, value: text };
@@ -78,8 +83,6 @@ const GeneralSettingForm = () => {
   const currenciesOptions = currencies.map(({ name, symbol, code }) => {
     return { label: `${name} (${symbol})`, value: code };
   });
-
-  const dispatch = useDispatch();
 
   const handlePrimaryColor = (color) => {
     dispatch(setPrimaryColor(color.toHexString()));
@@ -100,6 +103,49 @@ const GeneralSettingForm = () => {
       <CustomLogoUploader />
 
       <Row {...rowLayout} className="">
+        <Col {...colorColLayout}>
+          <Form.Item
+            label="Base Color"
+            name={"base_color"}
+            initialValue={token.colorPrimary}
+          >
+            <ColorPicker
+              styles={{
+                popupOverlayInner: {
+                  width: 480,
+                },
+              }}
+              presets={presets}
+              panelRender={customPanelRender}
+              size="large"
+              showText
+              onChangeComplete={handlePrimaryColor}
+              format="hex"
+            />
+          </Form.Item>
+        </Col>
+        <Col {...colorColLayout}>
+          <Form.Item
+            label="Secondary Color"
+            name={"secondary_color"}
+            initialValue={token.secondaryColor}
+          >
+            <ColorPicker
+              styles={{
+                popupOverlayInner: {
+                  width: 480,
+                },
+              }}
+              presets={presets}
+              panelRender={customPanelRender}
+              size="large"
+              showText
+              onChangeComplete={handleSecondaryColor}
+              format="hex"
+            />
+          </Form.Item>
+        </Col>
+
         <Col {...colLayout}>
           <CustomInput
             label={"System Title"}
@@ -124,70 +170,8 @@ const GeneralSettingForm = () => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
-          <Form.Item
-            label="Primary Color"
-            name={"primaryColor"}
-            initialValue={token.colorPrimary}
-          >
-            <ColorPicker
-              styles={{
-                popupOverlayInner: {
-                  width: 480,
-                },
-              }}
-              presets={presets}
-              panelRender={customPanelRender}
-              size="large"
-              showText
-              onChangeComplete={handlePrimaryColor}
-              format="hex"
-            />
-          </Form.Item>
-        </Col>
-        <Col {...colLayout}>
-          <Form.Item
-            label="Secondary Color"
-            name={"secondaryColor"}
-            initialValue={token.secondaryColor}
-          >
-            <ColorPicker
-              styles={{
-                popupOverlayInner: {
-                  width: 480,
-                },
-              }}
-              presets={presets}
-              panelRender={customPanelRender}
-              size="large"
-              showText
-              onChangeComplete={handleSecondaryColor}
-              format="hex"
-            />
-          </Form.Item>
-        </Col>
-        <Col {...colLayout}>
-          <Form.Item
-            label="Text Color"
-            name={"textColor"}
-            initialValue={token.colorText}
-          >
-            <ColorPicker
-              styles={{
-                popupOverlayInner: {
-                  width: 480,
-                },
-              }}
-              presets={presets}
-              panelRender={customPanelRender}
-              size="large"
-              showText
-              onChangeComplete={handleSecondaryColor}
-              format="hex"
-            />
-          </Form.Item>
-        </Col>
-        <Col {...colLayout}>
+
+        <Col {...colLayout2}>
           <CustomInput
             // name={"companyName"}
             label={"Time Zone"}
@@ -196,7 +180,7 @@ const GeneralSettingForm = () => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...colLayout2}>
           <CustomInput
             // name={"companyName"}
             label={"Date Format"}
@@ -205,15 +189,7 @@ const GeneralSettingForm = () => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            // name={"companyName"}
-            label={"Invoice Format"}
-            type={"select"}
-            options={invoiceFormatOptions}
-            required={true}
-          />
-        </Col>
+
         <Col {...colLayout}>
           <CustomInput
             // name={"companyName"}
@@ -232,29 +208,29 @@ const GeneralSettingForm = () => {
           />
         </Col>
         <Col {...colLayout}>
+          <Form.Item label="Currency Position" name={"currentPosittion"}>
+            <Radio.Group>
+              <Radio value="preifx">Prefix</Radio>
+              <Radio value="suffix">Suffix</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Invoice Format"}
+            type={"select"}
+            options={invoiceFormatOptions}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
           <CustomInput
             // name={"companyName"}
             label={"Staff Access"}
             type={"select"}
             required={true}
           />
-        </Col>
-
-        <Col {...colLayout}>
-          <CustomInput
-            // name={"companyName"}
-            label={"Developed By"}
-            type={"text"}
-            required={true}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <Form.Item label="Current Position" name={"currentPosittion"}>
-            <Radio.Group>
-              <Radio value="preifx">Prefix</Radio>
-              <Radio value="suffix">Suffix</Radio>
-            </Radio.Group>
-          </Form.Item>
         </Col>
         <Col {...colLayout}>
           <Form.Item
@@ -266,6 +242,23 @@ const GeneralSettingForm = () => {
               <Radio value="no">No</Radio>
             </Radio.Group>
           </Form.Item>
+        </Col>
+
+        <Col {...colLayout2}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Developed By"}
+            type={"text"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout2}>
+          <CustomInput
+            // name={"companyName"}
+            label={"Developed By Link"}
+            type={"text"}
+            required={true}
+          />
         </Col>
       </Row>
     </CustomForm>

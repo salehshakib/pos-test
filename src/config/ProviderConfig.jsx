@@ -8,11 +8,11 @@ import { theme } from "../utilities/configs/theme";
 import { ThemeProvider } from "styled-components";
 
 export const ProviderConfig = ({ children }) => {
-  var { primaryColor, secondaryColor } = useSelector((state) => state.theme);
+  var { primaryColor, secondaryColor, textColor } = useSelector(
+    (state) => state.theme
+  );
 
-  const customTheme = theme({ primaryColor, secondaryColor });
-
-  console.log(primaryColor, secondaryColor);
+  const customTheme = theme({ primaryColor, secondaryColor, textColor });
 
   return (
     <React.StrictMode>

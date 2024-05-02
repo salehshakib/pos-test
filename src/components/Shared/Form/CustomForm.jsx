@@ -58,7 +58,7 @@ const CustomForm = ({
             <Button
               htmlType="submit"
               type="primary"
-              className=" text-white"
+              // className=" text-white"
               loading={isLoading}
             >
               {submitBtnText}

@@ -34,7 +34,6 @@
     "sonner": "^1.4.41",
     "sort-by": "^1.2.0",
     "styled-components": "^6.1.8",
-    "timezones.json": "^1.7.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

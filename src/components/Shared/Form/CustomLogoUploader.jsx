@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { Col, Form, Image, Row, Upload } from "antd";
 import { LiaCloudUploadAltSolid } from "react-icons/lia";
@@ -24,10 +24,14 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-const CustomLogoUploader = () => {
+const CustomLogoUploader = ({ name, form }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    handleFileChange({ fileList: [form?.getFieldValue("logo")] });
+  }, [form]);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -40,6 +44,9 @@ const CustomLogoUploader = () => {
   const handleFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
+  // console.log(fileList);
+
   return (
     <GlobalUtilityStyle>
       <Row {...rowLayout} className="">
@@ -58,9 +65,7 @@ const CustomLogoUploader = () => {
             />
           )}
           <Form.Item
-            // label={}
             name={name}
-            // rules={[{ required: required, message: `Please input ${label}!` }]}
             valuePropName="fileList"
             getValueFromEvent={normFile}
             className=""
@@ -70,7 +75,7 @@ const CustomLogoUploader = () => {
           >
             <Upload
               listType="picture-circle"
-              name={"avatar"}
+              name={"file"}
               fileList={fileList}
               onChange={handleFileChange}
               onPreview={handlePreview}
@@ -81,7 +86,7 @@ const CustomLogoUploader = () => {
               maxCount={1}
               className="custom-logo-upload"
             >
-              {fileList.length === 0 && (
+              {fileList?.length === 0 && (
                 <button
                   style={{
                     // border: 0,

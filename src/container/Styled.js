@@ -18,11 +18,11 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .avatar-bg {
-    background: ${secondaryColor};
+    background: ${primaryColor};
   }
 
   .primary-text {
-    color: ${primaryColor};
+    color: ${primaryColor} !important;
   }
 
   .primary-bg {
@@ -96,10 +96,10 @@ const GlobalUtilityStyle = styled.div`
     background-color: ${secondaryColor} !important;
   }
 
-  .ant-menu-submenu-vertical > .ant-menu-item-active {
-    color: ${primaryColor} !important;
-    background-color: ${secondaryColor} !important;
-  }
+  // .ant-menu-submenu-vertical > .ant-menu-item-active {
+  //   color: ${primaryColor} !important;
+  //   background-color: ${secondaryColor} !important;
+  // }
 
   .ant-menu-item-selected {
     color: ${primaryColor} !important;
@@ -157,6 +157,12 @@ const GlobalUtilityStyle = styled.div`
     .ant-upload-list-item-container {
       width: 200px !important;
       height: 130px !important;
+    }
+  }
+
+  .ant-upload-list-item-thumbnail {
+    img {
+      object-fit: cover !important;
     }
   }
 `;

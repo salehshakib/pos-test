@@ -150,7 +150,7 @@ const GlobalContainer = ({
                 type="text"
                 icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
                 onClick={handleDrawerOpen}
-                className="flex justify-center items-center border-none w-full secondary-text hover:primary-text py-1"
+                className="flex justify-center items-center border-none w-full primary-text py-1"
               />
             ),
           }}

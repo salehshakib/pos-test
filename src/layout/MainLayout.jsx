@@ -47,7 +47,9 @@ const MainLayout = () => {
                 backgroundColor: "white",
               }}
             >
-              <Outlet />
+              <GlobalUtilityStyle>
+                <Outlet />
+              </GlobalUtilityStyle>
             </Content>
             <Footer
               style={{

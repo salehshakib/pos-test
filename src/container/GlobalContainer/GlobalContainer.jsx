@@ -140,7 +140,7 @@ const GlobalContainer = ({
 
   return (
     <GlobalUtilityStyle>
-      <div className="h-full ">
+      <div className="h-full">
         <PageContainer
           header={{
             title: <div className="text-2xl lg:text-3xl py-1">{pageTitle}</div>,
@@ -150,7 +150,7 @@ const GlobalContainer = ({
                 type="text"
                 icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
                 onClick={handleDrawerOpen}
-                className="flex justify-center items-center border-none w-full text-secondary py-1"
+                className="flex justify-center items-center border-none w-full secondary-text hover:primary-text py-1"
               />
             ),
           }}

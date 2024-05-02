@@ -6,14 +6,14 @@ import { adminPaths } from "./admin.routes";
 import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <PrivateRoute>
-        <App />
-      </PrivateRoute>
-    ),
-  },
+  // {
+  //   path: "/",
+  //   element: (
+  //     <PrivateRoute>
+  //       <App />
+  //     </PrivateRoute>
+  //   ),
+  // },
   {
     path: "/",
     element: (

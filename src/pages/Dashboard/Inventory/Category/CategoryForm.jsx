@@ -3,6 +3,17 @@ import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Form/CustomInput";
 import { useGetCategoriesQuery } from "../../../../redux/services/inventory/category/categoryApi";
 
+const rowLayout = {
+  gutter: 25,
+  // align: "middle",
+  // justify: "start",
+};
+
+const colLayout = {
+  xs: 24,
+  md: 12,
+  lg: 8,
+};
 const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
   const { data, isLoading: isParentCategoryLoading } = useGetCategoriesQuery(
     {}
@@ -20,8 +31,8 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
       fields={fields}
       isLoading={isLoading}
     >
-      <Row gutter={25}>
-        <Col xs={24} md={12} lg={8}>
+      <Row {...rowLayout}>
+        <Col {...colLayout}>
           <CustomInput
             label="Category Name"
             type={"text"}
@@ -30,7 +41,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Category Name"}
           />
         </Col>
-        <Col xs={24} md={12} lg={8}>
+        <Col {...colLayout}>
           <CustomInput
             label="Parent Category"
             type={"select"}
@@ -40,7 +51,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             isSelectLoading={isParentCategoryLoading}
           />
         </Col>
-        <Col xs={24} md={12} lg={8}>
+        <Col {...colLayout}>
           <CustomInput
             label="Number of Product"
             type={"number"}
@@ -49,7 +60,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Number of Product"}
           />
         </Col>
-        <Col xs={24} md={12} lg={8}>
+        <Col {...colLayout}>
           <CustomInput
             label="Stock Quantity"
             type={"number"}
@@ -58,7 +69,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Stock Quantity"}
           />
         </Col>
-        <Col xs={24} md={12} lg={8}>
+        <Col {...colLayout}>
           <CustomInput
             label="Stock Worth"
             type={"number"}

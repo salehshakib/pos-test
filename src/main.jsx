@@ -1,20 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { RouterProvider } from "react-router-dom";
+import { PersistGate } from "redux-persist/lib/integration/react.js";
 import App from "./App.jsx";
-import { ConfigProvider } from "antd";
+import { ProviderConfig } from "./config/ProviderConfig.jsx";
 import "./index.css";
-import { PersistGate } from "redux-persist/integration/react";
-import { Toaster } from "sonner";
 import { persistor, store } from "./redux/store.js";
-import { router } from "./routes/routes.jsx";
-import { theme } from "./utilities/configs/theme.js";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+root.render(
   <React.StrictMode>
-    <ConfigProvider
-      theme={theme}
+    {/* <ConfigProvider
+      theme={customTheme}
       button={{
         className: "hover:bg-[#5b3196]",
       }}
@@ -30,6 +27,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </PersistGate>
         <Toaster position="top-center" richColors />
       </Provider>
-    </ConfigProvider>
+    </ConfigProvider> */}
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ProviderConfig>
+          <App />
+        </ProviderConfig>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );

@@ -48,6 +48,7 @@ import Discount from "../pages/Dashboard/Settings/Discount/Discount";
 import DiscountPlan from "../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
 import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
 import Transfer from "../pages/Dashboard/Transfer/Transfer";
+import RolePermission from "../pages/Dashboard/Settings/RolePermission/RolePermission";
 
 export const adminPaths = [
   {
@@ -60,6 +61,7 @@ export const adminPaths = [
     name: "Product",
     path: "product",
     icon: BsBoxSeam,
+    element: <AdminDashboard />,
   },
   {
     name: "Inventory",
@@ -279,7 +281,7 @@ export const adminPaths = [
         name: "Role Permission",
         path: "role-permission",
         icon: FaUserLock,
-        element: <DiscountPlan />,
+        element: <RolePermission />,
       },
     ],
   },

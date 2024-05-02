@@ -6,6 +6,7 @@ import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import RolePermissionForm from "./RolePermissionForm";
 
 const columns = [
   {
@@ -243,11 +244,11 @@ const RolePermission = () => {
       />
 
       <CustomDrawer title={"Create Role Permission"} open={isCreateDrawerOpen}>
-        {/* <WarehouseForm
+        <RolePermissionForm
           handleSubmit={handleSubmit}
-          isLoading={isCreating}
+          //   isLoading={isCreating}
           fields={errorFields}
-        /> */}
+        />
       </CustomDrawer>
 
       <CustomDrawer
@@ -255,11 +256,11 @@ const RolePermission = () => {
         open={isEditDrawerOpen}
         //   isLoading={isFetching}
       >
-        {/* <CategoryForm
-      handleSubmit={handleUpdate}
-      isLoading={isUpdating}
-      fields={fields}
-    /> */}
+        <RolePermissionForm
+          handleSubmit={handleUpdate}
+          //   isLoading={isUpdating}
+          fields={fields}
+        />
       </CustomDrawer>
 
       <DeleteModal

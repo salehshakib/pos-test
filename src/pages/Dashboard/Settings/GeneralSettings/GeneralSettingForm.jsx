@@ -1,5 +1,14 @@
 import { generate, presetPalettes } from "@ant-design/colors";
-import { Col, ColorPicker, Divider, Form, Radio, Row, theme } from "antd";
+import {
+  Button,
+  Col,
+  ColorPicker,
+  Divider,
+  Form,
+  Radio,
+  Row,
+  theme,
+} from "antd";
 import { currencies } from "currencies.json";
 import { useDispatch } from "react-redux";
 import dateFormats from "../../../../assets/data/dateFormats.json";
@@ -104,7 +113,7 @@ const customSecondaryPanelRender = (_, { components: { Picker, Presets } }) => (
   </div>
 );
 
-const GeneralSettingForm = ({ handleSubmit, fields }) => {
+const GeneralSettingForm = ({ handleSubmit, fields, isLoading }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -157,16 +166,9 @@ const GeneralSettingForm = ({ handleSubmit, fields }) => {
     console.log(errorInfo);
   };
 
-  const logo = form.getFieldValue("logo");
+  // const logo = ;
 
   return (
-    // <CustomForm
-    //   // handleSubmit={handleSubmit}
-    //   fields={fields}
-    //   // isLoading={isLoading}
-    //   submitBtnText="Update"
-    // >
-
     <Form
       form={form}
       fields={fields}
@@ -175,7 +177,7 @@ const GeneralSettingForm = ({ handleSubmit, fields }) => {
       autoComplete="on"
       onFinishFailed={onFinishFailed}
     >
-      <CustomLogoUploader name={"logo"} defaultValue={fields} file={logo} />
+      <CustomLogoUploader name={"logo"} form={form} />
 
       <Divider orientation="left" orientationMargin={0}>
         Color Settings
@@ -362,6 +364,20 @@ const GeneralSettingForm = ({ handleSubmit, fields }) => {
           />
         </Col>
       </Row>
+
+      <div className="w-full flex gap-3 justify-end items-center">
+        {/* <Button type="default" onClick={handleDrawerClose}>
+              Cancel
+            </Button> */}
+        <Button
+          htmlType="submit"
+          type="primary"
+          // className=" text-white"
+          loading={isLoading}
+        >
+          Update
+        </Button>
+      </div>
     </Form>
 
     // {/* </CustomForm> */}

@@ -24,14 +24,14 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-const CustomLogoUploader = ({ name, file }) => {
+const CustomLogoUploader = ({ name, form }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    handleFileChange({ fileList: [file] });
-  }, [file]);
+    handleFileChange({ fileList: [form?.getFieldValue("logo")] });
+  }, [form]);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {

@@ -20,6 +20,27 @@ const GeneralSettings = () => {
     }
   }, [data]);
 
+  const handleSubmit = async (values) => {
+    console.log(values);
+    // const { data, error } = await createBrand({
+    //   data: values,
+    // });
+
+    // if (data?.success) {
+    //   setId(undefined);
+    //   dispatch(closeCreateDrawer());
+    // }
+
+    // if (error) {
+    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+    //     name: fieldName,
+    //     errors: error?.data?.errors[fieldName],
+    //   }));
+
+    //   setErrorFields(errorFields);
+    // }
+  };
+
   return (
     <GlobalUtilityStyle>
       <PageContainer
@@ -56,7 +77,11 @@ const GeneralSettings = () => {
         // }}
       >
         <div className="pt-10">
-          <GeneralSettingForm fields={fields} isLoading={isLoading} />
+          <GeneralSettingForm
+            fields={fields}
+            isLoading={isLoading}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </PageContainer>
     </GlobalUtilityStyle>

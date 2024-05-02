@@ -24,7 +24,8 @@ export function theme({ primaryColor, secondaryColor }) {
         stickyScrollBarBorderRadius: "0 0 10px 10px",
       },
       Menu: {
-        itemHoverBg: primaryColor,
+        itemHoverBg: secondaryColor,
+        itemHoverColor: primaryColor,
       },
     },
   };

@@ -96,10 +96,10 @@ const GlobalUtilityStyle = styled.div`
     background-color: ${secondaryColor} !important;
   }
 
-  .ant-menu-submenu-vertical > .ant-menu-item-active {
-    color: ${primaryColor} !important;
-    background-color: ${secondaryColor} !important;
-  }
+  // .ant-menu-submenu-vertical > .ant-menu-item-active {
+  //   color: ${primaryColor} !important;
+  //   background-color: ${secondaryColor} !important;
+  // }
 
   .ant-menu-item-selected {
     color: ${primaryColor} !important;

@@ -51,7 +51,8 @@ const customPrimaryPanelRender = (_, { components: { Picker, Presets } }) => (
         fontWeight: 500,
       }}
     >
-      This is your base color. Choose a strong color to enhance the UI.
+      This is your base color. Choose a strong color to enhance the UI. It will
+      be mainly used in hover color, focus color, text color etc.
     </div>
 
     <Row justify="space-between" wrap={false}>
@@ -83,6 +84,7 @@ const customSecondaryPanelRender = (_, { components: { Picker, Presets } }) => (
       }}
     >
       This is your accent color. Choose a mild color to enhance the Base Color.
+      It will be mainly used in general color, background color etc.
     </div>
 
     <Row justify="space-between" wrap={false}>

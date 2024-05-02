@@ -18,11 +18,11 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .avatar-bg {
-    background: ${secondaryColor};
+    background: ${primaryColor};
   }
 
   .primary-text {
-    color: ${primaryColor};
+    color: ${primaryColor} !important;
   }
 
   .primary-bg {

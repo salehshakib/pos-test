@@ -17,7 +17,12 @@ const Profile = () => {
   );
 
   return (
-    <Popover placement="bottomLeft" content={content} className="">
+    <Popover
+      placement="bottomLeft"
+      content={content}
+      className="hover:cursor-pointer"
+      trigger={"click"}
+    >
       <Avatar className="avatar-bg" size={40} icon={<UserOutlined />} />
     </Popover>
   );

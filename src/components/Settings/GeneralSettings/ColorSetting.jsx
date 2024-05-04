@@ -112,7 +112,6 @@ const ColorSettingComponent = () => {
               panelRender={customPrimaryPanelRender}
               size="large"
               showText={(color) => <span>{color.toHexString()}</span>}
-              // onChangeComplete={handlePrimaryColor}
               format="hex"
             />
           </Form.Item>
@@ -133,7 +132,6 @@ const ColorSettingComponent = () => {
               panelRender={customSecondaryPanelRender}
               size="large"
               showText={(color) => <span>{color.toHexString()}</span>}
-              // onChangeComplete={handleSecondaryColor}
               format="hex"
             />
           </Form.Item>

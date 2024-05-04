@@ -24,33 +24,25 @@ const GeneralSettingForm = ({ data }) => {
     }
   }, [data]);
 
-  console.log(data);
-
   const handleSubmit = async (values) => {
     const { logo, primary_color, secendary_color, ...rest } = values;
 
     const formData = new FormData();
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (
-        key !== "logo" &&
-        key !== "primary_color" &&
-        key !== "secendary_color"
-      ) {
-        formData.append(key, value);
-      }
+    Object.entries(rest).forEach(([key, value]) => {
+      formData.append(key, value);
     });
 
     if (form.isFieldTouched("logo")) {
       formData.append("logo", logo[0]);
     }
 
-    if (form.getFieldValue("primary_color").includes("#")) {
-      formData.append("primary_color", primary_color);
+    if (typeof primary_color === "object") {
+      formData.append("primary_color", primary_color.toHexString());
     }
 
-    if (form.getFieldValue("secendary_color").includes("#")) {
-      formData.append("secendary_color", secendary_color);
+    if (typeof secendary_color === "object") {
+      formData.append("secendary_color", secendary_color.toHexString());
     }
 
     await updateGeneralSettings({

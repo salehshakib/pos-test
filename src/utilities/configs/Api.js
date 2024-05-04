@@ -6,4 +6,4 @@ export const BRAND = "inventory/brand";
 export const WAREHOUSE = "inventory/warehouse";
 
 //settings
-export const GENERAL_SETTINGS = "settings/general-setting";
+export const GENERAL_SETTING = "settings/general-setting";

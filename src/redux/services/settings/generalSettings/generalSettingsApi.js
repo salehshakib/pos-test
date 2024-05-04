@@ -1,4 +1,4 @@
-import { GENERAL_SETTINGS } from "../../../../utilities/configs/Api";
+import { GENERAL_SETTING } from "../../../../utilities/configs/Api";
 import { openNotification } from "../../../../utilities/lib/notification";
 import { verifyToken } from "../../../../utilities/lib/verifyToken";
 import { baseApi } from "../../../api/baseApi";
@@ -8,18 +8,18 @@ const generalSettingsApi = baseApi.injectEndpoints({
     getGeneralSettings: build.query({
       query: () => {
         return {
-          url: `/${GENERAL_SETTINGS}/show/1`,
+          url: `/${GENERAL_SETTING}/show/1`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: () => [{ type: GENERAL_SETTINGS }, GENERAL_SETTINGS],
+      providesTags: () => [{ type: GENERAL_SETTING }, GENERAL_SETTING],
     }),
 
     updateGeneralSettings: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${GENERAL_SETTINGS}/update/`,
+          url: `/${GENERAL_SETTING}/update/1`,
           method: "POST",
           body: data,
         };
@@ -31,7 +31,7 @@ const generalSettingsApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [GENERAL_SETTINGS] : [];
+        return result ? [GENERAL_SETTING] : [];
       },
     }),
   }),

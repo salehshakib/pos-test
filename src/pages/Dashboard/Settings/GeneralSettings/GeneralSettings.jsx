@@ -1,45 +1,20 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import GeneralSettingForm from "./GeneralSettingForm";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 import { useGetGeneralSettingsQuery } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
-import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
+import GeneralSettingForm from "./GeneralSettingForm";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const GeneralSettings = () => {
-  const dispatch = useDispatch();
-
-  const [fields, setFields] = useState([]);
   const { data, isLoading } = useGetGeneralSettingsQuery();
-  // const [defaultLogo, setLogo] = useState(false);
+
+  console.log(data);
 
   useEffect(() => {
     if (data) {
-      const fieldData = fieldsToUpdate(data);
-      setFields(fieldData);
+      toast.success("Settings loaded successfully");
     }
   }, [data]);
-
-  const handleSubmit = async (values) => {
-    console.log(values);
-    // const { data, error } = await createBrand({
-    //   data: values,
-    // });
-
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeCreateDrawer());
-    // }
-
-    // if (error) {
-    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-    //     name: fieldName,
-    //     errors: error?.data?.errors[fieldName],
-    //   }));
-
-    //   setErrorFields(errorFields);
-    // }
-  };
 
   return (
     <GlobalUtilityStyle>
@@ -54,6 +29,7 @@ const GeneralSettings = () => {
             <div className="text-2xl lg:text-3xl py-1">General Settings</div>
           ),
         }}
+        loading={isLoading}
 
         // tabList={[
         //   {
@@ -76,13 +52,7 @@ const GeneralSettings = () => {
         //   },
         // }}
       >
-        <div className="pt-10">
-          <GeneralSettingForm
-            fields={fields}
-            isLoading={isLoading}
-            handleSubmit={handleSubmit}
-          />
-        </div>
+        <GeneralSettingForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );

@@ -26,15 +26,27 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .primary-bg {
-    background: ${primaryColor};
+    background: ${primaryColor} !important;
   }
 
   .secondary-text {
-    color: ${secondaryColor};
+    color: ${secondaryColor} !important;
   }
 
   .secondary-bg {
-    background: ${secondaryColor};
+    background: ${secondaryColor} !important;
+  }
+
+  .custom-primary-btn {
+    background: ${primaryColor} !important;
+    border: 1px solid ${primaryColor} !important;
+    color: white !important;
+
+    &:hover {
+      background: ${secondaryColor} !important;
+      border: 1px solid ${secondaryColor} !important;
+      color: ${primaryColor} !important;
+    }
   }
 
   .ant-page-header-heading {
@@ -65,11 +77,11 @@ const GlobalUtilityStyle = styled.div`
   .ant-select {
     border: 2px solid ${secondaryColor} !important;
     border-radius: 8px !important;
-  }
 
-  .ant-select:hover {
-    border: 2px solid ${primaryColor} !important;
-    border-radius: 8px !important;
+    &:hover {
+      border: 2px solid ${primaryColor} !important;
+      border-radius: 8px !important;
+    }
   }
 
   .ant-select-focused {
@@ -82,24 +94,10 @@ const GlobalUtilityStyle = styled.div`
     border: none !important;
   }
 
-  .ant-btn-primary {
-    background-color: ${primaryColor} !important;
-  }
-
-  // .ant-menu-submenu-selected > .ant-menu-submenu-title {
-  //   color: ${primaryColor} !important;
-  //   background-color: ${secondaryColor} !important;
-  // }
-
   .ant-menu-submenu-active > .ant-menu-submenu-title {
     color: ${primaryColor} !important;
     background-color: ${secondaryColor} !important;
   }
-
-  // .ant-menu-submenu-vertical > .ant-menu-item-active {
-  //   color: ${primaryColor} !important;
-  //   background-color: ${secondaryColor} !important;
-  // }
 
   .ant-menu-item-selected {
     color: ${primaryColor} !important;
@@ -111,9 +109,16 @@ const GlobalUtilityStyle = styled.div`
     background-color: ${secondaryColor} !important;
   }
 
-  .ant-btn-primary:hover {
-    color: ${primaryColor} !important;
-    background-color: ${secondaryColor} !important;
+  .ant-btn-primary {
+    background-color: ${primaryColor} !important;
+    // color: ${secondaryColor} !important;
+    border: 1px solid ${primaryColor} !important;
+
+    &:hover {
+      background-color: ${secondaryColor} !important;
+      color: ${primaryColor} !important;
+      border: 1px solid ${secondaryColor} !important;
+    }
   }
 
   .custom-logo-upload {
@@ -121,18 +126,12 @@ const GlobalUtilityStyle = styled.div`
       margin-inline: 0 !important;
       width: 150px !important;
       height: 150px !important;
-      // transition: transform 0.3s;
     }
 
     .ant-upload-list-item-container {
       margin-inline: 0 !important;
       width: 150px !important;
       height: 150px !important;
-    }
-
-    .ant-upload-select:hover {
-      border: 1px dashed ${secondaryColor} !important;
-      border-radius: 99999px !important;
     }
   }
 
@@ -165,6 +164,26 @@ const GlobalUtilityStyle = styled.div`
       object-fit: cover !important;
     }
   }
+
+  .ant-upload-list-item-container:hover {
+    border: 1px dashed ${primaryColor} !important;
+    border-radius: 99999px !important;
+  }
+
+  .ant-upload-select:hover {
+    border: 1px dashed ${primaryColor} !important;
+    border-radius: 99999px !important;
+  }
 `;
+
+// .ant-menu-submenu-selected > .ant-menu-submenu-title {
+//   color: ${primaryColor} !important;
+//   background-color: ${secondaryColor} !important;
+// }
+
+// .ant-menu-submenu-vertical > .ant-menu-item-active {
+//   color: ${primaryColor} !important;
+//   background-color: ${secondaryColor} !important;
+// }
 
 export { GlobalUtilityStyle };

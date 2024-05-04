@@ -1,29 +1,8 @@
-/* eslint-disable no-unused-vars */
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
-import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
-import StatusModal from "../../../../components/Shared/Modal/StatusModal";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import DepartmentCreate from "../../../../components/Department/DepartmentCreate";
+import DepartmentTable from "../../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import {
-  useCreateDepartmentMutation,
-  useDeleteDepartmentMutation,
-  useGetDepartmentDetailsQuery,
-  useGetDepartmentsQuery,
-  useUpdateDepartmentMutation,
-  useUpdateDepartmentStatusMutation,
-} from "../../../../redux/services/hrm/department/departmentApi";
-import {
-  closeCreateDrawer,
-  closeEditDrawer,
-  openEditDrawer,
-} from "../../../../redux/services/drawer/drawerSlice";
-import { DEPARTMENT } from "../../../../utilities/configs/Api";
-import DepartmentForm from "./DepartmentForm";
-import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const columns = [
   // {
@@ -114,154 +93,148 @@ const columns = [
 ];
 
 const Department = () => {
-  const dispatch = useDispatch();
-  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.drawer
-  );
-
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
+  // const [fields, setFields] = useState([]);
+  // const [errorFields, setErrorFields] = useState([]);
 
-  const [id, setId] = useState(undefined);
+  // const [id, setId] = useState(undefined);
 
-  const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
+  // const [statusId, setStatusId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(undefined);
+  // const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteId, setDeleteId] = useState(undefined);
 
   //get all data query
-  const { data, isLoading } = useGetDepartmentsQuery({
-    params: pagination,
-  });
+  // const { data, isLoading } = useGetDepartmentsQuery({
+  //   params: pagination,
+  // });
 
-  const total = data?.meta?.total;
+  // const total = data?.meta?.total;
 
-  const { data: details, isFetching } = useGetDepartmentDetailsQuery(
-    { id },
-    { skip: !id }
-  );
+  // const { data: details, isFetching } = useGetDepartmentDetailsQuery(
+  //   { id },
+  //   { skip: !id }
+  // );
 
-  const [createDepartment, { isLoading: isCreating }] =
-    useCreateDepartmentMutation();
+  // const [createDepartment, { isLoading: isCreating }] =
+  //   useCreateDepartmentMutation();
 
-  const [updateDepartment, { isLoading: isUpdating }] =
-    useUpdateDepartmentMutation();
+  // const [updateDepartment, { isLoading: isUpdating }] =
+  //   useUpdateDepartmentMutation();
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateDepartmentStatusMutation();
+  // const [updateStatus, { isLoading: isStatusUpdating }] =
+  //   useUpdateDepartmentStatusMutation();
 
-  const [deleteDepartment, { isLoading: isDeleting }] =
-    useDeleteDepartmentMutation();
+  // const [deleteDepartment, { isLoading: isDeleting }] =
+  //   useDeleteDepartmentMutation();
 
-  const getDetails = (id) => {
-    setId(id);
-    dispatch(openEditDrawer());
-  };
+  // const getDetails = (id) => {
+  //   setId(id);
+  //   dispatch(openEditDrawer());
+  // };
 
-  useEffect(() => {
-    if (details) {
-      // const fieldData = fieldsToUpdate(details);
+  // useEffect(() => {
+  //   if (details) {
+  //     // const fieldData = fieldsToUpdate(details);
 
-      const fieldData = [
-        {
-          name: "name",
-          value: details?.name,
-          errors: "",
-        },
-      ];
+  //     const fieldData = [
+  //       {
+  //         name: "name",
+  //         value: details?.name,
+  //         errors: "",
+  //       },
+  //     ];
 
-      setFields(fieldData);
-    }
-  }, [details, setFields]);
+  //     setFields(fieldData);
+  //   }
+  // }, [details, setFields]);
 
-  const handleStatus = (id) => {
-    setStatusModal(true);
-    setStatusId(id);
-  };
+  // const handleStatus = (id) => {
+  //   setStatusModal(true);
+  //   setStatusId(id);
+  // };
 
-  const handleStatusUpdate = async () => {
-    console.log(statusId);
-    const { data, error } = await updateStatus(statusId);
+  // const handleStatusUpdate = async () => {
+  //   console.log(statusId);
+  //   const { data, error } = await updateStatus(statusId);
 
-    if (data?.success) {
-      setId(undefined);
-      setStatusModal(false);
-    }
-  };
+  //   if (data?.success) {
+  //     setId(undefined);
+  //     setStatusModal(false);
+  //   }
+  // };
 
-  const handleDelete = (id) => {
-    setDeleteModal(true);
-    setDeleteId(id);
-  };
+  // const handleDelete = (id) => {
+  //   setDeleteModal(true);
+  //   setDeleteId(id);
+  // };
 
-  const handleDeleteDepartment = async () => {
-    const { data, error } = await deleteDepartment(deleteId);
-    if (data?.success) {
-      setDeleteModal(false);
-    }
-  };
+  // const handleDeleteDepartment = async () => {
+  //   const { data, error } = await deleteDepartment(deleteId);
+  //   if (data?.success) {
+  //     setDeleteModal(false);
+  //   }
+  // };
 
-  const dataSource =
-    data?.results?.department?.map((item) => {
-      const { id, name, created_at, is_active } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+  // const dataSource =
+  //   data?.results?.department?.map((item) => {
+  //     const { id, name, created_at, is_active } = item;
+  //     const date = dayjs(created_at).format("DD-MM-YYYY");
 
-      return {
-        id,
-        department: name,
-        status: { status: is_active, handleStatus },
-        created_at: date,
-        action: { getDetails, handleDelete },
-      };
-    }) ?? [];
+  //     return {
+  //       id,
+  //       department: name,
+  //       status: { status: is_active, handleStatus },
+  //       created_at: date,
+  //       action: { getDetails, handleDelete },
+  //     };
+  //   }) ?? [];
 
-  const handleSubmit = async (values) => {
-    const { data, error } = await createDepartment({
-      data: values,
-    });
+  // const handleSubmit = async (values) => {
+  //   const { data, error } = await createDepartment({
+  //     data: values,
+  //   });
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeCreateDrawer());
-    }
+  //   if (data?.success) {
+  //     // setId(undefined);
+  //     dispatch(closeCreateDrawer());
+  //   }
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+  //       name: fieldName,
+  //       errors: error?.data?.errors[fieldName],
+  //     }));
 
-      setErrorFields(errorFields);
-    }
-  };
+  //     setErrorFields(errorFields);
+  //   }
+  // };
 
-  const handleUpdate = async (values) => {
-    const { data, error } = await updateDepartment({
-      data: { id, ...values },
-    });
+  // const handleUpdate = async (values) => {
+  //   const { data, error } = await updateDepartment({
+  //     data: { id, ...values },
+  //   });
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeEditDrawer());
-    }
+  //   if (data?.success) {
+  //     setId(undefined);
+  //     dispatch(closeEditDrawer());
+  //   }
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors)?.map(
-        (fieldName) => ({
-          name: fieldName,
-          value: fields.find((field) => field.name === fieldName).value,
-          errors: error?.data?.errors[fieldName],
-        })
-      );
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors)?.map(
+  //       (fieldName) => ({
+  //         name: fieldName,
+  //         value: fields.find((field) => field.name === fieldName).value,
+  //         errors: error?.data?.errors[fieldName],
+  //       })
+  //     );
 
-      setFields(errorFields);
-    }
-  };
+  //     setFields(errorFields);
+  //   }
+  // };
 
   return (
     <GlobalContainer
@@ -270,7 +243,7 @@ const Department = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <CustomTable
+      {/* <CustomTable
         columns={newColumns}
         dataSource={dataSource}
         total={total}
@@ -278,17 +251,24 @@ const Department = () => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-      />
+      /> */}
 
-      <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
+      {/* <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
         <DepartmentForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
         />
-      </CustomDrawer>
+      </CustomDrawer> */}
 
-      <CustomDrawer
+      <DepartmentCreate />
+
+      <DepartmentTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
+
+      {/* <CustomDrawer
         title={"Edit Department"}
         open={isEditDrawerOpen}
         isLoading={isFetching}
@@ -298,9 +278,9 @@ const Department = () => {
           isLoading={isUpdating}
           fields={fields}
         />
-      </CustomDrawer>
+      </CustomDrawer> */}
 
-      <StatusModal
+      {/* <StatusModal
         statusModal={statusModal}
         setStatusModal={setStatusModal}
         handleStatusUpdate={handleStatusUpdate}
@@ -312,7 +292,7 @@ const Department = () => {
         setDeleteModal={setDeleteModal}
         handleDeleteDepartment={handleDeleteDepartment}
         isDeleting={isDeleting}
-      />
+      /> */}
     </GlobalContainer>
   );
 };

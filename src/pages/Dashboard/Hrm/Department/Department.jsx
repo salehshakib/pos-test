@@ -1,13 +1,8 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import DepartmentCreate from "../../../../components/Department/DepartmentCreate";
 import DepartmentTable from "../../../../components/Department/DepartmentTable";
-import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { closeCreateDrawer } from "../../../../redux/services/drawer/drawerSlice";
-import { useCreateDepartmentMutation } from "../../../../redux/services/hrm/department/departmentApi";
-import DepartmentForm from "./DepartmentForm";
 
 const columns = [
   // {
@@ -98,15 +93,11 @@ const columns = [
 ];
 
 const Department = () => {
-  const dispatch = useDispatch();
-  const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
-
-  // const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   // const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
+  // const [errorFields, setErrorFields] = useState([]);
 
   // const [id, setId] = useState(undefined);
 
@@ -128,8 +119,8 @@ const Department = () => {
   //   { skip: !id }
   // );
 
-  const [createDepartment, { isLoading: isCreating }] =
-    useCreateDepartmentMutation();
+  // const [createDepartment, { isLoading: isCreating }] =
+  //   useCreateDepartmentMutation();
 
   // const [updateDepartment, { isLoading: isUpdating }] =
   //   useUpdateDepartmentMutation();
@@ -202,25 +193,25 @@ const Department = () => {
   //     };
   //   }) ?? [];
 
-  const handleSubmit = async (values) => {
-    const { data, error } = await createDepartment({
-      data: values,
-    });
+  // const handleSubmit = async (values) => {
+  //   const { data, error } = await createDepartment({
+  //     data: values,
+  //   });
 
-    if (data?.success) {
-      // setId(undefined);
-      dispatch(closeCreateDrawer());
-    }
+  //   if (data?.success) {
+  //     // setId(undefined);
+  //     dispatch(closeCreateDrawer());
+  //   }
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+  //       name: fieldName,
+  //       errors: error?.data?.errors[fieldName],
+  //     }));
 
-      setErrorFields(errorFields);
-    }
-  };
+  //     setErrorFields(errorFields);
+  //   }
+  // };
 
   // const handleUpdate = async (values) => {
   //   const { data, error } = await updateDepartment({
@@ -262,13 +253,15 @@ const Department = () => {
         isLoading={isLoading}
       /> */}
 
-      <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
+      {/* <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
         <DepartmentForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
         />
-      </CustomDrawer>
+      </CustomDrawer> */}
+
+      <DepartmentCreate />
 
       <DepartmentTable
         newColumns={newColumns}

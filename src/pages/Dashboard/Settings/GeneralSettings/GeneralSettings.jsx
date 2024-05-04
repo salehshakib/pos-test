@@ -1,10 +1,20 @@
 import { PageContainer } from "@ant-design/pro-layout";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
-import GeneralSettingForm from "./GeneralSettingForm";
 import { useGetGeneralSettingsQuery } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
+import GeneralSettingForm from "./GeneralSettingForm";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const GeneralSettings = () => {
-  const { data } = useGetGeneralSettingsQuery();
+  const { data, isLoading } = useGetGeneralSettingsQuery();
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      toast.success("Settings loaded successfully");
+    }
+  }, [data]);
 
   return (
     <GlobalUtilityStyle>
@@ -19,6 +29,7 @@ const GeneralSettings = () => {
             <div className="text-2xl lg:text-3xl py-1">General Settings</div>
           ),
         }}
+        loading={isLoading}
 
         // tabList={[
         //   {

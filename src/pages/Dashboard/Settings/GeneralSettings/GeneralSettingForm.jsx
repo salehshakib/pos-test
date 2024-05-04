@@ -26,6 +26,10 @@ const GeneralSettingForm = ({ data }) => {
 
   const handleSubmit = (values) => {
     console.log(values);
+    console.log(form.isFieldTouched("secendary_color"));
+
+    if (form.isFieldTouched("secendary_color"))
+      console.log(values.secendary_color?.toHexString());
   };
 
   const onFinish = (values) => {
@@ -54,6 +58,7 @@ const GeneralSettingForm = ({ data }) => {
         layout="vertical"
         autoComplete="on"
         onFinishFailed={onFinishFailed}
+        disabled={!data}
       >
         <CustomLogoUploader name={"logo"} form={form} />
         <ColorSetting />

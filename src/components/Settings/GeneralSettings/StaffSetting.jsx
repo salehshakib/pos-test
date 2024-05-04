@@ -46,8 +46,8 @@ const StaffSetting = () => {
         <Col {...colLayout}>
           <Form.Item label="Sale and Quotion Without Stock" name={"sqws"}>
             <Radio.Group>
-              <Radio value="yes">Yes</Radio>
-              <Radio value="no">No</Radio>
+              <Radio value="1">Yes</Radio>
+              <Radio value="0">No</Radio>
             </Radio.Group>
           </Form.Item>
         </Col>

@@ -1,33 +1,38 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DepartmentForm from "../../pages/Dashboard/Hrm/Department/DepartmentForm";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
-  useGetDepartmentDetailsQuery,
-  useUpdateDepartmentMutation,
-} from "../../redux/services/hrm/department/departmentApi";
+  useGetCategoryDetailsQuery,
+  useUpdateCategoryMutation,
+} from "../../redux/services/inventory/category/categoryApi";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import CategoryForm from "../../pages/Dashboard/Inventory/Category/CategoryForm";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 
-const DepartmentEdit = ({ id, setId }) => {
+const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetDepartmentDetailsQuery(
+  const { data, isFetching } = useGetCategoryDetailsQuery(
     { id },
     { skip: !id }
   );
-  const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
+
+  const [updateCategory, { isLoading }] = useUpdateCategoryMutation();
 
   useEffect(() => {
     if (data) {
-      // const fieldData = fieldsToUpdate(data);
       const fieldData = [
         {
           name: "name",
           value: data?.name,
+          errors: "",
+        },
+        {
+          name: "parent_id",
+          value: Number(data?.parent_id),
           errors: "",
         },
       ];
@@ -37,7 +42,7 @@ const DepartmentEdit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateDepartment({
+    const { data, error } = await updateCategory({
       data: { id, ...values },
     });
 
@@ -52,14 +57,13 @@ const DepartmentEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
-
   return (
     <CustomDrawer
-      title={"Edit Department"}
+      title={"Edit Category"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <DepartmentForm
+      <CategoryForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -68,4 +72,4 @@ const DepartmentEdit = ({ id, setId }) => {
   );
 };
 
-export default DepartmentEdit;
+export default Categoryedit;

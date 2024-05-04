@@ -2,12 +2,7 @@ import { Button, Modal } from "antd";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const DeleteModal = ({
-  deleteModal,
-  hideModal,
-  handleDeleteDepartment,
-  isLoading,
-}) => {
+const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
   return (
     <GlobalUtilityStyle>
       <Modal
@@ -31,11 +26,7 @@ const DeleteModal = ({
           <span> Do you want to delete this department?</span>
           <div className="w-full flex justify-end items-center gap-3">
             <Button onClick={hideModal}>No</Button>
-            <Button
-              type="primary"
-              onClick={handleDeleteDepartment}
-              loading={isLoading}
-            >
+            <Button type="primary" onClick={handleDelete} loading={isLoading}>
               Yes
             </Button>
           </div>

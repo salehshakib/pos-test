@@ -140,7 +140,7 @@ const ProductList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="ProductList"
+      pageTitle="Product List"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

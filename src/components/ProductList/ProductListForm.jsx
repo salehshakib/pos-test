@@ -2,6 +2,8 @@ import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomUploader from "../Shared/Upload/CustomUploader";
 
 const rowLayout = {
   gutter: 25,
@@ -13,6 +15,11 @@ const colLayout = {
   xs: 24,
   md: 12,
   lg: 8,
+};
+
+const checkLayout = {
+  xs: 24,
+  md: 12,
 };
 
 const richTextLayout = {
@@ -156,9 +163,50 @@ const ProductListForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
       </Row>
+
+      <Row {...rowLayout}>
+        <Col {...checkLayout}>
+          <CustomCheckbox
+            label="Featured Product"
+            // name="product_description"
+            subLabel="(It will be displayed on POS)"
+          />
+        </Col>
+        <Col {...checkLayout}>
+          <CustomCheckbox
+            label="Embeded Barcode"
+            // name="product_description"
+          />
+        </Col>
+      </Row>
+      <Row {...rowLayout} justify={"center"} align={"middle"}>
+        <Col xs={24}>
+          <CustomUploader
+            label={"Profile Image"}
+            // name={"brand_image"}
+            // multiple={true}
+          />
+        </Col>
+      </Row>
       <Row {...rowLayout}>
         <Col {...richTextLayout}>
           <RichTextEditor label="Product Details" name="product_description" />
+        </Col>
+      </Row>
+
+      <Row {...rowLayout}>
+        <Col {...checkLayout}>
+          <CustomCheckbox
+            label="This Product has IME or Serial Number"
+            // name="product_description"
+            // subLabel="(It will be displayed on POS)"
+          />
+        </Col>
+        <Col {...checkLayout}>
+          <CustomCheckbox
+            label="Disable Woocommerce Sync"
+            // name="product_description"
+          />
         </Col>
       </Row>
     </CustomForm>

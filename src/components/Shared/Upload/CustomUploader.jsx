@@ -75,7 +75,7 @@ const CustomUploader = ({
           }}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
-          className={`${multiple ? "custom-upload" : "custom-single-upload"}`}
+          className={`${multiple ? "custom-upload" : "custom-single-upload "}`}
         >
           {(fileList.length < 1 || multiple) && (
             <button

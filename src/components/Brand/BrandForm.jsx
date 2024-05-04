@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
-import CustomForm from "../../../../components/Shared/Form/CustomForm";
-import CustomInput from "../../../../components/Shared/Input/CustomInput";
-import CustomUploader from "../../../../components/Shared/Upload/CustomUploader";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
+import CustomUploader from "../Shared/Upload/CustomUploader";
 
 const rowLayout = {
   gutter: 25,

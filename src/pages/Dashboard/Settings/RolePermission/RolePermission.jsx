@@ -62,7 +62,7 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ getDetails, handleDelete }, record) => {
+    render: ({ getDetails, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
@@ -72,7 +72,7 @@ const columns = [
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={() => handleDelete(record.id)}
+            onClick={() => handleDeleteModal(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />
@@ -184,9 +184,9 @@ const RolePermission = () => {
   //     return {
   //       id,
   //       department: name,
-  //       status: { status: is_active, handleStatus },
+  //       status: { status: is_active, handleStatusModal },
   //       created_at: date,
-  //       action: { getDetails, handleDelete },
+  //       action: { getDetails, handleDeleteModal },
   //     };
   //   }) ?? [];
 

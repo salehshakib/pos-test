@@ -1,24 +1,8 @@
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
-import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import CategoryCreate from "../../../../components/Category/CategoryCreate";
+import CategoryTable from "../../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import {
-  useCreateCategoryMutation,
-  useDeleteCategoryMutation,
-  useGetCategoriesQuery,
-  useGetCategoryDetailsQuery,
-  useUpdateCategoryMutation,
-} from "../../../../redux/services/inventory/category/categoryApi";
-import {
-  closeCreateDrawer,
-  closeEditDrawer,
-  openEditDrawer,
-} from "../../../../redux/services/drawer/drawerSlice";
-import CategoryForm from "./CategoryForm";
 
 const columns = [
   {
@@ -97,13 +81,13 @@ const columns = [
   //   key: "status",
   //   width: "80px",
   //   align: "center",
-  //   render: ({ status, handleStatus }, record) => {
+  //   render: ({ status, handleStatusModal }, record) => {
   //     return (
   //       <button
   //         className={`p-0 ${
   //           status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
   //         } rounded shadow-md w-full`}
-  //         onClick={() => handleStatus(record.id)}
+  //         onClick={() => handleStatusModal(record.id)}
   //       >
   //         <span className="font-medium text-white text-xs px-2 w-full">
   //           {status == 1 ? "Active" : "Inactive"}
@@ -120,7 +104,7 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ getDetails, handleDelete }, record) => {
+    render: ({ getDetails, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
@@ -130,7 +114,7 @@ const columns = [
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={() => handleDelete(record.id)}
+            onClick={() => handleDeleteModal(record.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />
@@ -140,136 +124,138 @@ const columns = [
     },
   },
 ];
-const Category = () => {
-  const dispatch = useDispatch();
-  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.drawer
-  );
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+const Category = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
+  // const dispatch = useDispatch();
+  // const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
+  //   (state) => state.drawer
+  // );
 
-  const [id, setId] = useState(undefined);
+  // const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(undefined);
+  // const [fields, setFields] = useState([]);
+  // const [errorFields, setErrorFields] = useState([]);
 
-  const { data, isLoading } = useGetCategoriesQuery({
-    params: pagination,
-  });
+  // const [id, setId] = useState(undefined);
 
-  const total = data?.meta?.total;
+  // const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteId, setDeleteId] = useState(undefined);
 
-  const { data: details, isFetching } = useGetCategoryDetailsQuery(
-    { id },
-    { skip: !id }
-  );
+  // const { data, isLoading } = useGetCategoriesQuery({
+  //   params: pagination,
+  // });
 
-  const [createCategory, { isLoading: isCreating }] =
-    useCreateCategoryMutation();
+  // const total = data?.meta?.total;
 
-  const [updateCategory, { isLoading: isUpdating }] =
-    useUpdateCategoryMutation();
+  // const { data: details, isFetching } = useGetCategoryDetailsQuery(
+  //   { id },
+  //   { skip: !id }
+  // );
 
-  const [deleteCategory, { isLoading: isDeleting }] =
-    useDeleteCategoryMutation();
+  // const [createCategory, { isLoading: isCreating }] =
+  //   useCreateCategoryMutation();
 
-  const getDetails = (id) => {
-    setId(id);
-    dispatch(openEditDrawer());
-  };
+  // const [updateCategory, { isLoading: isUpdating }] =
+  //   useUpdateCategoryMutation();
 
-  useEffect(() => {
-    if (details) {
-      const fieldData = [
-        {
-          name: "name",
-          value: details?.name,
-          errors: "",
-        },
-        {
-          name: "parent_id",
-          value: Number(details?.parent_id),
-          errors: "",
-        },
-      ];
+  // const [deleteCategory, { isLoading: isDeleting }] =
+  //   useDeleteCategoryMutation();
 
-      setFields(fieldData);
-    }
-  }, [details, setFields]);
+  // const getDetails = (id) => {
+  //   setId(id);
+  //   dispatch(openEditDrawer());
+  // };
 
-  const handleDelete = (id) => {
-    setDeleteModal(true);
-    setDeleteId(id);
-  };
+  // useEffect(() => {
+  //   if (details) {
+  //     const fieldData = [
+  //       {
+  //         name: "name",
+  //         value: details?.name,
+  //         errors: "",
+  //       },
+  //       {
+  //         name: "parent_id",
+  //         value: Number(details?.parent_id),
+  //         errors: "",
+  //       },
+  //     ];
 
-  const handleDeleteCategory = async () => {
-    const { data } = await deleteCategory(deleteId);
-    if (data?.success) {
-      setDeleteModal(false);
-    }
-  };
+  //     setFields(fieldData);
+  //   }
+  // }, [details, setFields]);
 
-  const dataSource =
-    data?.results?.category?.map((item) => {
-      const { id, name, created_at, parent_id } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+  // const handleDelete = (id) => {
+  //   setDeleteModal(true);
+  //   setDeleteId(id);
+  // };
 
-      return {
-        id,
-        category: name,
-        parentCategory: parent_id ?? "N/A",
-        created_at: date,
-        action: { getDetails, handleDelete },
-      };
-    }) ?? [];
+  // const handleDeleteCategory = async () => {
+  //   const { data } = await deleteCategory(deleteId);
+  //   if (data?.success) {
+  //     setDeleteModal(false);
+  //   }
+  // };
 
-  const handleSubmit = async (values) => {
-    const { data, error } = await createCategory({
-      data: values,
-    });
+  // const dataSource =
+  //   data?.results?.category?.map((item) => {
+  //     const { id, name, created_at, parent_id } = item;
+  //     const date = dayjs(created_at).format("DD-MM-YYYY");
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeCreateDrawer());
-    }
+  //     return {
+  //       id,
+  //       category: name,
+  //       parentCategory: parent_id ?? "N/A",
+  //       created_at: date,
+  //       action: { getDetails, handleDeleteModal },
+  //     };
+  //   }) ?? [];
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+  // const handleSubmit = async (values) => {
+  //   const { data, error } = await createCategory({
+  //     data: values,
+  //   });
 
-      setErrorFields(errorFields);
-    }
-  };
+  //   if (data?.success) {
+  //     setId(undefined);
+  //     dispatch(closeCreateDrawer());
+  //   }
 
-  const handleUpdate = async (values) => {
-    const { data, error } = await updateCategory({
-      data: { id, ...values },
-    });
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+  //       name: fieldName,
+  //       errors: error?.data?.errors[fieldName],
+  //     }));
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeEditDrawer());
-    }
+  //     setErrorFields(errorFields);
+  //   }
+  // };
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors)?.map(
-        (fieldName) => ({
-          name: fieldName,
-          value: fields.find((field) => field.name === fieldName).value,
-          errors: error?.data?.errors[fieldName],
-        })
-      );
+  // const handleUpdate = async (values) => {
+  //   const { data, error } = await updateCategory({
+  //     data: { id, ...values },
+  //   });
 
-      setFields(errorFields);
-    }
-  };
+  //   if (data?.success) {
+  //     setId(undefined);
+  //     dispatch(closeEditDrawer());
+  //   }
+
+  //   if (error) {
+  //     const errorFields = Object.keys(error?.data?.errors)?.map(
+  //       (fieldName) => ({
+  //         name: fieldName,
+  //         value: fields.find((field) => field.name === fieldName).value,
+  //         errors: error?.data?.errors[fieldName],
+  //       })
+  //     );
+
+  //     setFields(errorFields);
+  //   }
+  // };
 
   return (
     <GlobalContainer
@@ -278,7 +264,7 @@ const Category = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <CustomTable
+      {/* <CustomTable
         columns={newColumns}
         dataSource={dataSource}
         total={total}
@@ -286,17 +272,22 @@ const Category = () => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-      />
+      /> */}
 
-      <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
+      {/* <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
         <CategoryForm
           handleSubmit={handleSubmit}
           isLoading={isCreating}
           fields={errorFields}
         />
-      </CustomDrawer>
+      </CustomDrawer> */}
+      <CategoryCreate />
+      <CategoryTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
 
-      <CustomDrawer
+      {/* <CustomDrawer
         title={"Edit Category"}
         open={isEditDrawerOpen}
         isLoading={isFetching}
@@ -313,7 +304,7 @@ const Category = () => {
         setDeleteModal={setDeleteModal}
         handleDeleteDepartment={handleDeleteCategory}
         isDeleting={isDeleting}
-      />
+      /> */}
     </GlobalContainer>
   );
 };

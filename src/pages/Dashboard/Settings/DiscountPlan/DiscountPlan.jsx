@@ -64,13 +64,13 @@ const columns = [
     key: "status",
     width: "80px",
     align: "center",
-    render: ({ status, handleStatus }, record) => {
+    render: ({ status, handleStatusModal }, record) => {
       return (
         <button
           className={`p-0 ${
             status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
           } rounded shadow-md w-full`}
-          onClick={() => handleStatus(record.id)}
+          onClick={() => handleStatusModal(record.id)}
         >
           <span className="font-medium text-white text-xs px-2 w-full">
             {status == 1 ? "Active" : "Inactive"}
@@ -86,7 +86,7 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ getDetails, handleDelete }, record) => {
+    render: ({ getDetails, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
@@ -96,7 +96,7 @@ const columns = [
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={() => handleDelete(record.id)}
+            onClick={() => handleDeleteModal(record.id)}
             className="bg-secondary p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />
@@ -208,9 +208,9 @@ const DiscountPlan = () => {
   //     return {
   //       id,
   //       department: name,
-  //       status: { status: is_active, handleStatus },
+  //       status: { status: is_active, handleStatusModal },
   //       created_at: date,
-  //       action: { getDetails, handleDelete },
+  //       action: { getDetails, handleDeleteModal },
   //     };
   //   }) ?? [];
 

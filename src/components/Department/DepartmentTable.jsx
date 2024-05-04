@@ -37,12 +37,17 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
 
-  const handleStatus = (id) => {
+  const getDetails = (id) => {
+    setId(id);
+    dispatch(openEditDrawer());
+  };
+
+  const handleStatusModal = (id) => {
     setStatusModal(true);
     setStatusId(id);
   };
 
-  const handleStatusUpdate = async () => {
+  const handleStatus = async () => {
     console.log(statusId);
     const { data } = await updateStatus(statusId);
 
@@ -52,17 +57,12 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  const getDetails = (id) => {
-    setId(id);
-    dispatch(openEditDrawer());
-  };
-
-  const handleDelete = (id) => {
+  const handleDeleteModal = (id) => {
     setDeleteModal(true);
     setDeleteId(id);
   };
 
-  const handleDeleteDepartment = async () => {
+  const handleDelete = async () => {
     const { data } = await deleteDepartment(deleteId);
     if (data?.success) {
       setDeleteModal(false);
@@ -77,9 +77,9 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
       return {
         id,
         department: name,
-        status: { status: is_active, handleStatus },
+        status: { status: is_active, handleStatusModal },
         created_at: date,
-        action: { getDetails, handleDelete },
+        action: { getDetails, handleDeleteModal },
       };
     }) ?? [];
 
@@ -107,14 +107,14 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
       <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
-        handleStatusUpdate={handleStatusUpdate}
+        handleStatus={handleStatus}
         isLoading={isStatusUpdating}
       />
 
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
-        handleDeleteDepartment={handleDeleteDepartment}
+        handleDelete={handleDelete}
         isLoading={isDeleting}
       />
     </GlobalUtilityStyle>

@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import DepartmentForm from "../../pages/Dashboard/Hrm/Department/DepartmentForm";
-import { useCreateDepartmentMutation } from "../../redux/services/hrm/department/departmentApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DepartmentForm from "./DepartmentForm";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateDepartmentMutation } from "../../redux/services/hrm/department/departmentApi";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 
 const DepartmentCreate = () => {
   const dispatch = useDispatch();

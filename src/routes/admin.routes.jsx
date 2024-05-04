@@ -1,14 +1,11 @@
 //components
 import { BsBoxSeam } from "react-icons/bs";
-import { CiDiscount1 } from "react-icons/ci";
-import { FaUserLock } from "react-icons/fa";
 import { FaCartShopping, FaMoneyBillWave, FaUsersGear } from "react-icons/fa6";
 import { GoCreditCard } from "react-icons/go";
 import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
-  MdDisplaySettings,
   MdInventory2,
   MdOutlineSettings,
   MdPeopleAlt,
@@ -26,16 +23,13 @@ import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
 import Return from "../pages/Dashboard/Return/Return";
-import Discount from "../pages/Dashboard/Settings/Discount/Discount";
-import DiscountPlan from "../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
-import GeneralSettings from "../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
-import RolePermission from "../pages/Dashboard/Settings/RolePermission/RolePermission";
 import Transfer from "../pages/Dashboard/Transfer/Transfer";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
 import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
+import { settingPaths } from "./SettingRoutes/settings.routes";
 
 export const adminPaths = [
   {
@@ -187,31 +181,6 @@ export const adminPaths = [
     name: "Settings",
     path: "settings",
     icon: MdOutlineSettings,
-    children: [
-      {
-        name: "General Settings",
-        path: "general-settings",
-        icon: MdDisplaySettings,
-        element: <GeneralSettings />,
-      },
-      {
-        name: "Discount",
-        path: "discount",
-        icon: CiDiscount1,
-        element: <Discount />,
-      },
-      {
-        name: "Discount Plan",
-        path: "discount-plan",
-        icon: CiDiscount1,
-        element: <DiscountPlan />,
-      },
-      {
-        name: "Role Permission",
-        path: "role-permission",
-        icon: FaUserLock,
-        element: <RolePermission />,
-      },
-    ],
+    children: settingPaths,
   },
 ];

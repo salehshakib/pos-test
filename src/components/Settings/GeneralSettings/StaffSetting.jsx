@@ -1,6 +1,6 @@
 import { Col, Divider, Form, Radio, Row } from "antd";
 import invoiceFormats from "../../../assets/data/invoiceFormats.json";
-import CustomInput from "../../Shared/Form/CustomInput";
+import CustomInput from "../../Shared/Input/CustomInput";
 
 const rowLayout = {
   gutter: 25,

@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
-import CustomInput from "../../../../components/Shared/Form/CustomInput";
+import CustomInput from "../../../../components/Shared/Input/CustomInput";
 
 const rowLayout = {
   gutter: 25,

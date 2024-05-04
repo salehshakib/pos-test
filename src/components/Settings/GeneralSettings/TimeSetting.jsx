@@ -1,7 +1,7 @@
 import { Col, Divider, Row } from "antd";
 import dateFormats from "../../../assets/data/dateFormats.json";
 import timezones from "../../../assets/data/timezones.json";
-import CustomInput from "../../Shared/Form/CustomInput";
+import CustomInput from "../../Shared/Input/CustomInput";
 
 const rowLayout = {
   gutter: 25,

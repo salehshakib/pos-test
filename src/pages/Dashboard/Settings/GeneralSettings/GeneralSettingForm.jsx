@@ -6,7 +6,7 @@ import CurrencySetting from "../../../../components/Settings/GeneralSettings/Cur
 import DeveloperSetting from "../../../../components/Settings/GeneralSettings/DeveloperSetting";
 import StaffSetting from "../../../../components/Settings/GeneralSettings/StaffSetting";
 import TimeSetting from "../../../../components/Settings/GeneralSettings/TimeSetting";
-import CustomLogoUploader from "../../../../components/Shared/Form/CustomLogoUploader";
+import CustomLogoUploader from "../../../../components/Shared/Upload/CustomLogoUploader";
 import { useUpdateGeneralSettingsMutation } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
 import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 

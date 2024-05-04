@@ -2,19 +2,9 @@ import { PageContainer } from "@ant-design/pro-layout";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
 import { useGetGeneralSettingsQuery } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
 import GeneralSettingForm from "./GeneralSettingForm";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 const GeneralSettings = () => {
   const { data, isLoading } = useGetGeneralSettingsQuery();
-
-  console.log(data);
-
-  useEffect(() => {
-    if (data) {
-      toast.success("Settings loaded successfully");
-    }
-  }, [data]);
 
   return (
     <GlobalUtilityStyle>

@@ -53,7 +53,7 @@ const CustomForm = ({
       >
         {children}
         {submitBtn && (
-          <div className="w-full flex gap-3 justify-end items-center">
+          <div className="w-full flex gap-3 justify-end items-center pb-20">
             <Button type="default" onClick={handleDrawerClose}>
               Cancel
             </Button>

@@ -2,10 +2,15 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import BrandForm from "../../../../components/Brand/BrandForm";
 import CustomDrawer from "../../../../components/Shared/Drawer/CustomDrawer";
 import DeleteModal from "../../../../components/Shared/Modal/DeleteModal";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import {
+  closeEditDrawer,
+  openEditDrawer,
+} from "../../../../redux/services/drawer/drawerSlice";
 import {
   useCreateBrandMutation,
   useDeleteBrandMutation,
@@ -13,12 +18,7 @@ import {
   useGetBrandsQuery,
   useUpdateBrandMutation,
 } from "../../../../redux/services/inventory/brand/brandApi";
-import {
-  closeCreateDrawer,
-  closeEditDrawer,
-  openEditDrawer,
-} from "../../../../redux/services/drawer/drawerSlice";
-import BrandForm from "./BrandForm";
+// import BrandForm from "./BrandForm";
 
 const columns = [
   {

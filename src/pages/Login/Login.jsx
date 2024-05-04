@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import CustomForm from "../../components/Shared/Form/CustomForm";
-import CustomInput from "../../components/Shared/Form/CustomInput";
+import CustomInput from "../../components/Shared/Input/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
 

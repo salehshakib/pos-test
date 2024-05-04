@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DepartmentForm from "../../pages/Dashboard/Hrm/Department/DepartmentForm";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useGetDepartmentDetailsQuery,
   useUpdateDepartmentMutation,
 } from "../../redux/services/hrm/department/departmentApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import DepartmentForm from "./DepartmentForm";
 
 const DepartmentEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

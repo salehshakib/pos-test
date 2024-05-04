@@ -26,15 +26,15 @@ const GlobalUtilityStyle = styled.div`
   }
 
   .primary-bg {
-    background: ${primaryColor};
+    background: ${primaryColor} !important;
   }
 
   .secondary-text {
-    color: ${secondaryColor};
+    color: ${secondaryColor} !important;
   }
 
   .secondary-bg {
-    background: ${secondaryColor};
+    background: ${secondaryColor} !important;
   }
 
   .ant-page-header-heading {
@@ -82,10 +82,6 @@ const GlobalUtilityStyle = styled.div`
     border: none !important;
   }
 
-  .ant-btn-primary {
-    background-color: ${primaryColor} !important;
-  }
-
   // .ant-menu-submenu-selected > .ant-menu-submenu-title {
   //   color: ${primaryColor} !important;
   //   background-color: ${secondaryColor} !important;
@@ -109,6 +105,11 @@ const GlobalUtilityStyle = styled.div`
   .ant-menu-item-active {
     color: ${primaryColor} !important;
     background-color: ${secondaryColor} !important;
+  }
+
+  .ant-btn-primary {
+    background-color: ${primaryColor} !important;
+    // color: ${secondaryColor} !important;
   }
 
   .ant-btn-primary:hover {
@@ -166,5 +167,11 @@ const GlobalUtilityStyle = styled.div`
     }
   }
 `;
+
+// const StyledModal = styled(Modal)`
+//   & .ant-btn-primary {
+//     background-color: ${primaryColor} !important;
+//   }
+// `;
 
 export { GlobalUtilityStyle };

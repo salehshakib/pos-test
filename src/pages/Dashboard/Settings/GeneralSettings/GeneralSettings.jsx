@@ -1,45 +1,10 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import GeneralSettingForm from "./GeneralSettingForm";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import GeneralSettingForm from "./GeneralSettingForm";
 import { useGetGeneralSettingsQuery } from "../../../../redux/services/settings/generalSettings/generalSettingsApi";
-import { fieldsToUpdate } from "../../../../utilities/lib/fieldsToUpdate";
 
 const GeneralSettings = () => {
-  const dispatch = useDispatch();
-
-  const [fields, setFields] = useState([]);
-  const { data, isLoading } = useGetGeneralSettingsQuery();
-  // const [defaultLogo, setLogo] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      const fieldData = fieldsToUpdate(data);
-      setFields(fieldData);
-    }
-  }, [data]);
-
-  const handleSubmit = async (values) => {
-    console.log(values);
-    // const { data, error } = await createBrand({
-    //   data: values,
-    // });
-
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeCreateDrawer());
-    // }
-
-    // if (error) {
-    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-    //     name: fieldName,
-    //     errors: error?.data?.errors[fieldName],
-    //   }));
-
-    //   setErrorFields(errorFields);
-    // }
-  };
+  const { data } = useGetGeneralSettingsQuery();
 
   return (
     <GlobalUtilityStyle>
@@ -76,13 +41,7 @@ const GeneralSettings = () => {
         //   },
         // }}
       >
-        <div className="pt-10">
-          <GeneralSettingForm
-            fields={fields}
-            isLoading={isLoading}
-            handleSubmit={handleSubmit}
-          />
-        </div>
+        <GeneralSettingForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );

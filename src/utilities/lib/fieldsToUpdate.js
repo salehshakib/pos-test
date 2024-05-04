@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import dayjs from "dayjs";
 
 export const fieldsToUpdate = (details) => {

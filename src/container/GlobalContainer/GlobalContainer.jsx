@@ -224,7 +224,7 @@ const GlobalContainer = ({
 
             selectedRows?.length !== 0 && (
               <div key={"delete"}>
-                <button className="bg-secondary p-2 rounded-xl  text-white hover:scale-110 duration-300 ">
+                <button className="custom-primary-btn p-2 rounded-xl text-white  duration-300 ">
                   <FaTrash className="lg:text-xl" />
                 </button>
               </div>

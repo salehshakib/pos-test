@@ -51,11 +51,6 @@ const GeneralSettingForm = ({ data }) => {
   };
 
   const onFinish = (values) => {
-    const touchedFields = Object.keys(form.getFieldsValue()).filter((item) =>
-      form.isFieldTouched(item)
-    );
-
-    console.log(touchedFields);
     form
       .validateFields({
         validateOnly: true,
@@ -83,7 +78,7 @@ const GeneralSettingForm = ({ data }) => {
         onFinishFailed={onFinishFailed}
         disabled={!data}
       >
-        <CustomLogoUploader name={"logo"} form={form} />
+        <CustomLogoUploader name={"logo"} />
         <ColorSetting />
         <CompanySetting />
         <TimeSetting />

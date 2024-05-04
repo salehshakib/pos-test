@@ -24,7 +24,9 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-const CustomLogoUploader = ({ name, form }) => {
+const CustomLogoUploader = ({ name }) => {
+  const form = Form.useFormInstance();
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);

@@ -12,9 +12,9 @@ export const fieldsToUpdate = (details) => {
     )
     .map((key) => {
       let value = details[key];
-      if (key.includes("date")) {
-        value = dayjs(value, "YYYY-MM-DD").toDate();
-      }
+      // if (key.includes("date")) {
+      //   value = dayjs(value, "YYYY-MM-DD").toDate();
+      // }
 
       if (key.includes("attachments")) {
         for (var i = 0; i < details[key].length; i++) {

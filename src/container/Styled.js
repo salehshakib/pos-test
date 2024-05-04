@@ -122,18 +122,12 @@ const GlobalUtilityStyle = styled.div`
       margin-inline: 0 !important;
       width: 150px !important;
       height: 150px !important;
-      // transition: transform 0.3s;
     }
 
     .ant-upload-list-item-container {
       margin-inline: 0 !important;
       width: 150px !important;
       height: 150px !important;
-    }
-
-    .ant-upload-select:hover {
-      border: 1px dashed ${secondaryColor} !important;
-      border-radius: 99999px !important;
     }
   }
 
@@ -165,6 +159,16 @@ const GlobalUtilityStyle = styled.div`
     img {
       object-fit: cover !important;
     }
+  }
+
+  .ant-upload-list-item-container:hover {
+    border: 1px dashed ${primaryColor} !important;
+    border-radius: 99999px !important;
+  }
+
+  .ant-upload-select:hover {
+    border: 1px dashed ${primaryColor} !important;
+    border-radius: 99999px !important;
   }
 `;
 

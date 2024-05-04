@@ -1,10 +1,5 @@
 import { generate, presetPalettes } from "@ant-design/colors";
 import { Col, ColorPicker, Divider, Form, Row, theme } from "antd";
-import { useDispatch } from "react-redux";
-import {
-  setPrimaryColor,
-  setSecondaryColor,
-} from "../../../redux/services/theme/themeSlice";
 
 const rowLayout = {
   gutter: 25,
@@ -94,14 +89,6 @@ const ColorSettingComponent = () => {
     Primary: generate(token.colorPrimary),
     Secondary: generate(token.secondaryColor),
   });
-
-  // const handlePrimaryColor = (color) => {
-  //   dispatch(setPrimaryColor(color.toHexString()));
-  // };
-
-  // const handleSecondaryColor = (color) => {
-  //   dispatch(setSecondaryColor(color.toHexString()));
-  // };
 
   return (
     <>

@@ -24,15 +24,46 @@ const GeneralSettingForm = ({ data }) => {
     }
   }, [data]);
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    console.log(form.isFieldTouched("secendary_color"));
+  console.log(data);
 
-    if (form.isFieldTouched("secendary_color"))
-      console.log(values.secendary_color?.toHexString());
+  const handleSubmit = async (values) => {
+    const { logo, primary_color, secendary_color, ...rest } = values;
+
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (
+        key !== "logo" &&
+        key !== "primary_color" &&
+        key !== "secendary_color"
+      ) {
+        formData.append(key, value);
+      }
+    });
+
+    if (form.isFieldTouched("logo")) {
+      formData.append("logo", logo[0]);
+    }
+
+    if (form.getFieldValue("primary_color").includes("#")) {
+      formData.append("primary_color", primary_color);
+    }
+
+    if (form.getFieldValue("secendary_color").includes("#")) {
+      formData.append("secendary_color", secendary_color);
+    }
+
+    await updateGeneralSettings({
+      data: formData,
+    });
   };
 
   const onFinish = (values) => {
+    const touchedFields = Object.keys(form.getFieldsValue()).filter((item) =>
+      form.isFieldTouched(item)
+    );
+
+    console.log(touchedFields);
     form
       .validateFields({
         validateOnly: true,

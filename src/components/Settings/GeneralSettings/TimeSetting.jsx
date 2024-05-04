@@ -20,8 +20,9 @@ const TimeSetting = () => {
   });
 
   const dateFormatOptions = dateFormats.formats.map((item) => {
-    return { label: item, value: item };
+    return { label: item, value: item.toLowerCase() };
   });
+
   return (
     <>
       <Divider orientation="left" orientationMargin={0}>

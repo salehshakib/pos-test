@@ -1,6 +1,7 @@
 import { Col, Divider, Form, Radio, Row } from "antd";
 import { currencies } from "currencies.json";
 import CustomInput from "../../Shared/Input/CustomInput";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const rowLayout = {
   gutter: 25,
@@ -26,10 +27,9 @@ const CurrencySettingComponent = () => {
       </Divider>
       <Row {...rowLayout}>
         <Col {...colLayout}>
-          <CustomInput
+          <CustomSelect
             name={"currency"}
             label={"Currency"}
-            type={"select"}
             options={currenciesOptions}
             required={true}
           />

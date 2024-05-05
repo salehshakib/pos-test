@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
-import ProductListEdit from "./ProductListEdit";
+import ProductEdit from "./ProductEdit";
 import StatusModal from "../Shared/Modal/StatusModal";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 
-const ProductListTable = ({ newColumns, setSelectedRows }) => {
+const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
@@ -94,7 +94,7 @@ const ProductListTable = ({ newColumns, setSelectedRows }) => {
         // isLoading={isLoading}
       />
 
-      <ProductListEdit id={id} setId={setId} />
+      <ProductEdit id={id} setId={setId} />
 
       {/* <StatusModal
     statusModal={statusModal}
@@ -113,4 +113,4 @@ const ProductListTable = ({ newColumns, setSelectedRows }) => {
   );
 };
 
-export default ProductListTable;
+export default ProductTable;

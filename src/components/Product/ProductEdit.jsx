@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import ProductListForm from "./ProductListForm";
+import ProductForm from "./ProductForm";
 
 const ProductListEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -49,11 +49,11 @@ const ProductListEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Product List"}
+      title={"Edit Product"}
       open={isEditDrawerOpen}
       // isLoading={isFetching}
     >
-      <ProductListForm
+      <ProductForm
         // handleSubmit={handleUpdate}
         // isLoading={isLoading}
         fields={fields}

@@ -28,14 +28,15 @@ const CustomInput = ({
           />
         )) ||
           (type === "select" && (
-            <Select
-              placeholder={`Select ${placeholder ?? label}`}
-              className="mt-2 custom-selector"
-              size="large"
-              loading={isSelectLoading}
-              options={options}
-              allowClear
-            />
+            // <Select
+            //   placeholder={`Select ${placeholder ?? label}`}
+            //   className="mt-2 custom-selector"
+            //   size="large"
+            //   loading={isSelectLoading}
+            //   options={options}
+            //   allowClear
+            // /><>
+            <h1>Use Custom select component</h1>
           )) ||
           (type === "textarea" && (
             <Input.TextArea

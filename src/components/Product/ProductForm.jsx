@@ -26,7 +26,7 @@ const richTextLayout = {
   xs: 24,
 };
 
-const ProductListForm = ({ handleSubmit, isLoading, fields }) => {
+const ProductForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
       handleSubmit={handleSubmit}
@@ -213,4 +213,4 @@ const ProductListForm = ({ handleSubmit, isLoading, fields }) => {
   );
 };
 
-export default ProductListForm;
+export default ProductForm;

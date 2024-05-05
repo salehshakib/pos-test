@@ -72,6 +72,11 @@ const GlobalUtilityStyle = styled.div`
 
   .ant-input-affix-wrapper-lg {
     font-size: 14px;
+
+    &:focus {
+      border: none !important;
+      // border-radius: 8px !important;
+    }
   }
 
   .ant-select {

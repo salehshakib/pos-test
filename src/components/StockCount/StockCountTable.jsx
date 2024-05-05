@@ -1,21 +1,15 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
-import ProductListEdit from "./ProductListEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
-import DeleteModal from "../Shared/Modal/DeleteModal";
+import StockCountEdit from "./StockCountEdit";
 
-const ProductListTable = ({ newColumns, setSelectedRows }) => {
+const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [id, setId] = useState(undefined);
-
-  const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
 
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
@@ -94,13 +88,9 @@ const ProductListTable = ({ newColumns, setSelectedRows }) => {
         // isLoading={isLoading}
       />
 
-      <ProductListEdit id={id} setId={setId} />
+      <StockCountEdit id={id} setId={setId} />
 
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
+      {/* 
   />
 
   <DeleteModal
@@ -113,4 +103,4 @@ const ProductListTable = ({ newColumns, setSelectedRows }) => {
   );
 };
 
-export default ProductListTable;
+export default StockCountTable;

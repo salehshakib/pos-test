@@ -8,7 +8,8 @@
     "dev-saleh": "vite --host 192.168.1.14 --port 3000",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gittu": "git add . && set /p message=Enter commit message: && git commit -m \"%message%\" && git push"
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",

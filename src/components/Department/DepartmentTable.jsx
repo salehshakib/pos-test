@@ -103,14 +103,12 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <DepartmentEdit id={id} setId={setId} />
-
       <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
       />
-
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}

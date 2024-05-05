@@ -2,6 +2,7 @@ import { Col, Row } from "antd";
 import CustomForm from "../../../../components/Shared/Form/CustomForm";
 import CustomInput from "../../../../components/Shared/Input/CustomInput";
 import { useGetCategoriesQuery } from "../../../../redux/services/inventory/category/categoryApi";
+import CustomSelect from "../../../../components/Shared/Select/CustomSelect";
 
 const rowLayout = {
   gutter: 25,
@@ -42,9 +43,8 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
+          <CustomSelect
             label="Parent Category"
-            type={"select"}
             name={"parent_id"}
             options={options}
             placeholder={"Parent Category"}

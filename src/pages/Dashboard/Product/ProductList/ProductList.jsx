@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import ProductListCreate from "../../../../components/ProductList/ProductListCreate";
-import ProductListTable from "../../../../components/ProductList/ProductListTable";
+import ProductCreate from "../../../../components/Product/ProductCreate";
+import ProductTable from "../../../../components/Product/ProductTable";
 
 const columns = [
   {
@@ -145,12 +145,9 @@ const ProductList = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <ProductListCreate />
+      <ProductCreate />
 
-      <ProductListTable
-        newColumns={newColumns}
-        setSelectedRows={setSelectedRows}
-      />
+      <ProductTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
     </GlobalContainer>
   );
 };

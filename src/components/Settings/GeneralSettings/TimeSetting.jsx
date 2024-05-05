@@ -2,6 +2,7 @@ import { Col, Divider, Row } from "antd";
 import dateFormats from "../../../assets/data/dateFormats.json";
 import timezones from "../../../assets/data/timezones.json";
 import CustomInput from "../../Shared/Input/CustomInput";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const rowLayout = {
   gutter: 25,
@@ -30,19 +31,17 @@ const TimeSetting = () => {
       </Divider>
       <Row {...rowLayout}>
         <Col {...colLayout}>
-          <CustomInput
+          <CustomSelect
             name={"time_zone"}
             label={"Time Zone"}
-            type={"select"}
             options={timezone}
             required={true}
           />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
+          <CustomSelect
             name={"date_format"}
             label={"Date Format"}
-            type={"select"}
             options={dateFormatOptions}
             required={true}
           />

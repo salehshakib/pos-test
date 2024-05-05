@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "gittu": "git add . && echo. > commit_message.txt && set /p message=Enter commit message: && echo !message! >> commit_message.txt && git commit -F commit_message.txt && del commit_message.txt && git push"
+    "gittu": "git add . && git commit -a && git push"
 
 
   

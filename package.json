@@ -9,7 +9,9 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "gittu": "git add . && set /p message=Enter commit message: && git commit -m \"%message%\" && git push"
+    "gittu": "git add . && setlocal enabledelayedexpansion && set /p message=Enter commit message: && git commit -m \"!message!\" && git push && endlocal"
+
+  
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",

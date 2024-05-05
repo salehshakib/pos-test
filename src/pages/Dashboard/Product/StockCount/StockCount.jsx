@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import StockCountCreate from "../../../../components/StockCount/StockCountCreate";
+import StockCountTable from "../../../../components/StockCount/StockCountTable";
 
 const columns = [
   {
@@ -136,6 +138,7 @@ const columns = [
 const StockCount = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
   return (
     <GlobalContainer
       pageTitle="Stock Count List"
@@ -143,12 +146,11 @@ const StockCount = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      {/* <AdjustmentCreate />
-
-      <AdjustmentTable
+      <StockCountCreate />
+      <StockCountTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
-      /> */}
+      />
     </GlobalContainer>
   );
 };

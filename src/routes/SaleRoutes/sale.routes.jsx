@@ -1,10 +1,9 @@
-import { TbDashboard } from "react-icons/tb";
-import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
-import Pos from "../../pages/Dashboard/Sale/Pos/Pos";
-import GiftCardList from "../../pages/Dashboard/Sale/GiftCardList/GiftCardList";
 import CouponList from "../../pages/Dashboard/Sale/CouponList/CouponList";
 import CourierList from "../../pages/Dashboard/Sale/CourierList/CourierList";
 import DeliveryList from "../../pages/Dashboard/Sale/DeliveryList/DeliveryList";
+import GiftCardList from "../../pages/Dashboard/Sale/GiftCardList/GiftCardList";
+import Pos from "../../pages/Dashboard/Sale/Pos/Pos";
+import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
 
 export const salePaths = [
   {

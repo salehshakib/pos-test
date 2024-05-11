@@ -163,7 +163,7 @@ const TransferForm = ({ handleSubmit, isLoading, fields }) => {
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomSelect
-            label="Select Product"
+            label="Product"
             placeholder={"Product"}
             showSearch={true}
             // required={true}
@@ -174,7 +174,7 @@ const TransferForm = ({ handleSubmit, isLoading, fields }) => {
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomSelect
-            label="Select Warehouse (From)"
+            label="Warehouse (From)"
             placeholder={"Warehouse (From)"}
             showSearch={true}
             // required={true}
@@ -183,7 +183,7 @@ const TransferForm = ({ handleSubmit, isLoading, fields }) => {
         </Col>
         <Col {...colLayout}>
           <CustomSelect
-            label="Select Warehouse (To)"
+            label="Warehouse (To)"
             placeholder={"Warehouse (To)"}
             showSearch={true}
             // required={true}
@@ -202,7 +202,7 @@ const TransferForm = ({ handleSubmit, isLoading, fields }) => {
         </Col>
         <Col {...colLayout}>
           <CustomSelect
-            label="Select File Status"
+            label="File Status"
             placeholder={"File Status"}
 
             // showSearch={true}

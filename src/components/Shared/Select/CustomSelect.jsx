@@ -13,7 +13,7 @@ const CustomSelect = ({
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        label={label}
+        label={`Select ${label}`}
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
       >

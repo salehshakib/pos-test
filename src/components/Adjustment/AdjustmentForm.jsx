@@ -37,7 +37,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
         </Col>
         <Col {...colLayout}>
           <CustomSelect
-            label="Select Product"
+            label="Product"
             placeholder={"Product"}
             showSearch={true}
             // required={true}

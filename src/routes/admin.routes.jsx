@@ -22,7 +22,6 @@ import Expense from "../pages/Dashboard/Expense/Expense";
 import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
-import Return from "../pages/Dashboard/Return/Return";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
@@ -30,6 +29,7 @@ import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
 import { transferPaths } from "./TransaferRoutes/transfer.routes";
+import { returnPaths } from "./ReturnRoutes/return.routes";
 
 export const adminPaths = [
   {
@@ -98,14 +98,7 @@ export const adminPaths = [
     name: "Return",
     path: "return",
     icon: RiArrowGoBackFill,
-    children: [
-      {
-        name: "Returns",
-        path: "returns",
-        icon: TbDashboard,
-        element: <Return />,
-      },
-    ],
+    children: returnPaths,
   },
   {
     name: "Accounting",

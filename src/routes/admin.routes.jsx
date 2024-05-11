@@ -23,13 +23,13 @@ import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
 import Return from "../pages/Dashboard/Return/Return";
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
 import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
+import { transferPaths } from "./TransaferRoutes/transfer.routes";
 
 export const adminPaths = [
   {
@@ -92,14 +92,7 @@ export const adminPaths = [
     name: "Transfer",
     path: "transfer",
     icon: RiArrowGoForwardFill,
-    children: [
-      {
-        name: "Transfers",
-        path: "transfers",
-        icon: TbDashboard,
-        element: <Transfer />,
-      },
-    ],
+    children: transferPaths,
   },
   {
     name: "Return",

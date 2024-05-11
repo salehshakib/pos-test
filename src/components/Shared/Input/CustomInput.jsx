@@ -1,4 +1,4 @@
-import { Form, Input, Select } from "antd";
+import { Form, Input } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const CustomInput = ({
@@ -8,8 +8,6 @@ const CustomInput = ({
   placeholder,
   required = false,
   prefix,
-  options = [],
-  isSelectLoading = false,
 }) => {
   return (
     <GlobalUtilityStyle>

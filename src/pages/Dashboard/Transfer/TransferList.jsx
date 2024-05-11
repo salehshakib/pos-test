@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import DepartmentCreate from "../../../../components/Department/DepartmentCreate";
-import DepartmentTable from "../../../../components/Department/DepartmentTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import TransferCreate from "../../../components/Transfer/TransferCreate";
+import TransferTable from "../../../components/Transfer/TransferTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -19,26 +19,79 @@ const columns = [
     ),
   },
   {
-    //department
-    title: "Department",
-    dataIndex: "department",
-    key: "department",
+    title: "Reference",
+    dataIndex: "reference",
+    key: "reference",
     align: "center",
-    render: (department) => (
+    render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {department}
+        {reference}
       </span>
     ),
   },
   {
-    //created_at
-    title: "Created At",
-    dataIndex: "created_at",
-    key: "created_at",
+    title: "Warehouse (From)",
+    dataIndex: "warehouse_from",
+    key: "warehouse_from",
     align: "center",
-    render: (created_at) => (
+    render: (warehouseFrom) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {created_at}
+        {warehouseFrom}
+      </span>
+    ),
+  },
+  {
+    title: "Warehouse (To)",
+    dataIndex: "warehouse_to",
+    key: "warehouse_to",
+    align: "center",
+    render: (warehouseTo) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {warehouseTo}
+      </span>
+    ),
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+    align: "center",
+    render: (date) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {date}
+      </span>
+    ),
+  },
+  {
+    title: "Product Cost",
+    dataIndex: "product_cost",
+    key: "product_cost",
+    align: "center",
+    render: (productCost) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {productCost}
+      </span>
+    ),
+  },
+  {
+    title: "Product Tax",
+    dataIndex: "product_tax",
+    key: "product_tax",
+    align: "center",
+    render: (productTax) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {productTax}
+      </span>
+    ),
+  },
+  {
+    title: "Grand Total",
+    dataIndex: "grand_total",
+    key: "grand_total",
+    align: "center",
+    render: (grandTotal) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {grandTotal}
       </span>
     ),
   },
@@ -52,19 +105,18 @@ const columns = [
       return (
         <button
           className={`p-0 ${
-            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+            status === 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
           } rounded shadow-md w-[80px]`}
           onClick={() => handleStatusModal(record.id)}
         >
           <span className="font-medium text-white text-xs px-2 w-full">
-            {status == 1 ? "Active" : "Inactive"}
+            {status === 1 ? "Active" : "Inactive"}
           </span>
         </button>
       );
     },
   },
   {
-    //action
     title: "Action",
     dataIndex: "action",
     key: "action",
@@ -92,20 +144,19 @@ const columns = [
   },
 ];
 
-const Department = () => {
+const TransferList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <GlobalContainer
-      pageTitle="Department"
+      pageTitle={"Transfer List"}
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <DepartmentCreate />
-
-      <DepartmentTable
+      <TransferCreate />
+      <TransferTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />
@@ -113,4 +164,4 @@ const Department = () => {
   );
 };
 
-export default Department;
+export default TransferList;

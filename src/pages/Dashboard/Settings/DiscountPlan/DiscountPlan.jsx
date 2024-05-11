@@ -69,7 +69,7 @@ const columns = [
         <button
           className={`p-0 ${
             status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-          } rounded shadow-md w-full`}
+          } rounded shadow-md w-[80px]`}
           onClick={() => handleStatusModal(record.id)}
         >
           <span className="font-medium text-white text-xs px-2 w-full">

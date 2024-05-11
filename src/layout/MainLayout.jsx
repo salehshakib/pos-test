@@ -16,8 +16,8 @@ const MainLayout = () => {
 
   return (
     <GlobalUtilityStyle>
-      <Layout className="">
-        <Header className="bg-white flex justify-between items-center px-5 border border-b-2">
+      <Layout className="relative">
+        <Header className="bg-white flex justify-between items-center px-5 border border-b-2 sticky w-full top-0 z-10 shadow-md">
           <div className="flex items-center gap-6 text-2xl">
             <Button
               className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"

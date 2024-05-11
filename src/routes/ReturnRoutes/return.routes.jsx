@@ -1,5 +1,5 @@
-import PurchaseReturn from "../../pages/Dashboard/Return/Purchase/PurchaseReturn";
-import SaleReturn from "../../pages/Dashboard/Return/Sale/SaleReturn";
+import PurchaseReturn from "../../pages/Dashboard/Return/PurchaseReturn/PurchaseReturn";
+import SaleReturn from "../../pages/Dashboard/Return/SaleReturn/SaleReturn";
 
 export const returnPaths = [
   {

@@ -4,6 +4,7 @@ import { MdCategory } from "react-icons/md";
 import Brand from "../../pages/Dashboard/Inventory/Brand/Brand";
 import Category from "../../pages/Dashboard/Inventory/Category/Category";
 import Warehouse from "../../pages/Dashboard/Inventory/Warehouse/Warehouse";
+import UnitList from "../../pages/Dashboard/Unit/UnitList";
 
 export const inventoryPaths = [
   {
@@ -23,5 +24,11 @@ export const inventoryPaths = [
     path: "warehouse",
     icon: FaWarehouse,
     element: <Warehouse />,
+  },
+  {
+    name: "Unit",
+    path: "unit",
+    // icon: FaWarehouse,
+    element: <UnitList />,
   },
 ];

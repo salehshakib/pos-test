@@ -1,4 +1,4 @@
-import { DEPARTMENT } from "../../../../utilities/configs/Api";
+import { DEPARTMENT } from "../../../../utilities/apiEndpoints/hrm.api";
 import { openNotification } from "../../../../utilities/lib/notification";
 import { verifyToken } from "../../../../utilities/lib/verifyToken";
 import { baseApi } from "../../../api/baseApi";

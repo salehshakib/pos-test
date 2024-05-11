@@ -1,4 +1,4 @@
-import { WAREHOUSE } from "../../../../utilities/configs/Api";
+import { WAREHOUSE } from "../../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../../utilities/lib/notification";
 import { verifyToken } from "../../../../utilities/lib/verifyToken";
 import { baseApi } from "../../../api/baseApi";

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import PurchaseReturnForm from "./PurchaseReturnForm";
+import SaleReturnForm from "./SaleReturnForm";
 
-const PurchaseReturnEdit = ({ id, setId }) => {
+const SaleReturnEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
@@ -49,11 +49,11 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Purchase Reference"}
+      title={"Edit Sale Reference"}
       open={isEditDrawerOpen}
       // isLoading={isFetching}
     >
-      <PurchaseReturnForm
+      <SaleReturnForm
         // handleSubmit={handleUpdate}
         // isLoading={isLoading}
         fields={fields}
@@ -62,4 +62,4 @@ const PurchaseReturnEdit = ({ id, setId }) => {
   );
 };
 
-export default PurchaseReturnEdit;
+export default SaleReturnEdit;

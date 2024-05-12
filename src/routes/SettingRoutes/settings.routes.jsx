@@ -1,12 +1,13 @@
-import { MdDisplaySettings } from "react-icons/md";
-import GeneralSettings from "../../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
 import { CiDiscount1 } from "react-icons/ci";
+import { FaUserLock } from "react-icons/fa";
+import { MdDisplaySettings } from "react-icons/md";
+import Coupons from "../../pages/Dashboard/Coupons/Coupons";
+import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
 import Discount from "../../pages/Dashboard/Settings/Discount/Discount";
 import DiscountPlan from "../../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
-import { FaUserLock } from "react-icons/fa";
+import GeneralSettings from "../../pages/Dashboard/Settings/GeneralSettings/GeneralSettings";
 import RolePermission from "../../pages/Dashboard/Settings/RolePermission/RolePermission";
-import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
-import Coupons from "../../pages/Dashboard/Coupons/Coupons";
+import Types from "../../pages/Dashboard/Type/Types";
 
 export const settingPaths = [
   {
@@ -47,5 +48,11 @@ export const settingPaths = [
     path: "coupons",
     // icon: CiDiscount1,
     element: <Coupons />,
+  },
+  {
+    name: "Types",
+    path: "type",
+    // icon: CiDiscount1,
+    element: <Types />,
   },
 ];

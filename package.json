@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "gittu": "git add . && git commit -a && git push"
+    "gittu": "git add . && git commit && git push"
 
   },
   "dependencies": {

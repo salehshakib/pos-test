@@ -1,8 +1,8 @@
 const fakeData = [
   {
     id: "1",
-    image:
-      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    // image:
+    //   "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "John Doe",
     email: "john@example.com",
     address: "123 Main St, Anytown USA",
@@ -12,8 +12,8 @@ const fakeData = [
   },
   {
     id: "2",
-    image:
-      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    // image:
+    //   "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "Jane Doe",
     email: "jane@example.com",
     address: "123 Main St, Anytown USA",
@@ -23,8 +23,8 @@ const fakeData = [
   },
   {
     id: "3",
-    image:
-      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    // image:
+    //   "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "Mark Doe",
     email: "mark@example.com",
     address: "123 Main St, Anytown USA",
@@ -34,8 +34,8 @@ const fakeData = [
   },
   {
     id: "4",
-    image:
-      "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
+    // image:
+    //   "https://images.pexels.com/photos/2315712/pexels-photo-2315712.jpeg?auto=compress&cs=tinysrgb&w=600",
     name: "Sarah Doe",
     email: "sarah@example.com",
     address: "123 Main St, Anytown USA",

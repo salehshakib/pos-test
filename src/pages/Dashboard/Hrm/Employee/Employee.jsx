@@ -1,11 +1,9 @@
-import { Table } from "antd";
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { defaultUser } from "../../../../assets/data/defaultUserImage";
+import EmployeeCreate from "../../../../components/Employee/EmployeeCreate";
+import EmployeeTable from "../../../../components/Employee/EmployeeTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { useGetAllDataQuery } from "../../../../redux/services/fetchApi";
-import fakeData from "../fakeData";
-import { useDispatch, useSelector } from "react-redux";
-import { openEditDrawer } from "../../../../redux/services/drawer/drawerSlice";
 
 const columns = [
   {
@@ -31,7 +29,7 @@ const columns = [
     render: (img) => (
       <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
         <img
-          src={img}
+          src={img ?? defaultUser}
           alt="defaultUser"
           className="w-full h-full object-cover"
         />
@@ -110,138 +108,23 @@ const columns = [
 ];
 
 const Employee = () => {
-  const dispatch = useDispatch();
-  const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-    (state) => state.drawer
-  );
-
-  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const [fields, setFields] = useState([]);
-  const [errorFields, setErrorFields] = useState([]);
-
-  const [id, setId] = useState(undefined);
-
-  const { data, isFetching } = useGetAllDataQuery({
-    url: "inventory/category",
-    params: pagination,
-  });
-
-  const total = data?.meta?.total;
-
-  console.log(data, isFetching);
-
-  // const { data: details } = useGetDetailsQuery(
-  //   { url: DEPARTMENT, id },
-  //   { skip: !id }
-  // );
-
-  // console.log(details);
-
-  const getDetails = (id) => {
-    setId(id);
-    dispatch(openEditDrawer());
-  };
-
-  // const departmentData =
-  // data?.results?.department?.map((item) => {
-  //   const { id, name, created_at, is_active } = item;
-  //   const date = dayjs(created_at).format("DD-MM-YYYY");
-
-  //   return {
-  //     id,
-  //     department: name,
-  //     status: is_active,
-  //     created_at: date,
-  //     action: getDetails,
-  //   };
-  // }) ?? [];
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows);
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      name: record.name,
-    }),
-  };
-
-  const updatePage = (newPage) => {
-    setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
-  };
-
-  const updatePageSize = (newPageSize) => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      perPage: newPageSize,
-    }));
-  };
-
-  // const handleSubmit = async (values) => {
-  //   const { data, error } = await storeData({
-  //     url: DEPARTMENT,
-  //     data: values,
-  //   });
-
-  //   if (data?.success) {
-  //     setId(undefined);
-  //   }
-
-  //   if (error) {
-  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-  //       name: fieldName,
-  //       errors: error?.data?.errors[fieldName],
-  //     }));
-
-  //     setErrorFields(errorFields);
-  //   }
-  // };
-
-  // const handleUpdate = async (values) => {
-  //   console.log(values);
-  // };
-
   return (
-    <div className="h-full ">
-      <GlobalContainer
-        pageTitle="Employee"
-        columns={columns}
-        selectedRows={selectedRows}
-        setNewColumns={setNewColumns}
-      >
-        <Table
-          rowKey={(record) => record.id}
-          rowSelection={{
-            type: "checkbox",
-            ...rowSelection,
-          }}
-          size="small"
-          columns={newColumns}
-          dataSource={fakeData}
-          pagination={{
-            showTotal: (total) => `Total ${total} items`,
-            defaultCurrent: 1,
-            defaultPageSize: pagination.perPage,
-            total: total,
-            showSizeChanger: true,
-            current: pagination.page,
-            onShowSizeChange: (current, size) => {
-              updatePageSize(size);
-            },
-            onChange: (page) => {
-              updatePage(page);
-            },
-          }}
-          scroll={{
-            x: "max-content",
-          }}
-          loading={isFetching}
-        />
-      </GlobalContainer>
-    </div>
+    <GlobalContainer
+      pageTitle="Employee List"
+      columns={columns}
+      selectedRows={selectedRows}
+      setNewColumns={setNewColumns}
+    >
+      <EmployeeCreate />
+
+      <EmployeeTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
+    </GlobalContainer>
   );
 };
 

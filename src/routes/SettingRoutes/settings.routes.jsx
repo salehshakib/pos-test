@@ -5,6 +5,8 @@ import Discount from "../../pages/Dashboard/Settings/Discount/Discount";
 import DiscountPlan from "../../pages/Dashboard/Settings/DiscountPlan/DiscountPlan";
 import { FaUserLock } from "react-icons/fa";
 import RolePermission from "../../pages/Dashboard/Settings/RolePermission/RolePermission";
+import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
+import Coupons from "../../pages/Dashboard/Coupons/Coupons";
 
 export const settingPaths = [
   {
@@ -30,5 +32,20 @@ export const settingPaths = [
     path: "discount-plan",
     icon: CiDiscount1,
     element: <DiscountPlan />,
+  },
+
+  // ui developing
+
+  {
+    name: "Gift Card",
+    path: "gift-card",
+    // icon: CiDiscount1,
+    element: <GiftCardList />,
+  },
+  {
+    name: "Coupons",
+    path: "coupons",
+    // icon: CiDiscount1,
+    element: <Coupons />,
   },
 ];

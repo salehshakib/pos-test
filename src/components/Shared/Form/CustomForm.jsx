@@ -6,18 +6,18 @@ import {
 } from "../../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const CustomForm = ({
-  handleSubmit,
-  children,
-  fields,
-  isLoading,
-  submitBtn = true,
-  submitBtnText = "Save",
-}) => {
+const CustomForm = (props) => {
+  const {
+    handleSubmit,
+    children,
+    fields,
+    isLoading,
+    submitBtn = true,
+    submitBtnText = "Save",
+  } = props;
+
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
-  // const [form, setForm]
 
   const onFinish = (values) => {
     form

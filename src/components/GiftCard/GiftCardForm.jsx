@@ -1,6 +1,8 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import GenerateCode from "./GenerateCode";
 
 const rowLayout = {
   gutter: 25,
@@ -14,6 +16,10 @@ const colLayout = {
   lg: 8,
 };
 
+const fullColLayout = {
+  xs: 24,
+};
+
 const GiftCardForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
@@ -22,12 +28,33 @@ const GiftCardForm = ({ handleSubmit, isLoading, fields }) => {
       isLoading={isLoading}
     >
       <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <GenerateCode />
+        </Col>
+      </Row>
+      <Row {...rowLayout}>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Sale Reference"
+            name={"purchase_reference"}
+            // placeholder={"Purchase Refernce"}
+            // required={true}
+          />
+        </Col>
         <Col {...colLayout}>
           <CustomSelect
             label="Sale Reference"
             name={"purchase_reference"}
             // placeholder={"Purchase Refernce"}
-            required={true}
+            // required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomSelect
+            label="Sale Reference"
+            name={"purchase_reference"}
+            // placeholder={"Purchase Refernce"}
+            // required={true}
           />
         </Col>
       </Row>

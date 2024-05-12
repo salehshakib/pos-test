@@ -8,13 +8,19 @@ const CustomInput = ({
   placeholder,
   required = false,
   prefix,
+  requireMsg = false,
 }) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item
         label={label}
         name={name}
-        rules={[{ required: required, message: `Please input ${label}!` }]}
+        rules={[
+          {
+            required: required,
+            message: `Please input ${requireMsg ?? label}!`,
+          },
+        ]}
       >
         {(type === "password" && (
           <Input.Password

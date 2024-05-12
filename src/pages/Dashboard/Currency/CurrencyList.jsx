@@ -1,8 +1,8 @@
 import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import UnitCreate from "../../../components/Unit/UnitCreate";
-import UnitTable from "../../../components/Unit/UnitTable";
 import { MdDelete } from "react-icons/md";
+import CurrencyCreate from "../../../components/Currency/CurrencyCreate";
+import CurrencyTable from "../../../components/Currency/CurrencyTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -16,6 +16,7 @@ const columns = [
       </span>
     ),
   },
+
   {
     title: "Code",
     dataIndex: "code",
@@ -27,37 +28,46 @@ const columns = [
       </span>
     ),
   },
-
   {
-    title: "Base Unit",
-    dataIndex: "baseUnit",
-    key: "baseUnit",
+    title: "Exchange Rate",
+    dataIndex: "exchangeRate",
+    key: "exchangeRate",
     align: "center",
-    render: (baseUnit) => (
+    render: (exchangeRate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {baseUnit}
+        {exchangeRate}
       </span>
     ),
   },
   {
-    title: "Operator",
-    dataIndex: "operator",
-    key: "operator",
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
     align: "center",
-    render: (operator) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operator}
-      </span>
-    ),
+    render: ({ status, handleStatusModal }, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+          onClick={() => handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Default" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
   },
   {
-    title: "Operator Value",
-    dataIndex: "operatorValue",
-    key: "operatorValue",
+    title: "Created At",
+    dataIndex: "time",
+    key: "time",
     align: "center",
-    render: (operatorValue) => (
+    render: (time) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operatorValue}
+        {time}
       </span>
     ),
   },
@@ -83,22 +93,25 @@ const columns = [
   },
 ];
 
-const UnitList = () => {
+const CurrencyList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <GlobalContainer
-      pageTitle="Unit List"
+      pageTitle="Currency List"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <UnitCreate />
+      <CurrencyCreate />
 
-      <UnitTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <CurrencyTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };
 
-export default UnitList;
+export default CurrencyList;

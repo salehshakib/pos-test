@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateTypeMutation } from "../../redux/services/types/typesApi";
+import { useCreateTaxMutation } from "../../redux/services/tax/taxApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TypeForm from "./TypeForm";
+import TaxForm from "./TaxForm";
 
-const TypeCreate = () => {
+const TaxCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createType, { isLoading }] = useCreateTypeMutation();
+  const [createTax, { isLoading }] = useCreateTaxMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createType({
+    console.log(values);
+    const { data, error } = await createTax({
       data: values,
     });
     if (data?.success) {
@@ -29,8 +30,8 @@ const TypeCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Type"} open={isCreateDrawerOpen}>
-      <TypeForm
+    <CustomDrawer title={"Add Tax"} open={isCreateDrawerOpen}>
+      <TaxForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -39,4 +40,4 @@ const TypeCreate = () => {
   );
 };
 
-export default TypeCreate;
+export default TaxCreate;

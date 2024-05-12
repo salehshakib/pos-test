@@ -2,25 +2,25 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
-  useDeleteTypeMutation,
-  useGetTypesQuery,
-} from "../../redux/services/types/typesApi";
+  useDeleteTaxMutation,
+  useGetAllTaxQuery,
+} from "../../redux/services/tax/taxApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
-const TypeTable = ({ newColumns, setSelectedRows }) => {
+const TaxTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
-  const { data, isLoading } = useGetTypesQuery({
+  const { data, isLoading } = useGetAllTaxQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
-  const [deleteType, { isLoading: isDeleting }] = useDeleteTypeMutation();
+  const [deleteType, { isLoading: isDeleting }] = useDeleteTaxMutation();
 
   const handleDeleteModal = (id) => {
     setDeleteModal(true);
@@ -35,13 +35,14 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.type?.map((item) => {
-      const { id, name, created_at } = item;
+    data?.results?.tax?.map((item) => {
+      const { id, name, created_at, rate } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
+        rate: rate,
         time: date,
         action: { handleDeleteModal },
       };
@@ -73,4 +74,4 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
   );
 };
 
-export default TypeTable;
+export default TaxTable;

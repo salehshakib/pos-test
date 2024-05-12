@@ -2,7 +2,13 @@ import { Button, Modal } from "antd";
 import { FaInfoCircle } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const StatusModal = ({ statusModal, hideModal, handleStatus, isLoading }) => {
+const StatusModal = ({
+  text,
+  statusModal,
+  hideModal,
+  handleStatus,
+  isLoading,
+}) => {
   return (
     <Modal
       title={
@@ -21,7 +27,7 @@ const StatusModal = ({ statusModal, hideModal, handleStatus, isLoading }) => {
       maskClosable
     >
       <GlobalUtilityStyle>
-        <span>Do you want to update your status?</span>
+        <span>{text ?? "Do you want to update your status?"}</span>
         <div className="w-full flex justify-end items-center gap-3">
           <Button onClick={hideModal}>No</Button>
           <Button type="primary" onClick={handleStatus} loading={isLoading}>

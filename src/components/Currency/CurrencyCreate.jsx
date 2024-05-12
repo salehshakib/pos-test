@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useCreateCurrencyMutation } from "../../redux/services/currency/currencyApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateTypeMutation } from "../../redux/services/types/typesApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TypeForm from "./TypeForm";
+import CurrencyForm from "./CurrencyForm";
 
-const TypeCreate = () => {
+const CurrencyCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createType, { isLoading }] = useCreateTypeMutation();
+  const [createCurrency, { isLoading }] = useCreateCurrencyMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createType({
+    const { data, error } = await createCurrency({
       data: values,
     });
     if (data?.success) {
@@ -29,8 +29,8 @@ const TypeCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Type"} open={isCreateDrawerOpen}>
-      <TypeForm
+    <CustomDrawer title={"Add Currency"} open={isCreateDrawerOpen}>
+      <CurrencyForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -39,4 +39,4 @@ const TypeCreate = () => {
   );
 };
 
-export default TypeCreate;
+export default CurrencyCreate;

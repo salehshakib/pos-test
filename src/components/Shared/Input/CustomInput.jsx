@@ -1,15 +1,19 @@
-import { Form, Input } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
+const { TextArea, Password } = Input;
 
-const CustomInput = ({
-  type,
-  name,
-  label,
-  placeholder,
-  required = false,
-  prefix,
-  requireMsg = false,
-}) => {
+const CustomInput = (props) => {
+  const {
+    type,
+    name,
+    label,
+    placeholder,
+    required = false,
+    prefix,
+    suffix,
+    requireMsg = undefined,
+  } = props;
+
   return (
     <GlobalUtilityStyle>
       <Form.Item
@@ -23,7 +27,7 @@ const CustomInput = ({
         ]}
       >
         {(type === "password" && (
-          <Input.Password
+          <Password
             placeholder={`Enter ${placeholder ?? label}`}
             className="mt-2 border-2 "
             size="large"
@@ -43,10 +47,29 @@ const CustomInput = ({
             <h1>Use Custom select component</h1>
           )) ||
           (type === "textarea" && (
-            <Input.TextArea
+            <TextArea
               placeholder={`Enter ${placeholder ?? label}`}
               className="mt-2 border-2"
               size="large"
+              autoSize={{
+                minRows: 2,
+                maxRows: 5,
+              }}
+              showCount
+              allowClear
+            />
+          )) ||
+          (type === "number_with_percent" && (
+            <InputNumber
+              type={type}
+              placeholder={`Enter ${placeholder ?? label}`}
+              className="mt-2 border-2 w-full"
+              size="large"
+              prefix={prefix}
+              min={0}
+              max={100}
+              formatter={(value) => `${value}%`}
+              parser={(value) => value?.replace("%", "")}
               allowClear
             />
           )) || (
@@ -56,6 +79,7 @@ const CustomInput = ({
               className="mt-2 border-2"
               size="large"
               prefix={prefix}
+              suffix={suffix}
               allowClear
             />
           )}

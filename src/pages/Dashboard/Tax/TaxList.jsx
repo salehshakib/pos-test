@@ -1,8 +1,8 @@
 import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import UnitCreate from "../../../components/Unit/UnitCreate";
-import UnitTable from "../../../components/Unit/UnitTable";
 import { MdDelete } from "react-icons/md";
+import TaxCreate from "../../../components/Tax/TaxCreate";
+import TaxTable from "../../../components/Tax/TaxTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -17,47 +17,24 @@ const columns = [
     ),
   },
   {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
+    title: "Rate (%)",
+    dataIndex: "rate",
+    key: "rate",
     align: "center",
-    render: (code) => (
+    render: (rate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {code}
-      </span>
-    ),
-  },
-
-  {
-    title: "Base Unit",
-    dataIndex: "baseUnit",
-    key: "baseUnit",
-    align: "center",
-    render: (baseUnit) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {baseUnit}
+        {rate}
       </span>
     ),
   },
   {
-    title: "Operator",
-    dataIndex: "operator",
-    key: "operator",
+    title: "Created At",
+    dataIndex: "time",
+    key: "time",
     align: "center",
-    render: (operator) => (
+    render: (time) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operator}
-      </span>
-    ),
-  },
-  {
-    title: "Operator Value",
-    dataIndex: "operatorValue",
-    key: "operatorValue",
-    align: "center",
-    render: (operatorValue) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operatorValue}
+        {time}
       </span>
     ),
   },
@@ -83,22 +60,22 @@ const columns = [
   },
 ];
 
-const UnitList = () => {
+const TaxList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <GlobalContainer
-      pageTitle="Unit List"
+      pageTitle="Tax List"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <UnitCreate />
+      <TaxCreate />
 
-      <UnitTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <TaxTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
     </GlobalContainer>
   );
 };
 
-export default UnitList;
+export default TaxList;

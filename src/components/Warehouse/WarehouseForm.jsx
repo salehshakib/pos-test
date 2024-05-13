@@ -1,6 +1,34 @@
-import { Col, Row } from "antd";
+import { Col, Row, Select } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
+
+// const prefixSelector = (
+//   <Form.Item name="prefix" noStyle>
+//     <Select
+//       style={{
+//         width: 70,
+//       }}
+//     >
+//       <Option value="880">+880</Option>
+//       <Option value="87">+87</Option>
+//     </Select>
+//   </Form.Item>
+// );
+
+const PhoneNumberComponent = () => {
+  return (
+    <CustomInput
+      label="Phone Number"
+      type={"phone"}
+      required={true}
+      name={"phone"}
+      prefix={"+88"}
+      // addonBefore={prefixSelector}
+      placeholder={"Phone Number"}
+    />
+  );
+};
 
 const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
   return (
@@ -10,8 +38,8 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
       fields={fields}
       isLoading={isLoading}
     >
-      <Row gutter={25}>
-        <Col xs={24} md={12} lg={8}>
+      <Row {...rowLayout}>
+        <Col {...colLayout}>
           <CustomInput
             label="Warehouse Name"
             type={"text"}
@@ -21,7 +49,7 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
 
-        <Col xs={24} md={12} lg={8}>
+        <Col {...colLayout}>
           <CustomInput
             label="Email"
             type={"email"}
@@ -29,16 +57,10 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Email Address"}
           />
         </Col>
-        <Col xs={24} md={12} lg={8}>
-          <CustomInput
-            label="Phone Number"
-            type={"phone"}
-            required={true}
-            name={"phone"}
-            placeholder={"Phone Number"}
-          />
+        <Col {...colLayout}>
+          <PhoneNumberComponent />
         </Col>
-        <Col xs={24}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Address"
             type={"textarea"}

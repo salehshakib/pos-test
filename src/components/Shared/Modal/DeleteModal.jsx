@@ -18,6 +18,7 @@ const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
           </div>
         }
         open={deleteModal}
+        onCancel={hideModal}
         footer={null}
         centered
         maskClosable

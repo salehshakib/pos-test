@@ -73,6 +73,7 @@ const columns = [
       </span>
     ),
   },
+
   {
     title: "Action",
     dataIndex: "action",

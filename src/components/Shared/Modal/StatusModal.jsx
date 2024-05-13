@@ -2,13 +2,9 @@ import { Button, Modal } from "antd";
 import { FaInfoCircle } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const StatusModal = ({
-  text,
-  statusModal,
-  hideModal,
-  handleStatus,
-  isLoading,
-}) => {
+const StatusModal = (props) => {
+  const { text, statusModal, hideModal, handleStatus, isLoading } = props;
+
   return (
     <Modal
       title={
@@ -22,6 +18,7 @@ const StatusModal = ({
         </div>
       }
       open={statusModal}
+      onCancel={hideModal}
       footer={null}
       centered
       maskClosable

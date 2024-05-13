@@ -24,3 +24,23 @@ body::-webkit-scrollbar {
   width: 0;
   height: 0;
 } */
+
+.ant-input-number-input-wrap {
+  font-size: 14px;
+}
+
+.ant-input {
+  font-size: 14px !important;
+}
+
+.ant-input-number-input-wrapper {
+  font-size: 14px;
+}
+
+.ant-input-affix-wrapper-lg {
+  font-size: 14px;
+}
+
+.ant-input-affix-wrapper-lg:focus {
+  border: none !important;
+}

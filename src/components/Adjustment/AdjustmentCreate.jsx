@@ -2,18 +2,19 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import AdjustmentForm from "./AdjustmentForm";
-import RolePermissionForm from "../RolePermission/RolePermissionForm";
+import { useCreateAdjustmentMutation } from "../../redux/services/adjustment/adjustmentApi";
+// import RolePermissionForm from "../RolePermission/RolePermissionForm";
 
 const AdjustmentCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
+  const [createAdjustment, { isLoading }] = useCreateAdjustmentMutation();
 
   const handleSubmit = async (values) => {
     console.log(values);
-    // const { data, error } = await createDepartment({
+    // const { data, error } = await createAdjustment({
     //   data: values,
     // });
     // if (data?.success) {
@@ -36,7 +37,7 @@ const AdjustmentCreate = () => {
       /> */}
       <AdjustmentForm
         handleSubmit={handleSubmit}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         fields={errorFields}
       />
     </CustomDrawer>

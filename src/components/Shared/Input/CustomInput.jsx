@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Space } from "antd";
+import { Form, Input } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 const { TextArea, Password } = Input;
 
@@ -49,8 +49,8 @@ const CustomInput = (props) => {
             allowClear
           />
         ) : type === "number_with_percent" ? (
-          <InputNumber
-            type={type}
+          <Input
+            type={"number"}
             placeholder={`Enter ${placeholder ?? label}`}
             className="mt-2 border-2 w-full"
             size="large"
@@ -62,27 +62,18 @@ const CustomInput = (props) => {
             allowClear
           />
         ) : type === "phone" ? (
-          <Space>
-            <Space.Compact size="large">
-              <Input
-                value={"+880"}
-                size="large"
-                className="mt-2 border-2"
-                style={{
-                  width: "40%",
-                }}
-              />
-              <InputNumber
-                type="number"
-                placeholder={`Enter ${placeholder ?? label}`}
-                className="mt-2 border-2 w-full"
-                size="large"
-                prefix={prefix}
-                suffix={suffix}
-                allowClear
-              />
-            </Space.Compact>
-          </Space>
+          <Input
+            type="number"
+            // placeholder={`Enter ${placeholder ?? label}`}
+            placeholder="01XXXX123XX"
+            className="mt-2 border-2 w-full"
+            prefix={prefix ?? "+880"}
+            // addonBefore={addonBefore}
+            // style={{}}
+            suffix={suffix}
+            size="large"
+            allowClear
+          />
         ) : (
           <Input
             type={type}

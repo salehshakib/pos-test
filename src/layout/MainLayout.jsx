@@ -43,9 +43,11 @@ const MainLayout = () => {
           <Layout className="ml-[4.3rem] lg:ml-0">
             <Content
               style={{
-                marginLeft: "8px",
+                margin: "16px",
                 backgroundColor: "white",
+                borderRadius: "8px",
               }}
+              className="shadow-md"
             >
               <GlobalUtilityStyle>
                 <Outlet />

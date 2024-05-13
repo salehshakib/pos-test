@@ -6,10 +6,8 @@ import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteWarehouseMutation,
   useGetWarehousesQuery,
-  useUpdateWarehouseStatusMutation,
 } from "../../redux/services/warehouse/warehouseApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import WarehouseEdit from "./WarehouseEdit";
 
@@ -19,9 +17,6 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [id, setId] = useState(undefined);
 
-  const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
-
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
@@ -29,12 +24,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  console.log(data);
-
   const total = data?.meta?.total;
-
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateWarehouseStatusMutation();
 
   const [deleteWarehouse, { isLoading: isDeleting }] =
     useDeleteWarehouseMutation();
@@ -42,21 +32,6 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const getDetails = (id) => {
     setId(id);
     dispatch(openEditDrawer());
-  };
-
-  const handleStatusModal = (id) => {
-    setStatusModal(true);
-    setStatusId(id);
-  };
-
-  const handleStatus = async () => {
-    console.log(statusId);
-    const { data } = await updateStatus(statusId);
-
-    if (data?.success) {
-      setId(undefined);
-      setStatusModal(false);
-    }
   };
 
   const handleDeleteModal = (id) => {
@@ -73,8 +48,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.warehouse?.map((item) => {
-      const { id, name, phone, email, address, created_at, is_active } =
-        item ?? {};
+      const { id, name, phone, email, address, created_at } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
@@ -83,14 +57,13 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         phone: phone,
         email: email,
         address: address,
-        status: { status: is_active, handleStatusModal },
+        // status: { status: is_active, handleStatusModal },
         created_at: date,
         action: { getDetails, handleDeleteModal },
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -108,12 +81,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <WarehouseEdit id={id} setId={setId} />
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
+
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}

@@ -87,6 +87,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
+        isRowSelection={true}
         // isLoading={isLoading}
       />
 

@@ -19,6 +19,9 @@ const WarehouseEdit = ({ id, setId }) => {
     { id },
     { skip: !id }
   );
+
+  console.log(data);
+
   const [updateWarehouse, { isLoading }] = useUpdateWarehouseMutation();
 
   useEffect(() => {

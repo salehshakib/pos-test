@@ -1,33 +1,42 @@
-import { Col, Form, Row } from "antd";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { Col, Row } from "antd";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import CustomSelect from "../Shared/Select/CustomSelect";
+import ApplicableFrom from "./ApplicableFrom";
 
-const ApplicableFormItem = () => {
-  const form = Form.useWatch();
-
-  console.log(form.getFieldsValue("applicable_for"));
-
-  return (
-    <CustomSelect
-      label="Applicable For"
-      options={[
-        {
-          label: "All Products",
-          value: "all",
-        },
-        {
-          label: "Specific Products",
-          value: "specific",
-        },
-      ]}
-      name={"applicable_for"}
-      required={true}
-    />
-  );
-};
+const weekDays = [
+  {
+    label: "Monday",
+    value: "monday",
+  },
+  {
+    label: "Tuesday",
+    value: "tuesday",
+  },
+  {
+    label: "Wednesday",
+    value: "wednesday",
+  },
+  {
+    label: "Thursday",
+    value: "thursday",
+  },
+  {
+    label: "Friday",
+    value: "friday",
+  },
+  {
+    label: "Saturday",
+    value: "saturday",
+  },
+  {
+    label: "Sunday",
+    value: "sunday",
+  },
+];
 
 const DiscountForm = ({ handleSubmit, isLoading, fields }) => {
   return (
@@ -50,9 +59,9 @@ const DiscountForm = ({ handleSubmit, isLoading, fields }) => {
         <Col {...colLayout}>
           <CustomSelect label="Discount Plan" required={true} />
         </Col>
-        <Col {...colLayout}>
-          <ApplicableFormItem />
-        </Col>
+
+        <ApplicableFrom />
+
         <Col {...colLayout}>
           <CustomDatepicker type={"date"} label="Valid From" required={true} />
         </Col>
@@ -87,7 +96,15 @@ const DiscountForm = ({ handleSubmit, isLoading, fields }) => {
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...fullColLayout}></Col>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            name="valid_on"
+            mode="group"
+            label="Valid on the following days"
+            options={weekDays}
+            defaultValue={["sunday", "saturday"]}
+          />
+        </Col>
       </Row>
     </CustomForm>
   );

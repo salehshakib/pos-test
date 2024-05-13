@@ -6,20 +6,7 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomTable from "../Shared/Table/CustomTable";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-
-const rowLayout = {
-  gutter: 25,
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
-
-const fullColLayout = {
-  xs: 24,
-};
+import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 
 const columns = [
   {

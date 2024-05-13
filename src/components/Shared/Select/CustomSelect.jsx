@@ -1,15 +1,18 @@
 import { Form, Select } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const CustomSelect = ({
-  name,
-  label,
-  placeholder,
-  required = false,
-  showSearch = false,
-  options = [],
-  isLoading,
-}) => {
+const CustomSelect = (props) => {
+  const {
+    name,
+    label,
+    placeholder,
+    required = false,
+    showSearch = false,
+    mode = "single",
+    options = [],
+    isLoading,
+  } = props;
+
   return (
     <GlobalUtilityStyle>
       <Form.Item
@@ -34,6 +37,7 @@ const CustomSelect = ({
             size="large"
             loading={isLoading}
             options={options}
+            mode={mode}
             allowClear
           />
         ) : (
@@ -43,6 +47,7 @@ const CustomSelect = ({
             size="large"
             loading={isLoading}
             options={options}
+            mode={mode}
             allowClear
           />
         )}

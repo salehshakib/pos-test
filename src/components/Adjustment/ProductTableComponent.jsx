@@ -45,32 +45,31 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    render: (props, record) => {
-      const { id, setId, value } = props ?? {};
-
+    render: () => {
       return (
-        <>
-          {record?.id === id ? (
-            <span
-              style={{
-                width: 50,
-              }}
-            >
-              <CustomInput
-                type={"number"}
-                name={["product_list", "qty"]}
-                placeholder="quantity"
-              />
-            </span>
-          ) : (
-            <span
-              className="text-xs font-medium md:text-sm text-dark dark:text-white87"
-              onClick={() => setId(record.id)}
-            >
-              {value}
-            </span>
-          )}
-        </>
+        // <>
+        //   {record?.id === id ? (
+        //     <span
+        //       style={{
+        //         width: 50,
+        //       }}
+        //     >
+
+        //     </span>
+        //   ) : (
+        //     <span
+        //       className="text-xs font-medium md:text-sm text-dark dark:text-white87"
+        //       onClick={() => setId(record.id)}
+        //     >
+        //       {value}
+        //     </span>
+        //   )}
+        // </>
+        <CustomInput
+          type={"number"}
+          name={["product_list", "qty"]}
+          placeholder="quantity"
+        />
       );
     },
   },
@@ -125,30 +124,22 @@ export const ProductTableComponent = () => {
   const productData = Form.useWatch("product_name", form);
   const warehouseData = Form.useWatch("warehouse_id", form);
 
-  const [id, setId] = useState(undefined);
-
   const dataSource = [
     {
       id: 1,
-      quantity: { id, setId, value: 1 },
-      //   type: { setId },
     },
     {
       id: 2,
-      quantity: { id, setId, value: 1 },
-      //   type: { setId },
     },
     {
       id: 3,
-      quantity: { id, setId, value: 1 },
-      //   type: { setId },
     },
   ];
 
-  dataSource.push({
-    name: "Total",
-    action: <MdDelete className="text-lg md:text-xl " />,
-  });
+  //   dataSource.push({
+  //     name: "Total",
+  //     action: <MdDelete className="text-lg md:text-xl " />,
+  //   });
 
   return (
     <Col {...fullColLayout}>

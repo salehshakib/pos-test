@@ -129,134 +129,6 @@ const Category = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const dispatch = useDispatch();
-  // const { isCreateDrawerOpen, isEditDrawerOpen } = useSelector(
-  //   (state) => state.drawer
-  // );
-
-  // const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-
-  // const [fields, setFields] = useState([]);
-  // const [errorFields, setErrorFields] = useState([]);
-
-  // const [id, setId] = useState(undefined);
-
-  // const [deleteModal, setDeleteModal] = useState(false);
-  // const [deleteId, setDeleteId] = useState(undefined);
-
-  // const { data, isLoading } = useGetCategoriesQuery({
-  //   params: pagination,
-  // });
-
-  // const total = data?.meta?.total;
-
-  // const { data: details, isFetching } = useGetCategoryDetailsQuery(
-  //   { id },
-  //   { skip: !id }
-  // );
-
-  // const [createCategory, { isLoading: isCreating }] =
-  //   useCreateCategoryMutation();
-
-  // const [updateCategory, { isLoading: isUpdating }] =
-  //   useUpdateCategoryMutation();
-
-  // const [deleteCategory, { isLoading: isDeleting }] =
-  //   useDeleteCategoryMutation();
-
-  // const getDetails = (id) => {
-  //   setId(id);
-  //   dispatch(openEditDrawer());
-  // };
-
-  // useEffect(() => {
-  //   if (details) {
-  //     const fieldData = [
-  //       {
-  //         name: "name",
-  //         value: details?.name,
-  //         errors: "",
-  //       },
-  //       {
-  //         name: "parent_id",
-  //         value: Number(details?.parent_id),
-  //         errors: "",
-  //       },
-  //     ];
-
-  //     setFields(fieldData);
-  //   }
-  // }, [details, setFields]);
-
-  // const handleDelete = (id) => {
-  //   setDeleteModal(true);
-  //   setDeleteId(id);
-  // };
-
-  // const handleDeleteCategory = async () => {
-  //   const { data } = await deleteCategory(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
-
-  // const dataSource =
-  //   data?.results?.category?.map((item) => {
-  //     const { id, name, created_at, parent_id } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
-
-  //     return {
-  //       id,
-  //       category: name,
-  //       parentCategory: parent_id ?? "N/A",
-  //       created_at: date,
-  //       action: { getDetails, handleDeleteModal },
-  //     };
-  //   }) ?? [];
-
-  // const handleSubmit = async (values) => {
-  //   const { data, error } = await createCategory({
-  //     data: values,
-  //   });
-
-  //   if (data?.success) {
-  //     setId(undefined);
-  //     dispatch(closeCreateDrawer());
-  //   }
-
-  //   if (error) {
-  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-  //       name: fieldName,
-  //       errors: error?.data?.errors[fieldName],
-  //     }));
-
-  //     setErrorFields(errorFields);
-  //   }
-  // };
-
-  // const handleUpdate = async (values) => {
-  //   const { data, error } = await updateCategory({
-  //     data: { id, ...values },
-  //   });
-
-  //   if (data?.success) {
-  //     setId(undefined);
-  //     dispatch(closeEditDrawer());
-  //   }
-
-  //   if (error) {
-  //     const errorFields = Object.keys(error?.data?.errors)?.map(
-  //       (fieldName) => ({
-  //         name: fieldName,
-  //         value: fields.find((field) => field.name === fieldName).value,
-  //         errors: error?.data?.errors[fieldName],
-  //       })
-  //     );
-
-  //     setFields(errorFields);
-  //   }
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Category"
@@ -264,47 +136,11 @@ const Category = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      {/* <CustomTable
-        columns={newColumns}
-        dataSource={dataSource}
-        total={total}
-        pagination={pagination}
-        setPagination={setPagination}
-        setSelectedRows={setSelectedRows}
-        isLoading={isLoading}
-      /> */}
-
-      {/* <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
-        <CategoryForm
-          handleSubmit={handleSubmit}
-          isLoading={isCreating}
-          fields={errorFields}
-        />
-      </CustomDrawer> */}
       <CategoryCreate />
       <CategoryTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />
-
-      {/* <CustomDrawer
-        title={"Edit Category"}
-        open={isEditDrawerOpen}
-        isLoading={isFetching}
-      >
-        <CategoryForm
-          handleSubmit={handleUpdate}
-          isLoading={isUpdating}
-          fields={fields}
-        />
-      </CustomDrawer>
-
-      <DeleteModal
-        deleteModal={deleteModal}
-        setDeleteModal={setDeleteModal}
-        handleDeleteDepartment={handleDeleteCategory}
-        isDeleting={isDeleting}
-      /> */}
     </GlobalContainer>
   );
 };

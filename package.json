@@ -10,7 +10,6 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "gittu": "git add . && git commit && git push"
-
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",
@@ -36,8 +35,7 @@
     "redux-persist": "^6.0.0",
     "sonner": "^1.4.41",
     "sort-by": "^1.2.0",
-    "styled-components": "^6.1.8",
-    "zod": "^3.22.4"
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

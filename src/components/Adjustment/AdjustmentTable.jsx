@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentEdit from "./AdjustmentEdit";
+import { useGetAllAdjustmentQuery } from "../../redux/services/adjustment/adjustmentApi";
 
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -14,9 +15,11 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllAdjustmentQuery({
+    params: pagination,
+  });
+
+  console.log(data);
 
   // const total = data?.meta?.total;
 

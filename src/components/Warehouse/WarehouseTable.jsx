@@ -29,6 +29,8 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
+  console.log(data);
+
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
@@ -100,6 +102,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <WarehouseEdit id={id} setId={setId} />

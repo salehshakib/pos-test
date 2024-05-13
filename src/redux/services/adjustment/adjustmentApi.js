@@ -1,38 +1,40 @@
-import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
+import { ADJUSTMENT } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const brandApi = baseApi.injectEndpoints({
+const adjustmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getBrands: build.query({
+    getAllAdjustment: build.query({
       query: ({ params }) => {
         return {
-          url: `/${BRAND}`,
+          url: `/${ADJUSTMENT}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: BRAND, params },
-        BRAND,
+        { type: ADJUSTMENT, params },
+        ADJUSTMENT,
       ],
     }),
-    getBrandDetails: build.query({
+
+    getAdjustmentDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${BRAND}/show/${id}`,
+          url: `${ADJUSTMENT}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [BRAND],
+      providesTags: [ADJUSTMENT],
     }),
-    createBrand: build.mutation({
+
+    createAdjustment: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${BRAND}/store`,
+          url: `/${ADJUSTMENT}/store`,
           method: "POST",
           body: data,
         };
@@ -44,13 +46,14 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [ADJUSTMENT] : [];
       },
     }),
-    updateBrand: build.mutation({
+
+    updateAdjustment: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${BRAND}/update/${data?.id}`,
+          url: `/${ADJUSTMENT}/update/${data?.id}`,
           method: "POST",
           body: data,
         };
@@ -62,13 +65,14 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [ADJUSTMENT] : [];
       },
     }),
-    updateBrandStatus: build.mutation({
+
+    updateAdjustmentStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/status/${id}`,
+          url: `/${ADJUSTMENT}/status/${id}`,
           method: "POST",
         };
       },
@@ -79,13 +83,14 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [ADJUSTMENT] : [];
       },
     }),
-    deleteBrand: build.mutation({
+
+    deleteAdjustment: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/delete/${id}`,
+          url: `/${ADJUSTMENT}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -96,17 +101,17 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [ADJUSTMENT] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetBrandsQuery,
-  useGetBrandDetailsQuery,
-  useCreateBrandMutation,
-  useUpdateBrandMutation,
-  useUpdateBrandStatusMutation,
-  useDeleteBrandMutation,
-} = brandApi;
+  useGetAllAdjustmentQuery,
+  useGetAdjustmentDetailsQuery,
+  useCreateAdjustmentMutation,
+  useUpdateAdjustmentMutation,
+  useUpdateAdjustmentStatusMutation,
+  useDeleteAdjustmentMutation,
+} = adjustmentApi;

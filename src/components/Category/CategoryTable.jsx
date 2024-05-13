@@ -74,6 +74,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
       <Categoryedit id={id} setId={setId} />
 

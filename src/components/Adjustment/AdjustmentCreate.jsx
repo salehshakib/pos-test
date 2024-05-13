@@ -29,16 +29,16 @@ const AdjustmentCreate = () => {
   };
   return (
     <CustomDrawer title={"Create Adjustment"} open={isCreateDrawerOpen}>
-      <RolePermissionForm
-        handleSubmit={handleSubmit}
-        // isLoading={isLoading}
-        fields={errorFields}
-      />
-      {/* <AdjustmentForm
+      {/* <RolePermissionForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}
         fields={errorFields}
       /> */}
+      <AdjustmentForm
+        handleSubmit={handleSubmit}
+        // isLoading={isLoading}
+        fields={errorFields}
+      />
     </CustomDrawer>
   );
 };

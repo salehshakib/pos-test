@@ -16,7 +16,7 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
             label="Warehouse Name"
             type={"text"}
             required={true}
-            name={"warehouseName"}
+            name={"name"}
             placeholder={"Brand Name"}
           />
         </Col>
@@ -25,7 +25,6 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
           <CustomInput
             label="Email"
             type={"email"}
-            required={true}
             name={"email"}
             placeholder={"Email Address"}
           />
@@ -35,7 +34,7 @@ const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
             label="Phone Number"
             type={"phone"}
             required={true}
-            name={"phoneNumber"}
+            name={"phone"}
             placeholder={"Phone Number"}
           />
         </Col>

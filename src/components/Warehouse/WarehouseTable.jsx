@@ -72,15 +72,19 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.department?.map((item) => {
-      const { id, name, created_at, is_active } = item ?? {};
+    data?.results?.warehouse?.map((item) => {
+      const { id, name, phone, email, address, created_at, is_active } =
+        item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        //   department: name,
+        warehouse: name,
+        phone: phone,
+        email: email,
+        address: address,
         status: { status: is_active, handleStatusModal },
-        //   created_at: date,
+        created_at: date,
         action: { getDetails, handleDeleteModal },
       };
     }) ?? [];
@@ -89,8 +93,6 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
     setStatusModal(false);
     setDeleteModal(false);
   };
-
-  console.log(data?.results?.department);
 
   return (
     <GlobalUtilityStyle>

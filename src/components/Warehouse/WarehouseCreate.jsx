@@ -13,22 +13,23 @@ const WarehouseCreate = () => {
   const [createWarehouse, { isLoading }] = useCreateWarehouseMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createWarehouse({
-      data: values,
-    });
+    console.log(values);
+    // const { data, error } = await createWarehouse({
+    //   data: values,
+    // });
 
-    if (data?.success) {
-      dispatch(closeCreateDrawer());
-    }
+    // if (data?.success) {
+    //   dispatch(closeCreateDrawer());
+    // }
 
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
-        errors: error?.data?.errors[fieldName],
-      }));
+    // if (error) {
+    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+    //     name: fieldName,
+    //     errors: error?.data?.errors[fieldName],
+    //   }));
 
-      setErrorFields(errorFields);
-    }
+    //   setErrorFields(errorFields);
+    // }
   };
 
   return (

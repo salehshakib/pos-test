@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CategoryForm from "./CategoryForm";
-
-import { useCreateCategoryMutation } from "../../redux/services/category/categoryApi";
+import { useCreateWarehouseMutation } from "../../redux/services/warehouse/warehouseApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import WarehouseForm from "./WarehouseForm";
 
-const CategoryCreate = () => {
+const WarehouseCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [createWarehouse, { isLoading }] = useCreateWarehouseMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createCategory({
+    const { data, error } = await createWarehouse({
       data: values,
     });
 
@@ -31,9 +30,10 @@ const CategoryCreate = () => {
       setErrorFields(errorFields);
     }
   };
+
   return (
-    <CustomDrawer title={"Create Category"} open={isCreateDrawerOpen}>
-      <CategoryForm
+    <CustomDrawer title={"Create Warehouse"} open={isCreateDrawerOpen}>
+      <WarehouseForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -42,4 +42,4 @@ const CategoryCreate = () => {
   );
 };
 
-export default CategoryCreate;
+export default WarehouseCreate;

@@ -1,36 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { useGetCategoryDetailsQuery, useUpdateCategoryMutation } from "../../redux/services/category/categoryApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useGetWarehouseDetailsQuery,
+  useUpdateWarehouseMutation,
+} from "../../redux/services/warehouse/warehouseApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CategoryForm from "./CategoryForm";
+import WarehouseForm from "./WarehouseForm";
 
-const Categoryedit = ({ id, setId }) => {
+const WarehouseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetCategoryDetailsQuery(
+  const { data, isFetching } = useGetWarehouseDetailsQuery(
     { id },
     { skip: !id }
   );
-
-  const [updateCategory, { isLoading }] = useUpdateCategoryMutation();
+  const [updateWarehouse, { isLoading }] = useUpdateWarehouseMutation();
 
   useEffect(() => {
     if (data) {
+      // const fieldData = fieldsToUpdate(data);
       const fieldData = [
         {
           name: "name",
           value: data?.name,
-          errors: "",
-        },
-        {
-          name: "parent_id",
-          value: Number(data?.parent_id),
           errors: "",
         },
       ];
@@ -40,7 +37,7 @@ const Categoryedit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateCategory({
+    const { data, error } = await updateWarehouse({
       data: { id, ...values },
     });
 
@@ -55,13 +52,14 @@ const Categoryedit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
+
   return (
     <CustomDrawer
-      title={"Edit Category"}
+      title={"Edit Warehouse"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <CategoryForm
+      <WarehouseForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -69,5 +67,4 @@ const Categoryedit = ({ id, setId }) => {
     </CustomDrawer>
   );
 };
-
-export default Categoryedit;
+export default WarehouseEdit;

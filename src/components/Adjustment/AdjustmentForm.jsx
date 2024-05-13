@@ -1,23 +1,13 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import {
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomUploader from "../Shared/Upload/CustomUploader";
 import CustomSelect from "../Shared/Select/CustomSelect";
-
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-};
-
-const docsColLayout = {
-  xs: 24,
-};
+import CustomUploader from "../Shared/Upload/CustomUploader";
 
 const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
   return (
@@ -27,7 +17,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
       isLoading={isLoading}
     >
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Warehouse"
             type={"text"}
@@ -35,7 +25,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
             // name={"adjustment_name"}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomSelect
             label="Product"
             placeholder={"Product"}
@@ -46,7 +36,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
         </Col>
       </Row>
       <Row {...rowLayout}>
-        <Col {...docsColLayout}>
+        <Col {...fullColLayout}>
           <CustomUploader
             label="Attach Documents"
             multiple={true}
@@ -54,7 +44,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
             // name={"adjustment_name"}
           />
         </Col>
-        <Col {...docsColLayout}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Sale Note"
             multiple={true}

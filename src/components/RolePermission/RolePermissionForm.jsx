@@ -3,7 +3,7 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
-const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
+const RolePermissionForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
       handleSubmit={handleSubmit}
@@ -25,4 +25,4 @@ const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
   );
 };
 
-export default DepartmentForm;
+export default RolePermissionForm;

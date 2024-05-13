@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DiscountPlanForm from "./DiscountPlanForm";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import ProductForm from "./ProductForm";
 
-const ProductCreate = () => {
+const DiscountPlanCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -28,8 +28,8 @@ const ProductCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Product"} open={isCreateDrawerOpen}>
-      <ProductForm
+    <CustomDrawer title={"Create Discount Plan"} open={isCreateDrawerOpen}>
+      <DiscountPlanForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}
         fields={errorFields}
@@ -38,4 +38,4 @@ const ProductCreate = () => {
   );
 };
 
-export default ProductCreate;
+export default DiscountPlanCreate;

@@ -1,7 +1,7 @@
 import { FaBuilding, FaUsers } from "react-icons/fa";
 import { MdPayment, MdTimeToLeave } from "react-icons/md";
-import Department from "../../pages/Dashboard/Hrm/Department/Department";
-import Employee from "../../pages/Dashboard/Hrm/Employee/Employee";
+import Department from "../../pages/Dashboard/Department/Department";
+import Employee from "../../pages/Dashboard/Employee/Employee";
 import Hrm from "../../pages/Dashboard/Hrm/Hrm";
 
 export const hrmPaths = [

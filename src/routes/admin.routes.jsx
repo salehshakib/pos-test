@@ -1,7 +1,6 @@
 //components
 import { BsBoxSeam } from "react-icons/bs";
 import { FaCartShopping, FaMoneyBillWave, FaUsersGear } from "react-icons/fa6";
-import { GoCreditCard } from "react-icons/go";
 import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import {
@@ -22,14 +21,13 @@ import Expense from "../pages/Dashboard/Expense/Expense";
 import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
-import Return from "../pages/Dashboard/Return/Return";
-import Transfer from "../pages/Dashboard/Transfer/Transfer";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
-import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
+import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
+import { transferPaths } from "./TransaferRoutes/transfer.routes";
 
 export const adminPaths = [
   {
@@ -50,12 +48,12 @@ export const adminPaths = [
     icon: MdInventory2,
     children: inventoryPaths,
   },
-  {
-    name: "Purchase",
-    path: "purchase",
-    icon: GoCreditCard,
-    children: purchasePaths,
-  },
+  // {
+  //   name: "Purchase",
+  //   path: "purchase",
+  //   icon: GoCreditCard,
+  //   children: purchasePaths,
+  // },
   {
     name: "Sale",
     path: "sale",
@@ -92,27 +90,13 @@ export const adminPaths = [
     name: "Transfer",
     path: "transfer",
     icon: RiArrowGoForwardFill,
-    children: [
-      {
-        name: "Transfers",
-        path: "transfers",
-        icon: TbDashboard,
-        element: <Transfer />,
-      },
-    ],
+    children: transferPaths,
   },
   {
     name: "Return",
     path: "return",
     icon: RiArrowGoBackFill,
-    children: [
-      {
-        name: "Returns",
-        path: "returns",
-        icon: TbDashboard,
-        element: <Return />,
-      },
-    ],
+    children: returnPaths,
   },
   {
     name: "Accounting",

@@ -143,15 +143,18 @@ const GlobalContainer = ({
       <div className="h-full">
         <PageContainer
           header={{
-            title: <div className="text-2xl lg:text-3xl py-1">{pageTitle}</div>,
+            title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
-              <Button
-                key={"create"}
-                type="text"
-                icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
-                onClick={handleDrawerOpen}
-                className="flex justify-center items-center border-none w-full primary-text py-1"
-              />
+              <div className=" p-1">
+                <Button
+                  key={"create"}
+                  type="text"
+                  icon={<FaCirclePlus className="text-2xl lg:text-3xl " />}
+                  size="large"
+                  onClick={handleDrawerOpen}
+                  className="flex justify-center items-center  w-full  primary-text "
+                />
+              </div>
             ),
           }}
           extra={[
@@ -161,7 +164,7 @@ const GlobalContainer = ({
                   type="text"
                   key="search"
                   size="large"
-                  className="w-full border rounded-md border-gray-300 hover:border-primary-hover focus:outline-none focus:border-primary"
+                  className="w-full border rounded-md border-gray-300  focus:outline-none focus:border-primary"
                   placeholder="Search"
                   // value={searchUser}
                   // onChange={handleSearchUser}
@@ -186,7 +189,7 @@ const GlobalContainer = ({
                   <Button
                     key="filter"
                     size="large"
-                    className="hover:bg-white border border-gray-300 hover:border-primary-hover  "
+                    className="border border-gray-300 "
                     type="text"
                   >
                     <TbFilterSearch
@@ -194,7 +197,7 @@ const GlobalContainer = ({
                         fontSize: "16px",
                         color: "#000",
                       }}
-                      className="hover:scale-110 duration-300 text-xs lg:text-[16px]"
+                      className="text-xs lg:text-[16px]"
                     />
                   </Button>
                 </Popover>
@@ -231,7 +234,7 @@ const GlobalContainer = ({
             ),
           ]}
         >
-          {children}
+          <div className="">{children}</div>
         </PageContainer>
       </div>
     </GlobalUtilityStyle>

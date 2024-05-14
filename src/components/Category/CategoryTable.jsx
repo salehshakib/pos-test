@@ -2,14 +2,14 @@ import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
 import { useState } from "react";
-import {
-  useDeleteCategoryMutation,
-  useGetCategoriesQuery,
-} from "../../redux/services/inventory/category/categoryApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import dayjs from "dayjs";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import Categoryedit from "./Categoryedit";
+import {
+  useDeleteCategoryMutation,
+  useGetCategoriesQuery,
+} from "../../redux/services/category/categoryApi";
 
 const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -74,6 +74,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
       <Categoryedit id={id} setId={setId} />
 

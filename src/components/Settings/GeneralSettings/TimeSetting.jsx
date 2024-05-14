@@ -1,7 +1,6 @@
 import { Col, Divider, Row } from "antd";
 import dateFormats from "../../../assets/data/dateFormats.json";
 import timezones from "../../../assets/data/timezones.json";
-import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const rowLayout = {

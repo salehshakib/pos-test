@@ -66,19 +66,6 @@ const GlobalUtilityStyle = styled.div`
     justify-content: center;
   }
 
-  .ant-input-number-input-wrap {
-    font-size: 14px;
-  }
-
-  .ant-input-affix-wrapper-lg {
-    font-size: 14px;
-
-    &:focus {
-      border: none !important;
-      // border-radius: 8px !important;
-    }
-  }
-
   .ant-select {
     border: 2px solid ${secondaryColor} !important;
     border-radius: 8px !important;

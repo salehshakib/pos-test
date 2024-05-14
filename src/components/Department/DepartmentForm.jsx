@@ -1,16 +1,8 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-};
 const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
   return (
     <CustomForm
@@ -19,7 +11,7 @@ const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
       isLoading={isLoading}
     >
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Department Name"
             type={"text"}

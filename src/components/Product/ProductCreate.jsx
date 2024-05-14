@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ProductForm from "./ProductForm";
 
-const ProductListCreate = () => {
+const ProductCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -38,4 +38,4 @@ const ProductListCreate = () => {
   );
 };
 
-export default ProductListCreate;
+export default ProductCreate;

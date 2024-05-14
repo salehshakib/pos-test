@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CategoryForm from "../../pages/Dashboard/Inventory/Category/CategoryForm";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateCategoryMutation } from "../../redux/services/inventory/category/categoryApi";
+import CategoryForm from "./CategoryForm";
+
+import { useCreateCategoryMutation } from "../../redux/services/category/categoryApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 
 const CategoryCreate = () => {

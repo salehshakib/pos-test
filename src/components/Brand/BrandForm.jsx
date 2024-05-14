@@ -1,19 +1,8 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-
-const rowLayout = {
-  gutter: 25,
-  align: "middle",
-  justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 12,
-};
 
 const BrandForm = ({ handleSubmit, isLoading, fields }) => {
   return (
@@ -24,7 +13,7 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
       isLoading={isLoading}
     >
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Brand Name"
             type={"text"}
@@ -34,7 +23,7 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
           />
         </Col>
 
-        <Col {...colLayout}>
+        {/* <Col {...mdColLayout}>
           <CustomInput
             label="Product Name"
             type={"text"}
@@ -42,12 +31,12 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
             // name={"name"}
             placeholder={"Product Name"}
           />
-        </Col>
-        <Col xs={24}>
+        </Col> */}
+        <Col {...fullColLayout}>
           <CustomUploader
             label={"Brand Image"}
             name={"brand_image"}
-            multiple={true}
+            // multiple={true}
           />
         </Col>
       </Row>

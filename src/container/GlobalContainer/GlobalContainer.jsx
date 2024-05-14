@@ -145,13 +145,14 @@ const GlobalContainer = ({
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
-              <div className="w-full">
+              <div className=" p-1">
                 <Button
                   key={"create"}
                   type="text"
-                  icon={<FaCirclePlus className="text-2xl lg:text-3xl" />}
+                  icon={<FaCirclePlus className="text-2xl lg:text-3xl " />}
+                  size="large"
                   onClick={handleDrawerOpen}
-                  className="flex justify-center items-center border-none primary-text m-2"
+                  className="flex justify-center items-center  w-full  primary-text "
                 />
               </div>
             ),
@@ -233,7 +234,7 @@ const GlobalContainer = ({
             ),
           ]}
         >
-          {children}
+          <div className="">{children}</div>
         </PageContainer>
       </div>
     </GlobalUtilityStyle>

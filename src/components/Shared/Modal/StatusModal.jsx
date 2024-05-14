@@ -2,9 +2,19 @@ import { Button, Modal } from "antd";
 import { FaInfoCircle } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const StatusModal = (props) => {
-  const { text, statusModal, hideModal, handleStatus, isLoading } = props;
+const props = {
+  footer: null,
+  centered: true,
+  maskClosable: true,
+};
 
+const StatusModal = ({
+  text,
+  statusModal,
+  hideModal,
+  handleStatus,
+  isLoading,
+}) => {
   return (
     <Modal
       title={
@@ -19,9 +29,7 @@ const StatusModal = (props) => {
       }
       open={statusModal}
       onCancel={hideModal}
-      footer={null}
-      centered
-      maskClosable
+      {...props}
     >
       <GlobalUtilityStyle>
         <span>{text ?? "Do you want to update your status?"}</span>

@@ -13,6 +13,7 @@ const CustomInput = (props) => {
     suffix,
     requireMsg = undefined,
     noStyle = false,
+    addonAfter,
   } = props;
 
   return (
@@ -94,6 +95,7 @@ const CustomInput = (props) => {
             size="large"
             prefix={prefix}
             suffix={suffix}
+            addonAfter={addonAfter}
             allowClear
           />
         )}

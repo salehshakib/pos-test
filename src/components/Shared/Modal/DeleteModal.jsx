@@ -2,6 +2,12 @@ import { Button, Modal } from "antd";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
+const props = {
+  footer: null,
+  centered: true,
+  maskClosable: true,
+};
+
 const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
   return (
     <GlobalUtilityStyle>
@@ -19,9 +25,7 @@ const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
         }
         open={deleteModal}
         onCancel={hideModal}
-        footer={null}
-        centered
-        maskClosable
+        {...props}
       >
         <GlobalUtilityStyle>
           <span> Do you want to delete this department?</span>

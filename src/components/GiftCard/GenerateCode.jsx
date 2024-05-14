@@ -1,21 +1,10 @@
 import { Button, Col, Form, Input, Row } from "antd";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { generateRandomCode } from "../../utilities/lib/generateCode";
 
 const rowLayout = {
   gutter: 8,
   align: "middle",
-};
-
-const generateRandomCode = () => {
-  const currentTime = new Date().getTime();
-  const seed = currentTime % 2147483647;
-  let random = seed;
-  let code = "";
-  for (let i = 0; i < 16; i++) {
-    random = (random * 16807) % 2147483647;
-    code += (random % 10).toString();
-  }
-  return code;
 };
 
 const GenerateCode = () => {

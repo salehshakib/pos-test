@@ -41,6 +41,9 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
+.ant-input-group-wrapper {
+}
+
 .ant-input-affix-wrapper-lg:focus {
   border: none !important;
 }

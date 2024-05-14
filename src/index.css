@@ -44,3 +44,7 @@ body::-webkit-scrollbar {
 .ant-input-affix-wrapper-lg:focus {
   border: none !important;
 }
+
+.ant-input-number-lg input.ant-input-number-input {
+  height: 35px !important;
+}

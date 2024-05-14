@@ -29,6 +29,7 @@ const CustomAutoComplete = (props) => {
           allowClear
           size="large"
           placeholder={placeholder ?? `Enter ${label}`}
+          className="mt-2"
         />
       </Form.Item>
     </GlobalUtilityStyle>

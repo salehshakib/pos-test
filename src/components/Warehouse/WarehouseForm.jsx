@@ -26,6 +26,7 @@ const PhoneNumberComponent = () => {
       prefix={"+88"}
       // addonBefore={prefixSelector}
       placeholder={"Phone Number"}
+      noStyle={false}
     />
   );
 };

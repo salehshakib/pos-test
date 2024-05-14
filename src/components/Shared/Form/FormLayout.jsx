@@ -12,7 +12,7 @@ export const colLayout = {
 
 export const mdColLayout = {
   xs: 24,
-  md: 24,
+  md: 12,
 };
 
 export const fullColLayout = {

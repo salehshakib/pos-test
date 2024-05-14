@@ -108,7 +108,7 @@ const AdjustmentList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Adjustment List"
+      pageTitle="Adjustment"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

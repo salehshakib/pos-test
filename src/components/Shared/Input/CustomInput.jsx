@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 const { TextArea, Password } = Input;
 
@@ -12,6 +12,7 @@ const CustomInput = (props) => {
     prefix,
     suffix,
     requireMsg = undefined,
+    noStyle = false,
   } = props;
 
   return (
@@ -25,6 +26,7 @@ const CustomInput = (props) => {
             message: `Please input ${requireMsg ?? label}!`,
           },
         ]}
+        noStyle={noStyle}
       >
         {type === "password" ? (
           <Password
@@ -50,7 +52,7 @@ const CustomInput = (props) => {
           />
         ) : type === "number_with_percent" ? (
           <Input
-            type={"number"}
+            type="number"
             placeholder={`Enter ${placeholder ?? label}`}
             className="mt-2 border-2 w-full"
             size="large"
@@ -62,7 +64,7 @@ const CustomInput = (props) => {
             allowClear
           />
         ) : type === "phone" ? (
-          <Input
+          <InputNumber
             type="number"
             // placeholder={`Enter ${placeholder ?? label}`}
             placeholder="01XXXX123XX"
@@ -72,6 +74,16 @@ const CustomInput = (props) => {
             // style={{}}
             suffix={suffix}
             size="large"
+            allowClear
+          />
+        ) : type === "number" ? (
+          <InputNumber
+            type="number"
+            placeholder={`Enter ${placeholder ?? label}`}
+            className="mt-2 border-2 w-full"
+            size="large"
+            prefix={prefix}
+            suffix={suffix}
             allowClear
           />
         ) : (

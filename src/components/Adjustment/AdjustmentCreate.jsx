@@ -14,6 +14,18 @@ const AdjustmentCreate = () => {
 
   const handleSubmit = async (values) => {
     console.log(values);
+
+    const { product_list } = values;
+
+    const productListArray = Object.keys(product_list.qty).map((product_id) => {
+      return {
+        product_id: parseInt(product_id),
+        qty: product_list.qty[product_id],
+        action: product_list.action[product_id],
+      };
+    });
+
+    console.log(productListArray);
     // const { data, error } = await createAdjustment({
     //   data: values,
     // });

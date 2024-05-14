@@ -1,10 +1,10 @@
-import { Col, Form, Select } from "antd";
+import { Col, Form } from "antd";
+import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { fullColLayout } from "../Shared/Form/FormLayout";
-import CustomTable from "../Shared/Table/CustomTable";
-import { useState } from "react";
 import CustomInput from "../Shared/Input/CustomInput";
-const { Option } = Select;
+import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomTable from "../Shared/Table/CustomTable";
 
 const columns = [
   {
@@ -19,7 +19,7 @@ const columns = [
     ),
   },
   {
-    title: "Code",
+    title: "SKU",
     dataIndex: "code",
     key: "code",
     align: "center",
@@ -45,77 +45,75 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    render: () => {
-      return (
-        // <>
-        //   {record?.id === id ? (
-        //     <span
-        //       style={{
-        //         width: 50,
-        //       }}
-        //     >
-
-        //     </span>
-        //   ) : (
-        //     <span
-        //       className="text-xs font-medium md:text-sm text-dark dark:text-white87"
-        //       onClick={() => setId(record.id)}
-        //     >
-        //       {value}
-        //     </span>
-        //   )}
-        // </>
+    width: 200,
+    render: (quantity, record) => {
+      return quantity ? (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {quantity}
+        </span>
+      ) : (
         <CustomInput
           type={"number"}
-          name={["product_list", "qty"]}
+          name={["product_list", "qty", record?.id]}
           placeholder="quantity"
+          noStyle={true}
         />
       );
     },
   },
   {
     title: "Action",
-    dataIndex: "type",
-    key: "type",
-    align: "center",
-    width: 40,
-    // render: () => {
-    //   return (
-    //     // <div className="flex justify-center items-center gap-3">
-
-    //     // </div>
-    //     <Form.Item name={["product_list", "qty"]}>
-    //       <Select
-    //         style={{
-    //           width: 70,
-    //         }}
-    //       >
-    //         <Option value="add">Addition (+)</Option>
-    //         <Option value="sub">Subtraction (-)</Option>
-    //       </Select>
-    //     </Form.Item>
-    //   );
-    // },
-  },
-  {
-    title: <MdDelete className="text-lg md:text-xl" />,
     dataIndex: "action",
     key: "action",
     align: "center",
-    width: 40,
+    width: 180,
+    render: (action, record) => {
+      return (
+        action && (
+          <div className="flex w-full  justify-center items-center gap-3">
+            <CustomSelect
+              name={["product_list", "action", record?.id]}
+              placeholder="Type"
+              options={[
+                {
+                  value: "Addition",
+                  label: "Addition (+)",
+                },
+                {
+                  value: "Subtraction",
+                  label: "Subtraction (-)",
+                },
+              ]}
+              styleProps={{ width: "9rem" }}
+              noStyle={true}
+            />
+          </div>
+        )
+      );
+    },
+  },
+  {
+    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    dataIndex: "delete",
+    key: "delete",
+    align: "center",
+    width: 50,
     fixed: "right",
-    //   render: ({ handleDeleteModal }, record) => {
-    //     return (
-    //       <div className="flex justify-center items-center gap-3">
-    //         <button
-    //           onClick={() => handleDeleteModal(record.id)}
-    //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-    //         >
-    //           <MdDelete className="text-lg md:text-xl" />
-    //         </button>
-    //       </div>
-    //     );
-    //   },
+    render: (props, record) => {
+      const { setRowId } = props ?? {};
+      return (
+        props && (
+          <div className="flex justify-center items-center gap-3">
+            <button
+              onClick={() => setRowId(record?.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+          </div>
+        )
+      );
+    },
   },
 ];
 
@@ -123,26 +121,67 @@ export const ProductTableComponent = () => {
   const form = Form.useFormInstance();
   const productData = Form.useWatch("product_name", form);
   const warehouseData = Form.useWatch("warehouse_id", form);
+  const productListData = Form.useWatch("product_list", form);
 
-  const dataSource = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-  ];
+  const [rowId, setRowId] = useState(undefined);
 
-  //   dataSource.push({
-  //     name: "Total",
-  //     action: <MdDelete className="text-lg md:text-xl " />,
-  //   });
+  useEffect(() => {
+    if (productData && rowId) {
+      if (productListData?.qty?.[productData?.[rowId]]) {
+        form.setFieldValue(
+          ["product_list", "qty", productData[productData?.length - 1]],
+          1
+        );
+        form.setFieldValue(
+          ["product_list", "action", productData[productData?.length - 1]],
+          "Addition"
+        );
+      }
+    } else if (productData) {
+      form.setFieldValue(
+        ["product_list", "qty", productData?.[productData?.length - 1]],
+        1
+      );
+      form.setFieldValue(
+        ["product_list", "action", productData?.[productData?.length - 1]],
+        "Addition"
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData]);
+
+  useEffect(() => {
+    if (rowId) {
+      form.setFieldValue(
+        "product_name",
+        productData?.filter((item) => item !== rowId)
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rowId]);
+
+  const dataSource =
+    productData?.map((item) => {
+      return {
+        id: item,
+        name: item,
+        action: true,
+        delete: {
+          setRowId,
+        },
+      };
+    }) ?? [];
+
+  dataSource.push({
+    name: "Total",
+    quantity:
+      productListData &&
+      Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0),
+  });
 
   return (
-    <Col {...fullColLayout}>
+    <Col {...fullColLayout} className="mb-10">
       {productData && warehouseData && (
         <CustomTable columns={columns} dataSource={dataSource} />
       )}

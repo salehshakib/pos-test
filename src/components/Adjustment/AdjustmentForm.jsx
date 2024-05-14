@@ -1,7 +1,5 @@
 import { Col, Row } from "antd";
-import { useDebouncedCallback } from "use-debounce";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
-import CustomAutoComplete from "../Shared/AutoComplete/CustomAutoComplete";
 import CustomForm from "../Shared/Form/CustomForm";
 import {
   fullColLayout,
@@ -12,10 +10,10 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ProductTableComponent } from "./ProductTableComponent";
+import { SearchProductComponent } from "./SearchProductComponent";
 
 const SelectWarehouse = () => {
   const { data, isLoading } = useGetWarehousesQuery({});
-  console.log(data);
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id,
@@ -23,50 +21,15 @@ const SelectWarehouse = () => {
   }));
 
   return (
-    <Col {...mdColLayout}>
-      <CustomSelect
-        label="Warehouse"
-        type={"text"}
-        required={true}
-        options={options}
-        isLoading={isLoading}
-        showSearch={true}
-        name="warehouse_id"
-      />
-    </Col>
-  );
-};
-
-const SearchProductComponent = () => {
-  const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
-      console.log(value);
-    }
-  }, 1000);
-
-  const options = [
-    {
-      value: "1",
-      label: "Product 1",
-    },
-    {
-      value: "2",
-      label: "Product 2",
-    },
-  ];
-
-  return (
-    <Col {...mdColLayout}>
-      <CustomAutoComplete
-        label="Search Product"
-        onSearch={debounce}
-        requireMsg={"Product Name"}
-        placeholder={"Type Product Name"}
-        required={true}
-        options={options}
-        name={"product_name"}
-      />
-    </Col>
+    <CustomSelect
+      label="Warehouse"
+      type={"text"}
+      required={true}
+      options={options}
+      isLoading={isLoading}
+      showSearch={true}
+      name="warehouse_id"
+    />
   );
 };
 
@@ -78,9 +41,13 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
       isLoading={isLoading}
     >
       <Row {...rowLayout}>
-        <SelectWarehouse />
+        <Col {...mdColLayout}>
+          <SelectWarehouse />
+        </Col>
 
-        <SearchProductComponent />
+        <Col {...fullColLayout}>
+          <SearchProductComponent />
+        </Col>
       </Row>
       <Row {...rowLayout}>
         <ProductTableComponent />

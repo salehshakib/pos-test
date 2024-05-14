@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const drawerSlice = createSlice({
-  name: "global",
+  name: "globalDrawer",
   initialState,
   reducers: {
     openCreateDrawer: (state) => {

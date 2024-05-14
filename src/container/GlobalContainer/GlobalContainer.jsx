@@ -145,13 +145,15 @@ const GlobalContainer = ({
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
-              <Button
-                key={"create"}
-                type="text"
-                icon={<FaCirclePlus className="text-2xl lg:text-3xl w-full" />}
-                onClick={handleDrawerOpen}
-                className="flex justify-center items-center border-none w-full primary-text py-1"
-              />
+              <div className="w-full">
+                <Button
+                  key={"create"}
+                  type="text"
+                  icon={<FaCirclePlus className="text-2xl lg:text-3xl" />}
+                  onClick={handleDrawerOpen}
+                  className="flex justify-center items-center border-none primary-text m-2"
+                />
+              </div>
             ),
           }}
           extra={[

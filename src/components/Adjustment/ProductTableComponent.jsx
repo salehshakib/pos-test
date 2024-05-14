@@ -125,31 +125,33 @@ export const ProductTableComponent = () => {
 
   const [rowId, setRowId] = useState(undefined);
 
-  useEffect(() => {
-    if (productData && rowId) {
-      if (productListData?.qty?.[productData?.[rowId]]) {
-        form.setFieldValue(
-          ["product_list", "qty", productData[productData?.length - 1]],
-          1
-        );
-        form.setFieldValue(
-          ["product_list", "action", productData[productData?.length - 1]],
-          "Addition"
-        );
-      }
-    } else if (productData) {
-      form.setFieldValue(
-        ["product_list", "qty", productData?.[productData?.length - 1]],
-        1
-      );
-      form.setFieldValue(
-        ["product_list", "action", productData?.[productData?.length - 1]],
-        "Addition"
-      );
-    }
+  console.log(productData);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productData]);
+  // useEffect(() => {
+  //   if (productData && rowId) {
+  //     if (productListData?.qty?.[productData?.[rowId]]) {
+  //       form.setFieldValue(
+  //         ["product_list", "qty", productData[productData?.length - 1]],
+  //         1
+  //       );
+  //       form.setFieldValue(
+  //         ["product_list", "action", productData[productData?.length - 1]],
+  //         "Addition"
+  //       );
+  //     }
+  //   } else if (productData) {
+  //     form.setFieldValue(
+  //       ["product_list", "qty", productData?.[productData?.length - 1]],
+  //       1
+  //     );
+  //     form.setFieldValue(
+  //       ["product_list", "action", productData?.[productData?.length - 1]],
+  //       "Addition"
+  //     );
+  //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [productData]);
 
   useEffect(() => {
     if (rowId) {

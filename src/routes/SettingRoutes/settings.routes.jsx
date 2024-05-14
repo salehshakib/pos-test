@@ -13,9 +13,7 @@ import Discount from "../../pages/Dashboard/Discount/Discount";
 import DiscountPlan from "../../pages/Dashboard/DiscountPlan/DiscountPlan";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
 import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
-import PurchaseReturn from "../../pages/Dashboard/PurchaseReturn/PurchaseReturn";
 import RolePermission from "../../pages/Dashboard/RolePermission/RolePermission";
-import SaleReturn from "../../pages/Dashboard/SaleReturn/SaleReturn";
 import TaxList from "../../pages/Dashboard/Tax/TaxList";
 import Types from "../../pages/Dashboard/Type/Types";
 import UnitList from "../../pages/Dashboard/Unit/UnitList";
@@ -42,18 +40,7 @@ export const settingPaths = [
   },
 
   //! ui done
-  {
-    name: "Purchase Return",
-    path: "purchase",
-    // icon: TbDashboard,
-    element: <PurchaseReturn />,
-  },
-  {
-    name: "Sale Return",
-    path: "sale",
-    // icon: TbDashboard,
-    element: <SaleReturn />,
-  },
+
   {
     name: "Role Permission",
     path: "role-permission",

@@ -19,21 +19,9 @@ const columns = [
     ),
   },
   {
-    title: "Parent Category",
-    dataIndex: "parentCategory",
-    key: "parentCategory",
-    // align: "center",
-    render: (parentCategory) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {parentCategory}
-      </span>
-    ),
-  },
-  {
     title: "Category",
     dataIndex: "category",
     key: "category",
-    // align: "center",
     render: (category) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {category}
@@ -41,29 +29,16 @@ const columns = [
     ),
   },
   {
-    title: "Products",
-    dataIndex: "products",
-    key: "products",
-    align: "center",
-    render: (products) => (
+    title: "Parent Category",
+    dataIndex: "parentCategory",
+    key: "parentCategory",
+    render: (parentCategory) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {products}
+        {parentCategory}
       </span>
     ),
   },
   {
-    title: "Stock Quantity",
-    dataIndex: "stockQuantity",
-    key: "stockQuantity",
-    align: "center",
-    render: (stockQuantity) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {stockQuantity?.price} USD / {stockQuantity?.cost} USD
-      </span>
-    ),
-  },
-  {
-    //created_at
     title: "Created At",
     dataIndex: "created_at",
     key: "created_at",
@@ -74,28 +49,6 @@ const columns = [
       </span>
     ),
   },
-
-  // {
-  //   title: "Status",
-  //   dataIndex: "status",
-  //   key: "status",
-  //   width: "80px",
-  //   align: "center",
-  //   render: ({ status, handleStatusModal }, record) => {
-  //     return (
-  //       <button
-  //         className={`p-0 ${
-  //           status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-  //         } rounded shadow-md w-full`}
-  //         onClick={() => handleStatusModal(record.id)}
-  //       >
-  //         <span className="font-medium text-white text-xs px-2 w-full">
-  //           {status == 1 ? "Active" : "Inactive"}
-  //         </span>
-  //       </button>
-  //     );
-  //   },
-  // },
   {
     //action
     title: "Action",

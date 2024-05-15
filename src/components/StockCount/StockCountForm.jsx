@@ -1,8 +1,8 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
 
 const StockCountForm = (props) => {
   return (

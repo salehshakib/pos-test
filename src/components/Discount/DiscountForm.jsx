@@ -6,6 +6,7 @@ import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import ApplicableForm from "./ApplicableForm";
+import { SpecificProductComponent } from "./SpecificProductComponent";
 
 const weekDays = [
   {
@@ -56,7 +57,11 @@ const DiscountForm = (props) => {
         </Col>
 
         <ApplicableForm />
+      </Row>
 
+      <SpecificProductComponent />
+
+      <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomDatepicker type={"date"} label="Valid From" required={true} />
         </Col>

@@ -80,12 +80,7 @@ const items = [
 ];
 
 const AdjustmentDetails = ({ id, ...props }) => {
-  console.log(id);
-
-  const { data, isFetching } = useGetAdjustmentDetailsQuery(
-    { id },
-    { skip: !id }
-  );
+  const { data } = useGetAdjustmentDetailsQuery({ id }, { skip: !id });
 
   if (!data) return null;
 

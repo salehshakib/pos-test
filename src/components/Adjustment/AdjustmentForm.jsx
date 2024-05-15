@@ -37,7 +37,7 @@ const SelectWarehouse = () => {
   );
 };
 
-const AdjustmentForm = (props) => {
+const AdjustmentForm = ({ options, ...props }) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -46,7 +46,7 @@ const AdjustmentForm = (props) => {
         </Col>
 
         <Col {...fullColLayout}>
-          <SearchProductComponent />
+          <SearchProductComponent options={options} />
         </Col>
       </Row>
       <Row {...rowLayout}>
@@ -56,7 +56,7 @@ const AdjustmentForm = (props) => {
         <Col {...fullColLayout}>
           <CustomUploader
             label="Attach Documents"
-            multiple={true}
+            // multiple={true}
             name={"attachment"}
           />
         </Col>

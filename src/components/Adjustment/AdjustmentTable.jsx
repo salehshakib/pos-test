@@ -33,12 +33,10 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteAdjustment, { isLoading: isDeleting }] =
     useDeleteAdjustmentMutation();
 
-  const handleDetailsModal = (id) => {
+  const handleDetailsModal = () => {
     setDetailsId(id);
     setDetailsModal(true);
   };
-
-  console.log(detailsId, id);
 
   const handleEditModal = () => {
     dispatch(openEditDrawer());

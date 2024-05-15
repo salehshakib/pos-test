@@ -126,6 +126,8 @@ export const ProductTableComponent = () => {
   const [rowId, setRowId] = useState(undefined);
 
   useEffect(() => {
+    console.log(productData);
+
     if (productData?.length > 0) {
       if (rowId !== undefined) {
         const selectedProduct = productData[rowId];
@@ -137,11 +139,15 @@ export const ProductTableComponent = () => {
         );
 
         setRowId(undefined);
-      } else {
+      } else if (productData?.length > 0 && productData) {
         const lastProductIndex = productData.length - 1;
 
+        console.log(lastProductIndex);
         if (lastProductIndex >= 0) {
           const lastProduct = productData[lastProductIndex];
+
+          console.log(lastProduct.toString());
+
           form.setFieldValue(["product_list", "qty", lastProduct], 1);
           form.setFieldValue(
             ["product_list", "action", lastProduct],
@@ -151,7 +157,45 @@ export const ProductTableComponent = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productData, form]);
+  }, [productData]);
+
+  // useEffect(() => {
+  //   if (productData?.length > 0 && rowId) {
+  //     if (productListData?.qty?.[productData?.[rowId]]) {
+  //       form.setFieldValue(
+  //         ["product_list", "qty", `id${productData[productData?.length - 1]}`],
+  //         1
+  //       );
+  //       form.setFieldValue(
+  //         [
+  //           "product_list",
+  //           "action",
+  //           `id${productData[productData?.length - 1]}`,
+  //         ],
+  //         "Addition"
+  //       );
+  //     }
+  //   } else if (productData?.length > 0) {
+  //     form.setFieldValue(
+  //       [
+  //         "product_list",
+  //         "qty",
+  //         `id${productData?.[productData?.length - 1].toString()}`,
+  //       ],
+  //       1
+  //     );
+  //     form.setFieldValue(
+  //       [
+  //         "product_list",
+  //         "action",
+  //         `id${productData?.[productData?.length - 1].toString()}`,
+  //       ],
+  //       "Addition"
+  //     );
+  //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [productData]);
 
   useEffect(() => {
     if (rowId !== undefined) {
@@ -159,7 +203,8 @@ export const ProductTableComponent = () => {
 
       form.setFieldValue("product_name", updatedProductData);
     }
-  }, [rowId, productData, form]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rowId]);
 
   const dataSource =
     productData?.map((item) => {
@@ -173,11 +218,17 @@ export const ProductTableComponent = () => {
       };
     }) ?? [];
 
+  console.log(rowId);
+
+  console.log(productData);
+
+  console.log(productListData);
+
   dataSource.push({
     name: "Total",
-    quantity:
-      productListData &&
-      Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0),
+    quantity: productListData
+      ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
+      : 0,
   });
 
   return (

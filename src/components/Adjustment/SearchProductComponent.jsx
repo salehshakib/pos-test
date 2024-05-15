@@ -2,7 +2,26 @@ import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import DebouceSelect from "../Shared/Select/DebounceSelect";
 
-export const SearchProductComponent = () => {
+const options = [
+  {
+    value: "1",
+    label: "Product 1",
+  },
+  {
+    value: "2",
+    label: "Product 2",
+  },
+  {
+    value: "3",
+    label: "Product 3",
+  },
+  {
+    value: "4",
+    label: "Product 4",
+  },
+];
+
+export const SearchProductComponent = ({ options: editOptions }) => {
   const [keyword, setKeyword] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {
@@ -11,35 +30,17 @@ export const SearchProductComponent = () => {
     }
   }, 1000);
 
+  console.log(editOptions);
   console.log(keyword);
   // const { data, isLoading } = useGetpro({});
 
-  const options = [
-    {
-      value: "1",
-      label: "Product 1",
-    },
-    {
-      value: "2",
-      label: "Product 2",
-    },
-    {
-      value: "3",
-      label: "Product 3",
-    },
-    {
-      value: "4",
-      label: "Product 4",
-    },
-  ];
-
   return (
     <DebouceSelect
-      label="Search Product"
+      label="Product"
       onSearch={debounce}
       placeholder={"Product Name"}
       required={true}
-      options={options}
+      options={editOptions ?? options}
       name={"product_name"}
       mode={"multiple"}
       // isLoading={isLoading}

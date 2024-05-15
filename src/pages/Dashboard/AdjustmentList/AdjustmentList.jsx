@@ -4,7 +4,6 @@ import { MdDelete, MdEditSquare } from "react-icons/md";
 import AdjustmentCreate from "../../../components/Adjustment/AdjustmentCreate";
 import AdjustmentTable from "../../../components/Adjustment/AdjustmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import detailsModal from "../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
   {
@@ -21,6 +20,17 @@ const columns = [
     ),
   },
   {
+    title: "Reference",
+    dataIndex: "reference",
+    key: "reference",
+    align: "center",
+    render: (reference) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {reference}
+      </span>
+    ),
+  },
+  {
     title: "Warehouse",
     dataIndex: "warehouse",
     key: "warehouse",
@@ -28,17 +38,6 @@ const columns = [
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {warehouse}
-      </span>
-    ),
-  },
-  {
-    title: "Products",
-    dataIndex: "products",
-    key: "products",
-    align: "center",
-    render: (products) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {products}
       </span>
     ),
   },
@@ -54,17 +53,6 @@ const columns = [
     ),
   },
   {
-    title: "Reference",
-    dataIndex: "reference",
-    key: "reference",
-    align: "center",
-    render: (reference) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {reference}
-      </span>
-    ),
-  },
-  {
     title: "Note",
     dataIndex: "note",
     key: "note",
@@ -75,7 +63,6 @@ const columns = [
       </span>
     ),
   },
-
   {
     title: "Action",
     dataIndex: "action",
@@ -83,16 +70,11 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: (
-      { handleDetailsModal, handleEditModal, handleDeleteModal },
-      record
-    ) => {
-      // console.log(detailsModal);
-
+    render: ({ handleDetailsModal, handleEditModal, handleDeleteModal }) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={() => handleDetailsModal(record?.id)}
+            onClick={handleDetailsModal}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <FaRegEye className="text-lg md:text-xl" />

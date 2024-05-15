@@ -103,7 +103,7 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleEditModal, handleDeleteModal }, record) => {
+    render: ({ handleEditModal, handleDeleteModal }) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button

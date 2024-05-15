@@ -13,8 +13,12 @@ import CustomTable from "../Shared/Table/CustomTable";
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [id, setId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
+
+  const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
+
+  const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCurrencyQuery({
@@ -29,7 +33,8 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   const [deleteCurrency, { isLoading: isDeleting }] =
     useDeleteCurrencyMutation();
 
-  const handleStatusModal = () => {
+  const handleStatusModal = (id) => {
+    setStatusId(id);
     setStatusModal(true);
   };
 
@@ -41,7 +46,8 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
     setDeleteModal(true);
   };
 
@@ -85,7 +91,6 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-        setId={setId}
       />
 
       <StatusModal

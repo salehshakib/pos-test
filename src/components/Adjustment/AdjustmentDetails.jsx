@@ -1,4 +1,4 @@
-import { Descriptions } from "antd";
+import { Descriptions, Spin } from "antd";
 import { useGetAdjustmentDetailsQuery } from "../../redux/services/adjustment/adjustmentApi";
 import CustomModal from "../Shared/Modal/CustomModal";
 
@@ -80,9 +80,10 @@ const items = [
 ];
 
 const AdjustmentDetails = ({ id, ...props }) => {
-  const { data } = useGetAdjustmentDetailsQuery({ id }, { skip: !id });
-
-  if (!data) return null;
+  const { data, isFetching } = useGetAdjustmentDetailsQuery(
+    { id },
+    { skip: !id }
+  );
 
   const details = [
     {
@@ -103,9 +104,10 @@ const AdjustmentDetails = ({ id, ...props }) => {
       label: "Product List",
       children: (
         <>
-          {JSON.parse(data?.product_list)?.map((item, index) => {
-            return <div key={index}>{JSON.stringify(item)}</div>;
-          })}
+          {data?.product_list &&
+            JSON.parse(data?.product_list)?.map((item, index) => {
+              return <div key={index}>{JSON.stringify(item)}</div>;
+            })}
         </>
       ),
       span: 4,
@@ -120,7 +122,11 @@ const AdjustmentDetails = ({ id, ...props }) => {
 
   return (
     <CustomModal {...props}>
-      <Descriptions title="Adjustment Details" bordered items={details} />
+      {isFetching ? (
+        <Spin className="w-full flex justify-center items-center mt-10" />
+      ) : (
+        <Descriptions title="Adjustment Details" bordered items={details} />
+      )}
     </CustomModal>
   );
 };

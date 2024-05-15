@@ -15,8 +15,10 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
 
+  const [editId, setEditId] = useState(undefined);
+
+  const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetWarehousesQuery({
@@ -28,16 +30,18 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteWarehouse, { isLoading: isDeleting }] =
     useDeleteWarehouseMutation();
 
-  const handleEditModal = () => {
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
     setDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteWarehouse(id);
+    const { data } = await deleteWarehouse(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -55,7 +59,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         email: email,
         address: address ?? "N/A",
         created_at: date,
-        action: { handleEditModal, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -74,10 +78,9 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
-        setId={setId}
       />
 
-      <WarehouseEdit id={id} setId={setId} />
+      <WarehouseEdit id={editId} setId={setEditId} />
 
       <DeleteModal
         deleteModal={deleteModal}

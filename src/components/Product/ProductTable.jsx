@@ -12,9 +12,12 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
+  const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
+
+  const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   // const { data, isLoading } = useGetDepartmentsQuery({
@@ -26,11 +29,13 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   // const [deleteDepartment, { isLoading: isDeleting }] =
   // useDeleteDepartmentMutation();
 
-  const handleEditModal = () => {
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = () => {
+  const handleStatusModal = (id) => {
+    setStatusId(id);
     setStatusModal(true);
   };
 
@@ -44,7 +49,8 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     // }
   };
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
     setDeleteModal(true);
   };
 
@@ -65,7 +71,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   //       department: name,
   //       status: { status: is_active, handleStatusModal },
   //       created_at: date,
-  //       action: { handleEditModal, handleDeleteModal },
+  //       action: { handleEdit, handleDeleteModal },
   //     };
   //   }) ?? [];
 
@@ -85,11 +91,10 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        setId={setId}
         // isLoading={isLoading}
       />
 
-      <ProductEdit id={id} setId={setId} />
+      <ProductEdit id={editId} setId={setEditId} />
 
       {/* <StatusModal
     statusModal={statusModal}

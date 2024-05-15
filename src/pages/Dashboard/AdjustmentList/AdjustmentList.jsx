@@ -70,23 +70,23 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleDetailsModal, handleEditModal, handleDeleteModal }) => {
+    render: ({ handleDetailsModal, handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={handleDetailsModal}
+            onClick={() => handleDetailsModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <FaRegEye className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={handleEditModal}
+            onClick={() => handleEdit(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={handleDeleteModal}
+            onClick={()=>handleDeleteModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />

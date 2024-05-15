@@ -17,9 +17,12 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
+  const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
+
+  const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetDepartmentsQuery({
@@ -34,29 +37,32 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
 
-  const handleEditModal = () => {
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = () => {
+  const handleStatusModal = (id) => {
+    setStatusId(id);
     setStatusModal(true);
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(id);
+    const { data } = await updateStatus(statusId);
 
     if (data?.success) {
-      setId(undefined);
+      setStatusId(undefined);
       setStatusModal(false);
     }
   };
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
     setDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteDepartment(id);
+    const { data } = await deleteDepartment(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -72,7 +78,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         department: name,
         status: { status: is_active, handleStatusModal },
         created_at: date,
-        action: { handleEditModal, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -93,10 +99,10 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-        setId={setId}
       />
 
-      <DepartmentEdit id={id} setId={setId} />
+      <DepartmentEdit id={editId} setId={setEditId} />
+
       <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}

@@ -17,11 +17,12 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [id, setId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
-  const [detailsModal, setDetailsModal] = useState(false);
   const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
+  const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllAdjustmentQuery({
@@ -33,21 +34,23 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteAdjustment, { isLoading: isDeleting }] =
     useDeleteAdjustmentMutation();
 
-  const handleDetailsModal = () => {
+  const handleDetailsModal = (id) => {
     setDetailsId(id);
     setDetailsModal(true);
   };
 
-  const handleEditModal = () => {
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
     setDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteAdjustment(id);
+    const { data } = await deleteAdjustment(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -64,7 +67,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         reference: reference_id,
         date: date,
         note: note ?? "N/A",
-        action: { handleDetailsModal, handleEditModal, handleDeleteModal },
+        action: { handleDetailsModal, handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -84,10 +87,9 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isRowSelection={true}
         isLoading={isLoading}
-        setId={setId}
       />
 
-      <AdjustmentEdit id={id} setId={setId} />
+      <AdjustmentEdit id={editId} setId={setEditId} />
 
       <AdjustmentDetails
         id={detailsId}

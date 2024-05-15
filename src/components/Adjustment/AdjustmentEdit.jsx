@@ -5,17 +5,18 @@ import {
   useUpdateAdjustmentMutation,
 } from "../../redux/services/adjustment/adjustmentApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import AdjustmentForm from "./AdjustmentForm";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 const AdjustmentEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
+  console.log(id);
 
   const { data, isFetching } = useGetAdjustmentDetailsQuery(
     { id },

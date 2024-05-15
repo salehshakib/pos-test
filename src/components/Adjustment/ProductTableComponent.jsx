@@ -218,12 +218,6 @@ export const ProductTableComponent = () => {
       };
     }) ?? [];
 
-  console.log(rowId);
-
-  console.log(productData);
-
-  console.log(productListData);
-
   dataSource.push({
     name: "Total",
     quantity: productListData

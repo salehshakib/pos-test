@@ -4,6 +4,7 @@ import { MdDelete, MdEditSquare } from "react-icons/md";
 import AdjustmentCreate from "../../../components/Adjustment/AdjustmentCreate";
 import AdjustmentTable from "../../../components/Adjustment/AdjustmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import detailsModal from "../../../components/Shared/Modal/DeleteModal";
 
 const columns = [
   {
@@ -82,11 +83,16 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleDetailsModal, handleEditModal, handleDeleteModal }) => {
+    render: (
+      { handleDetailsModal, handleEditModal, handleDeleteModal },
+      record
+    ) => {
+      // console.log(detailsModal);
+
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={handleDetailsModal}
+            onClick={() => handleDetailsModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <FaRegEye className="text-lg md:text-xl" />

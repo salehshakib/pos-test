@@ -10,6 +10,7 @@ import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentEdit from "./AdjustmentEdit";
+import AdjustmentDetails from "./AdjustmentDetails";
 
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -19,10 +20,12 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [id, setId] = useState(undefined);
 
   const [detailsModal, setDetailsModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllAdjustmentQuery({
-    params: { pagination, allData: 1 },
+    params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
@@ -30,10 +33,12 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteAdjustment, { isLoading: isDeleting }] =
     useDeleteAdjustmentMutation();
 
-  const handleDetailsModal = () => {
-    console.log(id);
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
     setDetailsModal(true);
   };
+
+  console.log(detailsId, id);
 
   const handleEditModal = () => {
     dispatch(openEditDrawer());
@@ -67,6 +72,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
 
   const hideModal = () => {
     setDeleteModal(false);
+    setDetailsModal(false);
   };
 
   return (
@@ -84,6 +90,12 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <AdjustmentEdit id={id} setId={setId} />
+
+      <AdjustmentDetails
+        id={detailsId}
+        openModal={detailsModal}
+        hideModal={hideModal}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

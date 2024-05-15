@@ -13,7 +13,11 @@ import { ProductTableComponent } from "./ProductTableComponent";
 import { SearchProductComponent } from "./SearchProductComponent";
 
 const SelectWarehouse = () => {
-  const { data, isLoading } = useGetWarehousesQuery({});
+  const { data, isLoading } = useGetWarehousesQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id,

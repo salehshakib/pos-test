@@ -8,6 +8,7 @@ import {
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import WarehouseForm from "./WarehouseForm";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 
 const WarehouseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -26,14 +27,14 @@ const WarehouseEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data) {
-      // const fieldData = fieldsToUpdate(data);
-      const fieldData = [
-        {
-          name: "name",
-          value: data?.name,
-          errors: "",
-        },
-      ];
+      const fieldData = fieldsToUpdate(data);
+      // const fieldData = [
+      //   {
+      //     name: "name",
+      //     value: data?.name,
+      //     errors: "",
+      //   },
+      // ];
 
       setFields(fieldData);
     }

@@ -22,12 +22,6 @@ export const productPaths = [
     element: <ProductList />,
   },
   {
-    name: "Print Barcode",
-    path: "print-barcode",
-    icon: FaBarcode,
-    element: <PrintBarcode />,
-  },
-  {
     name: "Adjustment List",
     path: "adjustment-list",
     icon: MdProductionQuantityLimits,
@@ -38,5 +32,11 @@ export const productPaths = [
     path: "stock-count",
     icon: AiOutlineStock,
     element: <StockCount />,
+  },
+  {
+    name: "Print Barcode",
+    path: "print-barcode",
+    icon: FaBarcode,
+    element: <PrintBarcode />,
   },
 ];

@@ -21,7 +21,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
 
   const { data, isLoading } = useGetWarehousesQuery({
-    params: pagination,
+    params: { pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;

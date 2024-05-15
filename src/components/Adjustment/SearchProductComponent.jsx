@@ -3,16 +3,16 @@ import { useDebouncedCallback } from "use-debounce";
 import DebouceSelect from "../Shared/Select/DebounceSelect";
 
 export const SearchProductComponent = () => {
-  const [value, setValue] = useState(null);
+  const [keyword, setKeyword] = useState(null);
+
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== "") {
-      setValue(value);
+      setKeyword(value);
     }
   }, 1000);
 
-  console.log(value);
-
-  // const { data, isLoading } = useGetWarehousesQuery({});
+  console.log(keyword);
+  // const { data, isLoading } = useGetpro({});
 
   const options = [
     {

@@ -1,3 +1,5 @@
+//inventory api
+
 export const CATEGORY = "inventory/category";
 export const WAREHOUSE = "inventory/warehouse";
 export const BRAND = "inventory/brand";

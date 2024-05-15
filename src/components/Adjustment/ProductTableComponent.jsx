@@ -125,43 +125,41 @@ export const ProductTableComponent = () => {
 
   const [rowId, setRowId] = useState(undefined);
 
-  console.log(productData);
-
-  // useEffect(() => {
-  //   if (productData && rowId) {
-  //     if (productListData?.qty?.[productData?.[rowId]]) {
-  //       form.setFieldValue(
-  //         ["product_list", "qty", productData[productData?.length - 1]],
-  //         1
-  //       );
-  //       form.setFieldValue(
-  //         ["product_list", "action", productData[productData?.length - 1]],
-  //         "Addition"
-  //       );
-  //     }
-  //   } else if (productData) {
-  //     form.setFieldValue(
-  //       ["product_list", "qty", productData?.[productData?.length - 1]],
-  //       1
-  //     );
-  //     form.setFieldValue(
-  //       ["product_list", "action", productData?.[productData?.length - 1]],
-  //       "Addition"
-  //     );
-  //   }
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [productData]);
-
   useEffect(() => {
-    if (rowId) {
-      form.setFieldValue(
-        "product_name",
-        productData?.filter((item) => item !== rowId)
-      );
+    if (productData?.length > 0) {
+      if (rowId !== undefined) {
+        const selectedProduct = productData[rowId];
+
+        form.setFieldValue(["product_list", "qty", selectedProduct], 1);
+        form.setFieldValue(
+          ["product_list", "action", selectedProduct],
+          "Addition"
+        );
+
+        setRowId(undefined);
+      } else {
+        const lastProductIndex = productData.length - 1;
+
+        if (lastProductIndex >= 0) {
+          const lastProduct = productData[lastProductIndex];
+          form.setFieldValue(["product_list", "qty", lastProduct], 1);
+          form.setFieldValue(
+            ["product_list", "action", lastProduct],
+            "Addition"
+          );
+        }
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rowId]);
+  }, [productData, form]);
+
+  useEffect(() => {
+    if (rowId !== undefined) {
+      const updatedProductData = productData?.filter((item) => item !== rowId);
+
+      form.setFieldValue("product_name", updatedProductData);
+    }
+  }, [rowId, productData, form]);
 
   const dataSource =
     productData?.map((item) => {
@@ -184,7 +182,7 @@ export const ProductTableComponent = () => {
 
   return (
     <Col {...fullColLayout} className="mb-10">
-      {productData && warehouseData && (
+      {productData?.length > 0 && warehouseData && (
         <CustomTable columns={columns} dataSource={dataSource} />
       )}
     </Col>

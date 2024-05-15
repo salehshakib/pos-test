@@ -1,52 +1,40 @@
-import { WAREHOUSE } from "../../../utilities/apiEndpoints/inventory.api";
+import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const warehouseApi = baseApi.injectEndpoints({
+const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getWarehouses: build.query({
+    getProducts: build.query({
       query: ({ params }) => {
         return {
-          url: `/${WAREHOUSE}`,
+          url: `/${PRODUCT}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: WAREHOUSE, params },
-        WAREHOUSE,
+        { type: PRODUCT, params },
+        PRODUCT,
       ],
     }),
 
-    // getWarehouseSelectedDetails: build.query({
-    //   query: ({ params }) => {
-    //     return {
-    //       url: `${WAREHOUSE}`,
-    //       method: "GET",
-    //       params,
-    //     };
-    //   },
-    //   transformResponse: (response) => verifyToken(response.data),
-    //   providesTags: [WAREHOUSE],
-    // }),
-
-    getWarehouseDetails: build.query({
+    getProductDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${WAREHOUSE}/show/${id}`,
+          url: `${PRODUCT}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [WAREHOUSE],
+      providesTags: [PRODUCT],
     }),
 
-    createWarehouse: build.mutation({
+    createProduct: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${WAREHOUSE}/store`,
+          url: `/${PRODUCT}/store`,
           method: "POST",
           body: data,
         };
@@ -58,14 +46,14 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [PRODUCT] : [];
       },
     }),
 
-    updateWarehouse: build.mutation({
+    updateProduct: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${WAREHOUSE}/update/${data?.id}`,
+          url: `/${PRODUCT}/update/${data?.id}`,
           method: "POST",
           body: data,
         };
@@ -77,14 +65,14 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [PRODUCT] : [];
       },
     }),
 
-    updateWarehouseStatus: build.mutation({
+    updateProductStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${WAREHOUSE}/status/${id}`,
+          url: `/${PRODUCT}/status/${id}`,
           method: "POST",
         };
       },
@@ -95,14 +83,14 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [PRODUCT] : [];
       },
     }),
 
-    deleteWarehouse: build.mutation({
+    deleteProduct: build.mutation({
       query: (id) => {
         return {
-          url: `/${WAREHOUSE}/delete/${id}`,
+          url: `/${PRODUCT}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -113,18 +101,17 @@ const warehouseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [WAREHOUSE] : [];
+        return result ? [PRODUCT] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetWarehousesQuery,
-  // useGetWarehouseSelectedDetailsQuery,
-  useGetWarehouseDetailsQuery,
-  useCreateWarehouseMutation,
-  useUpdateWarehouseMutation,
-  useUpdateWarehouseStatusMutation,
-  useDeleteWarehouseMutation,
-} = warehouseApi;
+  useGetProductsQuery,
+  useGetProductDetailsQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useUpdateProductStatusMutation,
+  useDeleteProductMutation,
+} = productApi;

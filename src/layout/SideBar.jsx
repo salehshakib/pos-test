@@ -69,7 +69,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute lg:relative z-40 lg:z-0 h-full">
+    <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
       <Sider
         className="pb-10 h-full overflow-auto"
         theme="light"

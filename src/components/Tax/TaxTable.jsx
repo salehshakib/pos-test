@@ -10,9 +10,8 @@ import CustomTable from "../Shared/Table/CustomTable";
 
 const TaxTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-
+  const [id, setId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(undefined);
 
   const { data, isLoading } = useGetAllTaxQuery({
     params: pagination,
@@ -22,13 +21,12 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
 
   const [deleteType, { isLoading: isDeleting }] = useDeleteTaxMutation();
 
-  const handleDeleteModal = (id) => {
+  const handleDeleteModal = () => {
     setDeleteModal(true);
-    setDeleteId(id);
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteType(deleteId);
+    const { data } = await deleteType(id);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -62,6 +60,7 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        setId={setId}
       />
 
       <DeleteModal

@@ -35,13 +35,9 @@ const BaseUnit = () => {
   );
 };
 
-const UnitForm = ({ handleSubmit, isLoading, fields }) => {
+const UnitForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

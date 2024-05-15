@@ -4,14 +4,9 @@ import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
-const BrandForm = ({ handleSubmit, isLoading, fields }) => {
+const BrandForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomInput
@@ -22,22 +17,8 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Brand Name"}
           />
         </Col>
-
-        {/* <Col {...mdColLayout}>
-          <CustomInput
-            label="Product Name"
-            type={"text"}
-            required={true}
-            // name={"name"}
-            placeholder={"Product Name"}
-          />
-        </Col> */}
         <Col {...fullColLayout}>
-          <CustomUploader
-            label={"Brand Image"}
-            name={"brand_image"}
-            // multiple={true}
-          />
+          <CustomUploader label={"Brand Image"} name={"brand_image"} />
         </Col>
       </Row>
     </CustomForm>

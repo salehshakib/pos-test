@@ -1,17 +1,18 @@
 //components
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsBoxSeam } from "react-icons/bs";
-import { FaCartShopping, FaMoneyBillWave, FaUsersGear } from "react-icons/fa6";
+import { FaMoneyBillWave, FaUsersGear } from "react-icons/fa6";
 import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import {
   MdAccountBalance,
-  MdInventory2,
   MdOutlineSettings,
   MdPeopleAlt,
   MdSpaceDashboard,
 } from "react-icons/md";
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { TbDashboard, TbReport } from "react-icons/tb";
+import { TfiShoppingCart } from "react-icons/tfi";
 import { VscDiffAdded } from "react-icons/vsc";
 import Accounting from "../pages/Dashboard/Accounting/Accounting";
 import AddOns from "../pages/Dashboard/AddOns/AddOns";
@@ -22,8 +23,8 @@ import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
-import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
+import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
@@ -42,22 +43,22 @@ export const adminPaths = [
     icon: BsBoxSeam,
     children: productPaths,
   },
-  {
-    name: "Inventory",
-    path: "inventory",
-    icon: MdInventory2,
-    children: inventoryPaths,
-  },
   // {
-  //   name: "Purchase",
-  //   path: "purchase",
-  //   icon: GoCreditCard,
-  //   children: purchasePaths,
+  //   name: "Inventory",
+  //   path: "inventory",
+  //   icon: MdInventory2,
+  //   children: inventoryPaths,
   // },
+  {
+    name: "Purchase",
+    path: "purchase",
+    icon: AiOutlineShoppingCart,
+    children: purchasePaths,
+  },
   {
     name: "Sale",
     path: "sale",
-    icon: FaCartShopping,
+    icon: TfiShoppingCart,
     children: salePaths,
   },
   {

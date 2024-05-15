@@ -13,12 +13,13 @@ const CustomModal = ({
   hideModal,
   handleSubmit,
   isLoading,
+  children,
 }) => {
   return (
     <GlobalUtilityStyle>
       <Modal title={title} open={openModal} onCancel={hideModal} {...props}>
         <GlobalUtilityStyle>
-          <span> Do you want to delete this department?</span>
+          {children}
           <div className="w-full flex justify-end items-center gap-3">
             <Button onClick={hideModal}>No</Button>
             <Button type="primary" onClick={handleSubmit} loading={isLoading}>

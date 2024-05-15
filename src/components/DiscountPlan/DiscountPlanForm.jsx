@@ -4,14 +4,9 @@ import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
-const DiscountPlanForm = ({ handleSubmit, isLoading, fields }) => {
+const DiscountPlanForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
           <CustomInput

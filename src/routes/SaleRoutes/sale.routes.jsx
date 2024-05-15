@@ -1,16 +1,29 @@
-import CouponList from "../../pages/Dashboard/Sale/CouponList/CouponList";
-import CourierList from "../../pages/Dashboard/Sale/CourierList/CourierList";
-import DeliveryList from "../../pages/Dashboard/Sale/DeliveryList/DeliveryList";
+import { CiGift } from "react-icons/ci";
+import Coupons from "../../pages/Dashboard/Coupons/Coupons";
 import GiftCardList from "../../pages/Dashboard/Sale/GiftCardList/GiftCardList";
-import Pos from "../../pages/Dashboard/Sale/Pos/Pos";
 import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
+import { MdPointOfSale } from "react-icons/md";
+import { RiCoupon3Line } from "react-icons/ri";
 
 export const salePaths = [
   {
     name: "Sale List",
     path: "sale-list",
-    // icon: TbDashboard,
+    icon: MdPointOfSale,
     element: <SaleList />,
+  },
+
+  {
+    name: "Gift Card",
+    path: "gift-card",
+    icon: CiGift,
+    element: <GiftCardList />,
+  },
+  {
+    name: "Coupons",
+    path: "coupons",
+    icon: RiCoupon3Line,
+    element: <Coupons />,
   },
   // {
   //   name: "POS",

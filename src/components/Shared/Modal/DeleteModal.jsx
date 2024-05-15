@@ -8,7 +8,7 @@ const props = {
   maskClosable: true,
 };
 
-const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
+const detailsModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
   return (
     <GlobalUtilityStyle>
       <Modal
@@ -41,4 +41,4 @@ const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
   );
 };
 
-export default DeleteModal;
+export default detailsModal;

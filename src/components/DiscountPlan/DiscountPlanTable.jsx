@@ -14,10 +14,7 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
   const [id, setId] = useState(undefined);
 
   const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
-
   const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(undefined);
 
   // const { data, isLoading } = useGetDepartmentsQuery({
   //   params: pagination,
@@ -31,19 +28,17 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
   // const [deleteDepartment, { isLoading: isDeleting }] =
   // useDeleteDepartmentMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleEditModal = () => {
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
+  const handleStatusModal = () => {
     setStatusModal(true);
-    setStatusId(id);
   };
 
   const handleStatus = async () => {
-    console.log(statusId);
-    // const { data } = await updateStatus(statusId);
+    console.log(id);
+    // const { data } = await updateStatus( id);
 
     // if (data?.success) {
     //   setId(undefined);
@@ -51,13 +46,12 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
     // }
   };
 
-  const handleDeleteModal = (id) => {
+  const handleDeleteModal = () => {
     setDeleteModal(true);
-    setDeleteId(id);
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment(deleteId);
+    // const { data } = await deleteDepartment( id);
     // if (data?.success) {
     //   setDeleteModal(false);
     // }
@@ -73,7 +67,7 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
   //       department: name,
   //       status: { status: is_active, handleStatusModal },
   //       created_at: date,
-  //       action: { getDetails, handleDeleteModal },
+  //       action: { handleEditModal, handleDeleteModal },
   //     };
   //   }) ?? [];
 
@@ -92,6 +86,7 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
+        setId={setId}
         // isLoading={isLoading}
       />
 

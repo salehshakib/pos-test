@@ -10,7 +10,7 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
-const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
+const CategoryForm = (props) => {
   const { data, isLoading: isParentCategoryLoading } = useGetCategoriesQuery(
     {}
   );
@@ -21,12 +21,7 @@ const CategoryForm = ({ handleSubmit, isLoading, fields }) => {
   }));
 
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
           <CustomInput

@@ -1,24 +1,11 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
-const rowLayout = {
-  gutter: 25,
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
-
-const CurrencyForm = ({ handleSubmit, isLoading, fields }) => {
+const CurrencyForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

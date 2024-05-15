@@ -11,21 +11,15 @@ const PhoneNumberComponent = () => {
       required={true}
       name={"phone"}
       prefix={"+88"}
-      // addonBefore={prefixSelector}
       placeholder={"Phone Number"}
       noStyle={false}
     />
   );
 };
 
-const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
+const WarehouseForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

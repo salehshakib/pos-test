@@ -3,13 +3,9 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
-const SaleReturnForm = ({ handleSubmit, isLoading, fields }) => {
+const SaleReturnForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomSelect

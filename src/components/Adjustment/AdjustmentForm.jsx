@@ -37,13 +37,9 @@ const SelectWarehouse = () => {
   );
 };
 
-const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
+const AdjustmentForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
           <SelectWarehouse />
@@ -61,8 +57,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
           <CustomUploader
             label="Attach Documents"
             multiple={true}
-            // required={true}
-            // name={"adjustment_name"}
+            name={"attachment"}
           />
         </Col>
         <Col {...fullColLayout}>
@@ -70,8 +65,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
             label="Sale Note"
             multiple={true}
             type={"textarea"}
-            // required={true}
-            // name={"adjustment_name"}
+            name={"note"}
           />
         </Col>
       </Row>

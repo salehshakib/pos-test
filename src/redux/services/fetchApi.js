@@ -14,7 +14,7 @@ const fetchApi = baseApi.injectEndpoints({
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { url }) => [url],
     }),
-    getDetails: build.query({
+    handleEditModal: build.query({
       query: ({ url, id }) => {
         console.log(url, id);
         return {

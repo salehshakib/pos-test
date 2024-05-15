@@ -5,7 +5,7 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import ApplicableFrom from "./ApplicableFrom";
+import ApplicableForm from "./ApplicableForm";
 
 const weekDays = [
   {
@@ -38,14 +38,9 @@ const weekDays = [
   },
 ];
 
-const DiscountForm = ({ handleSubmit, isLoading, fields }) => {
+const DiscountForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
@@ -60,7 +55,7 @@ const DiscountForm = ({ handleSubmit, isLoading, fields }) => {
           <CustomSelect label="Discount Plan" required={true} />
         </Col>
 
-        <ApplicableFrom />
+        <ApplicableForm />
 
         <Col {...colLayout}>
           <CustomDatepicker type={"date"} label="Valid From" required={true} />

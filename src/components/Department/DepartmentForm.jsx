@@ -3,13 +3,9 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
-const DepartmentForm = ({ handleSubmit, isLoading, fields }) => {
+const DepartmentForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomInput

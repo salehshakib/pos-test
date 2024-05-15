@@ -9,7 +9,16 @@ export const appendToFormData = (data, formData) => {
     }
   }
 
+  console.log(data);
   Object.entries(data).forEach(([key, value]) => {
+    // console.log(key, value);
+
+    // if (Array.isArray(value)) {
+    //   value.map((item) => {
+    //     console.log(key, item);
+    //   });
+    //   // appendToFormData(value, formData);
+    // }
     append(key, value);
   });
 };

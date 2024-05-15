@@ -1,11 +1,11 @@
-import { TbDashboard } from "react-icons/tb";
-import Purchase from "../../pages/Dashboard/Purchase/Purchase";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import AdminDashboard from "../../pages/Dashboard/Admin/AdminDashboard";
 
 export const purchasePaths = [
   {
     name: "Purchase List",
     path: "purchase-list",
-    icon: TbDashboard,
-    element: <Purchase />,
+    icon: AiOutlineShoppingCart,
+    element: <AdminDashboard />,
   },
 ];

@@ -13,13 +13,9 @@ import CustomUploader from "../Shared/Upload/CustomUploader";
 import ProductCodeComponent from "./ProductCodeComponent";
 import ProductTypeComponent from "./ProductTypeComponent";
 
-const ProductForm = ({ handleSubmit, isLoading, fields }) => {
+const ProductForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <ProductTypeComponent />

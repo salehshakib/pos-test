@@ -17,7 +17,7 @@ const colLayoutDescription = {
   xs: 24,
 };
 
-const RolePermissionForm = ({ handleSubmit, isLoading, fields }) => {
+const RolePermissionForm = (props) => {
   return (
     <CustomForm
       handleSubmit={handleSubmit}

@@ -82,17 +82,17 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ getDetails, handleDeleteModal }, record) => {
+    render: ({ handleEditModal, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={() => getDetails(record.id)}
+            onClick={handleEditModal}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={() => handleDeleteModal(record.id)}
+            onClick={handleDeleteModal}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />

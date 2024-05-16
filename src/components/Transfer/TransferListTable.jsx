@@ -1,7 +1,6 @@
-import { Col, Form } from "antd";
+import { Row } from "antd";
 import { MdDelete } from "react-icons/md";
-import { colLayout, fullColLayout } from "../Shared/Form/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { rowLayout } from "../Shared/Form/FormLayout";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const columns = [
@@ -115,7 +114,7 @@ const columns = [
     //     return (
     //       <div className="flex justify-center items-center gap-3">
     //         <button
-    //           onClick={() => handleDeleteModal(record.id)}
+    //           onClick={()=>handleDeleteModal(record?.id)}
     //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
     //         >
     //           <MdDelete className="text-lg md:text-xl" />
@@ -125,64 +124,22 @@ const columns = [
     //   },
   },
 ];
-
-const SpecificProductsComponent = () => {
-  return (
-    <CustomSelect
-      label="Products"
-      mode="multiple"
-      options={[
-        {
-          label: "Product 1",
-          value: "product_1",
-        },
-        {
-          label: "Product 2",
-          value: "product_2",
-        },
-      ]}
-      name={"products"}
-      required={true}
-    />
-  );
-};
-
-const ApplicableFrom = () => {
-  const form = Form.useFormInstance();
-  const formData = Form.useWatch("applicable_for", form);
-
+const TransferListTable = () => {
   const dataSource = [];
 
-  return (
-    <>
-      <Col {...colLayout}>
-        <CustomSelect
-          label="Applicable For"
-          options={[
-            {
-              label: "All Products",
-              value: "all",
-            },
-            {
-              label: "Specific Products",
-              value: "specific",
-            },
-          ]}
-          name={"applicable_for"}
-          required={true}
-        />
-      </Col>
+  const subTotalRow = {
+    key: "subtotal",
+    name: "Subtotal",
+    // totalOnz: { subtotal },
+    // PNLAED: { pnlAEDTotal },
+  };
 
-      <Col {...fullColLayout}>
-        {formData === "specific" && <SpecificProductsComponent />}
-      </Col>
-      <Col {...fullColLayout} className="my-5">
-        {formData === "specific" && (
-          <CustomTable columns={columns} dataSource={dataSource} />
-        )}
-      </Col>
-    </>
+  dataSource.push(subTotalRow);
+  return (
+    <Row {...rowLayout} className="my-5">
+      <CustomTable columns={columns} dataSource={dataSource} />
+    </Row>
   );
 };
 
-export default ApplicableFrom;
+export default TransferListTable;

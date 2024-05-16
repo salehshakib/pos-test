@@ -31,12 +31,12 @@ const DebouceSelect = (props) => {
           options={options}
           allowClear
           notFoundContent={
-            isLoading ? (
+            isLoading && (
               <Spin
                 size="small"
                 className="w-full flex justify-center items-center"
               />
-            ) : null
+            )
           }
         />
       </Form.Item>

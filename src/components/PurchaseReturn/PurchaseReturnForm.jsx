@@ -1,26 +1,13 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-};
-
-const PurchaseReturnForm = ({ handleSubmit, isLoading, fields }) => {
+const PurchaseReturnForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <CustomSelect
             label="Purchase Refernce"
             name={"purchase_reference"}

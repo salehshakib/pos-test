@@ -1,25 +1,13 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
+import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
 
-const rowLayout = {
-  gutter: 25,
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-};
-
-const TaxForm = ({ handleSubmit, isLoading, fields }) => {
+const TaxForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label={"Tax Name"}
             type={"text"}
@@ -27,7 +15,7 @@ const TaxForm = ({ handleSubmit, isLoading, fields }) => {
             name={"name"}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label={"Tax Rate"}
             type={"number_with_percent"}

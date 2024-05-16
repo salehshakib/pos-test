@@ -11,8 +11,8 @@ import CustomTable from "../Shared/Table/CustomTable";
 const TypeTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetTypesQuery({
     params: pagination,
@@ -23,8 +23,8 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
   const [deleteType, { isLoading: isDeleting }] = useDeleteTypeMutation();
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {

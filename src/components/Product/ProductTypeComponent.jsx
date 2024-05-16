@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 const options = [
@@ -8,10 +9,15 @@ const options = [
 ];
 
 const ProductTypeComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("product_type", form);
+
+  if (!productType) {
+    form.setFieldValue("product_type", "standard");
+  }
   return (
     <CustomSelect
       label="Product Type"
-      type={"text"}
       required={true}
       options={options}
       name={"product_type"}

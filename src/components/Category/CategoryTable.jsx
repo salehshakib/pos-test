@@ -15,10 +15,10 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetCategoriesQuery({
     params: pagination,
@@ -29,14 +29,14 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const [deleteCategory, { isLoading: isDeleting }] =
     useDeleteCategoryMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
@@ -56,7 +56,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         category: name,
         parentCategory: parent_id ?? "N/A",
         created_at: date,
-        action: { getDetails, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -76,7 +76,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         isLoading={isLoading}
         isRowSelection={true}
       />
-      <Categoryedit id={id} setId={setId} />
+      <Categoryedit id={editId} setId={setEditId} />
 
       <DeleteModal
         deleteModal={deleteModal}

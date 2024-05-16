@@ -13,7 +13,11 @@ import { ProductTableComponent } from "./ProductTableComponent";
 import { SearchProductComponent } from "./SearchProductComponent";
 
 const SelectWarehouse = () => {
-  const { data, isLoading } = useGetWarehousesQuery({});
+  const { data, isLoading } = useGetWarehousesQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id,
@@ -33,20 +37,16 @@ const SelectWarehouse = () => {
   );
 };
 
-const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
+const AdjustmentForm = ({ options, ...props }) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
           <SelectWarehouse />
         </Col>
 
         <Col {...fullColLayout}>
-          <SearchProductComponent />
+          <SearchProductComponent options={options} />
         </Col>
       </Row>
       <Row {...rowLayout}>
@@ -56,9 +56,8 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
         <Col {...fullColLayout}>
           <CustomUploader
             label="Attach Documents"
-            multiple={true}
-            // required={true}
-            // name={"adjustment_name"}
+            // multiple={true}
+            name={"attachment"}
           />
         </Col>
         <Col {...fullColLayout}>
@@ -66,8 +65,7 @@ const AdjustmentForm = ({ handleSubmit, isLoading, fields }) => {
             label="Sale Note"
             multiple={true}
             type={"textarea"}
-            // required={true}
-            // name={"adjustment_name"}
+            name={"note"}
           />
         </Col>
       </Row>

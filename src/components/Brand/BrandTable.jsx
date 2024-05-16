@@ -13,12 +13,11 @@ import { BrandEdit } from "./BrandEdit";
 
 export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [editId, setEditId] = useState(undefined);
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetBrandsQuery({
     params: pagination,
@@ -28,14 +27,14 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
 
   const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
@@ -56,7 +55,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
         brand: name,
         image: attachments?.[0]?.url,
         created_at: date,
-        action: { getDetails, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -77,7 +76,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <BrandEdit id={id} setId={setId} />
+      <BrandEdit id={editId} setId={setEditId} />
 
       <DeleteModal
         deleteModal={deleteModal}

@@ -15,13 +15,14 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [editId, setEditId] = useState(undefined);
+
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetWarehousesQuery({
-    params: pagination,
+    params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
@@ -29,14 +30,14 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteWarehouse, { isLoading: isDeleting }] =
     useDeleteWarehouseMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
@@ -56,10 +57,9 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         warehouse: name,
         phone: phone,
         email: email,
-        address: address,
-        // status: { status: is_active, handleStatusModal },
+        address: address ?? "N/A",
         created_at: date,
-        action: { getDetails, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -80,7 +80,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <WarehouseEdit id={id} setId={setId} />
+      <WarehouseEdit id={editId} setId={setEditId} />
 
       <DeleteModal
         deleteModal={deleteModal}

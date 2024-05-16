@@ -11,8 +11,10 @@ const CustomDrawer = ({
   children,
   open,
   isLoading = false,
+  onClose,
 }) => {
   const dispatch = useDispatch();
+
   const handleCloseDrawer = () => {
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
@@ -26,7 +28,7 @@ const CustomDrawer = ({
       width={800}
       placement={placement}
       closable={true}
-      onClose={handleCloseDrawer}
+      onClose={onClose ?? handleCloseDrawer}
       maskClosable
       destroyOnClose
     >

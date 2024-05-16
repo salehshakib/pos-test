@@ -1,30 +1,38 @@
 import { Button, Modal } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const props = {
+const modalProps = {
   footer: null,
   centered: true,
   maskClosable: true,
+  width: 1000,
 };
 
 const CustomModal = ({
   title,
   openModal,
   hideModal,
-  handleSubmit,
-  isLoading,
+  showCloseButton = true,
+  children,
 }) => {
+  console.log(title);
   return (
     <GlobalUtilityStyle>
-      <Modal title={title} open={openModal} onCancel={hideModal} {...props}>
+      <Modal
+        title={title}
+        open={openModal}
+        onCancel={hideModal}
+        {...modalProps}
+      >
         <GlobalUtilityStyle>
-          <span> Do you want to delete this department?</span>
-          <div className="w-full flex justify-end items-center gap-3">
-            <Button onClick={hideModal}>No</Button>
-            <Button type="primary" onClick={handleSubmit} loading={isLoading}>
-              Yes
-            </Button>
-          </div>
+          {children}
+          {showCloseButton && (
+            <div className="w-full flex justify-end items-center gap-3 mt-5">
+              <Button type="primary" onClick={hideModal}>
+                Close
+              </Button>
+            </div>
+          )}
         </GlobalUtilityStyle>
       </Modal>
     </GlobalUtilityStyle>

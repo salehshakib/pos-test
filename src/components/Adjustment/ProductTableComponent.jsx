@@ -47,7 +47,7 @@ const columns = [
     align: "center",
     width: 200,
     render: (quantity, record) => {
-      return quantity ? (
+      return quantity >= 0 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {quantity}
         </span>
@@ -125,40 +125,45 @@ export const ProductTableComponent = () => {
 
   const [rowId, setRowId] = useState(undefined);
 
-  console.log(productData);
+  useEffect(() => {
+    console.log(productData);
 
-  // useEffect(() => {
-  //   if (productData && rowId) {
-  //     if (productListData?.qty?.[productData?.[rowId]]) {
-  //       form.setFieldValue(
-  //         ["product_list", "qty", productData[productData?.length - 1]],
-  //         1
-  //       );
-  //       form.setFieldValue(
-  //         ["product_list", "action", productData[productData?.length - 1]],
-  //         "Addition"
-  //       );
-  //     }
-  //   } else if (productData) {
-  //     form.setFieldValue(
-  //       ["product_list", "qty", productData?.[productData?.length - 1]],
-  //       1
-  //     );
-  //     form.setFieldValue(
-  //       ["product_list", "action", productData?.[productData?.length - 1]],
-  //       "Addition"
-  //     );
-  //   }
+    if (productData?.length > 0) {
+      if (rowId !== undefined) {
+        const selectedProduct = productData[rowId];
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [productData]);
+        form.setFieldValue(["product_list", "qty", selectedProduct], 1);
+        form.setFieldValue(
+          ["product_list", "action", selectedProduct],
+          "Addition"
+        );
+
+        setRowId(undefined);
+      } else if (productData?.length > 0 && productData) {
+        const lastProductIndex = productData.length - 1;
+
+        console.log(lastProductIndex);
+        if (lastProductIndex >= 0) {
+          const lastProduct = productData[lastProductIndex];
+
+          console.log(lastProduct.toString());
+
+          form.setFieldValue(["product_list", "qty", lastProduct], 1);
+          form.setFieldValue(
+            ["product_list", "action", lastProduct],
+            "Addition"
+          );
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData]);
 
   useEffect(() => {
-    if (rowId) {
-      form.setFieldValue(
-        "product_name",
-        productData?.filter((item) => item !== rowId)
-      );
+    if (rowId !== undefined) {
+      const updatedProductData = productData?.filter((item) => item !== rowId);
+
+      form.setFieldValue("product_name", updatedProductData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowId]);
@@ -177,14 +182,14 @@ export const ProductTableComponent = () => {
 
   dataSource.push({
     name: "Total",
-    quantity:
-      productListData &&
-      Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0),
+    quantity: productListData
+      ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
+      : -1,
   });
 
   return (
     <Col {...fullColLayout} className="mb-10">
-      {productData && warehouseData && (
+      {productData?.length > 0 && warehouseData && (
         <CustomTable columns={columns} dataSource={dataSource} />
       )}
     </Col>

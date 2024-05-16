@@ -1,26 +1,11 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
 
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
-
-const EmployeeForm = ({ handleSubmit, isLoading, fields }) => {
+const EmployeeForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomSelect

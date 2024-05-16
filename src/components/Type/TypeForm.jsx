@@ -10,13 +10,9 @@ const colLayout = {
   xs: 24,
 };
 
-const TypeForm = ({ handleSubmit, isLoading, fields }) => {
+const TypeForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

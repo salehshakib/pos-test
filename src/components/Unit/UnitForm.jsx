@@ -2,7 +2,7 @@ import { Col, Form, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import baseUnit from "../../assets/data/baseUnit.json";
+import { baseUnit } from "../../assets/data/baseUnit";
 
 const rowLayout = {
   gutter: 25,
@@ -22,7 +22,7 @@ const BaseUnit = () => {
 
   console.log(base_unit);
 
-  const baseUnitOptions = baseUnit.units.map(({ name, symbol }) => {
+  const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
     return { label: `${name} (${symbol})`, value: name };
   });
   return (
@@ -35,13 +35,9 @@ const BaseUnit = () => {
   );
 };
 
-const UnitForm = ({ handleSubmit, isLoading, fields }) => {
+const UnitForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

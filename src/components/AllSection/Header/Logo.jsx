@@ -4,10 +4,11 @@ const Logo = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="font-bold hover:cursor-pointer primary-text"
+      className="font-bold hover:cursor-pointer primary-text flex justify-center items-center "
       onClick={() => navigate("/dashboard")}
     >
-      POS Inventory
+      <img src="/src/assets/images/logo.png" alt="" className="w-32" />
+      {/* <p>POS Inventory</p> */}
     </div>
   );
 };

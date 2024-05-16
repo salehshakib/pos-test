@@ -20,6 +20,18 @@ const warehouseApi = baseApi.injectEndpoints({
       ],
     }),
 
+    // getWarehouseSelectedDetails: build.query({
+    //   query: ({ params }) => {
+    //     return {
+    //       url: `${WAREHOUSE}`,
+    //       method: "GET",
+    //       params,
+    //     };
+    //   },
+    //   transformResponse: (response) => verifyToken(response.data),
+    //   providesTags: [WAREHOUSE],
+    // }),
+
     getWarehouseDetails: build.query({
       query: ({ id }) => {
         return {
@@ -109,6 +121,7 @@ const warehouseApi = baseApi.injectEndpoints({
 
 export const {
   useGetWarehousesQuery,
+  // useGetWarehouseSelectedDetailsQuery,
   useGetWarehouseDetailsQuery,
   useCreateWarehouseMutation,
   useUpdateWarehouseMutation,

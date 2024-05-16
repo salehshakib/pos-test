@@ -13,11 +13,13 @@ import CustomTable from "../Shared/Table/CustomTable";
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [statusModal, setStatusModal] = useState(false);
-  const [statusId, setStatusId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
+
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCurrencyQuery({
     params: pagination,
@@ -32,27 +34,25 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
     useDeleteCurrencyMutation();
 
   const handleStatusModal = (id) => {
-    setStatusModal(true);
     setStatusId(id);
+    setStatusModal(true);
   };
 
   const handleStatus = async () => {
-    console.log(statusId);
-    const { data } = await updateCurrencyDefault(statusId);
-
+    const { data } = await updateCurrencyDefault(id);
     if (data?.success) {
-      // setId(undefined);
+      setId(undefined);
       setStatusModal(false);
     }
   };
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteCurrency(deleteId);
+    const { data } = await deleteCurrency(id);
     if (data?.success) {
       setDeleteModal(false);
     }

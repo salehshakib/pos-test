@@ -16,17 +16,17 @@ import DepartmentEdit from "./DepartmentEdit";
 const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
+  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
+  const [editId, setEditId] = useState(undefined);
 
-  const [statusModal, setStatusModal] = useState(false);
   const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
-  const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetDepartmentsQuery({
-    params: pagination,
+    params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
@@ -37,29 +37,28 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
   const handleStatusModal = (id) => {
-    setStatusModal(true);
     setStatusId(id);
+    setStatusModal(true);
   };
 
   const handleStatus = async () => {
-    console.log(statusId);
     const { data } = await updateStatus(statusId);
 
     if (data?.success) {
-      setId(undefined);
+      setStatusId(undefined);
       setStatusModal(false);
     }
   };
 
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
@@ -79,7 +78,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         department: name,
         status: { status: is_active, handleStatusModal },
         created_at: date,
-        action: { getDetails, handleDeleteModal },
+        action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
@@ -102,7 +101,8 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         isLoading={isLoading}
       />
 
-      <DepartmentEdit id={id} setId={setId} />
+      <DepartmentEdit id={editId} setId={setEditId} />
+
       <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}

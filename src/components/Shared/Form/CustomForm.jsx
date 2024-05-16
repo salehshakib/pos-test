@@ -6,7 +6,7 @@ import {
   closeEditDrawer,
 } from "../../../redux/services/drawer/drawerSlice";
 
-const SubmitButtonForm = ({ loading, children }) => {
+const FormButton = ({ loading, children, onClose }) => {
   const dispatch = useDispatch();
 
   const handleDrawerClose = () => {
@@ -15,8 +15,8 @@ const SubmitButtonForm = ({ loading, children }) => {
   };
 
   return (
-    <div className="w-full flex gap-3 justify-end items-center pb-20">
-      <Button type="default" onClick={handleDrawerClose}>
+    <div className={`w-full flex gap-3 justify-end items-center`}>
+      <Button type="default" onClick={onClose ?? handleDrawerClose}>
         Cancel
       </Button>
       <Button htmlType="submit" type="primary" loading={loading}>
@@ -34,6 +34,7 @@ const CustomForm = (props) => {
     isLoading,
     submitBtn = true,
     submitBtnText = "Save",
+    onClose,
   } = props;
 
   const [form] = Form.useForm();
@@ -68,9 +69,9 @@ const CustomForm = (props) => {
         {children}
 
         {submitBtn && (
-          <SubmitButtonForm loading={isLoading}>
+          <FormButton loading={isLoading} onClose={onClose}>
             {submitBtnText}
-          </SubmitButtonForm>
+          </FormButton>
         )}
       </Form>
     </GlobalUtilityStyle>

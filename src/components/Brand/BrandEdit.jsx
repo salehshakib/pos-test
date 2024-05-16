@@ -8,6 +8,7 @@ import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 
 export const BrandEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -23,14 +24,14 @@ export const BrandEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data) {
-      // const fieldData = fieldsToUpdate(data);
-      const fieldData = [
-        {
-          name: "name",
-          value: data?.name,
-          errors: "",
-        },
-      ];
+      const fieldData = fieldsToUpdate(data);
+      // const fieldData = [
+      //   {
+      //     name: "name",
+      //     value: data?.name,
+      //     errors: "",
+      //   },
+      // ];
 
       setFields(fieldData);
     }

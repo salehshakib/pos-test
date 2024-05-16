@@ -32,7 +32,7 @@ const adjustmentApi = baseApi.injectEndpoints({
     }),
 
     createAdjustment: build.mutation({
-      query: ({ data }) => {
+      query: (data) => {
         return {
           url: `/${ADJUSTMENT}/store`,
           method: "POST",
@@ -51,11 +51,11 @@ const adjustmentApi = baseApi.injectEndpoints({
     }),
 
     updateAdjustment: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, formData }) => {
         return {
-          url: `/${ADJUSTMENT}/update/${data?.id}`,
+          url: `/${ADJUSTMENT}/update/${id}`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {

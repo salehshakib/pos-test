@@ -1,7 +1,8 @@
 import { AiOutlineStock } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaBarcode } from "react-icons/fa6";
-import { MdAddShoppingCart, MdProductionQuantityLimits } from "react-icons/md";
+import { MdAddShoppingCart } from "react-icons/md";
+import { TbShoppingCartExclamation } from "react-icons/tb";
 import AdjustmentList from "../../pages/Dashboard/AdjustmentList/AdjustmentList";
 import Category from "../../pages/Dashboard/Category/Category";
 import PrintBarcode from "../../pages/Dashboard/PrintBarcode/PrintBarcode";
@@ -22,15 +23,9 @@ export const productPaths = [
     element: <ProductList />,
   },
   {
-    name: "Print Barcode",
-    path: "print-barcode",
-    icon: FaBarcode,
-    element: <PrintBarcode />,
-  },
-  {
-    name: "Adjustment List",
+    name: "Adjustment",
     path: "adjustment-list",
-    icon: MdProductionQuantityLimits,
+    icon: TbShoppingCartExclamation,
     element: <AdjustmentList />,
   },
   {
@@ -38,5 +33,11 @@ export const productPaths = [
     path: "stock-count",
     icon: AiOutlineStock,
     element: <StockCount />,
+  },
+  {
+    name: "Print Barcode",
+    path: "print-barcode",
+    icon: FaBarcode,
+    element: <PrintBarcode />,
   },
 ];

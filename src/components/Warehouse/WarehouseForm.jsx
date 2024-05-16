@@ -1,20 +1,7 @@
-import { Col, Row, Select } from "antd";
+import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
-
-// const prefixSelector = (
-//   <Form.Item name="prefix" noStyle>
-//     <Select
-//       style={{
-//         width: 70,
-//       }}
-//     >
-//       <Option value="880">+880</Option>
-//       <Option value="87">+87</Option>
-//     </Select>
-//   </Form.Item>
-// );
 
 const PhoneNumberComponent = () => {
   return (
@@ -24,21 +11,15 @@ const PhoneNumberComponent = () => {
       required={true}
       name={"phone"}
       prefix={"+88"}
-      // addonBefore={prefixSelector}
       placeholder={"Phone Number"}
       noStyle={false}
     />
   );
 };
 
-const WarehouseForm = ({ handleSubmit, isLoading, fields }) => {
+const WarehouseForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput

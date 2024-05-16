@@ -23,7 +23,11 @@ const CategoryCreate = ({ subDrawer }) => {
     });
 
     if (data?.success) {
-      dispatch(closeCreateDrawer());
+      if (subDrawer) {
+        handleCloseSubDrawer();
+      } else {
+        dispatch(closeCreateDrawer());
+      }
     }
 
     if (error) {

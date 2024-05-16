@@ -13,8 +13,6 @@ import CustomTable from "../Shared/Table/CustomTable";
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const [editId, setEditId] = useState(undefined);
-
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
 
@@ -39,9 +37,9 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleStatus = async () => {
-    const { data } = await updateCurrencyDefault(id);
+    const { data } = await updateCurrencyDefault(statusId);
     if (data?.success) {
-      setId(undefined);
+      setStatusId(undefined);
       setStatusModal(false);
     }
   };
@@ -52,7 +50,7 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteCurrency(id);
+    const { data } = await deleteCurrency(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -78,8 +76,6 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
     setStatusModal(false);
     setDeleteModal(false);
   };
-
-  console.log(data?.results?.currency);
 
   return (
     <GlobalUtilityStyle>

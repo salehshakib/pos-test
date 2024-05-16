@@ -8,7 +8,13 @@ const modalProps = {
   width: 1000,
 };
 
-const CustomModal = ({ title, openModal, hideModal, children }) => {
+const CustomModal = ({
+  title,
+  openModal,
+  hideModal,
+  showCloseButton = true,
+  children,
+}) => {
   console.log(title);
   return (
     <GlobalUtilityStyle>
@@ -20,11 +26,13 @@ const CustomModal = ({ title, openModal, hideModal, children }) => {
       >
         <GlobalUtilityStyle>
           {children}
-          <div className="w-full flex justify-end items-center gap-3 mt-5">
-            <Button type="primary" onClick={hideModal}>
-              Close
-            </Button>
-          </div>
+          {showCloseButton && (
+            <div className="w-full flex justify-end items-center gap-3 mt-5">
+              <Button type="primary" onClick={hideModal}>
+                Close
+              </Button>
+            </div>
+          )}
         </GlobalUtilityStyle>
       </Modal>
     </GlobalUtilityStyle>

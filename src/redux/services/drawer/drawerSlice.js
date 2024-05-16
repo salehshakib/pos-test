@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isCreateDrawerOpen: false,
   isEditDrawerOpen: false,
+  isBrandDrawerOpen: false,
+  isCategoryDrawerOpen: false,
 };
 
 const drawerSlice = createSlice({
@@ -21,6 +23,18 @@ const drawerSlice = createSlice({
     closeEditDrawer: (state) => {
       state.isEditDrawerOpen = false;
     },
+    openBrandDrawer: (state) => {
+      state.isBrandDrawerOpen = true;
+    },
+    closeBrandDrawer: (state) => {
+      state.isBrandDrawerOpen = false;
+    },
+    openCategoryDrawer: (state) => {
+      state.isCategoryDrawerOpen = true;
+    },
+    closeCategoryDrawer: (state) => {
+      state.isCategoryDrawerOpen = false;
+    },
   },
 });
 
@@ -31,4 +45,8 @@ export const {
   closeCreateDrawer,
   openEditDrawer,
   closeEditDrawer,
+  openBrandDrawer,
+  closeBrandDrawer,
+  openCategoryDrawer,
+  closeCategoryDrawer,
 } = drawerSlice.actions;

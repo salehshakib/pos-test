@@ -16,7 +16,7 @@ const MainLayout = () => {
 
   return (
     <GlobalUtilityStyle>
-      <Layout className="relative">
+      <div className="relative">
         <Header className="bg-white flex justify-between items-center px-5 sticky w-full top-0 z-50 shadow-md">
           <div className="flex items-center gap-6 text-2xl">
             <Button
@@ -35,12 +35,12 @@ const MainLayout = () => {
           <Profile />
         </Header>
 
-        <Layout className="min-h-screen ">
-          <div className="relative">
+        <div className="flex">
+          <div className="h-[100dvh] sticky top-[4rem] left-0">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="ml-[4.3rem] lg:ml-0">
+          <Layout className="w-48 ">
             <Content
               style={{
                 margin: "16px",
@@ -62,8 +62,8 @@ const MainLayout = () => {
               Solutions
             </Footer>
           </Layout>
-        </Layout>
-      </Layout>
+        </div>
+      </div>
     </GlobalUtilityStyle>
   );
 };

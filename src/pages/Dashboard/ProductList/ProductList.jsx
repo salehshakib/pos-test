@@ -3,6 +3,7 @@ import { MdDelete, MdEditSquare } from "react-icons/md";
 import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { defaultUser } from "../../../assets/data/defaultUserImage";
 
 const columns = [
   {
@@ -19,14 +20,20 @@ const columns = [
     ),
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
+    title: "Image",
+    dataIndex: "image",
+    key: "image",
+    fixed: "left",
     align: "center",
-    render: (category) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {category}
-      </span>
+    width: 70,
+    render: (img) => (
+      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+        <img
+          src={img ?? defaultUser}
+          alt="defaultUser"
+          className="w-full h-full object-cover"
+        />
+      </div>
     ),
   },
   {
@@ -52,6 +59,17 @@ const columns = [
     ),
   },
   {
+    title: "Category",
+    dataIndex: "category",
+    key: "category",
+    align: "center",
+    render: (category) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {category}
+      </span>
+    ),
+  },
+  {
     title: "Quantity",
     dataIndex: "quantity",
     key: "quantity",
@@ -62,17 +80,17 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
-    render: (stock) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {stock}
-      </span>
-    ),
-  },
+  // {
+  //   title: "Stock",
+  //   dataIndex: "stock",
+  //   key: "stock",
+  //   align: "center",
+  //   render: (stock) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {stock}
+  //     </span>
+  //   ),
+  // },
   {
     title: "Unit",
     dataIndex: "unit",
@@ -140,7 +158,7 @@ const ProductList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Product List"
+      pageTitle="Product"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

@@ -36,7 +36,9 @@ const CustomCheckbox = (props) => {
           </Checkbox>
         )}
 
-        {mode === "group" && <Group options={options} />}
+        {mode === "group" && (
+          <Group options={options} className="flex flex-col gap-3" />
+        )}
       </Form.Item>
     </GlobalUtilityStyle>
   );

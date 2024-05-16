@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateBrandMutation } from "../../redux/services/brand/brandApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  closeBrandDrawer,
+  closeCreateDrawer,
+} from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
 
-const BrandCreate = () => {
+const BrandCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
-  const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
+  const { isCreateDrawerOpen, isBrandDrawerOpen } = useSelector(
+    (state) => state.drawer
+  );
 
   const [createBrand, { isLoading }] = useCreateBrandMutation();
 
@@ -40,12 +45,21 @@ const BrandCreate = () => {
     }
   };
 
+  const handleCloseSubDrawer = () => {
+    dispatch(closeBrandDrawer());
+  };
+
   return (
-    <CustomDrawer title={"Create Brand"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Brand"}
+      open={subDrawer ? isBrandDrawerOpen : isCreateDrawerOpen}
+      onClose={handleCloseSubDrawer}
+    >
       <BrandForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        onClose={handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

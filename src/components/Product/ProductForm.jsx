@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomForm from "../Shared/Form/CustomForm";
 import {
@@ -10,8 +10,62 @@ import {
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
+import BarCodeComponent from "./BarCodeComponent";
+import { BrandComponent } from "./BrandComponent";
+import { CategoryComponent } from "./CategoryComponent";
 import ProductCodeComponent from "./ProductCodeComponent";
 import ProductTypeComponent from "./ProductTypeComponent";
+import { TaxComponent } from "./TaxComponent";
+import TaxTypeComponent from "./TaxTypeComponent";
+import UnitComponent from "./UnitComponent";
+import ComboProductsComponent from "./ComboProductsComponent";
+
+const ProductCostComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("product_type", form);
+
+  if (productType === "standard")
+    return (
+      <Col {...colLayout}>
+        <CustomInput
+          label="Product Cost"
+          type={"number"}
+          required={true}
+          name={"product_cost"}
+        />
+      </Col>
+    );
+};
+
+const AttachmentComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("product_type", form);
+
+  if (productType === "digital")
+    return (
+      <Col {...fullColLayout}>
+        <CustomUploader label={"Attachment"} name={"attachment"} />
+      </Col>
+    );
+};
+
+const AlertComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("product_type", form);
+
+  if (productType === "standard") {
+    return (
+      <Col {...colLayout}>
+        <CustomInput
+          label="Alert Quantity"
+          type={"number"}
+          // required={true}
+          name={"alert_quantity"}
+        />
+      </Col>
+    );
+  }
+};
 
 const ProductForm = (props) => {
   return (
@@ -26,116 +80,54 @@ const ProductForm = (props) => {
             label="Product Name"
             type={"text"}
             required={true}
-            name={"product_name"}
+            name={"name"}
           />
         </Col>
+
         <Col {...colLayout}>
           <ProductCodeComponent />
         </Col>
 
         <Col {...colLayout}>
-          <CustomInput
-            label="Barcode Symbology"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <BarCodeComponent />
+        </Col>
+
+        <ComboProductsComponent />
+        <AttachmentComponent />
+        <Col {...colLayout}>
+          <BrandComponent />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
-            label="Product Brand"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <CategoryComponent />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Category"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Unit"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Sale Unit"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Pruchase Unit"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Cost"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
+
+        <UnitComponent />
+        <ProductCostComponent />
+
         <Col {...colLayout}>
           <CustomInput
             label="Product Price"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
+            type={"number"}
+            required={true}
+            name={"product_price"}
           />
         </Col>
         <Col {...colLayout}>
           <CustomInput
             label="Daily Sale Objectives"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
+            type={"number"}
+            tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
+            name={"daily_sale_objectitves"}
           />
         </Col>
+
+        <AlertComponent />
+
         <Col {...colLayout}>
-          <CustomInput
-            label="Product Quantity"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <TaxComponent />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
-            label="Alert Quantity"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Tax"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Tax Method"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <TaxTypeComponent />
         </Col>
       </Row>
 
@@ -157,7 +149,7 @@ const ProductForm = (props) => {
       <Row {...rowLayout} justify={"center"} align={"middle"}>
         <Col xs={24}>
           <CustomUploader
-            label={"Profile Image"}
+            label={"Product Image"}
             // name={"brand_image"}
             // multiple={true}
           />
@@ -170,17 +162,19 @@ const ProductForm = (props) => {
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...mdColLayout}>
+        <Col {...fullColLayout}>
           <CustomCheckbox
-            label="This Product has IME or Serial Number"
-            // name="product_description"
-            // subLabel="(It will be displayed on POS)"
-          />
-        </Col>
-        <Col {...mdColLayout}>
-          <CustomCheckbox
-            label="Disable Woocommerce Sync"
-            // name="product_description"
+            // label="This Product has IME or Serial Number"
+            mode="group"
+            options={[
+              "This Product has varient",
+              "This product has different price for different warehouse",
+              "This product has batch and expired date",
+              "This product has IMEI or Serial numbers",
+              "  Add Promotional Price",
+              "Disable Woocommerce Sync",
+            ]}
+            name={"product_checkbox"}
           />
         </Col>
       </Row>

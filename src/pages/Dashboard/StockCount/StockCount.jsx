@@ -118,7 +118,7 @@ const StockCount = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Stock Count List"
+      pageTitle="Stock Count"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

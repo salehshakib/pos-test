@@ -1,7 +1,7 @@
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
-import { openSubDrawer } from "../../redux/services/drawer/drawerSlice";
+import { openCategoryDrawer } from "../../redux/services/drawer/drawerSlice";
 import CategoryCreate from "../Category/CategoryCreate";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 
@@ -16,7 +16,7 @@ export const CategoryComponent = () => {
     };
   });
   function handleAddCategory() {
-    dispatch(openSubDrawer());
+    dispatch(openCategoryDrawer());
   }
   return (
     <>
@@ -27,7 +27,7 @@ export const CategoryComponent = () => {
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleAddCategory}
-        name={"brand"}
+        name={"category_name"}
         isLoading={isFetching}
       />
 

@@ -21,7 +21,7 @@ export const TaxComponent = () => {
       options={options}
       icon={<FaPlus className="text-xl" />}
       onClick={handleProductTax}
-      name={"brand"}
+      name={"tax"}
       isLoading={isFetching}
     />
   );

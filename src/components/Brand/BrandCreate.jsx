@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateBrandMutation } from "../../redux/services/brand/brandApi";
 import {
+  closeBrandDrawer,
   closeCreateDrawer,
-  closeSubDrawer,
 } from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
@@ -12,7 +12,7 @@ import BrandForm from "./BrandForm";
 const BrandCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
-  const { isCreateDrawerOpen, isSubDrawerOpen } = useSelector(
+  const { isCreateDrawerOpen, isBrandDrawerOpen } = useSelector(
     (state) => state.drawer
   );
 
@@ -46,13 +46,13 @@ const BrandCreate = ({ subDrawer }) => {
   };
 
   const handleCloseSubDrawer = () => {
-    dispatch(closeSubDrawer());
+    dispatch(closeBrandDrawer());
   };
 
   return (
     <CustomDrawer
       title={"Create Brand"}
-      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      open={subDrawer ? isBrandDrawerOpen : isCreateDrawerOpen}
       onClose={handleCloseSubDrawer}
     >
       <BrandForm

@@ -80,7 +80,7 @@ const ProductForm = (props) => {
             label="Product Name"
             type={"text"}
             required={true}
-            name={"product_name"}
+            name={"name"}
           />
         </Col>
 

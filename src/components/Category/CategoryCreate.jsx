@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  closeCreateDrawer,
-  closeSubDrawer,
-} from "../../redux/services/drawer/drawerSlice";
-import CategoryForm from "./CategoryForm";
-
 import { useCreateCategoryMutation } from "../../redux/services/category/categoryApi";
+import {
+  closeCategoryDrawer,
+  closeCreateDrawer,
+} from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import CategoryForm from "./CategoryForm";
 
 const CategoryCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
-  const { isCreateDrawerOpen, isSubDrawerOpen } = useSelector(
+  const { isCreateDrawerOpen, isCategoryDrawerOpen } = useSelector(
     (state) => state.drawer
   );
 
@@ -38,13 +37,13 @@ const CategoryCreate = ({ subDrawer }) => {
   };
 
   const handleCloseSubDrawer = () => {
-    dispatch(closeSubDrawer());
+    dispatch(closeCategoryDrawer());
   };
 
   return (
     <CustomDrawer
       title={"Create Category"}
-      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      open={subDrawer ? isCategoryDrawerOpen : isCreateDrawerOpen}
       onClose={handleCloseSubDrawer}
     >
       <CategoryForm

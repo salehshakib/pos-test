@@ -21,6 +21,8 @@ export const ProviderConfig = ({ children }) => {
 
   const { data } = useGetGeneralSettingsQuery();
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       dispatch(setPrimaryColor(data.primary_color));

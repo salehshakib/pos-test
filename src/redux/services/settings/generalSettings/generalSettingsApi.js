@@ -1,4 +1,4 @@
-import { GENERAL_SETTING } from "../../../../utilities/configs/Api";
+import { GENERAL_SETTING } from "../../../../utilities/apiEndpoints/settings.api";
 import { openNotification } from "../../../../utilities/lib/notification";
 import { verifyToken } from "../../../../utilities/lib/verifyToken";
 import { baseApi } from "../../../api/baseApi";

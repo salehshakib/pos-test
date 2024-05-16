@@ -1,23 +1,42 @@
 import { Button, Form } from "antd";
 import { useDispatch } from "react-redux";
+import { GlobalUtilityStyle } from "../../../container/Styled";
 import {
   closeCreateDrawer,
   closeEditDrawer,
 } from "../../../redux/services/drawer/drawerSlice";
-import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const CustomForm = ({
-  handleSubmit,
-  children,
-  fields,
-  isLoading,
-  submitBtn = true,
-  submitBtnText = "Save",
-}) => {
-  const [form] = Form.useForm();
+const SubmitButtonForm = ({ loading, children }) => {
   const dispatch = useDispatch();
 
-  // const [form, setForm]
+  const handleDrawerClose = () => {
+    dispatch(closeCreateDrawer());
+    dispatch(closeEditDrawer());
+  };
+
+  return (
+    <div className="w-full flex gap-3 justify-end items-center pb-20">
+      <Button type="default" onClick={handleDrawerClose}>
+        Cancel
+      </Button>
+      <Button htmlType="submit" type="primary" loading={loading}>
+        {children}
+      </Button>
+    </div>
+  );
+};
+
+const CustomForm = (props) => {
+  const {
+    handleSubmit,
+    children,
+    fields,
+    isLoading,
+    submitBtn = true,
+    submitBtnText = "Save",
+  } = props;
+
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
     form
@@ -36,11 +55,6 @@ const CustomForm = ({
     console.log(errorInfo);
   };
 
-  const handleDrawerClose = () => {
-    dispatch(closeCreateDrawer());
-    dispatch(closeEditDrawer());
-  };
-
   return (
     <GlobalUtilityStyle>
       <Form
@@ -52,20 +66,11 @@ const CustomForm = ({
         onFinishFailed={onFinishFailed}
       >
         {children}
+
         {submitBtn && (
-          <div className="w-full flex gap-3 justify-end items-center pb-20">
-            <Button type="default" onClick={handleDrawerClose}>
-              Cancel
-            </Button>
-            <Button
-              htmlType="submit"
-              type="primary"
-              // className=" text-white"
-              loading={isLoading}
-            >
-              {submitBtnText}
-            </Button>
-          </div>
+          <SubmitButtonForm loading={isLoading}>
+            {submitBtnText}
+          </SubmitButtonForm>
         )}
       </Form>
     </GlobalUtilityStyle>

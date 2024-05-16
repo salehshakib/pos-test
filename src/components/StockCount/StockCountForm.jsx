@@ -1,29 +1,28 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import PartialForm from "./PartialForm";
 
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
+const options = [
+  {
+    // full
+    value: "full",
+    label: "Full",
+  },
+  {
+    // partial
+    value: "partial",
+    label: "Partial",
+  },
+];
 
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
-
-const StockCountForm = ({ handleSubmit, isLoading, fields }) => {
+const StockCountForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Warehouse"
             type={"text"}
@@ -31,30 +30,17 @@ const StockCountForm = ({ handleSubmit, isLoading, fields }) => {
             // name={"adjustment_name"}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Type"
-            type={"text"}
-            // required={true}
-            // name={"adjustment_name"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Category"
-            type={"text"}
-            // required={true}
-            // name={"adjustment_name"}
-          />
-        </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomSelect
-            label="Brand"
-            // showSearch={true}
-            // required={true}
+            label="Type"
+            options={options}
+            name={"type"}
+            required={true}
             // name={"adjustment_name"}
           />
         </Col>
+
+        <PartialForm />
       </Row>
     </CustomForm>
   );

@@ -3,11 +3,13 @@ import { Table } from "antd";
 const CustomTable = ({
   columns,
   dataSource,
+  isRowSelection = false,
   total,
-  pagination,
+  pagination = false,
   setPagination,
   setSelectedRows,
   isLoading,
+  setId,
 }) => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -49,18 +51,30 @@ const CustomTable = ({
   return (
     <Table
       size="small"
-      rowKey={(record) => record.id}
-      rowSelection={{
-        type: "checkbox",
-        ...rowSelection,
+      style={{
+        width: "100%",
       }}
+      rowKey={(record) => record.id}
+      rowSelection={
+        isRowSelection
+          ? {
+              type: "checkbox",
+              ...rowSelection,
+            }
+          : false
+      }
+      onRow={(record) => ({
+        onClick: () => {
+          setId(record.id);
+        },
+      })}
       loading={isLoading}
       columns={columns}
       dataSource={dataSource}
       scroll={{
         x: "max-content",
       }}
-      pagination={{ ...paginationProps }}
+      pagination={pagination ? { ...paginationProps } : false}
     />
   );
 };

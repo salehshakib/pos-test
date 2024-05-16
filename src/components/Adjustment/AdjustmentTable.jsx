@@ -2,102 +2,107 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import {
+  useDeleteAdjustmentMutation,
+  useGetAllAdjustmentQuery,
+} from "../../redux/services/adjustment/adjustmentApi";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentEdit from "./AdjustmentEdit";
+import AdjustmentDetails from "./AdjustmentDetails";
 
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [id, setId] = useState(undefined);
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
+
   const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllAdjustmentQuery({
+    params: { ...pagination, allData: 1 },
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [deleteAdjustment, { isLoading: isDeleting }] =
+    useDeleteAdjustmentMutation();
 
-  const getDetails = (id) => {
-    setId(id);
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
+
+  const handleEdit = (id) => {
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusModal(true);
-    setStatusId(id);
-  };
-
-  const handleStatus = async () => {
-    console.log(statusId);
-    // const { data } = await updateStatus(statusId);
-
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
-  };
-
   const handleDeleteModal = (id) => {
-    setDeleteModal(true);
     setDeleteId(id);
+    setDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment(deleteId);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deleteAdjustment(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  const dataSource =
+    data?.results?.adjustment?.map((item) => {
+      const { id, note, created_at, warehouse_id, reference_id } = item;
+      const date = dayjs(created_at).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { getDetails, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      return {
+        id,
+        warehouse: warehouse_id,
+        reference: reference_id,
+        date: date,
+        note: note ?? "N/A",
+        action: { handleDetailsModal, handleEdit, handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
     setDeleteModal(false);
+    setDetailsModal(false);
   };
 
-  // console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
+        isRowSelection={true}
+        isLoading={isLoading}
       />
 
-      <AdjustmentEdit id={id} setId={setId} />
+      <AdjustmentEdit id={editId} setId={setEditId} />
 
-      {/* 
-  />
+      <AdjustmentDetails
+        id={detailsId}
+        openModal={detailsModal}
+        hideModal={hideModal}
+      />
 
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

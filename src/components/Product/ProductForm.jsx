@@ -1,63 +1,38 @@
 import { Col, Row } from "antd";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomForm from "../Shared/Form/CustomForm";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomUploader from "../Shared/Upload/CustomUploader";
+import ProductCodeComponent from "./ProductCodeComponent";
+import ProductTypeComponent from "./ProductTypeComponent";
 
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
-
-const checkLayout = {
-  xs: 24,
-  md: 12,
-};
-
-const richTextLayout = {
-  xs: 24,
-};
-
-const ProductForm = ({ handleSubmit, isLoading, fields }) => {
+const ProductForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
+        <Col {...colLayout}>
+          <ProductTypeComponent />
+        </Col>
+
         <Col {...colLayout}>
           <CustomInput
             label="Product Name"
             type={"text"}
-            // required={true}
+            required={true}
             name={"product_name"}
           />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
-            label="Product Code"
-            type={"text"}
-            // required={true}
-            name={"product_code"}
-          />
+          <ProductCodeComponent />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Type"
-            type={"text"}
-            // required={true}
-            name={"product_type"}
-          />
-        </Col>
+
         <Col {...colLayout}>
           <CustomInput
             label="Barcode Symbology"
@@ -165,14 +140,14 @@ const ProductForm = ({ handleSubmit, isLoading, fields }) => {
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...checkLayout}>
+        <Col {...mdColLayout}>
           <CustomCheckbox
             label="Featured Product"
             // name="product_description"
             subLabel="(It will be displayed on POS)"
           />
         </Col>
-        <Col {...checkLayout}>
+        <Col {...mdColLayout}>
           <CustomCheckbox
             label="Embeded Barcode"
             // name="product_description"
@@ -189,20 +164,20 @@ const ProductForm = ({ handleSubmit, isLoading, fields }) => {
         </Col>
       </Row>
       <Row {...rowLayout}>
-        <Col {...richTextLayout}>
+        <Col {...fullColLayout}>
           <RichTextEditor label="Product Details" name="product_description" />
         </Col>
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...checkLayout}>
+        <Col {...mdColLayout}>
           <CustomCheckbox
             label="This Product has IME or Serial Number"
             // name="product_description"
             // subLabel="(It will be displayed on POS)"
           />
         </Col>
-        <Col {...checkLayout}>
+        <Col {...mdColLayout}>
           <CustomCheckbox
             label="Disable Woocommerce Sync"
             // name="product_description"

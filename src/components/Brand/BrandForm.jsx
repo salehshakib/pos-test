@@ -1,30 +1,14 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
-const rowLayout = {
-  gutter: 25,
-  align: "middle",
-  justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 12,
-};
-
-const BrandForm = ({ handleSubmit, isLoading, fields }) => {
+const BrandForm = (props) => {
   return (
-    <CustomForm
-      handleSubmit={handleSubmit}
-      className=""
-      fields={fields}
-      isLoading={isLoading}
-    >
+    <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Brand Name"
             type={"text"}
@@ -33,22 +17,8 @@ const BrandForm = ({ handleSubmit, isLoading, fields }) => {
             placeholder={"Brand Name"}
           />
         </Col>
-
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Name"
-            type={"text"}
-            required={true}
-            // name={"name"}
-            placeholder={"Product Name"}
-          />
-        </Col>
-        <Col xs={24}>
-          <CustomUploader
-            label={"Brand Image"}
-            name={"brand_image"}
-            multiple={true}
-          />
+        <Col {...fullColLayout}>
+          <CustomUploader label={"Brand Image"} name={"brand_image"} />
         </Col>
       </Row>
     </CustomForm>

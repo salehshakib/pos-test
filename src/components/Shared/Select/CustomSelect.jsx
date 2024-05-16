@@ -1,21 +1,27 @@
-import { Form, Select } from "antd";
+import { Form, Select, Spin } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const CustomSelect = ({
-  name,
-  label,
-  placeholder,
-  required = false,
-  showSearch = false,
-  options = [],
-  isLoading,
-}) => {
+const CustomSelect = (props) => {
+  const {
+    name,
+    label,
+    placeholder,
+    required = false,
+    showSearch = false,
+    mode = "single",
+    options = [],
+    isLoading,
+    noStyle = false,
+    styleProps,
+  } = props;
+
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        label={label}
+        label={label && `Select ${label}`}
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
+        noStyle={noStyle}
       >
         {showSearch ? (
           <Select
@@ -34,6 +40,15 @@ const CustomSelect = ({
             size="large"
             loading={isLoading}
             options={options}
+            mode={mode}
+            notFoundContent={
+              isLoading ? (
+                <Spin
+                  size="small"
+                  className="w-full flex justify-center items-center"
+                />
+              ) : null
+            }
             allowClear
           />
         ) : (
@@ -43,6 +58,16 @@ const CustomSelect = ({
             size="large"
             loading={isLoading}
             options={options}
+            mode={mode}
+            style={{ ...styleProps }}
+            notFoundContent={
+              isLoading ? (
+                <Spin
+                  size="small"
+                  className="w-full flex justify-center items-center"
+                />
+              ) : null
+            }
             allowClear
           />
         )}

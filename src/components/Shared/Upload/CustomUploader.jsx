@@ -15,6 +15,7 @@ const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
   }
+
   return e?.fileList;
 };
 
@@ -40,7 +41,6 @@ const CustomUploader = ({
     setFileList(newFileList);
   };
 
-  console.log(fileList);
   return (
     <GlobalUtilityStyle>
       {previewImage && (
@@ -75,7 +75,9 @@ const CustomUploader = ({
           }}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
-          className={`${multiple ? "custom-upload" : "custom-single-upload "}`}
+          className={`${
+            multiple ? "custom-upload" : "custom-single-upload "
+          } mt-2`}
         >
           {(fileList.length < 1 || multiple) && (
             <button

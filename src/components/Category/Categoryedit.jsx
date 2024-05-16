@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useGetCategoryDetailsQuery,
-  useUpdateCategoryMutation,
-} from "../../redux/services/inventory/category/categoryApi";
+
+import { useGetCategoryDetailsQuery, useUpdateCategoryMutation } from "../../redux/services/category/categoryApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CategoryForm from "../../pages/Dashboard/Inventory/Category/CategoryForm";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import CategoryForm from "./CategoryForm";
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();

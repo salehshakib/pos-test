@@ -16,7 +16,7 @@ export const CategoryComponent = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         label="Category"
-        name={"category"}
+        name={"category_id"}
         options={options}
         isLoading={isFetching}
         mode="multiple"

@@ -5,6 +5,11 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
 import StockCountEdit from "./StockCountEdit";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteStockCountMutation,
+  useGetStockCountsQuery,
+} from "../../redux/services/stockCount/stockCountApi";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -18,14 +23,14 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetStockCountsQuery({
+    params: pagination,
+  });
+  console.log(data);
+  const total = data?.meta?.total;
 
-  // const total = data?.meta?.total;
-
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [deleteStockCount, { isLoading: isDeleting }] =
+    useDeleteStockCountMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -37,7 +42,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     setStatusModal(true);
   };
 
-  const handleStatus = async () => {
+  const handleStatus = async (id) => {
     console.log(id);
     // const { data } = await updateStatus( id);
 
@@ -52,26 +57,27 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(true);
   };
 
-  const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+  const handleDelete = async (id) => {
+    const { data } = await deleteStockCount(id);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  const dataSource =
+    data?.results?.stockcount?.map((item) => {
+      const { id, reference_id, created_at, is_active, type } = item;
+      const date = dayjs(created_at).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      return {
+        id,
+        reference: reference_id,
+        type: type,
+        status: { status: is_active, handleStatusModal },
+        created_at: date,
+        action: { handleEdit, handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
@@ -84,25 +90,22 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
+        isLoading={isLoading}
       />
 
       <StockCountEdit id={editId} setId={setEditId} />
 
-      {/* 
-  />
-
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

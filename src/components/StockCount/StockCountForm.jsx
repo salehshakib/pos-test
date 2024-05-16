@@ -8,12 +8,12 @@ import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseA
 const options = [
   {
     // full
-    value: "full",
+    value: "Full",
     label: "Full",
   },
   {
     // partial
-    value: "partial",
+    value: "Partial",
     label: "Partial",
   },
 ];

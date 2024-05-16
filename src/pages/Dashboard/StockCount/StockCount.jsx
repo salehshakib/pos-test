@@ -74,35 +74,13 @@ const columns = [
     ),
   },
   {
-    title: "Initial File",
-    dataIndex: "initialFile",
-    key: "initialFile",
-    align: "center",
-    render: (initialFile) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {initialFile}
-      </span>
-    ),
-  },
-  {
-    title: "Final File",
-    dataIndex: "finalFile",
-    key: "finalFile",
-    align: "center",
-    render: (finalFile) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {finalFile}
-      </span>
-    ),
-  },
-  {
     title: "Date",
-    dataIndex: "date",
-    key: "date",
+    dataIndex: "created_at",
+    key: "created_at",
     align: "center",
-    render: (date) => (
+    render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {date}
+        {created_at}
       </span>
     ),
   },

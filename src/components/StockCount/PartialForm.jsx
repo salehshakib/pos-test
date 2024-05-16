@@ -6,7 +6,7 @@ const PartialForm = () => {
   const form = Form.useFormInstance();
   const typeData = Form.useWatch("type", form);
 
-  if (typeData === "partial") {
+  if (typeData === "Partial") {
     return (
       <>
         <CategoryComponent />

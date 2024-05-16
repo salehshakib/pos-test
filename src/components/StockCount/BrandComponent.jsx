@@ -18,7 +18,7 @@ export const BrandComponent = () => {
   return (
     <Col {...mdColLayout}>
       <CustomSelect
-        name={"brand"}
+        name={"brand_id"}
         label="Brand"
         options={options}
         isLoading={isFetching}

@@ -24,13 +24,13 @@ const drawerSlice = createSlice({
       state.isEditDrawerOpen = false;
     },
     openBrandDrawer: (state) => {
-      state.isBrandDrawerOpen = false;
+      state.isBrandDrawerOpen = true;
     },
     closeBrandDrawer: (state) => {
       state.isBrandDrawerOpen = false;
     },
     openCategoryDrawer: (state) => {
-      state.isCategoryDrawerOpen = false;
+      state.isCategoryDrawerOpen = true;
     },
     closeCategoryDrawer: (state) => {
       state.isCategoryDrawerOpen = false;

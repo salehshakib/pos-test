@@ -87,8 +87,6 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  console.log(data?.results?.department);
-
   return (
     <GlobalUtilityStyle>
       <CustomTable

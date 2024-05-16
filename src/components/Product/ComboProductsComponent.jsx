@@ -33,8 +33,6 @@ const SearchProductComponent = () => {
     }
   }, 1000);
 
-  console.log(keyword);
-
   return (
     <Col {...fullColLayout}>
       <DebouceSelect

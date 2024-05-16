@@ -75,8 +75,6 @@ const UnitComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("product_type", form);
 
-  console.log(productType);
-
   if (productType === "standard") {
     return (
       <>

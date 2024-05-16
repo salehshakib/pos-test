@@ -7,5 +7,3 @@ const apiEndpoints = {
 
 export const base_url = apiEndpoints[mode];
 export const api_key = import.meta.env.VITE_SECRET_KEY;
-
-console.log(base_url);

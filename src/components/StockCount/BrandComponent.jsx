@@ -6,8 +6,6 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 export const BrandComponent = () => {
   const { data, isFetching } = useGetBrandsQuery({});
 
-  console.log(data);
-
   const options = data?.results?.brand?.map((item) => {
     return {
       value: item?.id,

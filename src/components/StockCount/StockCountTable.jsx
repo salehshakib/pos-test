@@ -26,7 +26,6 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const { data, isLoading } = useGetStockCountsQuery({
     params: pagination,
   });
-  console.log(data);
   const total = data?.meta?.total;
 
   const [deleteStockCount, { isLoading: isDeleting }] =
@@ -57,8 +56,8 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(true);
   };
 
-  const handleDelete = async (id) => {
-    const { data } = await deleteStockCount(id);
+  const handleDelete = async () => {
+    const { data } = await deleteStockCount(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -83,8 +82,6 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     setStatusModal(false);
     setDeleteModal(false);
   };
-
-  // console.log(data?.results?.department);
 
   return (
     <GlobalUtilityStyle>

@@ -28,7 +28,7 @@ export const BrandComponent = () => {
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleAddBrand}
-        name={"brand_name"}
+        name={"brand_id"}
         isLoading={isFetching}
       />
 

@@ -157,7 +157,7 @@ const ProductForm = (props) => {
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <RichTextEditor label="Product Details" name="product_description" />
+          <RichTextEditor label="Product Details" name="details" />
         </Col>
       </Row>
 

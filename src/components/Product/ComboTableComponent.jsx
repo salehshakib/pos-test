@@ -130,8 +130,6 @@ const ComboTableComponent = () => {
         if (lastProductIndex >= 0) {
           const lastProduct = productData[lastProductIndex];
 
-          console.log(lastProduct.toString());
-
           form.setFieldValue(["product_list", "qty", lastProduct], 1);
           form.setFieldValue(["product_list", "unit_price", lastProduct], 0);
         }
@@ -160,8 +158,6 @@ const ComboTableComponent = () => {
         },
       };
     }) ?? [];
-
-  console.log(productListData?.unit_price);
 
   dataSource.push({
     name: "Total",

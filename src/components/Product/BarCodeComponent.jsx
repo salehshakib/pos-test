@@ -32,7 +32,7 @@ const BarCodeComponent = () => {
   const productType = Form.useWatch("product_type", form);
 
   if (!productType) {
-    form.setFieldValue("barcode_symbology", "Code 128");
+    form.setFieldValue("symbology", "Code 128");
   }
 
   return (
@@ -40,7 +40,7 @@ const BarCodeComponent = () => {
       label="Barcode Symbology"
       options={options}
       required={true}
-      name={"barcode_symbology"}
+      name={"symbology"}
     />
   );
 };

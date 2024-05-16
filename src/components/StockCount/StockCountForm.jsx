@@ -1,9 +1,9 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
-import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import PartialForm from "./PartialForm";
+import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 
 const options = [
   {
@@ -19,15 +19,29 @@ const options = [
 ];
 
 const StockCountForm = (props) => {
+  const { data, isLoading } = useGetWarehousesQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
+
+  const warehouseOptions = data?.results?.warehouse?.map((warehouse) => ({
+    value: warehouse.id,
+    label: warehouse.name,
+  }));
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
-          <CustomInput
+          <CustomSelect
             label="Warehouse"
             type={"text"}
-            // required={true}
-            // name={"adjustment_name"}
+            required={true}
+            options={warehouseOptions}
+            isLoading={isLoading}
+            showSearch={true}
+            name="warehouse_id"
           />
         </Col>
         <Col {...mdColLayout}>
@@ -36,7 +50,6 @@ const StockCountForm = (props) => {
             options={options}
             name={"type"}
             required={true}
-            // name={"adjustment_name"}
           />
         </Col>
 

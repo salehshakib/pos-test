@@ -8,7 +8,7 @@ const StockCountCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
+  // const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
 
   const handleSubmit = async (values) => {
     console.log(values);
@@ -21,6 +21,7 @@ const StockCountCreate = () => {
     // if (error) {
     //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
     //     name: fieldName,
+    
     //     errors: error?.data?.errors[fieldName],
     //   }));
     //   setErrorFields(errorFields);

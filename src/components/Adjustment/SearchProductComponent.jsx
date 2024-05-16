@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import DebouceSelect from "../Shared/Select/DebounceSelect";
+import { useGetProductsQuery } from "../../redux/services/product/productApi";
 
 const options = [
   {
@@ -32,7 +33,7 @@ export const SearchProductComponent = ({ options: editOptions }) => {
 
   console.log(editOptions);
   console.log(keyword);
-  // const { data, isLoading } = useGetpro({});
+  const { data, isLoading } = useGetProductsQuery({});
 
   return (
     <DebouceSelect

@@ -10,6 +10,8 @@ import {
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
+import BarCodeComponent from "./BarCodeComponent";
+import { BrandComponent } from "./BrandComponent";
 import ProductCodeComponent from "./ProductCodeComponent";
 import ProductTypeComponent from "./ProductTypeComponent";
 
@@ -34,20 +36,10 @@ const ProductForm = (props) => {
         </Col>
 
         <Col {...colLayout}>
-          <CustomInput
-            label="Barcode Symbology"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <BarCodeComponent />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
-            label="Product Brand"
-            type={"text"}
-            // required={true}
-            // name={"product_code"}
-          />
+          <BrandComponent />
         </Col>
         <Col {...colLayout}>
           <CustomInput

@@ -11,7 +11,6 @@ const ProductTypeComponent = () => {
   return (
     <CustomSelect
       label="Product Type"
-      type={"text"}
       required={true}
       options={options}
       name={"product_type"}

@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 const options = [
@@ -27,6 +28,13 @@ const options = [
   },
 ];
 const BarCodeComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("product_type", form);
+
+  if (!productType) {
+    form.setFieldValue("barcode_symbology", "Code 128");
+  }
+
   return (
     <CustomSelect
       label="Barcode Symbology"

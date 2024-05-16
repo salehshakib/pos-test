@@ -158,7 +158,7 @@ const ProductList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Product List"
+      pageTitle="Product"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

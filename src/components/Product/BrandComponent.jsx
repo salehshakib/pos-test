@@ -1,19 +1,38 @@
 import { FaPlus } from "react-icons/fa";
+import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
+import BrandCreate from "../Brand/BrandCreate";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
-
-const options = [{ value: "test", label: "test" }];
+import { useDispatch } from "react-redux";
+import { openSubDrawer } from "../../redux/services/drawer/drawerSlice";
 
 export const BrandComponent = () => {
-  function handleAddBrand() {
-    console.log("hello");
-  }
+  const dispatch = useDispatch();
+  const { data, isFetching } = useGetBrandsQuery({});
+
+  const options = data?.results?.brand?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+    };
+  });
+
+  const handleAddBrand = () => {
+    dispatch(openSubDrawer());
+  };
+
   return (
-    <CustomSelectButton
-      label="Brand"
-      options={options}
-      icon={<FaPlus className="text-xl" />}
-      onClick={handleAddBrand}
-      name={"brand"}
-    />
+    <>
+      <CustomSelectButton
+        label="Brand"
+        showSearch={true}
+        options={options}
+        icon={<FaPlus className="text-xl" />}
+        onClick={handleAddBrand}
+        name={"brand"}
+        isLoading={isFetching}
+      />
+
+      <BrandCreate subDrawer={true} />
+    </>
   );
 };

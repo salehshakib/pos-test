@@ -50,12 +50,12 @@ export const CustomSelectButton = (props) => {
                 options={options}
                 mode={mode}
                 notFoundContent={
-                  isLoading ? (
+                  isLoading && (
                     <Spin
                       size="small"
                       className="w-full flex justify-center items-center"
                     />
-                  ) : null
+                  )
                 }
                 allowClear
               />
@@ -69,12 +69,12 @@ export const CustomSelectButton = (props) => {
                 mode={mode}
                 style={{ ...styleProps }}
                 notFoundContent={
-                  isLoading ? (
+                  isLoading && (
                     <Spin
                       size="small"
                       className="w-full flex justify-center items-center"
                     />
-                  ) : null
+                  )
                 }
                 allowClear
               />

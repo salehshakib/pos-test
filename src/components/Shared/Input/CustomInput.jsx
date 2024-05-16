@@ -14,6 +14,7 @@ const CustomInput = (props) => {
     requireMsg = undefined,
     noStyle = false,
     addonAfter,
+    tooltip,
   } = props;
 
   return (
@@ -27,6 +28,7 @@ const CustomInput = (props) => {
             message: `Please input ${requireMsg ?? label}!`,
           },
         ]}
+        tooltip={tooltip}
         noStyle={noStyle}
       >
         {type === "password" ? (

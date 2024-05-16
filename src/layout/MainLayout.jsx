@@ -9,7 +9,7 @@ import { GlobalUtilityStyle } from "../container/Styled";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -35,12 +35,12 @@ const MainLayout = () => {
           <Profile />
         </Header>
 
-        <div className="flex">
-          <div className="sticky top-14">
+        <div className="flex ">
+          <div className="h-[100dvh] sticky top-16 left-0 border-2 border-red-600">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="ml-[4.3rem] lg:ml-0 border-2 border-black h-[100dvh] overflow-auto">
+          <Layout className="">
             <Content
               style={{
                 margin: "16px",
@@ -64,65 +64,6 @@ const MainLayout = () => {
           </Layout>
         </div>
       </div>
-
-      {/* <div className="relative">
-        <div className="bg-blue-500 text-white text-center py-4 sticky top-0 z-50">
-          Header
-        </div>
-
-        <div className="border-2 border-black flex">
-          <Sider
-            width={200}
-            className="bg-gray-200 h-[100dvh] overflow-y-auto sticky top-14 border-2 border-red-600 left-0"
-          >
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-            <div className="py-5 text-white">Sidebar Content</div>
-          </Sider>
-          <Layout>
-            <Content className="p-4 ">
-              <div className="border border-green-600  h-[200dvh]">
-                Main Content Area
-              </div>
-            </Content>
-            <Footer className="bg-gray-300 text-center py-2">Footer</Footer>
-          </Layout>
-        </div>
-      </div> */}
     </GlobalUtilityStyle>
   );
 };

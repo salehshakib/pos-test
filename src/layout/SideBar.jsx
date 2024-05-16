@@ -69,35 +69,35 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
-      <Sider
-        className="pb-10 h-full overflow-auto"
+    // <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
+    <Sider
+      className="h-full overflow-x-auto "
+      theme="light"
+      width={220}
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={(value) => setCollapsed(value)}
+      style={{
+        boxShadow:
+          "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
+      }}
+      breakpoint="lg"
+      collapsedWidth="70"
+    >
+      <Menu
         theme="light"
-        width={220}
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{
-          boxShadow:
-            "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
-        }}
-        breakpoint="lg"
-        collapsedWidth="70"
-      >
-        <Menu
-          theme="light"
-          mode="inline"
-          className="h-full pb-10 "
-          defaultSelectedKeys={["Dashboard"]}
-          items={sidebarItems}
-          // openKeys={stateOpenKeys}
-          onOpenChange={onOpenChange}
-          selectedKeys={selectedKeys}
-          onSelect={({ key }) => setSelectedKeys([key])}
-        />
-      </Sider>
-    </div>
+        mode="inline"
+        className="h-full pb-10"
+        defaultSelectedKeys={["Dashboard"]}
+        items={sidebarItems}
+        // openKeys={stateOpenKeys}
+        onOpenChange={onOpenChange}
+        selectedKeys={selectedKeys}
+        onSelect={({ key }) => setSelectedKeys([key])}
+      />
+    </Sider>
+    // </div>
   );
 };
 

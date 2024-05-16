@@ -41,13 +41,15 @@ const CustomTable = ({
       updatePage(page);
     },
     showSizeChanger: true,
-    defaultPageSize: pagination.perPage,
+    // defaultPageSize: pagination.perPage,
+    defaultPageSize: 20,
     onShowSizeChange: (current, size) => {
       updatePageSize(size);
     },
     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
   };
 
+  console.log(pagination);
   return (
     <Table
       size="small"

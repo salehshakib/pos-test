@@ -16,7 +16,7 @@ import DepartmentEdit from "./DepartmentEdit";
 const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
   const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
@@ -26,7 +26,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetDepartmentsQuery({
-    params: pagination,
+    params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;

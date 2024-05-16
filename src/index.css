@@ -4,16 +4,16 @@
 
 ::-webkit-scrollbar {
   /* width: 2px; */
-  width: 8px;
+  width: 2px;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background: #dcbfff;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #51258f;
-}
+} */
 
 /* html,
 body {

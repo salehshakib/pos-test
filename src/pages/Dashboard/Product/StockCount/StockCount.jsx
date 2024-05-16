@@ -18,7 +18,6 @@ const columns = [
       </span>
     ),
   },
-
   {
     title: "Reference",
     dataIndex: "reference",

@@ -38,7 +38,7 @@ const CategoryForm = (props) => {
             name={"parent_id"}
             options={options}
             placeholder={"Parent Category"}
-            isSelectLoading={isParentCategoryLoading}
+            isLoading={isParentCategoryLoading}
           />
         </Col>
         <Col {...fullColLayout}>

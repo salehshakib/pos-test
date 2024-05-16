@@ -39,25 +39,37 @@ const columns = [
       </span>
     ),
   },
+  // {
+  //   title: "Operator",
+  //   dataIndex: "operator",
+  //   key: "operator",
+  //   align: "center",
+  //   render: (operator) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {operator}
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   title: "Operator Value",
+  //   dataIndex: "operatorValue",
+  //   key: "operatorValue",
+  //   align: "center",
+  //   render: (operatorValue) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {operatorValue}
+  //     </span>
+  //   ),
+  // },
   {
-    title: "Operator",
-    dataIndex: "operator",
-    key: "operator",
+    //created_at
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
     align: "center",
-    render: (operator) => (
+    render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operator}
-      </span>
-    ),
-  },
-  {
-    title: "Operator Value",
-    dataIndex: "operatorValue",
-    key: "operatorValue",
-    align: "center",
-    render: (operatorValue) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operatorValue}
+        {created_at}
       </span>
     ),
   },

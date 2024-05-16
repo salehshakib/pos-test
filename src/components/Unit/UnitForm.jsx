@@ -3,6 +3,7 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { baseUnit } from "../../assets/data/baseUnit";
+import { useGetTypesQuery } from "../../redux/services/types/typesApi";
 
 const rowLayout = {
   gutter: 25,
@@ -35,6 +36,29 @@ const BaseUnit = () => {
   );
 };
 
+const TypeUnit = () => {
+  const { data, isFetching } = useGetTypesQuery({});
+
+  const options = data?.results?.type?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+    };
+  });
+
+  return (
+    <Col {...colLayout}>
+      <CustomSelect
+        label="Type"
+        name={"for"}
+        options={options}
+        placeholder={"Type"}
+        isLoading={isFetching}
+      />
+    </Col>
+  );
+};
+
 const UnitForm = (props) => {
   return (
     <CustomForm {...props}>
@@ -58,6 +82,8 @@ const UnitForm = (props) => {
         <Col {...colLayout}>
           <BaseUnit />
         </Col>
+
+        <TypeUnit />
       </Row>
     </CustomForm>
   );

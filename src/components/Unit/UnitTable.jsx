@@ -1,50 +1,26 @@
+import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import {
+  useDeleteUnitMutation,
+  useGetAllUnitQuery,
+} from "../../redux/services/unit/unitApi";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import UnitEdit from "./UnitEdit";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 
 const UnitTable = ({ newColumns, setSelectedRows }) => {
-  const dispatch = useDispatch();
-
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [editId, setEditId] = useState(undefined);
-
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllUnitQuery({
+    params: { ...pagination, allData: 1 },
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
-
-  const handleEdit = (id) => {
-    setEditId(id);
-    dispatch(openEditDrawer());
-  };
-
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
-
-  const handleStatus = async () => {
-    console.log(id);
-    // const { data } = await updateStatus( id);
-
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
-  };
+  const [deleteUnit, { isLoading: isDeleting }] = useDeleteUnitMutation();
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -52,28 +28,32 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deleteUnit(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  console.log(data);
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+  const dataSource =
+    data?.results?.unit?.map((item) => {
+      console.log(item);
+
+      const { id, name, code, base_unit, created_at } = item ?? {};
+      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      return {
+        id,
+        name: name,
+        code: code,
+        baseUnit: base_unit,
+        created_at: date,
+        action: { handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -82,30 +62,20 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-
-        // isLoading={isLoading}
+        isLoading={isLoading}
       />
 
-      <UnitEdit id={editId} setId={setEditId} />
-
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
-  />
-  
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

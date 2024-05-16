@@ -62,12 +62,12 @@ const columns = [
   },
   {
     title: "Created At",
-    dataIndex: "time",
-    key: "time",
+    dataIndex: "created_at",
+    key: "created_at",
     align: "center",
-    render: (time) => (
+    render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {time}
+        {created_at}
       </span>
     ),
   },

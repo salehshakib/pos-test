@@ -35,12 +35,12 @@ const MainLayout = () => {
           <Profile />
         </Header>
 
-        <div className="flex ">
-          <div className="h-[100dvh] sticky top-16 left-0 border-2 border-red-600">
+        <div className="flex">
+          <div className="h-[100dvh] sticky top-[4rem] left-0">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="">
+          <Layout className="w-48 ">
             <Content
               style={{
                 margin: "16px",

@@ -71,7 +71,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   return (
     // <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
     <Sider
-      className="h-full overflow-x-auto "
+      className="h-full overflow-x-auto pb-48 pt-1"
       theme="light"
       width={220}
       trigger={null}
@@ -88,7 +88,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       <Menu
         theme="light"
         mode="inline"
-        className="h-full pb-10"
+        className="h-full w-full "
         defaultSelectedKeys={["Dashboard"]}
         items={sidebarItems}
         // openKeys={stateOpenKeys}

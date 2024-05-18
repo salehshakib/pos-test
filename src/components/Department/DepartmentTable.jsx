@@ -112,6 +112,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"department"}
       />
     </GlobalUtilityStyle>
   );

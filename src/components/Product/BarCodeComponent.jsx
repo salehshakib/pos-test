@@ -29,7 +29,7 @@ const options = [
 ];
 const BarCodeComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
 
   if (!productType) {
     form.setFieldValue("symbology", "Code 128");

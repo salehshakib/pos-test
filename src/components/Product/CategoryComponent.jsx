@@ -7,7 +7,7 @@ import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 
 export const CategoryComponent = () => {
   const dispatch = useDispatch();
-  const { data, isFetching } = useGetCategoriesQuery({});
+  const { data, isLoading } = useGetCategoriesQuery({});
 
   const options = data?.results?.category?.map((item) => {
     return {
@@ -15,6 +15,7 @@ export const CategoryComponent = () => {
       label: item.name,
     };
   });
+
   function handleAddCategory() {
     dispatch(openCategoryDrawer());
   }
@@ -22,13 +23,13 @@ export const CategoryComponent = () => {
     <>
       <CustomSelectButton
         label="Category"
-        showSearch={true}
+        // showSearch={true}
         required={true}
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleAddCategory}
-        name={"category_name"}
-        isLoading={isFetching}
+        name={"category_id"}
+        isLoading={isLoading}
       />
 
       <CategoryCreate subDrawer={true} />

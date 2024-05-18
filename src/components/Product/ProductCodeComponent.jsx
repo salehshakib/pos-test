@@ -9,15 +9,16 @@ const ProductCodeComponent = () => {
   const generate = () => {
     const randomCode = generateRandomCode(6);
 
-    form?.setFieldValue("product_code", randomCode);
+    form?.setFieldValue("sku", randomCode);
   };
 
   return (
     <CustomInputButton
-      label="Product Code"
+      label="Sku"
       type={"text"}
       required={true}
-      name={"product_code"}
+      name={"sku"}
+      placeholder={"Generate Sku"}
       onClick={generate}
       icon={<RiRefreshLine className="text-xl" />}
     />

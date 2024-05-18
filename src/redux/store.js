@@ -14,6 +14,7 @@ import { baseApi } from "./api/baseApi";
 import authSlice from "./services/auth/authSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
 import themeSlice from "./services/theme/themeSlice";
+import productSlice from "./services/product/productSlice";
 
 const persistConfig = {
   key: ["auth", "theme"],
@@ -27,8 +28,9 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
-    drawer: drawerSlice,
     theme: persistedThemeReducer,
+    drawer: drawerSlice,
+    product: productSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

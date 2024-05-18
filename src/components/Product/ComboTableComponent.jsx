@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { fullColLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomTable from "../Shared/Table/CustomTable";
+import { useSelector } from "react-redux";
 
 const columns = [
   {
@@ -126,7 +127,6 @@ const ComboTableComponent = () => {
       } else if (productData?.length > 0 && productData) {
         const lastProductIndex = productData.length - 1;
 
-        console.log(lastProductIndex);
         if (lastProductIndex >= 0) {
           const lastProduct = productData[lastProductIndex];
 
@@ -147,11 +147,19 @@ const ComboTableComponent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowId]);
 
+  const { productDetails } = useSelector((state) => state.product);
+
+  const filteredProducts = productDetails.filter((product) =>
+    productData.includes(product.value)
+  );
+
+  console.log(filteredProducts);
+
   const dataSource =
-    productData?.map((item) => {
+    filteredProducts?.map(({ value, label }) => {
       return {
-        id: item,
-        name: item,
+        id: value,
+        name: label,
         action: true,
         delete: {
           setRowId,

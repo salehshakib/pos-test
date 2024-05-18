@@ -57,6 +57,7 @@ const ProductListEdit = ({ id, setId }) => {
         // handleSubmit={handleUpdate}
         // isLoading={isLoading}
         fields={fields}
+        options={[]}
       />
     </CustomDrawer>
   );

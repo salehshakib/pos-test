@@ -28,9 +28,10 @@ const CustomCheckbox = (props) => {
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
         valuePropName={mode === "single" && "checked"}
+        noStyle
       >
         {mode === "single" && (
-          <Checkbox>
+          <Checkbox className="my-1">
             <span>{label}</span>
             <span className="text-sm text-gray-500 px-2">{subLabel}</span>
           </Checkbox>

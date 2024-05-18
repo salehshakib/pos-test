@@ -16,12 +16,11 @@ const AdjustmentEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  console.log(id);
-
   const { data, isFetching } = useGetAdjustmentDetailsQuery(
     { id },
     { skip: !id }
   );
+  console.log(data);
 
   const [udpateAdjustment, { isLoading }] = useUpdateAdjustmentMutation();
 

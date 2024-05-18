@@ -1,71 +1,45 @@
 import { Col, Form } from "antd";
-import { baseUnit } from "../../assets/data/baseUnit";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { useGetAllUnitQuery } from "../../redux/services/unit/unitApi";
 import { colLayout } from "../Shared/Form/FormLayout";
+import CustomSelect from "../Shared/Select/CustomSelect";
 
-const ProductUnit = () => {
-  const options = baseUnit.map((item) => {
-    return {
-      value: item?.name,
-      label: `${item?.name} (${item?.symbol})`,
-    };
-  });
-
+const ProductUnit = ({ options = [], isLoading }) => {
   return (
     <Col {...colLayout}>
       <CustomSelect
         label="Product Unit"
         options={options}
+        isLoading={isLoading}
         required={true}
-        name={"product_unit"}
+        name={"unit_id"}
       />
     </Col>
   );
 };
 
-function getSubunits(baseUnitData) {
-  const unit = baseUnit.find((unit) => unit.name === baseUnitData);
-  return unit
-    ? unit.subunits.map((item) => {
-        return {
-          value: item.name,
-          label: `${item.name} (${item.symbol})`,
-        };
-      }) || []
-    : [];
-}
-
-const SaleUnit = () => {
-  const form = Form.useFormInstance();
-  const productData = Form.useWatch("product_unit", form);
-
-  const options = getSubunits(productData);
-
-  return (
-    <Col {...colLayout}>
-      <CustomSelect
-        label="Sale Unit"
-        options={options}
-        required={true}
-        name={"sale_unit"}
-      />
-    </Col>
-  );
-};
-
-const PurchaseUnit = () => {
-  const form = Form.useFormInstance();
-  const productData = Form.useWatch("product_unit", form);
-
-  const options = getSubunits(productData);
-
+const PurchaseUnit = ({ options = [], isLoading }) => {
   return (
     <Col {...colLayout}>
       <CustomSelect
         label="Puchase Unit"
         options={options}
+        isLoading={isLoading}
         required={true}
-        name={"purchase_unit"}
+        name={"purchase_unit_id"}
+      />
+    </Col>
+  );
+};
+
+const SaleUnit = ({ options = [], isLoading }) => {
+  return (
+    <Col {...colLayout}>
+      <CustomSelect
+        label="Sale Unit"
+        options={options}
+        isLoading={isLoading}
+        required={true}
+        name={"sale_unit_id"}
       />
     </Col>
   );
@@ -73,14 +47,32 @@ const PurchaseUnit = () => {
 
 const UnitComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
+
+  const { data, isLoading } = useGetAllUnitQuery({
+    params: {
+      selectValue: ["name", "id", "for"],
+    },
+  });
+
+  const productUnits = data?.results?.unit
+    ?.filter((unit) => unit.for === "product-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+
+  const saleUnits = data?.results?.unit
+    ?.filter((unit) => unit.for === "sale-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+
+  const purchaseUnits = data?.results?.unit
+    ?.filter((unit) => unit.for === "purchase-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   if (productType === "standard") {
     return (
       <>
-        <ProductUnit />
-        <SaleUnit />
-        <PurchaseUnit />
+        <ProductUnit options={productUnits} isLoading={isLoading} />
+        <PurchaseUnit options={purchaseUnits} isLoading={isLoading} />
+        <SaleUnit options={saleUnits} isLoading={isLoading} />
       </>
     );
   }

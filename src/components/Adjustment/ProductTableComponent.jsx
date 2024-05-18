@@ -5,6 +5,7 @@ import { fullColLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomTable from "../Shared/Table/CustomTable";
+import { useSelector } from "react-redux";
 
 const columns = [
   {
@@ -20,23 +21,23 @@ const columns = [
   },
   {
     title: "SKU",
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "sku",
+    key: "sku",
     align: "center",
-    render: (code) => (
+    render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {code}
+        {sku}
       </span>
     ),
   },
   {
     title: "Unit Cost",
-    dataIndex: "cost",
-    key: "cost",
+    dataIndex: "unitCost",
+    key: "unitCost",
     align: "center",
-    render: (cost) => (
+    render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {cost}
+        {unitCost}
       </span>
     ),
   },
@@ -126,8 +127,6 @@ export const ProductTableComponent = () => {
   const [rowId, setRowId] = useState(undefined);
 
   useEffect(() => {
-    console.log(productData);
-
     if (productData?.length > 0) {
       if (rowId !== undefined) {
         const selectedProduct = productData[rowId];
@@ -142,11 +141,8 @@ export const ProductTableComponent = () => {
       } else if (productData?.length > 0 && productData) {
         const lastProductIndex = productData.length - 1;
 
-        console.log(lastProductIndex);
         if (lastProductIndex >= 0) {
           const lastProduct = productData[lastProductIndex];
-
-          console.log(lastProduct.toString());
 
           form.setFieldValue(["product_list", "qty", lastProduct], 1);
           form.setFieldValue(
@@ -168,11 +164,19 @@ export const ProductTableComponent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowId]);
 
+  const { productDetails } = useSelector((state) => state.product);
+
+  const filteredProducts = productDetails.filter((product) =>
+    productData?.includes(product.value)
+  );
+
   const dataSource =
-    productData?.map((item) => {
+    filteredProducts?.map(({ value, label, sku, unitCost }) => {
       return {
-        id: item,
-        name: item,
+        id: value,
+        name: label,
+        sku,
+        unitCost,
         action: true,
         delete: {
           setRowId,

@@ -30,6 +30,10 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
+.ant-picker-input > input {
+  font-size: 14px !important;
+}
+
 .ant-input {
   font-size: 14px !important;
 }

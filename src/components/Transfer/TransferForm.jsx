@@ -1,4 +1,5 @@
 import { Col, Row } from "antd";
+import { SearchProductComponent } from "../Adjustment/SearchProductComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
@@ -6,59 +7,62 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import TransferListTable from "./TransferListTable";
+import { WarehouseComponent } from "./WarehouseComponent";
+
+const FileStatusComponent = () => {
+  const options = [
+    {
+      value: "completed",
+      label: "Completed",
+    },
+    { value: "pending", label: "Pending" },
+    {
+      value: "sent",
+      label: "Sent",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      label="File Status"
+      placeholder={"File Status"}
+      options={options}
+      // showSearch={true}
+      // required={true}
+      // name={"adjustment_name"}
+    />
+  );
+};
 
 const TransferForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
+        <WarehouseComponent />
+        <Col {...colLayout}>
+          <CustomDatepicker
+            label="Date"
+            type={"date"}
+            required={true}
+            name={"adjustment_name"}
+            // picker
+          />
+        </Col>
+        <Col {...colLayout}>
+          <FileStatusComponent />
+        </Col>
+      </Row>
+
+      <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomSelect
+          {/* <CustomSelect
             label="Product"
             placeholder={"Product"}
             showSearch={true}
             // required={true}
             // name={"adjustment_name"}
-          />
-        </Col>
-      </Row>
-      <Row {...rowLayout}>
-        <Col {...colLayout}>
-          <CustomSelect
-            label="Warehouse (From)"
-            placeholder={"Warehouse (From)"}
-            showSearch={true}
-            // required={true}
-            // name={"adjustment_name"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomSelect
-            label="Warehouse (To)"
-            placeholder={"Warehouse (To)"}
-            showSearch={true}
-            // required={true}
-            // name={"adjustment_name"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomDatepicker
-            label="Date"
-            type={"date"}
-
-            // picker
-            // required={true}
-            // name={"adjustment_name"}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomSelect
-            label="File Status"
-            placeholder={"File Status"}
-
-            // showSearch={true}
-            // required={true}
-            // name={"adjustment_name"}
-          />
+          /> */}
+          <SearchProductComponent />
         </Col>
       </Row>
 

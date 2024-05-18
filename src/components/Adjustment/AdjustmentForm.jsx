@@ -20,14 +20,13 @@ const SelectWarehouse = () => {
   });
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse.id,
+    value: warehouse.id?.toString(),
     label: warehouse.name,
   }));
 
   return (
     <CustomSelect
       label="Warehouse"
-      type={"text"}
       required={true}
       options={options}
       isLoading={isLoading}

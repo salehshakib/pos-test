@@ -102,6 +102,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"adjustment"}
       />
     </GlobalUtilityStyle>
   );

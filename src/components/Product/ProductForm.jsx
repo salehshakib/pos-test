@@ -19,19 +19,22 @@ import { TaxComponent } from "./TaxComponent";
 import TaxTypeComponent from "./TaxTypeComponent";
 import UnitComponent from "./UnitComponent";
 import ComboProductsComponent from "./ComboProductsComponent";
+import { VarientComponent } from "./VarientComponent";
+import WarehouseComponent from "./WarehouseComponent";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
 
   if (productType === "standard")
     return (
       <Col {...colLayout}>
         <CustomInput
-          label="Product Cost"
+          label="Product Buying Cost"
           type={"number"}
           required={true}
-          name={"product_cost"}
+          name={"buying_price"}
         />
       </Col>
     );
@@ -39,19 +42,19 @@ const ProductCostComponent = () => {
 
 const AttachmentComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
 
   if (productType === "digital")
     return (
       <Col {...fullColLayout}>
-        <CustomUploader label={"Attachment"} name={"attachment"} />
+        <CustomUploader label={"Attachment"} name={"attach_file"} />
       </Col>
     );
 };
 
 const AlertComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
 
   if (productType === "standard") {
     return (
@@ -60,11 +63,75 @@ const AlertComponent = () => {
           label="Alert Quantity"
           type={"number"}
           // required={true}
-          name={"alert_quantity"}
+          name={"alert_qty"}
         />
       </Col>
     );
   }
+};
+
+const ExpireComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("type", form);
+  const hasExpiredDate = Form.useWatch("has_expired_date", form);
+
+  if (productType === "standard") {
+    return (
+      <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label="This product has batch and expired date"
+            name="has_expired_date"
+          />
+        </Col>
+
+        {hasExpiredDate && (
+          <Col {...colLayout}>
+            <CustomDatepicker label={"Expired Date"} name={"expired_date"} />
+          </Col>
+        )}
+      </Row>
+    );
+  }
+};
+
+const PromotionalPriceComponent = () => {
+  const form = Form.useFormInstance();
+  const hasPromotionalPrice = Form.useWatch("has_promotion", form);
+
+  return (
+    <Row {...rowLayout}>
+      <Col {...fullColLayout}>
+        <CustomCheckbox label="Add Promotional Price" name="has_promotion" />
+      </Col>
+
+      {hasPromotionalPrice && (
+        <>
+          <Col {...colLayout}>
+            <CustomInput
+              label="Promotional Price"
+              type={"number"}
+              required={true}
+            />
+          </Col>
+          <Col {...colLayout}>
+            <CustomDatepicker
+              type={"date"}
+              label={"Start Date"}
+              name={"start_date"}
+            />
+          </Col>
+          <Col {...colLayout}>
+            <CustomDatepicker
+              type={"date"}
+              label={"End Date"}
+              name={"end_date"}
+            />
+          </Col>
+        </>
+      )}
+    </Row>
+  );
 };
 
 const ProductForm = (props) => {
@@ -94,6 +161,7 @@ const ProductForm = (props) => {
 
         <ComboProductsComponent />
         <AttachmentComponent />
+
         <Col {...colLayout}>
           <BrandComponent />
         </Col>
@@ -106,10 +174,10 @@ const ProductForm = (props) => {
 
         <Col {...colLayout}>
           <CustomInput
-            label="Product Price"
+            label="Product Selling Price"
             type={"number"}
             required={true}
-            name={"product_price"}
+            name={"selling_price"}
           />
         </Col>
         <Col {...colLayout}>
@@ -117,7 +185,7 @@ const ProductForm = (props) => {
             label="Daily Sale Objectives"
             type={"number"}
             tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
-            name={"daily_sale_objectitves"}
+            name={"daily_sale_qty"}
           />
         </Col>
 
@@ -135,7 +203,7 @@ const ProductForm = (props) => {
         <Col {...mdColLayout}>
           <CustomCheckbox
             label="Featured Product"
-            // name="product_description"
+            name="has_featured"
             subLabel="(It will be displayed on POS)"
           />
         </Col>
@@ -161,23 +229,11 @@ const ProductForm = (props) => {
         </Col>
       </Row>
 
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox
-            // label="This Product has IME or Serial Number"
-            mode="group"
-            options={[
-              "This Product has varient",
-              "This product has different price for different warehouse",
-              "This product has batch and expired date",
-              "This product has IMEI or Serial numbers",
-              "  Add Promotional Price",
-              "Disable Woocommerce Sync",
-            ]}
-            name={"product_checkbox"}
-          />
-        </Col>
-      </Row>
+      <VarientComponent />
+      <WarehouseComponent />
+      <ExpireComponent />
+
+      <PromotionalPriceComponent />
     </CustomForm>
   );
 };

@@ -87,6 +87,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"warehouse"}
       />
     </GlobalUtilityStyle>
   );

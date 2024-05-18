@@ -37,7 +37,7 @@ const CustomInput = (props) => {
             className="mt-2 border-2 "
             size="large"
             prefix={prefix}
-            allowClear
+            allowClear={true}
           />
         ) : type === "select" ? (
           <h1>Use Custom select component</h1>
@@ -51,7 +51,7 @@ const CustomInput = (props) => {
               maxRows: 5,
             }}
             showCount
-            allowClear
+            allowClear={true}
           />
         ) : type === "number_with_percent" ? (
           <Input
@@ -64,7 +64,7 @@ const CustomInput = (props) => {
             max={100}
             formatter={(value) => `${value}%`}
             parser={(value) => value?.replace("%", "")}
-            allowClear
+            allowClear={true}
           />
         ) : type === "phone" ? (
           <InputNumber
@@ -77,7 +77,7 @@ const CustomInput = (props) => {
             // style={{}}
             suffix={suffix}
             size="large"
-            allowClear
+            allowClear={true}
           />
         ) : type === "number" ? (
           <InputNumber
@@ -87,7 +87,7 @@ const CustomInput = (props) => {
             size="large"
             prefix={prefix}
             suffix={suffix}
-            allowClear
+            allowClear={true}
           />
         ) : (
           <Input
@@ -98,7 +98,7 @@ const CustomInput = (props) => {
             prefix={prefix}
             suffix={suffix}
             addonAfter={addonAfter}
-            allowClear
+            allowClear={true}
           />
         )}
       </Form.Item>

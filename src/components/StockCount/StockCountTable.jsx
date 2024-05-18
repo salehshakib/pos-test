@@ -102,6 +102,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"stock count"}
       />
     </GlobalUtilityStyle>
   );

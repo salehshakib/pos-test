@@ -9,7 +9,6 @@ const CustomTable = ({
   setPagination,
   setSelectedRows,
   isLoading,
-  setId,
 }) => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -65,9 +64,7 @@ const CustomTable = ({
           : false
       }
       onRow={(record) => ({
-        onClick: () => {
-          setId(record.id);
-        },
+        onClick: () => console.log(record.id),
       })}
       loading={isLoading}
       columns={columns}

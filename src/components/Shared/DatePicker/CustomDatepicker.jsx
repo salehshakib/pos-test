@@ -3,7 +3,7 @@ import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const { RangePicker } = DatePicker;
 
-const CustomDatepicker = ({ label, required, picker, type, name }) => {
+const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item

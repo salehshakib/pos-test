@@ -54,7 +54,7 @@ const GenerateCode = () => {
                 className="border-2"
                 onChange={onCodeChange}
                 size="large"
-                allowClear
+                allowClear={true}
               />
               {/* <Input.OTP /> */}
             </Form.Item>

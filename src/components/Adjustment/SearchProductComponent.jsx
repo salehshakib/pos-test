@@ -1,28 +1,11 @@
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import DebouceSelect from "../Shared/Select/DebounceSelect";
 import { useGetProductsQuery } from "../../redux/services/product/productApi";
+import DebouceSelect from "../Shared/Select/DebounceSelect";
+import { useDispatch } from "react-redux";
+import { setProduct } from "../../redux/services/product/productSlice";
 
-const options = [
-  {
-    value: "1",
-    label: "Product 1",
-  },
-  {
-    value: "2",
-    label: "Product 2",
-  },
-  {
-    value: "3",
-    label: "Product 3",
-  },
-  {
-    value: "4",
-    label: "Product 4",
-  },
-];
-
-export const SearchProductComponent = ({ options: editOptions }) => {
+export const SearchProductComponent = ({ options: editOptions = [] }) => {
   const [keyword, setKeyword] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {
@@ -31,9 +14,40 @@ export const SearchProductComponent = ({ options: editOptions }) => {
     }
   }, 1000);
 
-  console.log(editOptions);
-  console.log(keyword);
-  const { data, isLoading } = useGetProductsQuery({});
+  const { data, isFetching } = useGetProductsQuery(
+    {
+      params: {
+        selectValue: ["id", "name", "sku", "buying_price"],
+        keyword,
+      },
+    },
+    {
+      skip: !keyword,
+    }
+  );
+
+  const options = [
+    ...editOptions,
+    ...(data?.results?.Product?.map((product) => ({
+      value: product.id.toString(),
+      label: product.name,
+      sku: product.sku,
+      unitCost: product.buying_price,
+    })) ?? []),
+  ];
+
+  const dispatch = useDispatch();
+
+  const onSelect = (value, option) => {
+    dispatch(
+      setProduct({
+        value: option.value,
+        label: option.label,
+        sku: option.sku,
+        unitCost: option.unitCost,
+      })
+    );
+  };
 
   return (
     <DebouceSelect
@@ -41,10 +55,11 @@ export const SearchProductComponent = ({ options: editOptions }) => {
       onSearch={debounce}
       placeholder={"Product Name"}
       required={true}
-      options={editOptions ?? options}
+      options={options}
       name={"product_name"}
       mode={"multiple"}
-      // isLoading={isLoading}
+      isLoading={isFetching}
+      onSelect={onSelect}
     />
   );
 };

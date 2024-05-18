@@ -57,7 +57,7 @@ export const CustomSelectButton = (props) => {
                     />
                   )
                 }
-                allowClear
+                allowClear={true}
               />
             ) : (
               <Select
@@ -76,7 +76,7 @@ export const CustomSelectButton = (props) => {
                     />
                   )
                 }
-                allowClear
+                allowClear={true}
               />
             )}
           </Form.Item>

@@ -30,10 +30,10 @@ const CustomInputButton = (props) => {
           >
             <Input
               type={type}
-              placeholder={`Enter ${placeholder ?? label}`}
+              placeholder={`${placeholder ?? "Enter" + label}`}
               className="mt-2 border-2"
               size="large"
-              allowClear
+              allowClear={true}
             />
           </Form.Item>
           <Button

@@ -12,6 +12,7 @@ const DebouceSelect = (props) => {
     isLoading = false,
     noStyle = false,
     onSearch,
+    onSelect,
   } = props;
 
   return (
@@ -27,9 +28,9 @@ const DebouceSelect = (props) => {
           className="mt-2 custom-selector"
           size="large"
           mode={mode}
+          filterOption={false}
           onSearch={onSearch}
           options={options}
-          allowClear
           notFoundContent={
             isLoading && (
               <Spin
@@ -38,6 +39,8 @@ const DebouceSelect = (props) => {
               />
             )
           }
+          onSelect={onSelect}
+          allowClear
         />
       </Form.Item>
     </GlobalUtilityStyle>

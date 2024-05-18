@@ -1,30 +1,14 @@
 import { Col, Form } from "antd";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { useGetProductsQuery } from "../../redux/services/product/productApi";
 import { fullColLayout } from "../Shared/Form/FormLayout";
 import DebouceSelect from "../Shared/Select/DebounceSelect";
 import ComboTableComponent from "./ComboTableComponent";
+import { useDispatch } from "react-redux";
+import { setProduct } from "../../redux/services/product/productSlice";
 
-const options = [
-  {
-    value: "1",
-    label: "Product 1",
-  },
-  {
-    value: "2",
-    label: "Product 2",
-  },
-  {
-    value: "3",
-    label: "Product 3",
-  },
-  {
-    value: "4",
-    label: "Product 4",
-  },
-];
-
-const SearchProductComponent = () => {
+const SearchProductComponent = ({ options: editOptions = [] }) => {
   const [keyword, setKeyword] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {
@@ -32,6 +16,41 @@ const SearchProductComponent = () => {
       setKeyword(value);
     }
   }, 1000);
+
+  const { data, isFetching } = useGetProductsQuery(
+    {
+      params: {
+        selectValue: ["id", "name", "sku", "buying_price"],
+        keyword,
+      },
+    },
+    {
+      skip: !keyword,
+    }
+  );
+
+  const options = [
+    ...editOptions,
+    ...(data?.results?.Product?.map((product) => ({
+      value: product.id.toString(),
+      label: product.name,
+      sku: product.sku,
+      unitCost: product.buying_price,
+    })) ?? []),
+  ];
+
+  const dispatch = useDispatch();
+
+  const onSelect = (value, option) => {
+    dispatch(
+      setProduct({
+        value: option.value,
+        label: option.label,
+        sku: option.sku,
+        unitCost: option.unitCost,
+      })
+    );
+  };
 
   return (
     <Col {...fullColLayout}>
@@ -43,7 +62,8 @@ const SearchProductComponent = () => {
         options={options}
         name={"product_name"}
         mode={"multiple"}
-        // isLoading={isLoading}
+        isLoading={isFetching}
+        onSelect={onSelect}
       />
     </Col>
   );
@@ -51,7 +71,7 @@ const SearchProductComponent = () => {
 
 const ComboProductsComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("product_type", form);
+  const productType = Form.useWatch("type", form);
 
   if (productType === "combo") {
     return (

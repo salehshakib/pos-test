@@ -7,11 +7,11 @@ import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 
 export const BrandComponent = () => {
   const dispatch = useDispatch();
-  const { data, isFetching } = useGetBrandsQuery({});
+  const { data, isLoading } = useGetBrandsQuery({});
 
   const options = data?.results?.brand?.map((item) => {
     return {
-      value: item.id,
+      value: item.id?.toString(),
       label: item.name,
     };
   });
@@ -24,12 +24,12 @@ export const BrandComponent = () => {
     <>
       <CustomSelectButton
         label="Brand"
-        showSearch={true}
+        // showSearch={true}
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleAddBrand}
         name={"brand_id"}
-        isLoading={isFetching}
+        isLoading={isLoading}
       />
 
       <BrandCreate subDrawer={true} />

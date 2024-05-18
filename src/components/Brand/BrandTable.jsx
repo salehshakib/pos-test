@@ -83,6 +83,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"brand"}
       />
     </GlobalUtilityStyle>
   );

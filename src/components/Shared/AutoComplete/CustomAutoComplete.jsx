@@ -26,7 +26,7 @@ const CustomAutoComplete = (props) => {
         <AutoComplete
           options={options}
           onSearch={onSearch}
-          allowClear
+          allowClear={true}
           size="large"
           placeholder={placeholder ?? `Enter ${label}`}
           className="mt-2"

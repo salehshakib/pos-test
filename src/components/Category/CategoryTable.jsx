@@ -83,6 +83,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
+        item={"category"}
       />
     </GlobalUtilityStyle>
   );

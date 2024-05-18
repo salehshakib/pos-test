@@ -5,6 +5,7 @@ const initialState = {
   isEditDrawerOpen: false,
   isBrandDrawerOpen: false,
   isCategoryDrawerOpen: false,
+  isTaxDrawerOpen: false,
 };
 
 const drawerSlice = createSlice({
@@ -35,6 +36,12 @@ const drawerSlice = createSlice({
     closeCategoryDrawer: (state) => {
       state.isCategoryDrawerOpen = false;
     },
+    openTaxDrawer: (state) => {
+      state.isTaxDrawerOpen = true;
+    },
+    closeTaxDrawer: (state) => {
+      state.isTaxDrawerOpen = false;
+    },
   },
 });
 
@@ -49,4 +56,6 @@ export const {
   closeBrandDrawer,
   openCategoryDrawer,
   closeCategoryDrawer,
+  openTaxDrawer,
+  closeTaxDrawer,
 } = drawerSlice.actions;

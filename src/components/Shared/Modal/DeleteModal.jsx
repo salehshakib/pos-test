@@ -8,7 +8,13 @@ const modalProps = {
   maskClosable: true,
 };
 
-const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
+const DeleteModal = ({
+  deleteModal,
+  hideModal,
+  handleDelete,
+  isLoading,
+  item,
+}) => {
   return (
     <GlobalUtilityStyle>
       <Modal
@@ -20,7 +26,7 @@ const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
                 fontSize: "20px",
               }}
             />
-            <span>Delete Department</span>
+            <span>Delete {item}</span>
           </div>
         }
         open={deleteModal}
@@ -28,7 +34,7 @@ const DeleteModal = ({ deleteModal, hideModal, handleDelete, isLoading }) => {
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          <span>Do you want to delete this department?</span>
+          <span>Do you want to delete this {item}?</span>
           <div className="w-full flex justify-end items-center gap-3">
             <Button onClick={hideModal}>No</Button>
             <Button type="primary" onClick={handleDelete} loading={isLoading}>

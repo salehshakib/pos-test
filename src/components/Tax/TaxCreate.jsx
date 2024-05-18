@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  closeCreateDrawer,
+  closeTaxDrawer,
+} from "../../redux/services/drawer/drawerSlice";
 import { useCreateTaxMutation } from "../../redux/services/tax/taxApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import TaxForm from "./TaxForm";
 
-const TaxCreate = () => {
+const TaxCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
-  const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
+  const { isCreateDrawerOpen, isTaxDrawerOpen } = useSelector(
+    (state) => state.drawer
+  );
 
   const [createTax, { isLoading }] = useCreateTaxMutation();
 
@@ -29,12 +34,21 @@ const TaxCreate = () => {
     }
   };
 
+  const handleCloseSubDrawer = () => {
+    dispatch(closeTaxDrawer());
+  };
+
   return (
-    <CustomDrawer title={"Add Tax"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Add Tax"}
+      open={subDrawer ? isTaxDrawerOpen : isCreateDrawerOpen}
+      onClose={handleCloseSubDrawer}
+    >
       <TaxForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        onClose={handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

@@ -14,6 +14,7 @@ const ProductCreate = () => {
 
   const handleSubmit = async (values) => {
     console.log(values);
+
     const { data, error } = await createProduct({
       data: values,
     });
@@ -33,7 +34,7 @@ const ProductCreate = () => {
     <CustomDrawer title={"Create Product"} open={isCreateDrawerOpen}>
       <ProductForm
         handleSubmit={handleSubmit}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         fields={errorFields}
       />
     </CustomDrawer>

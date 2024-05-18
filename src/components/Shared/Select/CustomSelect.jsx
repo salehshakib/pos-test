@@ -49,7 +49,7 @@ const CustomSelect = (props) => {
                 />
               )
             }
-            allowClear
+            allowClear={true}
           />
         ) : (
           <Select
@@ -68,7 +68,7 @@ const CustomSelect = (props) => {
                 />
               )
             }
-            allowClear
+            allowClear={true}
           />
         )}
       </Form.Item>

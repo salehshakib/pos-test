@@ -182,7 +182,7 @@ const PromotionalPriceComponent = () => {
               <CustomDatepicker
                 type={"date"}
                 label={"Start Date"}
-                name={["promotion", "start_date"]}
+                name={["promotion", "starting_date"]}
               />
             </Col>
             <Col {...mdColLayout}>
@@ -202,7 +202,7 @@ const PromotionalPriceComponent = () => {
   );
 };
 
-const ProductForm = (props) => {
+const ProductForm = ({ options, ...props }) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -227,7 +227,7 @@ const ProductForm = (props) => {
           <BarCodeComponent />
         </Col>
 
-        <ComboProductsComponent />
+        <ComboProductsComponent options={options} />
         <AttachmentComponent />
 
         <Col {...colLayout}>

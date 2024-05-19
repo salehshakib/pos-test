@@ -20,7 +20,7 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
   const { data, isFetching } = useGetProductsQuery(
     {
       params: {
-        selectValue: ["id", "name", "sku", "buying_price"],
+        // selectValue: ["id", "name", "sku", "buying_price"],
         keyword,
       },
     },
@@ -30,12 +30,12 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
   );
 
   const options = [
-    ...editOptions,
+    // ...editOptions,
     ...(data?.results?.Product?.map((product) => ({
       value: product.id.toString(),
       label: product.name,
-      sku: product.sku,
-      unitCost: product.buying_price,
+      // sku: product.sku,
+      // unitCost: product.buying_price,
     })) ?? []),
   ];
 
@@ -46,8 +46,8 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
       setProduct({
         value: option.value,
         label: option.label,
-        sku: option.sku,
-        unitCost: option.unitCost,
+        // sku: option.sku,
+        // unitCost: option.unitCost,
       })
     );
   };
@@ -60,7 +60,7 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
         placeholder={"Product Name"}
         required={true}
         options={options}
-        name={"product_name"}
+        name={"product_id"}
         mode={"multiple"}
         isLoading={isFetching}
         onSelect={onSelect}
@@ -69,14 +69,14 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
   );
 };
 
-const ComboProductsComponent = () => {
+const ComboProductsComponent = ({ options }) => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
   if (productType === "combo") {
     return (
       <>
-        <SearchProductComponent />
+        <SearchProductComponent options={options} />
         <ComboTableComponent />
       </>
     );

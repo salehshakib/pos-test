@@ -1,11 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Col, Form } from "antd";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
 import { fullColLayout } from "../../Shared/Form/FormLayout";
+import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomTable from "../../Shared/Table/CustomTable";
-import CustomInput from "../../Shared/Input/CustomInput";
 
 const columns = [
   {
@@ -127,33 +127,64 @@ export const ProductTableComponent = () => {
 
   const [rowId, setRowId] = useState(undefined);
 
+  // useEffect(() => {
+  //   if (productData?.length > 0) {
+  //     if (rowId !== undefined) {
+  //       const selectedProduct = productData[rowId];
+
+  //       form.setFieldValue(["product_list", "qty", selectedProduct], 1);
+  //       form.setFieldValue(
+  //         ["product_list", "action", selectedProduct],
+  //         "Addition"
+  //       );
+
+  //       setRowId(undefined);
+  //     } else if (productData?.length > 0 && productData) {
+  //       const lastProductIndex = productData.length - 1;
+
+  //       if (lastProductIndex >= 0) {
+  //         const lastProduct = productData[lastProductIndex];
+
+  //         form.setFieldValue(["product_list", "qty", lastProduct], 1);
+  //         form.setFieldValue(
+  //           ["product_list", "action", lastProduct],
+  //           "Addition"
+  //         );
+  //       }
+  //     }
+  //   }
+  // }, [productData]);
+
   useEffect(() => {
     if (productData?.length > 0) {
+      const setFormValuesIfNotExists = (productIndex) => {
+        const selectedProduct = productData[productIndex];
+        const qtyPath = ["product_list", "qty", selectedProduct];
+        const actionPath = ["product_list", "action", selectedProduct];
+
+        // Check if the value already exists
+        const existingQty = form.getFieldValue(qtyPath);
+        const existingAction = form.getFieldValue(actionPath);
+
+        // Only set the values if they do not exist
+        if (existingQty === undefined) {
+          form.setFieldValue(qtyPath, 1);
+        }
+        if (existingAction === undefined) {
+          form.setFieldValue(actionPath, "Addition");
+        }
+      };
+
       if (rowId !== undefined) {
-        const selectedProduct = productData[rowId];
-
-        form.setFieldValue(["product_list", "qty", selectedProduct], 1);
-        form.setFieldValue(
-          ["product_list", "action", selectedProduct],
-          "Addition"
-        );
-
+        setFormValuesIfNotExists(rowId);
         setRowId(undefined);
-      } else if (productData?.length > 0 && productData) {
+      } else {
         const lastProductIndex = productData.length - 1;
-
         if (lastProductIndex >= 0) {
-          const lastProduct = productData[lastProductIndex];
-
-          form.setFieldValue(["product_list", "qty", lastProduct], 1);
-          form.setFieldValue(
-            ["product_list", "action", lastProduct],
-            "Addition"
-          );
+          setFormValuesIfNotExists(lastProductIndex);
         }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productData]);
 
   useEffect(() => {
@@ -162,20 +193,21 @@ export const ProductTableComponent = () => {
 
       form.setFieldValue("product_name", updatedProductData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowId]);
 
-  const { productDetails } = useSelector((state) => state.product);
+  // const { productDetails } = useSelector((state) => state.product);
 
-  const filteredProducts = productDetails.filter((product) =>
-    productData?.includes(product.value)
-  );
+  // const filteredProducts = productDetails.filter((product) =>
+  //   productData?.includes(product.value)
+  // );
 
   const dataSource =
-    filteredProducts?.map(({ value, label, sku, unitCost }) => {
+    productData?.map((item) => {
+      const { value, label, sku, unitCost } = item ?? {};
+
       return {
-        id: value,
-        name: label,
+        id: item,
+        name: item,
         sku,
         unitCost,
         action: true,

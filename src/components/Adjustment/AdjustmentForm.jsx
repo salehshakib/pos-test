@@ -53,11 +53,7 @@ const AdjustmentForm = ({ options, ...props }) => {
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomUploader
-            label="Attach Documents"
-            // multiple={true}
-            name={"attachment"}
-          />
+          <CustomUploader label="Attach Documents" name={"attachment"} />
         </Col>
         <Col {...fullColLayout}>
           <CustomInput

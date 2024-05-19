@@ -68,8 +68,6 @@ export const WarehouseStockTableComponent = () => {
   const form = Form.useFormInstance();
   const warehouse = Form.useWatch("initial_stock_warehouse_id", form);
 
-  //   const price_diff_warehouse = Form.useWatch("price_list", form);
-
   const [rowId, setRowId] = useState(undefined);
 
   useEffect(() => {
@@ -96,9 +94,11 @@ export const WarehouseStockTableComponent = () => {
     if (rowId !== undefined) {
       const updatedProductData = warehouse?.filter((item) => item !== rowId);
 
-      form.setFieldValue("warehouse_id", updatedProductData);
+      form.setFieldValue("initial_stock_warehouse_id", updatedProductData);
     }
   }, [rowId]);
+
+  console.log(warehouse);
 
   const dataSource = warehouse?.map((item) => {
     return {

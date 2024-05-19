@@ -20,6 +20,7 @@ export const SearchWarehouse = ({ name }) => {
       options={options}
       isLoading={isFetching}
       showSearch={true}
+      mode="multiple"
       name={name}
     />
   );

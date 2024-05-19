@@ -43,15 +43,17 @@ const AdjustmentEdit = ({ id, setId }) => {
           value: list?.map((item) => item?.product_id.toString()),
           errors: "",
         },
-        {
-          name: "attachment",
-          value: [
-            {
-              url: data?.attachments?.[0]?.url,
-            },
-          ],
-          errors: "",
-        },
+        data?.attachments?.length > 0
+          ? {
+              name: "attachment",
+              value: [
+                {
+                  url: data?.attachments?.[0]?.url,
+                },
+              ],
+              errors: "",
+            }
+          : {},
         {
           name: "note",
           value: data?.note,
@@ -100,6 +102,8 @@ const AdjustmentEdit = ({ id, setId }) => {
     });
 
     // attachment[0]?.originFileObj;
+
+    console.log(values);
     const postObj = {
       attachment:
         attachment?.length > 0

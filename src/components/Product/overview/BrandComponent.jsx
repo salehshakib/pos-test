@@ -20,6 +20,8 @@ export const BrandComponent = () => {
     dispatch(openBrandDrawer());
   };
 
+  console.log(options);
+
   return (
     <>
       <CustomSelectButton

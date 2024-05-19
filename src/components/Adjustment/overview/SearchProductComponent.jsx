@@ -22,12 +22,14 @@ export const SearchProductComponent = ({ options: editOptions = [] }) => {
       },
     },
     {
-      skip: !keyword,
+      // skip: !keyword,
     }
   );
 
+  console.log(data?.results?.Product);
+
   const options = [
-    ...editOptions,
+    // ...editOptions,
     ...(data?.results?.Product?.map((product) => ({
       value: product.id.toString(),
       label: product.name,

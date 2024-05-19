@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Col, Form } from "antd";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
@@ -88,62 +89,97 @@ const columns = [
 
 const ComboTableComponent = () => {
   const form = Form.useFormInstance();
-  const productData = Form.useWatch("product_name", form);
+  const productData = Form.useWatch("product_id", form);
   const productListData = Form.useWatch("product_list", form);
+
+  console.log(productData);
 
   const [rowId, setRowId] = useState(undefined);
 
+  // useEffect(() => {
+  //   if (productData?.length > 0) {
+  //     if (rowId !== undefined) {
+  //       const selectedProduct = productData[rowId];
+
+  //       form.setFieldValue(["product_list", "qty", selectedProduct], 1);
+  //       form.setFieldValue(["product_list", "unit_price", selectedProduct], 0);
+
+  //       setRowId(undefined);
+  //     } else if (productData?.length > 0 && productData) {
+  //       const lastProductIndex = productData.length - 1;
+
+  //       if (lastProductIndex >= 0) {
+  //         const lastProduct = productData[lastProductIndex];
+
+  //         form.setFieldValue(["product_list", "qty", lastProduct], 1);
+  //         form.setFieldValue(["product_list", "unit_price", lastProduct], 0);
+  //       }
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [productData]);
+
   useEffect(() => {
     if (productData?.length > 0) {
+      const setFormValuesIfNotExists = (productIndex) => {
+        const selectedProduct = productData[productIndex];
+        const qtyPath = ["product_list", "qty", selectedProduct];
+        const unitPricePath = ["product_list", "unit_price", selectedProduct];
+
+        // Check if the value already exists
+        const existingQty = form.getFieldValue(qtyPath);
+        const existingUnitPrice = form.getFieldValue(unitPricePath);
+
+        // Only set the values if they do not exist
+        if (existingQty === undefined) {
+          form.setFieldValue(qtyPath, 1);
+        }
+        if (existingUnitPrice === undefined) {
+          form.setFieldValue(unitPricePath, 0);
+        }
+      };
+
       if (rowId !== undefined) {
-        const selectedProduct = productData[rowId];
-
-        form.setFieldValue(["product_list", "qty", selectedProduct], 1);
-        form.setFieldValue(["product_list", "unit_price", selectedProduct], 0);
-
+        setFormValuesIfNotExists(rowId);
         setRowId(undefined);
-      } else if (productData?.length > 0 && productData) {
+      } else {
         const lastProductIndex = productData.length - 1;
-
         if (lastProductIndex >= 0) {
-          const lastProduct = productData[lastProductIndex];
-
-          form.setFieldValue(["product_list", "qty", lastProduct], 1);
-          form.setFieldValue(["product_list", "unit_price", lastProduct], 0);
+          setFormValuesIfNotExists(lastProductIndex);
         }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productData]);
 
   useEffect(() => {
     if (rowId !== undefined) {
       const updatedProductData = productData?.filter((item) => item !== rowId);
 
-      form.setFieldValue("product_name", updatedProductData);
+      form.setFieldValue("product_id", updatedProductData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowId]);
 
-  const { productDetails } = useSelector((state) => state.product);
+  // const { productDetails } = useSelector((state) => state.product);
 
-  const filteredProducts = productDetails.filter((product) =>
-    productData.includes(product.value)
-  );
+  // const filteredProducts = productDetails.filter((product) =>
+  //   productData?.includes(product.value)
+  // );
 
-  console.log(filteredProducts);
+  // console.log(filteredProducts);
 
   const dataSource =
-    filteredProducts?.map(({ value, label }) => {
+    productData?.map((item) => {
       return {
-        id: value,
-        name: label,
+        id: item,
+        name: item,
         action: true,
         delete: {
           setRowId,
         },
       };
     }) ?? [];
+
+  console.log(productData, productListData);
 
   dataSource.push({
     name: "Total",

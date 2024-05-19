@@ -11,7 +11,7 @@ export const CategoryComponent = () => {
 
   const options = data?.results?.category?.map((item) => {
     return {
-      value: item.id,
+      value: item.id?.toString(),
       label: item.name,
     };
   });
@@ -19,6 +19,7 @@ export const CategoryComponent = () => {
   function handleAddCategory() {
     dispatch(openCategoryDrawer());
   }
+
   return (
     <>
       <CustomSelectButton

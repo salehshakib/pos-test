@@ -51,11 +51,11 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     updateProduct: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, formData }) => {
         return {
-          url: `/${PRODUCT}/update/${data?.id}`,
+          url: `/${PRODUCT}/update/${id}`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {

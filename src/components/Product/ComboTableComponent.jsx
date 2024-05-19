@@ -18,28 +18,6 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "SKU",
-  //   dataIndex: "code",
-  //   key: "code",
-  //   align: "center",
-  //   render: (code) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {code}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   title: "Unit Cost",
-  //   dataIndex: "cost",
-  //   key: "cost",
-  //   align: "center",
-  //   render: (cost) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {cost}
-  //     </span>
-  //   ),
-  // },
   {
     title: "Quantity",
     dataIndex: "quantity",

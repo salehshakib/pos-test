@@ -1,27 +1,23 @@
 import { Col, Form, Row } from "antd";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import {
-  colLayout,
-  fullColLayout,
-  mdColLayout,
-  rowLayout,
-} from "../Shared/Form/FormLayout";
+import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import BarCodeComponent from "./BarCodeComponent";
 import { BrandComponent } from "./BrandComponent";
 import { CategoryComponent } from "./CategoryComponent";
+import ComboProductsComponent from "./ComboProductsComponent";
 import ProductCodeComponent from "./ProductCodeComponent";
 import ProductTypeComponent from "./ProductTypeComponent";
+import { SearchWarehouse } from "./SearchWarehouse";
 import { TaxComponent } from "./TaxComponent";
 import TaxTypeComponent from "./TaxTypeComponent";
 import UnitComponent from "./UnitComponent";
-import ComboProductsComponent from "./ComboProductsComponent";
 import { VarientComponent } from "./VarientComponent";
-import WarehouseComponent from "./WarehouseComponent";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import WarehouseTableComponent from "./WarehouseTableComponent";
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
@@ -68,6 +64,59 @@ const AlertComponent = () => {
       </Col>
     );
   }
+};
+
+const InitialStockComponent = () => {
+  const form = Form.useFormInstance();
+  const initialSctock = Form.useWatch("initial_stock", form);
+
+  return (
+    <>
+      <Col {...fullColLayout}>
+        <CustomCheckbox label="Initial Stock" name="initial_stock" />
+      </Col>
+
+      {initialSctock && (
+        <>
+          <Col {...fullColLayout} className="mt-5">
+            <SearchWarehouse />
+          </Col>
+
+          <Col {...fullColLayout}>
+            <WarehouseTableComponent className="mb-10" />
+          </Col>
+        </>
+      )}
+    </>
+  );
+};
+
+const DifferentPriceComponent = () => {
+  const form = Form.useFormInstance();
+  const has_different_price = Form.useWatch("has_differnet_price", form);
+
+  return (
+    <Row {...rowLayout}>
+      <Col {...fullColLayout}>
+        <CustomCheckbox
+          label="This product has different price for different warehouse"
+          name="has_differnet_price"
+        />
+      </Col>
+
+      {has_different_price && (
+        <>
+          <Col {...fullColLayout} className="mt-5">
+            <SearchWarehouse />
+          </Col>
+
+          <Col {...fullColLayout}>
+            <WarehouseTableComponent className="mb-10" />
+          </Col>
+        </>
+      )}
+    </Row>
+  );
 };
 
 const ExpireComponent = () => {
@@ -200,18 +249,17 @@ const ProductForm = (props) => {
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...mdColLayout}>
+        <InitialStockComponent />
+
+        <Col {...fullColLayout}>
           <CustomCheckbox
             label="Featured Product"
             name="has_featured"
             subLabel="(It will be displayed on POS)"
           />
         </Col>
-        <Col {...mdColLayout}>
-          <CustomCheckbox
-            label="Embeded Barcode"
-            // name="product_description"
-          />
+        <Col {...fullColLayout}>
+          <CustomCheckbox label="Embeded Barcode" name="embedded_barcode" />
         </Col>
       </Row>
       <Row {...rowLayout} justify={"center"} align={"middle"}>
@@ -230,10 +278,19 @@ const ProductForm = (props) => {
       </Row>
 
       <VarientComponent />
-      <WarehouseComponent />
+      <DifferentPriceComponent />
       <ExpireComponent />
 
       <PromotionalPriceComponent />
+
+      <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label="Disable Ecommerce Sync"
+            name="ecommerce_sync"
+          />
+        </Col>
+      </Row>
     </CustomForm>
   );
 };

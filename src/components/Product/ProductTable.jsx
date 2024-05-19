@@ -7,6 +7,10 @@ import CustomTable from "../Shared/Table/CustomTable";
 import ProductEdit from "./ProductEdit";
 import StatusModal from "../Shared/Modal/StatusModal";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "../../redux/services/product/productApi";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -20,14 +24,13 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetProductsQuery({
+    params: { ...pagination, allData: 1 },
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -55,11 +58,13 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deleteProduct(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
+
+  console.log(data);
 
   // const dataSource =
   //   data?.results?.department?.map((item) => {
@@ -87,11 +92,11 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
       <CustomTable
         columns={newColumns}
         // dataSource={dataSource}
-        // total={total}
+        total={total}
         pagination={pagination}
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
+        isLoading={isLoading}
       />
 
       <ProductEdit id={editId} setId={setEditId} />
@@ -103,12 +108,14 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     isLoading={isStatusUpdating}
   />
 
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+   */}
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

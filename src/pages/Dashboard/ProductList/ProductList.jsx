@@ -4,6 +4,7 @@ import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { defaultUser } from "../../../assets/data/defaultUserImage";
+import { FaRegEye } from "react-icons/fa";
 
 const columns = [
   {
@@ -37,13 +38,24 @@ const columns = [
     ),
   },
   {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
     align: "center",
-    render: (code) => (
+    render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {code}
+        {name}
+      </span>
+    ),
+  },
+  {
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
       </span>
     ),
   },
@@ -131,9 +143,15 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleEdit, handleDeleteModal }, record) => {
+    render: ({ handleDetailsModal, handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
+          <button
+            onClick={() => handleDetailsModal(record?.id)}
+            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <FaRegEye className="text-lg md:text-xl" />
+          </button>
           <button
             onClick={() => handleEdit(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"

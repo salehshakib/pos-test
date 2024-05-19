@@ -82,7 +82,7 @@ const InitialStockComponent = () => {
         <CustomCheckbox
           label="Initial Stock"
           name="has_stock"
-          required={true}
+          // required={true}
         />
       </Col>
 

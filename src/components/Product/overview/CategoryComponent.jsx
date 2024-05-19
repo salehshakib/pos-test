@@ -23,7 +23,7 @@ export const CategoryComponent = () => {
     <>
       <CustomSelectButton
         label="Category"
-        // showSearch={true}
+        showSearch={true}
         required={true}
         options={options}
         icon={<FaPlus className="text-xl" />}

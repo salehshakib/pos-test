@@ -121,8 +121,9 @@ const ProductCreate = () => {
       embedder_barcode: embedder_barcode ? 1 : 0,
       has_promotion: has_promotion ? 1 : 0,
       promotion_price: promotion?.promotion_price,
-      starting_date: dayjs(promotion?.start_date).format("YYYY-MM-DD"),
-      last_date: dayjs(promotion?.last_date).format("YYYY-MM-DD"),
+      starting_date:
+        promotion && dayjs(promotion?.start_date).format("YYYY-MM-DD"),
+      last_date: promotion && dayjs(promotion?.last_date).format("YYYY-MM-DD"),
       has_different_price: has_different_price ? 1 : 0,
       price_list: has_different_price && JSON.stringify(priceListArray),
       product_list: JSON.stringify(productListArray),

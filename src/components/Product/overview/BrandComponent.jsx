@@ -24,7 +24,7 @@ export const BrandComponent = () => {
     <>
       <CustomSelectButton
         label="Brand"
-        // showSearch={true}
+        showSearch={true}
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleAddBrand}

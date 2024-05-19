@@ -18,6 +18,7 @@ const TaxTypeComponent = () => {
       options={options}
       required={true}
       name={"tax_method"}
+      showSearch={true}
     />
   );
 };

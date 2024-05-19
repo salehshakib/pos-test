@@ -17,6 +17,14 @@ export const CustomSelectButton = (props) => {
     styleProps,
   } = props;
 
+  const filterOption = (input, option) =>
+    (option?.label ?? "").toLocaleLowerCase().includes(input);
+
+  const filterSort = (optionA, optionB) =>
+    (optionA?.label ?? "")
+      .toLowerCase()
+      .localeCompare((optionB?.label ?? "").toLowerCase());
+
   return (
     <GlobalUtilityStyle>
       <Form.Item label={label} required={required}>
@@ -35,14 +43,8 @@ export const CustomSelectButton = (props) => {
               <Select
                 showSearch
                 optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
-                filterSort={(optionA, optionB) =>
-                  (optionA?.label ?? "")
-                    .toLowerCase()
-                    .localeCompare((optionB?.label ?? "").toLowerCase())
-                }
+                filterOption={filterOption}
+                filterSort={filterSort}
                 placeholder={`Select ${placeholder ?? label}`}
                 className="mt-2 custom-selector"
                 size="large"

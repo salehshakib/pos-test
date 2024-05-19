@@ -12,6 +12,7 @@ const ProductUnit = ({ options = [], isLoading }) => {
         isLoading={isLoading}
         required={true}
         name={"unit_id"}
+        showSearch={true}
       />
     </Col>
   );
@@ -26,6 +27,7 @@ const PurchaseUnit = ({ options = [], isLoading }) => {
         isLoading={isLoading}
         required={true}
         name={"purchase_unit_id"}
+        showSearch={true}
       />
     </Col>
   );
@@ -40,6 +42,7 @@ const SaleUnit = ({ options = [], isLoading }) => {
         isLoading={isLoading}
         required={true}
         name={"sale_unit_id"}
+        showSearch={true}
       />
     </Col>
   );

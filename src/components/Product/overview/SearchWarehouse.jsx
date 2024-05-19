@@ -1,44 +1,25 @@
-import { useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
-import DebouceSelect from "../../Shared/Select/DebounceSelect";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 export const SearchWarehouse = ({ name }) => {
-  const [keyword, setKeyword] = useState(null);
-
-  const { data, isFetching } = useGetWarehousesQuery(
-    {
-      params: {
-        selectValue: ["id", "name"],
-        keyword,
-      },
+  const { data, isFetching } = useGetWarehousesQuery({
+    params: {
+      selectValue: ["id", "name"],
     },
-    {
-      skip: !keyword,
-    }
-  );
+  });
 
-  console.log(data);
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
     label: warehouse.name,
   }));
 
-  const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
-      setKeyword(value);
-    }
-  }, 1000);
-
   return (
-    <DebouceSelect
+    <CustomSelect
       label="Warehouse"
-      placeholder={"Warehouse Name"}
-      onSearch={debounce}
-      mode={"multiple"}
+      required={true}
       options={options}
       isLoading={isFetching}
-      // name="warehouse_id"
+      showSearch={true}
       name={name}
     />
   );

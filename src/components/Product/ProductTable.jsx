@@ -1,16 +1,16 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import ProductEdit from "./ProductEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
-import DeleteModal from "../Shared/Modal/DeleteModal";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../redux/services/product/productApi";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { ProductDetails } from "./ProductDetails";
+import ProductEdit from "./ProductEdit";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -18,8 +18,11 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -32,25 +35,30 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
+
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
+  // const handleStatusModal = (id) => {
+  //   setStatusId(id);
+  //   setStatusModal(true);
+  // };
 
-  const handleStatus = async () => {
-    console.log(id);
-    // const { data } = await updateStatus( id);
+  // const handleStatus = async () => {
+  //   console.log(id);
+  //   // const { data } = await updateStatus( id);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
-  };
+  //   // if (data?.success) {
+  //   //   setId(undefined);
+  //   //   setStatusModal(false);
+  //   // }
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -66,32 +74,52 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
   console.log(data);
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  const dataSource =
+    data?.results?.Product?.map((item) => {
+      const {
+        id,
+        name,
+        created_at,
+        // is_active,
+        sku,
+        type,
+        brand_id,
+        category_id,
+        qty,
+        unit_id,
+        buying_price: cost,
+        selling_price: price,
+      } = item;
+      const date = dayjs(created_at).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      return {
+        id,
+        name: name,
+        sku: sku,
+        type,
+        brand: brand_id,
+        category: category_id,
+        quantity: qty,
+        unit: unit_id,
+        cost: cost,
+        price: price,
+        // status: { status: is_active, handleStatusModal },
+        created_at: date,
+        action: { handleDetailsModal, handleEdit, handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    // setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
-
-  // console.log(data?.results?.department);
 
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
+        dataSource={dataSource}
         total={total}
         pagination={pagination}
         setPagination={setPagination}
@@ -100,6 +128,12 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <ProductEdit id={editId} setId={setEditId} />
+
+      <ProductDetails
+        id={detailsId}
+        openModal={detailsModal}
+        hideModal={hideModal}
+      />
 
       {/* <StatusModal
     statusModal={statusModal}

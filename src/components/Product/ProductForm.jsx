@@ -17,6 +17,7 @@ import { TaxComponent } from "./TaxComponent";
 import TaxTypeComponent from "./TaxTypeComponent";
 import UnitComponent from "./UnitComponent";
 import { VarientComponent } from "./VarientComponent";
+import { WarehouseStockTableComponent } from "./WarehouseStockTableComponent";
 import WarehouseTableComponent from "./WarehouseTableComponent";
 
 const ProductCostComponent = () => {
@@ -73,7 +74,11 @@ const InitialStockComponent = () => {
   return (
     <>
       <Col {...fullColLayout}>
-        <CustomCheckbox label="Initial Stock" name="initial_stock" />
+        <CustomCheckbox
+          label="Initial Stock"
+          name="initial_stock"
+          required={true}
+        />
       </Col>
 
       {initialSctock && (
@@ -83,7 +88,7 @@ const InitialStockComponent = () => {
           </Col>
 
           <Col {...fullColLayout}>
-            <WarehouseTableComponent className="mb-10" />
+            <WarehouseStockTableComponent className="mb-10" />
           </Col>
         </>
       )}

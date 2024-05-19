@@ -108,6 +108,7 @@ const columns = [
             <button
               onClick={() => setRowId(record?.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              type="button"
             >
               <MdDelete className="text-lg md:text-xl" />
             </button>

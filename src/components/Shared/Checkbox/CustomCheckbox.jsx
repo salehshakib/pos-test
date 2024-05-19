@@ -26,7 +26,7 @@ const CustomCheckbox = (props) => {
       <Form.Item
         label={mode === "group" && label}
         name={name}
-        rules={[{ required: required, message: `Please input ${label}!` }]}
+        rules={[{ required: required, message: `Please select ${label}!` }]}
         valuePropName={mode === "single" && "checked"}
         noStyle
       >

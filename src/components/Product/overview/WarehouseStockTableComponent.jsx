@@ -31,7 +31,7 @@ const columns = [
       ) : (
         <CustomInput
           type={"number"}
-          name={["price_list", "qty", record?.id]}
+          name={["qty_list", "qty", record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -66,7 +66,7 @@ const columns = [
 
 export const WarehouseStockTableComponent = () => {
   const form = Form.useFormInstance();
-  const warehouse = Form.useWatch("warehouse_id", form);
+  const warehouse = Form.useWatch("initial_stock_warehouse_id", form);
 
   //   const price_diff_warehouse = Form.useWatch("price_list", form);
 
@@ -77,7 +77,7 @@ export const WarehouseStockTableComponent = () => {
       if (rowId !== undefined) {
         const selectedProduct = warehouse[rowId];
 
-        form.setFieldValue(["price_list", "qty", selectedProduct], 1);
+        form.setFieldValue(["qty_list", "qty", selectedProduct], 1);
 
         setRowId(undefined);
       } else if (warehouse?.length > 0 && warehouse) {
@@ -86,7 +86,7 @@ export const WarehouseStockTableComponent = () => {
         if (lastProductIndex >= 0) {
           const lastProduct = warehouse[lastProductIndex];
 
-          form.setFieldValue(["price_list", "qty", lastProduct], 1);
+          form.setFieldValue(["qty_list", "qty", lastProduct], 1);
         }
       }
     }

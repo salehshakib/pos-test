@@ -84,7 +84,7 @@ const InitialStockComponent = () => {
       {initialSctock && (
         <>
           <Col {...fullColLayout} className="mt-5">
-            <SearchWarehouse />
+            <SearchWarehouse name="initial_stock_warehouse_id" />
           </Col>
 
           <Col {...fullColLayout}>
@@ -112,7 +112,7 @@ const DifferentPriceComponent = () => {
       {has_different_price && (
         <>
           <Col {...fullColLayout} className="mt-5">
-            <SearchWarehouse />
+            <SearchWarehouse name={"warehouse_id"} />
           </Col>
 
           <Col {...fullColLayout}>
@@ -270,9 +270,9 @@ const ProductForm = (props) => {
       <Row {...rowLayout} justify={"center"} align={"middle"}>
         <Col xs={24}>
           <CustomUploader
-            label={"Product Image"}
-            // name={"brand_image"}
-            // multiple={true}
+            label={"Attachment"}
+            name={"attachments"}
+            multiple={true}
           />
         </Col>
       </Row>

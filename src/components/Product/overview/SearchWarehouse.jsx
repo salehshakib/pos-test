@@ -3,7 +3,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
 import DebouceSelect from "../../Shared/Select/DebounceSelect";
 
-export const SearchWarehouse = () => {
+export const SearchWarehouse = ({ name }) => {
   const [keyword, setKeyword] = useState(null);
 
   const { data, isFetching } = useGetWarehousesQuery(
@@ -37,20 +37,8 @@ export const SearchWarehouse = () => {
       mode={"multiple"}
       options={options}
       isLoading={isFetching}
-      name="warehouse_id"
+      // name="warehouse_id"
+      name={name}
     />
   );
 };
-
-// const WarehouseComponent = () => {
-//   const form = Form.useFormInstance();
-//   const has_different_price = Form.useWatch("has_differnet_price", form);
-
-//   console.log(has_different_price);
-
-//   return (
-
-//   );
-// };
-
-// export default WarehouseComponent;

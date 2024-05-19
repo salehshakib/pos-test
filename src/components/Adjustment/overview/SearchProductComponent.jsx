@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
-import { useGetProductsQuery } from "../../redux/services/product/productApi";
-import DebouceSelect from "../Shared/Select/DebounceSelect";
 import { useDispatch } from "react-redux";
-import { setProduct } from "../../redux/services/product/productSlice";
+import { useDebouncedCallback } from "use-debounce";
+import { useGetProductsQuery } from "../../../redux/services/product/productApi";
+import { setProduct } from "../../../redux/services/product/productSlice";
+import DebouceSelect from "../../Shared/Select/DebounceSelect";
 
 export const SearchProductComponent = ({ options: editOptions = [] }) => {
   const [keyword, setKeyword] = useState(null);

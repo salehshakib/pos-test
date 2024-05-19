@@ -1,9 +1,9 @@
 import { FaPlus } from "react-icons/fa";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import { useDispatch } from "react-redux";
-import { openTaxDrawer } from "../../redux/services/drawer/drawerSlice";
-import TaxCreate from "../Tax/TaxCreate";
+import { openTaxDrawer } from "../../../redux/services/drawer/drawerSlice";
+import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
+import TaxCreate from "../../Tax/TaxCreate";
 
 export const TaxComponent = () => {
   const dispatch = useDispatch();

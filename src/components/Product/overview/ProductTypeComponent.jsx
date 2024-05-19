@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const options = [
   { value: "standard", label: "Standard" },

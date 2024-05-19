@@ -1,10 +1,11 @@
 import { Col, Form } from "antd";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { fullColLayout } from "../Shared/Form/FormLayout";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomTable from "../Shared/Table/CustomTable";
 import { useSelector } from "react-redux";
+import { fullColLayout } from "../../Shared/Form/FormLayout";
+import CustomSelect from "../../Shared/Select/CustomSelect";
+import CustomTable from "../../Shared/Table/CustomTable";
+import CustomInput from "../../Shared/Input/CustomInput";
 
 const columns = [
   {
@@ -15,6 +16,28 @@ const columns = [
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
+      </span>
+    ),
+  },
+  {
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    title: "Unit Cost",
+    dataIndex: "unitCost",
+    key: "unitCost",
+    align: "center",
+    render: (unitCost) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {unitCost}
       </span>
     ),
   },
@@ -40,27 +63,36 @@ const columns = [
     },
   },
   {
-    title: "UnitPrice",
-    dataIndex: "unitPrice",
-    key: "unitPrice",
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
     align: "center",
-    width: 200,
-    render: (unitPrice, record) => {
-      return unitPrice >= 0 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {unitPrice}
-        </span>
-      ) : (
-        <CustomInput
-          type={"number"}
-          name={["product_list", "unit_price", record?.id]}
-          placeholder="quantity"
-          noStyle={true}
-        />
+    width: 180,
+    render: (action, record) => {
+      return (
+        action && (
+          <div className="flex w-full  justify-center items-center gap-3">
+            <CustomSelect
+              name={["product_list", "action", record?.id]}
+              placeholder="Type"
+              options={[
+                {
+                  value: "Addition",
+                  label: "Addition (+)",
+                },
+                {
+                  value: "Subtraction",
+                  label: "Subtraction (-)",
+                },
+              ]}
+              styleProps={{ width: "9rem" }}
+              noStyle={true}
+            />
+          </div>
+        )
       );
     },
   },
-
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
     dataIndex: "delete",
@@ -76,6 +108,7 @@ const columns = [
             <button
               onClick={() => setRowId(record?.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              type="button"
             >
               <MdDelete className="text-lg md:text-xl" />
             </button>
@@ -86,9 +119,10 @@ const columns = [
   },
 ];
 
-const ComboTableComponent = () => {
+export const ProductTableComponent = () => {
   const form = Form.useFormInstance();
   const productData = Form.useWatch("product_name", form);
+  const warehouseData = Form.useWatch("warehouse_id", form);
   const productListData = Form.useWatch("product_list", form);
 
   const [rowId, setRowId] = useState(undefined);
@@ -99,7 +133,10 @@ const ComboTableComponent = () => {
         const selectedProduct = productData[rowId];
 
         form.setFieldValue(["product_list", "qty", selectedProduct], 1);
-        form.setFieldValue(["product_list", "unit_price", selectedProduct], 0);
+        form.setFieldValue(
+          ["product_list", "action", selectedProduct],
+          "Addition"
+        );
 
         setRowId(undefined);
       } else if (productData?.length > 0 && productData) {
@@ -109,7 +146,10 @@ const ComboTableComponent = () => {
           const lastProduct = productData[lastProductIndex];
 
           form.setFieldValue(["product_list", "qty", lastProduct], 1);
-          form.setFieldValue(["product_list", "unit_price", lastProduct], 0);
+          form.setFieldValue(
+            ["product_list", "action", lastProduct],
+            "Addition"
+          );
         }
       }
     }
@@ -128,16 +168,16 @@ const ComboTableComponent = () => {
   const { productDetails } = useSelector((state) => state.product);
 
   const filteredProducts = productDetails.filter((product) =>
-    productData.includes(product.value)
+    productData?.includes(product.value)
   );
 
-  console.log(filteredProducts);
-
   const dataSource =
-    filteredProducts?.map(({ value, label }) => {
+    filteredProducts?.map(({ value, label, sku, unitCost }) => {
       return {
         id: value,
         name: label,
+        sku,
+        unitCost,
         action: true,
         delete: {
           setRowId,
@@ -150,21 +190,13 @@ const ComboTableComponent = () => {
     quantity: productListData
       ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
       : -1,
-    unitPrice: productListData
-      ? Object.values(productListData?.unit_price)?.reduce(
-          (acc, cur) => acc + cur,
-          0
-        )
-      : -1,
   });
 
   return (
-    <Col {...fullColLayout} className={`${productData && "mb-10"}`}>
-      {productData?.length > 0 && (
+    <Col {...fullColLayout} className="mb-10">
+      {productData?.length > 0 && warehouseData && (
         <CustomTable columns={columns} dataSource={dataSource} />
       )}
     </Col>
   );
 };
-
-export default ComboTableComponent;

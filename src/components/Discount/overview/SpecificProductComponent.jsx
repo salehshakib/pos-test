@@ -1,8 +1,8 @@
 import { Col, Form, Row } from "antd";
 import { MdDelete } from "react-icons/md";
-import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomTable from "../Shared/Table/CustomTable";
+import { fullColLayout, rowLayout } from "../../Shared/Form/FormLayout";
+import CustomSelect from "../../Shared/Select/CustomSelect";
+import CustomTable from "../../Shared/Table/CustomTable";
 
 const columns = [
   {

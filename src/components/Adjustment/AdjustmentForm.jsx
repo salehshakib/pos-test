@@ -9,8 +9,8 @@ import {
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import { ProductTableComponent } from "./ProductTableComponent";
-import { SearchProductComponent } from "./SearchProductComponent";
+import { ProductTableComponent } from "./overview/ProductTableComponent";
+import { SearchProductComponent } from "./overview/SearchProductComponent";
 
 const SelectWarehouse = () => {
   const { data, isLoading } = useGetWarehousesQuery({

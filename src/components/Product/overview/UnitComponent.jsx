@@ -1,7 +1,7 @@
 import { Col, Form } from "antd";
-import { useGetAllUnitQuery } from "../../redux/services/unit/unitApi";
-import { colLayout } from "../Shared/Form/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
+import { colLayout } from "../../Shared/Form/FormLayout";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const ProductUnit = ({ options = [], isLoading }) => {
   return (

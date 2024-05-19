@@ -27,6 +27,7 @@ const CustomCheckbox = (props) => {
         label={mode === "group" && label}
         name={name}
         rules={[{ required: required, message: `Please select ${label}!` }]}
+        required={required}
         valuePropName={mode === "single" && "checked"}
         noStyle
       >

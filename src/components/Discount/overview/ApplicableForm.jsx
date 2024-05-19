@@ -1,6 +1,6 @@
 import { Col } from "antd";
-import { colLayout } from "../Shared/Form/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { colLayout } from "../../Shared/Form/FormLayout";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const ApplicableForm = () => {
   return (

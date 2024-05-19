@@ -1,4 +1,4 @@
-import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const options = [
   {

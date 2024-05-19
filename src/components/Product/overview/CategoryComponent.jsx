@@ -1,9 +1,9 @@
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
-import { openCategoryDrawer } from "../../redux/services/drawer/drawerSlice";
-import CategoryCreate from "../Category/CategoryCreate";
-import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
+import { useGetCategoriesQuery } from "../../../redux/services/category/categoryApi";
+import { openCategoryDrawer } from "../../../redux/services/drawer/drawerSlice";
+import CategoryCreate from "../../Category/CategoryCreate";
+import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 
 export const CategoryComponent = () => {
   const dispatch = useDispatch();

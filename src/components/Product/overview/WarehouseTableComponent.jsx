@@ -2,8 +2,8 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomTable from "../Shared/Table/CustomTable";
+import CustomInput from "../../Shared/Input/CustomInput";
+import CustomTable from "../../Shared/Table/CustomTable";
 
 const columns = [
   {
@@ -19,19 +19,19 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
+    title: "Price",
+    dataIndex: "price",
+    key: "price",
     align: "center",
-    render: (qty, record) => {
-      return qty >= 0 ? (
+    render: (price, record) => {
+      return price >= 0 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {qty}
+          {price}
         </span>
       ) : (
         <CustomInput
           type={"number"}
-          name={["price_list", "qty", record?.id]}
+          name={["price_list", "price", record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -64,11 +64,9 @@ const columns = [
   },
 ];
 
-export const WarehouseStockTableComponent = () => {
+const WarehouseTableComponent = () => {
   const form = Form.useFormInstance();
   const warehouse = Form.useWatch("warehouse_id", form);
-
-  //   const price_diff_warehouse = Form.useWatch("price_list", form);
 
   const [rowId, setRowId] = useState(undefined);
 
@@ -77,7 +75,7 @@ export const WarehouseStockTableComponent = () => {
       if (rowId !== undefined) {
         const selectedProduct = warehouse[rowId];
 
-        form.setFieldValue(["price_list", "qty", selectedProduct], 1);
+        form.setFieldValue(["price_list", "price", selectedProduct], 0);
 
         setRowId(undefined);
       } else if (warehouse?.length > 0 && warehouse) {
@@ -86,7 +84,7 @@ export const WarehouseStockTableComponent = () => {
         if (lastProductIndex >= 0) {
           const lastProduct = warehouse[lastProductIndex];
 
-          form.setFieldValue(["price_list", "qty", lastProduct], 1);
+          form.setFieldValue(["price_list", "price", lastProduct], 0);
         }
       }
     }
@@ -112,3 +110,5 @@ export const WarehouseStockTableComponent = () => {
 
   return <CustomTable columns={columns} dataSource={dataSource} />;
 };
+
+export default WarehouseTableComponent;

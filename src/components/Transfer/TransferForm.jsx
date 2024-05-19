@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { SearchProductComponent } from "../Adjustment/SearchProductComponent";
+import { SearchProductComponent } from "../Adjustment/overview/SearchProductComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";

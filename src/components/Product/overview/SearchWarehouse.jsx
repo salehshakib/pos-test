@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
-import DebouceSelect from "../Shared/Select/DebounceSelect";
+import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
+import DebouceSelect from "../../Shared/Select/DebounceSelect";
 
 export const SearchWarehouse = () => {
   const [keyword, setKeyword] = useState(null);

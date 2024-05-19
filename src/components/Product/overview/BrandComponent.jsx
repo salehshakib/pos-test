@@ -1,9 +1,9 @@
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
-import { openBrandDrawer } from "../../redux/services/drawer/drawerSlice";
-import BrandCreate from "../Brand/BrandCreate";
-import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
+import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
+import { openBrandDrawer } from "../../../redux/services/drawer/drawerSlice";
+import BrandCreate from "../../Brand/BrandCreate";
+import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 
 export const BrandComponent = () => {
   const dispatch = useDispatch();

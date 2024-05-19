@@ -5,8 +5,8 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import ApplicableForm from "./ApplicableForm";
-import { SpecificProductComponent } from "./SpecificProductComponent";
+import ApplicableForm from "./overview/ApplicableForm";
+import { SpecificProductComponent } from "./overview/SpecificProductComponent";
 
 const weekDays = [
   {

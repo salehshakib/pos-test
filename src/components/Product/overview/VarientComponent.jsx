@@ -1,6 +1,6 @@
 import { Col, Form, Row } from "antd";
-import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import { fullColLayout, rowLayout } from "../../Shared/Form/FormLayout";
+import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 
 export const VarientComponent = () => {
   const form = Form.useFormInstance();

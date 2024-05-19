@@ -1,7 +1,7 @@
 import { Form } from "antd";
 import { RiRefreshLine } from "react-icons/ri";
-import CustomInputButton from "../Shared/Input/CustomInputButton";
-import { generateRandomCode } from "../../utilities/lib/generateCode";
+import { generateRandomCode } from "../../../utilities/lib/generateCode";
+import CustomInputButton from "../../Shared/Input/CustomInputButton";
 
 const ProductCodeComponent = () => {
   const form = Form.useFormInstance();

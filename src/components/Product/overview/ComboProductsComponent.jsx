@@ -1,12 +1,12 @@
 import { Col, Form } from "antd";
 import { useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
-import { useGetProductsQuery } from "../../redux/services/product/productApi";
-import { fullColLayout } from "../Shared/Form/FormLayout";
-import DebouceSelect from "../Shared/Select/DebounceSelect";
-import ComboTableComponent from "./ComboTableComponent";
 import { useDispatch } from "react-redux";
-import { setProduct } from "../../redux/services/product/productSlice";
+import { useDebouncedCallback } from "use-debounce";
+import { useGetProductsQuery } from "../../../redux/services/product/productApi";
+import { setProduct } from "../../../redux/services/product/productSlice";
+import { fullColLayout } from "../../Shared/Form/FormLayout";
+import DebouceSelect from "../../Shared/Select/DebounceSelect";
+import ComboTableComponent from "./ComboTableComponent";
 
 const SearchProductComponent = ({ options: editOptions = [] }) => {
   const [keyword, setKeyword] = useState(null);

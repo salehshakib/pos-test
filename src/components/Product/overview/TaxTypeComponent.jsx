@@ -2,11 +2,11 @@ import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const options = [
   {
-    value: "exclusive",
+    value: "Exclusive",
     label: "Exclusive",
   },
   {
-    value: "inclusive",
+    value: "Inclusive",
     label: "Inclusive",
   },
 ];

@@ -1,4 +1,5 @@
 import { DatePicker, Form } from "antd";
+import { MdDateRange } from "react-icons/md";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const { RangePicker } = DatePicker;
@@ -16,7 +17,9 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
             size={"large"}
             className="border-2 mt-2"
             style={{ width: "100%" }}
+            format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}
             picker={picker}
+            suffixIcon={<MdDateRange color="black" />}
           />
         )}
 
@@ -26,6 +29,8 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
             size={"large"}
             className="border-2 mt-2"
             style={{ width: "100%" }}
+            format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}
+            suffixIcon={<MdDateRange color="black" />}
           />
         )}
       </Form.Item>

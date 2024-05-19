@@ -18,6 +18,7 @@ export const SearchWarehouse = ({ name }) => {
     }
   );
 
+  console.log(data);
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
     label: warehouse.name,

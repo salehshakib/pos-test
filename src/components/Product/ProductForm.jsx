@@ -2,7 +2,12 @@ import { Col, Form, Row } from "antd";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
@@ -69,19 +74,19 @@ const AlertComponent = () => {
 
 const InitialStockComponent = () => {
   const form = Form.useFormInstance();
-  const initialSctock = Form.useWatch("initial_stock", form);
+  const hasStock = Form.useWatch("has_stock", form);
 
   return (
     <>
       <Col {...fullColLayout}>
         <CustomCheckbox
           label="Initial Stock"
-          name="initial_stock"
+          name="has_stock"
           required={true}
         />
       </Col>
 
-      {initialSctock && (
+      {hasStock && (
         <>
           <Col {...fullColLayout} className="mt-5">
             <SearchWarehouse name="initial_stock_warehouse_id" />
@@ -140,8 +145,11 @@ const ExpireComponent = () => {
         </Col>
 
         {hasExpiredDate && (
-          <Col {...colLayout}>
-            <CustomDatepicker label={"Expired Date"} name={"expired_date"} />
+          <Col {...mdColLayout}>
+            <CustomDatepicker
+              label={"Expired Date"}
+              name={["product_expire", "expired_date"]}
+            />
           </Col>
         )}
       </Row>
@@ -161,27 +169,33 @@ const PromotionalPriceComponent = () => {
 
       {hasPromotionalPrice && (
         <>
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <CustomInput
               label="Promotional Price"
+              name={["promotion", "promotion_price"]}
               type={"number"}
               required={true}
             />
           </Col>
-          <Col {...colLayout}>
-            <CustomDatepicker
-              type={"date"}
-              label={"Start Date"}
-              name={"start_date"}
-            />
-          </Col>
-          <Col {...colLayout}>
-            <CustomDatepicker
-              type={"date"}
-              label={"End Date"}
-              name={"end_date"}
-            />
-          </Col>
+          <Row {...rowLayout}>
+            <Col {...mdColLayout}>
+              <CustomDatepicker
+                type={"date"}
+                label={"Start Date"}
+                name={["promotion", "start_date"]}
+              />
+            </Col>
+            <Col {...mdColLayout}>
+              <CustomDatepicker
+                type={"date"}
+                label={"End Date"}
+                name={["promotion", "last_date"]}
+              />
+            </Col>
+          </Row>
+          {/* <Col {...colLayout}>
+            
+          </Col> */}
         </>
       )}
     </Row>

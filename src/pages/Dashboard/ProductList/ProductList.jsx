@@ -28,7 +28,7 @@ const columns = [
     align: "center",
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
         <img
           src={img ?? defaultUser}
           alt="defaultUser"

@@ -73,7 +73,7 @@ const ComboProductsComponent = ({ options }) => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (productType === "combo") {
+  if (productType === "Combo") {
     return (
       <>
         <SearchProductComponent options={options} />

@@ -23,7 +23,11 @@ const Profile = () => {
       className="hover:cursor-pointer"
       trigger={"click"}
     >
-      <Avatar className="avatar-bg" size={40} icon={<UserOutlined />} />
+      <Avatar
+        className="avatar-bg shadow-md hover:shadow-lg"
+        size={40}
+        icon={<UserOutlined />}
+      />
     </Popover>
   );
 };

@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import dayjs from "dayjs";
-
 export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
     .filter(
@@ -13,29 +10,20 @@ export const fieldsToUpdate = (details) => {
     )
     .map((key) => {
       let value = details[key];
-      // if (key.includes("date")) {
-      //   value = dayjs(value, "YYYY-MM-DD").toDate();
-      // }
+
+      console.log(key);
 
       if (key.includes("attachments")) {
-        console.log(details[key]);
-        for (var i = 0; i < details[key].length; i++) {
-          const obj = details[key][i];
+        const attachmentArray = details[key].map((attachment) => ({
+          uid: attachment.id,
+          url: attachment.url,
+        }));
 
-          console.log(obj);
-
-          return {
-            name: obj.label,
-            value: [
-              {
-                uid: obj?.id,
-                url: obj.url,
-                // url: "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg",
-              },
-            ],
-            errors: "",
-          };
-        }
+        return {
+          name: key,
+          value: attachmentArray,
+          errors: "",
+        };
       }
 
       return {

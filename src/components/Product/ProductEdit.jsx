@@ -285,6 +285,8 @@ const ProductListEdit = ({ id }) => {
 
     const formData = new FormData();
 
+    console.log(values);
+
     const postObj = {
       attachments:
         values.attachments?.length > 0
@@ -292,21 +294,22 @@ const ProductListEdit = ({ id }) => {
           : [],
 
       attach_file:
-        values.attach_file?.length > 0 ? values.attach_file.originFileObj : [],
-      formData,
+        values.attach_file?.length > 0 && !values?.attach_file?.[0].url
+          ? values.attach_file?.[0].originFileObj
+          : [],
       name,
       sku,
       type,
       symbology,
-      brand_id,
-      category_id,
-      unit_id,
-      purchase_unit_id,
-      sale_unit_id,
-      buying_price,
-      selling_price,
-      profit: Number(selling_price) - Number(buying_price),
-      qty,
+      brand_id: parseInt(brand_id),
+      category_id: parseInt(category_id),
+      unit_id: parseInt(unit_id),
+      purchase_unit_id: parseInt(purchase_unit_id),
+      sale_unit_id: parseInt(sale_unit_id),
+      buying_price: parseInt(buying_price),
+      selling_price: parseInt(selling_price),
+      profit: parseInt(Number(selling_price) - Number(buying_price)),
+      qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_method,
@@ -338,7 +341,6 @@ const ProductListEdit = ({ id }) => {
     const { data, error } = await updateProduct({ id, formData });
 
     if (data?.success) {
-      // setId(undefined);
       dispatch(closeEditDrawer());
     }
 

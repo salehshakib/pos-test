@@ -29,7 +29,7 @@ const ProductCostComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (productType === "standard")
+  if (productType === "Standard")
     return (
       <Col {...colLayout}>
         <CustomInput
@@ -46,7 +46,7 @@ const AttachmentComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (productType === "digital")
+  if (productType === "Digital")
     return (
       <Col {...fullColLayout}>
         <CustomUploader label={"Attachment"} name={"attach_file"} />
@@ -58,7 +58,7 @@ const AlertComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (productType === "standard") {
+  if (productType === "Standard") {
     return (
       <Col {...colLayout}>
         <CustomInput
@@ -134,7 +134,7 @@ const ExpireComponent = () => {
   const productType = Form.useWatch("type", form);
   const hasExpiredDate = Form.useWatch("has_expired_date", form);
 
-  if (productType === "standard") {
+  if (productType === "Standard") {
     return (
       <Row {...rowLayout}>
         <Col {...fullColLayout}>

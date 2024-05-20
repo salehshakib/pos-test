@@ -70,7 +70,7 @@ const UnitComponent = () => {
     ?.filter((unit) => unit.for === "purchase-unit")
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
-  if (productType === "standard") {
+  if (productType === "Standard") {
     return (
       <>
         <ProductUnit options={productUnits} isLoading={isLoading} />

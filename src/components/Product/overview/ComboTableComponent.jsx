@@ -5,7 +5,6 @@ import { MdDelete } from "react-icons/md";
 import { fullColLayout } from "../../Shared/Form/FormLayout";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomTable from "../../Shared/Table/CustomTable";
-import { useSelector } from "react-redux";
 
 const columns = [
   {

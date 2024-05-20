@@ -102,7 +102,7 @@ const ProductCreate = () => {
       buying_price: parseInt(buying_price),
       selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
-      qty,
+      qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_method,

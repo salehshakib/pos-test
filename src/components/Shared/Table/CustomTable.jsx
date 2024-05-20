@@ -1,15 +1,20 @@
 import { Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectPagination,
+  updatePage,
+  updatePageSize,
+} from "../../../redux/services/pagination/paginationSlice";
 
 const CustomTable = ({
   columns,
   dataSource,
   isRowSelection = false,
   total,
-  pagination = false,
-  setPagination,
   setSelectedRows,
   isLoading,
 }) => {
+  const dispatch = useDispatch();
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRows(selectedRows);
@@ -20,15 +25,25 @@ const CustomTable = ({
     }),
   };
 
-  const updatePage = (newPage) => {
-    setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
+  // const updatePage = (newPage) => {
+  //   setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
+  // };
+
+  // const updatePageSize = (newPageSize) => {
+  //   setPagination((prevPagination) => ({
+  //     ...prevPagination,
+  //     perPage: newPageSize,
+  //   }));
+  // };
+
+  const pagination = useSelector(selectPagination);
+
+  const handlePageChange = (newPage) => {
+    dispatch(updatePage({ page: newPage }));
   };
 
-  const updatePageSize = (newPageSize) => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      perPage: newPageSize,
-    }));
+  const handlePageSizeChange = (newPageSize) => {
+    dispatch(updatePageSize({ perPage: newPageSize }));
   };
 
   const paginationProps = {
@@ -37,13 +52,12 @@ const CustomTable = ({
     defaultCurrent: 1,
     current: pagination.page,
     onChange: (page) => {
-      updatePage(page);
+      handlePageChange(page);
     },
     showSizeChanger: true,
-    // defaultPageSize: pagination.perPage,
-    defaultPageSize: 20,
+    defaultPageSize: pagination.perPage,
     onShowSizeChange: (current, size) => {
-      updatePageSize(size);
+      handlePageSizeChange(size);
     },
     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
   };

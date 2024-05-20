@@ -1,20 +1,22 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import StockCountEdit from "./StockCountEdit";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteStockCountMutation,
   useGetStockCountsQuery,
 } from "../../redux/services/stockCount/stockCountApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import StockCountEdit from "./StockCountEdit";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const pagination = useSelector(selectPagination);
+
   const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
@@ -89,10 +91,9 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <StockCountEdit id={editId} setId={setEditId} />

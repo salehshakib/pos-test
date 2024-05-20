@@ -15,6 +15,7 @@ import authSlice from "./services/auth/authSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
 import themeSlice from "./services/theme/themeSlice";
 import productSlice from "./services/product/productSlice";
+import paginationSlice from "./services/pagination/paginationSlice";
 
 const persistConfig = {
   key: ["auth", "theme"],
@@ -23,12 +24,17 @@ const persistConfig = {
 
 const persistedAuthReducer = persistReducer(persistConfig, authSlice);
 const persistedThemeReducer = persistReducer(persistConfig, themeSlice);
+const persistemPaginationReducer = persistReducer(
+  persistConfig,
+  paginationSlice
+);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     theme: persistedThemeReducer,
+    pagination: persistemPaginationReducer,
     drawer: drawerSlice,
     product: productSlice,
   },

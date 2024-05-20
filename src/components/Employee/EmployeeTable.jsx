@@ -8,7 +8,8 @@ import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const pagination = useSelector(selectPagination);
+
   const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
@@ -84,11 +85,9 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         // dataSource={dataSource}
         // total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-
         // isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <EmployeeEdit id={editId} setId={setEditId} />

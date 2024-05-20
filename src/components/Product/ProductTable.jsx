@@ -14,15 +14,13 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
-
-  console.log(editId);
-
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const pagination = useSelector(selectPagination);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);
@@ -125,10 +123,9 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <ProductEdit id={editId} />

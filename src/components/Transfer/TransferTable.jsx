@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import TransferEdit from "./TransferEdit";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const TransferTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const pagination = useSelector(selectPagination);
   const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
@@ -90,11 +91,9 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         // dataSource={dataSource}
         // total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
-
         // isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <TransferEdit id={editId} setId={setEditId} />

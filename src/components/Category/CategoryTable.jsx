@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
 import { useState } from "react";
@@ -10,11 +10,12 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "../../redux/services/category/categoryApi";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
+  const pagination = useSelector(selectPagination);
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
 
   const [deleteId, setDeleteId] = useState(undefined);
@@ -70,8 +71,6 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

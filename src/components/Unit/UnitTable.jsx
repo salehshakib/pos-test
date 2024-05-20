@@ -7,9 +7,11 @@ import {
 } from "../../redux/services/unit/unitApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { useSelector } from "react-redux";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const UnitTable = ({ newColumns, setSelectedRows }) => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 20 });
+  const pagination = useSelector(selectPagination);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -64,10 +66,9 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <DeleteModal

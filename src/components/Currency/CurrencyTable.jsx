@@ -1,17 +1,19 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCurrencyMutation,
   useGetAllCurrencyQuery,
   useUpdateCurrencyDefaultMutation,
 } from "../../redux/services/currency/currencyApi";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
+  const pagination = useSelector(selectPagination);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -83,10 +85,9 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <StatusModal

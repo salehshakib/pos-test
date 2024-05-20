@@ -8,10 +8,12 @@ import {
 
 const FormButton = ({ loading, children, onClose }) => {
   const dispatch = useDispatch();
+  const form = Form.useFormInstance();
 
   const handleDrawerClose = () => {
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
+    form.resetFields();
   };
 
   return (

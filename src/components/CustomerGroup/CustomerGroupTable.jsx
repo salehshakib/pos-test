@@ -3,62 +3,60 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
+  useDeleteCustomerGroupMutation,
+  useGetAllCustomerGroupQuery,
+} from "../../redux/services/customerGroup/customerGroupApi";
+import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import {
-  useDeleteDepartmentMutation,
-  useGetDepartmentsQuery,
-  useUpdateDepartmentStatusMutation,
-} from "../../redux/services/hrm/department/departmentApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import DepartmentEdit from "./DepartmentEdit";
+import { CustomerGroupEdit } from "./CustomerGroupEdit";
 
-const DepartmentTable = ({ newColumns, setSelectedRows }) => {
+const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetDepartmentsQuery({
+  const { data, isLoading } = useGetAllCustomerGroupQuery({
     params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateDepartmentStatusMutation();
+  // const [updateStatus, { isLoading: isStatusUpdating }] =
+  //   useUpda();
 
-  const [deleteDepartment, { isLoading: isDeleting }] =
-    useDeleteDepartmentMutation();
+  const [deleteCustomerGroup, { isLoading: isDeleting }] =
+    useDeleteCustomerGroupMutation();
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
+  // const handleStatusModal = (id) => {
+  //   setStatusId(id);
+  //   setStatusModal(true);
+  // };
 
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+  // const handleStatus = async () => {
+  //   const { data } = await updateStatus(statusId);
 
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
-  };
+  //   if (data?.success) {
+  //     setStatusId(undefined);
+  //     setStatusModal(false);
+  //   }
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -66,7 +64,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteDepartment(deleteId);
+    const { data } = await deleteCustomerGroup(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -79,15 +77,15 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
 
       return {
         id,
-        department: name,
-        status: { status: is_active, handleStatusModal },
+        name: name,
+        //   status: { status: is_active, handleStatusModal },
         created_at: date,
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    //   setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -102,14 +100,15 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <DepartmentEdit id={editId} />
+      <CustomerGroupEdit id={editId} />
 
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
+      {/* <StatusModal
+          statusModal={statusModal}
+          hideModal={hideModal}
+          handleStatus={handleStatus}
+          isLoading={isStatusUpdating}
+        /> */}
+
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
@@ -121,4 +120,4 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   );
 };
 
-export default DepartmentTable;
+export default CustomerGroupTable;

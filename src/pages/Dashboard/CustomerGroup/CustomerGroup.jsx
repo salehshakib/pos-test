@@ -1,10 +1,8 @@
 import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import CustomerCreate from "../../../components/Customer/CustomerCreate";
-import CustomerTable from "../../../components/Customer/CustomerTable";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { FiMoreHorizontal } from "react-icons/fi";
-import { Dropdown } from "antd";
+import CustomerGroupCreate from "../../../components/CustomerGroup/CustomerGroupCreate";
+import CustomerGroupTable from "../../../components/CustomerGroup/CustomerGroupTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -54,27 +52,6 @@ const columns = [
     ),
   },
   {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    width: "80px",
-    align: "center",
-    render: ({ status, handleStatusModal }, record) => {
-      return (
-        <button
-          className={`p-0 ${
-            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-          } rounded shadow-md w-[80px]`}
-          onClick={() => handleStatusModal(record.id)}
-        >
-          <span className="font-medium text-white text-xs px-2 w-full">
-            {status == 1 ? "Active" : "Inactive"}
-          </span>
-        </button>
-      );
-    },
-  },
-  {
     title: "Action",
     dataIndex: "action",
     key: "action",
@@ -84,29 +61,6 @@ const columns = [
     render: ({ handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: "1",
-                  label: <div>Due Clear</div>,
-                },
-                {
-                  key: "2",
-                  label: <div onClick={() => handleEdit(record?.id)}>Edit</div>,
-                },
-              ],
-            }}
-            placement="bottom"
-            trigger={["click"]}
-          >
-            <button
-              // onClick={() => handleEdit(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-            >
-              <FiMoreHorizontal className="text-lg md:text-xl" />
-            </button>
-          </Dropdown>
           <button
             onClick={() => handleEdit(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
@@ -125,19 +79,19 @@ const columns = [
   },
 ];
 
-const Customer = () => {
+const CustomerGroup = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Customer List"
+      pageTitle="Customer Group"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <CustomerCreate />
+      <CustomerGroupCreate />
 
-      <CustomerTable
+      <CustomerGroupTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />
@@ -145,4 +99,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default CustomerGroup;

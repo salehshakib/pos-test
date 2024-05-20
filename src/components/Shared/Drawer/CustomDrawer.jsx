@@ -1,4 +1,4 @@
-import { Drawer, Spin } from "antd";
+import { Drawer, Form, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import {
   closeCreateDrawer,
@@ -14,10 +14,12 @@ const CustomDrawer = ({
   onClose,
 }) => {
   const dispatch = useDispatch();
+  const form = Form.useFormInstance();
 
   const handleCloseDrawer = () => {
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
+    form.resetFields();
   };
 
   return (

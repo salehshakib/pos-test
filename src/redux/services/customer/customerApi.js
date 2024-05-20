@@ -1,38 +1,65 @@
-import { DEPARTMENT } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../../utilities/lib/notification";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { CUSTOMER } from "../../../utilities/apiEndpoints/people.api";
+import { openNotification } from "../../../utilities/lib/notification";
+import { verifyToken } from "../../../utilities/lib/verifyToken";
+import { baseApi } from "../../api/baseApi";
 
-const departmentApi = baseApi.injectEndpoints({
+const customerApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getDepartments: build.query({
+    getAllCustomer: build.query({
       query: ({ params }) => {
         return {
-          url: `/${DEPARTMENT}`,
+          url: `/${CUSTOMER}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: DEPARTMENT, params },
-        DEPARTMENT,
+        { type: CUSTOMER, params },
+        CUSTOMER,
       ],
     }),
-    getDepartmentDetails: build.query({
+
+    getCustomerDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${DEPARTMENT}/show/${id}`,
+          url: `${CUSTOMER}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: DEPARTMENT, id }],
+      providesTags: (result, error, { id }) => [{ type: CUSTOMER, id }],
     }),
-    createDepartment: build.mutation({
+
+    createCustomer: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${DEPARTMENT}/store`,
+          url: `/${CUSTOMER}/store`,
+          method: "POST",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [CUSTOMER] : [];
+      },
+    }),
+
+    updateCustomer: build.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/${CUSTOMER}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -44,31 +71,14 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [CUSTOMER] : [];
       },
     }),
-    updateDepartment: build.mutation({
-      query: ({ data }) => {
-        return {
-          url: `/${DEPARTMENT}/update/${data?.id}`,
-          method: "POST",
-          body: data,
-        };
-      },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification("success", response?.message);
-          return response;
-        }
-      },
-      invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
-      },
-    }),
-    updateDepartmentStatus: build.mutation({
+
+    updateCustomerStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${DEPARTMENT}/status/${id}`,
+          url: `/${CUSTOMER}/status/${id}`,
           method: "POST",
         };
       },
@@ -79,13 +89,14 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [CUSTOMER] : [];
       },
     }),
-    deleteDepartment: build.mutation({
+
+    deleteCustomer: build.mutation({
       query: (id) => {
         return {
-          url: `/${DEPARTMENT}/delete/${id}`,
+          url: `/${CUSTOMER}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -96,17 +107,17 @@ const departmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [DEPARTMENT] : [];
+        return result ? [CUSTOMER] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetDepartmentsQuery,
-  useGetDepartmentDetailsQuery,
-  useCreateDepartmentMutation,
-  useUpdateDepartmentMutation,
-  useUpdateDepartmentStatusMutation,
-  useDeleteDepartmentMutation,
-} = departmentApi;
+  useGetAllCustomerQuery,
+  useGetCustomerDetailsQuery,
+  useCreateCustomerMutation,
+  useUpdateCustomerMutation,
+  useUpdateCustomerStatusMutation,
+  useDeleteCustomerMutation,
+} = customerApi;

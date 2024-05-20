@@ -3,21 +3,21 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
+  useDeleteCustomerMutation,
+  useGetAllCustomerQuery,
+  useUpdateCustomerStatusMutation,
+} from "../../redux/services/customer/customerApi";
+import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import {
-  useDeleteDepartmentMutation,
-  useGetDepartmentsQuery,
-  useUpdateDepartmentStatusMutation,
-} from "../../redux/services/hrm/department/departmentApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import DepartmentEdit from "./DepartmentEdit";
+import CustomerEdit from "./CustomerEdit";
 
-const DepartmentTable = ({ newColumns, setSelectedRows }) => {
+const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
@@ -29,17 +29,17 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetDepartmentsQuery({
+  const { data, isLoading } = useGetAllCustomerQuery({
     params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateDepartmentStatusMutation();
+    useUpdateCustomerStatusMutation();
 
-  const [deleteDepartment, { isLoading: isDeleting }] =
-    useDeleteDepartmentMutation();
+  const [deleteCustomer, { isLoading: isDeleting }] =
+    useDeleteCustomerMutation();
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -66,7 +66,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteDepartment(deleteId);
+    const { data } = await deleteCustomer(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
@@ -79,7 +79,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
 
       return {
         id,
-        department: name,
+        name: name,
         status: { status: is_active, handleStatusModal },
         created_at: date,
         action: { handleEdit, handleDeleteModal },
@@ -102,7 +102,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <DepartmentEdit id={editId} />
+      <CustomerEdit id={editId} />
 
       <StatusModal
         statusModal={statusModal}
@@ -110,6 +110,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
       />
+
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
@@ -121,4 +122,4 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   );
 };
 
-export default DepartmentTable;
+export default CustomerTable;

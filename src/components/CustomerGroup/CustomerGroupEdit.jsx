@@ -1,43 +1,37 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
-  useGetDepartmentDetailsQuery,
-  useUpdateDepartmentMutation,
-} from "../../redux/services/hrm/department/departmentApi";
+  useGetCustomerGroupDetailsQuery,
+  useUpdateCustomerGroupMutation,
+} from "../../redux/services/customerGroup/customerGroupApi";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import DepartmentForm from "./DepartmentForm";
+import CustomerGroupForm from "./CustomerGroupForm";
 
-const DepartmentEdit = ({ id }) => {
+export const CustomerGroupEdit = ({ id }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetDepartmentDetailsQuery(
+  const { data, isFetching } = useGetCustomerGroupDetailsQuery(
     { id },
     { skip: !id }
   );
-  const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
+  const [updateCustomerGroup, { isLoading }] = useUpdateCustomerGroupMutation();
 
   useEffect(() => {
     if (data) {
-      // const fieldData = fieldsToUpdate(data);
-      const fieldData = [
-        {
-          name: "name",
-          value: data?.name,
-          errors: "",
-        },
-      ];
+      const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateDepartment({
+    const { data, error } = await updateCustomerGroup({
       data: { id, ...values },
     });
 
@@ -51,14 +45,13 @@ const DepartmentEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
-
   return (
     <CustomDrawer
-      title={"Edit Department"}
+      title={"Edit Customer Group"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <DepartmentForm
+      <CustomerGroupForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -66,5 +59,3 @@ const DepartmentEdit = ({ id }) => {
     </CustomDrawer>
   );
 };
-
-export default DepartmentEdit;

@@ -28,7 +28,7 @@ const productApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [PRODUCT],
+      providesTags: (result, error, { id }) => [{ type: PRODUCT, id }],
     }),
 
     createProduct: build.mutation({

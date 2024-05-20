@@ -2,22 +2,22 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
-  useDeleteCustomerMutation,
-  useGetAllCustomerQuery,
-  useUpdateCustomerStatusMutation,
-} from "../../redux/services/customer/customerApi";
+  useDeleteSupplierMutation,
+  useGetAllSupplierQuery,
+  useUpdateSupplierStatusMutation,
+} from "../../redux/services/supplier/supplierApi";
 import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import CustomerEdit from "./CustomerEdit";
+import SupplierEdit from "./SupplierEdit";
+import StatusModal from "../Shared/Modal/StatusModal";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 
-const CustomerTable = ({ newColumns, setSelectedRows }) => {
+const SuuplierTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
@@ -29,17 +29,17 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCustomerQuery({
+  const { data, isLoading } = useGetAllSupplierQuery({
     params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateCustomerStatusMutation();
+    useUpdateSupplierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
-    useDeleteCustomerMutation();
+    useDeleteSupplierMutation();
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -102,7 +102,7 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <CustomerEdit id={editId} />
+      <SupplierEdit id={editId} />
 
       <StatusModal
         statusModal={statusModal}
@@ -116,10 +116,10 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"customer"}
+        item={"supplier"}
       />
     </GlobalUtilityStyle>
   );
 };
 
-export default CustomerTable;
+export default SuuplierTable;

@@ -72,7 +72,7 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.department?.map((item) => {
-      const { id, name, created_at, is_active } = item;
+      const { id, name, created_at } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {

@@ -1,10 +1,9 @@
-import { FaChalkboardUser } from "react-icons/fa6";
+import { FaCashRegister, FaChalkboardUser } from "react-icons/fa6";
 import { FiUsers } from "react-icons/fi";
-import { GiBilledCap } from "react-icons/gi";
 import { HiOutlineUsers } from "react-icons/hi";
-import { Biller } from "../../pages/Dashboard/Biller/Biller";
+import Cashier from "../../pages/Dashboard/Cashier/Cashier";
 import Customer from "../../pages/Dashboard/Customer/Customer";
-import Discount from "../../pages/Dashboard/Discount/Discount";
+import { Supplier } from "../../pages/Dashboard/Supplier/Supplier";
 import UserList from "../../pages/Dashboard/User/UserList";
 
 export const peoplePaths = [
@@ -24,12 +23,18 @@ export const peoplePaths = [
     name: "Supplier",
     path: "supplier",
     icon: FaChalkboardUser,
-    element: <Discount />,
+    element: <Supplier />,
   },
   {
-    name: "Biller",
-    path: "biler",
-    icon: GiBilledCap,
-    element: <Biller />,
+    name: "Cashier",
+    path: "cashier",
+    icon: FaCashRegister,
+    element: <Cashier />,
   },
+  // {
+  //   name: "Biller",
+  //   path: "biler",
+  //   icon: GiBilledCap,
+  //   element: <Biller />,
+  // },
 ];

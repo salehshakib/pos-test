@@ -2,28 +2,11 @@ import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
 
-const CustomerGroupComonent = () => {
-  return (
-    <CustomSelect
-      label="Customer Group"
-      required={true}
-      //   options={options}
-      //   isLoading={isLoading}
-      showSearch={true}
-      name="customer_group"
-    />
-  );
-};
-
-export const CustomerForm = (props) => {
+const SupplierForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
-          <CustomerGroupComonent />
-        </Col>
         <Col {...colLayout}>
           <CustomInput
             label="Name"
@@ -56,7 +39,14 @@ export const CustomerForm = (props) => {
             name={"phone"}
           />
         </Col>
-
+        <Col {...colLayout}>
+          <CustomInput
+            label="Vat Number"
+            type={"text"}
+            required={true}
+            name={"vat_number"}
+          />
+        </Col>
         <Col {...colLayout}>
           <CustomInput
             label="Country"
@@ -101,3 +91,5 @@ export const CustomerForm = (props) => {
     </CustomForm>
   );
 };
+
+export default SupplierForm;

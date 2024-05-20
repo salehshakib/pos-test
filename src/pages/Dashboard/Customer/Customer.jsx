@@ -21,24 +21,51 @@ const columns = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Company Name",
+    dataIndex: "companyName",
+    key: "companyName",
     align: "center",
-    render: (name) => (
+    render: (companyName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {name}
+        {companyName}
       </span>
     ),
   },
   {
-    title: "Percentage",
-    dataIndex: "percentage",
-    key: "percentage",
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <div className="flex flex-col cursor-pointer ">
+        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
+          {name}
+        </span>
+        <span className="text-xs dark:text-white60 primary-text">
+          admin@gmail.com
+        </span>
+      </div>
+    ),
+  },
+
+  {
+    title: "Phone",
+    dataIndex: "phone",
+    key: "phone",
     align: "center",
-    render: (percentage) => (
+    render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {percentage}
+        {phone}
+      </span>
+    ),
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
+    align: "center",
+    render: (address) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {address}
       </span>
     ),
   },

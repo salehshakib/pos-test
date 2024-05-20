@@ -18,7 +18,7 @@ const columns = [
     ),
   },
   {
-    title: "Image",
+    title: "Img",
     dataIndex: "image",
     key: "image",
     fixed: "left",

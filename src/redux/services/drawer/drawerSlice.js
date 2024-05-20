@@ -76,6 +76,8 @@ const drawerSlice = createSlice({
 
 export default drawerSlice.reducer;
 
+export const selectEditId = (state) => state.drawer.editId;
+
 export const {
   setDetailsId,
   setEditId,

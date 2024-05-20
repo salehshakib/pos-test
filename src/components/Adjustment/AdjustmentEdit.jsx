@@ -10,7 +10,7 @@ import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import AdjustmentForm from "./AdjustmentForm";
 
-const AdjustmentEdit = ({ id, setId }) => {
+const AdjustmentEdit = ({ id }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
@@ -103,7 +103,7 @@ const AdjustmentEdit = ({ id, setId }) => {
 
     const postObj = {
       attachment:
-        attachment?.length > 0
+        attachment?.length > 0 && !attachment?.[0]?.url
           ? attachment?.map((file) => file.originFileObj)
           : [],
       warehouse_id: parseInt(warehouse_id),
@@ -116,7 +116,6 @@ const AdjustmentEdit = ({ id, setId }) => {
     const { data, error } = await udpateAdjustment({ id, formData });
 
     if (data?.success) {
-      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

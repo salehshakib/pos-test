@@ -30,7 +30,7 @@ const AdjustmentCreate = () => {
       };
     });
 
-    console.log(warehouse_id);
+    console.log(attachment);
 
     const postObj = {
       attachment:

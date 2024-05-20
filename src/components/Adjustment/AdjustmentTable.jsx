@@ -6,7 +6,11 @@ import {
   useDeleteAdjustmentMutation,
   useGetAllAdjustmentQuery,
 } from "../../redux/services/adjustment/adjustmentApi";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  openEditDrawer,
+  selectEditId,
+  setEditId,
+} from "../../redux/services/drawer/drawerSlice";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -16,8 +20,7 @@ import AdjustmentEdit from "./AdjustmentEdit";
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
-
-  const [editId, setEditId] = useState(undefined);
+  const editId = useSelector(selectEditId);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -40,7 +43,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleEdit = (id) => {
-    setEditId(id);
+    dispatch(setEditId(id));
     dispatch(openEditDrawer());
   };
 
@@ -87,7 +90,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <AdjustmentEdit id={editId} setId={setEditId} />
+      <AdjustmentEdit id={editId} />
 
       <AdjustmentDetails
         id={detailsId}

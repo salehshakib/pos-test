@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  openEditDrawer,
+  setEditId,
+} from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteProductMutation,
   useGetProductsQuery,
@@ -15,8 +18,11 @@ import ProductEdit from "./ProductEdit";
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
+  const { editId } = useSelector((state) => state.drawer);
+
+  console.log(editId);
+
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
-  const [editId, setEditId] = useState(undefined);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);
@@ -41,7 +47,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleEdit = (id) => {
-    setEditId(id);
+    dispatch(setEditId(id));
     dispatch(openEditDrawer());
   };
 
@@ -71,8 +77,6 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
       setDeleteModal(false);
     }
   };
-
-  console.log(data);
 
   const dataSource =
     data?.results?.Product?.map((item) => {
@@ -127,7 +131,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         isLoading={isLoading}
       />
 
-      <ProductEdit id={editId} setId={setEditId} />
+      <ProductEdit id={editId} />
 
       <ProductDetails
         id={detailsId}

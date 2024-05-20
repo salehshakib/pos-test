@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 
-const ProductListEdit = ({ id, setId }) => {
+const ProductListEdit = ({ id }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -51,6 +51,7 @@ const ProductListEdit = ({ id, setId }) => {
         ecommerce_sync,
         details,
         has_stock,
+        attachments,
       } = data;
 
       const fieldData = fieldsToUpdate({
@@ -69,15 +70,18 @@ const ProductListEdit = ({ id, setId }) => {
         daily_sale_qty,
         tax_method,
         tax_id,
+        attachments,
         details,
       });
 
       console.log(data);
 
-      const qtyListArray = JSON.parse(data?.qty_list)?.map((item) => item);
-      const productListArray = JSON.parse(data?.product_list)?.map(
-        (item) => item
-      );
+      const qtyListArray =
+        JSON.parse(data?.qty_list)?.map((item) => item) ?? [];
+      const productListArray =
+        JSON.parse(data?.product_list)?.map((item) => item) ?? [];
+      const priceListArray =
+        JSON.parse(data?.price_list)?.map((item) => item) ?? [];
 
       const newFieldData = [
         ...fieldData,
@@ -122,7 +126,23 @@ const ProductListEdit = ({ id, setId }) => {
             errors: "",
           };
         }),
-
+        {
+          name: "has_different_price",
+          value: has_different_price === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "warehouse_id",
+          value: priceListArray?.map((item) => item?.warehouse_id?.toString()),
+          errors: "",
+        },
+        ...priceListArray.map((item) => {
+          return {
+            name: ["price_list", "price", item?.warehouse_id?.toString()],
+            value: item?.price,
+            errors: "",
+          };
+        }),
         {
           name: "has_promotion",
           value: has_promotion === "1" ? true : false,
@@ -145,12 +165,7 @@ const ProductListEdit = ({ id, setId }) => {
           errors: "",
         },
         {
-          name: ["has_different_price"],
-          value: has_different_price === "1" ? true : false,
-          errors: "",
-        },
-        {
-          name: ["has_expired_date"],
+          name: "has_expired_date",
           value: has_expired_date === "1" ? true : false,
           errors: "",
         },
@@ -161,17 +176,17 @@ const ProductListEdit = ({ id, setId }) => {
           errors: "",
         },
         {
-          name: ["ecommerce_sync"],
+          name: "ecommerce_sync",
           value: ecommerce_sync === "1" ? true : false,
           errors: "",
         },
         {
-          name: ["has_featured"],
+          name: "has_featured",
           value: has_featured === "1" ? true : false,
           errors: "",
         },
         {
-          name: ["embedded_barcode"],
+          name: "embedded_barcode",
           value: embedded_barcode === "1" ? true : false,
           errors: "",
         },
@@ -323,7 +338,7 @@ const ProductListEdit = ({ id, setId }) => {
     const { data, error } = await updateProduct({ id, formData });
 
     if (data?.success) {
-      setId(undefined);
+      // setId(undefined);
       dispatch(closeEditDrawer());
     }
 

@@ -20,8 +20,6 @@ export const BrandComponent = () => {
     dispatch(openBrandDrawer());
   };
 
-  console.log(options);
-
   return (
     <>
       <CustomSelectButton
@@ -32,6 +30,7 @@ export const BrandComponent = () => {
         onClick={handleAddBrand}
         name={"brand_id"}
         isLoading={isLoading}
+        required={"true"}
       />
 
       <BrandCreate subDrawer={true} />

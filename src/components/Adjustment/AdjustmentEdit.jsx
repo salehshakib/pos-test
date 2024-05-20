@@ -101,15 +101,12 @@ const AdjustmentEdit = ({ id, setId }) => {
       };
     });
 
-    // attachment[0]?.originFileObj;
-
-    console.log(values);
     const postObj = {
       attachment:
         attachment?.length > 0
           ? attachment?.map((file) => file.originFileObj)
           : [],
-      warehouse_id: warehouse_id,
+      warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,
     };

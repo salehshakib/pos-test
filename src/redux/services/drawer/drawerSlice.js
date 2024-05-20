@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  detailsId: undefined,
+  editId: undefined,
+  statusId: undefined,
+  deleteId: undefined,
+
   isCreateDrawerOpen: false,
   isEditDrawerOpen: false,
   isBrandDrawerOpen: false,
@@ -12,17 +17,41 @@ const drawerSlice = createSlice({
   name: "globalDrawer",
   initialState,
   reducers: {
+    setDetailsId: (state, action) => {
+      state.detailsId = action.payload;
+    },
+    setEditId: (state, action) => {
+      state.editId = action.payload;
+    },
+    setDeleteId: (state, action) => {
+      state.deleteId = action.payload;
+    },
+    removeId: (state) => {
+      state.detailsId = undefined;
+      state.editId = undefined;
+      state.deleteId = undefined;
+      state.statusId = undefined;
+    },
+
     openCreateDrawer: (state) => {
       state.isCreateDrawerOpen = true;
     },
     closeCreateDrawer: (state) => {
       state.isCreateDrawerOpen = false;
+      state.detailsId = undefined;
+      state.editId = undefined;
+      state.deleteId = undefined;
+      state.statusId = undefined;
     },
     openEditDrawer: (state) => {
       state.isEditDrawerOpen = true;
     },
     closeEditDrawer: (state) => {
       state.isEditDrawerOpen = false;
+      state.detailsId = undefined;
+      state.editId = undefined;
+      state.deleteId = undefined;
+      state.statusId = undefined;
     },
     openBrandDrawer: (state) => {
       state.isBrandDrawerOpen = true;
@@ -48,6 +77,10 @@ const drawerSlice = createSlice({
 export default drawerSlice.reducer;
 
 export const {
+  setDetailsId,
+  setEditId,
+  setDeleteId,
+  removeId,
   openCreateDrawer,
   closeCreateDrawer,
   openEditDrawer,

@@ -23,6 +23,7 @@ import People from "../pages/Dashboard/People/People";
 import Quotation from "../pages/Dashboard/Quotations/Quotation";
 import Reports from "../pages/Dashboard/Reports/Reports";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
+import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
 import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
@@ -122,14 +123,7 @@ export const adminPaths = [
     name: "People",
     path: "people",
     icon: MdPeopleAlt,
-    children: [
-      {
-        name: "Peoples",
-        path: "peoples",
-        icon: TbDashboard,
-        element: <People />,
-      },
-    ],
+    children: peoplePaths,
   },
   {
     name: "Reports",

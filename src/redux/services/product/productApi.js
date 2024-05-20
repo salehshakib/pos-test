@@ -32,11 +32,11 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     createProduct: build.mutation({
-      query: (data) => {
+      query: ({ formData }) => {
         return {
           url: `/${PRODUCT}/store`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {

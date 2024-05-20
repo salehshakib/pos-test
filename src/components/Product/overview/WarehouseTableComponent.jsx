@@ -70,24 +70,51 @@ const WarehouseTableComponent = () => {
 
   const [rowId, setRowId] = useState(undefined);
 
+  // useEffect(() => {
+  //   if (warehouse?.length > 0) {
+  //     if (rowId !== undefined) {
+  //       const selectedProduct = warehouse[rowId];
+
+  //       form.setFieldValue(["price_list", "price", selectedProduct], 0);
+
+  //       setRowId(undefined);
+  //     } else if (warehouse?.length > 0 && warehouse) {
+  //       const lastProductIndex = warehouse.length - 1;
+
+  //       if (lastProductIndex >= 0) {
+  //         const lastProduct = warehouse[lastProductIndex];
+
+  //         form.setFieldValue(["price_list", "price", lastProduct], 0);
+  //       }
+  //     }
+  //   }
+  // }, [warehouse]);
   useEffect(() => {
     if (warehouse?.length > 0) {
+      const setFormValuesIfNotExists = (productIndex) => {
+        const selectedProduct = warehouse[productIndex];
+        const pricePath = ["price_list", "price", selectedProduct];
+
+        // Check if the value already exists
+        const existingPrice = form.getFieldValue(pricePath);
+
+        // Only set the values if they do not exist
+        if (existingPrice === undefined) {
+          form.setFieldValue(pricePath, 0);
+        }
+      };
+
       if (rowId !== undefined) {
-        const selectedProduct = warehouse[rowId];
-
-        form.setFieldValue(["price_list", "price", selectedProduct], 0);
-
+        setFormValuesIfNotExists(rowId);
         setRowId(undefined);
-      } else if (warehouse?.length > 0 && warehouse) {
+      } else {
         const lastProductIndex = warehouse.length - 1;
-
         if (lastProductIndex >= 0) {
-          const lastProduct = warehouse[lastProductIndex];
-
-          form.setFieldValue(["price_list", "price", lastProduct], 0);
+          setFormValuesIfNotExists(lastProductIndex);
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [warehouse]);
 
   useEffect(() => {

@@ -103,17 +103,6 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "Stock",
-  //   dataIndex: "stock",
-  //   key: "stock",
-  //   align: "center",
-  //   render: (stock) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {stock}
-  //     </span>
-  //   ),
-  // },
   {
     title: "Unit",
     dataIndex: "unit",

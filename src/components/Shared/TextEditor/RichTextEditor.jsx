@@ -5,10 +5,10 @@ import "react-quill/dist/quill.snow.css";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const RichTextEditor = ({ value, onChange, name, required, label }) => {
-  const handleChange = (content, delta, source, editor) => {
-    // onChange(content);
-    console.log(content);
-  };
+  // const handleChange = (content, delta, source, editor) => {
+  //   // onChange(content);
+  //   console.log(content);
+  // };
 
   return (
     <GlobalUtilityStyle>
@@ -20,7 +20,7 @@ const RichTextEditor = ({ value, onChange, name, required, label }) => {
         <ReactQuill
           theme="snow"
           // value={value}
-          onChange={handleChange}
+          // onChange={handleChange}
           modules={{
             toolbar: [
               [{ header: [1, 2, 3, 4, false] }],

@@ -1,7 +1,7 @@
 import { Button, Layout } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
@@ -22,7 +22,7 @@ const MainLayout = () => {
             <Button
               className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
               type="text"
-              icon={<RxHamburgerMenu />}
+              icon={<GiHamburgerMenu />}
               onClick={() => setCollapsed(!collapsed)}
             ></Button>
             <Logo />

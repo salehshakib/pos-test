@@ -103,18 +103,18 @@ const InitialStockComponent = () => {
 
 const DifferentPriceComponent = () => {
   const form = Form.useFormInstance();
-  const has_different_price = Form.useWatch("has_differnet_price", form);
+  const hasDifferentPrice = Form.useWatch("has_different_price", form);
 
   return (
     <Row {...rowLayout}>
       <Col {...fullColLayout}>
         <CustomCheckbox
           label="This product has different price for different warehouse"
-          name="has_differnet_price"
+          name="has_different_price"
         />
       </Col>
 
-      {has_different_price && (
+      {hasDifferentPrice && (
         <>
           <Col {...fullColLayout} className="mt-5">
             <SearchWarehouse name={"warehouse_id"} />
@@ -292,7 +292,11 @@ const ProductForm = ({ options, ...props }) => {
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <RichTextEditor label="Product Details" name="details" />
+          <RichTextEditor
+            label="Product Details"
+            name="details"
+            required={true}
+          />
         </Col>
       </Row>
 

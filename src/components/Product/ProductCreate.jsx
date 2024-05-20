@@ -15,7 +15,7 @@ const ProductCreate = () => {
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    const formData = new FormData();
 
     const {
       name,
@@ -79,8 +79,6 @@ const ProductCreate = () => {
       }
     );
 
-    const formData = new FormData();
-
     const attachmentObj = {
       attachments:
         values.attachments?.length > 0
@@ -88,32 +86,28 @@ const ProductCreate = () => {
           : [],
 
       attach_file:
-        values.attach_file?.length > 0 ? values.attach_file.originFileObj : [],
-    };
+        values.attach_file?.length > 0
+          ? values.attach_file?.[0].originFileObj
+          : [],
 
-    appendToFormData(attachmentObj, formData);
-
-    console.log(values);
-
-    const { data, error } = await createProduct({
-      formData,
       name,
       sku,
       type,
       symbology,
-      brand_id,
-      category_id,
-      unit_id,
-      purchase_unit_id,
-      sale_unit_id,
-      buying_price,
-      selling_price,
-      profit: Number(selling_price) - Number(buying_price),
+      brand_id: parseInt(brand_id),
+      category_id: parseInt(category_id),
+      unit_id: parseInt(unit_id),
+      purchase_unit_id: parseInt(purchase_unit_id),
+      sale_unit_id: parseInt(sale_unit_id),
+      buying_price: parseInt(buying_price),
+      selling_price: parseInt(selling_price),
+      profit: parseInt(Number(selling_price) - Number(buying_price)),
       qty,
       alert_qty,
       daily_sale_qty,
       tax_method,
       tax_id,
+      product_list: JSON.stringify(productListArray),
       has_featured: has_featured ? 1 : 0,
       has_stock: has_stock ? 1 : 0,
       qty_list: has_stock ? JSON.stringify(qtyListArray) : "",
@@ -126,15 +120,17 @@ const ProductCreate = () => {
       last_date: promotion && dayjs(promotion?.last_date).format("YYYY-MM-DD"),
       has_different_price: has_different_price ? 1 : 0,
       price_list: has_different_price && JSON.stringify(priceListArray),
-      product_list: JSON.stringify(productListArray),
       has_expired_date: has_expired_date ? 1 : 0,
       expired_date:
         has_expired_date &&
         dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
-
       ecommerce_sync: ecommerce_sync ? 1 : 0,
       details,
-    });
+    };
+
+    appendToFormData(attachmentObj, formData);
+
+    const { data, error } = await createProduct({ formData });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());

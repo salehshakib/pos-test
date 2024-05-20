@@ -30,23 +30,22 @@ const AdjustmentCreate = () => {
       };
     });
 
-    // attachment[0]?.originFileObj;
+    console.log(warehouse_id);
 
     const postObj = {
       attachment:
         attachment?.length > 0
           ? attachment?.map((file) => file.originFileObj)
           : [],
+
+      warehouse_id: parseInt(warehouse_id),
+      product_list: JSON.stringify(productListArray),
+      note,
     };
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await createAdjustment({
-      formData,
-      warehouse_id: warehouse_id,
-      product_list: JSON.stringify(productListArray),
-      note: note ?? null,
-    });
+    const { data, error } = await createAdjustment({ formData });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());

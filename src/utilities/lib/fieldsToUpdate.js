@@ -11,19 +11,23 @@ export const fieldsToUpdate = (details) => {
     .map((key) => {
       let value = details[key];
 
-      console.log(key);
-
       if (key.includes("attachments")) {
-        const attachmentArray = details[key].map((attachment) => ({
-          uid: attachment.id,
-          url: attachment.url,
-        }));
+        // Group attachments by their label
+        const groupedAttachments = value.reduce((acc, attachment) => {
+          const { label, id, url } = attachment;
+          if (!acc[label]) {
+            acc[label] = [];
+          }
+          acc[label].push({ uid: id, url });
+          return acc;
+        }, {});
 
-        return {
-          name: key,
-          value: attachmentArray,
+        // Convert the grouped attachments to the desired format
+        return Object.keys(groupedAttachments).map((label) => ({
+          name: label,
+          value: groupedAttachments[label],
           errors: "",
-        };
+        }));
       }
 
       return {
@@ -31,7 +35,8 @@ export const fieldsToUpdate = (details) => {
         value: value,
         errors: "",
       };
-    });
+    })
+    .flat(); // Flatten the array to merge nested arrays
 
   return fieldsToUpdate;
 };

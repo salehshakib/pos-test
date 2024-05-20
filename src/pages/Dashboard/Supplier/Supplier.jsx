@@ -3,8 +3,8 @@ import { useState } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { defaultUser } from "../../../assets/data/defaultUserImage";
-import CustomerTable from "../../../components/Customer/CustomerTable";
 import SupplierCreate from "../../../components/Supplier/SupplierCreate";
+import SupplierTable from "../../../components/Supplier/SupplierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
@@ -194,7 +194,7 @@ export const Supplier = () => {
     >
       <SupplierCreate />
 
-      <CustomerTable
+      <SupplierTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />

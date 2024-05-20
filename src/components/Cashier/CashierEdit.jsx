@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
-  useGetSupplierDetailsQuery,
-  useUpdateSupplierMutation,
-} from "../../redux/services/supplier/supplierApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+  useGetCashierDetailsQuery,
+  useUpdateCashierMutation,
+} from "../../redux/services/cashier/cashierApi";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import SupplierForm from "./SupplierForm";
+import CashierForm from "./CashierForm";
 
-const SupplierEdit = ({ id }) => {
+const CashierEdit = ({ id }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetSupplierDetailsQuery(
-    { id },
-    { skip: !id }
-  );
-  const [updateSupplier, { isLoading }] = useUpdateSupplierMutation();
+  const { data, isFetching } = useGetCashierDetailsQuery({ id }, { skip: !id });
+  const [updateCashier, { isLoading }] = useUpdateCashierMutation();
 
   useEffect(() => {
     if (data) {
@@ -31,7 +28,7 @@ const SupplierEdit = ({ id }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateSupplier({
+    const { data, error } = await updateCashier({
       data: { id, ...values },
     });
 
@@ -47,11 +44,11 @@ const SupplierEdit = ({ id }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Supplier"}
+      title={"Edit Cashier"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <SupplierForm
+      <CashierForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -60,4 +57,4 @@ const SupplierEdit = ({ id }) => {
   );
 };
 
-export default SupplierEdit;
+export default CashierEdit;

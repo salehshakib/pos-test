@@ -4,20 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
-  useDeleteSupplierMutation,
-  useGetAllSupplierQuery,
-  useUpdateSupplierStatusMutation,
-} from "../../redux/services/supplier/supplierApi";
+  useDeleteCashierMutation,
+  useGetAllCashierQuery,
+  useUpdateCashierStatusMutation,
+} from "../../redux/services/cashier/cashierApi";
 import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
 import CustomTable from "../Shared/Table/CustomTable";
-import SupplierEdit from "./SupplierEdit";
+import CashierEdit from "./CashierEdit";
 import StatusModal from "../Shared/Modal/StatusModal";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 
-const SuuplierTable = ({ newColumns, setSelectedRows }) => {
+const CashierTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
@@ -29,17 +29,17 @@ const SuuplierTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllSupplierQuery({
+  const { data, isLoading } = useGetAllCashierQuery({
     params: { ...pagination, allData: 1 },
   });
 
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateSupplierStatusMutation();
+    useUpdateCashierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
-    useDeleteSupplierMutation();
+    useDeleteCashierMutation();
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -102,7 +102,7 @@ const SuuplierTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <SupplierEdit id={editId} />
+      <CashierEdit id={editId} />
 
       <StatusModal
         statusModal={statusModal}
@@ -116,10 +116,10 @@ const SuuplierTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"supplier"}
+        item={"cashier"}
       />
     </GlobalUtilityStyle>
   );
 };
 
-export default SuuplierTable;
+export default CashierTable;

@@ -1,9 +1,9 @@
 import { CiGift } from "react-icons/ci";
-import Coupons from "../../pages/Dashboard/Coupons/Coupons";
-import GiftCardList from "../../pages/Dashboard/Sale/GiftCardList/GiftCardList";
-import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
 import { MdPointOfSale } from "react-icons/md";
 import { RiCoupon3Line } from "react-icons/ri";
+import Coupons from "../../pages/Dashboard/Coupons/Coupons";
+import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
+import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
 
 export const salePaths = [
   {

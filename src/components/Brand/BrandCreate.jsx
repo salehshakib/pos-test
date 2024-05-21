@@ -57,13 +57,13 @@ const BrandCreate = ({ subDrawer }) => {
     <CustomDrawer
       title={"Create Brand"}
       open={subDrawer ? isBrandDrawerOpen : isCreateDrawerOpen}
-      onClose={handleCloseSubDrawer}
+      onClose={subDrawer && handleCloseSubDrawer}
     >
       <BrandForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        onClose={handleCloseSubDrawer}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

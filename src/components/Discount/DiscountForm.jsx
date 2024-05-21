@@ -102,7 +102,6 @@ const DiscountForm = (props) => {
             mode="group"
             label="Valid on the following days"
             options={weekDays}
-            defaultValue={["sunday", "saturday"]}
           />
         </Col>
       </Row>

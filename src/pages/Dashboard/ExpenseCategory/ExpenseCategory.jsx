@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
-import BrandCreate from "../../../components/Brand/BrandCreate";
-import { BrandTable } from "../../../components/Brand/BrandTable";
+import ExpenseCategoryCreate from "../../../components/ExpenseCategory/ExpenseCategoryCreate";
+import ExpenseCategoryTable from "../../../components/ExpenseCategory/ExpenseCategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
@@ -12,7 +11,7 @@ const columns = [
     key: "id",
     fixed: "left",
     align: "center",
-    width: 60,
+    width: 80,
     render: (id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {id}
@@ -20,36 +19,29 @@ const columns = [
     ),
   },
   {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
-    fixed: "left",
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
     align: "center",
-    width: 70,
-    render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
-        <img
-          src={img ?? defaultUser}
-          alt="defaultUser"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    ),
-  },
-  {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
-    // align: "center",
-    render: (brand) => (
+    render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {brand}
+        {name}
       </span>
     ),
   },
 
   {
-    //created_at
+    title: "Code",
+    dataIndex: "code",
+    key: "code",
+    align: "center",
+    render: (code) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {code}
+      </span>
+    ),
+  },
+  {
     title: "Created At",
     dataIndex: "created_at",
     key: "created_at",
@@ -61,7 +53,27 @@ const columns = [
     ),
   },
   {
-    //action
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: ({ status, handleStatusModal }, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+          onClick={() => handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
+  },
+  {
     title: "Action",
     dataIndex: "action",
     key: "action",
@@ -89,22 +101,24 @@ const columns = [
   },
 ];
 
-const Brand = () => {
+const ExpenseCategory = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
-
   return (
     <GlobalContainer
-      pageTitle="Brand"
+      pageTitle="Expense Group List"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <BrandCreate />
+      <ExpenseCategoryCreate />
 
-      <BrandTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <ExpenseCategoryTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };
 
-export default Brand;
+export default ExpenseCategory;

@@ -1,42 +1,42 @@
-import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
+import { EXPENSE_CATEGORY } from "../../../utilities/apiEndpoints/account.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const productApi = baseApi.injectEndpoints({
+const expenseCategoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query({
+    getAllExpenseCategory: build.query({
       query: ({ params }) => {
         return {
-          url: `/${PRODUCT}`,
+          url: `/${EXPENSE_CATEGORY}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: PRODUCT, params },
-        PRODUCT,
+        { type: EXPENSE_CATEGORY, params },
+        EXPENSE_CATEGORY,
       ],
     }),
 
-    getProductDetails: build.query({
+    getExpenseCategoryDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${PRODUCT}/show/${id}`,
+          url: `${EXPENSE_CATEGORY}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: PRODUCT, id }],
+      providesTags: (result, error, { id }) => [{ type: EXPENSE_CATEGORY, id }],
     }),
 
-    createProduct: build.mutation({
-      query: ({ formData }) => {
+    createExpenseCategory: build.mutation({
+      query: ({ data }) => {
         return {
-          url: `/${PRODUCT}/store`,
+          url: `/${EXPENSE_CATEGORY}/store`,
           method: "POST",
-          body: formData,
+          body: data,
         };
       },
       transformResponse: (response) => {
@@ -46,19 +46,22 @@ const productApi = baseApi.injectEndpoints({
         }
       },
       transformErrorResponse: (response) => {
-        console.log(response);
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
       },
       invalidatesTags: (result) => {
-        return result ? [PRODUCT] : [];
+        return result ? [EXPENSE_CATEGORY] : [];
       },
     }),
 
-    updateProduct: build.mutation({
-      query: ({ id, formData }) => {
+    updateExpenseCategory: build.mutation({
+      query: ({ id, data }) => {
         return {
-          url: `/${PRODUCT}/update/${id}`,
+          url: `/${EXPENSE_CATEGORY}/update/${id}`,
           method: "POST",
-          body: formData,
+          body: data,
         };
       },
       transformResponse: (response) => {
@@ -68,14 +71,14 @@ const productApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [PRODUCT] : [];
+        return result ? [EXPENSE_CATEGORY] : [];
       },
     }),
 
-    updateProductStatus: build.mutation({
+    updateExpenseCategoryStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${PRODUCT}/status/${id}`,
+          url: `/${EXPENSE_CATEGORY}/status/${id}`,
           method: "POST",
         };
       },
@@ -86,14 +89,14 @@ const productApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [PRODUCT] : [];
+        return result ? [EXPENSE_CATEGORY] : [];
       },
     }),
 
-    deleteProduct: build.mutation({
+    deleteExpenseCategory: build.mutation({
       query: (id) => {
         return {
-          url: `/${PRODUCT}/delete/${id}`,
+          url: `/${EXPENSE_CATEGORY}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -104,17 +107,17 @@ const productApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [PRODUCT] : [];
+        return result ? [EXPENSE_CATEGORY] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetProductsQuery,
-  useGetProductDetailsQuery,
-  useCreateProductMutation,
-  useUpdateProductMutation,
-  useUpdateProductStatusMutation,
-  useDeleteProductMutation,
-} = productApi;
+  useGetAllExpenseCategoryQuery,
+  useGetExpenseCategoryDetailsQuery,
+  useCreateExpenseCategoryMutation,
+  useUpdateExpenseCategoryMutation,
+  useUpdateExpenseCategoryStatusMutation,
+  useDeleteExpenseCategoryMutation,
+} = expenseCategoryApi;

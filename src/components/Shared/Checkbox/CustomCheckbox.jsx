@@ -1,6 +1,5 @@
 import { Checkbox, Form } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useEffect } from "react";
 const { Group } = Checkbox;
 
 const CustomCheckbox = (props) => {
@@ -14,17 +13,13 @@ const CustomCheckbox = (props) => {
     defaultValue,
   } = props;
 
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue("valid_on", defaultValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultValue]);
+  // const form = Form.useFormInstance();
 
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        label={mode === "group" && label}
+        // label={mode === "group" && label}
+        label={label}
         name={name}
         rules={[{ required: required, message: `Please select ${label}!` }]}
         required={required}
@@ -39,7 +34,10 @@ const CustomCheckbox = (props) => {
         )}
 
         {mode === "group" && (
-          <Group options={options} className="flex flex-col gap-3" />
+          <>
+            <span>{label}</span>
+            <Group options={options} className="flex my-5 gap-3" />
+          </>
         )}
       </Form.Item>
     </GlobalUtilityStyle>

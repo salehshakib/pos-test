@@ -1,20 +1,21 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { GlobalUtilityStyle } from "../../container/Styled";
+import {
+  openEditDrawer,
+  setEditId,
+} from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteExpenseCategoryMutation,
   useGetAllExpenseCategoryQuery,
   useUpdateExpenseCategoryStatusMutation,
 } from "../../redux/services/expense/expenseCategoryApi";
-import {
-  openEditDrawer,
-  setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import StatusModal from "../Shared/Modal/StatusModal";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
 
 const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -101,7 +102,7 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <ExpenseCategoryTable id={editId} />
+      <ExpenseCategoryEdit id={editId} />
 
       <StatusModal
         statusModal={statusModal}

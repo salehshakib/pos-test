@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import GenerateCode from "../GiftCard/GenerateCode";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
 const ExpenseCategoryForm = (props) => {
@@ -9,7 +9,7 @@ const ExpenseCategoryForm = (props) => {
     <CustomForm {...props}>
       <GenerateCode />
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <CustomInput
             label="Name"
             type={"text"}

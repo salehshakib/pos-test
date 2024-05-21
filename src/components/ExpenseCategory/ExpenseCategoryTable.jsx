@@ -38,7 +38,7 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   const [updateStatus, { isLoading: isStatusUpdating }] =
     useUpdateExpenseCategoryStatusMutation();
 
-  const [deleteCustomer, { isLoading: isDeleting }] =
+  const [deleteExpenseCategory, { isLoading: isDeleting }] =
     useDeleteExpenseCategoryMutation();
 
   const handleEdit = (id) => {
@@ -66,7 +66,7 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteCustomer(deleteId);
+    const { data } = await deleteExpenseCategory(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }

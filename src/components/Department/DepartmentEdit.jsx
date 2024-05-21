@@ -38,7 +38,8 @@ const DepartmentEdit = ({ id }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateDepartment({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

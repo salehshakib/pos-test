@@ -71,14 +71,14 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.department?.map((item) => {
-      const { id, name, created_at } = item;
+    data?.results?.customergroup?.map((item) => {
+      const { id, name, created_at, percentage } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
-        //   status: { status: is_active, handleStatusModal },
+        percentage: percentage + " percent",
         created_at: date,
         action: { handleEdit, handleDeleteModal },
       };
@@ -114,7 +114,7 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"department"}
+        item={"customer group"}
       />
     </GlobalUtilityStyle>
   );

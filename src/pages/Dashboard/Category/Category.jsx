@@ -1,21 +1,39 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { defaultUser } from "../../../assets/data/defaultUserImage";
 import CategoryCreate from "../../../components/Category/CategoryCreate";
 import CategoryTable from "../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
+  // {
+  //   title: "ID",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 60,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
+    title: "Img",
+    dataIndex: "image",
+    key: "image",
     fixed: "left",
     align: "center",
-    width: 60,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
+    width: 70,
+    render: (img) => (
+      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
+        <img
+          src={img ?? defaultUser}
+          alt="defaultUser"
+          className="w-full h-full object-cover"
+        />
+      </div>
     ),
   },
   {
@@ -48,6 +66,27 @@ const columns = [
         {created_at}
       </span>
     ),
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: ({ status, handleStatusModal }, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+          onClick={() => handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
   },
   {
     //action

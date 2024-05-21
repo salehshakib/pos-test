@@ -48,9 +48,9 @@ const categoryApi = baseApi.injectEndpoints({
       },
     }),
     updateCategory: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${CATEGORY}/update/${data?.id}`,
+          url: `/${CATEGORY}/update/${id}`,
           method: "POST",
           body: data,
         };

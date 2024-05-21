@@ -30,7 +30,7 @@ const columns = [
     ),
   },
   {
-    title: "Percentage",
+    title: "Percentage (%)",
     dataIndex: "percentage",
     key: "percentage",
     align: "center",

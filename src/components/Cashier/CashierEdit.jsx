@@ -29,7 +29,8 @@ const CashierEdit = ({ id }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateCashier({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

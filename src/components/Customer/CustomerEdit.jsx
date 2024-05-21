@@ -32,7 +32,8 @@ const CustomerEdit = ({ id }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateCustomerGroup({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

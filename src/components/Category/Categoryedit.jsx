@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useGetCategoryDetailsQuery, useUpdateCategoryMutation } from "../../redux/services/category/categoryApi";
+import {
+  useGetCategoryDetailsQuery,
+  useUpdateCategoryMutation,
+} from "../../redux/services/category/categoryApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -22,18 +26,21 @@ const Categoryedit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data) {
-      const fieldData = [
-        {
-          name: "name",
-          value: data?.name,
-          errors: "",
-        },
-        {
-          name: "parent_id",
-          value: Number(data?.parent_id),
-          errors: "",
-        },
-      ];
+      // console.log(data);
+      const fieldData = fieldsToUpdate(data);
+
+      // const fieldData = [
+      //   {
+      //     name: "name",
+      //     value: data?.name,
+      //     errors: "",
+      //   },
+      //   {
+      //     name: "parent_id",
+      //     value: Number(data?.parent_id),
+      //     errors: "",
+      //   },
+      // ];
 
       setFields(fieldData);
     }
@@ -41,7 +48,8 @@ const Categoryedit = ({ id, setId }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateCategory({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

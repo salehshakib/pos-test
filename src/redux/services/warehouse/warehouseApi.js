@@ -63,9 +63,9 @@ const warehouseApi = baseApi.injectEndpoints({
     }),
 
     updateWarehouse: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${WAREHOUSE}/update/${data?.id}`,
+          url: `/${WAREHOUSE}/update/${id}`,
           method: "POST",
           body: data,
         };

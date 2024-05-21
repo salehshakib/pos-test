@@ -3,16 +3,27 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/customerGroupApi";
 
 const CustomerGroupComonent = () => {
+  const { data, isLoading } = useGetAllCustomerGroupQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
+
+  const options = data?.results?.customergroup?.map((item) => ({
+    value: item.id?.toString(),
+    label: item.name,
+  }));
   return (
     <CustomSelect
       label="Customer Group"
       required={true}
-      //   options={options}
-      //   isLoading={isLoading}
+      options={options}
+      isLoading={isLoading}
       showSearch={true}
-      name="customer_group"
+      name="customer_group_id"
     />
   );
 };
@@ -53,7 +64,7 @@ export const CustomerForm = (props) => {
             label="Phone Number"
             type={"phone"}
             required={true}
-            name={"phone"}
+            name={"phone_number"}
           />
         </Col>
 
@@ -84,7 +95,7 @@ export const CustomerForm = (props) => {
         <Col {...colLayout}>
           <CustomInput
             label="Postal Code"
-            type={"text"}
+            type={"number"}
             required={true}
             name={"postal_code"}
           />

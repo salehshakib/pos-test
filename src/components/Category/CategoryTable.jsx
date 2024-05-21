@@ -49,7 +49,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, parent_id } = item;
+      const { id, name, created_at, parent_id, is_active } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
@@ -57,6 +57,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         category: name,
         parentCategory: parent_id ?? "N/A",
         created_at: date,
+        status: { status: is_active },
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];

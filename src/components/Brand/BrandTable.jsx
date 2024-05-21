@@ -44,16 +44,16 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
       setDeleteModal(false);
     }
   };
-  console.log(data?.results?.brand);
 
   const dataSource =
     data?.results?.brand?.map((item) => {
-      const { id, name, created_at, attachments } = item ?? {};
+      const { id, name, created_at, attachments, is_active } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         brand: name,
+        status: { status: is_active },
         image: attachments?.[0]?.url,
         created_at: date,
         action: { handleEdit, handleDeleteModal },

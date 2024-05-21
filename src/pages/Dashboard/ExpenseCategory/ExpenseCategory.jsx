@@ -29,18 +29,17 @@ const columns = [
       </span>
     ),
   },
-
-  {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
-    align: "center",
-    render: (code) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {code}
-      </span>
-    ),
-  },
+  // {
+  //   title: "Code",
+  //   dataIndex: "code",
+  //   key: "code",
+  //   align: "center",
+  //   render: (code) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {code}
+  //     </span>
+  //   ),
+  // },
   {
     title: "Created At",
     dataIndex: "created_at",
@@ -106,7 +105,7 @@ const ExpenseCategory = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Expense Category List"
+      pageTitle="Expense Category"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

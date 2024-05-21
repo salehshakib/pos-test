@@ -7,6 +7,7 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 const CategoryCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
@@ -18,8 +19,16 @@ const CategoryCreate = ({ subDrawer }) => {
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
 
   const handleSubmit = async (values) => {
+    const postObj = {
+      ...values,
+      category_image: values?.category_image?.[0].originFileObj,
+    };
+
+    const formData = new FormData();
+    appendToFormData(postObj, formData);
+
     const { data, error } = await createCategory({
-      data: values,
+      data: formData,
     });
 
     if (data?.success) {
@@ -48,13 +57,13 @@ const CategoryCreate = ({ subDrawer }) => {
     <CustomDrawer
       title={"Create Category"}
       open={subDrawer ? isCategoryDrawerOpen : isCreateDrawerOpen}
-      onClose={handleCloseSubDrawer}
+      onClose={subDrawer && handleCloseSubDrawer}
     >
       <CategoryForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        onClose={handleCloseSubDrawer}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

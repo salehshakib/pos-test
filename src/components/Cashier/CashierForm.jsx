@@ -36,7 +36,7 @@ const CashierForm = (props) => {
             label="Phone Number"
             type={"phone"}
             required={true}
-            name={"phone"}
+            name={"phone_number"}
           />
         </Col>
         <Col {...colLayout}>
@@ -74,7 +74,7 @@ const CashierForm = (props) => {
         <Col {...colLayout}>
           <CustomInput
             label="Postal Code"
-            type={"text"}
+            type={"number"}
             required={true}
             name={"postal_code"}
           />

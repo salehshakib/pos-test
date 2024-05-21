@@ -73,15 +73,29 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.department?.map((item) => {
-      const { id, name, created_at, is_active } = item;
+    data?.results?.cashier?.map((item) => {
+      const {
+        id,
+        name,
+        email,
+        company_name: companyName,
+        phone_number: phone,
+        address,
+        created_at,
+        is_active,
+        vat_number,
+      } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        name: name,
-        status: { status: is_active, handleStatusModal },
+        name: { name, email },
+        companyName,
+        phone,
+        address,
+        vatNumber: vat_number,
         created_at: date,
+        status: { status: is_active },
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];

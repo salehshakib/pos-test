@@ -1,8 +1,9 @@
 import { Dropdown } from "antd";
 import { useState } from "react";
+import { FaEye } from "react-icons/fa6";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
+import { PiBroom } from "react-icons/pi";
 import CashierCreate from "../../../components/Cashier/CashierCreate";
 import CashierTable from "../../../components/Cashier/CashierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -21,20 +22,35 @@ const columns = [
       </span>
     ),
   },
+  // {
+  //   title: "Img",
+  //   dataIndex: "image",
+  //   key: "image",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 70,
+  //   render: (img) => (
+  //     <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+  //       <img
+  //         src={img ?? defaultUser}
+  //         alt="defaultUser"
+  //         className="w-full h-full object-cover"
+  //       />
+  //     </div>
+  //   ),
+  // },
   {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
     fixed: "left",
-    align: "center",
-    width: 70,
-    render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
-        <img
-          src={img ?? defaultUser}
-          alt="defaultUser"
-          className="w-full h-full object-cover"
-        />
+
+    render: ({ name, email }) => (
+      <div className="flex flex-col cursor-pointer ">
+        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
+          {name}
+        </span>
+        <span className="text-xs dark:text-white60 primary-text">{email}</span>
       </div>
     ),
   },
@@ -42,29 +58,12 @@ const columns = [
     title: "Company Name",
     dataIndex: "companyName",
     key: "companyName",
-    align: "center",
     render: (companyName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {companyName}
       </span>
     ),
   },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (name) => (
-      <div className="flex flex-col cursor-pointer ">
-        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
-          {name}
-        </span>
-        <span className="text-xs dark:text-white60 primary-text">
-          admin@gmail.com
-        </span>
-      </div>
-    ),
-  },
-
   {
     title: "Phone",
     dataIndex: "phone",
@@ -80,7 +79,6 @@ const columns = [
     title: "Address",
     dataIndex: "address",
     key: "address",
-    align: "center",
     render: (address) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {address}
@@ -146,30 +144,52 @@ const columns = [
               items: [
                 {
                   key: "1",
-                  label: <div>Suuply Due Clear</div>,
+                  label: (
+                    <div
+                      onClick={() => handleEdit(record?.id)}
+                      className="flex justify-start items-center gap-3"
+                    >
+                      <FaEye className="text-lg md:text-xl" />
+                      Details
+                    </div>
+                  ),
                 },
                 {
                   key: "2",
-                  label: <div onClick={() => handleEdit(record?.id)}>Edit</div>,
+                  label: (
+                    <div
+                      onClick={() => handleEdit(record?.id)}
+                      className="flex justify-start items-center gap-3"
+                    >
+                      <MdEditSquare className="text-lg md:text-xl" />
+                      Edit
+                    </div>
+                  ),
+                },
+                {
+                  key: "3",
+                  label: (
+                    <div className="flex justify-start items-center gap-3">
+                      <PiBroom className="text-lg md:text-xl" />
+                      Due Clear
+                    </div>
+                  ),
                 },
               ],
             }}
             placement="bottom"
             trigger={["click"]}
           >
-            <button
-              // onClick={() => handleEdit(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-            >
+            <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
               <FiMoreHorizontal className="text-lg md:text-xl" />
             </button>
           </Dropdown>
-          <button
+          {/* <button
             onClick={() => handleEdit(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
-          </button>
+          </button> */}
           <button
             onClick={() => handleDeleteModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"

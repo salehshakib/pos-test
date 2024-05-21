@@ -32,7 +32,8 @@ const SupplierEdit = ({ id }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateSupplier({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

@@ -51,9 +51,9 @@ const stockCountApi = baseApi.injectEndpoints({
     }),
 
     updateStockCount: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${STOCK_COUNT}/update/${data?.id}`,
+          url: `/${STOCK_COUNT}/update/${id}`,
           method: "POST",
           body: data,
         };

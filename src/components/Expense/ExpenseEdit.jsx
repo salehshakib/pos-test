@@ -29,7 +29,8 @@ export const ExpenseEdit = ({ id }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpense({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

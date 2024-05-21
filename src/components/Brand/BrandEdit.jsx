@@ -39,7 +39,8 @@ export const BrandEdit = ({ id, setId }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateBrand({
-      data: { id, ...values },
+      id,
+      data: values,
     });
 
     if (data?.success) {

@@ -48,9 +48,9 @@ const departmentApi = baseApi.injectEndpoints({
       },
     }),
     updateDepartment: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${DEPARTMENT}/update/${data?.id}`,
+          url: `/${DEPARTMENT}/update/${id}`,
           method: "POST",
           body: data,
         };

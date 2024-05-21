@@ -48,9 +48,9 @@ const brandApi = baseApi.injectEndpoints({
       },
     }),
     updateBrand: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${BRAND}/update/${data?.id}`,
+          url: `/${BRAND}/update/${id}`,
           method: "POST",
           body: data,
         };

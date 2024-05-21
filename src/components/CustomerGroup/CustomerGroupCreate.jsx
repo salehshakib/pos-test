@@ -13,7 +13,11 @@ const CustomerGroupCreate = () => {
   const [createCustomerGroup, { isLoading }] = useCreateCustomerGroupMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createCustomerGroup({ data: values });
+    console.log(values);
+
+    const { data, error } = await createCustomerGroup({
+      data: { ...values, percentage: values.percentage.toString() },
+    });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());

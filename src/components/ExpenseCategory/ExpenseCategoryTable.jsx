@@ -9,11 +9,9 @@ import {
 import {
   useDeleteExpenseCategoryMutation,
   useGetAllExpenseCategoryQuery,
-  useUpdateExpenseCategoryStatusMutation,
 } from "../../redux/services/expense/expenseCategoryApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
 
@@ -23,8 +21,8 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
 
   const { editId } = useSelector((state) => state.drawer);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -35,8 +33,8 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateExpenseCategoryStatusMutation();
+  // const [updateStatus, { isLoading: isStatusUpdating }] =
+  //   useUpdateExpenseCategoryStatusMutation();
 
   const [deleteExpenseCategory, { isLoading: isDeleting }] =
     useDeleteExpenseCategoryMutation();
@@ -46,19 +44,19 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
+  // const handleStatusModal = (id) => {
+  //   setStatusId(id);
+  //   setStatusModal(true);
+  // };
 
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+  // const handleStatus = async () => {
+  //   const { data } = await updateStatus(statusId);
 
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
-  };
+  //   if (data?.success) {
+  //     setStatusId(undefined);
+  //     setStatusModal(false);
+  //   }
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -73,23 +71,29 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.department?.map((item) => {
+    data?.results?.expensecategory?.map((item) => {
       const { id, name, created_at, is_active } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
-        status: { status: is_active, handleStatusModal },
+        status: {
+          status: is_active,
+
+          // handleStatusModal
+        },
         created_at: date,
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    // setStatusModal(false);
     setDeleteModal(false);
   };
+
+  console.log(editId);
 
   return (
     <GlobalUtilityStyle>
@@ -104,12 +108,12 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
 
       <ExpenseCategoryEdit id={editId} />
 
-      <StatusModal
+      {/* <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      />
+      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

@@ -10,9 +10,13 @@ import {
   MdOutlineSpaceDashboard,
   MdPeopleAlt,
 } from "react-icons/md";
-import { RiArrowGoBackFill, RiArrowGoForwardFill } from "react-icons/ri";
 import { SlWallet } from "react-icons/sl";
-import { TbDashboard, TbReport } from "react-icons/tb";
+import {
+  TbDashboard,
+  TbReport,
+  TbTransferIn,
+  TbTruckReturn,
+} from "react-icons/tb";
 import { TfiShoppingCart } from "react-icons/tfi";
 import { VscDiffAdded } from "react-icons/vsc";
 import Accounting from "../pages/Dashboard/Accounting/Accounting";
@@ -85,13 +89,13 @@ export const adminPaths = [
   {
     name: "Transfer",
     path: "transfer",
-    icon: RiArrowGoForwardFill,
+    icon: TbTransferIn,
     children: transferPaths,
   },
   {
     name: "Return",
     path: "return",
-    icon: RiArrowGoBackFill,
+    icon: TbTruckReturn,
     children: returnPaths,
   },
   {

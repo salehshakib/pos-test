@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -7,7 +8,10 @@ import TypeForm from "./TypeForm";
 
 const TypeCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createType, { isLoading }] = useCreateTypeMutation();
@@ -34,6 +38,7 @@ const TypeCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

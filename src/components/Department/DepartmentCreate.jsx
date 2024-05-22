@@ -1,13 +1,17 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DepartmentForm from "./DepartmentForm";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateDepartmentMutation } from "../../redux/services/hrm/department/departmentApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import DepartmentForm from "./DepartmentForm";
 
 const DepartmentCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
@@ -37,6 +41,7 @@ const DepartmentCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

@@ -1,13 +1,17 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCreateSupplierMutation } from "../../redux/services/supplier/supplierApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateSupplierMutation } from "../../redux/services/supplier/supplierApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SupplierForm from "./SupplierForm";
 
 const SupplierCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createSupplier, { isLoading }] = useCreateSupplierMutation();
@@ -33,6 +37,7 @@ const SupplierCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

@@ -1,15 +1,18 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import AdjustmentForm from "./AdjustmentForm";
 import { useCreateAdjustmentMutation } from "../../redux/services/adjustment/adjustmentApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
-// import RolePermissionForm from "../RolePermission/RolePermissionForm";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import AdjustmentForm from "./AdjustmentForm";
 
 const AdjustmentCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createAdjustment, { isLoading }] = useCreateAdjustmentMutation();
@@ -65,6 +68,7 @@ const AdjustmentCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

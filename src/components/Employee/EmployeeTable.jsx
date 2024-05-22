@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import CustomTable from "../Shared/Table/CustomTable";
 import EmployeeEdit from "./EmployeeEdit";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 
 const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();

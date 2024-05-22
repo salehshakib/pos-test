@@ -1,9 +1,9 @@
 import { Col, Row } from "antd";
+import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/customerGroupApi";
 import CustomForm from "../Shared/Form/CustomForm";
 import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/customerGroupApi";
 
 const CustomerGroupComonent = () => {
   const { data, isLoading } = useGetAllCustomerGroupQuery({
@@ -16,6 +16,9 @@ const CustomerGroupComonent = () => {
     value: item.id?.toString(),
     label: item.name,
   }));
+
+  console.log(options);
+
   return (
     <CustomSelect
       label="Customer Group"

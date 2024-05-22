@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -12,6 +13,8 @@ import ExpenseCategoryForm from "./ExpenseCategoryForm";
 
 const ExpenseCategoryEdit = ({ id }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -59,6 +62,7 @@ const ExpenseCategoryEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

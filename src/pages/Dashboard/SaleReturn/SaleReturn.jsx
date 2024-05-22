@@ -118,7 +118,7 @@ const SaleReturn = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Sale Return List"
+      pageTitle="Sale Return"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

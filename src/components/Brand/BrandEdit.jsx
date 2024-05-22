@@ -9,9 +9,12 @@ import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { Form } from "antd";
 
 export const BrandEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -65,6 +68,7 @@ export const BrandEdit = ({ id, setId }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

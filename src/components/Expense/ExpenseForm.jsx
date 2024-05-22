@@ -10,9 +10,9 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 const ExpenseCategoryComponent = () => {
   const { data, isLoading } = useGetAllExpenseCategoryQuery({});
 
-  const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse.id?.toString(),
-    label: warehouse.name,
+  const options = data?.results?.expensecategory?.map((item) => ({
+    value: item.id?.toString(),
+    label: item.name,
   }));
 
   return (

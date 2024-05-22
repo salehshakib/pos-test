@@ -1,13 +1,17 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateStockCountMutation } from "../../redux/services/stockCount/stockCountApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import StockCountForm from "./StockCountForm";
-import { useCreateStockCountMutation } from "../../redux/services/stockCount/stockCountApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 
 const StockCountCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createStockCount, { isLoading }] = useCreateStockCountMutation();
@@ -36,6 +40,7 @@ const StockCountCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

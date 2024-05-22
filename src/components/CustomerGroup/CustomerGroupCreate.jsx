@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateCustomerGroupMutation } from "../../redux/services/customerGroup/customerGroupApi";
@@ -7,7 +8,10 @@ import CustomerGroupForm from "./CustomerGroupForm";
 
 const CustomerGroupCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createCustomerGroup, { isLoading }] = useCreateCustomerGroupMutation();
@@ -37,6 +41,7 @@ const CustomerGroupCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

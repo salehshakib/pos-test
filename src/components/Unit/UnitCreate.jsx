@@ -1,13 +1,17 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateUnitMutation } from "../../redux/services/unit/unitApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import UnitForm from "./UnitForm";
-import { useCreateUnitMutation } from "../../redux/services/unit/unitApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 
 const UnitCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createUnit, { isLoading }] = useCreateUnitMutation();
@@ -35,6 +39,7 @@ const UnitCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

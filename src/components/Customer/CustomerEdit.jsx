@@ -9,9 +9,11 @@ import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { CustomerForm } from "./CustomerForm";
+import { Form } from "antd";
 
 const CustomerEdit = ({ id }) => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -56,6 +58,7 @@ const CustomerEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

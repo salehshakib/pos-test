@@ -8,9 +8,12 @@ import {
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import DepartmentForm from "./DepartmentForm";
+import { Form } from "antd";
 
 const DepartmentEdit = ({ id }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -63,6 +66,7 @@ const DepartmentEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

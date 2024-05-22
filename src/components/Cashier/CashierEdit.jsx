@@ -1,17 +1,20 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useGetCashierDetailsQuery,
   useUpdateCashierMutation,
 } from "../../redux/services/cashier/cashierApi";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CashierForm from "./CashierForm";
 
 const CashierEdit = ({ id }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -53,6 +56,7 @@ const CashierEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

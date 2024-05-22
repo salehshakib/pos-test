@@ -1,15 +1,19 @@
+import { Form } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateProductMutation } from "../../redux/services/product/productApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ProductForm from "./ProductForm";
-import { useCreateProductMutation } from "../../redux/services/product/productApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import dayjs from "dayjs";
 
 const ProductCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
@@ -150,6 +154,7 @@ const ProductCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

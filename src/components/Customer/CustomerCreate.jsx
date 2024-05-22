@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateCustomerMutation } from "../../redux/services/customer/customerApi";
@@ -7,6 +8,8 @@ import { CustomerForm } from "./CustomerForm";
 
 const CustomerCreate = () => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -17,6 +20,7 @@ const CustomerCreate = () => {
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -28,11 +32,16 @@ const CustomerCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Customer"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Customer"}
+      open={isCreateDrawerOpen}
+      form={form}
+    >
       <CustomerForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

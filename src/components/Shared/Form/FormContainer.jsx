@@ -28,7 +28,7 @@ const FormButton = ({ loading, children, onClose }) => {
   );
 };
 
-const CustomForm = (props) => {
+const FromContainer = (props) => {
   const {
     handleSubmit,
     children,
@@ -37,8 +37,9 @@ const CustomForm = (props) => {
     submitBtn = true,
     submitBtnText = "Save",
     onClose,
-    form,
   } = props;
+
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
     form
@@ -67,18 +68,17 @@ const CustomForm = (props) => {
         autoComplete="on"
         onFinishFailed={onFinishFailed}
         scrollToFirstError
-        onC
       >
         {children}
 
-        {submitBtn && (
+        {/* {submitBtn && (
           <FormButton loading={isLoading} onClose={onClose}>
             {submitBtnText}
           </FormButton>
-        )}
+        )} */}
       </Form>
     </GlobalUtilityStyle>
   );
 };
 
-export default CustomForm;
+export default FromContainer;

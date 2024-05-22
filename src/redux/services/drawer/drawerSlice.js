@@ -38,33 +38,39 @@ const drawerSlice = createSlice({
     },
     closeCreateDrawer: (state) => {
       state.isCreateDrawerOpen = false;
+
       state.detailsId = undefined;
       state.editId = undefined;
       state.deleteId = undefined;
       state.statusId = undefined;
     },
+
     openEditDrawer: (state) => {
       state.isEditDrawerOpen = true;
     },
     closeEditDrawer: (state) => {
       state.isEditDrawerOpen = false;
+
       state.detailsId = undefined;
       state.editId = undefined;
       state.deleteId = undefined;
       state.statusId = undefined;
     },
+
     openBrandDrawer: (state) => {
       state.isBrandDrawerOpen = true;
     },
     closeBrandDrawer: (state) => {
       state.isBrandDrawerOpen = false;
     },
+
     openCategoryDrawer: (state) => {
       state.isCategoryDrawerOpen = true;
     },
     closeCategoryDrawer: (state) => {
       state.isCategoryDrawerOpen = false;
     },
+
     openTaxDrawer: (state) => {
       state.isTaxDrawerOpen = true;
     },

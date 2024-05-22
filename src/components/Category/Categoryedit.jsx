@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Form } from "antd";
 import {
   useGetCategoryDetailsQuery,
   useUpdateCategoryMutation,
 } from "../../redux/services/category/categoryApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -73,6 +76,7 @@ const Categoryedit = ({ id, setId }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

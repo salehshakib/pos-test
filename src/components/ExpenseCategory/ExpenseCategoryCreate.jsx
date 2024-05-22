@@ -4,10 +4,14 @@ import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateExpenseCategoryMutation } from "../../redux/services/expense/expenseCategoryApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ExpenseCategoryForm from "./ExpenseCategoryForm";
+import { Form } from "antd";
 
 const ExpenseCategoryCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createExpenseCategory, { isLoading }] =
@@ -34,6 +38,7 @@ const ExpenseCategoryCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

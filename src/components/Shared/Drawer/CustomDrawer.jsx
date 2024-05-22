@@ -1,4 +1,4 @@
-import { Drawer, Form, Spin } from "antd";
+import { Drawer, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import {
   closeCreateDrawer,
@@ -15,10 +15,7 @@ const CustomDrawer = ({
 }) => {
   const dispatch = useDispatch();
 
-  const [form] = Form.useForm();
-
   const handleCloseDrawer = () => {
-    form.resetFields();
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
   };
@@ -33,7 +30,6 @@ const CustomDrawer = ({
       closable={true}
       onClose={onClose ?? handleCloseDrawer}
       maskClosable
-      destroyOnClose
     >
       <div className="relative w-full h-full ">
         {isLoading ? (

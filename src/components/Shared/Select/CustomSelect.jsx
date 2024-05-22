@@ -1,4 +1,4 @@
-import { Form, Select, Spin } from "antd";
+import { Empty, Form, Select, Spin } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const CustomSelect = (props) => {
@@ -44,14 +44,17 @@ const CustomSelect = (props) => {
             options={options}
             mode={mode}
             notFoundContent={
-              isLoading && (
+              isLoading ? (
                 <Spin
                   size="small"
                   className="w-full flex justify-center items-center"
                 />
+              ) : (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               )
             }
             allowClear={true}
+            defaultActiveFirstOption
           />
         ) : (
           <Select
@@ -63,14 +66,17 @@ const CustomSelect = (props) => {
             mode={mode}
             style={{ ...styleProps }}
             notFoundContent={
-              isLoading && (
+              isLoading ? (
                 <Spin
                   size="small"
                   className="w-full flex justify-center items-center"
                 />
+              ) : (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               )
             }
             allowClear={true}
+            defaultActiveFirstOption
           />
         )}
       </Form.Item>

@@ -1,17 +1,20 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useGetExpenseDetailsQuery,
   useUpdateExpenseMutation,
 } from "../../redux/services/expense/expenseApi";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { ExpenseForm } from "./ExpenseForm";
 
 export const ExpenseEdit = ({ id }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -53,6 +56,7 @@ export const ExpenseEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
+        form={form}
       />
     </CustomDrawer>
   );

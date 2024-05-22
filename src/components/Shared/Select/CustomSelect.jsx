@@ -38,7 +38,7 @@ const CustomSelect = (props) => {
             filterOption={filterOption}
             filterSort={filterSort}
             placeholder={`Select ${placeholder ?? label}`}
-            className="mt-2 custom-selector"
+            className="mt-1 custom-selector"
             size="large"
             loading={isLoading}
             options={options}
@@ -59,7 +59,7 @@ const CustomSelect = (props) => {
         ) : (
           <Select
             placeholder={`Select ${placeholder ?? label}`}
-            className="mt-2 custom-selector"
+            className="mt-1 custom-selector"
             size="large"
             loading={isLoading}
             options={options}

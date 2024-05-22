@@ -1,27 +1,14 @@
 import { Col, Form, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
 import { baseUnit } from "../../assets/data/baseUnit";
 import { useGetTypesQuery } from "../../redux/services/types/typesApi";
-
-const rowLayout = {
-  gutter: 25,
-  // align: "middle",
-  // justify: "start",
-};
-
-const colLayout = {
-  xs: 24,
-  md: 12,
-  lg: 8,
-};
+import CustomForm from "../Shared/Form/CustomForm";
+import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import CustomInput from "../Shared/Input/CustomInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
 
 const BaseUnit = () => {
-  const form = Form.useFormInstance();
-  const base_unit = Form.useWatch("base_unit", form);
-
-  console.log(base_unit);
+  // const form = Form.useFormInstance();
+  // const base_unit = Form.useWatch("base_unit", form);
 
   const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
     return { label: `${name} (${symbol})`, value: name };
@@ -47,7 +34,7 @@ const TypeUnit = () => {
   });
 
   return (
-    <Col {...colLayout}>
+    <Col {...mdColLayout}>
       <CustomSelect
         label="Type"
         name={"for"}
@@ -63,7 +50,7 @@ const UnitForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label={"Unit Name"}
             type={"text"}
@@ -71,7 +58,7 @@ const UnitForm = (props) => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label={"Unit Code"}
             type={"text"}
@@ -79,7 +66,7 @@ const UnitForm = (props) => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <BaseUnit />
         </Col>
 

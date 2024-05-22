@@ -1,11 +1,7 @@
 import { Col, Row } from "antd";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import {
-  fullColLayout,
-  mdColLayout,
-  rowLayout,
-} from "../Shared/Form/FormLayout";
+import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
@@ -40,7 +36,7 @@ const AdjustmentForm = ({ options, ...props }) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...mdColLayout}>
+        <Col {...fullColLayout}>
           <SelectWarehouse />
         </Col>
 

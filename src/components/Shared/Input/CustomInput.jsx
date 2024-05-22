@@ -34,7 +34,7 @@ const CustomInput = (props) => {
         {type === "password" ? (
           <Password
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-2 border-2 "
+            className="mt-1 border-2 "
             size="large"
             prefix={prefix}
             allowClear
@@ -44,7 +44,7 @@ const CustomInput = (props) => {
         ) : type === "textarea" ? (
           <TextArea
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-2 border-2"
+            className="mt-1 border-2"
             size="large"
             autoSize={{
               minRows: 2,
@@ -57,7 +57,7 @@ const CustomInput = (props) => {
           <InputNumber
             type="number"
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-2 border-2 w-full"
+            className="mt-1 border-2 w-full"
             size="large"
             prefix={prefix}
             suffix={"%"}
@@ -72,7 +72,7 @@ const CustomInput = (props) => {
             type="number"
             // placeholder={`Enter ${placeholder ?? label}`}
             placeholder="01XXXX123XX"
-            className="mt-2 border-2 w-full"
+            className="mt-1 border-2 w-full"
             prefix={prefix ?? "+88"}
             // addonBefore={addonBefore}
             // style={{}}
@@ -84,7 +84,7 @@ const CustomInput = (props) => {
           <InputNumber
             type="number"
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-2 border-2 w-full"
+            className="mt-1 border-2 w-full"
             size="large"
             prefix={prefix}
             suffix={suffix}
@@ -94,7 +94,7 @@ const CustomInput = (props) => {
           <Input
             type={type}
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-2 border-2"
+            className="mt-1 border-2"
             size="large"
             prefix={prefix}
             suffix={suffix}

@@ -31,7 +31,7 @@ const CustomInputButton = (props) => {
             <Input
               type={type}
               placeholder={`${placeholder ?? "Enter" + label}`}
-              className="mt-2 border-2"
+              className="mt-1 border-2"
               size="large"
               allowClear={true}
             />
@@ -39,7 +39,7 @@ const CustomInputButton = (props) => {
           <Button
             onClick={onClick}
             icon={icon}
-            className="border-2 mt-2"
+            className="border-2 mt-1"
             size="large"
           />
         </Space.Compact>

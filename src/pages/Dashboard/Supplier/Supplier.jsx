@@ -79,6 +79,7 @@ const columns = [
     title: "Address",
     dataIndex: "address",
     key: "address",
+    width: 350,
     render: (address) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {address}

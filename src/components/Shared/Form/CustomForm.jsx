@@ -11,9 +11,9 @@ const FormButton = ({ loading, children, onClose }) => {
   const form = Form.useFormInstance();
 
   const handleDrawerClose = () => {
+    form.resetFields();
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
-    form.resetFields();
   };
 
   return (
@@ -40,6 +40,7 @@ const CustomForm = (props) => {
   } = props;
 
   const [form] = Form.useForm();
+  // const form = Form.useFormInstance();
 
   const onFinish = (values) => {
     form
@@ -67,6 +68,7 @@ const CustomForm = (props) => {
         layout="vertical"
         autoComplete="on"
         onFinishFailed={onFinishFailed}
+        scrollToFirstError
       >
         {children}
 

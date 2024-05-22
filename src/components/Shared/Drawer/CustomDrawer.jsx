@@ -14,12 +14,13 @@ const CustomDrawer = ({
   onClose,
 }) => {
   const dispatch = useDispatch();
-  const form = Form.useFormInstance();
+
+  const [form] = Form.useForm();
 
   const handleCloseDrawer = () => {
+    form.resetFields();
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
-    form.resetFields();
   };
 
   return (

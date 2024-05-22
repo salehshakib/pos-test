@@ -40,12 +40,7 @@ const SupplierForm = (props) => {
           />
         </Col>
         <Col {...colLayout}>
-          <CustomInput
-            label="Vat Number"
-            type={"text"}
-            required={true}
-            name={"vat_number"}
-          />
+          <CustomInput label="Vat Number" type={"text"} name={"vat_number"} />
         </Col>
         <Col {...colLayout}>
           <CustomInput

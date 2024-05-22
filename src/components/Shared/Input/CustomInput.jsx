@@ -73,7 +73,7 @@ const CustomInput = (props) => {
             // placeholder={`Enter ${placeholder ?? label}`}
             placeholder="01XXXX123XX"
             className="mt-2 border-2 w-full"
-            prefix={prefix ?? "+880"}
+            prefix={prefix ?? "+88"}
             // addonBefore={addonBefore}
             // style={{}}
             suffix={suffix}

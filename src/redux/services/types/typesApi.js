@@ -1,5 +1,8 @@
 import { TYPE } from "../../../utilities/apiEndpoints/helper.api";
-import { openNotification } from "../../../utilities/lib/notification";
+import {
+  transformErrorResponse,
+  transformResponse,
+} from "../../../utilities/lib/handleResponse";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -14,6 +17,7 @@ const typesApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
+      transformErrorResponse,
       providesTags: (result, error, { params }) => [
         { type: TYPE, params },
         TYPE,
@@ -27,12 +31,8 @@ const typesApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification("success", response?.message);
-          return response;
-        }
-      },
+      transformResponse: transformResponse,
+      transformErrorResponse: transformErrorResponse,
       invalidatesTags: (result) => {
         return result ? [TYPE] : [];
       },
@@ -44,12 +44,7 @@ const typesApi = baseApi.injectEndpoints({
           method: "DELETE",
         };
       },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification("success", response?.message);
-          return response;
-        }
-      },
+      transformResponse: transformResponse,
       invalidatesTags: (result) => {
         return result ? [TYPE] : [];
       },

@@ -57,6 +57,7 @@ const columns = [
     dataIndex: "address",
     key: "address",
     align: "center",
+    width: 300,
     render: (address) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {address}
@@ -103,7 +104,7 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleEdit, handleDeleteModal }) => {
+    render: ({ handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button

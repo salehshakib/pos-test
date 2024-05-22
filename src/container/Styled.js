@@ -151,19 +151,19 @@ const GlobalUtilityStyle = styled.div`
 
   .custom-single-upload {
     .ant-upload {
-      width: 200px !important;
+      width: 100% !important;
       height: 130px !important;
     }
 
     .ant-upload-list-item-container {
-      width: 200px !important;
+      width: 100% !important;
       height: 130px !important;
     }
   }
 
   .ant-upload-list-item-thumbnail {
     img {
-      object-fit: cover !important;
+      object-fit: contain !important;
     }
   }
 

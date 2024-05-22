@@ -47,11 +47,9 @@ const AdjustmentForm = ({ options, ...props }) => {
         <Col {...fullColLayout}>
           <SearchProductComponent options={options} />
         </Col>
-      </Row>
-      <Row {...rowLayout}>
+
         <ProductTableComponent />
-      </Row>
-      <Row {...rowLayout}>
+
         <Col {...fullColLayout}>
           <CustomUploader label="Attach Documents" name={"attachment"} />
         </Col>

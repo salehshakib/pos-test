@@ -57,7 +57,7 @@ const CustomUploader = ({
         />
       )}
       <Form.Item
-        label={label}
+        label={<span className="font-bold mt-2">{label}</span>}
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
         valuePropName="fileList"
@@ -75,8 +75,10 @@ const CustomUploader = ({
           }}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
-          className={`${
-            multiple ? "custom-upload" : "custom-single-upload "
+          className={` ${
+            multiple
+              ? "custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2"
+              : "custom-single-upload"
           } mt-2`}
         >
           {(fileList.length < 1 || multiple) && (

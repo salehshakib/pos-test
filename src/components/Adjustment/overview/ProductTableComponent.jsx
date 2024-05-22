@@ -225,10 +225,11 @@ export const ProductTableComponent = () => {
   });
 
   return (
-    <Col {...fullColLayout} className="mb-10">
-      {productData?.length > 0 && warehouseData && (
+    productData?.length > 0 &&
+    warehouseData && (
+      <Col {...fullColLayout} className="mb-10">
         <CustomTable columns={columns} dataSource={dataSource} />
-      )}
-    </Col>
+      </Col>
+    )
   );
 };

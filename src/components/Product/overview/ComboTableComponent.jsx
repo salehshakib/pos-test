@@ -194,11 +194,11 @@ const ComboTableComponent = () => {
   });
 
   return (
-    <Col {...fullColLayout} className={`${productData && "mb-10"}`}>
-      {productData?.length > 0 && (
+    productData?.length > 0 && (
+      <Col {...fullColLayout} className={`${productData && "mb-10"}`}>
         <CustomTable columns={columns} dataSource={dataSource} />
-      )}
-    </Col>
+      </Col>
+    )
   );
 };
 

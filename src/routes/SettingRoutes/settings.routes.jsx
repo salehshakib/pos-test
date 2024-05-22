@@ -1,13 +1,15 @@
 import { AiOutlineDeploymentUnit } from "react-icons/ai";
 import { BsCurrencyPound } from "react-icons/bs";
 import { CiDiscount1 } from "react-icons/ci";
+import { FaPeopleGroup } from "react-icons/fa6";
 import { LuClipboardType } from "react-icons/lu";
-import { MdDisplaySettings } from "react-icons/md";
+import { MdOutlineSettingsApplications } from "react-icons/md";
 import { PiWarehouse } from "react-icons/pi";
 import { RiCoupon2Line, RiVerifiedBadgeLine } from "react-icons/ri";
 import { TbBrandAirtable, TbReceiptTax } from "react-icons/tb";
 import Brand from "../../pages/Dashboard/Brand/Brand";
 import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
+import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 import Discount from "../../pages/Dashboard/Discount/Discount";
 import DiscountPlan from "../../pages/Dashboard/DiscountPlan/DiscountPlan";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
@@ -16,8 +18,6 @@ import TaxList from "../../pages/Dashboard/Tax/TaxList";
 import Types from "../../pages/Dashboard/Type/Types";
 import UnitList from "../../pages/Dashboard/Unit/UnitList";
 import Warehouse from "../../pages/Dashboard/Warehouse/Warehouse";
-import { FaPeopleGroup } from "react-icons/fa6";
-import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 
 export const settingPaths = [
   {
@@ -83,7 +83,7 @@ export const settingPaths = [
   {
     name: "General Settings",
     path: "general-settings",
-    icon: MdDisplaySettings,
+    icon: MdOutlineSettingsApplications,
     element: <GeneralSettings />,
   },
 ];

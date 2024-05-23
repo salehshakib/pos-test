@@ -1,8 +1,12 @@
 import { Dropdown } from "antd";
+import { useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
+import QuotationCreate from "../../../components/Quotation/QuotationCreate";
+import QuotationTable from "../../../components/Quotation/QuotationTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -118,7 +122,8 @@ const columns = [
     align: "center",
     width: 120,
     fixed: "right",
-    render: ({ handleEdit, handleDeleteModal }, record) => {
+    render: (props, record) => {
+      const { handleEdit, handleDeleteModal } = props ?? {};
       return (
         <div className="flex justify-center items-center gap-3 ">
           <Dropdown
@@ -179,7 +184,23 @@ const columns = [
 ];
 
 const Quotation = () => {
-  return <div>This is quotation</div>;
+  const [newColumns, setNewColumns] = useState(columns);
+  const [selectedRows, setSelectedRows] = useState([]);
+  return (
+    <GlobalContainer
+      pageTitle="Quotation"
+      columns={columns}
+      selectedRows={selectedRows}
+      setNewColumns={setNewColumns}
+    >
+      <QuotationCreate />
+
+      <QuotationTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
+    </GlobalContainer>
+  );
 };
 
 export default Quotation;

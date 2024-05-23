@@ -1,5 +1,5 @@
 //components
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
 import {
   IoCardOutline,
@@ -54,7 +54,7 @@ export const adminPaths = [
   {
     name: "Purchase",
     path: "purchase",
-    icon: AiOutlineShoppingCart,
+    icon: FiShoppingBag,
     // children: purchasePaths,
   },
   {

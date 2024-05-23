@@ -7,10 +7,12 @@ import { selectPagination } from "../../redux/services/pagination/paginationSlic
 import {
   useDeleteStockCountMutation,
   useGetStockCountsQuery,
+  useUpdateStockCountStatusMutation,
 } from "../../redux/services/stockCount/stockCountApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import StockCountEdit from "./StockCountEdit";
+import StatusModal from "../Shared/Modal/StatusModal";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -30,6 +32,9 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   });
   const total = data?.meta?.total;
 
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateStockCountStatusMutation();
+
   const [deleteStockCount, { isLoading: isDeleting }] =
     useDeleteStockCountMutation();
 
@@ -43,14 +48,13 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     setStatusModal(true);
   };
 
-  const handleStatus = async (id) => {
-    console.log(id);
-    // const { data } = await updateStatus( id);
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
   };
 
   const handleDeleteModal = (id) => {
@@ -97,6 +101,13 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <StockCountEdit id={editId} setId={setEditId} />
+
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

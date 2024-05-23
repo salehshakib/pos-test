@@ -57,6 +57,8 @@ const CustomForm = (props) => {
     console.log(errorInfo);
   };
 
+  console.log(isLoading);
+
   return (
     <GlobalUtilityStyle>
       <Form
@@ -67,7 +69,6 @@ const CustomForm = (props) => {
         autoComplete="on"
         onFinishFailed={onFinishFailed}
         scrollToFirstError
-        onC
       >
         {children}
 

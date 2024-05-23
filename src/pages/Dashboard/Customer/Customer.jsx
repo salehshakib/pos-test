@@ -1,9 +1,9 @@
 import { Dropdown } from "antd";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa6";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
+import { TbListDetails } from "react-icons/tb";
 import CustomerCreate from "../../../components/Customer/CustomerCreate";
 import CustomerTable from "../../../components/Customer/CustomerTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -48,6 +48,17 @@ const columns = [
   },
 
   {
+    title: "Customer Group",
+    dataIndex: "customerGroup",
+    key: "customerGroup",
+    align: "center",
+    render: (customerGroup) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {customerGroup}
+      </span>
+    ),
+  },
+  {
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
@@ -58,17 +69,17 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-    width: 350,
-    render: (address) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {address}
-      </span>
-    ),
-  },
+  // {
+  //   title: "Address",
+  //   dataIndex: "address",
+  //   key: "address",
+  //   width: 350,
+  //   render: (address) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {address}
+  //     </span>
+  //   ),
+  // },
   {
     title: "Created At",
     dataIndex: "created_at",
@@ -111,23 +122,18 @@ const columns = [
     render: ({ handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
+          <button
+            // onClick={() => handleDeleteModal(record?.id)}
+            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <TbListDetails className="text-lg md:text-xl" />
+          </button>
+
           <Dropdown
             menu={{
               items: [
                 {
-                  key: "1",
-                  label: (
-                    <div
-                      // onClick={() => handleEdit(record?.id)}
-                      className="flex justify-start items-center gap-3"
-                    >
-                      <FaEye className="text-lg md:text-xl" />
-                      Details
-                    </div>
-                  ),
-                },
-                {
-                  key: "2",
+                  key: "edit",
                   label: (
                     <div
                       onClick={() => handleEdit(record?.id)}
@@ -139,11 +145,23 @@ const columns = [
                   ),
                 },
                 {
-                  key: "3",
+                  key: "due",
                   label: (
                     <div className="flex justify-start items-center gap-3">
                       <PiBroom className="text-lg md:text-xl" />
                       Due Clear
+                    </div>
+                  ),
+                },
+                {
+                  key: "delete",
+                  label: (
+                    <div
+                      onClick={() => handleDeleteModal(record?.id)}
+                      className="flex justify-start items-center gap-3"
+                    >
+                      <MdDelete className="text-lg md:text-xl" />
+                      Delete
                     </div>
                   ),
                 },
@@ -156,18 +174,6 @@ const columns = [
               <FiMoreHorizontal className="text-lg md:text-xl" />
             </button>
           </Dropdown>
-          {/* <button
-            onClick={() => handleEdit(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdEditSquare className="text-lg md:text-xl" />
-          </button> */}
-          <button
-            onClick={() => handleDeleteModal(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdDelete className="text-lg md:text-xl" />
-          </button>
         </div>
       );
     },

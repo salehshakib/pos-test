@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteCashierMutation,
   useGetAllCashierQuery,
@@ -12,10 +11,11 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import CashierEdit from "./CashierEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
-import DeleteModal from "../Shared/Modal/DeleteModal";
 
 const CashierTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -80,7 +80,6 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
         email,
         company_name: companyName,
         phone_number: phone,
-        address,
         created_at,
         is_active,
         vat_number,
@@ -92,10 +91,9 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
         name: { name, email },
         companyName,
         phone,
-        address,
         vatNumber: vat_number,
         created_at: date,
-        status: { status: is_active },
+        status: { status: is_active, handleStatusModal },
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];

@@ -26,11 +26,9 @@ export const SearchProductComponent = ({ options: editOptions = [] }) => {
     }
   );
 
-  console.log(data?.results?.Product);
-
   const options = [
     // ...editOptions,
-    ...(data?.results?.Product?.map((product) => ({
+    ...(data?.results?.product?.map((product) => ({
       value: product.id.toString(),
       label: product.name,
       sku: product.sku,

@@ -5,6 +5,7 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCustomerMutation,
   useGetAllCustomerQuery,
+  useUpdateCustomerStatusMutation,
 } from "../../redux/services/customer/customerApi";
 import {
   openEditDrawer,
@@ -12,6 +13,7 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import CustomerEdit from "./CustomerEdit";
 
@@ -21,8 +23,8 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
 
   const { editId } = useSelector((state) => state.drawer);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -33,8 +35,8 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateCustomerStatusMutation();
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateCustomerStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
     useDeleteCustomerMutation();
@@ -44,19 +46,19 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
 
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
 
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
+  };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -78,26 +80,29 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         email,
         company_name: companyName,
         phone_number: phone,
-        address,
+        // address,
         created_at,
         is_active,
+        customer_group_id,
       } = item;
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
+      console.log(item);
       return {
         id,
         name: { name, email },
         companyName,
         phone,
-        address,
+        // address,
+        customerGroup: customer_group_id,
         created_at: date,
-        status: { status: is_active },
+        status: { status: is_active, handleStatusModal },
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
   const hideModal = () => {
-    // setStatusModal(false);
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -114,12 +119,12 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
 
       <CustomerEdit id={editId} />
 
-      {/* <StatusModal
+      <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      /> */}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

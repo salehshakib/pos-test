@@ -13,6 +13,7 @@ const CustomTable = ({
   total,
   setSelectedRows,
   isLoading,
+  showPaging = true,
 }) => {
   const dispatch = useDispatch();
   const rowSelection = {
@@ -86,7 +87,7 @@ const CustomTable = ({
       scroll={{
         x: "max-content",
       }}
-      pagination={pagination ? { ...paginationProps } : false}
+      pagination={showPaging ? { ...paginationProps } : false}
     />
   );
 };

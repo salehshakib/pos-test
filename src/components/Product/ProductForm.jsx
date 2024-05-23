@@ -183,6 +183,7 @@ const PromotionalPriceComponent = () => {
                 type={"date"}
                 label={"Start Date"}
                 name={["promotion", "starting_date"]}
+                required={true}
               />
             </Col>
             <Col {...mdColLayout}>
@@ -190,6 +191,7 @@ const PromotionalPriceComponent = () => {
                 type={"date"}
                 label={"End Date"}
                 name={["promotion", "last_date"]}
+                required={true}
               />
             </Col>
           </Row>

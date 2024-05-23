@@ -228,7 +228,11 @@ export const ProductTableComponent = () => {
     productData?.length > 0 &&
     warehouseData && (
       <Col {...fullColLayout} className="mb-10">
-        <CustomTable columns={columns} dataSource={dataSource} />
+        <CustomTable
+          columns={columns}
+          dataSource={dataSource}
+          showPaging={false}
+        />
       </Col>
     )
   );

@@ -8,10 +8,15 @@ import {
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
+import { Form } from "antd";
 
 const BrandCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen, isBrandDrawerOpen } = useSelector(
     (state) => state.drawer
   );
@@ -34,8 +39,10 @@ const BrandCreate = ({ subDrawer }) => {
     if (data?.success) {
       if (subDrawer) {
         handleCloseSubDrawer();
+        subForm.resetFields();
       } else {
         dispatch(closeCreateDrawer());
+        form.resetFields();
       }
     }
 
@@ -63,6 +70,7 @@ const BrandCreate = ({ subDrawer }) => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={subDrawer ? subForm : form}
         onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>

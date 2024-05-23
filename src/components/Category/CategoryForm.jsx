@@ -1,14 +1,9 @@
 import { Col, Row } from "antd";
 import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import {
-  fullColLayout,
-  mdColLayout,
-  rowLayout,
-} from "../Shared/Form/FormLayout";
+import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
 
 const CategoryForm = (props) => {
   const { data, isLoading: isParentCategoryLoading } = useGetCategoriesQuery(
@@ -41,13 +36,13 @@ const CategoryForm = (props) => {
             isLoading={isParentCategoryLoading}
           />
         </Col>
-        <Col {...fullColLayout}>
+        {/* <Col {...fullColLayout}>
           <CustomUploader
             label={"Category Image"}
             name={"category_image"}
-            multiple={true}
+            
           />
-        </Col>
+        </Col> */}
       </Row>
     </CustomForm>
   );

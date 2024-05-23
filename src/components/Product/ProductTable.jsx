@@ -77,7 +77,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.Product?.map((item) => {
+    data?.results?.product?.map((item) => {
       const {
         id,
         name,

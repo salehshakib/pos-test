@@ -7,10 +7,16 @@ import {
 import { useCreateTaxMutation } from "../../redux/services/tax/taxApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import TaxForm from "./TaxForm";
+import { Form } from "antd";
 
 const TaxCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
+
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen, isTaxDrawerOpen } = useSelector(
     (state) => state.drawer
   );
@@ -18,13 +24,17 @@ const TaxCreate = ({ subDrawer }) => {
   const [createTax, { isLoading }] = useCreateTaxMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
     const { data, error } = await createTax({
       data: values,
     });
     if (data?.success) {
-      dispatch(closeCreateDrawer());
-      form.resetFields();
+      if (subDrawer) {
+        handleCloseSubDrawer();
+        subForm.resetFields();
+      } else {
+        dispatch(closeCreateDrawer());
+        form.resetFields();
+      }
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -43,13 +53,14 @@ const TaxCreate = ({ subDrawer }) => {
     <CustomDrawer
       title={"Add Tax"}
       open={subDrawer ? isTaxDrawerOpen : isCreateDrawerOpen}
-      onClose={handleCloseSubDrawer}
+      onClose={subDrawer && handleCloseSubDrawer}
     >
       <TaxForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        onClose={handleCloseSubDrawer}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

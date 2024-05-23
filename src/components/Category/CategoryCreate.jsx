@@ -8,10 +8,15 @@ import {
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from "antd";
 
 const CategoryCreate = ({ subDrawer }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+
   const { isCreateDrawerOpen, isCategoryDrawerOpen } = useSelector(
     (state) => state.drawer
   );
@@ -21,7 +26,7 @@ const CategoryCreate = ({ subDrawer }) => {
   const handleSubmit = async (values) => {
     const postObj = {
       ...values,
-      category_image: values?.category_image?.[0].originFileObj,
+      // category_image: values?.category_image?.[0].originFileObj,
     };
 
     const formData = new FormData();
@@ -34,8 +39,10 @@ const CategoryCreate = ({ subDrawer }) => {
     if (data?.success) {
       if (subDrawer) {
         handleCloseSubDrawer();
+        subForm.resetFields();
       } else {
         dispatch(closeCreateDrawer());
+        form.resetFields();
       }
     }
 
@@ -63,6 +70,7 @@ const CategoryCreate = ({ subDrawer }) => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={subDrawer ? subForm : form}
         onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>

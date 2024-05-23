@@ -10,8 +10,10 @@ import { selectPagination } from "../../redux/services/pagination/paginationSlic
 import {
   useDeleteSupplierMutation,
   useGetAllSupplierQuery,
+  useUpdateSupplierStatusMutation,
 } from "../../redux/services/supplier/supplierApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import SupplierEdit from "./SupplierEdit";
 
@@ -21,8 +23,8 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
 
   const { editId } = useSelector((state) => state.drawer);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -33,8 +35,8 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateSupplierStatusMutation();
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateSupplierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
     useDeleteSupplierMutation();
@@ -44,19 +46,19 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
 
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
 
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
+  };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -78,7 +80,6 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
         email,
         company_name: companyName,
         phone_number: phone,
-        address,
         created_at,
         is_active,
         vat_number,
@@ -90,16 +91,15 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
         name: { name, email },
         companyName,
         phone,
-        address,
         vatNumber: vat_number,
         created_at: date,
-        status: { status: is_active },
+        status: { status: is_active, handleStatusModal },
         action: { handleEdit, handleDeleteModal },
       };
     }) ?? [];
 
   const hideModal = () => {
-    // setStatusModal(false);
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -116,12 +116,12 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
 
       <SupplierEdit id={editId} />
 
-      {/* <StatusModal
+      <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      /> */}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

@@ -1,15 +1,15 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useGetCustomerDetailsQuery,
   useUpdateCustomerMutation,
 } from "../../redux/services/customer/customerApi";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { CustomerForm } from "./CustomerForm";
-import { Form } from "antd";
 
 const CustomerEdit = ({ id }) => {
   const dispatch = useDispatch();

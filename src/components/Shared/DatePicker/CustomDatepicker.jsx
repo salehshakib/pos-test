@@ -15,7 +15,7 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
         {type === "date" && (
           <DatePicker
             size={"large"}
-            className="border-2 mt-2"
+            className="border-2 mt-1"
             style={{ width: "100%" }}
             format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}
             picker={picker}
@@ -27,7 +27,7 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
           <RangePicker
             picker={picker}
             size={"large"}
-            className="border-2 mt-2"
+            className="border-2 mt-1"
             style={{ width: "100%" }}
             format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}
             suffixIcon={<MdDateRange color="black" />}

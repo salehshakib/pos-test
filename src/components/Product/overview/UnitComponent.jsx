@@ -58,6 +58,8 @@ const UnitComponent = () => {
     },
   });
 
+  console.log(data);
+
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "product-unit")
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));

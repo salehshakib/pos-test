@@ -23,6 +23,7 @@ const DepartmentCreate = () => {
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
 
     if (error) {

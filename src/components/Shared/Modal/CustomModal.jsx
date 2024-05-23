@@ -15,7 +15,6 @@ const CustomModal = ({
   showCloseButton = true,
   children,
 }) => {
-  console.log(title);
   return (
     <GlobalUtilityStyle>
       <Modal

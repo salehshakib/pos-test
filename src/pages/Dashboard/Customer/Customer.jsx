@@ -118,7 +118,7 @@ const columns = [
                   key: "1",
                   label: (
                     <div
-                      onClick={() => handleEdit(record?.id)}
+                      // onClick={() => handleEdit(record?.id)}
                       className="flex justify-start items-center gap-3"
                     >
                       <FaEye className="text-lg md:text-xl" />

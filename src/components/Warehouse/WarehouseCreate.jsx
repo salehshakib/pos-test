@@ -24,6 +24,7 @@ const WarehouseCreate = () => {
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
 
     if (error) {

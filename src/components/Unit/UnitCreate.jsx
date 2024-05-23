@@ -17,12 +17,12 @@ const UnitCreate = () => {
   const [createUnit, { isLoading }] = useCreateUnitMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
     const { data, error } = await createUnit({
       data: values,
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({

@@ -1,8 +1,8 @@
 import { AiOutlineStock } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaBarcode } from "react-icons/fa6";
+import { GoChecklist } from "react-icons/go";
 import { MdAddShoppingCart } from "react-icons/md";
-import { TbShoppingCartExclamation } from "react-icons/tb";
 import AdjustmentList from "../../pages/Dashboard/AdjustmentList/AdjustmentList";
 import Category from "../../pages/Dashboard/Category/Category";
 import PrintBarcode from "../../pages/Dashboard/PrintBarcode/PrintBarcode";
@@ -25,7 +25,7 @@ export const productPaths = [
   {
     name: "Adjustment",
     path: "adjustment-list",
-    icon: TbShoppingCartExclamation,
+    icon: GoChecklist,
     element: <AdjustmentList />,
   },
   {

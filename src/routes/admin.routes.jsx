@@ -1,36 +1,29 @@
 //components
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { BsBoxSeam } from "react-icons/bs";
-import { FaUsersGear } from "react-icons/fa6";
+import { CiMoneyCheck1 } from "react-icons/ci";
+import { GoPeople } from "react-icons/go";
 import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
-import { LuClipboardList } from "react-icons/lu";
-import {
-  MdAccountBalance,
-  MdOutlineSettings,
-  MdOutlineSpaceDashboard,
-  MdPeopleAlt,
-} from "react-icons/md";
+import { LuArchive } from "react-icons/lu";
+import { MdOutlineSettings, MdOutlineSpaceDashboard } from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
 import {
-  TbDashboard,
+  TbFilePercent,
   TbReport,
   TbTransferIn,
   TbTruckReturn,
+  TbUsersGroup,
 } from "react-icons/tb";
 import { TfiShoppingCart } from "react-icons/tfi";
 import { VscDiffAdded } from "react-icons/vsc";
-import Accounting from "../pages/Dashboard/Accounting/Accounting";
 import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import People from "../pages/Dashboard/People/People";
-import Quotation from "../pages/Dashboard/Quotations/Quotation";
-import Reports from "../pages/Dashboard/Reports/Reports";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
-import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
+import { quotationPaths } from "./Quotation/quotation.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
@@ -46,7 +39,7 @@ export const adminPaths = [
   {
     name: "Product",
     path: "product",
-    icon: BsBoxSeam,
+    icon: LuArchive,
     children: productPaths,
   },
   // {
@@ -59,7 +52,7 @@ export const adminPaths = [
     name: "Purchase",
     path: "purchase",
     icon: AiOutlineShoppingCart,
-    children: purchasePaths,
+    // children: purchasePaths,
   },
   {
     name: "Sale",
@@ -76,15 +69,8 @@ export const adminPaths = [
   {
     name: "Quotation",
     path: "quotation",
-    icon: LuClipboardList,
-    children: [
-      {
-        name: "Quotations",
-        path: "quotations",
-        icon: TbDashboard,
-        element: <Quotation />,
-      },
-    ],
+    icon: TbFilePercent,
+    children: quotationPaths,
   },
   {
     name: "Transfer",
@@ -101,46 +87,40 @@ export const adminPaths = [
   {
     name: "Accounting",
     path: "accounting",
-    icon: MdAccountBalance,
-    children: [
-      {
-        name: "Sub Accounting",
-        path: "sub-accounting",
-        icon: TbDashboard,
-        element: <Accounting />,
-      },
-    ],
+    icon: CiMoneyCheck1,
+    // children: [
+    //   {
+    //     name: "Sub Accounting",
+    //     path: "sub-accounting",
+    //     icon: TbDashboard,
+    //     element: <Accounting />,
+    //   },
+    // ],
   },
   {
     name: "HRM",
     path: "human-resources",
-    icon: FaUsersGear,
+    icon: TbUsersGroup,
     children: hrmPaths,
   },
   {
     name: "People",
     path: "people",
-    icon: MdPeopleAlt,
+    icon: GoPeople,
     children: peoplePaths,
   },
   {
     name: "Reports",
     path: "reports",
     icon: TbReport,
-    children: [
-      {
-        name: "Sub Reports",
-        path: "sub-reports",
-        icon: TbDashboard,
-        element: <Reports />,
-      },
-    ],
-  },
-  {
-    name: "AddOns",
-    path: "addons",
-    icon: VscDiffAdded,
-    element: <AddOns />,
+    // children: [
+    //   {
+    //     name: "Sub Reports",
+    //     path: "sub-reports",
+    //     icon: TbDashboard,
+    //     element: <Reports />,
+    //   },
+    // ],
   },
   {
     name: "Roles",
@@ -153,6 +133,13 @@ export const adminPaths = [
     path: "documents",
     icon: IoDocumentTextOutline,
     element: <Documents />,
+  },
+
+  {
+    name: "AddOns",
+    path: "addons",
+    icon: VscDiffAdded,
+    element: <AddOns />,
   },
   {
     name: "Settings",

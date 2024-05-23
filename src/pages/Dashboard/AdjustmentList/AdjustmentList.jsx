@@ -64,6 +64,27 @@ const columns = [
     ),
   },
   {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: ({ status, handleStatusModal }, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+          onClick={() => handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
+  },
+  {
     title: "Action",
     dataIndex: "action",
     key: "action",

@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "antd";
+import { Col, Row } from "antd";
 import { baseUnit } from "../../assets/data/baseUnit";
 import { useGetTypesQuery } from "../../redux/services/types/typesApi";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -28,7 +28,7 @@ const TypeUnit = () => {
 
   const options = data?.results?.type?.map((item) => {
     return {
-      value: item.id,
+      value: item.name,
       label: item.name,
     };
   });

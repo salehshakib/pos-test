@@ -1,8 +1,11 @@
 //components
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { CiMoneyCheck1 } from "react-icons/ci";
 import { GoPeople } from "react-icons/go";
-import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
+import {
+  IoCardOutline,
+  IoDocumentTextOutline,
+  IoPeopleCircle,
+} from "react-icons/io5";
 import { LuArchive } from "react-icons/lu";
 import { MdOutlineSettings, MdOutlineSpaceDashboard } from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
@@ -87,7 +90,7 @@ export const adminPaths = [
   {
     name: "Accounting",
     path: "accounting",
-    icon: CiMoneyCheck1,
+    icon: IoCardOutline,
     // children: [
     //   {
     //     name: "Sub Accounting",

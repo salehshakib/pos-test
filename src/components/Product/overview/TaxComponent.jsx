@@ -19,6 +19,8 @@ export const TaxComponent = () => {
     };
   });
 
+  // console.log(options);
+
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);
   };

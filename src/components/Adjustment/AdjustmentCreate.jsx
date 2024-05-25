@@ -33,8 +33,6 @@ const AdjustmentCreate = () => {
       };
     });
 
-    console.log(attachment);
-
     const postObj = {
       attachment:
         attachment?.length > 0

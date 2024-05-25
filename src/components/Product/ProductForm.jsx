@@ -49,7 +49,11 @@ const AttachmentComponent = () => {
   if (productType === "Digital")
     return (
       <Col {...fullColLayout}>
-        <CustomUploader label={"Attachment"} name={"attach_file"} />
+        <CustomUploader
+          label={"Attachment"}
+          name={"attach_file"}
+          required={true}
+        />
       </Col>
     );
 };
@@ -149,6 +153,7 @@ const ExpireComponent = () => {
             <CustomDatepicker
               label={"Expired Date"}
               name={["product_expire", "expired_date"]}
+              required={true}
             />
           </Col>
         )}

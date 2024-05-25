@@ -1,22 +1,25 @@
-export const desLayout = {
-  bordered: true,
-  labelStyle: {
-    width: "25%",
-  },
-  contentStyle: {
-    width: "25%",
-  },
-  size: "middle",
-  column: { sm: 2, lg: 4 },
+export const desLayout = ({ isMobile }) => {
+  return {
+    bordered: true,
+    labelStyle: {
+      width: isMobile ? "40%" : "25%",
+    },
+    contentStyle: {
+      width: isMobile ? "60%" : "25%",
+    },
+    size: "middle",
+    column: { sm: 2, lg: 4 },
+  };
 };
 
 export const detailsLayout = {
-  ...desLayout,
+  bordered: true,
+  size: "middle",
   labelStyle: {
-    width: "10%",
+    width: "25%",
   },
   contentStyle: {
-    // "min-width": "fit-content",
-    width: "40%",
+    width: "75%",
   },
+  column: { sm: 2, lg: 4 },
 };

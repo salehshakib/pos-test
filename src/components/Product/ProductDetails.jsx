@@ -1,18 +1,13 @@
 import { Descriptions, Spin } from "antd";
-import { desLayout, detailsLayout } from "../../layout/DescriptionLayout";
+import parse from "html-react-parser";
+import { detailsLayout } from "../../layout/DescriptionLayout";
 import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
+import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
-import parse from "html-react-parser";
 
 export const ProductDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetProductDetailsQuery({ id }, { skip: !id });
-
-  console.log(data);
-
-  // const details = createDetailsLayout(data);
-
-  // console.log(details);
 
   const basicInfo = createDetailsLayout({
     name: data?.name,
@@ -33,9 +28,6 @@ export const ProductDetails = ({ id, ...props }) => {
     buying_price: data?.buying_price,
     selling_price: data?.selling_price,
     profit: data?.profit,
-
-    // tax_method: data?.tax_method,
-    // tax_id: data?.tax_id,
   });
 
   const inventoryInfo = createDetailsLayout({
@@ -78,35 +70,14 @@ export const ProductDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <div className="space-y-5">
-          <Descriptions {...desLayout} title="Basic Info" items={basicInfo} />
-          <Descriptions
-            {...desLayout}
-            title="Category & Units"
-            items={categoryInfo}
-          />
-          <Descriptions
-            {...desLayout}
-            title="Pricing Info"
-            items={pricingInfo}
-          />
-          <Descriptions
-            {...desLayout}
-            title="Inventory Info"
-            items={inventoryInfo}
-          />
-          <Descriptions
-            {...desLayout}
-            title="Features Info"
-            items={featuresInfo}
-          />
-          <Descriptions
-            {...desLayout}
-            title="Variant Info"
-            items={variantsInfo}
-          />
-          <Descriptions {...desLayout} title="Tax Info" items={taxInfo} />
-          <Descriptions
-            {...desLayout}
+          <CustomDescription title="Basic Info" items={basicInfo} />
+          <CustomDescription title="Category & Units" items={categoryInfo} />
+          <CustomDescription title="Pricing Info" items={pricingInfo} />
+          <CustomDescription title="Inventory Info" items={inventoryInfo} />
+          <CustomDescription title="Features Info" items={featuresInfo} />
+          <CustomDescription title="Variant Info" items={variantsInfo} />
+          <CustomDescription title="Tax Info" items={taxInfo} />
+          <CustomDescription
             title="Miscellaneous Info"
             items={miscellaneousInfo}
           />

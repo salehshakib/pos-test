@@ -8,9 +8,9 @@ const initialState = {
 
   isCreateDrawerOpen: false,
   isEditDrawerOpen: false,
-  isBrandDrawerOpen: false,
-  isCategoryDrawerOpen: false,
-  isTaxDrawerOpen: false,
+  // isBrandDrawerOpen: false,
+  // isCategoryDrawerOpen: false,
+  // isTaxDrawerOpen: false,
 };
 
 const drawerSlice = createSlice({
@@ -57,26 +57,26 @@ const drawerSlice = createSlice({
       state.statusId = undefined;
     },
 
-    openBrandDrawer: (state) => {
-      state.isBrandDrawerOpen = true;
-    },
-    closeBrandDrawer: (state) => {
-      state.isBrandDrawerOpen = false;
-    },
+    // openBrandDrawer: (state) => {
+    //   state.isBrandDrawerOpen = true;
+    // },
+    // closeBrandDrawer: (state) => {
+    //   state.isBrandDrawerOpen = false;
+    // },
 
-    openCategoryDrawer: (state) => {
-      state.isCategoryDrawerOpen = true;
-    },
-    closeCategoryDrawer: (state) => {
-      state.isCategoryDrawerOpen = false;
-    },
+    // openCategoryDrawer: (state) => {
+    //   state.isCategoryDrawerOpen = true;
+    // },
+    // closeCategoryDrawer: (state) => {
+    //   state.isCategoryDrawerOpen = false;
+    // },
 
-    openTaxDrawer: (state) => {
-      state.isTaxDrawerOpen = true;
-    },
-    closeTaxDrawer: (state) => {
-      state.isTaxDrawerOpen = false;
-    },
+    // openTaxDrawer: (state) => {
+    //   state.isTaxDrawerOpen = true;
+    // },
+    // closeTaxDrawer: (state) => {
+    //   state.isTaxDrawerOpen = false;
+    // },
   },
 });
 
@@ -93,10 +93,10 @@ export const {
   closeCreateDrawer,
   openEditDrawer,
   closeEditDrawer,
-  openBrandDrawer,
-  closeBrandDrawer,
-  openCategoryDrawer,
-  closeCategoryDrawer,
-  openTaxDrawer,
-  closeTaxDrawer,
+  // openBrandDrawer,
+  // closeBrandDrawer,
+  // openCategoryDrawer,
+  // closeCategoryDrawer,
+  // openTaxDrawer,
+  // closeTaxDrawer,
 } = drawerSlice.actions;

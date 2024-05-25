@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
-import { openBrandDrawer } from "../../../redux/services/drawer/drawerSlice";
 import BrandCreate from "../../Brand/BrandCreate";
 import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 
 export const BrandComponent = () => {
-  const dispatch = useDispatch();
-  const { data, isLoading } = useGetBrandsQuery({});
+  const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
+  const { data, isLoading } = useGetBrandsQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
   const options = data?.results?.brand?.map((item) => {
     return {
       value: item.id?.toString(),
@@ -16,8 +19,12 @@ export const BrandComponent = () => {
     };
   });
 
-  const handleAddBrand = () => {
-    dispatch(openBrandDrawer());
+  const handleOpenSubDrawer = () => {
+    setIsSubDrawerOpen(true);
+  };
+
+  const handleCloseSubDrawer = () => {
+    setIsSubDrawerOpen(false);
   };
 
   return (
@@ -27,13 +34,17 @@ export const BrandComponent = () => {
         showSearch={true}
         options={options}
         icon={<FaPlus className="text-xl" />}
-        onClick={handleAddBrand}
+        onClick={handleOpenSubDrawer}
         name={"brand_id"}
         isLoading={isLoading}
         required={"true"}
       />
 
-      <BrandCreate subDrawer={true} />
+      <BrandCreate
+        subDrawer={true}
+        isSubDrawerOpen={isSubDrawerOpen}
+        handleCloseSubDrawer={handleCloseSubDrawer}
+      />
     </>
   );
 };

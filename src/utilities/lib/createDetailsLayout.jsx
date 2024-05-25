@@ -1,14 +1,14 @@
 import { Badge } from "antd";
+import parse from "html-react-parser";
 
 const createDetailsLayout = (data) => {
   const ignoredKeys = ["id", "created_at", "updated_at", "deleted_at"];
-
   const fullRowKeys = ["details", "product_list", "address", "qty_list"];
 
   const details = Object.entries(data ?? {}).reduce(
     (acc, [key, value], index) => {
       if (!ignoredKeys.includes(key)) {
-        const detail = {
+        const item = {
           key: index + 1,
           label: key.replace(/_/g, " ").toUpperCase(),
           children:
@@ -24,12 +24,15 @@ const createDetailsLayout = (data) => {
               "False"
             ) : value ? (
               value
+            ) : key === "details" ? (
+              value && <div>{parse(value)}</div>
             ) : (
               "N/A"
             ),
           span: fullRowKeys.includes(key) ? 4 : 2,
         };
-        acc.push(detail);
+
+        acc.push(item);
       }
       return acc;
     },

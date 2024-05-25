@@ -1,7 +1,10 @@
 export const desLayout = {
-  labelStyle: { width: "200px" },
   bordered: true,
+  labelStyle: {
+    width: "200px",
+  },
   contentStyle: {
     width: "fit-content",
   },
+  column: 4,
 };

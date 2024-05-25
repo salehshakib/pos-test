@@ -3,6 +3,7 @@ import { desLayout } from "../../layout/DescriptionLayout";
 import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import CustomModal from "../Shared/Modal/CustomModal";
+import parse from "html-react-parser";
 
 export const ProductDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetProductDetailsQuery({ id }, { skip: !id });
@@ -71,10 +72,6 @@ export const ProductDetails = ({ id, ...props }) => {
     embedded_barcode: data?.embedded_barcode,
   });
 
-  const additionalInfo = createDetailsLayout({
-    details: data?.details,
-  });
-
   return (
     <CustomModal {...props}>
       {isFetching ? (
@@ -113,11 +110,12 @@ export const ProductDetails = ({ id, ...props }) => {
             title="Miscellaneous Info"
             items={miscellaneousInfo}
           />
-          <Descriptions
-            {...desLayout}
-            title="Additional Details"
-            items={additionalInfo}
-          />
+
+          <Descriptions {...desLayout} title="Additional Info">
+            <Descriptions.Item label="Details">
+              <div>{parse(data?.details)}</div>
+            </Descriptions.Item>
+          </Descriptions>
         </div>
       )}
     </CustomModal>

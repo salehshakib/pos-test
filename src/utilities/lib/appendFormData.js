@@ -1,7 +1,5 @@
 export const appendToFormData = (data, formData) => {
-  console.log(data);
   function append(key, value) {
-    console.log(key);
     if (Array.isArray(value) && key.includes("attachments")) {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);

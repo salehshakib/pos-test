@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 
 const PurchaseReturnForm = (props) => {
   return (

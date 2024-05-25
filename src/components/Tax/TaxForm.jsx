@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
-import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 
 const TaxForm = (props) => {
   return (

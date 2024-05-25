@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useDebouncedCallback } from "use-debounce";
 import { useGetProductsQuery } from "../../../redux/services/product/productApi";
 import { setProduct } from "../../../redux/services/product/productSlice";
-import { fullColLayout } from "../../Shared/Form/FormLayout";
+import { fullColLayout } from "../../../layout/FormLayout";
 import DebouceSelect from "../../Shared/Select/DebounceSelect";
 import ComboTableComponent from "./ComboTableComponent";
 

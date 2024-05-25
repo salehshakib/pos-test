@@ -2,7 +2,7 @@
 import { Col, Form } from "antd";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { fullColLayout } from "../../Shared/Form/FormLayout";
+import { fullColLayout } from "../../../layout/FormLayout";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomTable from "../../Shared/Table/CustomTable";

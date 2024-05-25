@@ -3,7 +3,7 @@ import { Badge } from "antd";
 const createDetailsLayout = (data) => {
   const ignoredKeys = ["id", "created_at", "updated_at", "deleted_at"];
 
-  const fullRowKeys = ["details", "product_list", "address"];
+  const fullRowKeys = ["details", "product_list", "address", "qty_list"];
 
   const details = Object.entries(data ?? {}).reduce(
     (acc, [key, value], index) => {
@@ -18,8 +18,14 @@ const createDetailsLayout = (data) => {
               ) : (
                 <Badge status="default" text="Inactive" />
               )
-            ) : (
+            ) : value === "1" ? (
+              "True"
+            ) : value === "0" ? (
+              "False"
+            ) : value ? (
               value
+            ) : (
+              "N/A"
             ),
           span: fullRowKeys.includes(key) ? 4 : 2,
         };

@@ -41,16 +41,16 @@ const CustomForm = (props) => {
   } = props;
 
   const onFinish = (values) => {
-    form
-      .validateFields({
-        validateOnly: true,
-      })
-      .then(() => {
-        handleSubmit(values);
-      })
-      .catch((error) => {
-        console.error("Validation error:", error);
-      });
+    handleSubmit(values);
+    // form
+    //   .validateFields({
+    //     validateOnly: true,
+    //   })
+    //   .then(() => {
+    //   })
+    //   .catch((error) => {
+    //     console.error("Validation error:", error);
+    //   });
   };
 
   const onFinishFailed = (errorInfo) => {

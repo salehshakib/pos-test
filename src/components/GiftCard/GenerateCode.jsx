@@ -54,9 +54,11 @@ const GenerateCode = () => {
                 className="border-2"
                 onChange={onCodeChange}
                 size="large"
-                allowClear={true}
+                style={{
+                  allowClear: true,
+                }}
+                // allowClear
               />
-              {/* <Input.OTP /> */}
             </Form.Item>
           </Col>
           <Col span={6}>

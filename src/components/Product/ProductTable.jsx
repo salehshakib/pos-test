@@ -130,11 +130,13 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
       <ProductEdit id={editId} />
 
-      <ProductDetails
-        id={detailsId}
-        openModal={detailsModal}
-        hideModal={hideModal}
-      />
+      {detailsId && (
+        <ProductDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       {/* <StatusModal
     statusModal={statusModal}

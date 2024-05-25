@@ -53,7 +53,10 @@ const CustomSelect = (props) => {
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               )
             }
-            allowClear={true}
+            style={{
+              ...styleProps,
+              allowClear: true,
+            }}
             defaultActiveFirstOption
           />
         ) : (
@@ -64,7 +67,10 @@ const CustomSelect = (props) => {
             loading={isLoading}
             options={options}
             mode={mode}
-            style={{ ...styleProps }}
+            style={{
+              ...styleProps,
+              allowClear: true,
+            }}
             notFoundContent={
               isLoading ? (
                 <Spin
@@ -75,7 +81,6 @@ const CustomSelect = (props) => {
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               )
             }
-            allowClear={true}
             defaultActiveFirstOption
           />
         )}

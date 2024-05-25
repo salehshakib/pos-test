@@ -1,7 +1,7 @@
 import { Col, Form, Row } from "antd";
 import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/customerGroupApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";

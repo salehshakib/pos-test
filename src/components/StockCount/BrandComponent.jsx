@@ -1,6 +1,6 @@
 import { Col } from "antd";
 import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
-import { mdColLayout } from "../Shared/Form/FormLayout";
+import { mdColLayout } from "../../layout/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const BrandComponent = () => {

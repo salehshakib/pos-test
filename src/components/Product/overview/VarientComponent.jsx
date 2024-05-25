@@ -1,5 +1,5 @@
 import { Col, Form, Row } from "antd";
-import { fullColLayout, rowLayout } from "../../Shared/Form/FormLayout";
+import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 
 export const VarientComponent = () => {

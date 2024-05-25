@@ -40,7 +40,9 @@ const DebouceSelect = (props) => {
             )
           }
           onSelect={onSelect}
-          allowClear
+          style={{
+            allowClear: true,
+          }}
         />
       </Form.Item>
     </GlobalUtilityStyle>

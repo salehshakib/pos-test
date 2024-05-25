@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { colLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 
 const CurrencyForm = (props) => {

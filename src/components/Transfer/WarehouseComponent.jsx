@@ -1,5 +1,5 @@
 import { Col } from "antd";
-import { colLayout } from "../Shared/Form/FormLayout";
+import { colLayout } from "../../layout/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 

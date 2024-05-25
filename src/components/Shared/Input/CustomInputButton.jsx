@@ -18,7 +18,6 @@ const CustomInputButton = (props) => {
       <Form.Item label={label} required={required}>
         <Space.Compact style={{ width: "100%" }}>
           <Form.Item
-            // label={label}
             name={name}
             rules={[
               {
@@ -33,7 +32,9 @@ const CustomInputButton = (props) => {
               placeholder={`${placeholder ?? "Enter" + label}`}
               className="mt-1 border-2"
               size="large"
-              allowClear={true}
+              style={{
+                allowClear: true,
+              }}
             />
           </Form.Item>
           <Button

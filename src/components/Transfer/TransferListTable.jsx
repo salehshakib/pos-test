@@ -1,6 +1,6 @@
 import { Row } from "antd";
 import { MdDelete } from "react-icons/md";
-import { rowLayout } from "../Shared/Form/FormLayout";
+import { rowLayout } from "../../layout/FormLayout";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const columns = [

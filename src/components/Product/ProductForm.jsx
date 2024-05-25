@@ -7,7 +7,7 @@ import {
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../Shared/Form/FormLayout";
+} from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";

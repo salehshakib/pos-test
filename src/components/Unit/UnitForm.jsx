@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 import { baseUnit } from "../../assets/data/baseUnit";
 import { useGetTypesQuery } from "../../redux/services/types/typesApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 

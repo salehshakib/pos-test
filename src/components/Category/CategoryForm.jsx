@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 

@@ -1,9 +1,9 @@
 import { Col, Row } from "antd";
+import { mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { mdColLayout, rowLayout } from "../Shared/Form/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import PartialForm from "./PartialForm";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 
 const options = [
   {

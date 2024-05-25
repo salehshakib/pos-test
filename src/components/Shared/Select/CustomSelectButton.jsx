@@ -59,7 +59,10 @@ export const CustomSelectButton = (props) => {
                     />
                   )
                 }
-                allowClear={true}
+                style={{
+                  ...styleProps,
+                  allowClear: true,
+                }}
               />
             ) : (
               <Select
@@ -69,7 +72,10 @@ export const CustomSelectButton = (props) => {
                 loading={isLoading}
                 options={options}
                 mode={mode}
-                style={{ ...styleProps }}
+                style={{
+                  ...styleProps,
+                  allowClear: true,
+                }}
                 notFoundContent={
                   isLoading && (
                     <Spin
@@ -78,7 +84,6 @@ export const CustomSelectButton = (props) => {
                     />
                   )
                 }
-                allowClear={true}
               />
             )}
           </Form.Item>

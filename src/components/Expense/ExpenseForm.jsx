@@ -3,7 +3,7 @@ import { useGetAllExpenseCategoryQuery } from "../../redux/services/expense/expe
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../Shared/Form/FormLayout";
+import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 

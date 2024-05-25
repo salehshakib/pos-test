@@ -1,5 +1,5 @@
 import { Descriptions, Spin } from "antd";
-import { desLayout } from "../../layout/DescriptionLayout";
+import { desLayout, detailsLayout } from "../../layout/DescriptionLayout";
 import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import CustomModal from "../Shared/Modal/CustomModal";
@@ -111,7 +111,7 @@ export const ProductDetails = ({ id, ...props }) => {
             items={miscellaneousInfo}
           />
 
-          <Descriptions {...desLayout} title="Additional Info">
+          <Descriptions {...detailsLayout} title="Additional Info">
             <Descriptions.Item label="Details">
               <div>{parse(data?.details)}</div>
             </Descriptions.Item>

@@ -1,10 +1,22 @@
 export const desLayout = {
   bordered: true,
   labelStyle: {
-    width: "200px",
+    width: "25%",
   },
   contentStyle: {
-    width: "fit-content",
+    width: "25%",
   },
-  column: 4,
+  size: "middle",
+  column: { sm: 2, lg: 4 },
+};
+
+export const detailsLayout = {
+  ...desLayout,
+  labelStyle: {
+    width: "10%",
+  },
+  contentStyle: {
+    // "min-width": "fit-content",
+    width: "40%",
+  },
 };

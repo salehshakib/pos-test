@@ -31,7 +31,7 @@ const SearchProductComponent = ({ options: editOptions = [] }) => {
 
   const options = [
     // ...editOptions,
-    ...(data?.results?.Product?.map((product) => ({
+    ...(data?.results?.product?.map((product) => ({
       value: product.id.toString(),
       label: product.name,
       // sku: product.sku,

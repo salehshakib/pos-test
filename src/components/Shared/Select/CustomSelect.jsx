@@ -55,8 +55,8 @@ const CustomSelect = (props) => {
             }
             style={{
               ...styleProps,
-              allowClear: true,
             }}
+            allowClear
             defaultActiveFirstOption
           />
         ) : (

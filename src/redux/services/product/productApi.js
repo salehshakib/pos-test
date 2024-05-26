@@ -57,7 +57,7 @@ const productApi = baseApi.injectEndpoints({
       query: ({ id, formData }) => {
         return {
           url: `/${PRODUCT}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: formData,
         };
       },

@@ -60,7 +60,7 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: ({ id, formData }) => {
         return {
           url: `/${ADJUSTMENT}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: formData,
         };
       },

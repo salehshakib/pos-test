@@ -1,9 +1,9 @@
 import { Col, Row } from "antd";
+import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetAllExpenseCategoryQuery } from "../../redux/services/expense/expenseCategoryApi";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
@@ -53,13 +53,13 @@ export const ExpenseForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <WarehouseComponent />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <ExpenseCategoryComponent />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Amount"
             type={"number"}
@@ -67,7 +67,7 @@ export const ExpenseForm = (props) => {
             name={"amount"}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomDatepicker label="Date" type={"date"} name={"date"} />
         </Col>
         <Col {...fullColLayout}>

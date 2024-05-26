@@ -135,7 +135,9 @@ const WarehouseTableComponent = () => {
     };
   });
 
-  return <CustomTable columns={columns} dataSource={dataSource} />;
+  return (
+    <CustomTable columns={columns} dataSource={dataSource} showPaging={false} />
+  );
 };
 
 export default WarehouseTableComponent;

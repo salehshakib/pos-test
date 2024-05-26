@@ -59,7 +59,7 @@ const transferApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${CUSTOMER}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: data,
         };
       },

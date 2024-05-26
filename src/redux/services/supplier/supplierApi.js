@@ -60,7 +60,7 @@ const supplierApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${SUPPLIER}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: data,
         };
       },

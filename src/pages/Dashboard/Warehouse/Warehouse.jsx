@@ -123,36 +123,32 @@ const columns = [
               items: [
                 {
                   key: "edit",
+                  icon: <MdEditSquare size={20} />,
                   label: (
-                    <div
-                      onClick={() => handleEdit(record?.id)}
-                      className="flex justify-start items-center gap-3"
-                    >
-                      <MdEditSquare className="text-lg md:text-xl" />
+                    <div className="flex justify-start items-center gap-3">
                       Edit
                     </div>
                   ),
+                  onClick: () => handleEdit(record?.id),
                 },
                 {
                   key: "due",
+                  icon: <PiBroom size={20} />,
                   label: (
                     <div className="flex justify-start items-center gap-3">
-                      <PiBroom className="text-lg md:text-xl" />
                       Due Clear
                     </div>
                   ),
                 },
                 {
                   key: "delete",
+                  icon: <MdDelete size={20} />,
                   label: (
-                    <div
-                      onClick={() => handleDeleteModal(record?.id)}
-                      className="flex justify-start items-center gap-3"
-                    >
-                      <MdDelete className="text-lg md:text-xl" />
+                    <div className="flex justify-start items-center gap-3">
                       Delete
                     </div>
                   ),
+                  onClick: () => handleDeleteModal(record?.id),
                 },
               ],
             }}

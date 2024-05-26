@@ -60,7 +60,7 @@ const expenseCategoryApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${EXPENSE_CATEGORY}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: data,
         };
       },

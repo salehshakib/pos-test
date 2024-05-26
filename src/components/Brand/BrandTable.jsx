@@ -5,10 +5,12 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteBrandMutation,
   useGetBrandsQuery,
+  useUpdateBrandStatusMutation,
 } from "../../redux/services/brand/brandApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { BrandEdit } from "./BrandEdit";
 
@@ -17,6 +19,10 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
+
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
+
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -26,11 +32,28 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateBrandStatusMutation();
+
   const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
+
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
+
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
   };
 
   const handleDeleteModal = (id) => {
@@ -53,7 +76,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
       return {
         id,
         brand: name,
-        status: { status: is_active },
+        status: { status: is_active, handleStatusModal },
         image: attachments?.[0]?.url,
         created_at: date,
         action: { handleEdit, handleDeleteModal },
@@ -61,6 +84,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
     }) ?? [];
 
   const hideModal = () => {
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -76,6 +100,13 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <BrandEdit id={editId} setId={setEditId} />
+
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

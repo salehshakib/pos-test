@@ -19,16 +19,17 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
   const [createBrand, { isLoading }] = useCreateBrandMutation();
 
   const handleSubmit = async (values) => {
-    const newObj = {
+    const formData = new FormData();
+
+    const postData = {
       ...values,
       brand_image: values?.brand_image?.[0].originFileObj,
     };
 
-    const formData = new FormData();
-    appendToFormData(newObj, formData);
+    appendToFormData(postData, formData);
 
     const { data, error } = await createBrand({
-      data: formData,
+      formData,
     });
 
     if (data?.success) {

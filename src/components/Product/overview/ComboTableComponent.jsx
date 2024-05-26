@@ -75,6 +75,7 @@ const columns = [
           <div className="flex justify-center items-center gap-3">
             <button
               onClick={() => setRowId(record?.id)}
+              type="button"
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
             >
               <MdDelete className="text-lg md:text-xl" />
@@ -158,6 +159,8 @@ const ComboTableComponent = () => {
     }
   }, [rowId]);
 
+  console.log(rowId);
+
   // const { productDetails } = useSelector((state) => state.product);
 
   // const filteredProducts = productDetails.filter((product) =>
@@ -169,6 +172,7 @@ const ComboTableComponent = () => {
   const dataSource =
     productData?.map((item) => {
       return {
+        key: item,
         id: item,
         name: item,
         action: true,
@@ -178,9 +182,8 @@ const ComboTableComponent = () => {
       };
     }) ?? [];
 
-  console.log(productData, productListData);
-
   dataSource.push({
+    id: "total",
     name: "Total",
     quantity: productListData
       ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
@@ -196,7 +199,11 @@ const ComboTableComponent = () => {
   return (
     productData?.length > 0 && (
       <Col {...fullColLayout} className={`${productData && "mb-10"}`}>
-        <CustomTable columns={columns} dataSource={dataSource} />
+        <CustomTable
+          columns={columns}
+          dataSource={dataSource}
+          showPaging={false}
+        />
       </Col>
     )
   );

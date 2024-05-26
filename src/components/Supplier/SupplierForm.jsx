@@ -1,7 +1,52 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
+import { countries } from "../../assets/data/countries";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
+
+const CountriesForm = () => {
+  const options = Object.keys(countries).map((country) => ({
+    value: country,
+    label: country,
+  }));
+
+  return (
+    <CustomSelect
+      label="Country"
+      required={true}
+      options={options}
+      showSearch={true}
+      name="country"
+    />
+  );
+};
+
+const CitiesForm = () => {
+  const form = Form.useFormInstance();
+  const selectedCountry = Form.useWatch("country", form);
+
+  const options =
+    countries[selectedCountry]?.map((city) => ({
+      value: city,
+      label: city,
+    })) ?? [];
+
+  return (
+    <CustomSelect
+      label="City"
+      required={true}
+      options={options}
+      showSearch={true}
+      name="city"
+    />
+  );
+};
 
 const SupplierForm = (props) => {
   return (
@@ -15,14 +60,7 @@ const SupplierForm = (props) => {
             name={"name"}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Company Name"
-            type={"text"}
-            required={true}
-            name={"company_name"}
-          />
-        </Col>
+
         <Col {...colLayout}>
           <CustomInput
             label="Email"
@@ -39,26 +77,24 @@ const SupplierForm = (props) => {
             name={"phone_number"}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
+          <CustomInput
+            label="Company Name"
+            type={"text"}
+            required={true}
+            name={"company_name"}
+          />
+        </Col>
+        <Col {...mdColLayout}>
           <CustomInput label="Vat Number" type={"text"} name={"vat_number"} />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Country"
-            type={"text"}
-            required={true}
-            name={"country"}
-          />
+        <Col {...mdColLayout}>
+          <CountriesForm />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="City"
-            type={"text"}
-            required={true}
-            name={"city"}
-          />
+        <Col {...mdColLayout}>
+          <CitiesForm />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="State"
             type={"text"}
@@ -66,7 +102,7 @@ const SupplierForm = (props) => {
             name={"state"}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Postal Code"
             type={"number"}

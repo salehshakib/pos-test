@@ -19,6 +19,7 @@ const brandApi = baseApi.injectEndpoints({
         BRAND,
       ],
     }),
+
     getBrandDetails: build.query({
       query: ({ id }) => {
         return {
@@ -29,12 +30,13 @@ const brandApi = baseApi.injectEndpoints({
       transformResponse: (response) => verifyToken(response.data),
       providesTags: [BRAND],
     }),
+
     createBrand: build.mutation({
-      query: ({ data }) => {
+      query: ({ formData }) => {
         return {
           url: `/${BRAND}/store`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {
@@ -47,11 +49,12 @@ const brandApi = baseApi.injectEndpoints({
         return result ? [BRAND] : [];
       },
     }),
+
     updateBrand: build.mutation({
       query: ({ id, data }) => {
         return {
           url: `/${BRAND}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: data,
         };
       },

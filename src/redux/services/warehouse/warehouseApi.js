@@ -66,7 +66,7 @@ const warehouseApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${WAREHOUSE}/update/${id}`,
-          method: "POST",
+          method: "PUT",
           body: data,
         };
       },

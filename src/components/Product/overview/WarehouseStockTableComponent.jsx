@@ -129,6 +129,7 @@ export const WarehouseStockTableComponent = () => {
 
   const dataSource = warehouse?.map((item) => {
     return {
+      key: item,
       id: item,
       name: item,
       delete: {
@@ -137,5 +138,7 @@ export const WarehouseStockTableComponent = () => {
     };
   });
 
-  return <CustomTable columns={columns} dataSource={dataSource} />;
+  return (
+    <CustomTable columns={columns} dataSource={dataSource} showPaging={false} />
+  );
 };

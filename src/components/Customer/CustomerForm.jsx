@@ -1,10 +1,16 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
+import { countries } from "../../assets/data/countries";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
 import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/customerGroupApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useEffect } from "react";
 
 const CustomerGroupComonent = () => {
   const form = Form.useFormInstance();
@@ -36,12 +42,57 @@ const CustomerGroupComonent = () => {
   );
 };
 
+const CountriesForm = () => {
+  const options = Object.keys(countries).map((country) => ({
+    value: country,
+    label: country,
+  }));
+
+  return (
+    <CustomSelect
+      label="Country"
+      required={true}
+      options={options}
+      showSearch={true}
+      name="country"
+    />
+  );
+};
+
+const CitiesForm = () => {
+  const form = Form.useFormInstance();
+  const selectedCountry = Form.useWatch("country", form);
+
+  const options =
+    countries[selectedCountry]?.map((city) => ({
+      value: city,
+      label: city,
+    })) ?? [];
+
+  return (
+    <CustomSelect
+      label="City"
+      required={true}
+      options={options}
+      showSearch={true}
+      name="city"
+    />
+  );
+};
+
 export const CustomerForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomerGroupComonent />
+        </Col>
+        <Col {...mdColLayout}>
+          <CustomInput
+            label="Company Name"
+            type={"text"}
+            name={"company_name"}
+          />
         </Col>
         <Col {...colLayout}>
           <CustomInput
@@ -51,13 +102,7 @@ export const CustomerForm = (props) => {
             name={"name"}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Company Name"
-            type={"text"}
-            name={"company_name"}
-          />
-        </Col>
+
         <Col {...colLayout}>
           <CustomInput label="Email" type={"email"} name={"email"} />
         </Col>
@@ -70,16 +115,18 @@ export const CustomerForm = (props) => {
           />
         </Col>
 
-        <Col {...colLayout}>
-          <CustomInput label="Country" type={"text"} name={"country"} />
+        <Col {...mdColLayout}>
+          {/* <CustomInput label="Country" type={"text"} name={"country"} /> */}
+          <CountriesForm />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput label="City" type={"text"} name={"city"} />
+        <Col {...mdColLayout}>
+          {/* <CustomInput label="City" type={"text"} name={"city"} /> */}
+          <CitiesForm />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput label="State" type={"text"} name={"state"} />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Postal Code"
             type={"number"}

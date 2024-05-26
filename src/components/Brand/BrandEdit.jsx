@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -5,11 +6,11 @@ import {
   useUpdateBrandMutation,
 } from "../../redux/services/brand/brandApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { Form } from "antd";
 
 export const BrandEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -20,8 +21,6 @@ export const BrandEdit = ({ id, setId }) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
-
-  console.log(data);
 
   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
@@ -41,9 +40,18 @@ export const BrandEdit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
+    const formData = new FormData();
+
+    const postData = {
+      ...values,
+      brand_image: values?.brand_image?.[0].originFileObj,
+    };
+
+    appendToFormData(postData, formData);
+
     const { data, error } = await updateBrand({
       id,
-      data: values,
+      data: formData,
     });
 
     if (data?.success) {

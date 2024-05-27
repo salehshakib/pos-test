@@ -39,11 +39,22 @@ const PosLayout = () => {
             </Header>
 
             <div className="flex">
-              <div className="h-[93dvh] absolute top-[4rem] left-0  pb-4">
+              <div className="h-[90dvh] absolute top-[4rem] left-0  pb-4">
                 <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
               </div>
 
-              <Layout className="w-48 h-[93dvh]">
+              <Layout className="w-48 h-[90dvh]">
+                <div className="grid grid-cols-3 gap-3 pr-4 pt-5">
+                  <Button type="primary" size="large">
+                    Category
+                  </Button>
+                  <Button type="primary" size="large">
+                    Brand
+                  </Button>
+                  <Button type="primary" size="large">
+                    Featured
+                  </Button>
+                </div>
                 <Content
                   style={{
                     margin: "16px 16px 16px 0",

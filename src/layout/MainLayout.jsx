@@ -1,5 +1,5 @@
 import { Button, Layout } from "antd";
-import { Footer } from "antd/es/layout/layout";
+// import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
@@ -9,7 +9,7 @@ import { GlobalUtilityStyle } from "../container/Styled";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -40,7 +40,7 @@ const MainLayout = () => {
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 ">
+          <Layout className="w-48 h-[100dvh]">
             <Content
               style={{
                 margin: "16px",

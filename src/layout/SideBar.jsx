@@ -28,6 +28,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const menu = userData?.roles?.menu;
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
+
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -35,7 +36,11 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       setStateOpenKeys(["Dashboard"]);
       setSelectedKeys(["Dashboard"]);
     }
-  }, [pathname]);
+
+    if (pathname === "/pos") {
+      setCollapsed(true);
+    }
+  }, [pathname, setCollapsed]);
 
   const filteredPaths = adminPaths.filter((item) => {
     return menu?.some(
@@ -71,7 +76,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   return (
     // <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
     <Sider
-      className="h-full overflow-x-auto pb-48 pt-1"
+      className="h-full overflow-x-auto pb-48 pt-1 bg-white"
       theme="light"
       width={230}
       trigger={null}
@@ -82,8 +87,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         boxShadow:
           "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
       }}
-      breakpoint="lg"
-      collapsedWidth="70"
+      breakpoint={`${pathname === "/pos" ? "" : "lg"}`}
+      // collapsedWidth="70"
+      collapsedWidth={`${pathname === "/pos" ? 0 : 70}`}
     >
       <Menu
         theme="light"

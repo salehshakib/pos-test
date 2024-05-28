@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { logout } from "../../../redux/services/auth/authSlice";
+import CreateComponent from "./CreateComponent";
 
 const PosComponent = () => {
   return (
@@ -39,7 +40,8 @@ const Profile = () => {
   );
 
   return (
-    <div className=" flex justify-center items-center gap-5">
+    <div className=" flex justify-center items-center gap-3">
+      <CreateComponent />
       {pathname !== "/pos" && <PosComponent />}
       <Popover
         placement="bottomLeft"

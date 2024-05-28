@@ -39,7 +39,7 @@ const PosLayout = () => {
             </Header>
 
             <div className="flex">
-              <div className="h-[90dvh] absolute top-[4rem] left-0  pb-4">
+              <div className="h-[82.3dvh] absolute top-[8.7rem] left-0 pb-4">
                 <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
               </div>
 

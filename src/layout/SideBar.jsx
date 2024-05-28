@@ -32,6 +32,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    console.log(pathname);
+
     if (pathname === "/dashboard") {
       setStateOpenKeys(["Dashboard"]);
       setSelectedKeys(["Dashboard"]);
@@ -76,7 +78,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   return (
     // <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
     <Sider
-      className="h-full overflow-x-auto pb-48 pt-1 bg-white"
+      className="h-full overflow-x-auto pb-48 pt-1  bg-black "
       theme="light"
       width={230}
       trigger={null}
@@ -92,7 +94,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       collapsedWidth={`${pathname === "/pos" ? 0 : 70}`}
     >
       <Menu
-        theme="light"
+        theme="dark"
         mode="inline"
         className="h-full w-full "
         defaultSelectedKeys={["Dashboard"]}

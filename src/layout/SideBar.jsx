@@ -32,14 +32,12 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(pathname);
-
     if (pathname === "/dashboard") {
       setStateOpenKeys(["Dashboard"]);
       setSelectedKeys(["Dashboard"]);
     }
 
-    if (pathname === "/pos") {
+    if (pathname.includes("/pos")) {
       setCollapsed(true);
     }
   }, [pathname, setCollapsed]);
@@ -76,7 +74,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    // <div className="absolute lg:relative z-40 lg:z-0 h-[100dvh]">
     <Sider
       className="h-full overflow-x-auto pb-48 pt-1  bg-black "
       theme="light"
@@ -89,9 +86,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         boxShadow:
           "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
       }}
-      breakpoint={`${pathname === "/pos" ? "" : "lg"}`}
-      // collapsedWidth="70"
-      collapsedWidth={`${pathname === "/pos" ? 0 : 70}`}
+      breakpoint={`${pathname.includes("/pos") ? "" : "lg"}`}
+      collapsedWidth={`${pathname.includes("/pos") ? 0 : 70}`}
     >
       <Menu
         theme="dark"
@@ -99,13 +95,11 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         className="h-full w-full "
         defaultSelectedKeys={["Dashboard"]}
         items={sidebarItems}
-        // openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
         selectedKeys={selectedKeys}
         onSelect={({ key }) => setSelectedKeys([key])}
       />
     </Sider>
-    // </div>
   );
 };
 

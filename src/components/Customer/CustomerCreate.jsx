@@ -6,9 +6,14 @@ import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { CustomerForm } from "./CustomerForm";
 
-const CustomerCreate = () => {
+const CustomerCreate = ({
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+}) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
 
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -34,14 +39,15 @@ const CustomerCreate = () => {
   return (
     <CustomDrawer
       title={"Create Customer"}
-      open={isCreateDrawerOpen}
-      form={form}
+      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      onClose={subDrawer && handleCloseSubDrawer}
     >
       <CustomerForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        form={form}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

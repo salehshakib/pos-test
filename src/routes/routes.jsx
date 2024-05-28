@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import Brand from "../pages/Dashboard/PosRegister/Brand";
+import Category from "../pages/Dashboard/PosRegister/Category";
+import Featured from "../pages/Dashboard/PosRegister/Featured";
 import Login from "../pages/Login/Login";
 import Pos from "../Pos";
 import { routeGenerator } from "../utilities/lib/routesGenerator";
@@ -23,6 +26,20 @@ export const router = createBrowserRouter([
         <Pos />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "category",
+        element: <Category />,
+      },
+      {
+        path: "brand",
+        element: <Brand />,
+      },
+      {
+        path: "featured",
+        element: <Featured />,
+      },
+    ],
   },
   {
     path: "/login",

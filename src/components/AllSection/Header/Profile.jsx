@@ -9,7 +9,7 @@ import CreateComponent from "./CreateComponent";
 
 const PosComponent = () => {
   return (
-    <Link to="/pos">
+    <Link to="/pos/category">
       <Button
         icon={<FaShoppingBasket size={20} />}
         className="flex justify-center items-center gap-1"

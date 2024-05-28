@@ -5,7 +5,7 @@ import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query({
+    getAllProducts: build.query({
       query: ({ params }) => {
         return {
           url: `/${PRODUCT}`,
@@ -111,7 +111,7 @@ const productApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetProductsQuery,
+  useGetAllProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

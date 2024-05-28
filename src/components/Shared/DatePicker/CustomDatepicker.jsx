@@ -15,6 +15,7 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
         {type === "date" && (
           <DatePicker
             size={"large"}
+            placeholder="Choose Date"
             className="border-2 mt-1"
             style={{ width: "100%" }}
             format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}

@@ -12,7 +12,6 @@ const GenerateCode = () => {
 
   const handleGenerateCode = () => {
     const randomCode = generateRandomCode();
-
     form?.setFieldValue("code", randomCode);
   };
 

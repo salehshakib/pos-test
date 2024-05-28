@@ -8,7 +8,7 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteProductMutation,
-  useGetProductsQuery,
+  useGetAllProductsQuery,
 } from "../../redux/services/product/productApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -31,7 +31,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetProductsQuery({
+  const { data, isLoading } = useGetAllProductsQuery({
     params: { ...pagination, allData: 1 },
   });
 

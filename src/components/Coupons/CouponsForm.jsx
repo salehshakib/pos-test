@@ -7,6 +7,7 @@ import CustomInputButton from "../Shared/Input/CustomInputButton";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import { useEffect } from "react";
 
 const CouponCodeComponent = () => {
   const form = Form.useFormInstance();
@@ -43,7 +44,10 @@ const options = [
 
 const TypeComponent = () => {
   const form = Form.useFormInstance();
-  form.setFieldValue("type", "Percentage");
+
+  useEffect(() => {
+    form.setFieldValue("type", "Percentage");
+  }, [form]);
 
   return (
     <CustomSelect

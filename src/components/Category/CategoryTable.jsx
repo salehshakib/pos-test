@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCategoryMutation,
-  useGetCategoriesQuery,
+  useGetAllCategoryQuery,
   useUpdateCategoryStatusMutation,
 } from "../../redux/services/category/categoryApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -26,7 +26,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetCategoriesQuery({
+  const { data, isLoading } = useGetAllCategoryQuery({
     params: pagination,
   });
 

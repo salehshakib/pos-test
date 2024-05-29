@@ -47,6 +47,7 @@ const productApi = baseApi.injectEndpoints({
       },
       transformErrorResponse: (response) => {
         console.log(response);
+        return response;
       },
       invalidatesTags: (result) => {
         return result ? [PRODUCT] : [];

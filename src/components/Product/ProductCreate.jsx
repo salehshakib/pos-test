@@ -140,11 +140,14 @@ const ProductCreate = () => {
       dispatch(closeCreateDrawer());
       form.resetFields();
     }
+
+    console.log(error);
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,
         errors: error?.data?.errors[fieldName],
       }));
+
       setErrorFields(errorFields);
     }
   };

@@ -1,5 +1,12 @@
 import { Button } from "antd";
+import { BsCash } from "react-icons/bs";
 import { FaCreditCard } from "react-icons/fa";
+import { FiFlag } from "react-icons/fi";
+import { GoHistory } from "react-icons/go";
+import { HiOutlineBanknotes } from "react-icons/hi2";
+import { IoRocketOutline } from "react-icons/io5";
+import { MdCardGiftcard, MdOutlineCancel } from "react-icons/md";
+import { PiHandDeposit } from "react-icons/pi";
 
 const Payment = () => {
   return (
@@ -16,7 +23,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<BsCash />}
           className="flex justify-center items-center gap-2"
         >
           Cash
@@ -24,7 +31,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<FiFlag />}
           className="flex justify-center items-center gap-2"
         >
           Draft
@@ -32,7 +39,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<HiOutlineBanknotes />}
           className="flex justify-center items-center gap-2"
         >
           Cheque
@@ -40,7 +47,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<MdCardGiftcard />}
           className="flex justify-center items-center gap-2"
         >
           Gift Card
@@ -48,7 +55,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<PiHandDeposit />}
           className="flex justify-center items-center gap-2"
         >
           Deposit
@@ -56,7 +63,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<IoRocketOutline />}
           className="flex justify-center items-center gap-2"
         >
           Points
@@ -64,7 +71,7 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<MdOutlineCancel />}
           className="flex justify-center items-center gap-2"
         >
           Cancel
@@ -72,10 +79,10 @@ const Payment = () => {
         <Button
           type="primary"
           size="large"
-          icon={<FaCreditCard />}
+          icon={<GoHistory />}
           className="flex justify-center items-center gap-2"
         >
-          Recent Transactions
+          Transactions
         </Button>
       </div>
     </div>

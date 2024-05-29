@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { useGetCategoriesQuery } from "../../../redux/services/category/categoryApi";
+import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
 import CategoryCreate from "../../Category/CategoryCreate";
 import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 
 export const CategoryComponent = () => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
-  const { data, isLoading } = useGetCategoriesQuery({
+  const { data, isLoading } = useGetAllCategoryQuery({
     params: {
       selectValue: ["id", "name"],
     },

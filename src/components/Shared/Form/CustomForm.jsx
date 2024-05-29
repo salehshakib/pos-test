@@ -47,7 +47,9 @@ const CustomForm = (props) => {
     //     validateOnly: true,
     //   })
     //   .then(() => {
+    //     //
     //   })
+
     //   .catch((error) => {
     //     console.error("Validation error:", error);
     //   });
@@ -56,8 +58,6 @@ const CustomForm = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo);
   };
-
-  console.log(isLoading);
 
   return (
     <GlobalUtilityStyle>

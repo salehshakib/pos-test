@@ -216,8 +216,6 @@ const SearchProductComponent = () => {
       label: product.name,
     })) ?? [];
 
-  console.log(options);
-
   const onSelect = (value, option) => {
     console.log(value, option);
     setValue(null);

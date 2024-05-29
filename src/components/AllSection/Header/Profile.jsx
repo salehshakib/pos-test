@@ -9,7 +9,7 @@ import CreateComponent from "./CreateComponent";
 
 const PosComponent = () => {
   return (
-    <Link to="/pos/category">
+    <Link to="/pos">
       <Button
         icon={<FaShoppingBasket size={20} />}
         className="flex justify-center items-center gap-1"
@@ -42,7 +42,7 @@ const Profile = () => {
   return (
     <div className=" flex justify-center items-center gap-3">
       <CreateComponent />
-      {pathname !== "/pos" && <PosComponent />}
+      {!pathname.includes("/pos") && <PosComponent />}
       <Popover
         placement="bottomLeft"
         content={content}

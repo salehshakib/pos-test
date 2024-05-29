@@ -47,6 +47,27 @@ const CustomTable = ({
     dispatch(updatePageSize({ perPage: newPageSize }));
   };
 
+  const tableProps = {
+    size: "small",
+    style: {
+      width: "100%",
+    },
+    rowKey: (record) => record.id,
+    rowSelection: isRowSelection
+      ? {
+          type: "checkbox",
+          ...rowSelection,
+        }
+      : false,
+    onRow: (record) => ({
+      onClick: () => console.log(record.id),
+    }),
+    loading: isLoading,
+    scroll: {
+      x: "max-content",
+    },
+  };
+
   const paginationProps = {
     size: "default",
     total: total,
@@ -56,6 +77,7 @@ const CustomTable = ({
       handlePageChange(page);
     },
     showSizeChanger: true,
+    hideOnSinglePage: true,
     defaultPageSize: pagination.perPage,
     onShowSizeChange: (current, size) => {
       handlePageSizeChange(size);
@@ -65,28 +87,9 @@ const CustomTable = ({
 
   return (
     <Table
-      size="small"
-      style={{
-        width: "100%",
-      }}
-      rowKey={(record) => record.id}
-      rowSelection={
-        isRowSelection
-          ? {
-              type: "checkbox",
-              ...rowSelection,
-            }
-          : false
-      }
-      onRow={(record) => ({
-        onClick: () => console.log(record.id),
-      })}
-      loading={isLoading}
+      {...tableProps}
       columns={columns}
       dataSource={dataSource}
-      scroll={{
-        x: "max-content",
-      }}
       pagination={showPaging ? { ...paginationProps } : false}
     />
   );

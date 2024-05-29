@@ -1,10 +1,10 @@
 import { Col } from "antd";
-import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
+import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
 import { mdColLayout } from "../../layout/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const CategoryComponent = () => {
-  const { data, isFetching } = useGetCategoriesQuery({});
+  const { data, isFetching } = useGetAllCategoryQuery({});
 
   const options = data?.results?.category?.map((item) => {
     return {

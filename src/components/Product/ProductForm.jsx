@@ -1,13 +1,13 @@
 import { Col, Form, Row } from "antd";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
@@ -294,6 +294,7 @@ const ProductForm = ({ options, ...props }) => {
             label={"Attachment"}
             name={"attachments"}
             multiple={true}
+            required={true}
           />
         </Col>
       </Row>
@@ -313,14 +314,14 @@ const ProductForm = ({ options, ...props }) => {
 
       <PromotionalPriceComponent />
 
-      <Row {...rowLayout}>
+      {/* <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label="Disable Ecommerce Sync"
             name="ecommerce_sync"
           />
         </Col>
-      </Row>
+      </Row> */}
     </CustomForm>
   );
 };

@@ -75,8 +75,8 @@ const SideBar = ({ collapsed, setCollapsed }) => {
 
   return (
     <Sider
-      className="h-full overflow-x-auto pb-48 pt-1  bg-black "
-      theme="light"
+      className="h-full overflow-x-auto pb-48 pt-1 bg-white"
+      // theme="dark"
       width={230}
       trigger={null}
       collapsible
@@ -90,7 +90,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       collapsedWidth={`${pathname.includes("/pos") ? 0 : 70}`}
     >
       <Menu
-        theme="dark"
+        theme="light"
         mode="inline"
         className="h-full w-full "
         defaultSelectedKeys={["Dashboard"]}

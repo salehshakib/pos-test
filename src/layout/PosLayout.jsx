@@ -1,39 +1,17 @@
 import { Button, Layout } from "antd";
-// import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, Outlet } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
+import Payment from "../components/PosRegister/Payment";
+import PosFilterComponent from "../components/PosRegister/PosFilterComponent";
+import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
+import { PosRegister } from "../components/PosRegister/PosRegister";
 import { GlobalUtilityStyle } from "../container/Styled";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
-import { PosRegister } from "../components/PosRegister/PosRegister";
-import Payment from "../components/PosRegister/Payment";
 
 const { Header, Content, Footer } = Layout;
-
-const TypeComponent = () => {
-  return (
-    <div className="grid grid-cols-3 gap-3 pr-4 pt-5">
-      <Link to="/pos/category">
-        <Button type="primary" size="large" className="w-full">
-          Category
-        </Button>
-      </Link>
-      <Link to="/pos/brand">
-        <Button type="primary" size="large" className="w-full">
-          Brand
-        </Button>
-      </Link>
-      <Link to="/pos/featured">
-        <Button type="primary" size="large" className="w-full">
-          Featured
-        </Button>
-      </Link>
-    </div>
-  );
-};
 
 const PosLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,7 +19,7 @@ const PosLayout = () => {
   return (
     <GlobalUtilityStyle>
       <div className="flex flex-col">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 bg-[#F5F5F5] ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 bg-[#F5F5F5] min-h-[95vh]">
           <PosRegister />
 
           <div className="relative">
@@ -64,22 +42,23 @@ const PosLayout = () => {
             </Header>
 
             <div className="flex">
-              <div className="h-[82.3dvh] absolute top-[8.7rem] left-0 pb-4">
+              <div className="absolute h-[762px] top-[8.7rem] z-40 left-0 pb-4 ">
                 <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
               </div>
 
-              <Layout className="w-48 h-[90dvh]">
-                <TypeComponent />
+              <Layout className="w-48 ">
+                <PosFilterComponent />
+
                 <Content
                   style={{
-                    margin: "16px 16px 16px 0",
-                    backgroundColor: "white",
+                    // margin: "16px 16px 16px 0",
+                    // backgroundColor: "#f5f5f5",
                     borderRadius: "8px",
                   }}
-                  className="shadow-md"
+                  className="shadow-md h-[746px] m-4 lg:ml-0 bg-gray-200"
                 >
                   <GlobalUtilityStyle>
-                    <Outlet />
+                    <PosProducts />
                   </GlobalUtilityStyle>
                 </Content>
               </Layout>

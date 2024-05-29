@@ -1,12 +1,10 @@
 import { Button } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { Categories } from "./Categories/Categories";
+import { Brands } from "./Brand/Brands";
 
 const CategoryFilterComponent = () => {
-  const navigate = useNavigate();
-  const [filter, setFilter] = useState();
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -39,13 +37,45 @@ const CategoryFilterComponent = () => {
   );
 };
 
+const BrandFilterComponent = () => {
+  const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
+
+  const handleOpenDrawer = () => {
+    setIsFilterDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsFilterDrawerOpen(false);
+  };
+
+  return (
+    <>
+      <Button
+        type="primary"
+        size="large"
+        className="w-full"
+        onClick={handleOpenDrawer}
+      >
+        Brand
+      </Button>
+
+      <CustomDrawer
+        title={"Choose Brand"}
+        open={isFilterDraweropen}
+        onClose={handleCloseDrawer}
+      >
+        <Brands />
+      </CustomDrawer>
+    </>
+  );
+};
+
 const PosFilterComponent = () => {
   return (
     <div className="grid grid-cols-3 gap-3 pr-4 pt-5">
       <CategoryFilterComponent />
-      <Button type="primary" size="large" className="w-full">
-        Brand
-      </Button>
+
+      <BrandFilterComponent />
       <Button type="primary" size="large" className="w-full">
         Featured
       </Button>

@@ -2,20 +2,20 @@ import { Card, Divider, Skeleton, Spin } from "antd";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
-import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
+import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
 const { Meta } = Card;
 
-export const Categories = () => {
+export const Brands = () => {
   const [pagination, setPagination] = useState({
     page: 1,
     perPage: 8,
     allData: 1,
   });
-  const { data, isLoading } = useGetAllCategoryQuery({
+  const { data, isLoading } = useGetBrandsQuery({
     params: pagination,
   });
 
-  const categories = data?.results?.category;
+  const brands = data?.results?.brand;
   const total = data?.meta?.total;
 
   const loadMoreData = () => {
@@ -46,9 +46,9 @@ export const Categories = () => {
       }}
     >
       <InfiniteScroll
-        dataLength={categories?.length}
+        dataLength={brands?.length}
         next={loadMoreData}
-        hasMore={categories?.length < total}
+        hasMore={brands?.length < total}
         loader={
           <Skeleton
             className="my-4"
@@ -63,9 +63,9 @@ export const Categories = () => {
       >
         <>
           <div className="grid grid-cols-4 gap-4">
-            {categories &&
-              categories?.map((category) => {
-                // const images = organizeAttachments(category?.attachments);
+            {brands &&
+              brands?.map((brand) => {
+                // const images = organizeAttachments(brand?.attachments);
                 return (
                   <Card
                     bordered
@@ -73,7 +73,7 @@ export const Categories = () => {
                     style={{
                       backgroundColor: "white",
                     }}
-                    key={category.id}
+                    key={brand.id}
                     cover={
                       <img
                         alt="example"
@@ -86,13 +86,13 @@ export const Categories = () => {
                       />
                     }
                   >
-                    <Meta className="text-center" title={category.name} />
+                    <Meta className="text-center" title={brand.name} />
                   </Card>
                 );
               })}
           </div>
 
-          {categories?.length < total && (
+          {brands?.length < total && (
             <div className="text-center my-4 pb-10">
               Pull down to load more ....
             </div>

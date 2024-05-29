@@ -42,7 +42,7 @@ const PosLayout = () => {
             </Header>
 
             <div className="flex">
-              <div className="absolute h-[762px] top-[8.7rem] z-40 left-0 pb-4 ">
+              <div className="absolute h-[786px] top-[8.7rem] z-40 left-0 pb-4 ">
                 <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
               </div>
 
@@ -55,7 +55,7 @@ const PosLayout = () => {
                     // backgroundColor: "#f5f5f5",
                     borderRadius: "8px",
                   }}
-                  className="shadow-md h-[746px] m-4 lg:ml-0 bg-gray-200"
+                  className="shadow-md h-[770px] m-4 lg:ml-0 bg-gray-200"
                 >
                   <GlobalUtilityStyle>
                     <PosProducts />

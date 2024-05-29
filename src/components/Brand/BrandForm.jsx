@@ -18,7 +18,7 @@ const BrandForm = (props) => {
           />
         </Col>
         <Col {...fullColLayout}>
-          <CustomUploader label={"Brand Image"} name={"brand_image"} />
+          <CustomUploader label={"Brand Image"} name={"logo"} />
         </Col>
       </Row>
     </CustomForm>

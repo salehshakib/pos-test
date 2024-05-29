@@ -27,7 +27,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetBrandsQuery({
-    params: { ...pagination, allData: 1 },
+    params: pagination,
   });
 
   const total = data?.meta?.total;

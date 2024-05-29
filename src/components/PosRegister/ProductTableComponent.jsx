@@ -89,7 +89,7 @@ const columns = [
 const ProductTableComponent = () => {
   return (
     <GlobalUtilityStyle>
-      <div className="border p-2 bg-white rounded-lg shadow-md mt-5 h-[90vh] lg:h-[670px] overflow-hidden flex flex-col gap-2">
+      <div className="border p-2 bg-white rounded-lg shadow-md mt-5 h-[90vh] lg:h-[696px] overflow-hidden flex flex-col gap-2">
         <div className="flex-grow overflow-auto">
           <CustomTable
             columns={columns}

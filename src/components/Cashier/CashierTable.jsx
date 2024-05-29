@@ -30,7 +30,7 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCashierQuery({
-    params: { ...pagination, allData: 1 },
+    params: pagination,
   });
 
   const total = data?.meta?.total;

@@ -6,8 +6,7 @@ import { LuClipboardType } from "react-icons/lu";
 import { MdOutlineSettingsApplications } from "react-icons/md";
 import { PiWarehouse } from "react-icons/pi";
 import { RiCoupon2Line, RiVerifiedBadgeLine } from "react-icons/ri";
-import { TbBrandAirtable, TbReceiptTax } from "react-icons/tb";
-import Brand from "../../pages/Dashboard/Brand/Brand";
+import { TbReceiptTax } from "react-icons/tb";
 import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
 import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 import Discount from "../../pages/Dashboard/Discount/Discount";
@@ -49,12 +48,6 @@ export const settingPaths = [
     path: "warehouse",
     icon: PiWarehouse,
     element: <Warehouse />,
-  },
-  {
-    name: "Brand",
-    path: "brand",
-    icon: TbBrandAirtable,
-    element: <Brand />,
   },
   {
     name: "Types",

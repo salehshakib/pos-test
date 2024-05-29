@@ -8,12 +8,14 @@ const { Meta } = Card;
 const PosProducts = () => {
   const [pagination, setPagination] = useState({
     page: 1,
-    pageSize: 15,
+    perPage: 15,
   });
 
   const { data, isLoading } = useGetAllProductsQuery({
     params: {
+      ...pagination,
       attachmentable: 1,
+      allData: 1,
     },
   });
 
@@ -29,59 +31,58 @@ const PosProducts = () => {
     );
   }
 
-  console.log(pagination);
-
   return (
-    <>
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 m-10">
-        {products &&
-          products.map((product) => {
-            const images = organizeAttachments(product?.attachments);
+    <div className="m-3 flex flex-col gap-2">
+      <div className="h-[42.5rem]">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 ">
+          {products &&
+            products.map((product) => {
+              const images = organizeAttachments(product?.attachments);
 
-            return (
-              <Card
-                bordered
-                hoverable
-                style={{
-                  backgroundColor: "white",
-                }}
-                key={product.id}
-                cover={
-                  <img
-                    alt="example"
-                    className="h-28 object-cover p-4"
-                    // className="border border-red-600"
-                    src={
-                      // images?.attach_file?.[0]?.url ??
-                      // images?.attachments?.[0]?.url ??
-                      productImage
-                    }
+              return (
+                <Card
+                  bordered
+                  hoverable
+                  style={{
+                    backgroundColor: "white",
+                  }}
+                  key={product.id}
+                  cover={
+                    <img
+                      alt="example"
+                      className="h-28 object-cover px-4 pt-4"
+                      src={
+                        // images?.attach_file?.[0]?.url ??
+                        // images?.attachments?.[0]?.url ??
+                        productImage
+                      }
+                    />
+                  }
+                >
+                  <Meta
+                    className="text-center"
+                    title={product.name}
+                    description={product.sku}
                   />
-                }
-              >
-                {/* <p>{product.name}</p> */}
-                <Meta
-                  className="text-center"
-                  title={product.name}
-                  description={product.sku}
-                />
-              </Card>
-            );
-          })}
+                </Card>
+              );
+            })}
+        </div>
       </div>
-      {products && products.length > 0 && (
-        <Pagination
-          {...pagination}
-          total={50}
-          current={pagination.page}
-          onChange={(page) => {
-            setPagination({ ...pagination, page });
-          }}
-          // pageSizeOptions={}
-          className=""
-        />
-      )}
-    </>
+      <div className="flex justify-end">
+        {products && products.length > 0 && (
+          <Pagination
+            {...pagination}
+            total={data?.meta?.total}
+            current={pagination.page}
+            onChange={(page) => {
+              setPagination({ ...pagination, page });
+            }}
+            // pageSizeOptions={}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

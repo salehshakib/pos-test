@@ -23,7 +23,7 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
     const postData = {
       ...values,
-      brand_image: values?.brand_image?.[0].originFileObj,
+      logo: values?.logo?.[0].originFileObj,
     };
 
     appendToFormData(postData, formData);

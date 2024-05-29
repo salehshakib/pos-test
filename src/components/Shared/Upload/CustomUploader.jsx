@@ -41,6 +41,8 @@ const CustomUploader = ({
     setFileList(newFileList);
   };
 
+  console.log(fileList);
+
   return (
     <GlobalUtilityStyle>
       {previewImage && (

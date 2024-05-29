@@ -5,13 +5,13 @@ import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import Payment from "../components/PosRegister/Payment";
 import PosFilterComponent from "../components/PosRegister/PosFilterComponent";
-import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
 import { PosRegister } from "../components/PosRegister/PosRegister";
 import { GlobalUtilityStyle } from "../container/Styled";
+import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const PosLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -42,7 +42,7 @@ const PosLayout = () => {
             </Header>
 
             <div className="flex">
-              <div className="absolute h-[786px] top-[8.7rem] z-40 left-0 pb-4 ">
+              <div className="absolute h-[770px] top-[8.7rem] z-40 left-0 pb-4 ">
                 <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
               </div>
 
@@ -55,7 +55,7 @@ const PosLayout = () => {
                     // backgroundColor: "#f5f5f5",
                     borderRadius: "8px",
                   }}
-                  className="shadow-md h-[770px] m-4 lg:ml-0 bg-gray-200"
+                  className="shadow-md h-[754px] m-4 lg:ml-0 bg-gray-200"
                 >
                   <GlobalUtilityStyle>
                     <PosProducts />
@@ -67,14 +67,6 @@ const PosLayout = () => {
         </div>
 
         <Payment />
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
-          Solutions
-        </Footer>
       </div>
     </GlobalUtilityStyle>
   );

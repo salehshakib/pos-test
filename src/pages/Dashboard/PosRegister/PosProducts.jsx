@@ -1,9 +1,10 @@
-import { Card, Pagination, Spin } from "antd";
+import { Card, Pagination, Spin, Layout } from "antd";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { organizeAttachments } from "../../../utilities/lib/imageFormat";
 import { useState } from "react";
 const { Meta } = Card;
+const { Footer } = Layout;
 
 const PosProducts = () => {
   const [pagination, setPagination] = useState({
@@ -69,7 +70,11 @@ const PosProducts = () => {
             })}
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-between mx-4">
+        <div>
+          POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
+          Solutions
+        </div>
         {products && products.length > 0 && (
           <Pagination
             {...pagination}

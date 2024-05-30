@@ -72,7 +72,7 @@ const BrandFilterComponent = () => {
 
 const PosFilterComponent = () => {
   return (
-    <div className="grid grid-cols-3 gap-3 pr-4 pt-5">
+    <div className="grid grid-cols-3 gap-3 px-4 pt-5">
       <CategoryFilterComponent />
 
       <BrandFilterComponent />

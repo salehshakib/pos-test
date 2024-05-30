@@ -262,13 +262,13 @@ const RegisterForm = () => {
             <Col {...colLayout}>
               <WarehouseComponent />
             </Col>
-            <Col {...colLayout}>
+            <Col {...mdColLayout}>
               <CashierComponent />
             </Col>
-            <Col {...colLayout}>
+            <Col {...mdColLayout}>
               <CustomerComponent />
             </Col>
-            <Col {...colLayout}>
+            <Col {...mdColLayout}>
               <Row gutter={5}>
                 <Col {...mdColLayout}>
                   <CurrencyComponent />
@@ -300,9 +300,13 @@ const RegisterForm = () => {
 
 export const PosRegister = () => {
   return (
-    <div className="p-4 space-y-4 h-full ">
-      <RegisterForm />
-      <ProductTableComponent />
+    <div className="p-4 flex flex-col gap-5 h-full">
+      <div>
+        <RegisterForm />
+      </div>
+      <div className="grow">
+        <ProductTableComponent />
+      </div>
     </div>
   );
 };

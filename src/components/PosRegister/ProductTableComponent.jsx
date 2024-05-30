@@ -1,8 +1,9 @@
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineCancel } from "react-icons/md";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomTable from "../Shared/Table/CustomTable";
 import { FaRegEdit } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { Button } from "antd";
 
 const columns = [
   {
@@ -88,8 +89,18 @@ const columns = [
 
 const ProductTableComponent = () => {
   return (
-    <GlobalUtilityStyle>
-      <div className="border p-2 bg-white rounded-lg shadow-md mt-5 h-[90vh] lg:h-[680px] overflow-hidden flex flex-col gap-2">
+    <GlobalUtilityStyle className="h-full">
+      <div
+        // lg:h-[680px]
+        // h-[90vh]
+
+        className="border p-2 bg-white rounded-lg shadow-md  h-full
+        
+    
+  
+      
+      overflow-hidden flex flex-col gap-2"
+      >
         <div className="flex-grow overflow-auto">
           <CustomTable
             columns={columns}
@@ -141,6 +152,14 @@ const ProductTableComponent = () => {
         <div className="text-center secondary-bg primary-text text-lg lg:text-xl py-1 lg:py-3 font-semibold rounded-sm">
           Grand Total
         </div>
+
+        <Button
+          type="primary"
+          // icon={<MdOutlineCancel />}
+          className=" flex justify-center items-center gap-2"
+        >
+          Cancel
+        </Button>
       </div>
     </GlobalUtilityStyle>
   );

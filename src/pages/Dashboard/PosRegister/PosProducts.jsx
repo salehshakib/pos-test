@@ -1,10 +1,9 @@
-import { Card, Pagination, Spin, Layout } from "antd";
-import { productImage } from "../../../assets/data/productImage";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { organizeAttachments } from "../../../utilities/lib/imageFormat";
+import { Card, Pagination, Spin } from "antd";
 import { useState } from "react";
+import { productImage } from "../../../assets/data/productImage";
+import { GlobalUtilityStyle } from "../../../container/Styled";
+import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 const { Meta } = Card;
-const { Footer } = Layout;
 
 const PosProducts = () => {
   const [pagination, setPagination] = useState({
@@ -33,12 +32,12 @@ const PosProducts = () => {
   }
 
   return (
-    <div className="m-3 flex flex-col gap-2">
-      <div className="h-[42.5rem]">
+    <GlobalUtilityStyle className="m-3 flex flex-col gap-5 h-full border-2 border-black">
+      <div className="border-2 border-pink-500">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 ">
           {products &&
             products.map((product) => {
-              const images = organizeAttachments(product?.attachments);
+              // const images = organizeAttachments(product?.attachments);
 
               return (
                 <Card
@@ -51,7 +50,7 @@ const PosProducts = () => {
                   cover={
                     <img
                       alt="example"
-                      className="h-28 object-cover px-4 pt-4"
+                      className="h-14 object-cover px-4 pt-4"
                       src={
                         // images?.attach_file?.[0]?.url ??
                         // images?.attachments?.[0]?.url ??
@@ -87,7 +86,7 @@ const PosProducts = () => {
           />
         )}
       </div>
-    </div>
+    </GlobalUtilityStyle>
   );
 };
 

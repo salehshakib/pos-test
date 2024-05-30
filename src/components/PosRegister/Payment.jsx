@@ -5,82 +5,73 @@ import { FiFlag } from "react-icons/fi";
 import { GoHistory } from "react-icons/go";
 import { HiOutlineBanknotes } from "react-icons/hi2";
 import { IoRocketOutline } from "react-icons/io5";
-import { MdCardGiftcard, MdOutlineCancel } from "react-icons/md";
+import { MdCardGiftcard } from "react-icons/md";
 import { PiHandDeposit } from "react-icons/pi";
 
 const Payment = () => {
   return (
     <div className="bg-[#F5F5F5]">
-      <div className=" mx-10 grid grid-cols-3 lg:grid-cols-9 gap-3">
+      <div className="mx-auto grid grid-cols-4 lg:grid-cols-8 gap-x-3 gap-y-2">
         <Button
           type="primary"
-          size="large"
           icon={<FaCreditCard />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Card
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<BsCash />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Cash
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<FiFlag />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Draft
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<HiOutlineBanknotes />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Cheque
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<MdCardGiftcard />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Gift Card
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<PiHandDeposit />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Deposit
         </Button>
         <Button
           type="primary"
-          size="large"
           icon={<IoRocketOutline />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Points
         </Button>
-        <Button
+        {/* <Button
           type="primary"
-          size="large"
           icon={<MdOutlineCancel />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Cancel
-        </Button>
+        </Button> */}
         <Button
           type="primary"
-          size="large"
           icon={<GoHistory />}
-          className="flex justify-center items-center gap-2"
+          className=" flex justify-center items-center min-w-fit"
         >
           Transactions
         </Button>

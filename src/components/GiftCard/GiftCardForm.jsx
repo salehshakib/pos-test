@@ -80,7 +80,7 @@ const RecieverComponent = () => {
   const form = Form.useFormInstance();
   const user = Form.useWatch("for_user", form);
 
-  if (for_user) return <EmployeeComponent />;
+  if (user) return <EmployeeComponent />;
 
   return <CustomerComponent />;
 };

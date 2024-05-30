@@ -70,8 +70,8 @@ export const adminPaths = [
     children: expensePaths,
   },
   {
-    name: "Quotation",
-    path: "quotation",
+    name: "Generator",
+    path: "generator",
     icon: TbFilePercent,
     children: quotationPaths,
   },

@@ -3,7 +3,6 @@ import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import CustomImageCrop from "../Shared/Upload/CustomImageCrop";
 
 const BrandForm = (props) => {
   return (
@@ -19,7 +18,7 @@ const BrandForm = (props) => {
           />
         </Col>
         <Col {...fullColLayout}>
-          <CustomImageCrop label={"Brand Image"} name={"logo"} />
+          <CustomUploader label={"Brand Image"} name={"logo"} />
         </Col>
       </Row>
     </CustomForm>

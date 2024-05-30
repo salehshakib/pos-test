@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { GiftCardTypeCreate } from "../../../components/GiftCardType/GiftCardTypeCreate";
-import GiftCardTypeTable from "../../../components/GiftCardType/GiftCardTypeTable";
+import GiftCardDesginTable from "../../../components/GiftCardDesign/GiftCardDesginTable";
+import { GiftCardDesignCreate } from "../../../components/GiftCardDesign/GiftCardDesignCreate";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
@@ -69,24 +69,24 @@ const columns = [
   // },
 ];
 
-const GiftCardType = () => {
+const GiftCardDesign = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <GlobalContainer
-      pageTitle="Gift Card Type"
+      pageTitle="Gift Card Designs"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <GiftCardTypeCreate />
+      <GiftCardDesignCreate />
 
-      <GiftCardTypeTable
+      <GiftCardDesginTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>
   );
 };
-export default GiftCardType;
+export default GiftCardDesign;

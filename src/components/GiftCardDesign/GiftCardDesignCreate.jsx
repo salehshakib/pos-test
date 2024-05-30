@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import GiftCardForm from "./GiftCardForm";
+import { GiftCardDesignForm } from "./GiftCardDesignForm";
 
-const GiftCardCreate = () => {
+export const GiftCardDesignCreate = () => {
   const dispatch = useDispatch();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -28,8 +28,8 @@ const GiftCardCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Gift Card"} open={isCreateDrawerOpen}>
-      <GiftCardForm
+    <CustomDrawer title={"Create Gift Card Type"} open={isCreateDrawerOpen}>
+      <GiftCardDesignForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}
         fields={errorFields}
@@ -37,5 +37,3 @@ const GiftCardCreate = () => {
     </CustomDrawer>
   );
 };
-
-export default GiftCardCreate;

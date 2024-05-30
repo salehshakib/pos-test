@@ -1,5 +1,5 @@
 import { Card, Divider, Skeleton, Spin } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
@@ -8,23 +8,31 @@ const { Meta } = Card;
 export const Categories = () => {
   const [pagination, setPagination] = useState({
     page: 1,
-    perPage: 8,
+    perPage: 12,
     allData: 1,
   });
+
   const { data, isLoading } = useGetAllCategoryQuery({
     params: pagination,
   });
 
+  const [newData, setNewData] = useState([]);
+
   const categories = data?.results?.category;
   const total = data?.meta?.total;
 
-  const loadMoreData = () => {
-    setPagination((prev) => ({ ...prev, perPage: prev.perPage + 4 }));
-  };
+  const loadMoreData = useCallback(() => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      page: prevPagination.page + 1,
+    }));
+  }, []);
 
   useEffect(() => {
-    loadMoreData();
-  }, []);
+    if (categories) {
+      setNewData((prevData) => [...prevData, ...categories]);
+    }
+  }, [categories]);
 
   if (isLoading) {
     return (
@@ -46,9 +54,9 @@ export const Categories = () => {
       }}
     >
       <InfiniteScroll
-        dataLength={categories?.length}
+        dataLength={newData?.length}
         next={loadMoreData}
-        hasMore={categories?.length < total}
+        hasMore={newData?.length < total}
         loader={
           <Skeleton
             className="my-4"
@@ -64,7 +72,7 @@ export const Categories = () => {
         <>
           <div className="grid grid-cols-4 gap-4">
             {categories &&
-              categories?.map((category) => {
+              newData?.map((category) => {
                 // const images = organizeAttachments(category?.attachments);
                 return (
                   <Card
@@ -92,8 +100,8 @@ export const Categories = () => {
               })}
           </div>
 
-          {categories?.length < total && (
-            <div className="text-center my-4 pb-10">
+          {newData?.length < total && (
+            <div className="text-center my-4 pb-40">
               Pull down to load more ....
             </div>
           )}

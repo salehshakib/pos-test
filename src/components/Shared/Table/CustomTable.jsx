@@ -14,6 +14,7 @@ const CustomTable = ({
   setSelectedRows,
   isLoading,
   showPaging = true,
+  tableStyleProps = {},
 }) => {
   const dispatch = useDispatch();
   const rowSelection = {
@@ -66,6 +67,7 @@ const CustomTable = ({
     scroll: {
       x: "max-content",
     },
+    ...tableStyleProps,
   };
 
   const paginationProps = {

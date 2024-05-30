@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { colLayout, fullColLayout, mdColLayout } from "../../layout/FormLayout";
+
 import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
 import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
@@ -15,7 +15,7 @@ import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
-import ProductTableComponent from "./ProductTableComponent";
+import ProductTableComponent from "./PosProductTableComponent";
 
 const WarehouseComponent = () => {
   const form = Form.useFormInstance();
@@ -134,7 +134,7 @@ const CurrencyComponent = () => {
   const form = Form.useFormInstance();
   const { data, isLoading } = useGetAllCurrencyQuery({
     params: {
-      selectValue: ["id", "name"],
+      selectValue: ["id", "name", "is_default"],
     },
   });
 
@@ -241,6 +241,16 @@ const SearchProductComponent = () => {
   );
 };
 
+const colLayout = {
+  xs: 24,
+  md: 12,
+  xl: 8,
+};
+
+const fullColLayout = {
+  xs: 24,
+};
+
 const RegisterForm = () => {
   const [form] = Form.useForm();
 
@@ -262,18 +272,18 @@ const RegisterForm = () => {
             <Col {...colLayout}>
               <WarehouseComponent />
             </Col>
-            <Col {...mdColLayout}>
+            <Col {...colLayout}>
               <CashierComponent />
             </Col>
-            <Col {...mdColLayout}>
+            <Col {...colLayout}>
               <CustomerComponent />
             </Col>
-            <Col {...mdColLayout}>
+            <Col {...colLayout}>
               <Row gutter={5}>
-                <Col {...mdColLayout}>
+                <Col xs={18}>
                   <CurrencyComponent />
                 </Col>
-                <Col {...mdColLayout}>
+                <Col xs={6}>
                   <CurrencyExchangeComponent />
                 </Col>
               </Row>

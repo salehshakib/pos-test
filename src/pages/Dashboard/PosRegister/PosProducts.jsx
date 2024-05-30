@@ -1,5 +1,6 @@
-import { Card, Pagination, Spin } from "antd";
-import { useState } from "react";
+import { Card, Divider, Skeleton, Spin } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
@@ -8,18 +9,36 @@ const { Meta } = Card;
 const PosProducts = () => {
   const [pagination, setPagination] = useState({
     page: 1,
-    perPage: 15,
+    perPage: 13,
+    allData: 1,
   });
 
   const { data, isLoading } = useGetAllProductsQuery({
     params: {
       ...pagination,
       attachmentable: 1,
-      allData: 1,
     },
   });
 
+  const [newData, setNewData] = useState([]);
+
   const products = data?.results?.product;
+  const total = data?.meta?.total;
+
+  const loadMoreData = useCallback(() => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      page: prevPagination.page + 1,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (products) {
+      setNewData((prevData) => [...prevData, ...products]);
+    }
+  }, [products]);
+
+  console.log(newData);
 
   if (isLoading) {
     return (
@@ -32,58 +51,69 @@ const PosProducts = () => {
   }
 
   return (
-    <GlobalUtilityStyle className="m-3 flex flex-col gap-5 h-full border-2 border-black">
-      <div className="border-2 border-pink-500">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 ">
-          {products &&
-            products.map((product) => {
-              // const images = organizeAttachments(product?.attachments);
+    <GlobalUtilityStyle className="p-3 flex flex-col h-full overflow-auto gap-3">
+      <div className="grow ">
+        <div
+          className="max-h-[60vh] xl:max-h-[66vh] overflow-auto"
+          id="scrollable"
+        >
+          <InfiniteScroll
+            dataLength={newData?.length}
+            next={loadMoreData}
+            hasMore={newData?.length < total}
+            loader={
+              <Skeleton
+                className="my-4"
+                paragraph={{
+                  rows: 3,
+                }}
+                active
+              />
+            }
+            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+            scrollableTarget="scrollable"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-1">
+              {products &&
+                newData.map((product) => {
+                  // const images = organizeAttachments(product?.attachments);
 
-              return (
-                <Card
-                  bordered
-                  hoverable
-                  style={{
-                    backgroundColor: "white",
-                  }}
-                  key={product.id}
-                  cover={
-                    <img
-                      alt="example"
-                      className="h-14 object-cover px-4 pt-4"
-                      src={
-                        // images?.attach_file?.[0]?.url ??
-                        // images?.attachments?.[0]?.url ??
-                        productImage
+                  return (
+                    <Card
+                      bordered
+                      hoverable
+                      style={{
+                        backgroundColor: "white",
+                        // height: "100px",
+                      }}
+                      key={product.id}
+                      cover={
+                        <img
+                          alt="example"
+                          className="h-32 lg:h-24 object-cover px-4 pt-4"
+                          src={
+                            // images?.attach_file?.[0]?.url ??
+                            // images?.attachments?.[0]?.url ??
+                            productImage
+                          }
+                        />
                       }
-                    />
-                  }
-                >
-                  <Meta
-                    className="text-center"
-                    title={product.name}
-                    description={product.sku}
-                  />
-                </Card>
-              );
-            })}
+                    >
+                      <Meta
+                        className="text-center"
+                        title={product.name}
+                        description={product.sku}
+                      />
+                    </Card>
+                  );
+                })}
+            </div>
+          </InfiniteScroll>
         </div>
       </div>
-      <div className="flex justify-between mx-4">
-        <div>
-          POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
-          Solutions
-        </div>
-        {products && products.length > 0 && (
-          <Pagination
-            {...pagination}
-            total={data?.meta?.total}
-            current={pagination.page}
-            onChange={(page) => {
-              setPagination({ ...pagination, page });
-            }}
-            // pageSizeOptions={}
-          />
+      <div>
+        {newData?.length < total && (
+          <Divider plain>Pull down to load more ....</Divider>
         )}
       </div>
     </GlobalUtilityStyle>

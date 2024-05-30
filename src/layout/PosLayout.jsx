@@ -30,7 +30,7 @@ const PosLayout = () => {
             </div>
 
             <div className="relative flex flex-col ">
-              <div className="bg-white flex justify-between items-center px-5  w-full top-0 z-50 shadow-md">
+              <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
                 <div className="flex items-center gap-6 text-2xl">
                   <Button
                     className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
@@ -49,32 +49,17 @@ const PosLayout = () => {
               </div>
 
               <div className="flex grow">
-                {/* <div
-                className="absolute h-[74vh] overflow-auto
-             
-            
-              top-[8.7rem] z-40 left-0 pb-4 "
-              >
-                <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-              </div> */}
-
                 <div className="flex flex-col w-full h-full">
                   <div>
                     <PosFilterComponent />
                   </div>
                   <div
                     style={{
-                      // margin: "16px 16px 16px 0",
-                      // backgroundColor: "#f5f5f5",
                       borderRadius: "8px",
                     }}
-                    // h-[754px]
-                    // h-[75vh]
-                    className="shadow-md
-              grow
-                  m-4  bg-gray-200"
+                    className="shadow-md grow m-4 bg-gray-200"
                   >
-                    {/* <PosProducts /> */}
+                    <PosProducts />
                   </div>
                 </div>
               </div>

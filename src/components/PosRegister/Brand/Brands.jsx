@@ -1,5 +1,5 @@
 import { Card, Divider, Skeleton, Spin } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
@@ -8,23 +8,30 @@ const { Meta } = Card;
 export const Brands = () => {
   const [pagination, setPagination] = useState({
     page: 1,
-    perPage: 8,
+    perPage: 12,
     allData: 1,
   });
   const { data, isLoading } = useGetBrandsQuery({
     params: pagination,
   });
 
+  const [newData, setNewData] = useState([]);
+
   const brands = data?.results?.brand;
   const total = data?.meta?.total;
 
-  const loadMoreData = () => {
-    setPagination((prev) => ({ ...prev, perPage: prev.perPage + 4 }));
-  };
+  const loadMoreData = useCallback(() => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      page: prevPagination.page + 1,
+    }));
+  }, []);
 
   useEffect(() => {
-    loadMoreData();
-  }, []);
+    if (brands) {
+      setNewData((prevData) => [...prevData, ...brands]);
+    }
+  }, [brands]);
 
   if (isLoading) {
     return (
@@ -46,9 +53,9 @@ export const Brands = () => {
       }}
     >
       <InfiniteScroll
-        dataLength={brands?.length}
+        dataLength={newData?.length}
         next={loadMoreData}
-        hasMore={brands?.length < total}
+        hasMore={newData?.length < total}
         loader={
           <Skeleton
             className="my-4"
@@ -64,7 +71,7 @@ export const Brands = () => {
         <>
           <div className="grid grid-cols-4 gap-4">
             {brands &&
-              brands?.map((brand) => {
+              newData?.map((brand) => {
                 // const images = organizeAttachments(brand?.attachments);
                 return (
                   <Card
@@ -92,7 +99,7 @@ export const Brands = () => {
               })}
           </div>
 
-          {brands?.length < total && (
+          {newData?.length < total && (
             <div className="text-center my-4 pb-10">
               Pull down to load more ....
             </div>

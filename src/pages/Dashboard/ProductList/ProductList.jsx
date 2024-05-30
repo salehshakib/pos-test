@@ -4,7 +4,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
 import { TbListDetails } from "react-icons/tb";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";

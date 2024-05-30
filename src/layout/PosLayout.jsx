@@ -19,10 +19,6 @@ const PosLayout = () => {
   return (
     <GlobalUtilityStyle>
       <div className="flex flex-col relative h-screen">
-        <div className="absolute h-[100vh] overflow-auto z-40 left-0">
-          <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-        </div>
-
         <div className="grow min-h-[60vh] overflow-auto h-full bg-[#F5F5F5]">
           <div className="grid grid-cols-2 h-full overflow-auto ">
             <div className="">
@@ -74,6 +70,10 @@ const PosLayout = () => {
         >
           <Payment />
         </Footer>
+
+        <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">
+          <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        </div>
       </div>
     </GlobalUtilityStyle>
   );

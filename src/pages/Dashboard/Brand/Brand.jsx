@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import BrandCreate from "../../../components/Brand/BrandCreate";
 import { BrandTable } from "../../../components/Brand/BrandTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";

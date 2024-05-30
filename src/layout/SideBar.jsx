@@ -2,6 +2,7 @@ import { Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import logo from "../assets/data/defaultLogo";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
@@ -89,6 +90,11 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       breakpoint={`${pathname.includes("/pos") ? "" : "lg"}`}
       collapsedWidth={`${pathname.includes("/pos") ? 0 : 70}`}
     >
+      {pathname.includes("/pos") && (
+        <div className="w-full">
+          <img src={logo} alt="" className="w-32 h-16 object-cover mx-auto" />
+        </div>
+      )}
       <Menu
         theme="light"
         mode="inline"

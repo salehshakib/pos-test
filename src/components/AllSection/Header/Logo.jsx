@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/images/Vistock-removebg-preview.png";
+import logo from "../../../assets/data/defaultLogo";
 
 const Logo = () => {
   const navigate = useNavigate();

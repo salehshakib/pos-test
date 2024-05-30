@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import CategoryCreate from "../../../components/Category/CategoryCreate";
 import CategoryTable from "../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";

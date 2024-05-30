@@ -146,7 +146,7 @@ const GiftCardList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Gift Card List"
+      pageTitle="Gift Card"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

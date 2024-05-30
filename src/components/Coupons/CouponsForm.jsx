@@ -27,6 +27,7 @@ const CouponCodeComponent = () => {
       placeholder={"Generate Coupon Code"}
       onClick={generate}
       icon={<RiRefreshLine className="text-xl" />}
+      btnText={"Generate"}
     />
   );
 };

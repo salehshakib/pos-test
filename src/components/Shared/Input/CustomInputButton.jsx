@@ -11,6 +11,7 @@ const CustomInputButton = (props) => {
     requireMsg = undefined,
     onClick,
     icon,
+    btnText,
   } = props;
 
   return (
@@ -40,9 +41,11 @@ const CustomInputButton = (props) => {
           <Button
             onClick={onClick}
             icon={icon}
-            className="border-2 mt-1"
+            className="border-2 mt-1 flex justify-center items-center"
             size="large"
-          />
+          >
+            {btnText}
+          </Button>
         </Space.Compact>
       </Form.Item>
     </GlobalUtilityStyle>

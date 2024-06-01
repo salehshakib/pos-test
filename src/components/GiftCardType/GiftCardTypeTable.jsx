@@ -1,8 +1,16 @@
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteGiftCardTypeMutation,
+  useGetAllGiftCardTypeQuery,
+  useUpdateGiftCardTypeStatusMutation,
+} from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardTypeEdit } from "./GiftCardTypeEdit";
 
@@ -19,14 +27,17 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllGiftCardTypeQuery({
+    params: pagination,
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateGiftCardTypeStatusMutation();
+
+  const [deleteGiftCardTypes, { isLoading: isDeleting }] =
+    useDeleteGiftCardTypeMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -39,13 +50,12 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleStatus = async () => {
-    console.log(id);
-    // const { data } = await updateStatus( id);
+    const { data } = await updateStatus(statusId);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
   };
 
   const handleDeleteModal = (id) => {
@@ -54,60 +64,59 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deleteGiftCardTypes(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  console.log(data);
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+  const dataSource =
+    data?.results?.giftcardtype?.map((item) => {
+      const { id, name, created_at, is_active } = item;
+      const time = dayjs(created_at).format("DD-MM-YYYY");
+
+      return {
+        id,
+        type: name,
+        time,
+        status: { status: is_active, handleStatusModal },
+        action: { handleEdit, handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
     setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
-
+        dataSource={dataSource}
+        total={total}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
-
+        isLoading={isLoading}
         isRowSelection={true}
       />
 
       <GiftCardTypeEdit id={editId} setId={setEditId} />
 
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
-  />
-  
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

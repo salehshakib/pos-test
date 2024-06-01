@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
     .filter(
@@ -6,6 +8,7 @@ export const fieldsToUpdate = (details) => {
         !key.includes("deleted_at") &&
         !key.includes("created_at") &&
         !key.includes("is_active") &&
+        !key.includes("expired_at") &&
         key !== "id"
     )
     .map((key) => {
@@ -28,6 +31,10 @@ export const fieldsToUpdate = (details) => {
           value: groupedAttachments[label],
           errors: "",
         }));
+      }
+
+      if (key.includes("date")) {
+        value = dayjs(value, "YYYY-MM-DD");
       }
 
       return {

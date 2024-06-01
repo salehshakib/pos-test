@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { MdDelete, MdEditSquare } from "react-icons/md";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import GiftCardCreate from "../../../components/GiftCard/GiftCardCreate";
 import GiftCardTable from "../../../components/GiftCard/GiftCardTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -25,9 +27,9 @@ const columns = [
     align: "center",
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
         <img
-          src={img}
+          src={img ?? defaultUser}
           alt="defaultUser"
           className="w-full h-full object-cover"
         />
@@ -102,12 +104,12 @@ const columns = [
   },
   {
     title: "Created At",
-    dataIndex: "time",
-    key: "time",
+    dataIndex: "date",
+    key: "date",
     align: "center",
-    render: (time) => (
+    render: (date) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {time}
+        {date}
       </span>
     ),
   },
@@ -118,26 +120,25 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    //   render: ({ handleEdit, handleDeleteModal }, record) => {
-    //     return (
-    //       <div className="flex justify-center items-center gap-3 ">
-    //         <button
-    //           onClick={            onClick={ handleEdit}
+    render: ({ handleEdit, handleDeleteModal }, record) => {
+      return (
+        <div className="flex justify-center items-center gap-3 ">
+          <button
+            onClick={() => handleEdit(record?.id)}
+            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdEditSquare className="text-lg md:text-xl" />
+          </button>
+          <button
+            onClick={() => handleDeleteModal(record?.id)}
+            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <MdDelete className="text-lg md:text-xl" />
+          </button>
+        </div>
+      );
+    },
   },
-  //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-  //         >
-  //           <MdEditSquare className="text-lg md:text-xl" />
-  //         </button>
-  //         <button
-  //           onClick={()=>handleDeleteModal(record?.id)}
-  //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-  //         >
-  //           <MdDelete className="text-lg md:text-xl" />
-  //         </button>
-  //       </div>
-  //     );
-  //   },
-  // },
 ];
 
 const GiftCardList = () => {

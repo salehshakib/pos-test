@@ -1,7 +1,12 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetBrandDetailsQuery } from "../../redux/services/brand/brandApi";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useGetGiftCardTypeDetailsQuery,
+  useUpdateGiftCardTypeMutation,
+} from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
+import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { GiftCardTypeForm } from "./GiftCardTypeForm";
@@ -14,45 +19,36 @@ export const GiftCardTypeEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetGiftCardTypeDetailsQuery(
+    { id },
+    { skip: !id }
+  );
 
-  //   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
+  const [updateGiftCardType, { isLoading }] = useUpdateGiftCardTypeMutation();
 
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-      // ];
 
       setFields(fieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    // const formData = new FormData();
-    // console.log(values);
-    // const postData = {
-    //   ...values,
-    //   logo: values?.logo?.[0].originFileObj,
-    // };
-    // appendToFormData(postData, formData);
-    // const { data, error } = await updateBrand({
-    //   id,
-    //   data: formData,
-    // });
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeEditDrawer());
-    // }
-    // if (error) {
-    //   const errorFields = errorFieldsUpdate(fields, error);
-    //   setFields(errorFields);
-    // }
+    const { data, error } = await updateGiftCardType({
+      data: { id, ...values },
+    });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+    }
+
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
+
+      setFields(errorFields);
+    }
   };
 
   return (
@@ -63,7 +59,7 @@ export const GiftCardTypeEdit = ({ id, setId }) => {
     >
       <GiftCardTypeForm
         handleSubmit={handleUpdate}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         fields={fields}
         form={form}
       />

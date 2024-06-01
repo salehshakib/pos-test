@@ -1,19 +1,14 @@
 import { Col, Form, Row } from "antd";
 import { RiRefreshLine } from "react-icons/ri";
-import {
-  colLayout,
-  fullColLayout,
-  mdColLayout,
-  rowLayout,
-} from "../../layout/FormLayout";
+import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 import { generateRandomCode } from "../../utilities/lib/generateCode";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomInputButton from "../Shared/Input/CustomInputButton";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 
 const GiftCardComponent = () => {
   const form = Form.useFormInstance();

@@ -56,7 +56,7 @@ const CustomSelect = (props) => {
             style={{
               ...styleProps,
             }}
-            allowClear
+            allowClear={true}
             defaultActiveFirstOption
           />
         ) : (
@@ -80,7 +80,7 @@ const CustomSelect = (props) => {
             style={{
               ...styleProps,
             }}
-            allowClear
+            allowClear={true}
           />
         )}
       </Form.Item>

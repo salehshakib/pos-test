@@ -1,13 +1,13 @@
 import { Col, Row } from "antd";
+import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { SearchProductComponent } from "../Adjustment/overview/SearchProductComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import TransferListTable from "./TransferListTable";
-import { WarehouseComponent } from "./WarehouseComponent";
+import { WarehouseTransferComponent } from "./WarehouseTransferComponent";
 
 const FileStatusComponent = () => {
   const options = [
@@ -38,7 +38,7 @@ const TransferForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <WarehouseComponent />
+        <WarehouseTransferComponent />
         <Col {...colLayout}>
           <CustomDatepicker
             label="Date"

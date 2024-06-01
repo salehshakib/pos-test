@@ -38,8 +38,6 @@ const PosProducts = () => {
     }
   }, [products]);
 
-  console.log(newData);
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -73,7 +71,7 @@ const PosProducts = () => {
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5 gap-1">
               {products &&
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);
@@ -88,15 +86,17 @@ const PosProducts = () => {
                       }}
                       key={product.id}
                       cover={
-                        <img
-                          alt="example"
-                          className="h-32 lg:h-24 object-cover px-4 pt-4"
-                          src={
-                            // images?.attach_file?.[0]?.url ??
-                            // images?.attachments?.[0]?.url ??
-                            productImage
-                          }
-                        />
+                        <div className="w-full">
+                          <img
+                            alt="example"
+                            className="h-32 mx-auto object-cover px-4 "
+                            src={
+                              // images?.attach_file?.[0]?.url ??
+                              // images?.attachments?.[0]?.url ??
+                              productImage
+                            }
+                          />
+                        </div>
                       }
                     >
                       <Meta

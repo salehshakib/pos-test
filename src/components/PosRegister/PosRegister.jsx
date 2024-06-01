@@ -183,6 +183,7 @@ const CurrencyExchangeComponent = () => {
       type={"number"}
       required={true}
       name={"exchange_rate"}
+      placeholder={"Exchange Rate"}
       suffix={content}
     />
   );
@@ -198,7 +199,7 @@ const SearchProductComponent = () => {
     }
   }, 1000);
 
-  const { data, isFetching } = useGetAllProductsQuery(
+  const { data } = useGetAllProductsQuery(
     {
       params: {
         selectValue: ["id", "name", "sku", "buying_price"],
@@ -228,7 +229,6 @@ const SearchProductComponent = () => {
   return (
     <AutoComplete
       options={options}
-      loading={isFetching}
       className="mt-1 w-full"
       size="large"
       onSelect={onSelect}
@@ -237,7 +237,7 @@ const SearchProductComponent = () => {
       onChange={onChange}
       placeholder="Search Product"
       suffixIcon={<FaSearch />}
-      allowClear
+      allowClear={true}
     />
   );
 };
@@ -279,10 +279,10 @@ const RegisterForm = () => {
           </Col>
           <Col {...colLayout}>
             <Row gutter={5}>
-              <Col xs={18}>
+              <Col xs={16}>
                 <CurrencyComponent />
               </Col>
-              <Col xs={6}>
+              <Col xs={8}>
                 <CurrencyExchangeComponent />
               </Col>
             </Row>

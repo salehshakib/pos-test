@@ -26,10 +26,10 @@ const ProductTableComponent = () => {
   const incrementCounter = (id, stock = 5) => {
     if (counters[id] >= stock) return;
 
-    if (!counters[id]) {
+    if (counters[id] === undefined) {
       setCounters((prevCounters) => ({
         ...prevCounters,
-        [id]: 1,
+        [id]: 2,
       }));
       return;
     }
@@ -56,8 +56,6 @@ const ProductTableComponent = () => {
       [id]: (prevCounters[id] || 0) - 1,
     }));
   };
-
-  console.log(counters);
 
   console.log(Form.useWatch(["product_list", "qty"], form));
 
@@ -254,7 +252,7 @@ const ProductTableComponent = () => {
           ...item,
           quantity: form.setFieldValue(
             ["product_list", "qty", item.id],
-            counters[item.id] ?? 0
+            counters[item.id] ?? 1
           ),
         };
       }) ?? []

@@ -3,7 +3,7 @@ import { colLayout } from "../../layout/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 
-export const WarehouseComponent = () => {
+export const WarehouseTransferComponent = () => {
   const { data, isLoading } = useGetWarehousesQuery({
     params: {
       selectValue: ["id", "name"],

@@ -20,7 +20,6 @@ const AdjustmentEdit = ({ id }) => {
     { id },
     { skip: !id }
   );
-  console.log(data);
 
   const [udpateAdjustment, { isLoading }] = useUpdateAdjustmentMutation();
 
@@ -31,6 +30,8 @@ const AdjustmentEdit = ({ id }) => {
       const product_list = JSON.parse(data?.product_list);
 
       const list = product_list?.map((item) => item);
+
+      console.log(list);
 
       const fieldData = [
         {

@@ -17,21 +17,20 @@ const AdjustmentCreate = () => {
 
   const [createAdjustment, { isLoading }] = useCreateAdjustmentMutation();
 
-  const handleSubmit = async ({
-    warehouse_id,
-    product_list,
-    attachment,
-    note,
-  }) => {
+  const handleSubmit = async (values) => {
+    const { warehouse_id, product_list, attachment, note } = values;
+
     const formData = new FormData();
 
-    const productListArray = Object.keys(product_list.qty).map((product_id) => {
-      return {
-        product_id: parseInt(product_id),
-        qty: product_list.qty[product_id],
-        action: product_list.action[product_id],
-      };
-    });
+    const productListArray = Object.keys(product_list?.qty ?? {}).map(
+      (product_id) => {
+        return {
+          product_id: parseInt(product_id),
+          qty: product_list?.qty[product_id],
+          action: product_list?.action[product_id],
+        };
+      }
+    );
 
     const postObj = {
       attachment:

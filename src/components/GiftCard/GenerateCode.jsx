@@ -55,10 +55,7 @@ const GenerateCode = () => {
                   className="border-2"
                   onChange={onCodeChange}
                   size="large"
-                  style={{
-                    allowClear: true,
-                  }}
-                  // allowClear
+                  allowClear={true}
                 />
               </Form.Item>
             </Col>

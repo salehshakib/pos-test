@@ -2,10 +2,10 @@ import { AiOutlineDeploymentUnit } from "react-icons/ai";
 import { BsCurrencyPound } from "react-icons/bs";
 import { CiDiscount1 } from "react-icons/ci";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { LuClipboardType } from "react-icons/lu";
+import { LuClipboardList, LuClipboardType } from "react-icons/lu";
 import { MdOutlineSettingsApplications } from "react-icons/md";
 import { PiWarehouse } from "react-icons/pi";
-import { RiCoupon2Line, RiVerifiedBadgeLine } from "react-icons/ri";
+import { RiVerifiedBadgeLine } from "react-icons/ri";
 import { TbReceiptTax } from "react-icons/tb";
 import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
 import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
@@ -28,7 +28,7 @@ export const settingPaths = [
   {
     name: "Discount Plan",
     path: "discount-plan",
-    icon: RiCoupon2Line,
+    icon: LuClipboardList,
     element: <DiscountPlan />,
   },
   {

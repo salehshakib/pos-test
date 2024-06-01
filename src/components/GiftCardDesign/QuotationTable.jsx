@@ -1,19 +1,19 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { GlobalUtilityStyle } from "../../../container/Styled";
 import {
   useDeleteQuotationMutation,
   useGetAllQuotationQuery,
-} from "../../redux/services/quotation/quotationApi";
+} from "../../../redux/services/quotation/quotationApi";
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import CustomTable from "../Shared/Table/CustomTable";
-import CustomerEdit from "../Customer/CustomerEdit";
-import DeleteModal from "../Shared/Modal/DeleteModal";
+} from "../../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../../Shared/Modal/DeleteModal";
+import CustomTable from "../../Shared/Table/CustomTable";
+import QuotationEdit from "./QuotationEdit";
 
 const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -70,6 +70,8 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
+  console.log(data);
+
   const dataSource =
     data?.results?.quotation?.map((item) => {
       const {
@@ -112,7 +114,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <CustomerEdit id={editId} />
+      <QuotationEdit id={editId} />
 
       {/* <StatusModal
         statusModal={statusModal}

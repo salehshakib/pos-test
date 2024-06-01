@@ -1,41 +1,39 @@
 // Import necessary dependencies
-import { GENERATE_QUOTATION } from "../../../utilities/apiEndpoints/generate.api";
+import { GENERATE_INVOICE } from "../../../utilities/apiEndpoints/generate.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const quotationApi = baseApi.injectEndpoints({
+const invoiceApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllQuotation: build.query({
+    getAllInvoice: build.query({
       query: ({ params }) => ({
-        url: `/${GENERATE_QUOTATION}`,
+        url: `/${GENERATE_INVOICE}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: GENERATE_QUOTATION, params },
-        GENERATE_QUOTATION,
+        { type: GENERATE_INVOICE, params },
+        GENERATE_INVOICE,
       ],
     }),
 
-    getQuotationDetails: build.query({
+    getInvoiceDetails: build.query({
       query: ({ id }) => {
         return {
-          url: `${GENERATE_QUOTATION}/show/${id}`,
+          url: `${GENERATE_INVOICE}/show/${id}`,
           method: "GET",
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [
-        { type: GENERATE_QUOTATION, id },
-      ],
+      providesTags: (result, error, { id }) => [{ type: GENERATE_INVOICE, id }],
     }),
 
-    createQuotation: build.mutation({
+    createInvoice: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${GENERATE_QUOTATION}/store`,
+          url: `/${GENERATE_INVOICE}/store`,
           method: "POST",
           body: data,
         };
@@ -53,14 +51,14 @@ const quotationApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [GENERATE_QUOTATION] : [];
+        return result ? [GENERATE_INVOICE] : [];
       },
     }),
 
-    updateQuotation: build.mutation({
+    updateInvoice: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${GENERATE_QUOTATION}/update/${id}`,
+          url: `/${GENERATE_INVOICE}/update/${id}`,
           method: "PUT",
           body: data,
         };
@@ -72,14 +70,14 @@ const quotationApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [GENERATE_QUOTATION] : [];
+        return result ? [GENERATE_INVOICE] : [];
       },
     }),
 
-    updateQuotationStatus: build.mutation({
+    updateInvoiceStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${GENERATE_QUOTATION}/status/${id}`,
+          url: `/${GENERATE_INVOICE}/status/${id}`,
           method: "POST",
         };
       },
@@ -90,14 +88,14 @@ const quotationApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [GENERATE_QUOTATION] : [];
+        return result ? [GENERATE_INVOICE] : [];
       },
     }),
 
-    deleteQuotation: build.mutation({
+    deleteInvoice: build.mutation({
       query: (id) => {
         return {
-          url: `/${GENERATE_QUOTATION}/delete/${id}`,
+          url: `/${GENERATE_INVOICE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -108,17 +106,17 @@ const quotationApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [GENERATE_QUOTATION] : [];
+        return result ? [GENERATE_INVOICE] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetAllQuotationQuery,
-  useGetQuotationDetailsQuery,
-  useCreateQuotationMutation,
-  useUpdateQuotationMutation,
-  useUpdateQuotationStatusMutation,
-  useDeleteQuotationMutation,
-} = quotationApi;
+  useGetAllInvoiceQuery,
+  useGetInvoiceDetailsQuery,
+  useCreateInvoiceMutation,
+  useUpdateInvoiceMutation,
+  useUpdateInvoiceStatusMutation,
+  useDeleteInvoiceMutation,
+} = invoiceApi;

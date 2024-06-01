@@ -7,6 +7,8 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ProductTableComponent } from "./overview/ProductTableComponent";
 import { SearchProductComponent } from "./overview/SearchProductComponent";
+import { ProductController } from "../Shared/ProductControllerComponent/ProductController";
+import { AdjustmentProductTable } from "./overview/AdjustmentProductTable";
 
 const SelectWarehouse = () => {
   const { data, isLoading } = useGetWarehousesQuery({
@@ -40,11 +42,14 @@ const AdjustmentForm = ({ options, ...props }) => {
           <SelectWarehouse />
         </Col>
 
-        <Col {...fullColLayout}>
-          <SearchProductComponent options={options} />
-        </Col>
+        {/* <Col {...fullColLayout}> */}
+        {/* <SearchProductComponent options={options} /> */}
+        {/* <ProductController /> */}
+        {/* </Col> */}
 
-        <ProductTableComponent />
+        <AdjustmentProductTable />
+
+        {/* <ProductTableComponent /> */}
 
         <Col {...fullColLayout}>
           <CustomUploader label="Attach Documents" name={"attachment"} />

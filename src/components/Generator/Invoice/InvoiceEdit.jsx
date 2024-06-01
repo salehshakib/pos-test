@@ -1,25 +1,25 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useGetQuotationDetailsQuery, useUpdateQuotationMutation } from "../../redux/services/quotation/quotationApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { CustomerForm } from "../Customer/CustomerForm";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { closeEditDrawer } from "../../../redux/services/drawer/drawerSlice";
+import {
+  useGetInvoiceDetailsQuery,
+  useUpdateInvoiceMutation,
+} from "../../../redux/services/invoice/invoiceApi";
+import { errorFieldsUpdate } from "../../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
+import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
+import { InvoiceForm } from "./InvoiceForm";
 
-const QuotationEdit = ({ id }) => {
+const InvoiceEdit = ({ id }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetQuotationDetailsQuery(
-    { id },
-    { skip: !id }
-  );
-  const [updateQuotation, { isLoading }] = useUpdateQuotationMutation();
+  const { data, isFetching } = useGetInvoiceDetailsQuery({ id }, { skip: !id });
+  const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation();
 
   useEffect(() => {
     if (data) {
@@ -30,7 +30,7 @@ const QuotationEdit = ({ id }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateQuotation({
+    const { data, error } = await updateInvoice({
       id,
       data: values,
     });
@@ -47,11 +47,11 @@ const QuotationEdit = ({ id }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Quotation"}
+      title={"Edit Invoice"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <CustomerForm
+      <InvoiceForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -61,4 +61,4 @@ const QuotationEdit = ({ id }) => {
   );
 };
 
-export default QuotationEdit;
+export default InvoiceEdit;

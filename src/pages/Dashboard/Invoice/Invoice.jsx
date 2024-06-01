@@ -4,9 +4,9 @@ import { FaEye } from "react-icons/fa6";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
+import InvoiceCreate from "../../../components/Generator/Invoice/InvoiceCreate";
+import InvoiceTable from "../../../components/Generator/Invoice/InvoiceTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import QuotationCreate from "../../../components/Generator/Quotation/QuotationCreate";
-import QuotationTable from "../../../components/Generator/Quotation/QuotationTable";
 
 const columns = [
   {
@@ -48,7 +48,7 @@ const columns = [
     key: "cashier",
     render: (cashier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {cashier}
+        {cashier ?? "N/A"}
       </span>
     ),
   },
@@ -94,27 +94,27 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "Status",
-  //   dataIndex: "status",
-  //   key: "status",
-  //   width: "80px",
-  //   align: "center",
-  //   render: ({ status, handleStatusModal }, record) => {
-  //     return (
-  //       <button
-  //         className={`p-0 ${
-  //           status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-  //         } rounded shadow-md w-[80px]`}
-  //         onClick={() => handleStatusModal(record.id)}
-  //       >
-  //         <span className="font-medium text-white text-xs px-2 w-full">
-  //           {status == 1 ? "Active" : "Inactive"}
-  //         </span>
-  //       </button>
-  //     );
+  //   {
+  //     title: "Status",
+  //     dataIndex: "status",
+  //     key: "status",
+  //     width: "80px",
+  //     align: "center",
+  //     render: ({ status, handleStatusModal }, record) => {
+  //       return (
+  //         <button
+  //           className={`p-0 ${
+  //             status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+  //           } rounded shadow-md w-[80px]`}
+  //           onClick={() => handleStatusModal(record.id)}
+  //         >
+  //           <span className="font-medium text-white text-xs px-2 w-full">
+  //             {status == 1 ? "Active" : "Inactive"}
+  //           </span>
+  //         </button>
+  //       );
+  //     },
   //   },
-  // },
   {
     title: "Actions",
     dataIndex: "actions",
@@ -183,24 +183,21 @@ const columns = [
   },
 ];
 
-const Quotation = () => {
+const Invoice = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Quotation"
+      pageTitle="Invoice"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <QuotationCreate />
+      <InvoiceCreate />
 
-      <QuotationTable
-        newColumns={newColumns}
-        setSelectedRows={setSelectedRows}
-      />
+      <InvoiceTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
     </GlobalContainer>
   );
 };
 
-export default Quotation;
+export default Invoice;

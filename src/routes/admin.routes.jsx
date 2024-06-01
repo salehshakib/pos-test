@@ -23,10 +23,10 @@ import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import People from "../pages/Dashboard/People/People";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
+import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
-import { quotationPaths } from "./Quotation/quotation.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
@@ -73,7 +73,7 @@ export const adminPaths = [
     name: "Generator",
     path: "generator",
     icon: TbFilePercent,
-    children: quotationPaths,
+    children: generatorPaths,
   },
   {
     name: "Transfer",

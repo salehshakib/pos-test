@@ -2,7 +2,6 @@ import { Form, Image, Upload } from "antd";
 import { useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { GlobalUtilityStyle } from "../../../container/Styled";
-import ImgCrop from "antd-img-crop";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -39,6 +38,8 @@ const CustomUploader = ({
   };
 
   const handleFileChange = ({ fileList: newFileList }) => {
+    console.log(newFileList);
+
     setFileList(newFileList);
   };
 
@@ -64,51 +65,53 @@ const CustomUploader = ({
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
-        <ImgCrop showGrid rotationSlider aspectSlider showReset>
-          <Upload
-            listType="picture-card"
-            name={"file"}
-            fileList={fileList}
-            onChange={handleFileChange}
-            onPreview={handlePreview}
-            beforeUpload={(file) => {
-              setFileList([...fileList, file]);
-              console.log(file);
-              return false;
-            }}
-            multiple={multiple}
-            maxCount={multiple ? 20 : 1}
-            className={` ${
-              multiple
-                ? "custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2 pb-2"
-                : "custom-single-upload"
-            } mt-2`}
-          >
-            {(fileList.length < 1 || multiple) && (
-              <button
+        {/* <ImgCrop showGrid rotationSlider aspectSlider showReset> */}
+        <Upload
+          listType="picture-card"
+          name={"file"}
+          fileList={fileList}
+          onChange={handleFileChange}
+          onPreview={handlePreview}
+          // beforeUpload={(file) => {
+          //   setFileList([...fileList, file]);
+          //   console.log(file);
+          //   return false;
+          // }}
+          beforeUpload={() => false}
+          // customRequest={}
+          multiple={multiple}
+          maxCount={multiple ? 20 : 1}
+          className={` ${
+            multiple
+              ? "custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2 pb-2"
+              : "custom-single-upload"
+          } mt-2`}
+        >
+          {(fileList.length < 1 || multiple) && (
+            <button
+              style={{
+                border: 0,
+                background: "none",
+              }}
+              type="button"
+              className="w-full flex flex-col items-center justify-center"
+            >
+              <BiImageAdd
                 style={{
-                  border: 0,
-                  background: "none",
+                  fontSize: 25,
                 }}
-                type="button"
-                className="w-full flex flex-col items-center justify-center"
+              />
+              <div
+                style={{
+                  marginTop: 8,
+                }}
               >
-                <BiImageAdd
-                  style={{
-                    fontSize: 25,
-                  }}
-                />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </button>
-            )}
-          </Upload>
-        </ImgCrop>
+                Upload
+              </div>
+            </button>
+          )}
+        </Upload>
+        {/* </ImgCrop> */}
       </Form.Item>
     </GlobalUtilityStyle>
   );

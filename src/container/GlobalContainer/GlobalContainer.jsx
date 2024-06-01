@@ -177,9 +177,7 @@ const GlobalContainer = ({
                       className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
                     />
                   }
-                  style={{
-                    allowClear: true,
-                  }}
+                  allowClear={true}
                 />
                 <Popover
                   content={searchFilterContent}

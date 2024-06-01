@@ -1,22 +1,22 @@
 import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCreateQuotationMutation } from "../../redux/services/quotation/quotationApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { QuotationForm } from "./QuotationForm";
+import { closeCreateDrawer } from "../../../redux/services/drawer/drawerSlice";
+import { useCreateInvoiceMutation } from "../../../redux/services/invoice/invoiceApi";
+import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
+import { InvoiceForm } from "./InvoiceForm";
 
-const QuotationCreate = () => {
+const InvoiceCreate = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createQuotation, { isLoading }] = useCreateQuotationMutation();
+  const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createQuotation({ data: values });
+    const { data, error } = await createInvoice({ data: values });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
@@ -33,11 +33,11 @@ const QuotationCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Quotation"}
+      title={"Create Invoice"}
       open={isCreateDrawerOpen}
       form={form}
     >
-      <QuotationForm
+      <InvoiceForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -47,4 +47,4 @@ const QuotationCreate = () => {
   );
 };
 
-export default QuotationCreate;
+export default InvoiceCreate;

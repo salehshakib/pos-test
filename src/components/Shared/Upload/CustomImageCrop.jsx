@@ -42,6 +42,8 @@ const CustomImageCrop = ({
     setFileList(newFileList);
   };
 
+  console.log(fileList);
+
   return (
     <GlobalUtilityStyle>
       {previewImage && (
@@ -64,14 +66,28 @@ const CustomImageCrop = ({
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
-        <ImgCrop showGrid rotationSlider aspectSlider showReset>
+        <ImgCrop
+          showGrid
+          rotationSlider
+          aspectSlider
+          showReset
+          // onVisibleChange
+          // onModalOk={(s) => {
+          //   console.log(s);
+          // }}
+          // onModalCancel={(s) => {
+          //   console.log(s);
+          // }}
+        >
           <Upload
             listType="picture-card"
             name={"file"}
             fileList={fileList}
             onChange={handleFileChange}
             onPreview={handlePreview}
-            beforeUpload={(file) => {
+            beforeUpload={(file, s) => {
+              console.log(file);
+              console.log(s);
               setFileList([...fileList, file]);
               return false;
             }}

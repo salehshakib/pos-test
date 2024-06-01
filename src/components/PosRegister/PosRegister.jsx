@@ -228,6 +228,7 @@ const SearchProductComponent = () => {
   return (
     <AutoComplete
       options={options}
+      loading={isFetching}
       className="mt-1 w-full"
       size="large"
       onSelect={onSelect}
@@ -252,71 +253,68 @@ const fullColLayout = {
 };
 
 const RegisterForm = () => {
-  const [form] = Form.useForm();
-
   return (
-    <GlobalUtilityStyle>
-      <Form form={form} layout="vertical" autoComplete="on" scrollToFirstError>
-        <div className="flex flex-col">
-          <Row gutter={10}>
-            <Col {...colLayout}>
-              <CustomDatepicker />
-            </Col>
-            <Col {...colLayout}>
-              <CustomInput
-                type={"text"}
-                required={true}
-                placeholder={"Reference Number"}
-              />
-            </Col>
-            <Col {...colLayout}>
-              <WarehouseComponent />
-            </Col>
-            <Col {...colLayout}>
-              <CashierComponent />
-            </Col>
-            <Col {...colLayout}>
-              <CustomerComponent />
-            </Col>
-            <Col {...colLayout}>
-              <Row gutter={5}>
-                <Col xs={18}>
-                  <CurrencyComponent />
-                </Col>
-                <Col xs={6}>
-                  <CurrencyExchangeComponent />
-                </Col>
-              </Row>
-            </Col>
-            <Col {...fullColLayout}>
-              <SearchProductComponent />
-            </Col>
-          </Row>
-          {/* <Row className="">
-            <Col {...fullColLayout}>
-            </Col>
-          </Row> */}
-        </div>
-
-        {/* {submitBtn && (
-          <FormButton loading={isLoading} onClose={onClose}>
-            {submitBtnText}
-          </FormButton>
-        )} */}
-      </Form>
+    <GlobalUtilityStyle className="h-full">
+      <div className="flex flex-col">
+        <Row gutter={10}>
+          <Col {...colLayout}>
+            <CustomDatepicker name={"date"} />
+          </Col>
+          <Col {...colLayout}>
+            <CustomInput
+              type={"text"}
+              required={true}
+              placeholder={"Reference Number"}
+              name={"reference_number"}
+            />
+          </Col>
+          <Col {...colLayout}>
+            <WarehouseComponent />
+          </Col>
+          <Col {...colLayout}>
+            <CashierComponent />
+          </Col>
+          <Col {...colLayout}>
+            <CustomerComponent />
+          </Col>
+          <Col {...colLayout}>
+            <Row gutter={5}>
+              <Col xs={18}>
+                <CurrencyComponent />
+              </Col>
+              <Col xs={6}>
+                <CurrencyExchangeComponent />
+              </Col>
+            </Row>
+          </Col>
+          <Col {...fullColLayout}>
+            <SearchProductComponent />
+          </Col>
+        </Row>
+      </div>
     </GlobalUtilityStyle>
   );
 };
 
 export const PosRegister = () => {
+  const [form] = Form.useForm();
+
   return (
-    <div className="p-4 flex flex-col gap-5 h-full">
-      <div>
-        <RegisterForm />
+    <Form
+      form={form}
+      layout="vertical"
+      autoComplete="on"
+      scrollToFirstError
+      className="h-full"
+    >
+      <div className="p-4 flex flex-col gap-5 h-full">
+        <div>
+          <RegisterForm />
+        </div>
+        <div className="grow">
+          <ProductTableComponent />
+        </div>
       </div>
-      <div className="grow">
-        <ProductTableComponent />
-      </div>
-    </div>
+    </Form>
   );
 };

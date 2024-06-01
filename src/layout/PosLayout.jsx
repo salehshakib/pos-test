@@ -11,7 +11,7 @@ import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 const PosLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -21,7 +21,7 @@ const PosLayout = () => {
       <div className="flex flex-col relative h-screen">
         <div className="grow min-h-[60vh] overflow-auto h-full bg-[#F5F5F5]">
           <div className="grid grid-cols-2 h-full overflow-auto ">
-            <div className="">
+            <div>
               <PosRegister />
             </div>
 

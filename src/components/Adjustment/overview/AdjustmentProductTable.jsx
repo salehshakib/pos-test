@@ -36,7 +36,7 @@ const columns = [
     align: "center",
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${unitCost}
+        {unitCost}
       </span>
     ),
   },
@@ -88,24 +88,26 @@ const columns = [
     width: 180,
     render: (action, record) => {
       return (
-        <div className="flex w-full  justify-center items-center gap-3">
-          <CustomSelect
-            name={["product_list", "action", record?.id]}
-            placeholder="Type"
-            options={[
-              {
-                value: "Addition",
-                label: "Addition (+)",
-              },
-              {
-                value: "Subtraction",
-                label: "Subtraction (-)",
-              },
-            ]}
-            styleProps={{ width: "9rem" }}
-            noStyle={true}
-          />
-        </div>
+        action && (
+          <div className="flex w-full  justify-center items-center gap-3">
+            <CustomSelect
+              name={["product_list", "action", record?.id]}
+              placeholder="Type"
+              options={[
+                {
+                  value: "Addition",
+                  label: "Addition (+)",
+                },
+                {
+                  value: "Subtraction",
+                  label: "Subtraction (-)",
+                },
+              ]}
+              styleProps={{ width: "9rem" }}
+              noStyle={true}
+            />
+          </div>
+        )
       );
     },
   },
@@ -193,12 +195,16 @@ export const AdjustmentProductTable = () => {
       id,
       name,
       sku,
-      unitCost: unit_cost,
+      unitCost: `$${unit_cost}`,
       quantity: form.setFieldValue(
         ["product_list", "qty", id],
         counters[id] ?? 1
       ),
-      action: form.setFieldValue(["product_list", "action", id], "Addition"),
+      action: true,
+      actionValue: form.setFieldValue(
+        ["product_list", "action", id],
+        "Addition"
+      ),
       delete: {
         setRowId,
       },
@@ -218,6 +224,7 @@ export const AdjustmentProductTable = () => {
             0
           )
         : -1,
+      action: false,
     });
 
   return (

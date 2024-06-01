@@ -31,7 +31,7 @@ const AdjustmentEdit = ({ id }) => {
 
       const list = product_list?.map((item) => item);
 
-      console.log(list);
+      console.log(data);
 
       const fieldData = [
         {

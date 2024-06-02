@@ -1,10 +1,17 @@
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteGiftCardDesignMutation,
+  useGetAllGiftCardDesignQuery,
+} from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
+import StatusModal from "../Shared/Modal/StatusModal";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 
 const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -19,14 +26,14 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllGiftCardDesignQuery({
+    params: pagination,
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [deleteGiftCardDesign, { isLoading: isDeleting }] =
+    useDeleteGiftCardDesignMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -54,25 +61,26 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
+    // const { data } = await deleteGiftCardDesign( id);
     // if (data?.success) {
     //   setDeleteModal(false);
     // }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  console.log(data);
+  const dataSource =
+    data?.results?.giftcarddesign?.map((item) => {
+      const { id, gift_card_type_id, created_at, is_active } = item;
+      const date = dayjs(created_at).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      return {
+        id,
+        type: gift_card_type_id,
+        time: date,
+        status: { status: is_active, handleStatusModal },
+        action: { handleEdit, handleDeleteModal },
+      };
+    }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
@@ -84,30 +92,28 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
-
+        dataSource={dataSource}
+        total={total}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
-
+        isLoading={isLoading}
         isRowSelection={true}
       />
 
       <GiftCardDesignEdit id={editId} setId={setEditId} />
 
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
-  />
-  
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        // isLoading={isStatusUpdating}
+      />
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

@@ -1,13 +1,16 @@
+import { Form } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateGiftCardMutation } from "../../redux/services/giftcard/giftcard/giftCardApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import GiftCardForm from "./GiftCardForm";
-import { useCreateGiftCardMutation } from "../../redux/services/giftcard/giftcard/giftCardApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import dayjs from "dayjs";
 
 const GiftCardCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -24,6 +27,7 @@ const GiftCardCreate = () => {
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -40,6 +44,7 @@ const GiftCardCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

@@ -11,11 +11,7 @@ const ProductTableComponent = () => {
   const form = Form.useFormInstance();
 
   const screens = useBreakpoint();
-  const isMobile =
-    screens === "xs" ||
-    screens === "sm" ||
-    screens === "md" ||
-    screens === "lg";
+  const isMobile = screens === "xs" || screens === "sm" || screens === "md";
 
   const tableStyleProps = {
     scroll: { y: isMobile ? 200 : 300, x: 600 },
@@ -56,8 +52,6 @@ const ProductTableComponent = () => {
       [id]: (prevCounters[id] || 0) - 1,
     }));
   };
-
-  console.log(Form.useWatch(["product_list", "qty"], form));
 
   // useEffect(()=> {
   //   form.setFieldValue(['product_list', 'qty'], counters)

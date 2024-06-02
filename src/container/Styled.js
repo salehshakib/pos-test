@@ -37,6 +37,21 @@ const GlobalUtilityStyle = styled.div`
     background: ${secondaryColor} !important;
   }
 
+  .image-border {
+    border: 1px dashed ${secondaryColor};
+    border-radius: 8px;
+
+    &:hover {
+      border-color: ${primaryColor};
+    }
+  }
+
+  .border-secondary-hover {
+    &:hover {
+      border: 1px solid ${primaryColor} !important;
+    }
+  }
+
   .custom-primary-btn {
     background: ${primaryColor} !important;
     border: 1px solid ${primaryColor} !important;

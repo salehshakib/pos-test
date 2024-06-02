@@ -4,9 +4,12 @@ import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateGiftCardTypeMutation } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { GiftCardTypeForm } from "./GiftCardTypeForm";
+import { Form } from "antd";
 
 export const GiftCardTypeCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -19,6 +22,7 @@ export const GiftCardTypeCreate = () => {
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -35,6 +39,7 @@ export const GiftCardTypeCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

@@ -1,8 +1,8 @@
 // Import necessary dependencies
 import { GIFT_CARD_DESIGN } from "../../../../utilities/apiEndpoints/offer.api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { openNotification } from "../../../../utilities/lib/notification";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
 const giftCardDesignApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -31,11 +31,11 @@ const giftCardDesignApi = baseApi.injectEndpoints({
     }),
 
     createGiftCardDesign: build.mutation({
-      query: ({ data }) => {
+      query: ({ formData }) => {
         return {
           url: `/${GIFT_CARD_DESIGN}/store`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {

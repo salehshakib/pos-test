@@ -20,7 +20,7 @@ const PosLayout = () => {
     <GlobalUtilityStyle>
       <div className="flex flex-col relative h-screen">
         <div className="grow min-h-[60vh] overflow-auto h-full bg-[#F5F5F5]">
-          <div className="grid grid-cols-2 h-full overflow-auto ">
+          <div className="grid grid-cols-2 h-full">
             <div>
               <PosRegister />
             </div>
@@ -53,7 +53,7 @@ const PosLayout = () => {
                     style={{
                       borderRadius: "8px",
                     }}
-                    className="shadow-md grow m-4 bg-gray-200"
+                    className="shadow-md grow m-4 bg-gray-200 "
                   >
                     <PosProducts />
                   </div>

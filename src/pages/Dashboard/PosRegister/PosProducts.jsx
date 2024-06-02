@@ -49,12 +49,9 @@ const PosProducts = () => {
   }
 
   return (
-    <GlobalUtilityStyle className="p-3 flex flex-col h-full overflow-auto gap-3">
-      <div className="grow ">
-        <div
-          className="max-h-[60vh] xl:max-h-[66vh] overflow-auto"
-          id="scrollable"
-        >
+    <GlobalUtilityStyle className="p-3 pb-0 flex flex-col h-full overflow-auto">
+      <div className="grow">
+        <div className="overflow-auto h-[calc(100vh-15.5rem)]" id="scrollable">
           <InfiniteScroll
             dataLength={newData?.length}
             next={loadMoreData}
@@ -80,6 +77,7 @@ const PosProducts = () => {
                     <Card
                       bordered
                       hoverable
+                      className="border-secondary-hover          "
                       style={{
                         backgroundColor: "white",
                         // height: "100px",
@@ -89,7 +87,7 @@ const PosProducts = () => {
                         <div className="w-full">
                           <img
                             alt="example"
-                            className="h-32 mx-auto object-cover px-4 "
+                            className="h-[6rem] mx-auto object-cover px-4 "
                             src={
                               // images?.attach_file?.[0]?.url ??
                               // images?.attachments?.[0]?.url ??
@@ -112,9 +110,11 @@ const PosProducts = () => {
         </div>
       </div>
       <div>
-        {newData?.length < total && (
-          <Divider plain>Pull down to load more ....</Divider>
-        )}
+        {/* {newData?.length < total && ( */}
+        {/* <Divider plain>
+          Pull down to load more ....
+        </Divider> */}
+        {/* )} */}
       </div>
     </GlobalUtilityStyle>
   );

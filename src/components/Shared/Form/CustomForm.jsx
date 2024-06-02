@@ -17,7 +17,7 @@ const FormButton = ({ loading, children, onClose }) => {
   };
 
   return (
-    <div className={`w-full flex gap-3 justify-end items-center pb-20`}>
+    <div className={`w-full flex gap-3 justify-end items-center pb-20 pt-5`}>
       <Button type="default" onClick={onClose ?? handleDrawerClose}>
         Cancel
       </Button>

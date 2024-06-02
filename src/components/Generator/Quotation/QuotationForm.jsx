@@ -54,9 +54,7 @@ export const QuotationForm = (props) => {
         <Col {...mdColLayout}>
           <WarehouseComponent />
         </Col>
-        {/* <Col {...fullColLayout}>
-          <SearchProductComponent />
-        </Col> */}
+
         <QuotationProductTable />
 
         <Col {...colLayout}>

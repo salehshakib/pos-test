@@ -1,6 +1,6 @@
 import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CustomQuantityInput } from "../../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../../Shared/ProductControllerComponent/ProductController";
@@ -12,9 +12,16 @@ const columns = [
     key: "name",
     align: "center",
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {name}
-      </span>
+      <div
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
+      >
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+        {name !== "Total" && <FaEdit className="primary-text" />}
+      </div>
     ),
   },
   {
@@ -137,10 +144,19 @@ const columns = [
 ];
 
 export const QuotationProductTable = () => {
-  const [products, setProducts] = useState([]);
   const form = Form.useFormInstance();
-
+  const [products, setProducts] = useState([]);
   const [counters, setCounters] = useState({});
+  const [discounts, setDiscounts] = useState({});
+  const [taxs, setTaxs] = useState({});
+
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(null);
+
+  const handleProductEdit = (id) => {
+    setProductEditModal(true);
+    setProductId(id);
+  };
 
   const incrementCounter = (id, stock = 5) => {
     if (counters[id] >= stock) return;
@@ -202,6 +218,9 @@ export const QuotationProductTable = () => {
         counters[id] ?? 1
       ),
       delete: true,
+      discount: "$0.00",
+      tax: "$0.00",
+      subTotal: `$${parseInt(unit_cost) * (counters[id] ?? 1)}`,
       incrementCounter,
       decrementCounter,
       onQuantityChange,
@@ -231,11 +250,13 @@ export const QuotationProductTable = () => {
   }, [products]);
 
   return (
-    <ProductController
-      products={products}
-      setProducts={setProducts}
-      columns={columns}
-      dataSource={dataSource}
-    />
+    <>
+      <ProductController
+        products={products}
+        setProducts={setProducts}
+        columns={columns}
+        dataSource={dataSource}
+      />
+    </>
   );
 };

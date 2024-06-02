@@ -22,11 +22,11 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const { editId } = useSelector((state) => state.drawer);
   const pagination = useSelector(selectPagination);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
+
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);

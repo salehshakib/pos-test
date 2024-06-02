@@ -15,6 +15,7 @@ const CustomInput = (props) => {
     noStyle = false,
     addonAfter,
     tooltip,
+    // onChange,
   } = props;
 
   return (
@@ -75,6 +76,8 @@ const CustomInput = (props) => {
             addonBefore={"+88"}
             suffix={suffix}
             size="large"
+            controls={false}
+            changeOnWheel={false}
           />
         ) : type === "number" ? (
           <InputNumber
@@ -84,6 +87,8 @@ const CustomInput = (props) => {
             size="large"
             prefix={prefix}
             suffix={suffix}
+            controls={false}
+            changeOnWheel={false}
           />
         ) : (
           <Input

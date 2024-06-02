@@ -2,7 +2,7 @@ import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import CustomInput from "../../../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../../Shared/ProductControllerComponent/ProductController";
 
 const columns = [
@@ -44,9 +44,9 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 150,
+    width: 140,
     render: (quantity, record) => {
-      return quantity > 0 ? (
+      return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {quantity}
         </span>
@@ -60,11 +60,10 @@ const columns = [
               onClick={() => record.decrementCounter(record?.id)}
             />
           </div>
-          <CustomInput
-            type={"number"}
+          <CustomQuantityInput
             name={["product_list", "qty", record?.id]}
-            placeholder="quantity"
             noStyle={true}
+            onChange={(value) => record.onQuantityChange(record.id, value)}
           />
           <div>
             <Button
@@ -120,12 +119,11 @@ const columns = [
     width: 50,
     fixed: "right",
     render: (props, record) => {
-      const { setRowId } = props ?? {};
       return (
         props && (
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => setRowId(record?.id)}
+              onClick={() => record.onDelete(record.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               type="button"
             >
@@ -140,10 +138,7 @@ const columns = [
 
 export const QuotationProductTable = () => {
   const [products, setProducts] = useState([]);
-  const [rowId, setRowId] = useState(undefined);
   const form = Form.useFormInstance();
-
-  console.log(rowId);
 
   const [counters, setCounters] = useState({});
 
@@ -181,13 +176,18 @@ export const QuotationProductTable = () => {
     }));
   };
 
-  useEffect(() => {
-    if (rowId !== undefined) {
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== rowId)
-      );
-    }
-  }, [rowId]);
+  const onQuantityChange = (id, value) => {
+    setCounters((prevCounters) => ({
+      ...prevCounters,
+      [id]: parseInt(value, 10) || 0,
+    }));
+  };
+
+  const onDelete = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+  };
 
   const dataSource = products?.map((product) => {
     const { id, name, sku, buying_price: unit_cost } = product;
@@ -201,27 +201,34 @@ export const QuotationProductTable = () => {
         ["product_list", "qty", id],
         counters[id] ?? 1
       ),
-      delete: {
-        setRowId,
-      },
+      delete: true,
       incrementCounter,
       decrementCounter,
+      onQuantityChange,
+      onDelete,
     };
   });
 
-  const productListData = Form.useWatch("product_list", form);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    const total = Object.values(counters).reduce((acc, cur) => acc + cur, 1);
+    setTotalQuantity(total === 0 ? 0 : total);
+  }, [counters]);
 
   products.length > 0 &&
     dataSource.push({
       id: "total",
       name: "Total",
-      quantity: productListData
-        ? Object.values(productListData?.qty)?.reduce(
-            (acc, cur) => acc + cur,
-            0
-          )
-        : -1,
+      quantity: totalQuantity,
+      action: false,
     });
+
+  useEffect(() => {
+    if (products.length === 0) {
+      setCounters({});
+    }
+  }, [products]);
 
   return (
     <ProductController

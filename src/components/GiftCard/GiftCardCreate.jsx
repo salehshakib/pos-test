@@ -4,6 +4,7 @@ import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import GiftCardForm from "./GiftCardForm";
 import { useCreateGiftCardMutation } from "../../redux/services/giftcard/giftcard/giftCardApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import dayjs from "dayjs";
 
 const GiftCardCreate = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,11 @@ const GiftCardCreate = () => {
   const handleSubmit = async (values) => {
     console.log(values);
     const { data, error } = await createGiftCard({
-      data: values,
+      data: {
+        ...values,
+        for_user: values?.for_user ? 1 : 0,
+        expired_date: dayjs(values?.expired_date).format("YYYY-MM-DD"),
+      },
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());

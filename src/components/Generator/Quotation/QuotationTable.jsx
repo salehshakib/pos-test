@@ -14,12 +14,16 @@ import { selectPagination } from "../../../redux/services/pagination/paginationS
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
+import { QuotationDetails } from "./overview/QuotationDetails";
 
 const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);
@@ -38,6 +42,11 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
 
   const [deleteQuotation, { isLoading: isDeleting }] =
     useDeleteQuotationMutation();
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -70,8 +79,6 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
-
   const dataSource =
     data?.results?.quotation?.map((item) => {
       const {
@@ -96,12 +103,13 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         supplier: supplier_id,
         total: grand_total,
         date,
-        actions: { handleEdit, handleDeleteModal },
+        actions: { handleEdit, handleDeleteModal, handleDetailsModal },
       };
     }) ?? [];
 
   const hideModal = () => {
     // setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -117,6 +125,14 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <QuotationEdit id={editId} />
+
+      {detailsId && (
+        <QuotationDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       {/* <StatusModal
         statusModal={statusModal}

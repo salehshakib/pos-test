@@ -1,6 +1,11 @@
 import { Col, Form, Row } from "antd";
 import { RiRefreshLine } from "react-icons/ri";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 import { generateRandomCode } from "../../utilities/lib/generateCode";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
@@ -9,6 +14,28 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomInputButton from "../Shared/Input/CustomInputButton";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { useGetAllGiftCardTypeQuery } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
+
+const GiftCardTypeComponent = () => {
+  const { data, isFetching } = useGetAllGiftCardTypeQuery({});
+
+  const options = data?.results?.giftcardtype?.map((giftCardType) => ({
+    value: giftCardType.id?.toString(),
+    label: giftCardType.name,
+  }));
+
+  console.log(data);
+
+  return (
+    <CustomSelect
+      label="Gift Card Type"
+      name={"gift_card_type_id"}
+      options={options}
+      isLoading={isFetching}
+      required={true}
+    />
+  );
+};
 
 const GiftCardComponent = () => {
   const form = Form.useFormInstance();
@@ -28,7 +55,7 @@ const GiftCardComponent = () => {
       placeholder={"Generate Coupon Code"}
       onClick={generate}
       icon={<RiRefreshLine className="text-xl" />}
-      btnText={"Generate"}
+      // btnText={"Generate"}
     />
   );
 };
@@ -63,7 +90,7 @@ const CustomerComponent = () => {
   return (
     <CustomSelect
       label="Customer"
-      name={"customer"}
+      name={"customer_id"}
       options={options}
       isLoading={isLoading}
       required={true}
@@ -84,10 +111,13 @@ const GiftCardForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
-        <Col {...mdColLayout}>
+        <Col {...colLayout}>
+          <GiftCardTypeComponent />
+        </Col>
+        <Col {...colLayout}>
           <GiftCardComponent />
         </Col>
-        <Col {...mdColLayout}>
+        <Col {...colLayout}>
           <CustomInput label="Amount" name={"amount"} required={true} />
         </Col>
 

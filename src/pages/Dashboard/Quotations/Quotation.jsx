@@ -1,12 +1,12 @@
 import { Dropdown } from "antd";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa6";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { TbListDetails } from "react-icons/tb";
 import QuotationCreate from "../../../components/Generator/Quotation/QuotationCreate";
 import QuotationTable from "../../../components/Generator/Quotation/QuotationTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -123,44 +123,47 @@ const columns = [
     width: 120,
     fixed: "right",
     render: (props, record) => {
-      const { handleEdit, handleDeleteModal } = props ?? {};
+      const { handleEdit, handleDeleteModal, handleDetailsModal } = props ?? {};
       return (
         <div className="flex justify-center items-center gap-3 ">
+          <button
+            onClick={() => handleDetailsModal(record?.id)}
+            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+          >
+            <TbListDetails className="text-lg md:text-xl" />
+          </button>
+
           <Dropdown
             menu={{
               items: [
                 {
-                  key: "1",
+                  key: "edit",
+                  icon: <MdEditSquare size={20} />,
                   label: (
-                    <div
-                      // onClick={() => handleEdit(record?.id)}
-                      className="flex justify-start items-center gap-3"
-                    >
-                      <FaEye className="text-lg md:text-xl" />
-                      Details
-                    </div>
-                  ),
-                },
-                {
-                  key: "2",
-                  label: (
-                    <div
-                      onClick={() => handleEdit(record?.id)}
-                      className="flex justify-start items-center gap-3"
-                    >
-                      <MdEditSquare className="text-lg md:text-xl" />
+                    <div className="flex justify-start items-center gap-3">
                       Edit
                     </div>
                   ),
+                  onClick: () => handleEdit(record?.id),
                 },
                 {
-                  key: "3",
+                  key: "due",
+                  icon: <PiBroom size={20} />,
                   label: (
                     <div className="flex justify-start items-center gap-3">
-                      <PiBroom className="text-lg md:text-xl" />
                       Due Clear
                     </div>
                   ),
+                },
+                {
+                  key: "delete",
+                  icon: <MdDelete size={20} />,
+                  label: (
+                    <div className="flex justify-start items-center gap-3">
+                      Delete
+                    </div>
+                  ),
+                  onClick: () => handleDeleteModal(record?.id),
                 },
               ],
             }}
@@ -171,12 +174,6 @@ const columns = [
               <FiMoreHorizontal className="text-lg md:text-xl" />
             </button>
           </Dropdown>
-          <button
-            onClick={() => handleDeleteModal(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdDelete className="text-lg md:text-xl" />
-          </button>
         </div>
       );
     },

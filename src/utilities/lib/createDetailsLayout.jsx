@@ -1,4 +1,5 @@
 import { Badge } from "antd";
+import dayjs from "dayjs";
 import parse from "html-react-parser";
 
 const createDetailsLayout = (data) => {
@@ -18,14 +19,22 @@ const createDetailsLayout = (data) => {
               ) : (
                 <Badge status="default" text="Inactive" />
               )
+            ) : key.includes("status") ? (
+              value.toLowerCase() === "pending" ? (
+                <Badge status="warning" text={value} />
+              ) : (
+                <Badge status="success" text={value} />
+              )
+            ) : key.includes("date") ? (
+              dayjs(value).format("DD-MM-YYYY")
             ) : value === "1" ? (
               "True"
             ) : value === "0" ? (
               "False"
-            ) : value ? (
-              value
             ) : key === "details" ? (
               value && <div>{parse(value)}</div>
+            ) : value ? (
+              value
             ) : (
               "N/A"
             ),

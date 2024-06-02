@@ -13,6 +13,7 @@ const CustomSelect = (props) => {
     isLoading,
     noStyle = false,
     styleProps,
+    onChange,
   } = props;
 
   const filterOption = (input, option) =>
@@ -33,6 +34,7 @@ const CustomSelect = (props) => {
       >
         {showSearch ? (
           <Select
+            onChange={onChange}
             showSearch
             optionFilterProp="children"
             filterOption={filterOption}
@@ -61,6 +63,7 @@ const CustomSelect = (props) => {
           />
         ) : (
           <Select
+            onChange={onChange}
             placeholder={`Select ${placeholder ?? label}`}
             className="mt-1 custom-selector"
             size="large"

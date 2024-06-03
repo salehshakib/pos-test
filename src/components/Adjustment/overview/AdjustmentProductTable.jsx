@@ -214,9 +214,6 @@ export const AdjustmentProductTable = () => {
 
   form.setFieldsValue(formValues);
 
-  console.log(formValues);
-  console.log(Form.useWatch("product_list", form));
-
   const dataSource = products?.map((product) => {
     const { id, name, sku, buying_price: unit_cost } = product;
     formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;

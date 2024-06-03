@@ -1,5 +1,22 @@
-import React from "react";
+import { Col, Row } from "antd";
+import { fullColLayout, rowLayout } from "../../layout/FormLayout";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
 
-export const PettyCashForm = () => {
-  return <div>PettyCashForm</div>;
+export const PettyCashForm = (props) => {
+  return (
+    <CustomForm {...props}>
+      <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <CustomInput
+            label="Department Name"
+            type={"text"}
+            required={true}
+            name={"name"}
+            placeholder={"Department Name"}
+          />
+        </Col>
+      </Row>
+    </CustomForm>
+  );
 };

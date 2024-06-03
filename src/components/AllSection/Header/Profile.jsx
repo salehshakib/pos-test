@@ -128,7 +128,7 @@ const CashRegisterComponent = () => {
     <Button
       icon={<FaCashRegister size={18} />}
       className="flex justify-center items-center gap-1 shadow-md"
-      onClick={() => navigate("/petty-cash/open")}
+      onClick={() => navigate("/petty-cash")}
       // size="large"
     />
   );

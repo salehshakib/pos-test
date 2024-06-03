@@ -13,8 +13,10 @@ const ProductTableComponent = () => {
   const screens = useBreakpoint();
   const isMobile = screens === "xs" || screens === "sm" || screens === "md";
 
+  const isLg = screens === "lg";
+
   const tableStyleProps = {
-    scroll: { y: isMobile ? 200 : 300, x: 600 },
+    scroll: { y: isMobile ? "15vh" : isLg ? "28vh" : "40vh", x: 600 },
   };
 
   const [counters, setCounters] = useState({});
@@ -236,6 +238,28 @@ const ProductTableComponent = () => {
         setRowId: (id) => console.log(`Deleting row with id: ${id}`),
       },
       id: 5,
+    },
+    {
+      key: "6",
+      name: "Product E",
+      sku: "E345",
+      unitCost: "$50.00",
+      subTotal: "$50.00",
+      delete: {
+        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
+      },
+      id: 6,
+    },
+    {
+      key: "7",
+      name: "Product E",
+      sku: "E345",
+      unitCost: "$50.00",
+      subTotal: "$50.00",
+      delete: {
+        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
+      },
+      id: 7,
     },
   ];
 

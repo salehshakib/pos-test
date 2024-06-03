@@ -44,9 +44,9 @@ const CreateComponent = () => {
   return (
     <Dropdown {...dropDownProps}>
       <Button
-        icon={<MdFormatListBulletedAdd size={20} />}
-        className="flex justify-center items-center gap-1"
-        size="large"
+        icon={<MdFormatListBulletedAdd size={18} />}
+        className="flex justify-center items-center gap-1 shadow-md"
+        // size="large"
       />
     </Dropdown>
   );

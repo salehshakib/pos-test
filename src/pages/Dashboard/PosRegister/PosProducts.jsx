@@ -23,7 +23,7 @@ const PosProducts = () => {
   const [newData, setNewData] = useState([]);
 
   const products = data?.results?.product;
-  const total = data?.meta?.total;
+  const total = data?.meta?.total || 0;
 
   const loadMoreData = useCallback(() => {
     setPagination((prevPagination) => ({
@@ -33,10 +33,13 @@ const PosProducts = () => {
   }, []);
 
   useEffect(() => {
-    if (products) {
+    if (products?.length > 0 && pagination.page > 1) {
+      console.log(products);
       setNewData((prevData) => [...prevData, ...products]);
+    } else if (products?.length > 0) {
+      setNewData(products);
     }
-  }, [products]);
+  }, [pagination.page, products]);
 
   if (isLoading) {
     return (
@@ -51,7 +54,7 @@ const PosProducts = () => {
   return (
     <GlobalUtilityStyle className="p-3 pb-0 flex flex-col h-full overflow-auto">
       <div className="grow">
-        <div className="overflow-auto h-[calc(100vh-15.5rem)]" id="scrollable">
+        <div className="overflow-auto h-[calc(100vh-16.5rem)]" id="scrollable">
           <InfiniteScroll
             dataLength={newData?.length}
             next={loadMoreData}

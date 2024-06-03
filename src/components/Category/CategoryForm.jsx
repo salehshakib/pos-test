@@ -12,7 +12,7 @@ const CategoryForm = (props) => {
   );
 
   const options = data?.results?.category?.map((category) => ({
-    value: category.id,
+    value: category.id?.toString(),
     label: category.name,
   }));
 

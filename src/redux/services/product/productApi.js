@@ -21,10 +21,11 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     getProductDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${PRODUCT}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

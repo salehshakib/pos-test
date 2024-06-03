@@ -1,13 +1,10 @@
 import { Col, Row } from "antd";
+import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import { ProductTableComponent } from "./overview/ProductTableComponent";
-import { SearchProductComponent } from "./overview/SearchProductComponent";
-import { ProductController } from "../Shared/ProductControllerComponent/ProductController";
 import { AdjustmentProductTable } from "./overview/AdjustmentProductTable";
 
 const SelectWarehouse = () => {

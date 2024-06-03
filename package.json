@@ -27,6 +27,7 @@
     "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
+    "prettier-plugin-tailwindcss": "0.0.0-insiders.d539a72",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.7",

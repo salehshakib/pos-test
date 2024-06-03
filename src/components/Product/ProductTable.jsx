@@ -6,15 +6,17 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
+  useUpdateProductStatusMutation,
 } from "../../redux/services/product/productApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -25,17 +27,34 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllProductsQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
+
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateProductStatusMutation();
+
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
+
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
+
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
+  };
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
@@ -49,21 +68,6 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   console.log(id);
-  //   // const { data } = await updateStatus( id);
-
-  //   // if (data?.success) {
-  //   //   setId(undefined);
-  //   //   setStatusModal(false);
-  //   // }
-  // };
-
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
@@ -76,22 +80,24 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
+  console.log(data);
+
   const dataSource =
     data?.results?.product?.map((item) => {
       const {
         id,
         name,
         created_at,
-        // is_active,
+        is_active,
         sku,
         type,
-        brand_id,
-        category_id,
         qty,
-        unit_id,
         buying_price: cost,
         selling_price: price,
-      } = item;
+        categories,
+        brands,
+        units,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
@@ -99,15 +105,18 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         name: name,
         sku: sku,
         type,
-        brand: brand_id,
-        category: category_id,
+        brand: brands?.name,
+        category: categories?.name,
         quantity: qty,
-        unit: unit_id ?? "N/A",
+        unit: units?.for ?? "N/A",
         cost: cost ?? "N/A",
         price: price,
-        // status: { status: is_active, handleStatusModal },
         created_at: date,
-        action: { handleDetailsModal, handleEdit, handleDeleteModal },
+        status: is_active,
+        handleStatusModal,
+        handleDetailsModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 
@@ -138,14 +147,12 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         />
       )}
 
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
-  />
-
-   */}
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

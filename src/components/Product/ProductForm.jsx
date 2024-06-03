@@ -24,6 +24,7 @@ import UnitComponent from "./overview/UnitComponent";
 import { VarientComponent } from "./overview/VarientComponent";
 import { WarehouseStockTableComponent } from "./overview/WarehouseStockTableComponent";
 import WarehouseTableComponent from "./overview/WarehouseTableComponent";
+import dayjs from "dayjs";
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
@@ -166,6 +167,24 @@ const PromotionalPriceComponent = () => {
   const form = Form.useFormInstance();
   const hasPromotionalPrice = Form.useWatch("has_promotion", form);
 
+  const disabledDate = (current) => {
+    return current < dayjs().startOf("day");
+  };
+
+  const start_date = Form.useWatch(["promotion", "starting_date"], form);
+
+  const disabledDateStart = (current) => {
+    if (start_date) {
+      return (
+        current && start_date && current < dayjs(start_date).startOf("day")
+      );
+    } else {
+      return current < dayjs().startOf("day");
+    }
+  };
+
+  console.log();
+
   return (
     <Row {...rowLayout}>
       <Col {...fullColLayout}>
@@ -189,6 +208,7 @@ const PromotionalPriceComponent = () => {
                 label={"Start Date"}
                 name={["promotion", "starting_date"]}
                 required={true}
+                disabledDate={disabledDate}
               />
             </Col>
             <Col {...mdColLayout}>
@@ -197,12 +217,10 @@ const PromotionalPriceComponent = () => {
                 label={"End Date"}
                 name={["promotion", "last_date"]}
                 required={true}
+                disabledDate={disabledDateStart}
               />
             </Col>
           </Row>
-          {/* <Col {...colLayout}>
-            
-          </Col> */}
         </>
       )}
     </Row>

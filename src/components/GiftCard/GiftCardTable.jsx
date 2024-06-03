@@ -95,8 +95,8 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
         status: is_active,
         customer: customer_id,
         date: date,
-        handleStatusModal: handleStatusModal,
-        action: { handleEdit, handleDeleteModal },
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

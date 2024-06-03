@@ -1,25 +1,22 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
 import { useState } from "react";
-import { FaShoppingBasket } from "react-icons/fa";
+import { FaCashRegister, FaShoppingBasket } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout } from "../../../redux/services/auth/authSlice";
+import { setCashRegister } from "../../../redux/services/cashRegister/cashRegisterSlice";
+import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pettyCashApi";
 import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
-import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pettyCashApi";
-import { setCashRegister } from "../../../redux/services/cashRegister/cashRegisterSlice";
 
-const PosComponent = () => {
+const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cash } = useSelector((state) => state.cashRegister);
-  const [open, setOpen] = useState(false);
 
   const [errorFields, setErrorFields] = useState([]);
 
@@ -34,6 +31,7 @@ const PosComponent = () => {
       dispatch(setCashRegister());
       hideModal();
       form.resetFields();
+      navigate("/pos");
     }
 
     if (error) {
@@ -45,66 +43,94 @@ const PosComponent = () => {
     }
   };
 
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      width={600}
+      centered
+      title={"Cash Register"}
+      open={open}
+      onCancel={hideModal}
+      footer={null}
+    >
+      <Form
+        isLoading={false}
+        fields={errorFields}
+        layout="vertical"
+        form={form}
+        onFinish={handleSubmit}
+        scrollToFirstError
+      >
+        <Row {...rowLayout} className="mt-5">
+          <Col {...fullColLayout}>
+            <WarehouseComponent />
+          </Col>
+          <Col {...fullColLayout}>
+            <CustomInput
+              label="Opening Balance"
+              type="number"
+              name="opening_balance"
+              required={true}
+            />
+          </Col>
+        </Row>
+        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+          <Button type="default" onClick={hideModal}>
+            Cancel
+          </Button>
+          <Button htmlType="submit" type="primary" loading={isLoading}>
+            Save
+          </Button>
+        </div>
+      </Form>
+    </Modal>
+  );
+};
+
+const PosComponent = () => {
+  const navigate = useNavigate();
+  const { cash } = useSelector((state) => state.cashRegister);
+  const [open, setOpen] = useState(false);
+
   const posRegister = () => {
     if (!cash) {
       setOpen(true);
     } else navigate("/pos");
   };
 
-  const hideModal = () => {
-    setOpen(false);
-  };
-
   return (
     <GlobalUtilityStyle>
       <Button
-        icon={<FaShoppingBasket size={20} />}
-        className="flex justify-center items-center gap-1"
-        size="large"
+        icon={<FaShoppingBasket size={18} />}
+        className="flex justify-center items-center gap-1 shadow-md"
+        // size="large"
         onClick={posRegister}
       >
         POS
       </Button>
-      <Modal
-        width={600}
-        centered
-        title={"Cash Register"}
+
+      <PettyCashOpenComponent
+        navigate={navigate}
         open={open}
-        onCancel={hideModal}
-        footer={null}
-      >
-        <Form
-          isLoading={false}
-          fields={errorFields}
-          layout="vertical"
-          form={form}
-          onFinish={handleSubmit}
-          scrollToFirstError
-        >
-          <Row {...rowLayout} className="mt-5">
-            <Col {...fullColLayout}>
-              <WarehouseComponent />
-            </Col>
-            <Col {...fullColLayout}>
-              <CustomInput
-                label="Opening Balance"
-                type="number"
-                name="opening_balance"
-                required={true}
-              />
-            </Col>
-          </Row>
-          <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
-            <Button type="default" onClick={hideModal}>
-              Cancel
-            </Button>
-            <Button htmlType="submit" type="primary" loading={isLoading}>
-              Save
-            </Button>
-          </div>
-        </Form>
-      </Modal>
+        setOpen={setOpen}
+      />
     </GlobalUtilityStyle>
+  );
+};
+
+const CashRegisterComponent = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Button
+      icon={<FaCashRegister size={18} />}
+      className="flex justify-center items-center gap-1 shadow-md"
+      onClick={() => navigate("/petty-cash/open")}
+      // size="large"
+    />
   );
 };
 
@@ -128,7 +154,14 @@ const Profile = () => {
   return (
     <div className=" flex justify-center items-center gap-3">
       <CreateComponent />
-      {!pathname.includes("/pos") && <PosComponent />}
+      {!pathname.includes("/pos") && (
+        <>
+          <PosComponent />
+        </>
+      )}
+
+      <CashRegisterComponent />
+
       <Popover
         placement="bottomLeft"
         content={content}

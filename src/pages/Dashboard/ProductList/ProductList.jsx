@@ -44,7 +44,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    align: "center",
+    // align: "center",
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -139,6 +139,40 @@ const columns = [
       </span>
     ),
   },
+
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: (status, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+          onClick={() => record.handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-white text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
+  },
+  {
+    //created_at
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
+    align: "center",
+    render: (created_at) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {created_at}
+      </span>
+    ),
+  },
   {
     title: "Action",
     dataIndex: "action",
@@ -146,11 +180,11 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleDetailsModal, handleEdit, handleDeleteModal }, record) => {
+    render: (_, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={() => handleDetailsModal(record?.id)}
+            onClick={() => record?.handleDetailsModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <TbListDetails className="text-lg md:text-xl" />
@@ -167,7 +201,7 @@ const columns = [
                       Edit
                     </div>
                   ),
-                  onClick: () => handleEdit(record?.id),
+                  onClick: () => record?.handleEdit(record?.id),
                 },
                 {
                   key: "due",
@@ -186,7 +220,7 @@ const columns = [
                       Delete
                     </div>
                   ),
-                  onClick: () => handleDeleteModal(record?.id),
+                  onClick: () => record?.handleDeleteModal(record?.id),
                 },
               ],
             }}

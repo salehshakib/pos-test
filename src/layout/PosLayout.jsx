@@ -67,6 +67,7 @@ const PosLayout = () => {
           style={{
             textAlign: "center",
           }}
+          className="py-4"
         >
           <Payment />
         </Footer>

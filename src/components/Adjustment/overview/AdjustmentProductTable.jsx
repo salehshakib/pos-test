@@ -140,54 +140,69 @@ export const AdjustmentProductTable = () => {
   const [products, setProducts] = useState([]);
   const form = Form.useFormInstance();
 
-  const [counters, setCounters] = useState({});
-  const [actions, setActions] = useState({});
+  const [formValues, setFormValues] = useState({
+    product_list: { qty: {}, action: {} },
+  });
 
   const incrementCounter = (id, stock = 5) => {
-    if (counters[id] >= stock) return;
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = Math.min(currentQty + 1, stock);
 
-    if (counters[id] === undefined) {
-      setCounters((prevCounters) => ({
-        ...prevCounters,
-        [id]: 2,
-      }));
-      return;
-    }
-
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [id]: (prevCounters[id] || 0) + 1,
-    }));
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
   };
 
   const decrementCounter = (id) => {
-    if (counters[id] <= 0) return;
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = Math.max(currentQty - 1, 0);
 
-    if (!counters[id]) {
-      setCounters((prevCounters) => ({
-        ...prevCounters,
-        [id]: 0,
-      }));
-      return;
-    }
-
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [id]: (prevCounters[id] || 0) - 1,
-    }));
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
   };
 
   const onQuantityChange = (id, value) => {
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [id]: parseInt(value, 10) || 0,
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        qty: {
+          ...prevFormValues.product_list.qty,
+          [id]: parseInt(value, 10) || 0,
+        },
+      },
     }));
   };
 
   const onActionChange = (id, value) => {
-    setActions((prevActions) => ({
-      ...prevActions,
-      [id]: value,
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        action: {
+          ...prevFormValues.product_list.action,
+          [id]: value,
+        },
+      },
     }));
   };
 
@@ -197,23 +212,24 @@ export const AdjustmentProductTable = () => {
     );
   };
 
+  form.setFieldsValue(formValues);
+
+  console.log(formValues);
+  console.log(Form.useWatch("product_list", form));
+
   const dataSource = products?.map((product) => {
     const { id, name, sku, buying_price: unit_cost } = product;
+    formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
+
+    formValues.product_list.action[id] =
+      formValues.product_list.action[id] ?? "Addition";
 
     return {
       id,
       name,
       sku,
       unitCost: `$${unit_cost}`,
-      quantity: form.setFieldValue(
-        ["product_list", "qty", id],
-        counters[id] ?? 1
-      ),
       action: true,
-      actionValue: form.setFieldValue(
-        ["product_list", "action", id],
-        actions[id] ?? "Addition"
-      ),
       delete: true,
       incrementCounter,
       decrementCounter,
@@ -226,18 +242,12 @@ export const AdjustmentProductTable = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
-    const total = Object.values(counters).reduce((acc, cur) => acc + cur, 1);
-    setTotalQuantity(total === 0 ? 0 : total);
-  }, [counters]);
-
-  // if (products.length > 0) {
-  //   dataSource.push({
-  //     id: "total",
-  //     name: "Total",
-  //     quantity: totalQuantity,
-  //     action: false,
-  //   });
-  // }
+    const total = Object.values(formValues.product_list.qty).reduce(
+      (acc, cur) => acc + cur,
+      0
+    );
+    setTotalQuantity(total);
+  }, [formValues, products]);
 
   products.length > 0 &&
     dataSource.push({
@@ -249,8 +259,9 @@ export const AdjustmentProductTable = () => {
 
   useEffect(() => {
     if (products.length === 0) {
-      setCounters({});
-      setActions({});
+      setFormValues({
+        product_list: { qty: {}, action: {} },
+      });
     }
   }, [products]);
 

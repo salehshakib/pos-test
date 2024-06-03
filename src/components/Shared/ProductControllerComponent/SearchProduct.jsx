@@ -5,7 +5,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 
-export const SearchProduct = ({ setProducts, products }) => {
+export const SearchProduct = ({ setProducts }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
@@ -34,8 +34,6 @@ export const SearchProduct = ({ setProducts, products }) => {
     </div>
   );
 
-  console.log(products);
-
   const options = isFetching
     ? [
         {
@@ -50,12 +48,8 @@ export const SearchProduct = ({ setProducts, products }) => {
       })) ?? [];
 
   const onSelect = (_, option) => {
-    console.log(option);
-
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
-        console.log(product);
-
         return product?.id === option?.product?.id;
       });
 
@@ -63,7 +57,6 @@ export const SearchProduct = ({ setProducts, products }) => {
         return [...prevProducts, option.product];
       }
 
-      // If the product already exists, return the previous list without changes
       message.warning("Product already exists in the list");
       return prevProducts;
     });
@@ -76,11 +69,6 @@ export const SearchProduct = ({ setProducts, products }) => {
 
   return (
     <Col {...fullColLayout}>
-      {/* <Row align={"middle"} justify={"start"}>
-        <Col span={2} className="border-2 rounded-md ">
-          hello
-        </Col>
-        <Col span={22}> */}
       <AutoComplete
         options={options}
         className="mt-1 w-full"
@@ -93,8 +81,6 @@ export const SearchProduct = ({ setProducts, products }) => {
         suffixIcon={<FaSearch />}
         allowClear={true}
       />
-      {/* </Col>
-      </Row> */}
     </Col>
   );
 };

@@ -80,9 +80,12 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
       return {
         id,
         department: name,
-        status: { status: is_active, handleStatusModal },
+        status: is_active,
         created_at: date,
-        action: { handleEdit, handleDeleteModal },
+
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

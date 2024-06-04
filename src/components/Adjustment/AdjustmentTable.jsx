@@ -29,7 +29,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllAdjustmentQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -61,13 +61,13 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.adjustment?.map((item) => {
-      const { id, note, created_at, warehouse_id, reference_id } = item;
+      const { id, note, created_at, warehouses, reference_id } = item ?? {};
 
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        warehouse: warehouse_id,
+        warehouse: warehouses?.name,
         reference: reference_id,
         date: date,
         note: note ?? "N/A",

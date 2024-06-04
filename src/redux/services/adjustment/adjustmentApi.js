@@ -21,10 +21,11 @@ const adjustmentApi = baseApi.injectEndpoints({
     }),
 
     getAdjustmentDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${ADJUSTMENT}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cash: false,
+  register: false,
 };
 
 const cashRegisterSlice = createSlice({
-  name: "auth",
+  name: "cashRegister",
   initialState,
   reducers: {
     setCashRegister: (state) => {
-      state.cash = true;
+      state.register = true;
     },
     clearCashRegister: (state) => {
-      state.cash = false;
+      state.register = false;
     },
   },
 });

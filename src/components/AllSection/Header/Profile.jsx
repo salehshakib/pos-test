@@ -8,11 +8,24 @@ import { toast } from "sonner";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout } from "../../../redux/services/auth/authSlice";
-import { setCashRegister } from "../../../redux/services/cashRegister/cashRegisterSlice";
-import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pettyCashApi";
+import {
+  clearCashRegister,
+  setCashRegister,
+} from "../../../redux/services/cashRegister/cashRegisterSlice";
+import {
+  useCreatePettyCashMutation,
+  useUpdatePettyCashMutation,
+} from "../../../redux/services/pettycash/pettyCashApi";
+import {
+  clearPettyCash,
+  setPettyCash,
+} from "../../../redux/services/pettycash/pettyCashSlice";
 import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
 import CustomInput from "../../Shared/Input/CustomInput";
+import CustomModal from "../../Shared/Modal/CustomModal";
 import CreateComponent from "./CreateComponent";
+import { CustomDescription } from "../../Shared/Description/CustomDescription";
+import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
@@ -29,6 +42,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
     if (data?.success) {
       dispatch(setCashRegister());
+      dispatch(setPettyCash({ data: data?.data }));
       hideModal();
       form.resetFields();
       navigate("/pos");
@@ -51,7 +65,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     <Modal
       width={600}
       centered
-      title={"Cash Register"}
+      title={"Cash Register Open"}
       open={open}
       onCancel={hideModal}
       footer={null}
@@ -92,11 +106,11 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
 const PosComponent = () => {
   const navigate = useNavigate();
-  const { cash } = useSelector((state) => state.cashRegister);
+  const { register } = useSelector((state) => state.cashRegister);
   const [open, setOpen] = useState(false);
 
   const posRegister = () => {
-    if (!cash) {
+    if (!register) {
       setOpen(true);
     } else navigate("/pos");
   };
@@ -123,14 +137,75 @@ const PosComponent = () => {
 
 const CashRegisterComponent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { pathname } = location;
+
+  const { pettyCash } = useSelector((state) => state.pettyCash);
+  const { register } = useSelector((state) => state.cashRegister);
+
+  const [updateGiftCard, { isLoading }] = useUpdatePettyCashMutation();
+  console.log(pettyCash, register);
+
+  const [open, setOpen] = useState(false);
+
+  const handleCashRegister = () => {
+    if (pathname.includes("/pos")) {
+      setOpen(true);
+      return;
+    }
+
+    navigate("/petty-cash");
+  };
+
+  const closeCashRegister = async () => {
+    // const { data, error } = await updateGiftCard({
+    //   data: { pettyCash.id, ...values },
+    // });
+    dispatch(clearPettyCash());
+    dispatch(clearCashRegister());
+    navigate("/dashboard");
+
+    hideModal();
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  const details = createDetailsLayout(pettyCash);
 
   return (
-    <Button
-      icon={<FaCashRegister size={18} />}
-      className="flex justify-center items-center gap-1 shadow-md"
-      onClick={() => navigate("/petty-cash")}
-      // size="large"
-    />
+    <>
+      <Button
+        icon={<FaCashRegister size={18} />}
+        className="flex justify-center items-center gap-1 shadow-md"
+        onClick={handleCashRegister}
+        // size="large"
+      />
+
+      <Modal
+        width={800}
+        centered
+        // title={"Cash Register Close"}
+        open={open}
+        onCancel={hideModal}
+        footer={null}
+      >
+        <CustomDescription title={"Cash Register Details"} items={details} />
+
+        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+          <Button
+            htmlType="button"
+            onClick={closeCashRegister}
+            type="primary"
+            loading={isLoading}
+          >
+            Close
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 };
 

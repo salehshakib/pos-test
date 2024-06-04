@@ -58,3 +58,9 @@ body::-webkit-scrollbar {
 .ant-input-number-lg input.ant-input-number-input {
   height: 37px !important;
 }
+
+@media screen and (max-width: 730px) {
+  .ant-page-header-heading {
+    justify-content: center !important;
+  }
+}

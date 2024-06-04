@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MdEditSquare } from "react-icons/md";
-import { PettyCashCreate } from "../../../components/PettyCash/PettyCashCreate";
 import { PettyCashTable } from "../../../components/PettyCash/PettyCashTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
@@ -15,6 +14,16 @@ const columns = [
     render: (id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {id}
+      </span>
+    ),
+  },
+  {
+    title: "Reference Id",
+    dataIndex: "reference_id",
+    key: "reference_id",
+    render: (reference_id) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {reference_id}
       </span>
     ),
   },
@@ -49,6 +58,17 @@ const columns = [
     ),
   },
   {
+    title: "Open At",
+    dataIndex: "open_at",
+    key: "open_at",
+    align: "center",
+    render: (open_at) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {open_at}
+      </span>
+    ),
+  },
+  {
     title: "Closes At",
     dataIndex: "closes_at",
     key: "closes_at",
@@ -65,17 +85,17 @@ const columns = [
     key: "status",
     width: "80px",
     align: "center",
-    render: (status, record) => {
+    render: (status) => {
       return (
         <button
           className={`p-0 ${
-            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+            status == "Open"
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
-          onClick={() => record.handleStatusModal(record.id)}
+          // onClick={() => record.handleStatusModal(record.id)}
         >
-          <span className="font-medium text-white text-xs px-2 w-full">
-            {status == 1 ? "Active" : "Inactive"}
-          </span>
+          <span className="font-medium text-xs px-2 w-full">{status}</span>
         </button>
       );
     },
@@ -91,7 +111,7 @@ const columns = [
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={() => record?.handleEdit(record?.id)}
+            onClick={() => record?.handleDetailsModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
@@ -113,8 +133,6 @@ export const PettyCash = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <PettyCashCreate />
-
       <PettyCashTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}

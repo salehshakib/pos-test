@@ -32,7 +32,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllQuotationQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1, child: 1 },
   });
 
   const total = data?.meta?.total;
@@ -79,31 +79,35 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
+  console.log(data);
+
   const dataSource =
     data?.results?.quotation?.map((item) => {
       const {
         id,
         reference_id,
-        warehouse_id,
         cashier_id,
         customer_id,
         supplier_id,
         grand_total,
         created_at,
+        warehouses,
         // is_active,
-      } = item;
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         reference: reference_id,
-        warehouse: warehouse_id,
+        warehouse: warehouses?.name,
         cashier: cashier_id,
         customer: customer_id,
         supplier: supplier_id,
         total: grand_total,
         date,
-        actions: { handleEdit, handleDeleteModal, handleDetailsModal },
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 

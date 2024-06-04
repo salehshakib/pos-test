@@ -4,6 +4,7 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import { useGetAllPettyCashQuery } from "../../redux/services/pettycash/pettyCashApi";
 import CustomTable from "../Shared/Table/CustomTable";
+import dayjs from "dayjs";
 
 export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
   // const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllPettyCashQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -64,11 +65,24 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.pettycash?.map((item) => {
-      const { id } = item;
-      //   const date = dayjs(created_at).format("DD-MM-YYYY");
+      const {
+        id,
+        created_at,
+        reference_id,
+        warehouses,
+        opening_balance,
+        status,
+      } = item ?? {};
+      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
+        reference_id,
+        open_at: date,
+        closes_at: status === "Open" ? "N/A" : date,
+        warehouse: warehouses?.name,
+        cash_in_hand: opening_balance,
+        status,
       };
     }) ?? [];
 

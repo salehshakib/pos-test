@@ -79,7 +79,7 @@ const CustomTable = ({
       handlePageChange(page);
     },
     showSizeChanger: true,
-    hideOnSinglePage: true,
+    // hideOnSinglePage: true,
     defaultPageSize: pagination.perPage,
     onShowSizeChange: (current, size) => {
       handlePageSizeChange(size);

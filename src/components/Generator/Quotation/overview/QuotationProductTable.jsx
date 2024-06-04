@@ -1,9 +1,10 @@
-import { Button, Form } from "antd";
+import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CustomQuantityInput } from "../../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../../Shared/ProductControllerComponent/ProductController";
+import CustomForm from "../../../Shared/Form/CustomForm";
 
 const columns = [
   {
@@ -11,11 +12,14 @@ const columns = [
     dataIndex: "name",
     key: "name",
     align: "center",
-    render: (name) => (
+    render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
           name !== "Total" && "hover:underline hover:cursor-pointer"
         }`}
+        onClick={() => {
+          record?.handleProductEdit(record?.id, record?.name);
+        }}
       >
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {name}
@@ -143,20 +147,74 @@ const columns = [
   },
 ];
 
+const ProductForm = ({
+  productId,
+  productName,
+  productEditModal,
+  hideModal,
+}) => {
+  const [productForm] = Form.useForm();
+
+  const handleSubmit = () => {
+    console.log("values");
+
+    // productForm.resetFields();
+    // hideModal();
+  };
+
+  return (
+    <Modal
+      title={productName}
+      open={productEditModal}
+      onCancel={hideModal}
+      centered
+      width={800}
+      okText="Update"
+      onOk={handleSubmit}
+      // onClose={}
+    >
+      <CustomForm
+        submitBtn={false}
+        form={productForm}
+        // handleSubmit={handleSubmit}
+      ></CustomForm>
+    </Modal>
+  );
+};
 export const QuotationProductTable = () => {
-  const form = Form.useFormInstance();
   const [products, setProducts] = useState([]);
+  const form = Form.useFormInstance();
+
+  // [{"product_id":4,"qty":1,"sale_unit_id":1,"net_unit_price":250.00,"discount":0.00,"tax_rate":0.00,"tax":0.00,"total":250.00}]
+
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      qty: {},
+      action: {},
+      sale_unit_id: {},
+      net_unit_price: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+    },
+  });
+
   const [counters, setCounters] = useState({});
   const [discounts, setDiscounts] = useState({});
   const [taxs, setTaxs] = useState({});
 
   const [productEditModal, setProductEditModal] = useState(false);
-  const [productId, setProductId] = useState(null);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
 
-  const handleProductEdit = (id) => {
-    setProductEditModal(true);
+  const handleProductEdit = (id, name) => {
     setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
   };
+
+  const hideModal = () => setProductEditModal(false);
 
   const incrementCounter = (id, stock = 5) => {
     if (counters[id] >= stock) return;
@@ -225,6 +283,7 @@ export const QuotationProductTable = () => {
       decrementCounter,
       onQuantityChange,
       onDelete,
+      handleProductEdit,
     };
   });
 
@@ -256,6 +315,13 @@ export const QuotationProductTable = () => {
         setProducts={setProducts}
         columns={columns}
         dataSource={dataSource}
+      />
+
+      <ProductForm
+        productEditModal={productEditModal}
+        productId={productId}
+        productName={productName}
+        hideModal={hideModal}
       />
     </>
   );

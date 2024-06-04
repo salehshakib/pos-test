@@ -86,23 +86,22 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
       const {
         id,
         reference_id,
-        cashier_id,
-        customer_id,
-        supplier_id,
+        cashiers,
+        customers,
+        suppliers,
         grand_total,
         created_at,
         warehouses,
-        // is_active,
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         reference: reference_id,
-        warehouse: warehouses?.name,
-        cashier: cashier_id,
-        customer: customer_id,
-        supplier: supplier_id,
+        warehouse: warehouses?.name ?? "N/A",
+        cashier: cashiers?.name ?? "N/A",
+        customer: customers?.name ?? "N/A",
+        supplier: suppliers?.name ?? "N/A",
         total: grand_total,
         date,
         handleEdit,

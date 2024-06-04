@@ -10,6 +10,7 @@ import { errorFieldsUpdate } from "../../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "./QuotationForm";
+import { appendToFormData } from "../../../utilities/lib/appendFormData";
 
 const QuotationEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -33,9 +34,33 @@ const QuotationEdit = ({ id }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
+    const formData = new FormData();
+
+    const { product_list, attachment } = values ?? {};
+
+    const productListArray = product_list?.qty
+      ? Object.keys(product_list.qty)
+          .filter((product_id) => product_list.qty[product_id] !== undefined)
+          .map((product_id) => ({
+            product_id: parseInt(product_id),
+            qty: product_list.qty[product_id],
+          }))
+      : [];
+
+    const postObj = {
+      ...values,
+      product_list: JSON.stringify(productListArray),
+    };
+
+    if (attachment) {
+      postObj.attachment = attachment?.[0].originFileObj;
+    }
+
+    appendToFormData(postObj, formData);
+
     const { data, error } = await updateQuotation({
       id,
-      data: values,
+      data: formData,
     });
 
     if (data?.success) {

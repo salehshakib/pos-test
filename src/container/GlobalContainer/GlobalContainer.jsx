@@ -149,6 +149,7 @@ const GlobalContainer = ({
 
           // }}
           // className="flex"
+
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
@@ -246,9 +247,10 @@ const GlobalContainer = ({
               </div>
             ),
           ]}
-        >
-          <div className="">{children}</div>
-        </PageContainer>
+          content={children}
+        />
+        {/* <div className="">{children}</div> */}
+        {/* </PageContainer> */}
       </div>
     </GlobalUtilityStyle>
   );

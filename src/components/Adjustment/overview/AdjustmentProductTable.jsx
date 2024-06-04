@@ -216,6 +216,7 @@ export const AdjustmentProductTable = () => {
 
   const dataSource = products?.map((product) => {
     const { id, name, sku, buying_price: unit_cost } = product;
+
     formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
     formValues.product_list.action[id] =

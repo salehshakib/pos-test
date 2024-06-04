@@ -19,12 +19,17 @@ export const SearchProduct = ({ setProducts }) => {
     {
       params: {
         keyword,
+        child: 1,
+        parent: 1,
+        // warehouse_id
       },
     },
     {
       skip: !keyword,
     }
   );
+
+  // console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center ">

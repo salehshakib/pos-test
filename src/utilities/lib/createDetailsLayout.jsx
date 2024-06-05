@@ -1,7 +1,6 @@
 import { Badge } from "antd";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
-import React from "react";
 
 const createDetailsLayout = (data) => {
   const ignoredKeys = [

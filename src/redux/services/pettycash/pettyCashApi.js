@@ -109,6 +109,24 @@ const pettyCashApi = baseApi.injectEndpoints({
         return result ? [PETTY_CASH] : [];
       },
     }),
+
+    checkPettyCash: build.query({
+      query: ({ params }) => ({
+        url: `/${PETTY_CASH}/check`,
+        method: "GET",
+        params,
+      }),
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      providesTags: (result, error, { params }) => [
+        { type: PETTY_CASH, params },
+        PETTY_CASH,
+      ],
+    }),
   }),
 });
 
@@ -119,4 +137,5 @@ export const {
   useUpdatePettyCashMutation,
   useUpdatePettyCashStatusMutation,
   useDeletePettyCashMutation,
+  useCheckPettyCashQuery,
 } = pettyCashApi;

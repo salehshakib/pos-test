@@ -16,6 +16,11 @@ const QuotationCreate = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
+  const [errorFields, setErrorFields] = useState([]);
+  const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
+
+  const [createQuotation, { isLoading }] = useCreateQuotationMutation();
+
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
@@ -27,11 +32,6 @@ const QuotationCreate = () => {
       total: {},
     },
   });
-
-  const [errorFields, setErrorFields] = useState([]);
-  const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
-
-  const [createQuotation, { isLoading }] = useCreateQuotationMutation();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();

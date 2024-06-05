@@ -20,10 +20,11 @@ const invoiceApi = baseApi.injectEndpoints({
     }),
 
     getInvoiceDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${GENERATE_INVOICE}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

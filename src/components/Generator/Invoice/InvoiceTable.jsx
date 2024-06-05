@@ -14,12 +14,16 @@ import { selectPagination } from "../../../redux/services/pagination/paginationS
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import InvoiceEdit from "./InvoiceEdit";
+import { InvoiceDetails } from "./overview/InvoiceDetails";
 
 const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);
@@ -28,7 +32,7 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllInvoiceQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1, child: 1 },
   });
 
   const total = data?.meta?.total;
@@ -37,6 +41,11 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   //   useUpdateCustomerStatusMutation();
 
   const [deleteInvoice, { isLoading: isDeleting }] = useDeleteInvoiceMutation();
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -76,31 +85,33 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
       const {
         id,
         reference_id,
-        warehouse_id,
-        cashier_id,
-        customer_id,
-        supplier_id,
+        cashiers,
+        customers,
+        suppliers,
         grand_total,
         created_at,
-        // is_active,
-      } = item;
+        warehouses,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         reference: reference_id,
-        warehouse: warehouse_id,
-        cashier: cashier_id,
-        customer: customer_id,
-        supplier: supplier_id,
+        warehouse: warehouses?.name ?? "N/A",
+        cashier: cashiers?.name ?? "N/A",
+        customer: customers?.name ?? "N/A",
+        supplier: suppliers?.name ?? "N/A",
         total: grand_total,
         date,
-        actions: { handleEdit, handleDeleteModal },
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     // setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -116,6 +127,14 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <InvoiceEdit id={editId} />
+
+      {detailsId && (
+        <InvoiceDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       {/* <StatusModal
         statusModal={statusModal}

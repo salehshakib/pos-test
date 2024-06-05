@@ -47,17 +47,7 @@ export const columns = [
       </span>
     ),
   },
-  {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
-    render: (stock) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {stock}
-      </span>
-    ),
-  },
+
   {
     title: "Quantity",
     dataIndex: "quantity",
@@ -76,7 +66,7 @@ export const columns = [
               key={"sub"}
               icon={<FaMinus />}
               type="primary"
-              onClick={() => record.decrementCounter(record?.id, record?.stock)}
+              onClick={() => record.decrementCounter(record?.id)}
             />
           </div>
           <CustomQuantityInput
@@ -89,7 +79,7 @@ export const columns = [
               key={"add"}
               icon={<FaPlus />}
               type="primary"
-              onClick={() => record.incrementCounter(record?.id, record?.stock)}
+              onClick={() => record.incrementCounter(record?.id)}
               className=""
             />
           </div>

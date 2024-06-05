@@ -42,13 +42,28 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
     data?.results?.unit?.map((item) => {
       console.log(item);
 
-      const { id, name, code, base_unit, created_at } = item ?? {};
+      const {
+        id,
+        name,
+        code,
+        base_unit,
+        created_at,
+        operator,
+        operation_value,
+        is_active,
+        for: type,
+      } = item ?? {};
+
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
         code: code,
+        type,
+        operator,
+        operatorValue: operation_value,
+        status: is_active,
         baseUnit: base_unit,
         created_at: date,
         action: { handleDeleteModal },

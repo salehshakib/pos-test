@@ -9,17 +9,17 @@ import { useGetAllTaxQuery } from "../../../../redux/services/tax/taxApi";
 import CustomSelect from "../../../Shared/Select/CustomSelect";
 import { useGetAllUnitQuery } from "../../../../redux/services/unit/unitApi";
 
-const TaxComponent = () => {
+const TaxComponent = ({ productId }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
 
   const options = data?.results?.tax?.map((tax) => ({
-    value: tax.id.toString(),
+    value: tax.rate,
     label: tax.name,
   }));
 
   return (
     <CustomSelect
-      name="tax_rate"
+      name={["tax_rate", productId]}
       options={options}
       label="Product Tax"
       isLoading={isLoading}
@@ -27,25 +27,39 @@ const TaxComponent = () => {
   );
 };
 
-const ProductUnitComponent = () => {
+const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const { data, isLoading } = useGetAllUnitQuery({
     params: {
-      selectValue: ["name", "id", "for"],
+      selectValue: ["name", "id", "for", "operator", "operation_value"],
     },
   });
 
   const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "product-unit")
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+    ?.filter((unit) => unit.for === "sale-unit")
+    .map((unit) => ({
+      value: unit.id.toString(),
+      label: unit.name,
+      operationValue: unit.operation_value,
+    }));
 
-  console.log(data?.results?.unit);
+  const onSelect = (value, option) => {
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        sale_units: {
+          [productId]: option.operationValue ?? 1,
+        },
+      };
+    });
+  };
 
   return (
     <CustomSelect
-      label="Product Unit"
+      label="Sale Unit"
       options={productUnits}
       isLoading={isLoading}
-      name={"product_unit"}
+      name={["sale_unit_id", productId]}
+      onSelect={onSelect}
     />
   );
 };
@@ -57,26 +71,79 @@ const ProductFormComponent = ({
   hideModal,
   formValues,
   setFormValues,
+  productUnits,
+  setProductUnits,
 }) => {
   const [productForm] = Form.useForm();
-  // const form = Form.useFormInstance();
+
+  console.log(productUnits);
 
   useEffect(() => {
-    console.log(formValues);
     productForm.setFieldsValue({
       quantity: formValues?.product_list?.qty[productId],
       unit_discount: formValues?.product_list?.discount[productId],
       unit_price: formValues?.product_list?.net_unit_price[productId],
+      sale_unit_id: {
+        [productId]: formValues?.product_list?.sale_unit_id[productId] ?? "",
+      },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, productForm, productId]);
 
   const handleSubmit = () => {
-    console.log("values");
-
     console.log(productForm.getFieldsValue());
 
-    // productForm.resetFields();
+    setFormValues((prevFormValues) => {
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [productId]: productForm.getFieldValue("quantity"),
+          },
+          sale_unit_id: {
+            ...prevFormValues.product_list.sale_unit_id,
+            [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
+          },
+          discount: {
+            ...prevFormValues.product_list.discount,
+            [productId]: productForm.getFieldValue("unit_discount"),
+          },
+          net_unit_price: {
+            ...prevFormValues.product_list.net_unit_price,
+            [productId]: productForm.getFieldValue("unit_price"),
+          },
+          tax_rate: {
+            ...prevFormValues.product_list.tax_rate,
+            [productId]: productForm.getFieldValue(["tax_rate", productId]),
+          },
+          tax: {
+            ...prevFormValues.product_list.tax,
+            [productId]: parseFloat(
+              (parseInt(productUnits.sale_units[productId]) *
+                parseInt(productForm.getFieldValue(["tax_rate", productId])) *
+                parseInt(productForm.getFieldValue("quantity")) *
+                parseInt(productForm.getFieldValue("unit_price"))) /
+                100
+            ).toFixed(2),
+          },
+        },
+      };
+    });
+
+    // setProductUnits((prevValues) => {
+    //   return {
+    //     ...prevValues,
+    //     sale_unit_id: {
+    //       ...prevValues.sale_units,
+    //       [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
+    //     },
+    //   };
+    // });
+
     hideModal();
+    // productForm.resetFields();
   };
 
   return (
@@ -88,13 +155,8 @@ const ProductFormComponent = ({
       width={800}
       okText="Update"
       onOk={handleSubmit}
-      // onClose={}
     >
-      <CustomForm
-        submitBtn={false}
-        form={productForm}
-        // handleSubmit={handleSubmit}
-      >
+      <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
           <Col {...fullColLayout}>
             <CustomInput
@@ -119,10 +181,13 @@ const ProductFormComponent = ({
             />
           </Col>
           <Col {...fullColLayout}>
-            <TaxComponent />
+            <TaxComponent productId={productId} />
           </Col>
           <Col {...fullColLayout}>
-            <ProductUnitComponent />
+            <ProductUnitComponent
+              setProductUnits={setProductUnits}
+              productId={productId}
+            />
           </Col>
         </Row>
       </CustomForm>
@@ -130,22 +195,20 @@ const ProductFormComponent = ({
   );
 };
 
-export const QuotationProductTable = () => {
-  const [products, setProducts] = useState([]);
+export const QuotationProductTable = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+}) => {
   const form = Form.useFormInstance();
-
   const warehouseId = Form.useWatch("warehouse_id", form);
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-    },
+  console.log(formValues);
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    // sale_unit_id: {},
   });
 
   const [productEditModal, setProductEditModal] = useState(false);
@@ -158,13 +221,14 @@ export const QuotationProductTable = () => {
     setProductEditModal(true);
   };
 
-  const hideModal = () => setProductEditModal(false);
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
 
-  const incrementCounter = (id, stock = 5) => {
+  const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
-      const stockValue = stock > 0 ? 1 : 0;
-      const currentQty = prevFormValues.product_list.qty[id] || stockValue;
-      const newQty = Math.min(currentQty + 1, stock);
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = currentQty + 1;
 
       return {
         ...prevFormValues,
@@ -179,12 +243,10 @@ export const QuotationProductTable = () => {
     });
   };
 
-  const decrementCounter = (id, stock = 5) => {
+  const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
-      const stockValue = stock > 0 ? 1 : 0;
-
-      const currentQty = prevFormValues.product_list.qty[id] || stockValue;
-      const newQty = Math.max(currentQty - 1, 0);
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = currentQty - 1;
 
       return {
         ...prevFormValues,
@@ -218,45 +280,61 @@ export const QuotationProductTable = () => {
     );
   };
 
-  const dataSource = products?.map((product) => {
-    const {
-      id,
-      name,
-      sku,
-      buying_price: unit_cost,
-      product_qties,
-      sale_unit_id,
-    } = product;
+  console.log(formValues);
 
-    console.log(product);
+  const setFormValuesId = (id, sale_unit_id, unit_cost, sale_units) => {
+    formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
 
-    const stock = parseInt(
-      product_qties.filter((item) => item.warehouse_id === warehouseId)[0]
-        ?.qty ?? 0
-    );
-
-    const stockValue = stock > 0 ? 1 : 0;
-
-    formValues.product_list.qty[id] =
-      formValues.product_list.qty[id] || stockValue;
-
-    formValues.product_list.sale_unit_id[id] = sale_unit_id;
+    formValues.product_list.sale_unit_id[id] =
+      formValues.product_list.sale_unit_id[id] ?? sale_unit_id;
 
     formValues.product_list.net_unit_price[id] = unit_cost;
 
     formValues.product_list.discount[id] =
       formValues.product_list.discount[id] ?? 0;
 
-    formValues.product_list.tax[id] = formValues.product_list.tax[id] ?? 0;
+    formValues.product_list.tax[id] = parseFloat(
+      (
+        (parseInt(productUnits.sale_units[id]) *
+          parseInt(formValues.product_list.tax_rate[id]) *
+          parseInt(formValues.product_list.net_unit_price[id]) *
+          parseInt(formValues.product_list.qty[id])) /
+        100
+      ).toFixed(2)
+    );
+
+    formValues.product_list.tax_rate[id] =
+      formValues.product_list.tax_rate[id] ?? 0;
+
+    productUnits.sale_units[id] =
+      productUnits?.sale_units[id] ?? sale_units?.operation_value ?? 1;
 
     formValues.product_list.total[id] =
-      parseInt(unit_cost) * formValues.product_list.qty[id];
+      productUnits.sale_units[id] *
+        parseInt(unit_cost) *
+        formValues.product_list.qty[id] -
+      formValues.product_list.discount[id] +
+      formValues.product_list.tax[id];
+  };
+
+  const dataSource = products?.map((product) => {
+    const {
+      id,
+      name,
+      sku,
+      buying_price: unit_cost,
+      sale_unit_id,
+      sale_units,
+    } = product ?? {};
+
+    console.log(product);
+
+    setFormValuesId(id, sale_unit_id, unit_cost, sale_units);
 
     return {
       id,
       name,
       sku,
-      stock: stock,
       unitCost: formValues.product_list.net_unit_price[id],
       delete: true,
       discount: formValues.product_list.discount[id],
@@ -271,7 +349,7 @@ export const QuotationProductTable = () => {
   });
 
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalSubTotal, setTotalSubTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
 
@@ -280,25 +358,25 @@ export const QuotationProductTable = () => {
       (acc, cur) => acc + cur,
       0
     );
+    setTotalQuantity(total);
 
-    const totalSubTotal = Object.values(formValues.product_list.total).reduce(
+    const totalPrice = Object.values(formValues.product_list.total).reduce(
       (acc, cur) => acc + cur,
       0
     );
+    setTotalPrice(totalPrice?.toFixed(2));
 
     const totalTax = Object.values(formValues.product_list.tax).reduce(
       (acc, cur) => acc + cur,
       0
     );
+    setTotalTax(totalTax.toFixed(2));
 
     const totalDiscount = Object.values(
       formValues.product_list.discount
     ).reduce((acc, cur) => acc + cur, 0);
 
-    setTotalQuantity(total);
-    setTotalSubTotal(totalSubTotal);
-    setTotalTax(totalTax);
-    setTotalDiscount(totalDiscount);
+    setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);
 
   products.length > 0 &&
@@ -306,18 +384,20 @@ export const QuotationProductTable = () => {
       id: "total",
       name: "Total",
       quantity: totalQuantity,
-      subTotal: totalSubTotal,
+      subTotal: totalPrice,
       tax: totalTax,
       discount: totalDiscount,
       action: false,
     });
 
   useEffect(() => {
-    if (products.length === 0) {
+    if (
+      products.length === 0 &&
+      !Object.keys(formValues.product_list.qty).length > 0
+    ) {
       setFormValues({
         product_list: {
           qty: {},
-          action: {},
           sale_unit_id: {},
           net_unit_price: {},
           discount: {},
@@ -326,8 +406,13 @@ export const QuotationProductTable = () => {
           total: {},
         },
       });
+
+      setProductUnits({
+        sale_units: {},
+      });
     }
-  }, [products]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products, setFormValues]);
 
   form.setFieldsValue(formValues);
 
@@ -349,6 +434,8 @@ export const QuotationProductTable = () => {
         hideModal={hideModal}
         formValues={formValues}
         setFormValues={setFormValues}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </>
   );

@@ -14,6 +14,7 @@ const CustomSelect = (props) => {
     noStyle = false,
     styleProps,
     onChange,
+    onSelect,
   } = props;
 
   const filterOption = (input, option) =>
@@ -60,6 +61,7 @@ const CustomSelect = (props) => {
             }}
             allowClear={true}
             defaultActiveFirstOption
+            onSelect={onSelect}
           />
         ) : (
           <Select
@@ -84,6 +86,8 @@ const CustomSelect = (props) => {
               ...styleProps,
             }}
             allowClear={true}
+            defaultActiveFirstOption
+            onSelect={onSelect}
           />
         )}
       </Form.Item>

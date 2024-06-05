@@ -20,10 +20,11 @@ const quotationApi = baseApi.injectEndpoints({
     }),
 
     getQuotationDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${GENERATE_QUOTATION}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

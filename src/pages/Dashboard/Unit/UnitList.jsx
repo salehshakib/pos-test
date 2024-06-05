@@ -35,32 +35,66 @@ const columns = [
     align: "center",
     render: (baseUnit) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {baseUnit}
+        {baseUnit ?? "N/A"}
       </span>
     ),
   },
-  // {
-  //   title: "Operator",
-  //   dataIndex: "operator",
-  //   key: "operator",
-  //   align: "center",
-  //   render: (operator) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {operator}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   title: "Operator Value",
-  //   dataIndex: "operatorValue",
-  //   key: "operatorValue",
-  //   align: "center",
-  //   render: (operatorValue) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {operatorValue}
-  //     </span>
-  //   ),
-  // },
+  {
+    title: "For",
+    dataIndex: "type",
+    key: "type",
+    align: "center",
+    render: (type) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {type}
+      </span>
+    ),
+  },
+  {
+    title: "Operator",
+    dataIndex: "operator",
+    key: "operator",
+    align: "center",
+    render: (operator) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {operator ?? "N/A"}
+      </span>
+    ),
+  },
+  {
+    title: "Operator Value",
+    dataIndex: "operatorValue",
+    key: "operatorValue",
+    align: "center",
+    render: (operatorValue) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {operatorValue ?? "N/A"}
+      </span>
+    ),
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    width: "80px",
+    align: "center",
+    render: (status, record) => {
+      return (
+        <button
+          className={`p-0 ${
+            status == 1
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-sm w-[80px]`}
+          onClick={() => record.handleStatusModal(record.id)}
+        >
+          <span className="font-medium text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </button>
+      );
+    },
+  },
   {
     //created_at
     title: "Created At",

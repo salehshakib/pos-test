@@ -9,8 +9,8 @@ export const WarehouseComponent = () => {
   });
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse.id?.toString(),
-    label: warehouse.name,
+    value: warehouse?.id?.toString(),
+    label: warehouse?.name,
   }));
 
   return (

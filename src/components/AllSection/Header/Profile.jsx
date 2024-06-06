@@ -1,6 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Col, Form, Modal, Popover, Row, Spin } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCashRegister, FaShoppingBasket } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,7 +38,6 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const warehouseId = Form.useWatch("warehouse_id", form);
 
-  // const [warehouseId, setWarehouseId] = useState(undefined)
   const { data, isFetching } = useCheckPettyCashQuery(
     {
       params: {
@@ -49,6 +48,14 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
       skip: !warehouseId,
     }
   );
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data?.data === "Open") {
+      navigate("/pos");
+    }
+  }, [data, navigate]);
 
   const handleSubmit = async (values) => {
     // setWarehouseId(values.warehouse_id)
@@ -75,6 +82,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const hideModal = () => {
     setOpen(false);
+    form.resetFields();
   };
 
   return (

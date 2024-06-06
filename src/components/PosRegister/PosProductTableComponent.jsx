@@ -5,7 +5,7 @@ import { FaMinus, FaPlus, FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomTable from "../Shared/Table/CustomTable";
+import CustomProductTable from "../Shared/Table/CustomProductTable";
 
 const ProductTableComponent = () => {
   const form = Form.useFormInstance();
@@ -298,7 +298,7 @@ const ProductTableComponent = () => {
       overflow-hidden flex flex-col gap-2"
       >
         <div className="flex-grow">
-          <CustomTable
+          <CustomProductTable
             columns={columns}
             dataSource={dataSource}
             showPaging={false}

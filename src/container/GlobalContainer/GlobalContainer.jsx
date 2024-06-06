@@ -16,6 +16,7 @@ import { TbFilterSearch } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { GlobalUtilityStyle } from "../Styled";
+import { useLocation } from "react-router-dom";
 
 const GlobalContainer = ({
   pageTitle,
@@ -23,9 +24,10 @@ const GlobalContainer = ({
   selectedRows,
   children,
   setNewColumns,
-  searchFilterContent,
+  searchFilterContent = <div className="border border-red-600 py-5">hello</div>,
 }) => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
 
@@ -145,16 +147,23 @@ const GlobalContainer = ({
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
-              <div className=" p-1">
-                <Button
-                  key={"create"}
-                  type="text"
-                  icon={<FaCirclePlus className="text-2xl lg:text-3xl " />}
-                  size="large"
-                  onClick={handleDrawerOpen}
-                  className="flex justify-center items-center  w-full  primary-text "
-                />
-              </div>
+              <>
+                {!pathname.includes("/petty-cash") && (
+                  <div className="w-full">
+                    <Button
+                      key={"create"}
+                      type="text"
+                      icon={<FaCirclePlus size={28} />}
+                      style={{
+                        width: "45px",
+                        height: "100%",
+                      }}
+                      onClick={handleDrawerOpen}
+                      className="primary-text flex justify-center items-center"
+                    />
+                  </div>
+                )}
+              </>
             ),
           }}
           extra={[
@@ -164,7 +173,7 @@ const GlobalContainer = ({
                   type="text"
                   key="search"
                   size="large"
-                  className="w-full border rounded-md border-gray-300  focus:outline-none focus:border-primary"
+                  className="w-full border rounded-md border-gray-300 focus:outline-none focus:border-primary"
                   placeholder="Search"
                   // value={searchUser}
                   // onChange={handleSearchUser}
@@ -172,18 +181,20 @@ const GlobalContainer = ({
                     <IoSearch
                       style={{
                         fontSize: "16px",
-                        color: "#000",
                       }}
-                      className="hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
+                      className="primary-text hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
                     />
                   }
-                  style={{
-                    allowClear: true,
-                  }}
+                  allowClear={true}
                 />
                 <Popover
                   content={searchFilterContent}
-                  title="Advance Search"
+                  title={<div className="text-center">Advance Search</div>}
+                  style={
+                    {
+                      // width: "300px"
+                    }
+                  }
                   trigger="click"
                   placement="bottomRight"
                   arrow={false}
@@ -197,9 +208,9 @@ const GlobalContainer = ({
                     <TbFilterSearch
                       style={{
                         fontSize: "16px",
-                        color: "#000",
+                        // color: "#000",
                       }}
-                      className="text-xs lg:text-[16px]"
+                      className="text-xs primary-text lg:text-[16px]"
                     />
                   </Button>
                 </Popover>
@@ -229,15 +240,16 @@ const GlobalContainer = ({
 
             selectedRows?.length !== 0 && (
               <div key={"delete"}>
-                <button className="custom-primary-btn p-2 rounded-xl text-white  duration-300 ">
-                  <FaTrash className="lg:text-xl" />
+                <button className="custom-primary-btn p-2 rounded-xl text-white duration-300 ">
+                  <FaTrash className="text-xl" />
                 </button>
               </div>
             ),
           ]}
-        >
-          <div className="">{children}</div>
-        </PageContainer>
+          content={children}
+        />
+        {/* <div className="">{children}</div> */}
+        {/* </PageContainer> */}
       </div>
     </GlobalUtilityStyle>
   );

@@ -111,7 +111,6 @@ const ProductCreate = () => {
       daily_sale_qty,
       tax_id: parseInt(tax_id),
       tax_method,
-      product_list: JSON.stringify(productListArray),
       has_featured: has_featured ? 1 : 0,
       has_stock: has_stock ? 1 : 0,
       qty_list: has_stock ? JSON.stringify(qtyListArray) : "",
@@ -132,6 +131,10 @@ const ProductCreate = () => {
       details,
     };
 
+    if (productListArray.length > 0) {
+      attachmentObj.product_list = JSON.stringify(productListArray);
+    }
+
     appendToFormData(attachmentObj, formData);
 
     const { data, error } = await createProduct({ formData });
@@ -140,11 +143,14 @@ const ProductCreate = () => {
       dispatch(closeCreateDrawer());
       form.resetFields();
     }
+
+    console.log(error);
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,
         errors: error?.data?.errors[fieldName],
       }));
+
       setErrorFields(errorFields);
     }
   };

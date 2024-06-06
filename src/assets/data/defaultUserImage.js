@@ -1,3 +1,3 @@
-import defaultUserImage from "../images/default.jpg";
+import defaultUser from "../images/default.jpg";
 
-export const defaultUser = defaultUserImage;
+export default defaultUser;

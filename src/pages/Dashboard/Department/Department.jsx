@@ -5,25 +5,25 @@ import DepartmentTable from "../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
+  // {
+  //   title: "ID",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 80,
+  //   render: (id) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {id}
+  //     </span>
+  //   ),
+  // },
   {
     //department
     title: "Department",
     dataIndex: "department",
     key: "department",
-    align: "center",
+    // align: "center",
     render: (department) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {department}
@@ -48,15 +48,17 @@ const columns = [
     key: "status",
     width: "80px",
     align: "center",
-    render: ({ status, handleStatusModal }, record) => {
+    render: (status, record) => {
       return (
         <button
           className={`p-0 ${
-            status == 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
-          } rounded shadow-md w-[80px]`}
-          onClick={() => handleStatusModal(record.id)}
+            status == 1
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-sm w-[80px]`}
+          onClick={() => record.handleStatusModal(record.id)}
         >
-          <span className="font-medium text-white text-xs px-2 w-full">
+          <span className="font-medium text-xs px-2 w-full">
             {status == 1 ? "Active" : "Inactive"}
           </span>
         </button>
@@ -71,17 +73,17 @@ const columns = [
     align: "center",
     width: 70,
     fixed: "right",
-    render: ({ handleEdit, handleDeleteModal }, record) => {
+    render: (_, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">
           <button
-            onClick={() => handleEdit(record?.id)}
+            onClick={() => record?.handleEdit(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
-            onClick={() => handleDeleteModal(record?.id)}
+            onClick={() => record?.handleDeleteModal(record?.id)}
             className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
           >
             <MdDelete className="text-lg md:text-xl" />

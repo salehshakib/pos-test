@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useDebouncedCallback } from "use-debounce";
-import { useGetProductsQuery } from "../../../redux/services/product/productApi";
+import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { setProduct } from "../../../redux/services/product/productSlice";
 import DebouceSelect from "../../Shared/Select/DebounceSelect";
 
@@ -14,7 +14,7 @@ export const SearchProductComponent = ({ options: editOptions = [] }) => {
     }
   }, 1000);
 
-  const { data, isFetching } = useGetProductsQuery(
+  const { data, isFetching } = useGetAllProductsQuery(
     {
       params: {
         selectValue: ["id", "name", "sku", "buying_price"],

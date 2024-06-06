@@ -1,15 +1,13 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import { baseUnit } from "../../assets/data/baseUnit";
+import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetTypesQuery } from "../../redux/services/types/typesApi";
 import CustomForm from "../Shared/Form/CustomForm";
-import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
+import CustomRadio from "../Shared/Radio/CustomRadio";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 const BaseUnit = () => {
-  // const form = Form.useFormInstance();
-  // const base_unit = Form.useWatch("base_unit", form);
-
   const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
     return { label: `${name} (${symbol})`, value: name };
   });
@@ -46,6 +44,54 @@ const TypeUnit = () => {
   );
 };
 
+const OperatorComponent = () => {
+  const form = Form.useFormInstance();
+  const baseUnit = Form.useWatch("base_unit", form);
+
+  const options = [
+    {
+      value: "+",
+      label: <span className="font-semibold">Addition (+)</span>,
+    },
+    {
+      value: "-",
+      label: <span className="font-semibold">Subtraction (-)</span>,
+    },
+    {
+      value: "*",
+      label: <span className="font-semibold">Multiply (*)</span>,
+    },
+    {
+      value: "/",
+      label: <span className="font-semibold">Division (/)</span>,
+    },
+  ];
+
+  if (baseUnit) {
+    return (
+      <>
+        <Col {...fullColLayout}>
+          <CustomRadio
+            options={options}
+            name={"operator"}
+            label={"Operator"}
+            required={true}
+          />
+        </Col>
+
+        <Col {...fullColLayout}>
+          <CustomInput
+            label={"Operator Value"}
+            type={"number"}
+            name={"operation_value"}
+            required={true}
+          />
+        </Col>
+      </>
+    );
+  }
+};
+
 const UnitForm = (props) => {
   return (
     <CustomForm {...props}>
@@ -71,6 +117,8 @@ const UnitForm = (props) => {
         </Col>
 
         <TypeUnit />
+
+        <OperatorComponent />
       </Row>
     </CustomForm>
   );

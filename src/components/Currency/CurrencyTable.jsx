@@ -68,9 +68,10 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
         name: name,
         code: code,
         exchangeRate: exchange_rate,
-        status: { status: is_default, handleStatusModal },
+        status: is_default,
+        handleStatusModal,
         created_at: date,
-        action: { handleDeleteModal },
+        handleDeleteModal,
       };
     }) ?? [];
 

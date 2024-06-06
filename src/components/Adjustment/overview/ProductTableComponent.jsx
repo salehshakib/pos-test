@@ -125,6 +125,8 @@ export const ProductTableComponent = () => {
   const warehouseData = Form.useWatch("warehouse_id", form);
   const productListData = Form.useWatch("product_list", form);
 
+  console.log(productData);
+
   const [rowId, setRowId] = useState(undefined);
 
   // useEffect(() => {
@@ -225,8 +227,7 @@ export const ProductTableComponent = () => {
   });
 
   return (
-    productData?.length > 0 &&
-    warehouseData && (
+    productData?.length > 0 && (
       <Col {...fullColLayout} className="mb-10">
         <CustomTable
           columns={columns}

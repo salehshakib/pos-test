@@ -30,7 +30,7 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCashierQuery({
-    params: { ...pagination, allData: 1 },
+    params: pagination,
   });
 
   const total = data?.meta?.total;
@@ -93,8 +93,10 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
         phone,
         vatNumber: vat_number,
         created_at: date,
-        status: { status: is_active, handleStatusModal },
-        action: { handleEdit, handleDeleteModal },
+        status: is_active,
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

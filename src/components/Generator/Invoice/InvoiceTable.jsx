@@ -1,25 +1,29 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import {
-  useDeleteQuotationMutation,
-  useGetAllQuotationQuery,
-} from "../../redux/services/quotation/quotationApi";
+import { GlobalUtilityStyle } from "../../../container/Styled";
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import CustomTable from "../Shared/Table/CustomTable";
-import CustomerEdit from "../Customer/CustomerEdit";
-import DeleteModal from "../Shared/Modal/DeleteModal";
+} from "../../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteInvoiceMutation,
+  useGetAllInvoiceQuery,
+} from "../../../redux/services/invoice/invoiceApi";
+import { selectPagination } from "../../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../../Shared/Modal/DeleteModal";
+import CustomTable from "../../Shared/Table/CustomTable";
+import InvoiceEdit from "./InvoiceEdit";
+import { InvoiceDetails } from "./overview/InvoiceDetails";
 
-const QuotationTable = ({ newColumns, setSelectedRows }) => {
+const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);
@@ -27,8 +31,8 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllQuotationQuery({
-    params: { ...pagination, allData: 1 },
+  const { data, isLoading } = useGetAllInvoiceQuery({
+    params: { ...pagination, parent: 1, child: 1 },
   });
 
   const total = data?.meta?.total;
@@ -36,8 +40,12 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
   // const [updateStatus, { isLoading: isStatusUpdating }] =
   //   useUpdateCustomerStatusMutation();
 
-  const [deleteQuotation, { isLoading: isDeleting }] =
-    useDeleteQuotationMutation();
+  const [deleteInvoice, { isLoading: isDeleting }] = useDeleteInvoiceMutation();
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
@@ -64,40 +72,46 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteQuotation(deleteId);
+    const { data } = await deleteInvoice(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
   };
 
+  console.log(data);
+
   const dataSource =
-    data?.results?.quotation?.map((item) => {
+    data?.results?.invoice?.map((item) => {
       const {
         id,
-        name,
-        email,
-        company_name: companyName,
-        phone_number: phone,
-        address,
+        reference_id,
+        cashiers,
+        customers,
+        suppliers,
+        grand_total,
         created_at,
-        is_active,
-      } = item;
+        warehouses,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        name: { name, email },
-        companyName,
-        phone,
-        address,
-        created_at: date,
-        status: { status: is_active },
-        action: { handleEdit, handleDeleteModal },
+        reference: reference_id,
+        warehouse: warehouses?.name ?? "N/A",
+        cashier: cashiers?.name ?? "N/A",
+        customer: customers?.name ?? "N/A",
+        supplier: suppliers?.name ?? "N/A",
+        total: grand_total,
+        date,
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     // setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -112,7 +126,15 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <CustomerEdit id={editId} />
+      <InvoiceEdit id={editId} />
+
+      {detailsId && (
+        <InvoiceDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       {/* <StatusModal
         statusModal={statusModal}
@@ -126,10 +148,10 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"quotation"}
+        item={"invoice"}
       />
     </GlobalUtilityStyle>
   );
 };
 
-export default QuotationTable;
+export default InvoiceTable;

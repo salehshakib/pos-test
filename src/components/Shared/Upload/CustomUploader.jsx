@@ -38,6 +38,8 @@ const CustomUploader = ({
   };
 
   const handleFileChange = ({ fileList: newFileList }) => {
+    console.log(newFileList);
+
     setFileList(newFileList);
   };
 
@@ -63,21 +65,25 @@ const CustomUploader = ({
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
+        {/* <ImgCrop showGrid rotationSlider aspectSlider showReset> */}
         <Upload
           listType="picture-card"
           name={"file"}
           fileList={fileList}
           onChange={handleFileChange}
           onPreview={handlePreview}
-          beforeUpload={(file) => {
-            setFileList([...fileList, file]);
-            return false;
-          }}
+          // beforeUpload={(file) => {
+          //   setFileList([...fileList, file]);
+          //   console.log(file);
+          //   return false;
+          // }}
+          beforeUpload={() => false}
+          // customRequest={}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
           className={` ${
             multiple
-              ? "custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2"
+              ? "custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2 pb-2"
               : "custom-single-upload"
           } mt-2`}
         >
@@ -105,6 +111,7 @@ const CustomUploader = ({
             </button>
           )}
         </Upload>
+        {/* </ImgCrop> */}
       </Form.Item>
     </GlobalUtilityStyle>
   );

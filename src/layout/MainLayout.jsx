@@ -36,18 +36,18 @@ const MainLayout = () => {
         </Header>
 
         <div className="flex">
-          <div className="h-[100dvh] sticky top-[4rem] left-0">
+          <div className="h-[100vh] sticky z-40 top-[4rem] left-0 ">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 h-[100dvh]">
+          <Layout className="w-48 ">
             <Content
               style={{
                 margin: "16px",
                 backgroundColor: "white",
                 borderRadius: "8px",
               }}
-              className="shadow-md"
+              className="shadow-md "
             >
               <GlobalUtilityStyle>
                 <Outlet />

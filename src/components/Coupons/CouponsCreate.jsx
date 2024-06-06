@@ -5,9 +5,12 @@ import { useCreateCouponMutation } from "../../redux/services/coupon/couponApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CouponsForm from "./CouponsForm";
+import { Form } from "antd";
 
 const CouponsCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -26,6 +29,7 @@ const CouponsCreate = () => {
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -42,6 +46,7 @@ const CouponsCreate = () => {
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
+        form={form}
       />
     </CustomDrawer>
   );

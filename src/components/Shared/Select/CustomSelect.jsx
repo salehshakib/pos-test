@@ -13,6 +13,8 @@ const CustomSelect = (props) => {
     isLoading,
     noStyle = false,
     styleProps,
+    onChange,
+    onSelect,
   } = props;
 
   const filterOption = (input, option) =>
@@ -33,6 +35,7 @@ const CustomSelect = (props) => {
       >
         {showSearch ? (
           <Select
+            onChange={onChange}
             showSearch
             optionFilterProp="children"
             filterOption={filterOption}
@@ -56,11 +59,13 @@ const CustomSelect = (props) => {
             style={{
               ...styleProps,
             }}
-            allowClear
+            allowClear={true}
             defaultActiveFirstOption
+            onSelect={onSelect}
           />
         ) : (
           <Select
+            onChange={onChange}
             placeholder={`Select ${placeholder ?? label}`}
             className="mt-1 custom-selector"
             size="large"
@@ -80,7 +85,9 @@ const CustomSelect = (props) => {
             style={{
               ...styleProps,
             }}
-            allowClear
+            allowClear={true}
+            defaultActiveFirstOption
+            onSelect={onSelect}
           />
         )}
       </Form.Item>

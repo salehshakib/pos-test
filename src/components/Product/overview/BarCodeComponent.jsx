@@ -1,5 +1,6 @@
 import { Form } from "antd";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useEffect } from "react";
 
 const options = [
   {
@@ -31,9 +32,11 @@ const BarCodeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (!productType) {
-    form.setFieldValue("symbology", "Code 128");
-  }
+  useEffect(() => {
+    if (!productType) {
+      form.setFieldValue("symbology", "Code 128");
+    }
+  }, [form, productType]);
 
   return (
     <CustomSelect

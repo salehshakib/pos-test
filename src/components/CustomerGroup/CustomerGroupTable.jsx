@@ -21,20 +21,14 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
 
   const { editId } = useSelector((state) => state.drawer);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCustomerGroupQuery({
-    params: { ...pagination, allData: 1 },
+    params: pagination,
   });
 
   const total = data?.meta?.total;
-
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpda();
 
   const [deleteCustomerGroup, { isLoading: isDeleting }] =
     useDeleteCustomerGroupMutation();
@@ -43,20 +37,6 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
   };
-
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -80,12 +60,12 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
         name: name,
         percentage: percentage + " percent",
         created_at: date,
-        action: { handleEdit, handleDeleteModal },
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    //   setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -98,16 +78,10 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <CustomerGroupEdit id={editId} />
-
-      {/* <StatusModal
-          statusModal={statusModal}
-          hideModal={hideModal}
-          handleStatus={handleStatus}
-          isLoading={isStatusUpdating}
-        /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

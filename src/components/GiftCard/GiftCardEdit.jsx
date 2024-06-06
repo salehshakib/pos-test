@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useGetGiftCardDetailsQuery,
+  useUpdateGiftCardMutation,
+} from "../../redux/services/giftcard/giftcard/giftCardApi";
+import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import GiftCardForm from "./GiftCardForm";
+import dayjs from "dayjs";
 
 const GiftCardEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -9,53 +17,54 @@ const GiftCardEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  // const { data, isFetching } = useGetDepartmentDetailsQuery(
-  //   { id },
-  //   { skip: !id }
-  // );
-  // const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
+  const { data, isFetching } = useGetGiftCardDetailsQuery(
+    { id },
+    { skip: !id }
+  );
+  const [updateGiftCard, { isLoading }] = useUpdateGiftCardMutation();
 
-  // useEffect(() => {
-  //   if (data) {
-  //     // const fieldData = fieldsToUpdate(data);
-  //     const fieldData = [
-  //       {
-  //         name: "name",
-  //         value: data?.name,
-  //         errors: "",
-  //       },
-  //     ];
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      const fieldData = [
+        ...fieldsToUpdate(data),
+        {
+          name: "customer_id",
+          value: data?.customer_id?.toString(),
+          errors: "",
+        },
+      ];
 
-  //     setFields(fieldData);
-  //   }
-  // }, [data, setFields]);
+      setFields(fieldData);
+    }
+  }, [data, setFields]);
 
-  // const handleUpdate = async (values) => {
-  //   const { data, error } = await updateDepartment({
-  //     data: { id, ...values },
-  //   });
+  const handleUpdate = async (values) => {
+    const { data, error } = await updateGiftCard({
+      data: { id, ...values },
+    });
 
-  //   if (data?.success) {
-  //     setId(undefined);
-  //     dispatch(closeEditDrawer());
-  //   }
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+    }
 
-  //   if (error) {
-  //     const errorFields = errorFieldsUpdate(fields, error);
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
 
-  //     setFields(errorFields);
-  //   }
-  // };
+      setFields(errorFields);
+    }
+  };
 
   return (
     <CustomDrawer
       title={"Edit Gift Card"}
       open={isEditDrawerOpen}
-      // isLoading={isFetching}
+      isLoading={isFetching}
     >
       <GiftCardForm
-        // handleSubmit={handleUpdate}
-        // isLoading={isLoading}
+        handleSubmit={handleUpdate}
+        isLoading={isLoading}
         fields={fields}
       />
     </CustomDrawer>

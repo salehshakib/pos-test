@@ -44,8 +44,8 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
       return {
         id,
         name: name,
-        time: date,
-        action: { handleDeleteModal },
+        created_at: date,
+        handleDeleteModal,
       };
     }) ?? [];
 
@@ -62,6 +62,7 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <DeleteModal

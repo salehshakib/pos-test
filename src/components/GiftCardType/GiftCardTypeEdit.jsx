@@ -2,24 +2,29 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useGetQuotationDetailsQuery, useUpdateQuotationMutation } from "../../redux/services/quotation/quotationApi";
+import {
+  useGetGiftCardTypeDetailsQuery,
+  useUpdateGiftCardTypeMutation,
+} from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { CustomerForm } from "../Customer/CustomerForm";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { GiftCardTypeForm } from "./GiftCardTypeForm";
 
-const QuotationEdit = ({ id }) => {
+export const GiftCardTypeEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
+
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetQuotationDetailsQuery(
+  const { data, isFetching } = useGetGiftCardTypeDetailsQuery(
     { id },
     { skip: !id }
   );
-  const [updateQuotation, { isLoading }] = useUpdateQuotationMutation();
+
+  const [updateGiftCardType, { isLoading }] = useUpdateGiftCardTypeMutation();
 
   useEffect(() => {
     if (data) {
@@ -30,12 +35,12 @@ const QuotationEdit = ({ id }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const { data, error } = await updateQuotation({
-      id,
-      data: values,
+    const { data, error } = await updateGiftCardType({
+      data: { id, ...values },
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 
@@ -45,13 +50,14 @@ const QuotationEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
+
   return (
     <CustomDrawer
-      title={"Edit Quotation"}
+      title={"Edit Gift Card"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <CustomerForm
+      <GiftCardTypeForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -60,5 +66,3 @@ const QuotationEdit = ({ id }) => {
     </CustomDrawer>
   );
 };
-
-export default QuotationEdit;

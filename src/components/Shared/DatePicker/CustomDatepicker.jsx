@@ -4,7 +4,14 @@ import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const { RangePicker } = DatePicker;
 
-const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
+const CustomDatepicker = ({
+  label,
+  required,
+  picker,
+  type = "date",
+  name,
+  disabledDate = false,
+}) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item
@@ -15,11 +22,13 @@ const CustomDatepicker = ({ label, required, picker, type = "date", name }) => {
         {type === "date" && (
           <DatePicker
             size={"large"}
+            placeholder="Choose Date"
             className="border-2 mt-1"
             style={{ width: "100%" }}
             format={picker === "year" ? "YYYY" : "YYYY-MM-DD"}
             picker={picker}
             suffixIcon={<MdDateRange color="black" />}
+            disabledDate={disabledDate}
           />
         )}
 

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import UnitCreate from "../../../components/Unit/UnitCreate";
 import UnitTable from "../../../components/Unit/UnitTable";
-import { MdDelete } from "react-icons/md";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -35,63 +34,42 @@ const columns = [
     align: "center",
     render: (baseUnit) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {baseUnit}
+        {baseUnit ?? "N/A"}
       </span>
     ),
   },
-  // {
-  //   title: "Operator",
-  //   dataIndex: "operator",
-  //   key: "operator",
-  //   align: "center",
-  //   render: (operator) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {operator}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   title: "Operator Value",
-  //   dataIndex: "operatorValue",
-  //   key: "operatorValue",
-  //   align: "center",
-  //   render: (operatorValue) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {operatorValue}
-  //     </span>
-  //   ),
-  // },
   {
-    //created_at
-    title: "Created At",
-    dataIndex: "created_at",
-    key: "created_at",
+    title: "For",
+    dataIndex: "type",
+    key: "type",
     align: "center",
-    render: (created_at) => (
+    render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {created_at}
+        {type}
       </span>
     ),
   },
   {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
+    title: "Operator",
+    dataIndex: "operator",
+    key: "operator",
     align: "center",
-    width: 70,
-    fixed: "right",
-    render: ({ handleDeleteModal }, record) => {
-      return (
-        <div className="flex justify-center items-center gap-3 ">
-          <button
-            onClick={() => handleDeleteModal(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdDelete className="text-lg md:text-xl" />
-          </button>
-        </div>
-      );
-    },
+    render: (operator) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {operator ?? "N/A"}
+      </span>
+    ),
+  },
+  {
+    title: "Operator Value",
+    dataIndex: "operatorValue",
+    key: "operatorValue",
+    align: "center",
+    render: (operatorValue) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {operatorValue ?? "N/A"}
+      </span>
+    ),
   },
 ];
 
@@ -101,7 +79,7 @@ const UnitList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Unit List"
+      pageTitle="Unit"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

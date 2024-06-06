@@ -5,7 +5,6 @@ const modalProps = {
   footer: null,
   centered: true,
   maskClosable: true,
-  width: 1000,
 };
 
 const CustomModal = ({
@@ -14,6 +13,7 @@ const CustomModal = ({
   hideModal,
   showCloseButton = true,
   children,
+  width = 1000,
 }) => {
   return (
     <GlobalUtilityStyle>
@@ -21,6 +21,7 @@ const CustomModal = ({
         title={title}
         open={openModal}
         onCancel={hideModal}
+        width={width}
         {...modalProps}
       >
         <GlobalUtilityStyle>

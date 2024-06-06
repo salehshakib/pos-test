@@ -7,7 +7,18 @@ import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
 
 export const ProductDetails = ({ id, ...props }) => {
-  const { data, isFetching } = useGetProductDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetProductDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !id }
+  );
+
+  console.log(data);
 
   const basicInfo = createDetailsLayout({
     name: data?.name,

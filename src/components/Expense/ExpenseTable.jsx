@@ -1,21 +1,19 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import {
-  useDeleteExpenseMutation,
-  useGetAllExpenseQuery,
-  useUpdateExpenseStatusMutation,
-} from "../../redux/services/expense/expenseApi";
+import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import {
+  useDeleteExpenseMutation,
+  useGetAllExpenseQuery,
+} from "../../redux/services/expense/expenseApi";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseEdit } from "./ExpenseEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
-import DeleteModal from "../Shared/Modal/DeleteModal";
 
 const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -23,40 +21,20 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
 
   const { editId } = useSelector((state) => state.drawer);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllExpenseQuery({
-    params: { ...pagination, allData: 1 },
+    params: { ...pagination, parent: 1, child: 1 },
   });
 
   const total = data?.meta?.total;
-
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateExpenseStatusMutation();
 
   const [deleteExpense, { isLoading: isDeleting }] = useDeleteExpenseMutation();
 
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
-  };
-
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
-
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
-
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
   };
 
   const handleDeleteModal = (id) => {
@@ -72,21 +50,37 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.department?.map((item) => {
-      const { id, name, created_at, is_active } = item;
+    data?.results?.expense?.map((item) => {
+      const {
+        id,
+        name,
+        created_at,
+
+        reference_id,
+        warehouses,
+        expense_categories,
+        amount,
+        reason,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
+        reference: reference_id,
+        warehouse: warehouses?.name,
+        category: expense_categories?.name,
+        amount,
+        note: reason,
         name: name,
-        status: { status: is_active, handleStatusModal },
+        // status: is_active,
         created_at: date,
-        action: { handleEdit, handleDeleteModal },
+        // handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -99,16 +93,10 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <ExpenseEdit id={editId} />
-
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
 
       <DeleteModal
         deleteModal={deleteModal}

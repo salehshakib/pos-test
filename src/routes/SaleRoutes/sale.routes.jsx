@@ -1,9 +1,12 @@
 import { CiGift } from "react-icons/ci";
-import { MdPointOfSale } from "react-icons/md";
+import { LuClipboardType } from "react-icons/lu";
+import { MdOutlineDesignServices, MdPointOfSale } from "react-icons/md";
 import { RiCoupon3Line } from "react-icons/ri";
 import Coupons from "../../pages/Dashboard/Coupons/Coupons";
 import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
+import GiftCardType from "../../pages/Dashboard/GiftCardType/GiftCardType";
 import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
+import GiftCardDesign from "../../pages/Dashboard/GiftCardDesign/GiftCardDesign";
 
 export const salePaths = [
   {
@@ -12,12 +15,23 @@ export const salePaths = [
     icon: MdPointOfSale,
     element: <SaleList />,
   },
-
+  {
+    name: "Gift Card Type",
+    path: "gift-card-type",
+    icon: LuClipboardType,
+    element: <GiftCardType />,
+  },
   {
     name: "Gift Card",
     path: "gift-card",
     icon: CiGift,
     element: <GiftCardList />,
+  },
+  {
+    name: "Gift Card Design",
+    path: "gift-card-design",
+    icon: MdOutlineDesignServices,
+    element: <GiftCardDesign />,
   },
   {
     name: "Coupons",

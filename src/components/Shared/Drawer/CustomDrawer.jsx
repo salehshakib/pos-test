@@ -30,6 +30,7 @@ const CustomDrawer = ({
       closable={true}
       onClose={onClose ?? handleCloseDrawer}
       maskClosable
+      destroyOnClose
     >
       <div className="relative w-full h-full ">
         {isLoading ? (

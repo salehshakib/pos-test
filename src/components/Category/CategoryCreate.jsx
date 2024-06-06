@@ -25,7 +25,7 @@ const CategoryCreate = ({
   const handleSubmit = async (values) => {
     const postObj = {
       ...values,
-      // category_image: values?.category_image?.[0].originFileObj,
+      attachment: values?.attachment?.[0].originFileObj,
     };
 
     const formData = new FormData();
@@ -34,6 +34,8 @@ const CategoryCreate = ({
     const { data, error } = await createCategory({
       data: formData,
     });
+
+    console.log(subDrawer);
 
     if (data?.success) {
       if (subDrawer) {

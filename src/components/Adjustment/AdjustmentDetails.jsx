@@ -5,7 +5,13 @@ import CustomModal from "../Shared/Modal/CustomModal";
 
 const AdjustmentDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetAdjustmentDetailsQuery(
-    { id },
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
     { skip: !id }
   );
 
@@ -13,7 +19,7 @@ const AdjustmentDetails = ({ id, ...props }) => {
     {
       key: 1,
       label: "Warehouse Name",
-      children: data?.warehouse_id,
+      children: data?.warehouses?.name,
       span: 2,
     },
 

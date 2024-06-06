@@ -1,22 +1,24 @@
 import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCreateQuotationMutation } from "../../redux/services/quotation/quotationApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreatePettyCashMutation } from "../../redux/services/pettycash/pettyCashApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { QuotationForm } from "./QuotationForm";
+import { PettyCashForm } from "./PettyCashForm";
 
-const QuotationCreate = () => {
+export const PettyCashCreate = () => {
   const dispatch = useDispatch();
-  const [form] = Form.useForm();
 
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createQuotation, { isLoading }] = useCreateQuotationMutation();
+  const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createQuotation({ data: values });
+    const { data, error } = await createPettyCash({
+      data: { ...values, status: "Open" },
+    });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
@@ -32,12 +34,8 @@ const QuotationCreate = () => {
   };
 
   return (
-    <CustomDrawer
-      title={"Create Quotation"}
-      open={isCreateDrawerOpen}
-      form={form}
-    >
-      <QuotationForm
+    <CustomDrawer title={"Create Petty Cash"} open={isCreateDrawerOpen}>
+      <PettyCashForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -46,5 +44,3 @@ const QuotationCreate = () => {
     </CustomDrawer>
   );
 };
-
-export default QuotationCreate;

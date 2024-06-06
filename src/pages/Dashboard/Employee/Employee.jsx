@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import EmployeeCreate from "../../../components/Employee/EmployeeCreate";
 import EmployeeTable from "../../../components/Employee/EmployeeTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { defaultUser } from "../../../assets/data/defaultUserImage";
 
 const columns = [
   {

@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
+import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
@@ -18,7 +18,7 @@ const BrandForm = (props) => {
           />
         </Col>
         <Col {...fullColLayout}>
-          <CustomUploader label={"Brand Image"} name={"brand_image"} />
+          <CustomUploader label={"Brand Image"} name={"logo"} />
         </Col>
       </Row>
     </CustomForm>

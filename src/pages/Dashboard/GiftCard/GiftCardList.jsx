@@ -1,22 +1,10 @@
 import { useState } from "react";
+import defaultUser from "../../../assets/data/defaultUserImage";
 import GiftCardCreate from "../../../components/GiftCard/GiftCardCreate";
 import GiftCardTable from "../../../components/GiftCard/GiftCardTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
   {
     title: "Img",
     dataIndex: "image",
@@ -25,9 +13,9 @@ const columns = [
     align: "center",
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
         <img
-          src={img}
+          src={img ?? defaultUser}
           alt="defaultUser"
           className="w-full h-full object-cover"
         />
@@ -100,36 +88,35 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Created At",
-    dataIndex: "time",
-    key: "time",
-    align: "center",
-    render: (time) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {time}
-      </span>
-    ),
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
-    width: 70,
-    fixed: "right",
-    //   render: ({ handleEdit, handleDeleteModal }, record) => {
-    //     return (
-    //       <div className="flex justify-center items-center gap-3 ">
-    //         <button
-    //           onClick={            onClick={ handleEdit}
-  },
+  // {
+  //   title: "Created At",
+  //   dataIndex: "date",
+  //   key: "date",
+  //   align: "center",
+  //   render: (date) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {date}
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   title: "Action",
+  //   dataIndex: "action",
+  //   key: "action",
+  //   align: "center",
+  //   width: 70,
+  //   fixed: "right",
+  //   render: (_, record) => {
+  //     return (
+  //       <div className="flex justify-center items-center gap-3 ">
+  //         <button
+  //           onClick={() => record?.handleEdit(record?.id)}
   //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
   //         >
   //           <MdEditSquare className="text-lg md:text-xl" />
   //         </button>
   //         <button
-  //           onClick={()=>handleDeleteModal(record?.id)}
+  //           onClick={() => record?.handleDeleteModal(record?.id)}
   //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
   //         >
   //           <MdDelete className="text-lg md:text-xl" />
@@ -146,7 +133,7 @@ const GiftCardList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Gift Card List"
+      pageTitle="Gift Card"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

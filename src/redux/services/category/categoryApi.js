@@ -5,7 +5,7 @@ import { baseApi } from "../../api/baseApi";
 
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query({
+    getAllCategory: build.query({
       query: ({ params }) => {
         return {
           url: `/${CATEGORY}`,
@@ -103,7 +103,7 @@ const categoryApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetCategoriesQuery,
+  useGetAllCategoryQuery,
   useGetCategoryDetailsQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,

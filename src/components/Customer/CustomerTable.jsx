@@ -30,7 +30,7 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllCustomerQuery({
-    params: { ...pagination, allData: 1 },
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -80,24 +80,23 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         email,
         company_name: companyName,
         phone_number: phone,
-        // address,
         created_at,
         is_active,
-        customer_group_id,
-      } = item;
+        customer_groups,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
-      console.log(item);
       return {
         id,
         name: { name, email },
         companyName,
         phone,
-        // address,
-        customerGroup: customer_group_id,
+        customerGroup: customer_groups?.name,
         created_at: date,
-        status: { status: is_active, handleStatusModal },
-        action: { handleEdit, handleDeleteModal },
+        status: is_active,
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

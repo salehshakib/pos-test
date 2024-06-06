@@ -12,10 +12,12 @@ import {
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./api/baseApi";
 import authSlice from "./services/auth/authSlice";
+import cashRegisterSlice from "./services/cashRegister/cashRegisterSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
-import themeSlice from "./services/theme/themeSlice";
-import productSlice from "./services/product/productSlice";
 import paginationSlice from "./services/pagination/paginationSlice";
+import productSlice from "./services/product/productSlice";
+import themeSlice from "./services/theme/themeSlice";
+import pettyCashSlice from "./services/pettycash/pettyCashSlice";
 
 const persistConfig = {
   key: ["auth", "theme"],
@@ -23,11 +25,16 @@ const persistConfig = {
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authSlice);
+
 const persistedThemeReducer = persistReducer(persistConfig, themeSlice);
+
 const persistemPaginationReducer = persistReducer(
   persistConfig,
   paginationSlice
 );
+
+const persistedCashRegister = persistReducer(persistConfig, cashRegisterSlice);
+const persistePettyCash = persistReducer(persistConfig, pettyCashSlice);
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +42,8 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     theme: persistedThemeReducer,
     pagination: persistemPaginationReducer,
+    cashRegister: persistedCashRegister,
+    pettyCash: persistePettyCash,
     drawer: drawerSlice,
     product: productSlice,
   },

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCategoryMutation,
-  useGetCategoriesQuery,
+  useGetAllCategoryQuery,
   useUpdateCategoryStatusMutation,
 } from "../../redux/services/category/categoryApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -26,8 +26,8 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetCategoriesQuery({
-    params: pagination,
+  const { data, isLoading } = useGetAllCategoryQuery({
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -71,16 +71,21 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, parent_id, is_active } = item;
+      const { id, name, created_at, is_active, parent_categories } = item ?? {};
+
+      const { name: parent_name } = parent_categories ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         category: name,
-        parentCategory: parent_id ?? "N/A",
+        parentCategory: parent_name ?? "N/A",
         created_at: date,
-        status: { status: is_active, handleStatusModal },
-        action: { handleEdit, handleDeleteModal },
+
+        status: is_active,
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

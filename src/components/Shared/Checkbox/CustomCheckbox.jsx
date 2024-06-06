@@ -10,15 +10,11 @@ const CustomCheckbox = (props) => {
     required = false,
     mode = "single",
     options = [],
-    defaultValue,
   } = props;
-
-  // const form = Form.useFormInstance();
 
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        // label={mode === "group" && label}
         label={label}
         name={name}
         rules={[{ required: required, message: `Please select ${label}!` }]}

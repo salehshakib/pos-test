@@ -37,6 +37,21 @@ const GlobalUtilityStyle = styled.div`
     background: ${secondaryColor} !important;
   }
 
+  .image-border {
+    border: 1px dashed ${secondaryColor};
+    border-radius: 8px;
+
+    &:hover {
+      border-color: ${primaryColor};
+    }
+  }
+
+  .border-secondary-hover {
+    &:hover {
+      border: 1px solid ${primaryColor} !important;
+    }
+  }
+
   .custom-primary-btn {
     background: ${primaryColor} !important;
     border: 1px solid ${primaryColor} !important;
@@ -69,6 +84,26 @@ const GlobalUtilityStyle = styled.div`
   .ant-select {
     border: 2px solid ${secondaryColor} !important;
     border-radius: 8px !important;
+
+    &:hover {
+      border: 2px solid ${primaryColor} !important;
+      border-radius: 8px !important;
+    }
+  }
+
+  .ant-group-number {
+    border: 2px solid ${secondaryColor} !important;
+    border-radius: 8px !important;
+
+    .ant-input-number-group-addon {
+      font-size: 14px !important;
+      border: none !important;
+      border-right: 2px solid ${secondaryColor} !important;
+    }
+
+    .ant-input-number {
+      border: none !important;
+    }
 
     &:hover {
       border: 2px solid ${primaryColor} !important;

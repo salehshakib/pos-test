@@ -29,7 +29,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllAdjustmentQuery({
-    params: { ...pagination, allData: 1 },
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -61,18 +61,19 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.adjustment?.map((item) => {
-      const { id, note, created_at, warehouse_id, reference_id } = item;
+      const { id, note, created_at, warehouses, reference_id } = item ?? {};
 
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        warehouse: warehouse_id,
+        warehouse: warehouses?.name,
         reference: reference_id,
-        date: date,
+        created_at: date,
         note: note ?? "N/A",
-
-        action: { handleDetailsModal, handleEdit, handleDeleteModal },
+        handleDetailsModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 
@@ -90,15 +91,18 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <AdjustmentEdit id={editId} />
 
-      <AdjustmentDetails
-        id={detailsId}
-        openModal={detailsModal}
-        hideModal={hideModal}
-      />
+      {detailsId && (
+        <AdjustmentDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

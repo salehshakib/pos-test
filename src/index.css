@@ -46,13 +46,21 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
-.ant-input-group-wrapper {
-}
+/* .ant-input-number-group-wrapper {
+  font-size: 14px;
+  border: none  !important;
+} */
 
 .ant-input-affix-wrapper-lg:focus {
   border: none !important;
 }
 
 .ant-input-number-lg input.ant-input-number-input {
-  height: 35px !important;
+  height: 37px !important;
+}
+
+@media screen and (max-width: 730px) {
+  .ant-page-header-heading {
+    justify-content: center !important;
+  }
 }

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import { PettyCash } from "../pages/Dashboard/PettyCash/PettyCash";
 import Login from "../pages/Login/Login";
 import Pos from "../Pos";
 import { routeGenerator } from "../utilities/lib/routesGenerator";
@@ -14,7 +15,13 @@ export const router = createBrowserRouter([
         <App />
       </PrivateRoute>
     ),
-    children: routeGenerator(adminPaths),
+    children: [
+      ...routeGenerator(adminPaths),
+      {
+        path: "petty-cash",
+        element: <PettyCash />,
+      },
+    ],
   },
   {
     path: "/pos",
@@ -24,6 +31,7 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+
   {
     path: "/login",
     element: <Login />,

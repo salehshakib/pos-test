@@ -33,7 +33,6 @@ export const TaxComponent = () => {
     <>
       <CustomSelectButton
         label="Product Tax"
-        showSearch={true}
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}

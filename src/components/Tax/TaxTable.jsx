@@ -45,8 +45,8 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
         id,
         name: name,
         rate: rate,
-        time: date,
-        action: { handleDeleteModal },
+        created_at: date,
+        handleDeleteModal,
       };
     }) ?? [];
 
@@ -63,6 +63,7 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <DeleteModal

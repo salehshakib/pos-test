@@ -1,5 +1,6 @@
 import { Form } from "antd";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useEffect } from "react";
 
 const options = [
   { value: "Standard", label: "Standard" },
@@ -12,9 +13,12 @@ const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (!productType) {
-    form.setFieldValue("type", "Standard");
-  }
+  useEffect(() => {
+    if (!productType) {
+      form.setFieldValue("type", "Standard");
+    }
+  }, [form, productType]);
+
   return (
     <CustomSelect
       label="Product Type"

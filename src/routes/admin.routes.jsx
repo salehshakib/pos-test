@@ -23,10 +23,11 @@ import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import People from "../pages/Dashboard/People/People";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
+import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
-import { quotationPaths } from "./Quotation/quotation.routes";
+import { reportPaths } from "./ReportRoutes/report.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
@@ -70,10 +71,10 @@ export const adminPaths = [
     children: expensePaths,
   },
   {
-    name: "Quotation",
-    path: "quotation",
+    name: "Generator",
+    path: "generator",
     icon: TbFilePercent,
-    children: quotationPaths,
+    children: generatorPaths,
   },
   {
     name: "Transfer",
@@ -116,14 +117,7 @@ export const adminPaths = [
     name: "Reports",
     path: "reports",
     icon: TbReport,
-    // children: [
-    //   {
-    //     name: "Sub Reports",
-    //     path: "sub-reports",
-    //     icon: TbDashboard,
-    //     element: <Reports />,
-    //   },
-    // ],
+    children: reportPaths,
   },
   {
     name: "Roles",

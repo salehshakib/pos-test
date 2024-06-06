@@ -17,7 +17,7 @@ const FormButton = ({ loading, children, onClose }) => {
   };
 
   return (
-    <div className={`w-full flex gap-3 justify-end items-center pb-20`}>
+    <div className={`w-full flex gap-3 justify-end items-center pb-20 pt-5`}>
       <Button type="default" onClick={onClose ?? handleDrawerClose}>
         Cancel
       </Button>
@@ -47,7 +47,9 @@ const CustomForm = (props) => {
     //     validateOnly: true,
     //   })
     //   .then(() => {
+    //     //
     //   })
+
     //   .catch((error) => {
     //     console.error("Validation error:", error);
     //   });
@@ -57,7 +59,7 @@ const CustomForm = (props) => {
     console.log(errorInfo);
   };
 
-  console.log(isLoading);
+  console.log(fields);
 
   return (
     <GlobalUtilityStyle>

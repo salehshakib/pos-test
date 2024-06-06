@@ -11,6 +11,7 @@ import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -29,30 +30,25 @@ const Categoryedit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data) {
-      // console.log(data);
       const fieldData = fieldsToUpdate(data);
-
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-      //   {
-      //     name: "parent_id",
-      //     value: Number(data?.parent_id),
-      //     errors: "",
-      //   },
-      // ];
 
       setFields(fieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
+    const postObj = values;
+
+    if (values?.attachment?.[0]?.originFileObj) {
+      postObj.attachment = values?.attachment?.[0]?.originFileObj;
+    }
+
+    const formData = new FormData();
+    appendToFormData(postObj, formData);
+
     const { data, error } = await updateCategory({
       id,
-      data: values,
+      data: formData,
     });
 
     if (data?.success) {

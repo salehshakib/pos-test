@@ -5,7 +5,7 @@ import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query({
+    getAllProducts: build.query({
       query: ({ params }) => {
         return {
           url: `/${PRODUCT}`,
@@ -21,10 +21,11 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     getProductDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${PRODUCT}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
@@ -47,6 +48,7 @@ const productApi = baseApi.injectEndpoints({
       },
       transformErrorResponse: (response) => {
         console.log(response);
+        return response;
       },
       invalidatesTags: (result) => {
         return result ? [PRODUCT] : [];
@@ -111,7 +113,7 @@ const productApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetProductsQuery,
+  useGetAllProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

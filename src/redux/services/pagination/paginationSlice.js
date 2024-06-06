@@ -4,6 +4,7 @@ const initialState = {
   pagination: {
     page: 1,
     perPage: 10,
+    allData: 1,
   },
 };
 

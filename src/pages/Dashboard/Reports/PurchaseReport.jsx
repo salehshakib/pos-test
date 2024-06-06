@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SaleReportTable } from "../../../components/Report/SaleReportTable";
+import { PurchaseReportTable } from "../../../components/Report/PurchaseReportTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
@@ -14,7 +14,7 @@ const columns = [
     ),
   },
   {
-    title: "Sold Amount",
+    title: "Purchased Amount",
     dataIndex: "soldAmount",
     key: "soldAmount",
     render: (amount) => (
@@ -24,7 +24,7 @@ const columns = [
     ),
   },
   {
-    title: "Sold Qty",
+    title: "Purchased Qty",
     dataIndex: "soldQty",
     key: "soldQty",
     render: (qty) => (
@@ -45,17 +45,17 @@ const columns = [
   },
 ];
 
-export const SaleReport = () => {
+export const PurchaseReport = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Sale Report"
+      pageTitle="Purchase Report"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <SaleReportTable
+      <PurchaseReportTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />

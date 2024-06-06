@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectPagination } from "../../../redux/services/pagination/paginationSlice";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import CustomTable from "../../Shared/Table/CustomTable";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { GlobalUtilityStyle } from "../../container/Styled";
+import CustomTable from "../Shared/Table/CustomTable";
 
-export const ProductReportTable = ({ newColumns, setSelectedRows }) => {
+export const SaleReportTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
@@ -89,6 +89,9 @@ export const ProductReportTable = ({ newColumns, setSelectedRows }) => {
         // isLoading={isLoading}
         setSelectedRows={setSelectedRows}
         isRowSelection={true}
+        status={false}
+        created_at={false}
+        action={false}
       />
 
       {/* <BrandEdit id={editId} setId={setEditId} />

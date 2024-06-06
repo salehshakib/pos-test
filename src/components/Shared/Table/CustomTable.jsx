@@ -20,6 +20,8 @@ const CustomTable = ({
   showPaging = true,
   tableStyleProps = {},
   status = true,
+  created_at = true,
+  action = true,
 }) => {
   const dispatch = useDispatch();
 
@@ -108,101 +110,6 @@ const CustomTable = ({
       ),
     },
     ...columns,
-    {
-      //created_at
-      title: "Created At",
-      dataIndex: "created_at",
-      key: "created_at",
-      align: "center",
-      render: (created_at) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {created_at}
-        </span>
-      ),
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-      align: "center",
-      width: 70,
-      fixed: "right",
-      render: (props, record) => {
-        if (record?.handleDetailsModal) {
-          return (
-            <div className="flex justify-center items-center gap-3 ">
-              <button
-                onClick={() => record?.handleDetailsModal(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <TbListDetails className="text-lg md:text-xl" />
-              </button>
-
-              <Dropdown
-                menu={{
-                  items: [
-                    {
-                      key: "edit",
-                      icon: <MdEditSquare size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Edit
-                        </div>
-                      ),
-                      onClick: () => record?.handleEdit(record?.id),
-                    },
-                    {
-                      key: "due",
-                      icon: <PiBroom size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Due Clear
-                        </div>
-                      ),
-                    },
-                    {
-                      key: "delete",
-                      icon: <MdDelete size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Delete
-                        </div>
-                      ),
-                      onClick: () => record?.handleDeleteModal(record?.id),
-                    },
-                  ],
-                }}
-                placement="bottom"
-                trigger={["click"]}
-              >
-                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-                  <FiMoreHorizontal className="text-lg md:text-xl" />
-                </button>
-              </Dropdown>
-            </div>
-          );
-        } else {
-          return (
-            <div className="flex justify-center items-center gap-3 ">
-              {record?.handleEdit && (
-                <button
-                  onClick={() => record?.handleEdit(record?.id)}
-                  className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-                >
-                  <MdEditSquare className="text-lg md:text-xl" />
-                </button>
-              )}
-              <button
-                onClick={() => record?.handleDeleteModal(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdDelete className="text-lg md:text-xl" />
-              </button>
-            </div>
-          );
-        }
-      },
-    },
   ];
 
   const statusColumn = {
@@ -229,14 +136,115 @@ const CustomTable = ({
     },
   };
 
+  const timeColumns = {
+    //created_at
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
+    align: "center",
+    render: (created_at) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {created_at}
+      </span>
+    ),
+  };
+
+  const actionColumn = {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+    align: "center",
+    width: 70,
+    fixed: "right",
+    render: (props, record) => {
+      if (record?.handleDetailsModal) {
+        return (
+          <div className="flex justify-center items-center gap-3 ">
+            <button
+              onClick={() => record?.handleDetailsModal(record?.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            >
+              <TbListDetails className="text-lg md:text-xl" />
+            </button>
+
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "edit",
+                    icon: <MdEditSquare size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Edit
+                      </div>
+                    ),
+                    onClick: () => record?.handleEdit(record?.id),
+                  },
+                  {
+                    key: "due",
+                    icon: <PiBroom size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Due Clear
+                      </div>
+                    ),
+                  },
+                  {
+                    key: "delete",
+                    icon: <MdDelete size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Delete
+                      </div>
+                    ),
+                    onClick: () => record?.handleDeleteModal(record?.id),
+                  },
+                ],
+              }}
+              placement="bottom"
+              trigger={["click"]}
+            >
+              <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                <FiMoreHorizontal className="text-lg md:text-xl" />
+              </button>
+            </Dropdown>
+          </div>
+        );
+      } else {
+        return (
+          <div className="flex justify-center items-center gap-3 ">
+            {record?.handleEdit && (
+              <button
+                onClick={() => record?.handleEdit(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdEditSquare className="text-lg md:text-xl" />
+              </button>
+            )}
+            <button
+              onClick={() => record?.handleDeleteModal(record?.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+          </div>
+        );
+      }
+    },
+  };
+
   const newColumns = [...baseColumns];
 
-  const createdAtIndex = newColumns.findIndex(
-    (column) => column.key === "created_at"
-  );
+  if (status) {
+    newColumns.splice(newColumns.length, 0, statusColumn);
+  }
 
-  if (status && createdAtIndex !== -1) {
-    newColumns.splice(createdAtIndex, 0, statusColumn);
+  if (created_at) {
+    newColumns.splice(newColumns.length, 0, timeColumns);
+  }
+
+  if (action) {
+    newColumns.splice(newColumns.length, 0, actionColumn);
   }
 
   return (

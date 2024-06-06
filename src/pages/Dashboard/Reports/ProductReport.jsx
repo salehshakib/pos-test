@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductReportTable } from "../../../components/Report/ProductReport/ProductReportTable";
+import { ProductReportTable } from "../../../components/Report/ProductReportTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [

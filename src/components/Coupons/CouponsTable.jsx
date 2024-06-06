@@ -124,6 +124,7 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        created_at={false}
       />
 
       <CouponsEdit id={editId} setId={setEditId} />

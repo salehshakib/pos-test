@@ -41,7 +41,8 @@ const StockCountForm = (props) => {
             options={warehouseOptions}
             isLoading={isLoading}
             showSearch={true}
-            name="warehouse_id"
+            mode="multiple"
+            name="stock_warehouse_ids"
           />
         </Col>
         <Col {...mdColLayout}>

@@ -8,7 +8,7 @@ export const BrandComponent = () => {
 
   const options = data?.results?.brand?.map((item) => {
     return {
-      value: item?.id,
+      value: item?.id.toString(),
       label: item?.name,
     };
   });
@@ -16,7 +16,7 @@ export const BrandComponent = () => {
   return (
     <Col {...mdColLayout}>
       <CustomSelect
-        name={"brand_id"}
+        name={"brand_ids"}
         label="Brand"
         options={options}
         isLoading={isFetching}

@@ -1,14 +1,14 @@
 import { Col, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
 
 const SaleReturnForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomSelect
+          <CustomInput
             label="Sale Reference"
             name={"purchase_reference"}
             // placeholder={"Purchase Refernce"}

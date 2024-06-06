@@ -15,25 +15,6 @@ export const ReportContainer = ({
         <PageContainer
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
-            //   subTitle: (
-            //     <>
-            //       {!pathname.includes("/petty-cash") && (
-            //         <div className="w-full">
-            //           <Button
-            //             key={"create"}
-            //             type="text"
-            //             icon={<FaCirclePlus size={28} />}
-            //             style={{
-            //               width: "45px",
-            //               height: "100%",
-            //             }}
-            //             onClick={handleDrawerOpen}
-            //             className="primary-text flex justify-center items-center"
-            //           />
-            //         </div>
-            //       )}
-            //     </>
-            //   ),
           }}
           extra={[
             <Space key="search">
@@ -80,35 +61,6 @@ export const ReportContainer = ({
                 </Popover>
               </Space.Compact>
             </Space>,
-
-            //   <Dropdown
-            //     key="dropdown"
-            //     trigger={["click"]}
-            //     open={open}
-            //     onOpenChange={handleOpenChange}
-            //     menu={{
-            //       items,
-            //       selectable: true,
-            //       onSelect: (value) => {
-            //         if (value.key !== "view") {
-            //           setOpen(false);
-            //         }
-            //       },
-            //     }}
-            //     placement="bottomRight"
-            //   >
-            //     <Button style={{ padding: "0 12px" }} size="large">
-            //       <FaEllipsis />
-            //     </Button>
-            //   </Dropdown>,
-
-            //   selectedRows?.length !== 0 && (
-            //     <div key={"delete"}>
-            //       <button className="custom-primary-btn p-2 rounded-xl text-white duration-300 ">
-            //         <FaTrash className="text-xl" />
-            //       </button>
-            //     </div>
-            //   ),
           ]}
           content={children}
         />

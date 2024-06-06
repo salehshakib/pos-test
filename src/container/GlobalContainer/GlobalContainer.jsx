@@ -148,7 +148,9 @@ const GlobalContainer = ({
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
               <>
-                {!pathname.includes("/petty-cash") && (
+                {!["/petty-cash", "/reports"].some((path) =>
+                  pathname.includes(path)
+                ) && (
                   <div className="w-full">
                     <Button
                       key={"create"}

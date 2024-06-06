@@ -17,6 +17,10 @@ const AdjustmentCreate = () => {
 
   const [createAdjustment, { isLoading }] = useCreateAdjustmentMutation();
 
+  const [formValues, setFormValues] = useState({
+    product_list: { qty: {}, action: {} },
+  });
+
   const handleSubmit = async (values) => {
     const { warehouse_id, product_list, attachment, note } = values;
 
@@ -77,6 +81,8 @@ const AdjustmentCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
+        formValues={formValues}
+        setFormValues={setFormValues}
       />
     </CustomDrawer>
   );

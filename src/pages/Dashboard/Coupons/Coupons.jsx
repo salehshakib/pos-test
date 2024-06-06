@@ -1,23 +1,9 @@
 import { useState } from "react";
-import { MdDelete, MdEditSquare } from "react-icons/md";
 import CouponsCreate from "../../../components/Coupons/CouponsCreate";
 import CouponsTable from "../../../components/Coupons/CouponsTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
   {
     title: "Coupon Code",
     dataIndex: "couponCode",
@@ -115,24 +101,6 @@ const columns = [
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {expiredAt}
       </span>
-    ),
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
-    width: 50,
-    fixed: "right",
-    render: () => (
-      <div className="flex justify-center items-center gap-3 ">
-        <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-          <MdEditSquare className="text-xl" />
-        </button>
-        <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-          <MdDelete className="text-xl" />
-        </button>
-      </div>
     ),
   },
 ];

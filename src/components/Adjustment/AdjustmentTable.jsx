@@ -69,10 +69,11 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         id,
         warehouse: warehouses?.name,
         reference: reference_id,
-        date: date,
+        created_at: date,
         note: note ?? "N/A",
-
-        action: { handleDetailsModal, handleEdit, handleDeleteModal },
+        handleDetailsModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 
@@ -90,15 +91,18 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <AdjustmentEdit id={editId} />
 
-      <AdjustmentDetails
-        id={detailsId}
-        openModal={detailsModal}
-        hideModal={hideModal}
-      />
+      {detailsId && (
+        <AdjustmentDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

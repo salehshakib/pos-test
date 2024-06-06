@@ -1,52 +1,24 @@
 import { Col, Row } from "antd";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import { WarehouseComponent } from "../Generator/overview/WarehouseComponent";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { AdjustmentProductTable } from "./overview/AdjustmentProductTable";
 
-const SelectWarehouse = () => {
-  const { data, isLoading } = useGetWarehousesQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
-  });
-
-  const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse.id?.toString(),
-    label: warehouse.name,
-  }));
-
-  return (
-    <CustomSelect
-      label="Warehouse"
-      required={true}
-      options={options}
-      isLoading={isLoading}
-      showSearch={true}
-      name="warehouse_id"
-    />
-  );
-};
-
-const AdjustmentForm = ({ options, ...props }) => {
+const AdjustmentForm = ({ formValues, setFormValues, ...props }) => {
+  console.log(formValues.product_list);
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <SelectWarehouse />
+          <WarehouseComponent />
         </Col>
 
-        {/* <Col {...fullColLayout}> */}
-        {/* <SearchProductComponent options={options} /> */}
-        {/* <ProductController /> */}
-        {/* </Col> */}
-
-        <AdjustmentProductTable />
-
-        {/* <ProductTableComponent /> */}
+        <AdjustmentProductTable
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
 
         <Col {...fullColLayout}>
           <CustomUploader label="Attach Documents" name={"attachment"} />

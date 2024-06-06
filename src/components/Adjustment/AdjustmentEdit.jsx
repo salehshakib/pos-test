@@ -17,31 +17,42 @@ const AdjustmentEdit = ({ id }) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const { data, isFetching } = useGetAdjustmentDetailsQuery(
-    { id },
+    { id, params: { child: 1 } },
     { skip: !id }
   );
 
   const [udpateAdjustment, { isLoading }] = useUpdateAdjustmentMutation();
 
-  const [options, setOptions] = useState([]);
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      qty: {},
+      action: {},
+    },
+  });
 
   useEffect(() => {
     if (data) {
-      const product_list = JSON.parse(data?.product_list);
-
-      const list = product_list?.map((item) => item);
-
-      console.log(data);
+      data?.adjustment_products?.forEach((item) => {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          product_list: {
+            ...prevFormValues.product_list,
+            qty: {
+              ...prevFormValues.product_list.qty,
+              [item?.product_id.toString()]: item?.qty,
+            },
+            action: {
+              ...prevFormValues.product_list.action,
+              [item?.product_id.toString()]: item?.action,
+            },
+          },
+        }));
+      });
 
       const fieldData = [
         {
           name: "warehouse_id",
           value: data?.warehouse_id,
-          errors: "",
-        },
-        {
-          name: "product_name",
-          value: list?.map((item) => item?.product_id.toString()),
           errors: "",
         },
         data?.attachments?.length > 0
@@ -60,30 +71,7 @@ const AdjustmentEdit = ({ id }) => {
           value: data?.note,
           errors: "",
         },
-        ...list.map((item) => {
-          return {
-            name: ["product_list", "action", `${item?.product_id.toString()}`],
-            value: item?.action,
-            errors: "",
-          };
-        }),
-        ...list.map((item) => {
-          return {
-            name: ["product_list", "qty", `${item?.product_id.toString()}`],
-            value: item?.qty,
-            errors: "",
-          };
-        }),
       ];
-
-      setOptions(
-        list?.map((item) => {
-          return {
-            value: item?.product_id.toString(),
-            label: `Product ${item?.product_id}`,
-          };
-        })
-      );
 
       setFields(fieldData);
     }
@@ -94,13 +82,17 @@ const AdjustmentEdit = ({ id }) => {
 
     const formData = new FormData();
 
-    const productListArray = Object.keys(product_list.qty).map((product_id) => {
-      return {
-        product_id: parseInt(product_id),
-        qty: product_list.qty[product_id],
-        action: product_list.action[product_id],
-      };
-    });
+    const productListArray = product_list?.qty
+      ? Object.keys(product_list.qty)
+          .filter((product_id) => product_list.qty[product_id] !== undefined)
+          .map((product_id) => {
+            return {
+              product_id: parseInt(product_id),
+              qty: product_list.qty[product_id],
+              action: product_list.action[product_id],
+            };
+          })
+      : [];
 
     const postObj = {
       attachment:
@@ -137,7 +129,8 @@ const AdjustmentEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
-        options={options}
+        formValues={formValues}
+        setFormValues={setFormValues}
       />
     </CustomDrawer>
   );

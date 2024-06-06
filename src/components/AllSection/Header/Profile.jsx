@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
+import { Avatar, Button, Col, Form, Modal, Popover, Row, Spin } from "antd";
 import { useState } from "react";
 import { FaCashRegister, FaShoppingBasket } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
   setCashRegister,
 } from "../../../redux/services/cashRegister/cashRegisterSlice";
 import {
+  useCheckPettyCashQuery,
   useCreatePettyCashMutation,
   useUpdatePettyCashMutation,
 } from "../../../redux/services/pettycash/pettyCashApi";
@@ -35,7 +36,22 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
 
+  const warehouseId = Form.useWatch("warehouse_id", form);
+
+  // const [warehouseId, setWarehouseId] = useState(undefined)
+  const { data, isFetching } = useCheckPettyCashQuery(
+    {
+      params: {
+        warehouse_id: parseInt(warehouseId),
+      },
+    },
+    {
+      skip: !warehouseId,
+    }
+  );
+
   const handleSubmit = async (values) => {
+    // setWarehouseId(values.warehouse_id)
     const { data, error } = await createPettyCash({
       data: { ...values, status: "Open" },
     });
@@ -82,20 +98,29 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
           <Col {...fullColLayout}>
             <WarehouseComponent />
           </Col>
-          <Col {...fullColLayout}>
-            <CustomInput
-              label="Opening Balance"
-              type="number"
-              name="opening_balance"
-              required={true}
-            />
-          </Col>
+          {/* {isFetching && (
+            <Spin className="w-full justify-center flex items-center" />
+          )} */}
+          {!isFetching && data && (
+            <Col {...fullColLayout}>
+              <CustomInput
+                label="Opening Balance"
+                type="number"
+                name="opening_balance"
+                required={true}
+              />
+            </Col>
+          )}
         </Row>
         <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
           <Button type="default" onClick={hideModal}>
             Cancel
           </Button>
-          <Button htmlType="submit" type="primary" loading={isLoading}>
+          <Button
+            htmlType="submit"
+            type="primary"
+            loading={isLoading || isFetching}
+          >
             Save
           </Button>
         </div>

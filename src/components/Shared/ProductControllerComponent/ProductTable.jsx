@@ -1,6 +1,6 @@
 import { Col } from "antd";
 import { fullColLayout } from "../../../layout/FormLayout";
-import CustomTable from "../Table/CustomTable";
+import CustomProductTable from "../Table/CustomProductTable";
 
 const tableStyleProps = {
   // bordered: true,
@@ -12,7 +12,7 @@ const tableStyleProps = {
 export const ProductTable = ({ columns, dataSource }) => {
   return (
     <Col {...fullColLayout} className="my-5">
-      <CustomTable
+      <CustomProductTable
         columns={columns}
         dataSource={dataSource}
         showPaging={false}

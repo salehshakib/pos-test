@@ -83,18 +83,23 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
         is_active,
         created_at,
         customer_id,
-      } = item;
+        created_by,
+      } = item ?? {};
+
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         cardNo: card_no,
         amount,
-        expense: expense ?? "N/A", // Default to 'N/A' if expense is null
+        expense: expense ?? "N/A",
         expiredDate: dayjs(expired_date).format("DD-MM-YYYY"),
         status: is_active,
         customer: customer_id,
-        date: date,
+        balance: amount - expense,
+        createdBy: created_by ?? "N/A",
+        created_at: date,
+        handleStatusModal,
         handleEdit,
         handleDeleteModal,
       };

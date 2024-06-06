@@ -15,8 +15,6 @@ const AdjustmentDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  console.log(data);
-
   const details = [
     {
       key: 1,

@@ -136,13 +136,11 @@ const columns = [
   },
 ];
 
-export const AdjustmentProductTable = () => {
+export const AdjustmentProductTable = ({ formValues, setFormValues }) => {
   const [products, setProducts] = useState([]);
   const form = Form.useFormInstance();
 
-  const [formValues, setFormValues] = useState({
-    product_list: { qty: {}, action: {} },
-  });
+  console.log(formValues);
 
   const incrementCounter = (id, stock = 5) => {
     setFormValues((prevFormValues) => {
@@ -212,8 +210,6 @@ export const AdjustmentProductTable = () => {
     );
   };
 
-  form.setFieldsValue(formValues);
-
   const dataSource = products?.map((product) => {
     const { id, name, sku, buying_price: unit_cost } = product;
 
@@ -255,13 +251,22 @@ export const AdjustmentProductTable = () => {
       action: false,
     });
 
-  useEffect(() => {
-    if (products.length === 0) {
-      setFormValues({
-        product_list: { qty: {}, action: {} },
-      });
-    }
-  }, [products]);
+  console.log(Object.keys(formValues.product_list.qty).length);
+
+  // useEffect(() => {
+
+  //   if (
+  //     products.length === 0 &&
+  //     Object.keys(formValues.product_list.qty).length === 0
+  //   ) {
+  //     setFormValues({
+  //       product_list: { qty: {}, action: {} },
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [products, setFormValues]);
+
+  form.setFieldsValue(formValues);
 
   return (
     <ProductController

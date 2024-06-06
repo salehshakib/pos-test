@@ -24,7 +24,7 @@ const GlobalContainer = ({
   selectedRows,
   children,
   setNewColumns,
-  searchFilterContent,
+  searchFilterContent = <div className="border border-red-600 py-5">hello</div>,
 }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -144,12 +144,6 @@ const GlobalContainer = ({
     <GlobalUtilityStyle>
       <div className="h-full">
         <PageContainer
-          // stylish={true}
-          // style={{
-
-          // }}
-          // className="flex"
-
           header={{
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
             subTitle: (
@@ -195,7 +189,12 @@ const GlobalContainer = ({
                 />
                 <Popover
                   content={searchFilterContent}
-                  title="Advance Search"
+                  title={<div className="text-center">Advance Search</div>}
+                  style={
+                    {
+                      // width: "300px"
+                    }
+                  }
                   trigger="click"
                   placement="bottomRight"
                   arrow={false}

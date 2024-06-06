@@ -70,8 +70,6 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
-
   const dataSource =
     data?.results?.giftcardtype?.map((item) => {
       const { id, name, created_at, is_active } = item;
@@ -80,9 +78,11 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
       return {
         id,
         type: name,
-        time,
-        status: { status: is_active, handleStatusModal },
-        action: { handleEdit, handleDeleteModal },
+        created_at: time,
+        status: is_active,
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
       };
     }) ?? [];
 

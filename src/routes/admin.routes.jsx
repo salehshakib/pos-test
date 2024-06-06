@@ -27,6 +27,7 @@ import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
+import { reportPaths } from "./ReportRoutes/report.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
@@ -116,14 +117,7 @@ export const adminPaths = [
     name: "Reports",
     path: "reports",
     icon: TbReport,
-    // children: [
-    //   {
-    //     name: "Sub Reports",
-    //     path: "sub-reports",
-    //     icon: TbDashboard,
-    //     element: <Reports />,
-    //   },
-    // ],
+    children: reportPaths,
   },
   {
     name: "Roles",

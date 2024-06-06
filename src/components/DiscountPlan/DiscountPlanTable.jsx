@@ -93,6 +93,7 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         // isLoading={isLoading}
+        isRowSelection={true}
       />
 
       <DiscountPlanEdit id={editId} setId={setEditId} />

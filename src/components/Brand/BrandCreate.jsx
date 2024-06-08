@@ -12,8 +12,8 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
   const [form] = Form.useForm();
   const [subForm] = Form.useForm();
-  const [errorFields, setErrorFields] = useState([]);
 
+  const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createBrand, { isLoading }] = useCreateBrandMutation();

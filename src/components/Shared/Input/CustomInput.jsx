@@ -26,7 +26,7 @@ const CustomInput = (props) => {
         rules={[
           {
             required: required,
-            message: `Please input ${requireMsg ?? label}!`,
+            message: `Please Input ${requireMsg ?? label}!`,
           },
         ]}
         tooltip={tooltip}

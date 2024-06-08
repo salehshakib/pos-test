@@ -1,42 +1,42 @@
-import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
+// Import necessary dependencies
+import { SALE } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const brandApi = baseApi.injectEndpoints({
+const saleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getBrands: build.query({
-      query: ({ params }) => {
+    getAllSale: build.query({
+      query: ({ params }) => ({
+        url: `/${SALE}`,
+        method: "GET",
+        params,
+      }),
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { params }) => [
+        { type: SALE, params },
+        SALE,
+      ],
+    }),
+
+    getSaleDetails: build.query({
+      query: ({ id, params }) => {
         return {
-          url: `/${BRAND}`,
+          url: `${SALE}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { params }) => [
-        { type: BRAND, params },
-        BRAND,
-      ],
+      providesTags: (result, error, { id }) => [{ type: SALE, id }],
     }),
 
-    getBrandDetails: build.query({
-      query: ({ id }) => {
+    createSale: build.mutation({
+      query: ({ data }) => {
         return {
-          url: `${BRAND}/show/${id}`,
-          method: "GET",
-        };
-      },
-      transformResponse: (response) => verifyToken(response.data),
-      providesTags: [BRAND],
-    }),
-
-    createBrand: build.mutation({
-      query: ({ formData }) => {
-        return {
-          url: `/${BRAND}/store`,
+          url: `/${SALE}/store`,
           method: "POST",
-          body: formData,
+          body: data,
         };
       },
       transformResponse: (response) => {
@@ -45,15 +45,21 @@ const brandApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE] : [];
       },
     }),
 
-    updateBrand: build.mutation({
+    updateSale: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${BRAND}/update/${id}`,
+          url: `/${SALE}/update/${id}`,
           method: "PUT",
           body: data,
         };
@@ -65,13 +71,14 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE] : [];
       },
     }),
-    updateBrandStatus: build.mutation({
+
+    updateSaleStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/status/${id}`,
+          url: `/${SALE}/status/${id}`,
           method: "POST",
         };
       },
@@ -82,13 +89,14 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE] : [];
       },
     }),
-    deleteBrand: build.mutation({
+
+    deleteSale: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/delete/${id}`,
+          url: `/${SALE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -99,27 +107,17 @@ const brandApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
-      },
-    }),
-    exportBrand: build.mutation({
-      query: ({ data }) => {
-        return {
-          url: `/${BRAND}/export`,
-          method: "POST",
-          body: data,
-        };
+        return result ? [SALE] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetBrandsQuery,
-  useGetBrandDetailsQuery,
-  useCreateBrandMutation,
-  useUpdateBrandMutation,
-  useUpdateBrandStatusMutation,
-  useDeleteBrandMutation,
-  useExportBrandMutation,
-} = brandApi;
+  useGetAllSaleQuery,
+  useGetSaleDetailsQuery,
+  useCreateSaleMutation,
+  useUpdateSaleMutation,
+  useUpdateSaleStatusMutation,
+  useDeleteSaleMutation,
+} = saleApi;

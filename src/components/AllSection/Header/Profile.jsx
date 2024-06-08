@@ -1,7 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Modal, Popover, Row, Spin } from "antd";
+import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
 import { useEffect, useState } from "react";
-import { FaCashRegister, FaShoppingBasket } from "react-icons/fa";
+import { FaCashRegister } from "react-icons/fa";
+import { MdPointOfSale } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -21,12 +22,11 @@ import {
   clearPettyCash,
   setPettyCash,
 } from "../../../redux/services/pettycash/pettyCashSlice";
-import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomModal from "../../Shared/Modal/CustomModal";
-import CreateComponent from "./CreateComponent";
-import { CustomDescription } from "../../Shared/Description/CustomDescription";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
+import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
+import { CustomDescription } from "../../Shared/Description/CustomDescription";
+import CustomInput from "../../Shared/Input/CustomInput";
+import CreateComponent from "./CreateComponent";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
@@ -151,7 +151,7 @@ const PosComponent = () => {
   return (
     <GlobalUtilityStyle>
       <Button
-        icon={<FaShoppingBasket size={18} />}
+        icon={<MdPointOfSale size={18} />}
         className="flex justify-center items-center gap-1 shadow-md"
         // size="large"
         onClick={posRegister}
@@ -178,6 +178,7 @@ const CashRegisterComponent = () => {
   const { register } = useSelector((state) => state.cashRegister);
 
   const [updateGiftCard, { isLoading }] = useUpdatePettyCashMutation();
+
   console.log(pettyCash, register);
 
   const [open, setOpen] = useState(false);

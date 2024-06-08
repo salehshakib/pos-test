@@ -2,11 +2,29 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
+import { Form } from "antd";
 
 const SaleReturnCreate = () => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
+
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      sale_id: {},
+      product_id: {},
+      qty: {},
+      recieved: {},
+      sale_unit_id: {},
+      net_unit_price: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+    },
+  });
 
   //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
 
@@ -33,6 +51,9 @@ const SaleReturnCreate = () => {
         handleSubmit={handleSubmit}
         // isLoading={isLoading}
         fields={errorFields}
+        form={form}
+        formValues={formValues}
+        setFormValues={setFormValues}
       />
     </CustomDrawer>
   );

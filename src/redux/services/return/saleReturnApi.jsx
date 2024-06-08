@@ -1,18 +1,16 @@
-import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
+// Import necessary dependencies
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const brandApi = baseApi.injectEndpoints({
+const saleReturnApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getBrands: build.query({
-      query: ({ params }) => {
-        return {
-          url: `/${BRAND}`,
-          method: "GET",
-          params,
-        };
-      },
+    getAllSaleReturn: build.query({
+      query: ({ params }) => ({
+        url: `/${BRAND}`,
+        method: "GET",
+        params,
+      }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
         { type: BRAND, params },
@@ -20,23 +18,24 @@ const brandApi = baseApi.injectEndpoints({
       ],
     }),
 
-    getBrandDetails: build.query({
-      query: ({ id }) => {
+    getSaleReturnDetails: build.query({
+      query: ({ id, params }) => {
         return {
           url: `${BRAND}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [BRAND],
+      providesTags: (result, error, { id }) => [{ type: BRAND, id }],
     }),
 
-    createBrand: build.mutation({
-      query: ({ formData }) => {
+    createSaleReturn: build.mutation({
+      query: ({ data }) => {
         return {
           url: `/${BRAND}/store`,
           method: "POST",
-          body: formData,
+          body: data,
         };
       },
       transformResponse: (response) => {
@@ -45,12 +44,18 @@ const brandApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
         return result ? [BRAND] : [];
       },
     }),
 
-    updateBrand: build.mutation({
+    updateSaleReturn: build.mutation({
       query: ({ id, data }) => {
         return {
           url: `/${BRAND}/update/${id}`,
@@ -68,7 +73,8 @@ const brandApi = baseApi.injectEndpoints({
         return result ? [BRAND] : [];
       },
     }),
-    updateBrandStatus: build.mutation({
+
+    updateSaleReturnStatus: build.mutation({
       query: (id) => {
         return {
           url: `/${BRAND}/status/${id}`,
@@ -85,7 +91,8 @@ const brandApi = baseApi.injectEndpoints({
         return result ? [BRAND] : [];
       },
     }),
-    deleteBrand: build.mutation({
+
+    deleteSaleReturn: build.mutation({
       query: (id) => {
         return {
           url: `/${BRAND}/delete/${id}`,
@@ -102,24 +109,31 @@ const brandApi = baseApi.injectEndpoints({
         return result ? [BRAND] : [];
       },
     }),
-    exportBrand: build.mutation({
+
+    exportSaleReturn: build.mutation({
       query: ({ data }) => {
         return {
           url: `/${BRAND}/export`,
-          method: "POST",
+          method: "GET",
           body: data,
         };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
       },
     }),
   }),
 });
 
 export const {
-  useGetBrandsQuery,
-  useGetBrandDetailsQuery,
-  useCreateBrandMutation,
-  useUpdateBrandMutation,
-  useUpdateBrandStatusMutation,
-  useDeleteBrandMutation,
-  useExportBrandMutation,
-} = brandApi;
+  useGetAllSaleReturnQuery,
+  useGetSaleReturnDetailsQuery,
+  useCreateSaleReturnMutation,
+  useUpdateSaleReturnMutation,
+  useUpdateSaleReturnStatusMutation,
+  useDeleteSaleReturnMutation,
+  useExportSaleReturnMutation,
+} = saleReturnApi;

@@ -18,6 +18,7 @@ export const CashierComponent = () => {
       options={options}
       isLoading={isLoading}
       name="cashier_id"
+      required={true}
     />
   );
 };

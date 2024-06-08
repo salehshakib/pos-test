@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { SaleCreate } from "../../../../components/Sale/SaleCreate";
-import { SaleTable } from "../../../../components/Sale/SaleTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { PurchaseCreate } from "../../../components/Purchase/PurchaseCreate";
+import { PurchaseTable } from "../../../components/Purchase/PurchaseTable";
 
 const columns = [
   {
@@ -25,32 +25,23 @@ const columns = [
     ),
   },
   {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
-    render: (customer) => (
+    title: "Supplier",
+    dataIndex: "supplier",
+    key: "supplier",
+    render: (supplier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer}
+        {supplier}
       </span>
     ),
   },
+
   {
-    title: "Biller",
-    dataIndex: "biller",
-    key: "biller",
-    render: (biller) => (
+    title: "Purchase Status",
+    dataIndex: "purchaseStatus",
+    key: "purchaseStatus",
+    render: (purchaseStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {biller}
-      </span>
-    ),
-  },
-  {
-    title: "Sale Status",
-    dataIndex: "saleStatus",
-    key: "saleStatus",
-    render: (saleStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {saleStatus}
+        {purchaseStatus}
       </span>
     ),
   },
@@ -61,16 +52,6 @@ const columns = [
     render: (paymentStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {paymentStatus}
-      </span>
-    ),
-  },
-  {
-    title: "Delivery Status",
-    dataIndex: "deliveryStatus",
-    key: "deliveryStatus",
-    render: (deliveryStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {deliveryStatus}
       </span>
     ),
   },
@@ -116,22 +97,25 @@ const columns = [
   },
 ];
 
-const SaleList = () => {
+const Purchase = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <GlobalContainer
-      pageTitle="Sale"
+      pageTitle="Purchase"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
     >
-      <SaleCreate />
+      <PurchaseCreate />
 
-      <SaleTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <PurchaseTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };
 
-export default SaleList;
+export default Purchase;

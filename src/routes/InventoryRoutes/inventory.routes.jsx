@@ -1,8 +1,3 @@
-import { FaWarehouse } from "react-icons/fa";
-import { FaBagShopping } from "react-icons/fa6";
-import { MdCategory } from "react-icons/md";
-import { SiUnitedairlines } from "react-icons/si";
-
 export const inventoryPaths = [
   // {
   //   name: "Category",

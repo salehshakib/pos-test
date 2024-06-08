@@ -24,7 +24,8 @@ const GlobalContainer = ({
   selectedRows,
   children,
   setNewColumns,
-  searchFilterContent = <div className="border border-red-600 py-5">hello</div>,
+  searchFilterContent,
+  handleExport,
 }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -39,6 +40,8 @@ const GlobalContainer = ({
     if (e.key !== "tableColumns") {
       setCheckedMenuOpen(false);
     }
+
+    console.log(e);
   };
   const handleOpenChange = (nextOpen, info) => {
     if (info.source === "trigger" || nextOpen) {
@@ -73,6 +76,24 @@ const GlobalContainer = ({
     setCheckedList(list);
   };
 
+  const menu = {
+    onClick: handleMenuClick,
+    className: "-translate-x-[34px] translate-y-1/4",
+    items: [
+      {
+        key: "tableColumns",
+        label: (
+          <Checkbox.Group
+            className="flex flex-col"
+            options={options}
+            value={checkedList}
+            onChange={onChange}
+          />
+        ),
+      },
+    ],
+  };
+
   const items = [
     {
       key: "view",
@@ -81,23 +102,7 @@ const GlobalContainer = ({
           open={checkedMenuOpen}
           onOpenChange={handleCheckedOpenChange}
           key="dropdown"
-          menu={{
-            onClick: handleMenuClick,
-            className: "-translate-x-[34px] translate-y-1/4",
-            items: [
-              {
-                key: "tableColumns",
-                label: (
-                  <Checkbox.Group
-                    className="flex flex-col"
-                    options={options}
-                    value={checkedList}
-                    onChange={onChange}
-                  />
-                ),
-              },
-            ],
-          }}
+          menu={menu}
           placement="left"
         >
           <div>View</div>
@@ -114,18 +119,21 @@ const GlobalContainer = ({
       //pdf
       label: "PDF",
       key: "pdf",
+      // onClick: () => handleExport("pdf"),
       icon: <FaFilePdf className="text-xl" />,
     },
     {
       //excel
       label: "Excel",
       key: "excel",
+      onClick: () => handleExport("excel"),
       icon: <FaFileCsv className="text-xl" />,
     },
     {
       //csv
       label: "CSV",
       key: "csv",
+      onClick: () => handleExport("csv"),
       icon: <FaFileCsv className="text-xl" />,
     },
     {

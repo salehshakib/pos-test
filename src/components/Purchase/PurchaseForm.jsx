@@ -4,45 +4,77 @@ import {
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../../../layout/FormLayout";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { CashierComponent } from "../overview/CashierComponent";
-import { CustomerComponent } from "../overview/CustomerComponent";
-import { SupplierComponent } from "../overview/SupplierComponent";
-import { WarehouseComponent } from "../overview/WarehouseComponent";
-import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { useEffect } from "react";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import CustomUploader from "../../Shared/Upload/CustomUploader";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+} from "../../layout/FormLayout";
+import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
-} from "../../../utilities/lib/generator/generatorUtils";
+} from "../../utilities/lib/generator/generatorUtils";
+import { SupplierComponent } from "../Generator/overview/SupplierComponent";
+import { WarehouseComponent } from "../Generator/overview/WarehouseComponent";
+import { CurrencyFormComponent } from "../Sale/overview/CurrencyComponent";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomUploader from "../Shared/Upload/CustomUploader";
+import { PurchaseProductTable } from "./overview/PurchaseProductTable";
 
-const StatusComponent = () => {
-  const form = Form.useFormInstance();
+// const StatusComponent = () => {
+//   const form = Form.useFormInstance();
 
-  useEffect(() => {
-    form.setFieldValue("quotation_status", "Pending");
-  }, [form]);
+//   useEffect(() => {
+//     form.setFieldValue("status", "Completed");
+//   }, [form]);
 
-  const options = [
-    {
-      value: "Pending",
-      label: "Pending",
-    },
-    {
-      value: "Sent",
-      label: "Sent",
-    },
-  ];
+//   const options = [
+//     {
+//       value: "Completed",
+//       label: "Completed",
+//     },
+//     {
+//       value: "Pending",
+//       label: "Pending",
+//     },
+//   ];
 
-  return (
-    <CustomSelect label="Status" options={options} name={"quotation_status"} />
-  );
-};
+//   return <CustomSelect label="Sale Status" options={options} name={"status"} />;
+// };
+
+// const PaymentComponent = () => {
+//   const form = Form.useFormInstance();
+
+//   useEffect(() => {
+//     form.setFieldValue("payment_status", "Pending");
+//   }, [form]);
+
+//   const options = [
+//     {
+//       value: "Pending",
+//       label: "Pending",
+//     },
+//     {
+//       value: "Due",
+//       label: "Due",
+//     },
+//     {
+//       value: "Partial",
+//       label: "Partial",
+//     },
+//     {
+//       value: "Paid",
+//       label: "Paid",
+//     },
+//   ];
+
+//   return (
+//     <CustomSelect
+//       label="Payment Status"
+//       options={options}
+//       name={"payment_status"}
+//     />
+//   );
+// };
 
 const TaxComponent = () => {
   const { data, isFetching } = useGetAllTaxQuery({});
@@ -65,7 +97,7 @@ const TaxComponent = () => {
   );
 };
 
-export const QuotationForm = ({
+export const PurchaseForm = ({
   formValues,
   setFormValues,
   products,
@@ -89,26 +121,30 @@ export const QuotationForm = ({
     shipping_cost
   );
 
-  console.log(formValues);
-
   return (
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...mdColLayout}>
-            <CashierComponent />
-          </Col>
-          <Col {...mdColLayout}>
-            <SupplierComponent />
-          </Col>
-          <Col {...mdColLayout}>
-            <CustomerComponent />
-          </Col>
-          <Col {...mdColLayout}>
-            <WarehouseComponent />
+          <Col {...colLayout}>
+            <CustomInput name={"name"} label={"Reference No"} required={true} />
           </Col>
 
-          <QuotationProductTable
+          <Col {...colLayout}>
+            <WarehouseComponent />
+          </Col>
+          <Col {...colLayout}>
+            <SupplierComponent />
+          </Col>
+
+          <Col {...colLayout}>
+            <CurrencyFormComponent />
+          </Col>
+
+          <Col {...colLayout}>
+            <CustomDatepicker label="Date" required={true} name={"date"} />
+          </Col>
+
+          <PurchaseProductTable
             formValues={formValues}
             setFormValues={setFormValues}
             products={products}
@@ -118,9 +154,11 @@ export const QuotationForm = ({
           <Col {...colLayout}>
             <TaxComponent />
           </Col>
+
           <Col {...colLayout}>
             <CustomInput label="Discount" type={"number"} name={"discount"} />
           </Col>
+
           <Col {...colLayout}>
             <CustomInput
               label="Shipping Cost"
@@ -128,15 +166,20 @@ export const QuotationForm = ({
               name={"shipping_cost"}
             />
           </Col>
-          <Col {...colLayout}>
-            <StatusComponent />
-          </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label="Attachment" name={"attachment"} />
+            <CustomUploader label={"Attach Document"} name={"logo"} />
           </Col>
-          <Col {...fullColLayout}>
-            <CustomInput label="Note" type={"textarea"} name={"note"} />
+
+          <Col {...mdColLayout}>
+            <CustomInput type={"textarea"} name="sale_note" label="Sale Note" />
+          </Col>
+          <Col {...mdColLayout}>
+            <CustomInput
+              type={"textarea"}
+              name="staff_note"
+              label="Staff Note"
+            />
           </Col>
         </Row>
       </CustomForm>

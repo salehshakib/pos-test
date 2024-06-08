@@ -1,11 +1,11 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import AdminDashboard from "../../pages/Dashboard/Admin/AdminDashboard";
+import Purchase from "../../pages/Dashboard/Purchase/Purchase";
 
 export const purchasePaths = [
   {
     name: "Purchase List",
     path: "purchase-list",
     icon: AiOutlineShoppingCart,
-    element: <AdminDashboard />,
+    element: <Purchase />,
   },
 ];

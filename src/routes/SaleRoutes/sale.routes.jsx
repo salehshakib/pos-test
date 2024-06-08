@@ -1,18 +1,19 @@
 import { CiGift } from "react-icons/ci";
+import { FaShoppingBasket } from "react-icons/fa";
 import { LuClipboardType } from "react-icons/lu";
-import { MdOutlineDesignServices, MdPointOfSale } from "react-icons/md";
+import { MdOutlineDesignServices } from "react-icons/md";
 import { RiCoupon3Line } from "react-icons/ri";
 import Coupons from "../../pages/Dashboard/Coupons/Coupons";
 import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
+import GiftCardDesign from "../../pages/Dashboard/GiftCardDesign/GiftCardDesign";
 import GiftCardType from "../../pages/Dashboard/GiftCardType/GiftCardType";
 import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
-import GiftCardDesign from "../../pages/Dashboard/GiftCardDesign/GiftCardDesign";
 
 export const salePaths = [
   {
-    name: "Sale List",
+    name: "Sale",
     path: "sale-list",
-    icon: MdPointOfSale,
+    icon: FaShoppingBasket,
     element: <SaleList />,
   },
   {

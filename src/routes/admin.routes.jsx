@@ -27,6 +27,7 @@ import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
+import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { reportPaths } from "./ReportRoutes/report.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
@@ -46,20 +47,14 @@ export const adminPaths = [
     icon: LuArchive,
     children: productPaths,
   },
-  // {
-  //   name: "Inventory",
-  //   path: "inventory",
-  //   icon: MdInventory2,
-  //   children: inventoryPaths,
-  // },
   {
     name: "Purchase",
     path: "purchase",
     icon: FiShoppingBag,
-    // children: purchasePaths,
+    children: purchasePaths,
   },
   {
-    name: "Sale",
+    name: "Sales",
     path: "sale",
     icon: TfiShoppingCart,
     children: salePaths,

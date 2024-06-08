@@ -1,4 +1,4 @@
-import { Dropdown, Table } from "antd";
+import { Dropdown, Table, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPagination,
@@ -119,19 +119,31 @@ const CustomTable = ({
     width: "80px",
     align: "center",
     render: (status, record) => {
-      return (
+      return record?.handleStatusModal ? (
         <button
           className={`p-0 ${
             status == 1
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
-          onClick={() => record.handleStatusModal(record.id)}
+          onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
             {status == 1 ? "Active" : "Inactive"}
           </span>
         </button>
+      ) : (
+        <div
+          className={`p-0 ${
+            status == 1
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+        >
+          <span className="font-medium text-xs px-2 w-full">
+            {status == 1 ? "Active" : "Inactive"}
+          </span>
+        </div>
       );
     },
   };
@@ -160,73 +172,82 @@ const CustomTable = ({
       if (record?.handleDetailsModal) {
         return (
           <div className="flex justify-center items-center gap-3 ">
-            <button
-              onClick={() => record?.handleDetailsModal(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-            >
-              <TbListDetails className="text-lg md:text-xl" />
-            </button>
-
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: "edit",
-                    icon: <MdEditSquare size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Edit
-                      </div>
-                    ),
-                    onClick: () => record?.handleEdit(record?.id),
-                  },
-                  {
-                    key: "due",
-                    icon: <PiBroom size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Due Clear
-                      </div>
-                    ),
-                  },
-                  {
-                    key: "delete",
-                    icon: <MdDelete size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Delete
-                      </div>
-                    ),
-                    onClick: () => record?.handleDeleteModal(record?.id),
-                  },
-                ],
-              }}
-              placement="bottom"
-              trigger={["click"]}
-            >
-              <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-                <FiMoreHorizontal className="text-lg md:text-xl" />
+            <Tooltip title="Details">
+              <button
+                onClick={() => record?.handleDetailsModal(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <TbListDetails className="text-lg md:text-xl" />
               </button>
-            </Dropdown>
+            </Tooltip>
+
+            <Tooltip title="More Actions">
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      key: "edit",
+                      icon: <MdEditSquare size={20} />,
+                      label: (
+                        <div className="flex justify-start items-center gap-3">
+                          Edit
+                        </div>
+                      ),
+                      onClick: () => record?.handleEdit(record?.id),
+                    },
+                    {
+                      key: "due",
+                      icon: <PiBroom size={20} />,
+                      label: (
+                        <div className="flex justify-start items-center gap-3">
+                          Due Clear
+                        </div>
+                      ),
+                    },
+                    {
+                      key: "delete",
+                      icon: <MdDelete size={20} />,
+                      label: (
+                        <div className="flex justify-start items-center gap-3">
+                          Delete
+                        </div>
+                      ),
+                      onClick: () => record?.handleDeleteModal(record?.id),
+                    },
+                  ],
+                }}
+                placement="bottom"
+                trigger={["click"]}
+              >
+                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                  <FiMoreHorizontal className="text-lg md:text-xl" />
+                </button>
+              </Dropdown>
+            </Tooltip>
           </div>
         );
       } else {
         return (
           <div className="flex justify-center items-center gap-3 ">
             {record?.handleEdit && (
+              <Tooltip title="Edit">
+                <button
+                  onClick={() => record?.handleEdit(record?.id)}
+                  className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+                >
+                  <MdEditSquare className="text-lg md:text-xl" />
+                </button>
+              </Tooltip>
+            )}
+
+            <Tooltip title="Delete">
               <button
-                onClick={() => record?.handleEdit(record?.id)}
+                onClick={() => record?.handleDeleteModal(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               >
-                <MdEditSquare className="text-lg md:text-xl" />
+                <MdDelete className="text-lg md:text-xl" />
               </button>
-            )}
-            <button
-              onClick={() => record?.handleDeleteModal(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-            >
-              <MdDelete className="text-lg md:text-xl" />
-            </button>
+            </Tooltip>
           </div>
         );
       }

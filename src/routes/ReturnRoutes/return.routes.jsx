@@ -6,13 +6,13 @@ import SaleReturn from "../../pages/Dashboard/SaleReturn/SaleReturn";
 export const returnPaths = [
   {
     name: "Purchase Return",
-    path: "purchase",
+    path: "purchase-return",
     icon: BiSolidPurchaseTag,
     element: <PurchaseReturn />,
   },
   {
     name: "Sale Return",
-    path: "sale",
+    path: "sale-return",
     icon: TbTruckReturn,
     element: <SaleReturn />,
   },

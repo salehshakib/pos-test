@@ -34,7 +34,7 @@ export const CustomSelectButton = (props) => {
             rules={[
               {
                 required: required,
-                message: `Please input ${requireMsg ?? label}!`,
+                message: `Please Select ${requireMsg ?? label}!`,
               },
             ]}
             noStyle

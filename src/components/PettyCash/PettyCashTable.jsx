@@ -1,22 +1,20 @@
+import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import { useGetAllPettyCashQuery } from "../../redux/services/pettycash/pettyCashApi";
+import {
+  useDeletePettyCashMutation,
+  useGetAllPettyCashQuery,
+} from "../../redux/services/pettycash/pettyCashApi";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import dayjs from "dayjs";
 
 export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
-  const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
-  //   const [editId, setEditId] = useState(undefined);
-
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
-  // const [deleteId, setDeleteId] = useState(undefined);
-  // const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllPettyCashQuery({
     params: { ...pagination, parent: 1 },
@@ -24,42 +22,20 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateGiftCardStatusMutation();
+  const [deletePettyCash, { isLoading: isDeleting }] =
+    useDeletePettyCashMutation();
 
-  // const [deleteGiftCard, { isLoading: isDeleting }] =
-  //   useDeleteGiftCardMutation();
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
+    setDeleteModal(true);
+  };
 
-  // const handleEdit = (id) => {
-  //   setEditId(id);
-  //   dispatch(openEditDrawer());
-  // };
-
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
-
-  // const handleDeleteModal = (id) => {
-  //   setDeleteId(id);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDelete = async () => {
-  //   const { data } = await deleteGiftCard(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
+  const handleDelete = async () => {
+    const { data } = await deletePettyCash(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
 
   console.log(data);
 
@@ -82,16 +58,16 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
         closes_at: status === "Open" ? "N/A" : date,
         warehouse: warehouses?.name,
         cash_in_hand: opening_balance,
-        status,
+        status: status === "Open" ? 1 : 0,
+        handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     // setStatusModal(false);
-    // setDeleteModal(false);
+    setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
@@ -101,15 +77,7 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
-      />
-
-      {/* <GiftCardEdit id={editId} setId={setEditId} /> */}
-
-      {/* <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
+        created_at={false}
       />
 
       <DeleteModal
@@ -117,7 +85,7 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-      /> */}
+      />
     </GlobalUtilityStyle>
   );
 };

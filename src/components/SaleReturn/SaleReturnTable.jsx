@@ -88,6 +88,7 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
         setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         // isLoading={isLoading}
+        created_at={false}
       />
 
       <SaleReturnEdit id={editId} setId={setEditId} />

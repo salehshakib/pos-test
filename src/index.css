@@ -15,11 +15,11 @@
   background: #51258f;
 } */
 
-/* html,
-body {
-  overflow-y: scroll;
-  scrollbar-width: none;
+html {
+  scrollbar-gutter: stable both-edges;
 }
+
+/* 
 
 body::-webkit-scrollbar {
   width: 0;

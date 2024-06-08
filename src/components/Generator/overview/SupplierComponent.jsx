@@ -17,6 +17,7 @@ export const SupplierComponent = () => {
       label="Select Supplier"
       options={options}
       isLoading={isLoading}
+      required={true}
       name="supplier_id"
     />
   );

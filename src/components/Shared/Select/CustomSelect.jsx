@@ -30,7 +30,12 @@ const CustomSelect = (props) => {
       <Form.Item
         label={label && `Select ${label}`}
         name={name}
-        rules={[{ required: required, message: `Please input ${label}!` }]}
+        rules={[
+          {
+            required: required,
+            message: `Please Select ${label ?? placeholder}!`,
+          },
+        ]}
         noStyle={noStyle}
       >
         {showSearch ? (

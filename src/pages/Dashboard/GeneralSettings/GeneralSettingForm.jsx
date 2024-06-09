@@ -45,6 +45,8 @@ const GeneralSettingForm = ({ data }) => {
       formData.append("secendary_color", secendary_color.toHexString());
     }
 
+    formData.append("_method", "PUT");
+
     await updateGeneralSettings({
       data: formData,
     });

@@ -59,7 +59,7 @@ const couponApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${COUPON}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

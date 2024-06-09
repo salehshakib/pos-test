@@ -57,6 +57,7 @@ const CustomTable = ({
   };
 
   const tableProps = {
+    loading: isLoading,
     size: "small",
     style: {
       width: "100%",
@@ -71,7 +72,6 @@ const CustomTable = ({
     onRow: (record) => ({
       onClick: () => console.log(record.id),
     }),
-    loading: isLoading,
     scroll: {
       x: "max-content",
     },
@@ -116,7 +116,7 @@ const CustomTable = ({
     title: "Status",
     dataIndex: "status",
     key: "status",
-    width: "80px",
+    width: "100px",
     align: "center",
     render: (status, record) => {
       return record?.handleStatusModal ? (
@@ -154,6 +154,7 @@ const CustomTable = ({
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
+    width: "100px",
     render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {created_at}
@@ -166,12 +167,12 @@ const CustomTable = ({
     dataIndex: "action",
     key: "action",
     align: "center",
-    width: 70,
+    width: "80px",
     fixed: "right",
     render: (props, record) => {
       if (record?.handleDetailsModal) {
         return (
-          <div className="flex justify-center items-center gap-3 ">
+          <div className="flex justify-center items-center gap-2">
             <Tooltip title="Details">
               <button
                 onClick={() => record?.handleDetailsModal(record?.id)}
@@ -228,7 +229,7 @@ const CustomTable = ({
         );
       } else {
         return (
-          <div className="flex justify-center items-center gap-3 ">
+          <div className="flex justify-center items-center gap-2">
             {record?.handleEdit && (
               <Tooltip title="Edit">
                 <button

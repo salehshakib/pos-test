@@ -44,7 +44,7 @@ const StockCountEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateStockCount({
       id,
-      data: values,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

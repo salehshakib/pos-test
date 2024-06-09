@@ -111,6 +111,26 @@ const GlobalUtilityStyle = styled.div`
     }
   }
 
+  .ant-group-addOn {
+    border: 2px solid ${secondaryColor} !important;
+    border-radius: 8px !important;
+
+    .ant-input-number-group-addon {
+      font-size: 14px !important;
+      border: none !important;
+      border-left: 2px solid ${secondaryColor} !important;
+    }
+
+    .ant-input-number {
+      border: none !important;
+    }
+
+    &:hover {
+      border: 2px solid ${primaryColor} !important;
+      border-radius: 8px !important;
+    }
+  }
+
   .ant-select-focused {
     border: 2px solid ${primaryColor} !important;
     border-radius: 8px !important;

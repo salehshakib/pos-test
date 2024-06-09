@@ -51,7 +51,7 @@ const departmentApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${DEPARTMENT}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

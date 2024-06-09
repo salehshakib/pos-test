@@ -54,7 +54,7 @@ const stockCountApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${STOCK_COUNT}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

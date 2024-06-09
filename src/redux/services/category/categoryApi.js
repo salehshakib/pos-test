@@ -51,7 +51,7 @@ const categoryApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${CATEGORY}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

@@ -83,12 +83,14 @@ const CustomInput = (props) => {
           <InputNumber
             type="number"
             placeholder={`Enter ${placeholder ?? label}`}
-            className="mt-1 border-2 w-full"
+            className="mt-1 border-2 w-full ant-group-addOn"
             size="large"
             prefix={prefix}
-            suffix={suffix}
+            // suffix={suffix}
+            addonAfter={suffix}
             controls={false}
             changeOnWheel={false}
+            allowClear={true}
           />
         ) : (
           <Input

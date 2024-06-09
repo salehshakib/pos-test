@@ -60,7 +60,7 @@ const expenseApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${EXPENSE}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

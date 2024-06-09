@@ -59,7 +59,7 @@ const saleReturnApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${BRAND}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

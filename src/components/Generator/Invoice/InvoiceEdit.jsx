@@ -121,7 +121,6 @@ const InvoiceEdit = ({ id }) => {
       total_tax: Number(totalTax).toFixed(2),
       total_price: Number(totalPrice).toFixed(2),
       tax: Number(orderTax).toFixed(2),
-
       grand_total: calculateGrandTotal(
         totalPrice,
         orderTax,
@@ -129,6 +128,8 @@ const InvoiceEdit = ({ id }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
+
+      _method: "PUT",
     };
 
     if (attachment) {

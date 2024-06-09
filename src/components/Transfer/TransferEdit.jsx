@@ -32,7 +32,8 @@ const TransferEdit = ({ id, setId }) => {
 
   const handleUpdate = async (values) => {
     // const { data, error } = await updateDepartment({
-    //   data: { id, ...values },
+    //  id,
+    //  data: { ...values , _method: "PUT"},
     // });
     // if (data?.success) {
     //   setId(undefined);

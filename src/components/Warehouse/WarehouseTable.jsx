@@ -103,6 +103,9 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        tableStyleProps={{
+          scroll: { x: 1000 },
+        }}
       />
 
       <WarehouseEdit id={editId} setId={setEditId} />

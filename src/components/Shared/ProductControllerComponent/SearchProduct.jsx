@@ -78,7 +78,7 @@ export const SearchProduct = ({ setProducts }) => {
         options={options}
         className="mt-1 w-full"
         size="large"
-        onSelect={onSelect}
+        onSelect={!isFetching && onSelect}
         onSearch={debounce}
         value={value}
         onChange={onChange}

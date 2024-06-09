@@ -35,7 +35,7 @@ export const CustomerComponent = () => {
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}
-        name={"brand_id"}
+        name={"customer_id"}
         isLoading={isLoading}
         required={"true"}
       />

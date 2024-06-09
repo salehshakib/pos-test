@@ -68,10 +68,10 @@ export const CurrencyFormComponent = () => {
   return (
     <Form.Item label={"Currency Exchange Rate"} className="mb-0">
       <Row gutter={5}>
-        <Col xs={16}>
+        <Col xs={14}>
           <CurrencyComponent />
         </Col>
-        <Col xs={8}>
+        <Col xs={10}>
           <CurrencyExchangeComponent />
         </Col>
       </Row>

@@ -36,7 +36,8 @@ export const GiftCardTypeEdit = ({ id, setId }) => {
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateGiftCardType({
-      data: { id, ...values },
+      id,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

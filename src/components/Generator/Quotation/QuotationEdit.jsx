@@ -128,6 +128,7 @@ const QuotationEdit = ({ id }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
+      _method: "PUT",
     };
 
     if (attachment) {

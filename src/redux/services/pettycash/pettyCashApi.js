@@ -59,7 +59,7 @@ const pettyCashApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${PETTY_CASH}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

@@ -102,6 +102,7 @@ const AdjustmentEdit = ({ id }) => {
       warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,
+      _method: "PUT",
     };
 
     appendToFormData(postObj, formData);

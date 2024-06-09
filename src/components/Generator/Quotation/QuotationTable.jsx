@@ -125,6 +125,8 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
+        created_at={false}
       />
 
       <QuotationEdit id={editId} />

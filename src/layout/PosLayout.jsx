@@ -37,7 +37,7 @@ const PosLayout = () => {
                   <Logo />
                 </div>
                 {mode === "local" && (
-                  <span className="text-xs bg-white p-2 rounded-lg font-bold text-gray-500">
+                  <span className="text-xs p-2 rounded-lg font-bold bg-gray-300">
                     {mode.toUpperCase()} MODE
                   </span>
                 )}

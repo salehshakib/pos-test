@@ -60,7 +60,7 @@ const invoiceApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${GENERATE_INVOICE}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { Col, Form } from "antd";
-import { colLayout, fullColLayout } from "../../../layout/FormLayout";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+} from "../../../layout/FormLayout";
 import CustomInput from "../../Shared/Input/CustomInput";
 import { useGetAllGiftCardQuery } from "../../../redux/services/giftcard/giftcard/giftCardApi";
 
@@ -29,23 +33,24 @@ const PaidByComponent = () => {
       value: "Cheque",
       label: "Cheque",
     },
-    {
-      value: "Deposit",
-      label: "Deposit",
-    },
-    {
-      value: "Points",
-      label: "Points",
-    },
+    // {
+    //   value: "Points",
+    //   label: "Points",
+    // },
   ];
 
-  return <CustomSelect label="Paid By" options={options} name={"paid_by"} />;
+  return (
+    <CustomSelect
+      label="Payment Type"
+      options={options}
+      name={"payment_type"}
+    />
+  );
 };
 
 const GiftCardComponent = () => {
   const { data, isFetching } = useGetAllGiftCardQuery({});
 
-  console.log(data);
   const options = data?.results?.giftcard?.map((item) => {
     return {
       value: item.id.toString(),
@@ -53,12 +58,14 @@ const GiftCardComponent = () => {
     };
   });
 
+  console.log(data);
+
   return (
     <Col {...fullColLayout}>
       <CustomSelect
         isLoading={isFetching}
         options={options}
-        name="gift_card_number"
+        name="gift_card_id"
         label="Gift Card Number"
         required={true}
       />
@@ -66,32 +73,86 @@ const GiftCardComponent = () => {
   );
 };
 
-const ChequeComponent = () => {
-  const form = Form.useFormInstance();
-  const paidBy = Form.useWatch("paid_by", form);
+const CardComponent = () => {
+  const options = [
+    {
+      //master credit
+      value: "Master Card (Credit)",
+      label: "Master Card (Credit)",
+    },
+    {
+      //visa credit
+      value: "Visa Card (Credit)",
+      label: "Visa Card (Credit)",
+    },
+    {
+      //master debit
+      value: "Master Card (Debit)",
+      label: "Master Card (Debit)",
+    },
+    {
+      //visa debit
+      value: "Visa Card (Debit)",
+      label: "Visa Card (Debit)",
+    },
+    {
+      //american express
+      value: "American Express",
+      label: "American Express",
+    },
+  ];
 
   return (
-    paidBy === "Cheque" && (
-      <Col {...fullColLayout}>
+    <>
+      <Col {...mdColLayout}>
         <CustomInput
           type={"text"}
-          name="cheque_number"
+          name="issuer"
+          label="Issuer Name"
+          required={true}
+        />
+      </Col>
+      <Col {...mdColLayout}>
+        <CustomSelect
+          options={options}
+          name="card"
+          label="Card Type"
+          required={true}
+        />
+      </Col>
+    </>
+  );
+};
+
+const ChequeComponent = () => {
+  return (
+    <>
+      <Col {...mdColLayout}>
+        <CustomInput
+          type={"text"}
+          name="bank"
+          label="Bank Name"
+          required={true}
+        />
+      </Col>
+      <Col {...mdColLayout}>
+        <CustomInput
+          type={"text"}
+          name="cheque_no"
           label="Cheque Number"
           required={true}
         />
       </Col>
-    )
+    </>
   );
 };
 
 export const PaymentTypeComponent = () => {
   const form = Form.useFormInstance();
-  const paymentStatus = Form.useWatch("payment_status", form);
-
-  const paidBy = Form.useWatch("paid_by", form);
+  const paymentStatus = Form.useWatch("payment_type", form);
 
   return (
-    (paymentStatus === "Due" || paymentStatus === "Partial") && (
+    (paymentStatus === "Paid" || paymentStatus === "Partial") && (
       <>
         <Col {...colLayout}>
           <PaidByComponent />
@@ -114,17 +175,16 @@ export const PaymentTypeComponent = () => {
         </Col>
 
         <Col {...colLayout}>
-          {" "}
           <CustomInput
             type={"text"}
-            name="payment_reciever"
+            name="payment_receiver"
             label="Payment Receiver"
           />
         </Col>
 
-        <ChequeComponent />
-
-        {paidBy === "Gift Card" && <GiftCardComponent />}
+        {paymentStatus === "Gift Card" && <GiftCardComponent />}
+        {paymentStatus === "Card" && <CardComponent />}
+        {paymentStatus === "Cheque" && <ChequeComponent />}
 
         <Col {...fullColLayout}>
           <CustomInput

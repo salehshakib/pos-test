@@ -27,7 +27,7 @@ const StatusComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("status", "Completed");
+    form.setFieldValue("sale_status", "Completed");
   }, [form]);
 
   const options = [
@@ -41,14 +41,16 @@ const StatusComponent = () => {
     },
   ];
 
-  return <CustomSelect label="Sale Status" options={options} name={"status"} />;
+  return (
+    <CustomSelect label="Sale Status" options={options} name={"sale_status"} />
+  );
 };
 
 const PaymentComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("payment_status", "Pending");
+    form.setFieldValue("payment_type", "Pending");
   }, [form]);
 
   const options = [
@@ -74,7 +76,7 @@ const PaymentComponent = () => {
     <CustomSelect
       label="Payment Status"
       options={options}
-      name={"payment_status"}
+      name={"payment_type"}
     />
   );
 };
@@ -96,6 +98,33 @@ const TaxComponent = () => {
       options={options}
       name={"tax_rate"}
       isLoading={isFetching}
+    />
+  );
+};
+
+const DiscountTypeComponent = () => {
+  const form = Form.useFormInstance();
+  const discount = Form.useWatch("discount", form);
+
+  const required = discount ? true : false;
+
+  const options = [
+    {
+      value: "Fixed",
+      label: "Fixed",
+    },
+    {
+      value: "Percentage",
+      label: "Percentage",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      options={options}
+      label="Discount Type"
+      name={"discount_type"}
+      required={required}
     />
   );
 };
@@ -128,9 +157,9 @@ export const SaleForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          {/* <Col {...colLayout}>
             <CustomInput name={"name"} label={"Reference No"} required={true} />
-          </Col>
+          </Col> */}
 
           <Col {...colLayout}>
             <WarehouseComponent />
@@ -147,7 +176,7 @@ export const SaleForm = ({
           </Col>
 
           <Col {...colLayout}>
-            <CustomDatepicker label="Date" required={true} name={"date"} />
+            <CustomDatepicker label="Date" required={true} name={"sale_at"} />
           </Col>
 
           <SaleProductTable
@@ -156,8 +185,17 @@ export const SaleForm = ({
             products={products}
             setProducts={setProducts}
           />
+
+          <Col {...colLayout}>
+            <StatusComponent />
+          </Col>
+
           <Col {...colLayout}>
             <TaxComponent />
+          </Col>
+
+          <Col {...colLayout}>
+            <DiscountTypeComponent />
           </Col>
           <Col {...colLayout}>
             <CustomInput label="Discount" type={"number"} name={"discount"} />
@@ -169,9 +207,6 @@ export const SaleForm = ({
               name={"shipping_cost"}
             />
           </Col>
-          <Col {...colLayout}>
-            <StatusComponent />
-          </Col>
 
           <Col {...colLayout}>
             <PaymentComponent />
@@ -180,7 +215,7 @@ export const SaleForm = ({
           <PaymentTypeComponent />
 
           <Col {...fullColLayout}>
-            <CustomUploader label={"Attach Document"} name={"logo"} />
+            <CustomUploader label={"Attach Document"} name={"attachment"} />
           </Col>
 
           <Col {...mdColLayout}>

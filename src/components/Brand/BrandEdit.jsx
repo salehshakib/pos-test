@@ -47,6 +47,7 @@ export const BrandEdit = ({ id, setId }) => {
     const postData = {
       ...values,
       logo: values?.logo?.[0].originFileObj,
+      _method: "PUT",
     };
 
     appendToFormData(postData, formData);

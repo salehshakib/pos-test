@@ -25,7 +25,7 @@ export const productPaths = [
     element: <Category />,
   },
   {
-    name: "Product List",
+    name: "Product",
     path: "product-list",
     icon: MdAddShoppingCart,
     element: <ProductList />,

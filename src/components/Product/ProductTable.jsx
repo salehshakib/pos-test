@@ -34,7 +34,11 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllProductsQuery({
-    params: { ...pagination, parent: 1 },
+    params: {
+      ...pagination,
+
+      // parent: 1
+    },
   });
 
   const total = data?.meta?.total;

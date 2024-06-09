@@ -30,6 +30,7 @@ const QuotationCreate = () => {
       tax_rate: {},
       tax: {},
       total: {},
+      tax_id: {},
     },
   });
 
@@ -37,7 +38,6 @@ const QuotationCreate = () => {
     const formData = new FormData();
 
     const { product_list } = formValues;
-
     const { attachment, discount, shipping_cost, tax_rate } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -70,8 +70,6 @@ const QuotationCreate = () => {
         0
       ) ?? 0;
 
-    console.log(formValues.product_list);
-
     const totalTax =
       Object.values(formValues.product_list?.tax).reduce(
         (acc, cur) => acc + cur,
@@ -96,11 +94,13 @@ const QuotationCreate = () => {
         discount,
         shipping_cost
       ),
-      attachment: attachment?.[0].originFileObj,
+      // attachment: attachment?.[0].originFileObj,
       product_list: JSON.stringify(productListArray),
     };
 
-    console.log(postObj);
+    if (attachment?.[0].originFileObj) {
+      postObj.attachment = attachment?.[0].originFileObj;
+    }
 
     appendToFormData(postObj, formData);
 

@@ -33,7 +33,7 @@ const CashierEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateCashier({
       id,
-      data: values,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

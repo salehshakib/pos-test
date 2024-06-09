@@ -54,7 +54,7 @@ const brandApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${BRAND}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

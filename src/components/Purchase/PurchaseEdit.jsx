@@ -42,9 +42,14 @@ export const PurchaseEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      logo: values?.logo?.[0].originFileObj,
+      _method: "PUT",
     };
 
+    // logo: values?.logo?.[0].originFileObj,
+
+    if (values?.logo?.[0].originFileObj) {
+      postData.logo = values?.logo?.[0].originFileObj;
+    }
     appendToFormData(postData, formData);
 
     const { data, error } = await updateSale({

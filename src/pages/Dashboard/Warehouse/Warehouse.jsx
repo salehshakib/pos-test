@@ -57,7 +57,7 @@ const Warehouse = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Warehouse List"
+      pageTitle="Warehouse"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

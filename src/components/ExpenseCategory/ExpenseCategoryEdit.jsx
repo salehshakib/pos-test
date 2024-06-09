@@ -39,7 +39,7 @@ const ExpenseCategoryEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpenseCategory({
       id,
-      data: values,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

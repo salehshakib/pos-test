@@ -63,6 +63,7 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
+      _method: "PUT",
     };
 
     if (form.getFieldValue("frontImage")) {

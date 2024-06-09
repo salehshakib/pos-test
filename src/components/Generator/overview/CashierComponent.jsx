@@ -14,7 +14,7 @@ export const CashierComponent = () => {
   }));
   return (
     <CustomSelect
-      label="Select Cashier"
+      label="Cashier"
       options={options}
       isLoading={isLoading}
       name="cashier_id"

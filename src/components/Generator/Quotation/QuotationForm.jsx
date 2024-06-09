@@ -25,7 +25,7 @@ const StatusComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("quotation_status", "Pending");
+    form.setFieldValue("status", "Pending");
   }, [form]);
 
   const options = [
@@ -39,9 +39,7 @@ const StatusComponent = () => {
     },
   ];
 
-  return (
-    <CustomSelect label="Status" options={options} name={"quotation_status"} />
-  );
+  return <CustomSelect label="Status" options={options} name={"status"} />;
 };
 
 const TaxComponent = () => {

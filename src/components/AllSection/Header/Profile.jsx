@@ -85,6 +85,10 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     form.resetFields();
   };
 
+  if (!open) {
+    return null;
+  }
+
   return (
     <Modal
       width={600}

@@ -36,7 +36,11 @@ export const CustomerGroupEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateCustomerGroup({
       id,
-      data: { ...values, percentage: values.percentage.toString() },
+      data: {
+        ...values,
+        percentage: values.percentage.toString(),
+        _method: "PUT",
+      },
     });
 
     if (data?.success) {

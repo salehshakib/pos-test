@@ -35,7 +35,7 @@ const CustomerEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateCustomerGroup({
       id,
-      data: values,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

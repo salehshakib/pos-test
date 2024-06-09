@@ -334,6 +334,8 @@ const ProductListEdit = ({ id }) => {
 
       ecommerce_sync: ecommerce_sync ? 1 : 0,
       details,
+
+      _method: "PUT",
     };
 
     appendToFormData(postObj, formData);

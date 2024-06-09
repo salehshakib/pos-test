@@ -62,7 +62,7 @@ const quotationApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${GENERATE_QUOTATION}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

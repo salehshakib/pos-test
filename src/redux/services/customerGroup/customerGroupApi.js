@@ -60,7 +60,7 @@ const customerGroupApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${CUSTOMER_GROUP}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

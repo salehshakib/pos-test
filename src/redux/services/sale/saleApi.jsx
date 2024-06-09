@@ -60,7 +60,7 @@ const saleApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${SALE}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

@@ -38,12 +38,14 @@ const Categoryedit = ({ id, setId }) => {
 
   const handleUpdate = async (values) => {
     const postObj = values;
+    postObj._method = "PUT";
 
     if (values?.attachment?.[0]?.originFileObj) {
       postObj.attachment = values?.attachment?.[0]?.originFileObj;
     }
 
     const formData = new FormData();
+
     appendToFormData(postObj, formData);
 
     const { data, error } = await updateCategory({

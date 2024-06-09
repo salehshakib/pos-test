@@ -49,7 +49,7 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Sale Reference"}
+      title={"Edit Sale Return"}
       open={isEditDrawerOpen}
       // isLoading={isFetching}
     >

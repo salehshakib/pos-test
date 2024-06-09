@@ -59,7 +59,7 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${GIFT_CARD_TYPE}/update/${id}`,
-          method: "PUT",
+          method: "POST",
           body: data,
         };
       },

@@ -10,7 +10,6 @@ const PhoneNumberComponent = () => {
       type={"phone"}
       required={true}
       name={"phone"}
-      prefix={"+88"}
       placeholder={"Phone Number"}
       noStyle={false}
     />

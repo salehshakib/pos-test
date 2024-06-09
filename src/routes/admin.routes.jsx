@@ -42,8 +42,8 @@ export const adminPaths = [
     element: <AdminDashboard />,
   },
   {
-    name: "Product",
-    path: "product",
+    name: "Products",
+    path: "products",
     icon: LuArchive,
     children: productPaths,
   },

@@ -1,28 +1,46 @@
 import { Col, Form, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
-import { fullColLayout, rowLayout } from "../../../../layout/FormLayout";
+import {
+  colLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../../../layout/FormLayout";
+import { useGetAllTaxQuery } from "../../../../redux/services/tax/taxApi";
+import { useGetAllUnitQuery } from "../../../../redux/services/unit/unitApi";
 import CustomForm from "../../../Shared/Form/CustomForm";
 import CustomInput from "../../../Shared/Input/CustomInput";
 import { ProductController } from "../../../Shared/ProductControllerComponent/ProductController";
-import { columns } from "./productColumns";
-import { useGetAllTaxQuery } from "../../../../redux/services/tax/taxApi";
 import CustomSelect from "../../../Shared/Select/CustomSelect";
-import { useGetAllUnitQuery } from "../../../../redux/services/unit/unitApi";
+import { columns } from "./productColumns";
+import { setFormValuesId } from "../../../../utilities/lib/updateFormValues/updateFormValues";
 
-const TaxComponent = ({ productId }) => {
+const TaxComponent = ({ productId, setProductUnits }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
 
   const options = data?.results?.tax?.map((tax) => ({
-    value: tax.rate,
+    value: tax.id?.toString(),
     label: tax.name,
+    rate: tax.rate,
   }));
+
+  const onSelect = (value, option) => {
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        tax_rate: {
+          [productId]: option.rate ?? 0,
+        },
+      };
+    });
+  };
 
   return (
     <CustomSelect
-      name={["tax_rate", productId]}
+      name={["tax_id", productId]}
       options={options}
       label="Product Tax"
       isLoading={isLoading}
+      onSelect={onSelect}
     />
   );
 };
@@ -76,15 +94,18 @@ const ProductFormComponent = ({
 }) => {
   const [productForm] = Form.useForm();
 
-  console.log(productUnits);
-
   useEffect(() => {
     productForm.setFieldsValue({
       quantity: formValues?.product_list?.qty[productId],
       unit_discount: formValues?.product_list?.discount[productId],
       unit_price: formValues?.product_list?.net_unit_price[productId],
       sale_unit_id: {
-        [productId]: formValues?.product_list?.sale_unit_id[productId] ?? "",
+        [productId]:
+          formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
+      },
+      tax_id: {
+        [productId]:
+          formValues?.product_list?.tax_id[productId]?.toString() ?? "",
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,35 +137,31 @@ const ProductFormComponent = ({
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productForm.getFieldValue(["tax_rate", productId]),
+            [productId]: productUnits.tax_rate[productId],
           },
           tax: {
             ...prevFormValues.product_list.tax,
             [productId]: parseFloat(
               (parseInt(productUnits.sale_units[productId]) *
-                parseInt(productForm.getFieldValue(["tax_rate", productId])) *
+                parseInt(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
                 100
             ).toFixed(2),
           },
+          tax_id: {
+            ...prevFormValues.product_list.tax_id,
+            [productId]: productForm.getFieldValue(["tax_id", productId]),
+          },
         },
       };
     });
 
-    // setProductUnits((prevValues) => {
-    //   return {
-    //     ...prevValues,
-    //     sale_unit_id: {
-    //       ...prevValues.sale_units,
-    //       [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
-    //     },
-    //   };
-    // });
-
     hideModal();
     // productForm.resetFields();
   };
+
+  console.log(formValues);
 
   return (
     <Modal
@@ -158,7 +175,7 @@ const ProductFormComponent = ({
     >
       <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <CustomInput
               label="Quantity"
               type={"number"}
@@ -166,27 +183,31 @@ const ProductFormComponent = ({
               placeholder={"Enter product name"}
             />
           </Col>
-          <Col {...fullColLayout}>
-            <CustomInput
-              label="Unit Discount"
-              type={"number"}
-              name={"unit_discount"}
-            />
-          </Col>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <CustomInput
               label="Unit Price"
               type={"number"}
               name={"unit_price"}
             />
           </Col>
-          <Col {...fullColLayout}>
-            <TaxComponent productId={productId} />
-          </Col>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <ProductUnitComponent
               setProductUnits={setProductUnits}
               productId={productId}
+            />
+          </Col>
+          <Col {...mdColLayout}>
+            <CustomInput
+              label="Unit Discount"
+              type={"number"}
+              name={"unit_discount"}
+            />
+          </Col>
+
+          <Col {...mdColLayout}>
+            <TaxComponent
+              productId={productId}
+              setProductUnits={setProductUnits}
             />
           </Col>
         </Row>
@@ -194,48 +215,6 @@ const ProductFormComponent = ({
     </Modal>
   );
 };
-
-function setFormValuesId(
-  id,
-  sale_unit_id,
-  unit_cost,
-  sale_units,
-  formValues,
-  productUnits
-) {
-  formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
-
-  formValues.product_list.sale_unit_id[id] =
-    formValues.product_list.sale_unit_id[id] ?? sale_unit_id;
-
-  formValues.product_list.net_unit_price[id] = unit_cost;
-
-  formValues.product_list.discount[id] =
-    formValues.product_list.discount[id] ?? 0;
-
-  formValues.product_list.tax[id] = parseFloat(
-    (
-      (parseInt(productUnits.sale_units[id]) *
-        parseInt(formValues.product_list.tax_rate[id]) *
-        parseInt(formValues.product_list.net_unit_price[id]) *
-        parseInt(formValues.product_list.qty[id])) /
-      100
-    ).toFixed(2)
-  );
-
-  formValues.product_list.tax_rate[id] =
-    formValues.product_list.tax_rate[id] ?? 0;
-
-  productUnits.sale_units[id] =
-    productUnits?.sale_units[id] ?? sale_units?.operation_value ?? 1;
-
-  formValues.product_list.total[id] =
-    productUnits.sale_units[id] *
-      parseInt(unit_cost) *
-      formValues.product_list.qty[id] -
-    formValues.product_list.discount[id] +
-    formValues.product_list.tax[id];
-}
 
 export const QuotationProductTable = ({
   formValues,
@@ -248,21 +227,8 @@ export const QuotationProductTable = ({
 
   const [productUnits, setProductUnits] = useState({
     sale_units: {},
+    tax_rate: {},
   });
-
-  const [productEditModal, setProductEditModal] = useState(false);
-  const [productId, setProductId] = useState(undefined);
-  const [productName, setProductName] = useState(null);
-
-  const handleProductEdit = (id, name) => {
-    setProductId(id);
-    setProductName(name);
-    setProductEditModal(true);
-  };
-
-  const hideModal = () => {
-    setProductEditModal(false);
-  };
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -319,7 +285,23 @@ export const QuotationProductTable = ({
     );
   };
 
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
+
+  const handleProductEdit = (id, name) => {
+    setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
+  };
+
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
+
   console.log(formValues);
+
+  console.log(products);
 
   const dataSource = products?.map((product) => {
     const {
@@ -328,10 +310,13 @@ export const QuotationProductTable = ({
       sku,
       buying_price: unit_cost,
       sale_unit_id,
+      tax_id,
       sale_units,
     } = product ?? {};
 
     console.log(product);
+
+    console.log(formValues);
 
     setFormValuesId(
       id,
@@ -339,8 +324,17 @@ export const QuotationProductTable = ({
       unit_cost,
       sale_units,
       formValues,
-      productUnits
+      productUnits,
+      tax_id
     );
+
+    // setProductUnits((prevProductUnits) => ({
+    //   ...prevProductUnits,
+    //   tax_id: {
+    //     ...prevProductUnits.tax_id,
+    //     [id]: tax_id,
+    //   },
+    // }));
 
     return {
       id,
@@ -392,7 +386,7 @@ export const QuotationProductTable = ({
 
   products.length > 0 &&
     dataSource.push({
-      id: "total",
+      id: "",
       name: "Total",
       quantity: totalQuantity,
       subTotal: totalPrice,
@@ -401,29 +395,29 @@ export const QuotationProductTable = ({
       action: false,
     });
 
-  useEffect(() => {
-    if (
-      products.length === 0 &&
-      !Object.keys(formValues.product_list.qty).length > 0
-    ) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
+  // useEffect(() => {
+  //   if (
+  //     products.length === 0 &&
+  //     !Object.keys(formValues.product_list.qty).length > 0
+  //   ) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+  //       },
+  //     });
 
-      setProductUnits({
-        sale_units: {},
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, setFormValues]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [products, setFormValues]);
 
   form.setFieldsValue(formValues);
 

@@ -46,7 +46,7 @@ const WarehouseEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateWarehouse({
       id,
-      data: values,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

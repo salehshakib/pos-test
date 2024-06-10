@@ -18,36 +18,37 @@ export const PurchaseCreate = () => {
 
   const [formValues, setFormValues] = useState({
     product_list: {
-      sale_id: {},
       product_id: {},
       qty: {},
       recieved: {},
-      sale_unit_id: {},
-      net_unit_price: {},
+      purchase_unit_id: {},
+      net_unit_cost: {},
       discount: {},
       tax_rate: {},
       tax: {},
       total: {},
+
+      tax_id: {},
     },
   });
 
   const handleSubmit = async (values) => {
     console.log(values);
-    const { data, error } = await createPurchase({
-      data: values,
-    });
-    if (data?.success) {
-      dispatch(closeCreateDrawer());
-      form.resetFields();
-    }
-    if (error) {
-      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-        name: fieldName,
+    // const { data, error } = await createPurchase({
+    //   data: values,
+    // });
+    // if (data?.success) {
+    //   dispatch(closeCreateDrawer());
+    //   form.resetFields();
+    // }
+    // if (error) {
+    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+    //     name: fieldName,
 
-        errors: error?.data?.errors[fieldName],
-      }));
-      setErrorFields(errorFields);
-    }
+    //     errors: error?.data?.errors[fieldName],
+    //   }));
+    //   setErrorFields(errorFields);
+    // }
   };
 
   const [products, setProducts] = useState([]);

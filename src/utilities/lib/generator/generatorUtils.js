@@ -1,6 +1,10 @@
 export const calculateTotalPrice = (data) => {
-  const totals = Object.values(data.total);
+  const totals = Object.values(data.total).map(
+    (value) => parseFloat(value) || 0
+  );
   const totalPrice = totals.reduce((sum, value) => sum + value, 0);
+
+  console.log(totals, totalPrice);
   return totalPrice;
 };
 
@@ -15,7 +19,26 @@ export const calculateGrandTotal = (
   discount,
   shipping_cost
 ) => {
-  const grandTotal = totalPrice + totalTax - discount + shipping_cost;
+  // Ensure all inputs are parsed as numbers
+  const parsedTotalPrice = parseFloat(totalPrice) || 0;
+  const parsedTotalTax = parseFloat(totalTax) || 0;
+  const parsedDiscount = parseFloat(discount) || 0;
+  const parsedShippingCost = parseFloat(shipping_cost) || 0;
+
+  // Calculate the grand total
+  let grandTotal = parsedTotalPrice + parsedTotalTax;
+
+  // Apply discount if provided
+  if (parsedDiscount) {
+    grandTotal -= parsedDiscount;
+  }
+
+  // Add shipping cost if provided
+  if (parsedShippingCost) {
+    grandTotal += parsedShippingCost;
+  }
+
+  // Return the formatted grand total
   return grandTotal ? Number(grandTotal).toFixed(2) : "0.00";
 };
 

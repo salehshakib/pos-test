@@ -1,86 +1,274 @@
-import { Col, Form } from "antd";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useDebouncedCallback } from "use-debounce";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { setProduct } from "../../../redux/services/product/productSlice";
-import { fullColLayout } from "../../../layout/FormLayout";
-import DebouceSelect from "../../Shared/Select/DebounceSelect";
-import ComboTableComponent from "./ComboTableComponent";
+import { Button, Form } from "antd";
+import { useEffect, useState } from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import CustomInput from "../../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
+// import { columns } from "./columns/ProductColumns";
 
-const SearchProductComponent = ({ options: editOptions = [] }) => {
-  const [keyword, setKeyword] = useState(null);
-
-  const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
-      setKeyword(value);
-    }
-  }, 1000);
-
-  const { data, isFetching } = useGetAllProductsQuery(
-    {
-      params: {
-        // selectValue: ["id", "name", "sku", "buying_price"],
-        keyword,
-      },
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    align: "center",
+    render: (name) => (
+      <div className={`flex items-center gap-2 `}>
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+      </div>
+    ),
+  },
+  {
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    title: "Quantity",
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+    width: 140,
+    render: (quantity, record) => {
+      return quantity > -1 ? (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {quantity}
+        </span>
+      ) : (
+        <div className="flex gap-1 justify-center items-center">
+          <div>
+            <Button
+              key={"sub"}
+              icon={<FaMinus />}
+              type="primary"
+              onClick={() => record.decrementCounter(record?.id)}
+            />
+          </div>
+          <CustomQuantityInput
+            name={["product_list", "qty", record?.id]}
+            noStyle={true}
+            onChange={(value) => record.onQuantityChange(record.id, value)}
+          />
+          <div>
+            <Button
+              key={"add"}
+              icon={<FaPlus />}
+              type="primary"
+              onClick={() => record.incrementCounter(record?.id)}
+              className=""
+            />
+          </div>
+        </div>
+      );
     },
-    {
-      skip: !keyword,
-    }
-  );
+  },
+  {
+    title: "UnitPrice",
+    dataIndex: "unitPrice",
+    key: "unitPrice",
+    align: "center",
+    width: 200,
+    render: (unitPrice, record) => {
+      return unitPrice > -1 ? (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {unitPrice}
+        </span>
+      ) : (
+        <CustomInput
+          type={"number"}
+          name={["product_list", "amount", record?.id]}
+          placeholder="quantity"
+          noStyle={true}
+          onChange={(value) => record.onUnitPriceChange(record.id, value)}
+        />
+      );
+    },
+  },
+  {
+    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    dataIndex: "delete",
+    key: "delete",
+    align: "center",
+    width: 50,
+    fixed: "right",
+    render: (props, record) => {
+      return (
+        props && (
+          <div className="flex justify-center items-center gap-3">
+            <button
+              onClick={() => record.onDelete(record.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              type="button"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+          </div>
+        )
+      );
+    },
+  },
+];
 
-  const options = [
-    // ...editOptions,
-    ...(data?.results?.product?.map((product) => ({
-      value: product.id.toString(),
-      label: product.name,
-      // sku: product.sku,
-      // unitCost: product.buying_price,
-    })) ?? []),
-  ];
+const ComboProductsComponent = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+}) => {
+  const form = Form.useFormInstance();
 
-  const dispatch = useDispatch();
+  const incrementCounter = (id, stock = 5) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = Math.min(currentQty + 1, stock);
 
-  const onSelect = (value, option) => {
-    dispatch(
-      setProduct({
-        value: option.value,
-        label: option.label,
-        // sku: option.sku,
-        // unitCost: option.unitCost,
-      })
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const decrementCounter = (id) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = Math.max(currentQty - 1, 0);
+
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const onQuantityChange = (id, value) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        qty: {
+          ...prevFormValues.product_list.qty,
+          [id]: parseInt(value, 10) || 0,
+        },
+      },
+    }));
+  };
+
+  // const onActionChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       action: {
+  //         ...prevFormValues.product_list.action,
+  //         [id]: value,
+  //       },
+  //     },
+  //   }));
+  // };
+
+  const onDelete = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
     );
   };
 
-  return (
-    <Col {...fullColLayout}>
-      <DebouceSelect
-        label="Product"
-        onSearch={debounce}
-        placeholder={"Product Name"}
-        required={true}
-        options={options}
-        name={"product_id"}
-        mode={"multiple"}
-        isLoading={isFetching}
-        onSelect={onSelect}
-      />
-    </Col>
-  );
-};
+  const onUnitPriceChange = (id, value) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        amount: {
+          ...prevFormValues.product_list.amount,
+          [id]: parseInt(value, 10) || 0,
+        },
+      },
+    }));
+  };
 
-const ComboProductsComponent = ({ options }) => {
-  const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const dataSource =
+    products?.map((product) => {
+      const { id, name, sku, buying_price: unitPrice } = product;
 
-  if (productType === "Combo") {
-    return (
-      <>
-        <SearchProductComponent options={options} />
-        <ComboTableComponent />
-      </>
+      formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
+      formValues.product_list.amount[id] =
+        formValues.product_list.amount[id] ?? parseInt(unitPrice) ?? 0;
+
+      return {
+        id,
+        name,
+        sku,
+        unitPrice: `$${formValues.product_list.amount[id]}`,
+        delete: true,
+        incrementCounter,
+        decrementCounter,
+        onQuantityChange,
+        onDelete,
+        onUnitPriceChange,
+      };
+    }) ?? [];
+
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalUnitPrice, setTotalUnitPrice] = useState(0);
+
+  useEffect(() => {
+    const total = Object.values(formValues.product_list.qty).reduce(
+      (acc, cur) => acc + cur,
+      0
     );
-  }
+    setTotalQuantity(total);
+
+    console.log(formValues);
+
+    const totalAmount = Object.values(formValues.product_list.amount).reduce(
+      (acc, cur) => acc + cur,
+      0
+    );
+
+    setTotalUnitPrice(totalAmount);
+
+    console.log(totalAmount);
+  }, [formValues, products]);
+
+  products.length > 0 &&
+    dataSource.push({
+      id: "",
+      name: "Total",
+      quantity: totalQuantity,
+      unitPrice: Number(totalUnitPrice)?.toFixed(2),
+    });
+
+  form.setFieldsValue(formValues);
+
+  return (
+    <ProductController
+      products={products}
+      setProducts={setProducts}
+      columns={columns}
+      dataSource={dataSource}
+    />
+  );
 };
 
 export default ComboProductsComponent;

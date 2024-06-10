@@ -21,6 +21,8 @@ const AdjustmentCreate = () => {
     product_list: { qty: {}, action: {} },
   });
 
+  const [products, setProducts] = useState([]);
+
   const handleSubmit = async (values) => {
     const { warehouse_id, product_list, attachment, note } = values;
 
@@ -47,15 +49,19 @@ const AdjustmentCreate = () => {
       : [];
 
     const postObj = {
-      attachment:
-        attachment?.length > 0
-          ? attachment?.map((file) => file.originFileObj)
-          : [],
+      // attachment:
+      //   attachment?.length > 0
+      //     ? attachment?.map((file) => file.originFileObj)
+      //     : [],
 
       warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,
     };
+
+    if (attachment?.length > 0 && attachment?.[0]?.url) {
+      postObj.attachment = attachment?.[0]?.originFileObj;
+    }
 
     appendToFormData(postObj, formData);
 
@@ -64,6 +70,8 @@ const AdjustmentCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+      setFormValues({ product_list: { qty: {}, action: {} } });
+      setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -83,6 +91,8 @@ const AdjustmentCreate = () => {
         form={form}
         formValues={formValues}
         setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
       />
     </CustomDrawer>
   );

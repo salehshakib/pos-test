@@ -110,9 +110,10 @@ export const PurchaseForm = ({
 
   const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
   const totalQty = Object.values(formValues.product_list?.qty).reduce(
-    (acc, cur) => acc + cur,
+    (acc, cur) => acc + (parseFloat(cur) || 0),
     0
   );
+
   const totalPrice = calculateTotalPrice(formValues.product_list);
   const grandTotal = calculateGrandTotal(
     totalPrice,
@@ -125,9 +126,9 @@ export const PurchaseForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          {/* <Col {...colLayout}>
             <CustomInput name={"name"} label={"Reference No"} required={true} />
-          </Col>
+          </Col> */}
 
           <Col {...colLayout}>
             <WarehouseComponent />
@@ -141,7 +142,11 @@ export const PurchaseForm = ({
           </Col>
 
           <Col {...colLayout}>
-            <CustomDatepicker label="Date" required={true} name={"date"} />
+            <CustomDatepicker
+              label="Date"
+              required={true}
+              name={"purchase_at"}
+            />
           </Col>
 
           <PurchaseProductTable

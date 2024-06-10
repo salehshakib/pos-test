@@ -30,8 +30,14 @@ const QuotationCreate = () => {
       tax_rate: {},
       tax: {},
       total: {},
+
       tax_id: {},
     },
+  });
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
   });
 
   const handleSubmit = async (values) => {
@@ -136,6 +142,8 @@ const QuotationCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

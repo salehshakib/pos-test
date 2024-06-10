@@ -1,7 +1,8 @@
 import { Button } from "antd";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import CustomInput from "../../../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../../../Shared/Input/CustomQuantityInput";
 
 export const columns = [
   {
@@ -9,7 +10,6 @@ export const columns = [
     dataIndex: "name",
     key: "name",
     align: "center",
-    width: 150,
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
@@ -37,18 +37,6 @@ export const columns = [
       </span>
     ),
   },
-  {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
-    render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost ? "$" + unitCost : ""}
-      </span>
-    ),
-  },
-
   {
     title: "Quantity",
     dataIndex: "quantity",
@@ -89,37 +77,26 @@ export const columns = [
     },
   },
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
+    title: "UnitPrice",
+    dataIndex: "unitPrice",
+    key: "unitPrice",
     align: "center",
-    render: (discount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${discount}
-      </span>
-    ),
-  },
-  {
-    title: "Tax",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
-    render: (tax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
-      </span>
-    ),
-  },
-  {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
-    render: (subTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
-      </span>
-    ),
+    width: 200,
+    render: (unitPrice, record) => {
+      return unitPrice >= 0 ? (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {unitPrice}
+        </span>
+      ) : (
+        <CustomInput
+          type={"number"}
+          name={["product_list", "unit_price", record?.id]}
+          placeholder="quantity"
+          noStyle={true}
+          onChange={(value) => record.onUnitPriceChange(record.id, value)}
+        />
+      );
+    },
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,

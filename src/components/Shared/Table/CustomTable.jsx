@@ -173,82 +173,82 @@ const CustomTable = ({
       if (record?.handleDetailsModal) {
         return (
           <div className="flex justify-center items-center gap-2">
-            <Tooltip title="Details">
-              <button
-                onClick={() => record?.handleDetailsModal(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <TbListDetails className="text-lg md:text-xl" />
-              </button>
-            </Tooltip>
+            {/* <Tooltip title="Details"> */}
+            <button
+              onClick={() => record?.handleDetailsModal(record?.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            >
+              <TbListDetails className="text-lg md:text-xl" />
+            </button>
+            {/* </Tooltip> */}
 
-            <Tooltip title="More Actions">
-              <Dropdown
-                menu={{
-                  items: [
-                    {
-                      key: "edit",
-                      icon: <MdEditSquare size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Edit
-                        </div>
-                      ),
-                      onClick: () => record?.handleEdit(record?.id),
-                    },
-                    {
-                      key: "due",
-                      icon: <PiBroom size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Due Clear
-                        </div>
-                      ),
-                    },
-                    {
-                      key: "delete",
-                      icon: <MdDelete size={20} />,
-                      label: (
-                        <div className="flex justify-start items-center gap-3">
-                          Delete
-                        </div>
-                      ),
-                      onClick: () => record?.handleDeleteModal(record?.id),
-                    },
-                  ],
-                }}
-                placement="bottom"
-                trigger={["click"]}
-              >
-                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-                  <FiMoreHorizontal className="text-lg md:text-xl" />
-                </button>
-              </Dropdown>
-            </Tooltip>
+            {/* <Tooltip title="More Actions"> */}
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "edit",
+                    icon: <MdEditSquare size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Edit
+                      </div>
+                    ),
+                    onClick: () => record?.handleEdit(record?.id),
+                  },
+                  {
+                    key: "due",
+                    icon: <PiBroom size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Due Clear
+                      </div>
+                    ),
+                  },
+                  {
+                    key: "delete",
+                    icon: <MdDelete size={20} />,
+                    label: (
+                      <div className="flex justify-start items-center gap-3">
+                        Delete
+                      </div>
+                    ),
+                    onClick: () => record?.handleDeleteModal(record?.id),
+                  },
+                ],
+              }}
+              placement="bottom"
+              trigger={["click"]}
+            >
+              <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                <FiMoreHorizontal className="text-lg md:text-xl" />
+              </button>
+            </Dropdown>
+            {/* </Tooltip> */}
           </div>
         );
       } else {
         return (
           <div className="flex justify-center items-center gap-2">
             {record?.handleEdit && (
-              <Tooltip title="Edit">
-                <button
-                  onClick={() => record?.handleEdit(record?.id)}
-                  className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-                >
-                  <MdEditSquare className="text-lg md:text-xl" />
-                </button>
-              </Tooltip>
-            )}
-
-            <Tooltip title="Delete">
+              // <Tooltip title="Edit">
               <button
-                onClick={() => record?.handleDeleteModal(record?.id)}
+                onClick={() => record?.handleEdit(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               >
-                <MdDelete className="text-lg md:text-xl" />
+                <MdEditSquare className="text-lg md:text-xl" />
               </button>
-            </Tooltip>
+              //  </Tooltip>
+            )}
+
+            {/* <Tooltip title="Delete"> */}
+            <button
+              onClick={() => record?.handleDeleteModal(record?.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+            {/* </Tooltip> */}
           </div>
         );
       }

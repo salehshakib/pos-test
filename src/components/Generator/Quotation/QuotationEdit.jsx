@@ -13,7 +13,6 @@ import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-  transformQuotationProducts,
 } from "../../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "./QuotationForm";
@@ -46,29 +45,90 @@ const QuotationEdit = ({ id }) => {
       tax_rate: {},
       tax: {},
       total: {},
+
+      tax_id: {},
     },
+  });
+
+  const [products, setProducts] = useState([]);
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
   });
 
   useEffect(() => {
     if (data) {
-      const fieldData = fieldsToUpdate(data);
+      data?.quotation_products?.forEach((item) => {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          product_list: {
+            ...prevFormValues.product_list,
+            qty: {
+              ...prevFormValues.product_list.qty,
+              [item?.product_id.toString()]: item?.qty,
+            },
+            sale_unit_id: {
+              ...prevFormValues.product_list.sale_unit_id,
+              [item?.product_id.toString()]: item?.sale_unit_id,
+            },
+            net_unit_price: {
+              ...prevFormValues.product_list.net_unit_price,
+              [item?.product_id.toString()]: item?.net_unit_price,
+            },
+            discount: {
+              ...prevFormValues.product_list.discount,
+              [item?.product_id.toString()]: item?.discount,
+            },
+            tax_rate: {
+              ...prevFormValues.product_list.tax_rate,
+              [item?.product_id.toString()]: item?.tax_rate,
+            },
+            tax: {
+              ...prevFormValues.product_list.tax,
+              [item?.product_id.toString()]: item?.tax,
+            },
+            total: {
+              ...prevFormValues.product_list.total,
+              [item?.product_id.toString()]: item?.total,
+            },
+          },
+        }));
 
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        product_list: transformQuotationProducts(data?.quotation_products),
-      }));
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            id: item?.product_id,
+            sku: item?.products?.sku,
+            name: item?.products?.name,
+            sale_unit_id: item?.sale_unit_id,
+            tax_id: item?.products?.tax_id,
+            taxes: item?.products?.taxes,
+            sale_units: item?.products?.sale_units,
+            buying_price: item?.products?.buying_price,
+          },
+        ]);
+
+        setProductUnits((prevProductUnits) => ({
+          ...prevProductUnits,
+
+          sale_units: {
+            ...prevProductUnits.sale_units,
+            [item?.product_id.toString()]: item?.products?.sale_unit_id,
+          },
+        }));
+      });
+
+      const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
     }
   }, [data, setFields]);
 
-  console.log(formValues);
-
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    const { product_list } = formValues ?? {};
-
+    const { product_list } = formValues;
     const { attachment, discount, shipping_cost, tax_rate } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -91,21 +151,19 @@ const QuotationEdit = ({ id }) => {
 
     const totalQty =
       Object.values(formValues.product_list?.qty).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
     const totalDiscount =
       Object.values(formValues.product_list?.discount).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
-    console.log(formValues.product_list);
-
     const totalTax =
       Object.values(formValues.product_list?.tax).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
@@ -131,7 +189,7 @@ const QuotationEdit = ({ id }) => {
       _method: "PUT",
     };
 
-    if (attachment) {
+    if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
     }
 
@@ -144,6 +202,19 @@ const QuotationEdit = ({ id }) => {
 
     if (data?.success) {
       dispatch(closeEditDrawer());
+
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProducts([]);
     }
 
     if (error) {
@@ -152,8 +223,6 @@ const QuotationEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
-
-  const [products, setProducts] = useState([]);
 
   return (
     <CustomDrawer
@@ -170,6 +239,8 @@ const QuotationEdit = ({ id }) => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

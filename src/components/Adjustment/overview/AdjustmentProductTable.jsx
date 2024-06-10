@@ -136,16 +136,20 @@ const columns = [
   },
 ];
 
-export const AdjustmentProductTable = ({ formValues, setFormValues }) => {
-  const [products, setProducts] = useState([]);
+export const AdjustmentProductTable = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+}) => {
   const form = Form.useFormInstance();
 
   console.log(formValues);
 
-  const incrementCounter = (id, stock = 5) => {
+  const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(currentQty + 1, stock);
+      const newQty = currentQty + 1;
 
       return {
         ...prevFormValues,
@@ -210,28 +214,33 @@ export const AdjustmentProductTable = ({ formValues, setFormValues }) => {
     );
   };
 
-  const dataSource = products?.map((product) => {
-    const { id, name, sku, buying_price: unit_cost } = product;
+  console.log(products);
 
-    formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
+  const dataSource =
+    products?.map((product) => {
+      const { id, name, sku, buying_price: unit_cost } = product ?? {};
 
-    formValues.product_list.action[id] =
-      formValues.product_list.action[id] ?? "Addition";
+      console.log(id);
 
-    return {
-      id,
-      name,
-      sku,
-      unitCost: `$${unit_cost}`,
-      action: true,
-      delete: true,
-      incrementCounter,
-      decrementCounter,
-      onQuantityChange,
-      onActionChange,
-      onDelete,
-    };
-  });
+      formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
+
+      formValues.product_list.action[id] =
+        formValues.product_list.action[id] ?? "Addition";
+
+      return {
+        id,
+        name,
+        sku,
+        unitCost: `$${unit_cost}`,
+        action: true,
+        delete: true,
+        incrementCounter,
+        decrementCounter,
+        onQuantityChange,
+        onActionChange,
+        onDelete,
+      };
+    }) ?? [];
 
   const [totalQuantity, setTotalQuantity] = useState(0);
 
@@ -245,7 +254,7 @@ export const AdjustmentProductTable = ({ formValues, setFormValues }) => {
 
   products.length > 0 &&
     dataSource.push({
-      id: "total",
+      id: "",
       name: "Total",
       quantity: totalQuantity,
       action: false,

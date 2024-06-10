@@ -1,4 +1,5 @@
 // Import necessary dependencies
+import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/notification";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
@@ -7,33 +8,33 @@ const saleReturnApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllSaleReturn: build.query({
       query: ({ params }) => ({
-        url: `/${BRAND}`,
+        url: `/${SALE_RETURN}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: BRAND, params },
-        BRAND,
+        { type: SALE_RETURN, params },
+        SALE_RETURN,
       ],
     }),
 
     getSaleReturnDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${BRAND}/show/${id}`,
+          url: `${SALE_RETURN}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: BRAND, id }],
+      providesTags: (result, error, { id }) => [{ type: SALE_RETURN, id }],
     }),
 
     createSaleReturn: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${BRAND}/store`,
+          url: `/${SALE_RETURN}/store`,
           method: "POST",
           body: data,
         };
@@ -51,14 +52,14 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE_RETURN] : [];
       },
     }),
 
     updateSaleReturn: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${BRAND}/update/${id}`,
+          url: `/${SALE_RETURN}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -70,14 +71,14 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE_RETURN] : [];
       },
     }),
 
     updateSaleReturnStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/status/${id}`,
+          url: `/${SALE_RETURN}/status/${id}`,
           method: "POST",
         };
       },
@@ -88,14 +89,14 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE_RETURN] : [];
       },
     }),
 
     deleteSaleReturn: build.mutation({
       query: (id) => {
         return {
-          url: `/${BRAND}/delete/${id}`,
+          url: `/${SALE_RETURN}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -106,14 +107,24 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [BRAND] : [];
+        return result ? [SALE_RETURN] : [];
+      },
+    }),
+
+    checkReference: build.mutation({
+      query: ({ data }) => {
+        return {
+          url: `/${SALE_RETURN}/reference`,
+          method: "POST",
+          body: data,
+        };
       },
     }),
 
     exportSaleReturn: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${BRAND}/export`,
+          url: `/${SALE_RETURN}/export`,
           method: "GET",
           body: data,
         };
@@ -135,5 +146,6 @@ export const {
   useUpdateSaleReturnMutation,
   useUpdateSaleReturnStatusMutation,
   useDeleteSaleReturnMutation,
+  useCheckReferenceMutation,
   useExportSaleReturnMutation,
 } = saleReturnApi;

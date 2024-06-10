@@ -27,7 +27,7 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllSaleQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1, child: 1 },
   });
 
   const total = data?.meta?.total;
@@ -70,14 +70,14 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.sale?.map((item) => {
-      const { id, created_at, is_active } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+      const { id, sale_at, is_active, reference_id } = item ?? {};
+      const date = dayjs(sale_at).format("DD-MM-YYYY");
 
       return {
         id,
 
-        created_at: date,
-
+        date: date,
+        reference: reference_id,
         status: is_active,
         handleStatusModal,
         handleEdit,
@@ -99,6 +99,7 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        created_at={false}
       />
 
       <SaleEdit id={editId} setId={setEditId} />

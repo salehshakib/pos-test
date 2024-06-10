@@ -48,6 +48,7 @@ const drawerSlice = createSlice({
     openEditDrawer: (state) => {
       state.isEditDrawerOpen = true;
     },
+
     closeEditDrawer: (state) => {
       state.isEditDrawerOpen = false;
 

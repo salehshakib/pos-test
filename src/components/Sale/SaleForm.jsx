@@ -50,7 +50,7 @@ const PaymentComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("payment_type", "Pending");
+    form.setFieldValue("payment_status", "Pending");
   }, [form]);
 
   const options = [
@@ -76,7 +76,7 @@ const PaymentComponent = () => {
     <CustomSelect
       label="Payment Status"
       options={options}
-      name={"payment_type"}
+      name={"payment_status"}
     />
   );
 };
@@ -142,10 +142,12 @@ export const SaleForm = ({
 
   const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
   const totalQty = Object.values(formValues.product_list?.qty).reduce(
-    (acc, cur) => acc + cur,
+    (acc, cur) => acc + (parseFloat(cur) || 0),
     0
   );
+
   const totalPrice = calculateTotalPrice(formValues.product_list);
+
   const grandTotal = calculateGrandTotal(
     totalPrice,
     tax_rate ?? 0,
@@ -157,10 +159,6 @@ export const SaleForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          {/* <Col {...colLayout}>
-            <CustomInput name={"name"} label={"Reference No"} required={true} />
-          </Col> */}
-
           <Col {...colLayout}>
             <WarehouseComponent />
           </Col>

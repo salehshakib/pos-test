@@ -12,7 +12,7 @@ export const ProductDetails = ({ id, ...props }) => {
       id,
       params: {
         parent: 1,
-        child: 1,
+        // child: 1,
       },
     },
     { skip: !id }
@@ -28,11 +28,11 @@ export const ProductDetails = ({ id, ...props }) => {
   });
 
   const categoryInfo = createDetailsLayout({
-    brand_id: data?.brand_id,
-    category_id: data?.category_id,
-    unit_id: data?.unit_id,
-    purchase_unit_id: data?.purchase_unit_id,
-    sale_unit_id: data?.sale_unit_id,
+    brand: data?.brands?.name,
+    category: data?.categories?.name,
+    unit: data?.units?.name,
+    purchase_unit: data?.purchase_units?.name,
+    sale_unit: data?.sale_units?.name,
   });
 
   const pricingInfo = createDetailsLayout({
@@ -66,7 +66,7 @@ export const ProductDetails = ({ id, ...props }) => {
   });
 
   const taxInfo = createDetailsLayout({
-    tax_id: data?.tax_id,
+    tax: data?.taxs?.name,
     tax_method: data?.tax_method,
   });
 

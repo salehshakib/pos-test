@@ -30,6 +30,8 @@ const AdjustmentEdit = ({ id }) => {
     },
   });
 
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     if (data) {
       data?.adjustment_products?.forEach((item) => {
@@ -47,6 +49,19 @@ const AdjustmentEdit = ({ id }) => {
             },
           },
         }));
+
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            id: item?.product_id,
+            sku: item?.products?.sku,
+            name: item?.products?.name,
+            qty: item?.qty,
+            action: item?.action,
+
+            buying_price: item?.products?.buying_price,
+          },
+        ]);
       });
 
       const fieldData = [
@@ -95,15 +110,15 @@ const AdjustmentEdit = ({ id }) => {
       : [];
 
     const postObj = {
-      attachment:
-        attachment?.length > 0 && !attachment?.[0]?.url
-          ? attachment?.map((file) => file.originFileObj)
-          : [],
       warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,
       _method: "PUT",
     };
+
+    if (attachment?.length > 0 && attachment?.[0]?.url) {
+      postObj.attachment = attachment?.[0]?.originFileObj;
+    }
 
     appendToFormData(postObj, formData);
 
@@ -111,11 +126,12 @@ const AdjustmentEdit = ({ id }) => {
 
     if (data?.success) {
       dispatch(closeEditDrawer());
+      setFormValues({ product_list: { qty: {}, action: {} } });
+      setProducts([]);
     }
 
     if (error) {
       const errorFields = errorFieldsUpdate(fields, error);
-
       setFields(errorFields);
     }
   };
@@ -132,6 +148,8 @@ const AdjustmentEdit = ({ id }) => {
         fields={fields}
         formValues={formValues}
         setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
       />
     </CustomDrawer>
   );

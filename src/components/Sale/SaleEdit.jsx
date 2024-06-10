@@ -20,14 +20,42 @@ export const SaleEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetSaleDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetSaleDetailsQuery(
+    {
+      id,
+      params: {
+        child: 1,
+        parent: 1,
+      },
+    },
+    { skip: !id }
+  );
 
   const [updateSale, { isLoading }] = useUpdateSaleMutation();
+
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      product_id: {},
+      qty: {},
+      sale_unit_id: {},
+      net_unit_price: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+
+      tax_id: {},
+    },
+  });
+
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
+      console.log(data);
+      console.log(fieldData);
       setFields(fieldData);
     }
   }, [data, setFields]);
@@ -77,6 +105,10 @@ export const SaleEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
       />
     </CustomDrawer>
   );

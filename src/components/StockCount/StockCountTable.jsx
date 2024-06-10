@@ -28,7 +28,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetStockCountsQuery({
-    params: { ...pagination, parent: 1, child: 1 },
+    params: { ...pagination, parent: 1 },
   });
   const total = data?.meta?.total;
 

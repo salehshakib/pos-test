@@ -6,8 +6,15 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { AdjustmentProductTable } from "./overview/AdjustmentProductTable";
 
-const AdjustmentForm = ({ formValues, setFormValues, ...props }) => {
-  console.log(formValues.product_list);
+const AdjustmentForm = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+  ...props
+}) => {
+  console.log(formValues);
+  console.log(products);
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -18,6 +25,8 @@ const AdjustmentForm = ({ formValues, setFormValues, ...props }) => {
         <AdjustmentProductTable
           formValues={formValues}
           setFormValues={setFormValues}
+          products={products}
+          setProducts={setProducts}
         />
 
         <Col {...fullColLayout}>

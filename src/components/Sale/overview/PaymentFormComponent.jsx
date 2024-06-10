@@ -1,19 +1,19 @@
+import { Col, Form, message } from "antd";
 import { useEffect } from "react";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { Col, Form } from "antd";
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
 } from "../../../layout/FormLayout";
-import CustomInput from "../../Shared/Input/CustomInput";
 import { useGetAllGiftCardQuery } from "../../../redux/services/giftcard/giftcard/giftCardApi";
+import CustomInput from "../../Shared/Input/CustomInput";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
-const PaidByComponent = () => {
+const PaymentType = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("paid_by", "Cash");
+    form.setFieldValue("payment_type", "Cash");
   }, [form]);
 
   const options = [
@@ -149,13 +149,30 @@ const ChequeComponent = () => {
 
 export const PaymentTypeComponent = () => {
   const form = Form.useFormInstance();
-  const paymentStatus = Form.useWatch("payment_type", form);
+  const paymentStatus = Form.useWatch("payment_status", form);
+
+  const receivedAmount = Form.useWatch("recieved_amount", form);
+  const paidAmount = Form.useWatch("paid_amount", form);
+
+  const paymentType = Form.useWatch("payment_type", form);
+
+  useEffect(() => {
+    if (paidAmount > receivedAmount) {
+      message.error("Paid Amount is greater than Recieved Amount");
+      form.setFieldValue("paid_amount", receivedAmount);
+    }
+    if (paymentStatus === "Paid") {
+      form.setFieldValue("paid_amount", receivedAmount);
+    }
+  }, [paidAmount, receivedAmount, form, paymentStatus]);
+
+  const change = (receivedAmount - paidAmount).toFixed(2);
 
   return (
     (paymentStatus === "Paid" || paymentStatus === "Partial") && (
       <>
         <Col {...colLayout}>
-          <PaidByComponent />
+          <PaymentType />
         </Col>
         <Col {...colLayout}>
           <CustomInput
@@ -182,9 +199,13 @@ export const PaymentTypeComponent = () => {
           />
         </Col>
 
-        {paymentStatus === "Gift Card" && <GiftCardComponent />}
-        {paymentStatus === "Card" && <CardComponent />}
-        {paymentStatus === "Cheque" && <ChequeComponent />}
+        <Col {...colLayout}>
+          <div className="py-9 text-lg font-semibold">Change: {change}</div>
+        </Col>
+
+        {paymentType === "Gift Card" && <GiftCardComponent />}
+        {paymentType === "Card" && <CardComponent />}
+        {paymentType === "Cheque" && <ChequeComponent />}
 
         <Col {...fullColLayout}>
           <CustomInput

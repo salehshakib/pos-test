@@ -8,6 +8,7 @@ const columns = [
     title: "Date",
     dataIndex: "date",
     key: "date",
+    align: "center",
     render: (date) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {date}
@@ -18,6 +19,7 @@ const columns = [
     title: "Reference",
     dataIndex: "reference",
     key: "reference",
+    align: "center",
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}

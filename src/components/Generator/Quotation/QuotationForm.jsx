@@ -12,7 +12,7 @@ import { CustomerComponent } from "../overview/CustomerComponent";
 import { SupplierComponent } from "../overview/SupplierComponent";
 import { WarehouseComponent } from "../overview/WarehouseComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
@@ -68,26 +68,39 @@ export const QuotationForm = ({
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
   ...props
 }) => {
   const discount = Form.useWatch("discount", props.form);
   const shipping_cost = Form.useWatch("shipping_cost", props.form);
   const tax_rate = Form.useWatch("tax_rate", props.form);
 
-  const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
-  const totalQty = Object.values(formValues.product_list?.qty).reduce(
-    (acc, cur) => acc + cur,
-    0
-  );
-  const totalPrice = calculateTotalPrice(formValues.product_list);
-  const grandTotal = calculateGrandTotal(
-    totalPrice,
-    tax_rate ?? 0,
-    discount,
-    shipping_cost
-  );
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    setTotalItems(Object.keys(formValues.product_list?.qty)?.length ?? 0);
+
+    setTotalQty(
+      Object.values(formValues.product_list?.qty).reduce(
+        (acc, cur) => acc + (parseFloat(cur) || 0),
+        0
+      )
+    );
+
+    setTotalPrice(calculateTotalPrice(formValues.product_list));
+    setGrandTotal(
+      calculateGrandTotal(totalPrice, tax_rate ?? 0, discount, shipping_cost)
+    );
+  }, [discount, formValues, shipping_cost, tax_rate, totalPrice]);
 
   console.log(formValues);
+  console.log(products);
+
+  console.log(totalPrice);
 
   return (
     <>
@@ -111,6 +124,8 @@ export const QuotationForm = ({
             setFormValues={setFormValues}
             products={products}
             setProducts={setProducts}
+            productUnits={productUnits}
+            setProductUnits={setProductUnits}
           />
 
           <Col {...colLayout}>

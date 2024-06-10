@@ -6,17 +6,26 @@ import CustomModal from "../../../Shared/Modal/CustomModal";
 
 export const QuotationDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetQuotationDetailsQuery(
-    { id },
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
     { skip: !id }
   );
 
   const details = createDetailsLayout(data);
+
+  console.log(details);
 
   return (
     <CustomModal {...props}>
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
+        // <></>
         <CustomDescription title="Quotation Details" items={details} />
       )}
     </CustomModal>

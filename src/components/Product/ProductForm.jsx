@@ -1,4 +1,5 @@
 import { Col, Form, Row } from "antd";
+import dayjs from "dayjs";
 import {
   colLayout,
   fullColLayout,
@@ -15,16 +16,14 @@ import BarCodeComponent from "./overview/BarCodeComponent";
 import { BrandComponent } from "./overview/BrandComponent";
 import { CategoryComponent } from "./overview/CategoryComponent";
 import ComboProductsComponent from "./overview/ComboProductsComponent";
+import { DifferentPriceComponent } from "./overview/DifferentPriceComponent";
+import { InitialStockComponent } from "./overview/InitialStockComponent";
 import ProductCodeComponent from "./overview/ProductCodeComponent";
 import ProductTypeComponent from "./overview/ProductTypeComponent";
-import { SearchWarehouse } from "./overview/SearchWarehouse";
 import { TaxComponent } from "./overview/TaxComponent";
 import TaxTypeComponent from "./overview/TaxTypeComponent";
 import UnitComponent from "./overview/UnitComponent";
 import { VarientComponent } from "./overview/VarientComponent";
-import { WarehouseStockTableComponent } from "./overview/WarehouseStockTableComponent";
-import WarehouseTableComponent from "./overview/WarehouseTableComponent";
-import dayjs from "dayjs";
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
@@ -77,62 +76,33 @@ const AlertComponent = () => {
   }
 };
 
-const InitialStockComponent = () => {
-  const form = Form.useFormInstance();
-  const hasStock = Form.useWatch("has_stock", form);
+// const DifferentPriceComponent = () => {
+//   const form = Form.useFormInstance();
+//   const hasDifferentPrice = Form.useWatch("has_different_price", form);
 
-  return (
-    <>
-      <Col {...fullColLayout}>
-        <CustomCheckbox
-          label="Initial Stock"
-          name="has_stock"
-          // required={true}
-        />
-      </Col>
+//   return (
+//     <Row {...rowLayout}>
+//       <Col {...fullColLayout}>
+//         <CustomCheckbox
+//           label="This product has different price for different warehouse"
+//           name="has_different_price"
+//         />
+//       </Col>
 
-      {hasStock && (
-        <>
-          <Col {...fullColLayout} className="mt-5">
-            <SearchWarehouse name="initial_stock_warehouse_id" />
-          </Col>
+//       {hasDifferentPrice && (
+//         <>
+//           <Col {...fullColLayout} className="mt-5">
+//             <SearchWarehouse name={"warehouse_id"} />
+//           </Col>
 
-          <Col {...fullColLayout}>
-            <WarehouseStockTableComponent className="mb-10" />
-          </Col>
-        </>
-      )}
-    </>
-  );
-};
-
-const DifferentPriceComponent = () => {
-  const form = Form.useFormInstance();
-  const hasDifferentPrice = Form.useWatch("has_different_price", form);
-
-  return (
-    <Row {...rowLayout}>
-      <Col {...fullColLayout}>
-        <CustomCheckbox
-          label="This product has different price for different warehouse"
-          name="has_different_price"
-        />
-      </Col>
-
-      {hasDifferentPrice && (
-        <>
-          <Col {...fullColLayout} className="mt-5">
-            <SearchWarehouse name={"warehouse_id"} />
-          </Col>
-
-          <Col {...fullColLayout}>
-            <WarehouseTableComponent className="mb-10" />
-          </Col>
-        </>
-      )}
-    </Row>
-  );
-};
+//           <Col {...fullColLayout}>
+//             <WarehouseTableComponent className="mb-10" />
+//           </Col>
+//         </>
+//       )}
+//     </Row>
+//   );
+// };
 
 const ExpireComponent = () => {
   const form = Form.useFormInstance();
@@ -183,8 +153,6 @@ const PromotionalPriceComponent = () => {
     }
   };
 
-  console.log();
-
   return (
     <Row {...rowLayout}>
       <Col {...fullColLayout}>
@@ -227,7 +195,21 @@ const PromotionalPriceComponent = () => {
   );
 };
 
-const ProductForm = ({ options, ...props }) => {
+const ProductForm = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+  initialWarehouses,
+  setInitialWarehouses,
+  priceWarehouses,
+  setPriceWarehouses,
+  ...props
+}) => {
+  console.log(formValues);
+
+  const productType = Form.useWatch("type", props.form);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -252,7 +234,15 @@ const ProductForm = ({ options, ...props }) => {
           <BarCodeComponent />
         </Col>
 
-        <ComboProductsComponent options={options} />
+        {productType === "Combo" && (
+          <ComboProductsComponent
+            formValues={formValues}
+            setFormValues={setFormValues}
+            products={products}
+            setProducts={setProducts}
+          />
+        )}
+
         <AttachmentComponent />
 
         <Col {...colLayout}>
@@ -293,7 +283,20 @@ const ProductForm = ({ options, ...props }) => {
       </Row>
 
       <Row {...rowLayout}>
-        <InitialStockComponent />
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label="Initial Stock"
+            name="has_stock"
+            // required={true}
+          />
+        </Col>
+
+        <InitialStockComponent
+          initialWarehouses={initialWarehouses}
+          setInitialWarehouses={setInitialWarehouses}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
 
         <Col {...fullColLayout}>
           <CustomCheckbox
@@ -306,6 +309,7 @@ const ProductForm = ({ options, ...props }) => {
           <CustomCheckbox label="Embeded Barcode" name="embedded_barcode" />
         </Col>
       </Row>
+
       <Row {...rowLayout} justify={"center"} align={"middle"}>
         <Col xs={24}>
           <CustomUploader
@@ -327,7 +331,23 @@ const ProductForm = ({ options, ...props }) => {
       </Row>
 
       <VarientComponent />
-      <DifferentPriceComponent />
+
+      <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label="This product has different price for different warehouse"
+            name="has_different_price"
+          />
+        </Col>
+
+        <DifferentPriceComponent
+          formValues={formValues}
+          setFormValues={setFormValues}
+          priceWarehouses={priceWarehouses}
+          setPriceWarehouses={setPriceWarehouses}
+        />
+      </Row>
+
       <ExpireComponent />
 
       <PromotionalPriceComponent />

@@ -14,8 +14,9 @@ const TaxComponent = ({ productId, setProductUnits }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
 
   const options = data?.results?.tax?.map((tax) => ({
-    value: tax.rate,
+    value: tax.id?.toString(),
     label: tax.name,
+    rate: tax.rate,
   }));
 
   const onSelect = (value, option) => {
@@ -41,11 +42,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({
-    params: {
-      selectValue: ["name", "id", "for", "operator", "operation_value"],
-    },
-  });
+  const { data, isLoading } = useGetAllUnitQuery({});
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")
@@ -89,8 +86,6 @@ const ProductFormComponent = ({
 }) => {
   const [productForm] = Form.useForm();
 
-  console.log(productUnits);
-
   useEffect(() => {
     productForm.setFieldsValue({
       quantity: formValues?.product_list?.qty[productId],
@@ -107,8 +102,6 @@ const ProductFormComponent = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, productForm, productId]);
-
-  console.log(productForm.getFieldsValue());
 
   const handleSubmit = () => {
     console.log(productForm.getFieldsValue());
@@ -136,7 +129,7 @@ const ProductFormComponent = ({
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productUnits.tax_rate[productId],
+            [productId]: productUnits?.tax_rate[productId],
           },
           tax: {
             ...prevFormValues.product_list.tax,
@@ -279,20 +272,6 @@ export const SaleProductTable = ({
     tax_rate: {},
   });
 
-  const [productEditModal, setProductEditModal] = useState(false);
-  const [productId, setProductId] = useState(undefined);
-  const [productName, setProductName] = useState(null);
-
-  const handleProductEdit = (id, name) => {
-    setProductId(id);
-    setProductName(name);
-    setProductEditModal(true);
-  };
-
-  const hideModal = () => {
-    setProductEditModal(false);
-  };
-
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
@@ -348,7 +327,19 @@ export const SaleProductTable = ({
     );
   };
 
-  console.log(formValues);
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
+
+  const handleProductEdit = (id, name) => {
+    setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
+  };
+
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
 
   const dataSource = products?.map((product) => {
     const {
@@ -359,6 +350,7 @@ export const SaleProductTable = ({
       sale_unit_id,
       sale_units,
       tax_id,
+      taxes,
     } = product ?? {};
 
     console.log(product);
@@ -370,7 +362,8 @@ export const SaleProductTable = ({
       sale_units,
       formValues,
       productUnits,
-      tax_id
+      tax_id,
+      taxes
     );
 
     return {
@@ -457,18 +450,18 @@ export const SaleProductTable = ({
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   //   }, [products, setFormValues]);
 
+  console.log(formValues);
+
   form.setFieldsValue(formValues);
 
   return (
     <>
-      {/* {warehouseId && ( */}
       <ProductController
         products={products}
         setProducts={setProducts}
         columns={columns}
         dataSource={dataSource}
       />
-      {/* )} */}
 
       <ProductFormComponent
         productEditModal={productEditModal}

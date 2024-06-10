@@ -18,6 +18,19 @@ const ProductCreate = () => {
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      qty: {},
+      amount: {},
+    },
+    qty_list: {
+      qty: {},
+    },
+    price_list: {
+      price: {},
+    },
+  });
+
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
@@ -25,9 +38,7 @@ const ProductCreate = () => {
       name,
       type,
       sku,
-      qty_list,
-      price_list,
-      product_list,
+
       symbology,
       brand_id,
       category_id,
@@ -49,60 +60,49 @@ const ProductCreate = () => {
       has_different_price,
       has_expired_date,
       product_expire,
-      ecommerce_sync,
       details,
     } = values ?? {};
+    const { product_list, qty_list, price_list } = formValues;
 
-    const qtyListArray = Object.keys(qty_list?.qty || {})?.map(
-      (warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          qty: qty_list?.qty[warehouseId],
-        };
-      }
-    );
+    const qtyListArray = qty_list?.qty
+      ? Object.keys(qty_list.qty).map((warehouseId) => {
+          return {
+            warehouse_id: parseInt(warehouseId, 10),
+            qty: parseInt(qty_list.qty[warehouseId], 10),
+          };
+        })
+      : [];
 
-    const qty = qtyListArray?.reduce((sum, item) => sum + item.qty, 0);
+    // Calculate total quantity
+    const qty = qtyListArray.reduce((sum, item) => sum + item.qty, 0);
 
-    const priceListArray = Object.keys(price_list?.price || {})?.map(
-      (warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          price: price_list?.price[warehouseId],
-        };
-      }
-    );
+    const priceListArray = price_list?.price
+      ? Object.keys(price_list.price).map((warehouseId) => {
+          return {
+            warehouse_id: parseInt(warehouseId, 10),
+            price: parseFloat(price_list.price[warehouseId]),
+          };
+        })
+      : [];
 
-    const productListArray = Object.keys(product_list?.qty || {})?.map(
-      (product_id) => {
-        return {
-          product_id: parseInt(product_id),
-          qty: product_list?.qty[product_id],
-          price: product_list?.unit_price[product_id],
-        };
-      }
-    );
+    const productListArray = product_list?.qty
+      ? Object.keys(product_list.qty)
+          .filter((product_id) => product_list.qty[product_id] !== undefined)
+          .map((product_id) => ({
+            combo_product_id: parseInt(product_id),
+            qty: product_list.qty[product_id],
+            price: product_list.amount[product_id],
+          }))
+      : [];
 
-    const attachmentObj = {
-      attachments:
-        values.attachments?.length > 0
-          ? values.attachments?.map((file) => file.originFileObj)
-          : [],
-
-      attach_file:
-        values.attach_file?.length > 0
-          ? values.attach_file?.[0].originFileObj
-          : [],
-
+    const postObj = {
       name,
       sku,
       type,
       symbology,
+
       brand_id: parseInt(brand_id),
       category_id: parseInt(category_id),
-      unit_id: parseInt(unit_id),
-      purchase_unit_id: parseInt(purchase_unit_id),
-      sale_unit_id: parseInt(sale_unit_id),
       buying_price: parseInt(buying_price),
       selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
@@ -113,35 +113,74 @@ const ProductCreate = () => {
       tax_method,
       has_featured: has_featured ? 1 : 0,
       has_stock: has_stock ? 1 : 0,
-      qty_list: has_stock ? JSON.stringify(qtyListArray) : "",
       has_variant: has_variant ? 1 : 0,
       embedded_barcode: embedded_barcode ? 1 : 0,
       has_promotion: has_promotion ? 1 : 0,
-      promotion_price: promotion?.promotion_price,
-      starting_date:
-        promotion && dayjs(promotion?.starting_date).format("YYYY-MM-DD"),
-      last_date: promotion && dayjs(promotion?.last_date).format("YYYY-MM-DD"),
       has_different_price: has_different_price ? 1 : 0,
-      price_list: has_different_price && JSON.stringify(priceListArray),
       has_expired_date: has_expired_date ? 1 : 0,
-      expired_date:
-        has_expired_date &&
-        dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
-      ecommerce_sync: ecommerce_sync ? 1 : 0,
       details,
+
+      attachments:
+        values.attachments?.length > 0
+          ? values.attachments?.map((file) => file.originFileObj)
+          : [],
     };
 
-    if (productListArray.length > 0) {
-      attachmentObj.product_list = JSON.stringify(productListArray);
+    if (has_promotion) {
+      postObj.promotion_price = parseInt(promotion?.promotion_price);
+      postObj.starting_date = dayjs(promotion?.starting_date).format(
+        "YYYY-MM-DD"
+      );
+      postObj.last_date = dayjs(promotion?.last_date).format("YYYY-MM-DD");
     }
 
-    appendToFormData(attachmentObj, formData);
+    if (has_expired_date) {
+      postObj.expired_date = dayjs(product_expire?.expired_date).format(
+        "YYYY-MM-DD"
+      );
+    }
+
+    if (type === "Standard") {
+      postObj.unit_id = parseInt(unit_id);
+      postObj.purchase_unit_id = parseInt(purchase_unit_id);
+      postObj.sale_unit_id = parseInt(sale_unit_id);
+    }
+
+    if (productListArray.length > 0) {
+      postObj.product_list = JSON.stringify(productListArray);
+    }
+
+    if (values.attach_file?.[0].originFileObj) {
+      postObj.attach_file = values.attach_file?.[0].originFileObj;
+    }
+
+    if (qtyListArray.length > 0 && has_stock) {
+      postObj.qty_list = JSON.stringify(qtyListArray);
+    }
+
+    if (priceListArray.length > 0 && has_different_price) {
+      postObj.price_list = JSON.stringify(priceListArray);
+    }
+
+    appendToFormData(postObj, formData);
 
     const { data, error } = await createProduct({ formData });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+      setFormValues({
+        product_list: {
+          qty: {},
+          amount: {},
+        },
+        qty_list: {
+          qty: {},
+        },
+        price_list: {
+          price: {},
+        },
+      });
     }
 
     console.log(error);
@@ -155,6 +194,12 @@ const ProductCreate = () => {
     }
   };
 
+  const [products, setProducts] = useState([]);
+  const [initialWarehouses, setInitialWarehouses] = useState([]);
+  const [priceWarehouses, setPriceWarehouses] = useState([]);
+
+  console.log(formValues);
+
   return (
     <CustomDrawer title={"Create Product"} open={isCreateDrawerOpen}>
       <ProductForm
@@ -162,6 +207,14 @@ const ProductCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
+        initialWarehouses={initialWarehouses}
+        setInitialWarehouses={setInitialWarehouses}
+        priceWarehouses={priceWarehouses}
+        setPriceWarehouses={setPriceWarehouses}
       />
     </CustomDrawer>
   );

@@ -46,11 +46,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({
-    params: {
-      selectValue: ["name", "id", "for", "operator", "operation_value"],
-    },
-  });
+  const { data, isLoading } = useGetAllUnitQuery({});
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")
@@ -137,7 +133,7 @@ const ProductFormComponent = ({
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productUnits.tax_rate[productId],
+            [productId]: productUnits?.tax_rate[productId],
           },
           tax: {
             ...prevFormValues.product_list.tax,
@@ -221,19 +217,20 @@ export const QuotationProductTable = ({
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-  const warehouseId = Form.useWatch("warehouse_id", form);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  // });
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty + 1;
+      const newQty = Number(currentQty) + 1;
 
       return {
         ...prevFormValues,
@@ -251,7 +248,7 @@ export const QuotationProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty - 1;
+      const newQty = Number(currentQty) - 1;
 
       return {
         ...prevFormValues,
@@ -283,6 +280,28 @@ export const QuotationProductTable = ({
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      // Destructure product_list from the previous form values
+      const { product_list } = prevFormValues;
+
+      // Create a new product_list object without the specified product ID
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // Filter out the product ID from each nested object
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      // Return the updated form values
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+      };
+    });
   };
 
   const [productEditModal, setProductEditModal] = useState(false);
@@ -303,6 +322,8 @@ export const QuotationProductTable = ({
 
   console.log(products);
 
+  console.log(productUnits);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -311,12 +332,9 @@ export const QuotationProductTable = ({
       buying_price: unit_cost,
       sale_unit_id,
       tax_id,
+      taxes,
       sale_units,
     } = product ?? {};
-
-    console.log(product);
-
-    console.log(formValues);
 
     setFormValuesId(
       id,
@@ -325,16 +343,9 @@ export const QuotationProductTable = ({
       sale_units,
       formValues,
       productUnits,
-      tax_id
+      tax_id,
+      taxes
     );
-
-    // setProductUnits((prevProductUnits) => ({
-    //   ...prevProductUnits,
-    //   tax_id: {
-    //     ...prevProductUnits.tax_id,
-    //     [id]: tax_id,
-    //   },
-    // }));
 
     return {
       id,
@@ -358,33 +369,63 @@ export const QuotationProductTable = ({
   const [totalTax, setTotalTax] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
 
+  // useEffect(() => {
+  //   if (products.length > 0) {
+  //     const total = Object.values(formValues.product_list.qty).reduce(
+  //       (acc, cur) => acc + cur,
+  //       0
+  //     );
+  //     setTotalQuantity(total);
+
+  //     const totalPrice = Object.values(formValues.product_list.total).reduce(
+  //       (acc, cur) => acc + cur,
+  //       0
+  //     );
+  //     setTotalPrice(totalPrice?.toFixed(2));
+
+  //     const totalTax = Object.values(formValues.product_list.tax).reduce(
+  //       (acc, cur) => acc + cur,
+  //       0
+  //     );
+  //     setTotalTax(totalTax.toFixed(2));
+
+  //     const totalDiscount = Object.values(
+  //       formValues.product_list.discount
+  //     ).reduce((acc, cur) => acc + cur, 0);
+
+  //     setTotalDiscount(totalDiscount.toFixed(2));
+  //   }
+  // }, [formValues, products]);
+
   useEffect(() => {
-    const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + cur,
-      0
-    );
-    setTotalQuantity(total);
+    if (products.length > 0) {
+      const total = Object.values(formValues.product_list.qty).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      );
+      setTotalQuantity(total);
 
-    const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + cur,
-      0
-    );
-    setTotalPrice(totalPrice?.toFixed(2));
+      const totalPrice = Object.values(formValues.product_list.total).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      );
+      setTotalPrice(totalPrice.toFixed(2));
 
-    const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + cur,
-      0
-    );
-    setTotalTax(totalTax.toFixed(2));
+      const totalTax = Object.values(formValues.product_list.tax).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      );
+      setTotalTax(totalTax.toFixed(2));
 
-    const totalDiscount = Object.values(
-      formValues.product_list.discount
-    ).reduce((acc, cur) => acc + cur, 0);
+      const totalDiscount = Object.values(
+        formValues.product_list.discount
+      ).reduce((acc, cur) => acc + parseFloat(cur), 0);
 
-    setTotalDiscount(totalDiscount.toFixed(2));
+      setTotalDiscount(totalDiscount.toFixed(2));
+    }
   }, [formValues, products]);
 
-  products.length > 0 &&
+  products?.length > 0 &&
     dataSource.push({
       id: "",
       name: "Total",
@@ -423,14 +464,12 @@ export const QuotationProductTable = ({
 
   return (
     <>
-      {warehouseId && (
-        <ProductController
-          products={products}
-          setProducts={setProducts}
-          columns={columns}
-          dataSource={dataSource}
-        />
-      )}
+      <ProductController
+        products={products}
+        setProducts={setProducts}
+        columns={columns}
+        dataSource={dataSource}
+      />
 
       <ProductFormComponent
         productEditModal={productEditModal}

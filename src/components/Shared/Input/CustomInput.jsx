@@ -15,7 +15,7 @@ const CustomInput = (props) => {
     noStyle = false,
     addonAfter,
     tooltip,
-    // onChange,
+    onChange,
   } = props;
 
   return (
@@ -90,7 +90,7 @@ const CustomInput = (props) => {
             addonAfter={suffix}
             controls={false}
             changeOnWheel={false}
-            allowClear={true}
+            onChange={onChange}
           />
         ) : (
           <Input

@@ -6,7 +6,7 @@ const tableStyleProps = {
   // bordered: true,
   scroll: {
     y: 400,
-    x: 1000,
+    // x: 1000,
   },
 };
 export const ProductTable = ({ columns, dataSource }) => {

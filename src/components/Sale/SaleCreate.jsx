@@ -2,6 +2,7 @@ import { Form } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../../redux/services/sale/saleApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import {
@@ -11,8 +12,10 @@ import {
 } from "../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useGetAllPettyCashQuery } from "../../redux/services/pettycash/pettyCashApi";
+
+const decimalConverter = (value) => {
+  return Number(value).toFixed(2);
+};
 
 export const SaleCreate = () => {
   const dispatch = useDispatch();
@@ -39,8 +42,9 @@ export const SaleCreate = () => {
     },
   });
 
-  const { data: pettyCashData } = useGetAllPettyCashQuery({});
-  console.log(pettyCashData);
+  const [products, setProducts] = useState([]);
+
+  // const { data: pettyCashData } = useGetAllPettyCashQuery({});
 
   //due amount = recieved - paid
 
@@ -48,8 +52,16 @@ export const SaleCreate = () => {
     const formData = new FormData();
 
     const { product_list } = formValues;
-    const { attachment, discount, shipping_cost, tax_rate, sale_at } =
-      values ?? {};
+
+    console.log(product_list);
+    const {
+      attachment,
+      discount,
+      shipping_cost,
+      tax_rate,
+      sale_at,
+      paid_amount,
+    } = values ?? {};
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
@@ -58,11 +70,13 @@ export const SaleCreate = () => {
             product_id: parseInt(product_id),
             qty: product_list.qty[product_id],
             sale_unit_id: product_list.sale_unit_id[product_id],
-            net_unit_price: product_list.net_unit_price[product_id],
-            discount: product_list.discount[product_id],
-            tax_rate: product_list.tax_rate[product_id],
-            tax: product_list.tax[product_id],
-            total: product_list.total[product_id],
+            net_unit_price: decimalConverter(
+              product_list.net_unit_price[product_id]
+            ),
+            discount: decimalConverter(product_list.discount[product_id]),
+            tax_rate: decimalConverter(product_list.tax_rate[product_id]),
+            tax: decimalConverter(product_list.tax[product_id]),
+            total: decimalConverter(product_list.total[product_id]),
           }))
       : [];
 
@@ -99,7 +113,7 @@ export const SaleCreate = () => {
       total_tax: Number(totalTax).toFixed(2),
       total_price: Number(totalPrice).toFixed(2),
       tax: Number(orderTax).toFixed(2),
-
+      change: values?.recieved_amount - values?.paid_amount,
       grand_total: calculateGrandTotal(
         totalPrice,
         orderTax,
@@ -110,6 +124,10 @@ export const SaleCreate = () => {
       product_list: JSON.stringify(productListArray),
       petty_cash_id: 8,
     };
+
+    if (paid_amount) {
+      postObj.paid_amount = Number(paid_amount).toFixed(2);
+    }
 
     if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
@@ -135,8 +153,6 @@ export const SaleCreate = () => {
       setErrorFields(errorFields);
     }
   };
-
-  const [products, setProducts] = useState([]);
 
   return (
     <CustomDrawer title={"Create Sale"} open={isCreateDrawerOpen}>

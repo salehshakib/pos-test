@@ -33,7 +33,7 @@ export const fieldsToUpdate = (details) => {
         }));
       }
 
-      if (key.includes("date")) {
+      if (key.includes("date") || key.includes("_at")) {
         value = dayjs(value, "YYYY-MM-DD");
       }
 

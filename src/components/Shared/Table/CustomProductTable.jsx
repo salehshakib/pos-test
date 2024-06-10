@@ -78,19 +78,19 @@ const CustomProductTable = ({
   };
 
   const newColumns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      fixed: "left",
-      align: "center",
-      width: 60,
-      render: (id) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {id}
-        </span>
-      ),
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   fixed: "left",
+    //   align: "center",
+    //   width: 60,
+    //   render: (id) => (
+    //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+    //       {id}
+    //     </span>
+    //   ),
+    // },
     ...columns,
   ];
 

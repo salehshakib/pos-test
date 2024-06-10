@@ -2,10 +2,11 @@ import { AutoComplete, Col, message, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
-import { fullColLayout } from "../../../layout/FormLayout";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
+import { fullColLayout } from "../../layout/FormLayout";
+import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import { ProductTable } from "../Shared/ProductControllerComponent/ProductTable";
 
-export const SearchProduct = ({ setProducts }) => {
+const SearchWarehouse = ({ setWarehouses }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
@@ -15,20 +16,11 @@ export const SearchProduct = ({ setProducts }) => {
     }
   }, 1000);
 
-  const { data, isFetching } = useGetAllProductsQuery(
+  const { data, isFetching } = useGetWarehousesQuery(
     {
       params: {
         keyword,
-        selectValue: [
-          "id",
-          "sku",
-          "name",
-          "buying_price",
-          "tax_id",
-          "sale_unit_id",
-          "purchase_unit_id",
-        ],
-        // child: 1,
+        child: 1,
         parent: 1,
       },
     },
@@ -37,7 +29,7 @@ export const SearchProduct = ({ setProducts }) => {
     }
   );
 
-  // console.log(data);
+  console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center ">
@@ -54,24 +46,24 @@ export const SearchProduct = ({ setProducts }) => {
           label: loadingContent,
         },
       ]
-    : data?.results?.product?.map((product) => ({
-        value: product.id.toString(),
-        label: `${product.name} (SKU: ${product.sku})`,
-        product: product,
+    : data?.results?.warehouse?.map((warehouse) => ({
+        value: warehouse.id.toString(),
+        label: `${warehouse.name}`,
+        warehouse: warehouse,
       })) ?? [];
 
   const onSelect = (_, option) => {
-    setProducts((prevProducts) => {
-      const productExists = prevProducts.some((product) => {
-        return product?.id === option?.product?.id;
+    setWarehouses((prevWarehouse) => {
+      const warehouseExists = prevWarehouse.some((warehouse) => {
+        return warehouse?.id === option?.warehouse?.id;
       });
 
-      if (!productExists) {
-        return [...prevProducts, option.product];
+      if (!warehouseExists) {
+        return [...prevWarehouse, option.warehouse];
       }
 
-      message.warning("Product already exists in the list");
-      return prevProducts;
+      message.warning("Warehouse already exists in the list");
+      return warehouseExists;
     });
     setValue(null);
   };
@@ -90,10 +82,23 @@ export const SearchProduct = ({ setProducts }) => {
         onSearch={debounce}
         value={value}
         onChange={onChange}
-        placeholder="Search Product"
+        placeholder="Search Warehouse"
         suffixIcon={<FaSearch />}
         allowClear={true}
       />
     </Col>
+  );
+};
+export const WarehouseController = ({
+  warehouses,
+  setWarehouses,
+  columns,
+  dataSource,
+}) => {
+  return (
+    <>
+      <SearchWarehouse warehouses={warehouses} setWarehouses={setWarehouses} />
+      <ProductTable columns={columns} dataSource={dataSource} />
+    </>
   );
 };

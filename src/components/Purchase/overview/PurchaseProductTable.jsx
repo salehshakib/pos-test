@@ -9,33 +9,42 @@ import { ProductController } from "../../Shared/ProductControllerComponent/Produ
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { ProductColumns } from "./productColumns";
 
-const TaxComponent = ({ productId }) => {
+const TaxComponent = ({ productId, setProductUnits }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
 
   const options = data?.results?.tax?.map((tax) => ({
-    value: tax.rate,
+    value: tax.id?.toString(),
     label: tax.name,
+    rate: tax.rate,
   }));
+
+  const onSelect = (value, option) => {
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        tax_rate: {
+          [productId]: option.rate ?? 0,
+        },
+      };
+    });
+  };
 
   return (
     <CustomSelect
-      name={["tax_rate", productId]}
+      name={["tax_id", productId]}
       options={options}
       label="Product Tax"
       isLoading={isLoading}
+      onSelect={onSelect}
     />
   );
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({
-    params: {
-      selectValue: ["name", "id", "for", "operator", "operation_value"],
-    },
-  });
+  const { data, isLoading } = useGetAllUnitQuery({});
 
   const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "sale-unit")
+    ?.filter((unit) => unit.for === "purchase-unit")
     .map((unit) => ({
       value: unit.id.toString(),
       label: unit.name,
@@ -58,7 +67,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
       label="Sale Unit"
       options={productUnits}
       isLoading={isLoading}
-      name={["sale_unit_id", productId]}
+      name={["purchase_unit_id", productId]}
       onSelect={onSelect}
     />
   );

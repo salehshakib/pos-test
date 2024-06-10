@@ -36,8 +36,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const { data, isLoading } = useGetAllProductsQuery({
     params: {
       ...pagination,
-
-      // parent: 1
+      parent: 1,
     },
   });
 

@@ -149,7 +149,7 @@ export const ReturnProductTable = ({
       decrementCounter,
       onQuantityChange,
       onDelete,
-      handleProductEdit,
+      // handleProductEdit,
     };
   });
 
@@ -198,13 +198,5 @@ export const ReturnProductTable = ({
 
   form.setFieldsValue(formValues);
 
-  return (
-    <ProductTable columns={columns} dataSource={dataSource} />
-    // <ProductController
-    //   products={products}
-    //   setProducts={setProducts}
-    //   columns={columns}
-    //   dataSource={dataSource}
-    // />
-  );
+  return <ProductTable columns={columns} dataSource={dataSource} />;
 };

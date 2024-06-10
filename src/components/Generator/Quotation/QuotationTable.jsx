@@ -24,6 +24,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
+  console.log(editId, detailsId);
 
   // const [statusId, setStatusId] = useState(undefined);
   // const [statusModal, setStatusModal] = useState(false);

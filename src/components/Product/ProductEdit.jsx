@@ -11,15 +11,43 @@ import ProductForm from "./ProductForm";
 import dayjs from "dayjs";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { Form } from "antd";
 
 const ProductListEdit = ({ id }) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
+
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
-  const { data, isFetching } = useGetProductDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetProductDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        // child: 1,
+      },
+    },
+    { skip: !id }
+  );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  const [options, setOptions] = useState([]);
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      qty: {},
+      amount: {},
+    },
+    qty_list: {
+      qty: {},
+    },
+    price_list: {
+      price: {},
+    },
+  });
+
+  const [products, setProducts] = useState([]);
+  const [initialWarehouses, setInitialWarehouses] = useState([]);
+  const [priceWarehouses, setPriceWarehouses] = useState([]);
 
   useEffect(() => {
     if (data) {
@@ -53,6 +81,8 @@ const ProductListEdit = ({ id }) => {
         has_stock,
         attachments,
       } = data;
+
+      console.log(data);
 
       const fieldData = fieldsToUpdate({
         name,
@@ -208,14 +238,6 @@ const ProductListEdit = ({ id }) => {
 
       console.log(newFieldData);
 
-      setOptions(
-        productListArray?.map((item) => {
-          return {
-            value: item?.product_id.toString(),
-            // label: `Product ${item?.product_id}`,
-          };
-        })
-      );
       setFields(newFieldData);
     }
   }, [data, setFields]);
@@ -353,6 +375,8 @@ const ProductListEdit = ({ id }) => {
     }
   };
 
+  console.log(formValues);
+
   return (
     <CustomDrawer
       title={"Edit Product"}
@@ -363,7 +387,15 @@ const ProductListEdit = ({ id }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
-        options={options}
+        form={form}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
+        initialWarehouses={initialWarehouses}
+        setInitialWarehouses={setInitialWarehouses}
+        priceWarehouses={priceWarehouses}
+        setPriceWarehouses={setPriceWarehouses}
       />
     </CustomDrawer>
   );

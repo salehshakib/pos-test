@@ -1,25 +1,24 @@
 import { Col, Form, Row } from "antd";
+import { useEffect, useState } from "react";
 import {
-  colLayout,
   fullColLayout,
-  mdColLayout,
+  largeLayout,
   rowLayout,
 } from "../../../layout/FormLayout";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { CashierComponent } from "../overview/CashierComponent";
-import { CustomerComponent } from "../overview/CustomerComponent";
-import { SupplierComponent } from "../overview/SupplierComponent";
-import { WarehouseComponent } from "../overview/WarehouseComponent";
-import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { useEffect, useState } from "react";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../../utilities/lib/generator/generatorUtils";
+import CustomForm from "../../Shared/Form/CustomForm";
+import CustomInput from "../../Shared/Input/CustomInput";
+import CustomSelect from "../../Shared/Select/CustomSelect";
+import CustomUploader from "../../Shared/Upload/CustomUploader";
+import { CashierComponent } from "../overview/CashierComponent";
+import { CustomerComponent } from "../overview/CustomerComponent";
+import { SupplierComponent } from "../overview/SupplierComponent";
+import { WarehouseComponent } from "../overview/WarehouseComponent";
+import { QuotationProductTable } from "./overview/QuotationProductTable";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();
@@ -97,25 +96,20 @@ export const QuotationForm = ({
     );
   }, [discount, formValues, shipping_cost, tax_rate, totalPrice]);
 
-  console.log(formValues);
-  console.log(products);
-
-  console.log(totalPrice);
-
   return (
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <CashierComponent />
           </Col>
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <SupplierComponent />
           </Col>
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <CustomerComponent />
           </Col>
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <WarehouseComponent />
           </Col>
 
@@ -128,20 +122,20 @@ export const QuotationForm = ({
             setProductUnits={setProductUnits}
           />
 
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <TaxComponent />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CustomInput label="Discount" type={"number"} name={"discount"} />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CustomInput
               label="Shipping Cost"
               type={"number"}
               name={"shipping_cost"}
             />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <StatusComponent />
           </Col>
 
@@ -158,7 +152,7 @@ export const QuotationForm = ({
         <Col {...fullColLayout}>
           <Row className="rounded-md overflow-hidden">
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Items</span>
@@ -167,35 +161,35 @@ export const QuotationForm = ({
               </span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Total</span>
               <span>{Number(totalPrice).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Tax</span>
               <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Discount</span>
               <span>{Number(discount ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Shipping Cost</span>
               <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Grand Total</span>

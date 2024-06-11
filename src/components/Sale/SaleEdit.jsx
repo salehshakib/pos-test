@@ -298,6 +298,7 @@ export const SaleEdit = ({ id, setId }) => {
       title={"Edit Sale"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
+      width={1400}
     >
       <SaleForm
         handleSubmit={handleUpdate}

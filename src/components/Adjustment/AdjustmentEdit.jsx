@@ -141,6 +141,7 @@ const AdjustmentEdit = ({ id }) => {
       title={"Edit Adjustment"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
+      width={1400}
     >
       <AdjustmentForm
         handleSubmit={handleUpdate}

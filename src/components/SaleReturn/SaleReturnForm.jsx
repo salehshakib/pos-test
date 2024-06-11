@@ -1,13 +1,23 @@
 import { Col, Form, message, Row } from "antd";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useEffect, useState } from "react";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
+import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
-import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
-import { useState } from "react";
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+} from "../../utilities/lib/generator/generatorUtils";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 
 const TaxComponent = () => {
   const { data, isFetching } = useGetAllTaxQuery({});
@@ -30,20 +40,73 @@ const TaxComponent = () => {
   );
 };
 
+const PaymentType = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue("payment_type", "Cash");
+  }, [form]);
+
+  const options = [
+    {
+      value: "Cash",
+      label: "Cash",
+    },
+    {
+      value: "Gift Card",
+      label: "Gift Card",
+    },
+    {
+      value: "Card",
+      label: "Card",
+    },
+    {
+      value: "Cheque",
+      label: "Cheque",
+    },
+    {
+      value: "Points",
+      label: "Points",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      label="Payment Type"
+      options={options}
+      name={"payment_type"}
+    />
+  );
+};
+
 const ReturnComponent = ({ reference_id, ...props }) => {
   return (
-    <>
+    <Row {...rowLayout}>
       <div className=" text-lg font-semibold text-center w-full underline ">
         Reference ID: {reference_id}
       </div>
+      <div className="text-center w-full">
+        Only Selected Items will be returned
+      </div>
       <ReturnProductTable {...props} />
 
-      <Col {...mdColLayout}>
+      <Col {...colLayout}>
+        <CustomDatepicker
+          label="Return Date"
+          required={true}
+          name={"sale_return_at"}
+        />
+      </Col>
+
+      <Col {...colLayout}>
         <TaxComponent />
+      </Col>
+      <Col {...colLayout}>
+        <PaymentType form={props.form} />
       </Col>
 
       <Col {...fullColLayout}>
-        <CustomUploader label={"Attach Document"} name={"logo"} />
+        <CustomUploader label={"Attach Document"} name={"attachment"} />
       </Col>
 
       <Col {...mdColLayout}>
@@ -52,8 +115,27 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       <Col {...mdColLayout}>
         <CustomInput type={"textarea"} name="staff_note" label="Staff Note" />
       </Col>
-    </>
+    </Row>
   );
+};
+
+const updateProductList = (deleteValue, product_list) => {
+  // Extract IDs to keep from the values.deleteValue object where the value is true
+  const idsToKeep = Object.keys(deleteValue).filter((key) => deleteValue[key]);
+
+  // Create a new product list keeping only the entries for the IDs to keep
+  const updatedProductList = {};
+
+  Object.keys(product_list).forEach((key) => {
+    updatedProductList[key] = {};
+    idsToKeep.forEach((id) => {
+      if (product_list[key][id] !== undefined) {
+        updatedProductList[key][id] = product_list[key][id];
+      }
+    });
+  });
+
+  return updatedProductList;
 };
 
 const SaleReturnForm = ({
@@ -63,17 +145,13 @@ const SaleReturnForm = ({
   setProductUnits,
   products,
   setProducts,
+  setSaleData,
   ...props
 }) => {
-  const [referenceForm] = Form.useForm();
-
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
-
-  console.log(products);
-  console.log(formValues);
 
   const handleSubmit = async (values) => {
     const { data } = await checkReference({ data: values });
@@ -83,7 +161,7 @@ const SaleReturnForm = ({
       setSaleExists(false);
       setRefId(null);
     } else {
-      console.log(data.data);
+      setSaleData(data?.data);
       data?.data?.sale_products?.map((item) => {
         console.log(item);
         setFormValues((prevFormValues) => {
@@ -131,6 +209,10 @@ const SaleReturnForm = ({
                 ...prevFormValues.product_list.sale_id,
                 [item.product_id.toString()]: item.sale_id?.toString(),
               },
+              max_return: {
+                ...prevFormValues.product_list.max_return,
+                [item.product_id.toString()]: item.qty?.toString(),
+              },
             },
           };
         });
@@ -163,14 +245,32 @@ const SaleReturnForm = ({
     }
   };
 
+  const tax_rate = Form.useWatch("tax_rate", props.form);
+
+  const deleteRow = Form.useWatch("delete", props.form);
+
   console.log(formValues);
+
+  // const updatedList = saleExists
+  //   ? updateProductList(deleteRow, formValues.product_list)
+  //   : [];
+
+  // const totalItems = Object.keys(updatedList?.qty)?.length ?? 0;
+  // const totalQty = Object.values(updatedList?.qty).reduce(
+  //   (acc, cur) => acc + (parseFloat(cur) || 0),
+  //   0
+  // );
+
+  // const totalPrice = calculateTotalPrice(updatedList);
+
+  // const grandTotal = calculateGrandTotal(totalPrice, tax_rate ?? 0);
 
   return (
     <>
       {!saleExists ? (
         <CustomForm
           handleSubmit={handleSubmit}
-          form={referenceForm}
+          form={props.form}
           submitBtnText={"Check Reference"}
           isLoading={isLoading}
         >
@@ -185,8 +285,8 @@ const SaleReturnForm = ({
           </Row>
         </CustomForm>
       ) : (
-        <CustomForm {...props}>
-          <Row {...rowLayout}>
+        <>
+          <CustomForm {...props}>
             <ReturnComponent
               reference_id={refId}
               formValues={formValues}
@@ -195,9 +295,47 @@ const SaleReturnForm = ({
               setProducts={setProducts}
               productUnits={productUnits}
               setProductUnits={setProductUnits}
+              form={props.form}
             />
-          </Row>
-        </CustomForm>
+          </CustomForm>
+          {/* <Row className="pb-20">
+            <Col {...fullColLayout}>
+              <Row className="rounded-md overflow-hidden">
+                <Col
+                  span={6}
+                  className="border flex justify-between items-center px-2 py-5 text-lg"
+                >
+                  <span className="font-semibold ">Items</span>
+                  <span>
+                    {totalItems} ({totalQty})
+                  </span>
+                </Col>
+                <Col
+                  span={6}
+                  className="border flex justify-between items-center px-2 py-5 text-lg"
+                >
+                  <span className="font-semibold ">Total</span>
+                  <span>{Number(totalPrice).toFixed(2)}</span>
+                </Col>
+                <Col
+                  span={6}
+                  className="border flex justify-between items-center px-2 py-5 text-lg"
+                >
+                  <span className="font-semibold ">Tax</span>
+                  <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
+                </Col>
+
+                <Col
+                  span={6}
+                  className="border flex justify-between items-center px-2 py-5 text-lg"
+                >
+                  <span className="font-semibold ">Grand Total</span>
+                  <span>{Number(grandTotal).toFixed(2)}</span>
+                </Col>
+              </Row>
+            </Col>
+          </Row> */}
+        </>
       )}
     </>
   );

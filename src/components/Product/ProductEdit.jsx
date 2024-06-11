@@ -384,6 +384,7 @@ const ProductListEdit = ({ id }) => {
       title={"Edit Product"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
+      width={1400}
     >
       <ProductForm
         handleSubmit={handleUpdate}

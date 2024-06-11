@@ -83,7 +83,11 @@ const AdjustmentCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Adjustment"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Adjustment"}
+      open={isCreateDrawerOpen}
+      width={1400}
+    >
       <AdjustmentForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {
   colLayout,
   fullColLayout,
+  largeLayout,
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
@@ -162,10 +163,10 @@ export const SaleForm = ({
       <CustomForm {...props}>
         <Row {...rowLayout}>
           <Col {...colLayout}>
-            <WarehouseComponent />
+            <CustomerComponent />
           </Col>
           <Col {...colLayout}>
-            <CustomerComponent />
+            <WarehouseComponent />
           </Col>
           <Col {...colLayout}>
             <CashierComponent />
@@ -187,27 +188,25 @@ export const SaleForm = ({
             productUnits={productUnits}
             setProductUnits={setProductUnits}
           />
-
-          <Col {...colLayout}>
-            <StatusComponent />
-          </Col>
-
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <TaxComponent />
           </Col>
 
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <DiscountTypeComponent />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CustomInput label="Discount" type={"number"} name={"discount"} />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CustomInput
               label="Shipping Cost"
               type={"number"}
               name={"shipping_cost"}
             />
+          </Col>
+          <Col {...colLayout}>
+            <StatusComponent />
           </Col>
 
           <Col {...colLayout}>
@@ -237,7 +236,7 @@ export const SaleForm = ({
         <Col {...fullColLayout}>
           <Row className="rounded-md overflow-hidden">
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Items</span>
@@ -246,35 +245,35 @@ export const SaleForm = ({
               </span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Total</span>
               <span>{Number(totalPrice).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Tax</span>
               <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Discount</span>
               <span>{Number(discount ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Shipping Cost</span>
               <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Grand Total</span>

@@ -14,7 +14,7 @@ export const CustomerComponent = () => {
   }));
   return (
     <CustomSelect
-      label="Select Customer"
+      label="Customer"
       options={options}
       isLoading={isLoading}
       name="customer_id"

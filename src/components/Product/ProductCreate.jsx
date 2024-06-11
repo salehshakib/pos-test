@@ -201,7 +201,11 @@ const ProductCreate = () => {
   console.log(formValues);
 
   return (
-    <CustomDrawer title={"Create Product"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Product"}
+      open={isCreateDrawerOpen}
+      width={1400}
+    >
       <ProductForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

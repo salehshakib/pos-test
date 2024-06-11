@@ -8,7 +8,6 @@ export const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    align: "center",
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
@@ -30,6 +29,7 @@ export const columns = [
     dataIndex: "sku",
     key: "sku",
     align: "center",
+    width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -41,6 +41,7 @@ export const columns = [
     dataIndex: "unitCost",
     key: "unitCost",
     align: "center",
+    width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost ? "$" + unitCost : ""}
@@ -92,6 +93,7 @@ export const columns = [
     dataIndex: "discount",
     key: "discount",
     align: "center",
+    width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${discount}
@@ -103,6 +105,7 @@ export const columns = [
     dataIndex: "tax",
     key: "tax",
     align: "center",
+    width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${tax}
@@ -114,6 +117,7 @@ export const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
+    width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${subTotal}

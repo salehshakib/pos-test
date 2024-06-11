@@ -12,6 +12,7 @@ const CustomDrawer = ({
   open,
   isLoading = false,
   onClose,
+  width = 800,
 }) => {
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ const CustomDrawer = ({
       key={title}
       title={title}
       open={open}
-      width={800}
+      width={width}
       placement={placement}
       closable={true}
       onClose={onClose ?? handleCloseDrawer}

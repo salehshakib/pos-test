@@ -12,6 +12,7 @@ export const CustomQuantityInput = (props) => {
     noStyle = false,
     tooltip,
     onChange,
+    value,
   } = props;
 
   return (
@@ -37,6 +38,7 @@ export const CustomQuantityInput = (props) => {
           onChange={onChange}
           controls={false}
           changeOnWheel={false}
+          value={value}
         />
       </Form.Item>
     </GlobalUtilityStyle>

@@ -1,8 +1,42 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateSaleReturnMutation } from "../../redux/services/return/saleReturnApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+  calculateTotalTax,
+} from "../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
-import { Form } from "antd";
+import dayjs from "dayjs";
+
+const updateProductList = (values, product_list) => {
+  // Extract IDs to keep from the values.delete object where the value is true
+  const idsToKeep = Object.keys(values.delete).filter(
+    (key) => values.delete[key]
+  );
+
+  // Create a new product list keeping only the entries for the IDs to keep
+  const updatedProductList = {};
+
+  Object.keys(product_list).forEach((key) => {
+    updatedProductList[key] = {};
+    idsToKeep.forEach((id) => {
+      if (product_list[key][id] !== undefined) {
+        updatedProductList[key][id] = product_list[key][id];
+      }
+    });
+  });
+
+  return updatedProductList;
+};
+
+const decimalConverter = (value = 0) => {
+  return Number(value).toFixed(2);
+};
 
 const SaleReturnCreate = () => {
   const dispatch = useDispatch();
@@ -10,6 +44,8 @@ const SaleReturnCreate = () => {
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
+
+  const [createSaleReturn, { isLoading }] = useCreateSaleReturnMutation();
 
   const [formValues, setFormValues] = useState({
     product_list: {
@@ -23,6 +59,8 @@ const SaleReturnCreate = () => {
       tax_rate: {},
       tax: {},
       total: {},
+
+      max_return: {},
     },
   });
 
@@ -31,6 +69,8 @@ const SaleReturnCreate = () => {
   });
 
   const [products, setProducts] = useState([]);
+
+  const [saleData, setSaleData] = useState();
 
   useEffect(() => {
     if (!isCreateDrawerOpen) {
@@ -56,28 +96,116 @@ const SaleReturnCreate = () => {
   }, [form, isCreateDrawerOpen]);
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    console.log(formValues.product_list);
-    // const { data, error } = await createDepartment({
-    //   data: values,
-    // });
-    // if (data?.success) {
-    //   dispatch(closeCreateDrawer());
-    // }
-    // if (error) {
-    //   const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-    //     name: fieldName,
-    //     errors: error?.data?.errors[fieldName],
-    //   }));
-    //   setErrorFields(errorFields);
-    // }
+    const updatedList = updateProductList(values, formValues.product_list);
+
+    const formData = new FormData();
+
+    const productListArray = updatedList?.qty
+      ? Object.keys(updatedList.qty)
+          .filter((product_id) => updatedList.qty[product_id] !== undefined)
+          .map((product_id) => ({
+            product_id: parseInt(product_id),
+            qty: updatedList.qty[product_id],
+            sale_id: updatedList.sale_id[product_id],
+            sale_unit_id: updatedList.sale_unit_id[product_id],
+            net_unit_price: decimalConverter(
+              updatedList.net_unit_price[product_id]
+            ),
+            discount: decimalConverter(updatedList.discount[product_id]),
+            tax_rate: decimalConverter(updatedList.tax_rate[product_id]),
+            tax: decimalConverter(updatedList.tax[product_id]),
+            total: decimalConverter(updatedList.total[product_id]),
+          }))
+      : [];
+
+    const totalPrice = calculateTotalPrice(updatedList);
+    const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
+
+    const totalQty =
+      Object.values(updatedList?.qty).reduce(
+        (acc, cur) => acc + parseInt(cur),
+        0
+      ) ?? 0;
+
+    const totalTax =
+      Object.values(updatedList?.tax).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      ) ?? 0;
+
+    console.log(totalPrice);
+
+    const postData = {
+      sale_return_at: dayjs(values?.sale_return_at).format("YYYY-MM-DD"),
+      sale_id: saleData?.id,
+      petty_cash_id: saleData?.petty_cash_id,
+      warehouse_id: saleData?.warehouse_id,
+      cashier_id: saleData?.cashier_id,
+      item: productListArray?.length,
+      total_qty: decimalConverter(totalQty),
+      total_tax: decimalConverter(totalTax),
+      total_price: decimalConverter(totalPrice),
+      tax_rate: decimalConverter(values?.tax_rate),
+      tax: decimalConverter(orderTax),
+      grand_total: calculateGrandTotal(totalPrice, orderTax),
+      return_payment_type: values?.payment_type,
+      return_amount: decimalConverter(totalPrice),
+      return_note: values?.return_note,
+      staff_note: values?.staff_note,
+      product_list: JSON.stringify(productListArray),
+    };
+
+    const { attachment } = values;
+
+    if (attachment?.[0].originFileObj) {
+      postData.attachment = attachment?.[0].originFileObj;
+    }
+
+    appendToFormData(postData, formData);
+
+    const { data, error } = await createSaleReturn({
+      data: formData,
+    });
+    if (data?.success) {
+      dispatch(closeCreateDrawer());
+      form.resetFields();
+
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_id: {},
+          product_id: {},
+          // recieved: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProductUnits({ sale_units: {} });
+
+      setProducts([]);
+    }
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+      setErrorFields(errorFields);
+    }
   };
 
   return (
-    <CustomDrawer title={"Create Sale Return"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Sale Return"}
+      open={isCreateDrawerOpen}
+      width={1400}
+    >
       <SaleReturnForm
         handleSubmit={handleSubmit}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         fields={errorFields}
         form={form}
         formValues={formValues}
@@ -86,6 +214,7 @@ const SaleReturnCreate = () => {
         setProductUnits={setProductUnits}
         products={products}
         setProducts={setProducts}
+        setSaleData={setSaleData}
       />
     </CustomDrawer>
   );

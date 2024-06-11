@@ -17,8 +17,6 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    align: "center",
-    width: 150,
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
@@ -40,6 +38,7 @@ const columns = [
     dataIndex: "sku",
     key: "sku",
     align: "center",
+    width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -51,6 +50,7 @@ const columns = [
     dataIndex: "unitCost",
     key: "unitCost",
     align: "center",
+    width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost ? "$" + unitCost : ""}
@@ -102,6 +102,7 @@ const columns = [
     dataIndex: "discount",
     key: "discount",
     align: "center",
+    width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${discount}
@@ -113,6 +114,7 @@ const columns = [
     dataIndex: "tax",
     key: "tax",
     align: "center",
+    width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${tax}
@@ -124,6 +126,7 @@ const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
+    width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${subTotal}
@@ -296,18 +299,7 @@ const ProductFormComponent = ({
       };
     });
 
-    // setProductUnits((prevValues) => {
-    //   return {
-    //     ...prevValues,
-    //     sale_unit_id: {
-    //       ...prevValues.sale_units,
-    //       [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
-    //     },
-    //   };
-    // });
-
     hideModal();
-    // productForm.resetFields();
   };
 
   return (
@@ -372,8 +364,6 @@ export const SaleProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-
-  console.log(form.getFieldValue("product_list"));
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -469,8 +459,6 @@ export const SaleProductTable = ({
     setProductEditModal(false);
   };
 
-  console.log(formValues);
-
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -482,8 +470,6 @@ export const SaleProductTable = ({
       tax_id,
       taxes,
     } = product ?? {};
-
-    console.log(product);
 
     setFormValuesId(
       id,
@@ -555,32 +541,6 @@ export const SaleProductTable = ({
       discount: totalDiscount,
       action: false,
     });
-
-  //   useEffect(() => {
-  //     if (
-  //       products.length === 0 &&
-  //       !Object.keys(formValues.product_list.qty).length > 0
-  //     ) {
-  //       setFormValues({
-  //         product_list: {
-  //           qty: {},
-  //           sale_unit_id: {},
-  //           net_unit_price: {},
-  //           discount: {},
-  //           tax_rate: {},
-  //           tax: {},
-  //           total: {},
-  //         },
-  //       });
-
-  //       setProductUnits({
-  //         sale_units: {},
-  //       });
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [products, setFormValues]);
-
-  console.log(formValues);
 
   form.setFieldsValue(formValues);
 

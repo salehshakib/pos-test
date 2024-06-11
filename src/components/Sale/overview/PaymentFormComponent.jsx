@@ -166,7 +166,9 @@ export const PaymentTypeComponent = () => {
     }
   }, [paidAmount, receivedAmount, form, paymentStatus]);
 
-  const change = (receivedAmount - paidAmount).toFixed(2);
+  const change = Number(
+    parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)
+  ).toFixed(2);
 
   return (
     (paymentStatus === "Paid" || paymentStatus === "Partial") && (
@@ -199,7 +201,7 @@ export const PaymentTypeComponent = () => {
           />
         </Col>
 
-        <Col {...colLayout}>
+        <Col {...fullColLayout}>
           <div className="py-9 text-lg font-semibold">Change: {change}</div>
         </Col>
 

@@ -4,11 +4,10 @@ export const calculateTotalPrice = (data) => {
   );
   const totalPrice = totals.reduce((sum, value) => sum + value, 0);
 
-  console.log(totals, totalPrice);
   return totalPrice;
 };
 
-export const calculateTotalTax = (totalPrice, taxRate) => {
+export const calculateTotalTax = (totalPrice, taxRate = 0) => {
   const totalTax = (totalPrice * taxRate) / 100;
   return totalTax ? Number(totalTax).toFixed(2) : "0.00";
 };

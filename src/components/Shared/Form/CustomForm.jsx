@@ -59,8 +59,6 @@ const CustomForm = (props) => {
     console.log(errorInfo);
   };
 
-  console.log(fields);
-
   return (
     <GlobalUtilityStyle>
       <Form

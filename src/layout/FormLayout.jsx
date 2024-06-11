@@ -4,6 +4,12 @@ export const rowLayout = {
   // justify: "start",
 };
 
+export const largeLayout = {
+  xs: 24,
+  md: 12,
+  lg: 6,
+};
+
 export const colLayout = {
   xs: 24,
   md: 12,

@@ -1,5 +1,4 @@
-import { Button, Form } from "antd";
-import { useEffect, useState } from "react";
+import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
@@ -8,17 +7,17 @@ import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTab
 
 const columns = [
   {
-    title: "",
+    title: "Choose",
     dataIndex: "delete",
     key: "delete",
     align: "center",
-    width: 50,
+    width: 80,
     fixed: "left",
     render: (props, record) => {
       return (
         props && (
           <div className="flex justify-center items-center gap-3 pl-9">
-            <CustomCheckbox value={record?.id} />
+            <CustomCheckbox value={record?.id} name={["delete", record?.id]} />
           </div>
         )
       );
@@ -40,6 +39,7 @@ const columns = [
     dataIndex: "sku",
     key: "sku",
     align: "center",
+    width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -51,6 +51,7 @@ const columns = [
     dataIndex: "unitCost",
     key: "unitCost",
     align: "center",
+    width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost ? "$" + unitCost : ""}
@@ -81,6 +82,7 @@ const columns = [
           </div>
           <CustomQuantityInput
             name={["product_list", "qty", record?.id]}
+            // value={record?.qty}
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -102,6 +104,7 @@ const columns = [
     dataIndex: "discount",
     key: "discount",
     align: "center",
+    width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${discount}
@@ -113,6 +116,7 @@ const columns = [
     dataIndex: "tax",
     key: "tax",
     align: "center",
+    width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${tax}
@@ -124,6 +128,7 @@ const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
+    width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         ${subTotal}
@@ -138,18 +143,15 @@ export const ReturnProductTable = ({
   products,
   setProducts,
   productUnits,
-  // form,
-  // setProductUnits,
+  form,
 }) => {
-  const form = Form.useFormInstance();
-
-  console.log(form.getFieldValue("product_list"));
-  console.log(formValues);
-
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = parseInt(currentQty) + 1;
+      const newQty = Math.min(
+        parseInt(currentQty) + 1,
+        parseInt(formValues?.product_list?.max_return?.[id])
+      );
 
       return {
         ...prevFormValues,
@@ -167,7 +169,10 @@ export const ReturnProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = parseInt(currentQty) - 1;
+      const newQty = Math.min(
+        parseInt(currentQty) - 1,
+        parseInt(formValues?.product_list?.max_return?.[id])
+      );
 
       return {
         ...prevFormValues,
@@ -183,13 +188,18 @@ export const ReturnProductTable = ({
   };
 
   const onQuantityChange = (id, value) => {
+    const qty = Math.min(
+      parseInt(value),
+      parseInt(formValues?.product_list?.max_return?.[id])
+    );
+
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       product_list: {
         ...prevFormValues.product_list,
         qty: {
           ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
+          [id]: qty || 0,
         },
       },
     }));
@@ -231,55 +241,13 @@ export const ReturnProductTable = ({
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],
       subTotal: formValues.product_list.total[id],
+      qty: formValues.product_list.qty[id],
       incrementCounter,
       decrementCounter,
       onQuantityChange,
       onDelete,
     };
   });
-
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalTax, setTotalTax] = useState(0);
-  const [totalDiscount, setTotalDiscount] = useState(0);
-
-  useEffect(() => {
-    const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + parseInt(cur),
-      0
-    );
-    setTotalQuantity(total);
-
-    const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + parseFloat(cur),
-      0
-    );
-    setTotalPrice(totalPrice?.toFixed(2));
-
-    const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + parseFloat(cur),
-      0
-    );
-    setTotalTax(totalTax.toFixed(2));
-
-    const totalDiscount = Object.values(
-      formValues.product_list.discount
-    ).reduce((acc, cur) => acc + parseFloat(cur), 0);
-
-    setTotalDiscount(totalDiscount.toFixed(2));
-  }, [formValues, products]);
-
-  products?.length > 0 &&
-    dataSource.push({
-      //   key: "total",
-      id: "",
-      name: "Total",
-      quantity: totalQuantity,
-      subTotal: totalPrice,
-      tax: totalTax,
-      discount: totalDiscount,
-      action: false,
-    });
 
   form.setFieldsValue(formValues);
 

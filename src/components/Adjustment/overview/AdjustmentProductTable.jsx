@@ -11,7 +11,6 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    align: "center",
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -23,6 +22,7 @@ const columns = [
     dataIndex: "sku",
     key: "sku",
     align: "center",
+    width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -34,6 +34,7 @@ const columns = [
     dataIndex: "unitCost",
     key: "unitCost",
     align: "center",
+    width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost}

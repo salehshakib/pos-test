@@ -256,6 +256,7 @@ const QuotationEdit = ({ id }) => {
       title={"Edit Quotation"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
+      width={1400}
     >
       <QuotationForm
         handleSubmit={handleUpdate}

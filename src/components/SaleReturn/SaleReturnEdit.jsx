@@ -51,6 +51,7 @@ const SaleReturnEdit = ({ id, setId }) => {
     <CustomDrawer
       title={"Edit Sale Return"}
       open={isEditDrawerOpen}
+      width={1400}
       // isLoading={isFetching}
     >
       <SaleReturnForm

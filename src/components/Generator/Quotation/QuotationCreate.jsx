@@ -131,7 +131,7 @@ const QuotationCreate = () => {
     <CustomDrawer
       title={"Create Quotation"}
       open={isCreateDrawerOpen}
-      form={form}
+      width={1400}
     >
       <QuotationForm
         handleSubmit={handleSubmit}

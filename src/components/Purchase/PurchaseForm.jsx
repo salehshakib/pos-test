@@ -63,8 +63,8 @@ const PurchaseStatus = () => {
       label: "Partial",
     },
     {
-      value: "Paid",
-      label: "Paid",
+      value: "Ordered",
+      label: "Ordered",
     },
   ];
 
@@ -178,17 +178,14 @@ export const PurchaseForm = ({
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label={"Attach Document"} name={"logo"} />
+            <CustomUploader label={"Attach Document"} name={"attachment"} />
           </Col>
 
-          <Col {...mdColLayout}>
-            <CustomInput type={"textarea"} name="sale_note" label="Sale Note" />
-          </Col>
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <CustomInput
               type={"textarea"}
-              name="staff_note"
-              label="Staff Note"
+              name="purchase_note"
+              label="Purchase Note"
             />
           </Col>
         </Row>

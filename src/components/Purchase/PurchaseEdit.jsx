@@ -22,18 +22,65 @@ export const PurchaseEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetPurchaseDetailsQuery(
     { id },
-    { skip: !id }
+    { skip: !id || !isEditDrawerOpen }
   );
+
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      product_id: {},
+      qty: {},
+      recieved: {},
+      purchase_unit_id: {},
+      net_unit_cost: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+
+      tax_id: {},
+    },
+  });
+  const [products, setProducts] = useState([]);
+  const [productUnits, setProductUnits] = useState({
+    purchase_units: {},
+  });
+
+  useEffect(() => {
+    if (!isEditDrawerOpen) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          recieved: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        purchase_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [isEditDrawerOpen]);
 
   const [updateSale, { isLoading }] = useUpdatePurchaseMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
     }
-  }, [data, setFields]);
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

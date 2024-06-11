@@ -151,6 +151,8 @@ const ProductFormComponent = ({
         },
       };
     });
+
+    hideModal();
   };
 
   return (

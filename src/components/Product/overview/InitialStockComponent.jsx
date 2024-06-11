@@ -9,7 +9,6 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    // align: "center",
     render: (name) => (
       <div className={`flex items-center gap-2 `}>
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

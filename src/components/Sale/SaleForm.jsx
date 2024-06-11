@@ -172,11 +172,11 @@ export const SaleForm = ({
             <CashierComponent />
           </Col>
 
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <CurrencyFormComponent />
           </Col>
 
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <CustomDatepicker label="Date" required={true} name={"sale_at"} />
           </Col>
 

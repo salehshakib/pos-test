@@ -254,8 +254,6 @@ const ProductFormComponent = ({
   }, [formValues, productForm, productId]);
 
   const handleSubmit = () => {
-    console.log(productForm.getFieldsValue());
-
     setFormValues((prevFormValues) => {
       return {
         ...prevFormValues,
@@ -386,7 +384,7 @@ export const SaleProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = parseInt(currentQty) - 1;
+      const newQty = Math.min(parseInt(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
@@ -413,12 +411,6 @@ export const SaleProductTable = ({
       },
     }));
   };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-  // };
 
   const onDelete = (id) => {
     setProducts((prevProducts) =>
@@ -532,7 +524,6 @@ export const SaleProductTable = ({
 
   products.length > 0 &&
     dataSource.push({
-      //   key: "total",
       id: "",
       name: "Total",
       quantity: totalQuantity,

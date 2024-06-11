@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -11,7 +12,6 @@ import {
 } from "../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
-import dayjs from "dayjs";
 
 const updateProductList = (values, product_list) => {
   // Extract IDs to keep from the values.delete object where the value is true
@@ -71,6 +71,8 @@ const SaleReturnCreate = () => {
   const [products, setProducts] = useState([]);
 
   const [saleData, setSaleData] = useState();
+
+  // const [summary, setSummary] = useState({});
 
   useEffect(() => {
     if (!isCreateDrawerOpen) {
@@ -133,7 +135,12 @@ const SaleReturnCreate = () => {
         0
       ) ?? 0;
 
-    console.log(totalPrice);
+    // setSummary({
+    //   totalItems: productListArray?.length,
+    //   totalQty: totalQty,
+    //   totalPrice: totalPrice,
+    //   grandTotal: calculateGrandTotal(totalPrice, orderTax),
+    // });
 
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format("YYYY-MM-DD"),
@@ -215,6 +222,7 @@ const SaleReturnCreate = () => {
         products={products}
         setProducts={setProducts}
         setSaleData={setSaleData}
+        // summary={summary}
       />
     </CustomDrawer>
   );

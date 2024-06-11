@@ -76,34 +76,6 @@ const AlertComponent = () => {
   }
 };
 
-// const DifferentPriceComponent = () => {
-//   const form = Form.useFormInstance();
-//   const hasDifferentPrice = Form.useWatch("has_different_price", form);
-
-//   return (
-//     <Row {...rowLayout}>
-//       <Col {...fullColLayout}>
-//         <CustomCheckbox
-//           label="This product has different price for different warehouse"
-//           name="has_different_price"
-//         />
-//       </Col>
-
-//       {hasDifferentPrice && (
-//         <>
-//           <Col {...fullColLayout} className="mt-5">
-//             <SearchWarehouse name={"warehouse_id"} />
-//           </Col>
-
-//           <Col {...fullColLayout}>
-//             <WarehouseTableComponent className="mb-10" />
-//           </Col>
-//         </>
-//       )}
-//     </Row>
-//   );
-// };
-
 const ExpireComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
@@ -206,8 +178,6 @@ const ProductForm = ({
   setPriceWarehouses,
   ...props
 }) => {
-  console.log(formValues);
-
   const productType = Form.useWatch("type", props.form);
 
   return (

@@ -1,4 +1,5 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
 import {
   colLayout,
   fullColLayout,
@@ -41,40 +42,40 @@ import { PurchaseProductTable } from "./overview/PurchaseProductTable";
 //   return <CustomSelect label="Sale Status" options={options} name={"status"} />;
 // };
 
-// const PaymentComponent = () => {
-//   const form = Form.useFormInstance();
+const PurchaseStatus = () => {
+  const form = Form.useFormInstance();
 
-//   useEffect(() => {
-//     form.setFieldValue("payment_status", "Pending");
-//   }, [form]);
+  useEffect(() => {
+    form.setFieldValue("purchase_status", "Pending");
+  }, [form]);
 
-//   const options = [
-//     {
-//       value: "Pending",
-//       label: "Pending",
-//     },
-//     {
-//       value: "Due",
-//       label: "Due",
-//     },
-//     {
-//       value: "Partial",
-//       label: "Partial",
-//     },
-//     {
-//       value: "Paid",
-//       label: "Paid",
-//     },
-//   ];
+  const options = [
+    {
+      value: "Pending",
+      label: "Pending",
+    },
+    {
+      value: "Due",
+      label: "Due",
+    },
+    {
+      value: "Partial",
+      label: "Partial",
+    },
+    {
+      value: "Paid",
+      label: "Paid",
+    },
+  ];
 
-//   return (
-//     <CustomSelect
-//       label="Payment Status"
-//       options={options}
-//       name={"payment_status"}
-//     />
-//   );
-// };
+  return (
+    <CustomSelect
+      label="Purchase Status"
+      options={options}
+      name={"purchase_status"}
+    />
+  );
+};
 
 const TaxComponent = () => {
   const { data, isFetching } = useGetAllTaxQuery({});
@@ -102,6 +103,8 @@ export const PurchaseForm = ({
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
   ...props
 }) => {
   const discount = Form.useWatch("discount", props.form);
@@ -126,10 +129,6 @@ export const PurchaseForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          {/* <Col {...colLayout}>
-            <CustomInput name={"name"} label={"Reference No"} required={true} />
-          </Col> */}
-
           <Col {...colLayout}>
             <WarehouseComponent />
           </Col>
@@ -138,10 +137,14 @@ export const PurchaseForm = ({
           </Col>
 
           <Col {...colLayout}>
+            <PurchaseStatus />
+          </Col>
+
+          <Col {...mdColLayout}>
             <CurrencyFormComponent />
           </Col>
 
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <CustomDatepicker
               label="Date"
               required={true}
@@ -154,6 +157,8 @@ export const PurchaseForm = ({
             setFormValues={setFormValues}
             products={products}
             setProducts={setProducts}
+            productUnits={productUnits}
+            setProductUnits={setProductUnits}
           />
 
           <Col {...colLayout}>
@@ -193,7 +198,7 @@ export const PurchaseForm = ({
         <Col {...fullColLayout}>
           <Row className="rounded-md overflow-hidden">
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Items</span>
@@ -202,35 +207,35 @@ export const PurchaseForm = ({
               </span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Total</span>
               <span>{Number(totalPrice).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Tax</span>
               <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Discount</span>
               <span>{Number(discount ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Shipping Cost</span>
               <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
             </Col>
             <Col
-              span={8}
+              span={4}
               className="border flex justify-between items-center px-2 py-5 text-lg"
             >
               <span className="font-semibold ">Grand Total</span>

@@ -14,7 +14,7 @@ export const SupplierComponent = () => {
   }));
   return (
     <CustomSelect
-      label="Select Supplier"
+      label="Supplier"
       options={options}
       isLoading={isLoading}
       required={true}

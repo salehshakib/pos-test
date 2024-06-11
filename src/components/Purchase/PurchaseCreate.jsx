@@ -31,6 +31,10 @@ export const PurchaseCreate = () => {
       tax_id: {},
     },
   });
+  const [products, setProducts] = useState([]);
+  const [productUnits, setProductUnits] = useState({
+    purchase_units: {},
+  });
 
   const handleSubmit = async (values) => {
     console.log(values);
@@ -51,10 +55,12 @@ export const PurchaseCreate = () => {
     // }
   };
 
-  const [products, setProducts] = useState([]);
-
   return (
-    <CustomDrawer title={"Create Purchase"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Purchase"}
+      open={isCreateDrawerOpen}
+      width={1400}
+    >
       <PurchaseForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -64,6 +70,8 @@ export const PurchaseCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

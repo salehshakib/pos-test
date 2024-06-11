@@ -8,16 +8,12 @@ import {
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
-import {
-  calculateGrandTotal,
-  calculateTotalPrice,
-} from "../../utilities/lib/generator/generatorUtils";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 
 const TaxComponent = () => {
   const { data, isFetching } = useGetAllTaxQuery({});
@@ -146,6 +142,8 @@ const SaleReturnForm = ({
   products,
   setProducts,
   setSaleData,
+  id,
+  referenceId,
   ...props
 }) => {
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
@@ -245,11 +243,11 @@ const SaleReturnForm = ({
     }
   };
 
-  const tax_rate = Form.useWatch("tax_rate", props.form);
+  // const tax_rate = Form.useWatch("tax_rate", props.form);
 
-  const deleteRow = Form.useWatch("delete", props.form);
+  // const deleteRow = Form.useWatch("delete", props.form);
 
-  console.log(formValues);
+  // console.log(formValues);
 
   // const updatedList = saleExists
   //   ? updateProductList(deleteRow, formValues.product_list)
@@ -267,7 +265,7 @@ const SaleReturnForm = ({
 
   return (
     <>
-      {!saleExists ? (
+      {!saleExists && !id ? (
         <CustomForm
           handleSubmit={handleSubmit}
           form={props.form}
@@ -288,7 +286,7 @@ const SaleReturnForm = ({
         <>
           <CustomForm {...props}>
             <ReturnComponent
-              reference_id={refId}
+              reference_id={referenceId ?? refId}
               formValues={formValues}
               setFormValues={setFormValues}
               products={products}

@@ -113,7 +113,7 @@ export const SaleCreate = () => {
       total_price: decimalConverter(totalPrice),
       tax: decimalConverter(orderTax),
       change: decimalConverter(
-        Number(values?.recieved_amount) - Number(values?.paid_amount)
+        Number(values?.recieved_amount ?? 0) - Number(values?.paid_amount ?? 0)
       ),
       grand_total: calculateGrandTotal(
         totalPrice,

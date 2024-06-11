@@ -5,13 +5,13 @@ import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
 
 const columns = [
   {
-    title: "Purchase Reference",
-    dataIndex: "purchaseReference",
-    key: "purchaseReference",
+    title: "Sale Reference",
+    dataIndex: "saleReference",
+    key: "saleReference",
     align: "center",
-    render: (purchaseReference) => (
+    render: (saleReference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {purchaseReference}
+        {saleReference}
       </span>
     ),
   },

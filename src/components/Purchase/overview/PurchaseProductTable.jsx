@@ -1,13 +1,13 @@
 import { Col, Form, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
-import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
+import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
 import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
-import { ProductColumns } from "./productColumns";
+import { columns, partialColumns } from "./productColumns";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
@@ -55,7 +55,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
     setProductUnits((prevValues) => {
       return {
         ...prevValues,
-        sale_units: {
+        purchase_units: {
           [productId]: option.operationValue ?? 1,
         },
       };
@@ -64,7 +64,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
 
   return (
     <CustomSelect
-      label="Sale Unit"
+      label="Purchase Unit"
       options={productUnits}
       isLoading={isLoading}
       name={["purchase_unit_id", productId]}
@@ -85,23 +85,27 @@ const ProductFormComponent = ({
 }) => {
   const [productForm] = Form.useForm();
 
-  console.log(productUnits);
-
   useEffect(() => {
-    productForm.setFieldsValue({
-      quantity: formValues?.product_list?.qty[productId],
-      unit_discount: formValues?.product_list?.discount[productId],
-      unit_price: formValues?.product_list?.net_unit_price[productId],
-      sale_unit_id: {
-        [productId]: formValues?.product_list?.sale_unit_id[productId] ?? "",
-      },
-    });
+    if (productId) {
+      productForm.setFieldsValue({
+        quantity: formValues?.product_list?.qty[productId],
+        unit_discount: formValues?.product_list?.discount[productId],
+        unit_price: formValues?.product_list?.net_unit_cost[productId],
+        purchase_unit_id: {
+          [productId]:
+            formValues?.product_list?.purchase_unit_id[productId]?.toString() ??
+            "",
+        },
+        tax_id: {
+          [productId]:
+            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+        },
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, productForm, productId]);
 
   const handleSubmit = () => {
-    console.log(productForm.getFieldsValue());
-
     setFormValues((prevFormValues) => {
       return {
         ...prevFormValues,
@@ -111,48 +115,42 @@ const ProductFormComponent = ({
             ...prevFormValues.product_list.qty,
             [productId]: productForm.getFieldValue("quantity"),
           },
-          sale_unit_id: {
-            ...prevFormValues.product_list.sale_unit_id,
-            [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
+          purchase_unit_id: {
+            ...prevFormValues.product_list.purchase_unit_id,
+            [productId]: productForm.getFieldValue([
+              "purchase_unit_id",
+              productId,
+            ]),
           },
           discount: {
             ...prevFormValues.product_list.discount,
             [productId]: productForm.getFieldValue("unit_discount"),
           },
-          net_unit_price: {
-            ...prevFormValues.product_list.net_unit_price,
+          net_unit_cost: {
+            ...prevFormValues.product_list.net_unit_cost,
             [productId]: productForm.getFieldValue("unit_price"),
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productForm.getFieldValue(["tax_rate", productId]),
+            [productId]: productUnits?.tax_rate[productId],
           },
           tax: {
             ...prevFormValues.product_list.tax,
             [productId]: parseFloat(
-              (parseInt(productUnits.sale_units[productId]) *
-                parseInt(productForm.getFieldValue(["tax_rate", productId])) *
+              (parseInt(productUnits.purchase_units[productId]) *
+                parseInt(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
                 100
             ).toFixed(2),
           },
+          tax_id: {
+            ...prevFormValues.product_list.tax_id,
+            [productId]: productForm.getFieldValue(["tax_id", productId]),
+          },
         },
       };
     });
-
-    // setProductUnits((prevValues) => {
-    //   return {
-    //     ...prevValues,
-    //     sale_unit_id: {
-    //       ...prevValues.sale_units,
-    //       [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
-    //     },
-    //   };
-    // });
-
-    hideModal();
-    // productForm.resetFields();
   };
 
   return (
@@ -167,7 +165,7 @@ const ProductFormComponent = ({
     >
       <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <CustomInput
               label="Quantity"
               type={"number"}
@@ -175,27 +173,31 @@ const ProductFormComponent = ({
               placeholder={"Enter product name"}
             />
           </Col>
-          <Col {...fullColLayout}>
-            <CustomInput
-              label="Unit Discount"
-              type={"number"}
-              name={"unit_discount"}
-            />
-          </Col>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <CustomInput
               label="Unit Price"
               type={"number"}
               name={"unit_price"}
             />
           </Col>
-          <Col {...fullColLayout}>
-            <TaxComponent productId={productId} />
-          </Col>
-          <Col {...fullColLayout}>
+          <Col {...colLayout}>
             <ProductUnitComponent
               setProductUnits={setProductUnits}
               productId={productId}
+            />
+          </Col>
+          <Col {...mdColLayout}>
+            <CustomInput
+              label="Unit Discount"
+              type={"number"}
+              name={"unit_discount"}
+            />
+          </Col>
+
+          <Col {...mdColLayout}>
+            <TaxComponent
+              productId={productId}
+              setProductUnits={setProductUnits}
             />
           </Col>
         </Row>
@@ -206,44 +208,65 @@ const ProductFormComponent = ({
 
 function setFormValuesId(
   id,
-  sale_unit_id,
+  purchase_unit_id,
   unit_cost,
-  sale_units,
+  purchase_units,
   formValues,
-  productUnits
+  productUnits,
+  tax_id,
+
+  // eslint-disable-next-line no-unused-vars
+  taxes
 ) {
-  formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
+  if (id) {
+    formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
 
-  formValues.product_list.sale_unit_id[id] =
-    formValues.product_list.sale_unit_id[id] ?? sale_unit_id;
+    formValues.product_list.net_unit_cost[id] =
+      formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
 
-  formValues.product_list.net_unit_price[id] = unit_cost;
+    formValues.product_list.discount[id] =
+      formValues.product_list.discount[id] ?? 0;
 
-  formValues.product_list.discount[id] =
-    formValues.product_list.discount[id] ?? 0;
+    formValues.product_list.tax[id] = parseFloat(
+      (
+        (parseInt(productUnits.purchase_units?.[id] ?? 1) *
+          parseInt(formValues.product_list.tax_rate[id]) *
+          parseInt(formValues.product_list.net_unit_cost[id]) *
+          parseInt(formValues.product_list.qty[id])) /
+        100
+      ).toFixed(2)
+    );
 
-  formValues.product_list.tax[id] = parseFloat(
-    (
-      (parseInt(productUnits.sale_units[id]) *
-        parseInt(formValues.product_list.tax_rate[id]) *
-        parseInt(formValues.product_list.net_unit_price[id]) *
-        parseInt(formValues.product_list.qty[id])) /
-      100
-    ).toFixed(2)
-  );
+    formValues.product_list.tax_rate[id] =
+      formValues.product_list.tax_rate[id] ?? 0;
 
-  formValues.product_list.tax_rate[id] =
-    formValues.product_list.tax_rate[id] ?? 0;
+    const saleUnitsOperationValue = purchase_units
+      ? purchase_units?.operation_value !== null
+        ? purchase_units?.operation_value
+        : 1
+      : 1;
 
-  productUnits.sale_units[id] =
-    productUnits?.sale_units[id] ?? sale_units?.operation_value ?? 1;
+    productUnits.purchase_units[id] =
+      productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
 
-  formValues.product_list.total[id] =
-    productUnits.sale_units[id] *
-      parseInt(unit_cost) *
-      formValues.product_list.qty[id] -
-    formValues.product_list.discount[id] +
-    formValues.product_list.tax[id];
+    formValues.product_list.total[id] =
+      productUnits.purchase_units[id] *
+        parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
+        formValues.product_list.qty[id] -
+      formValues.product_list.discount[id] +
+      formValues.product_list.tax[id];
+
+    formValues.product_list.purchase_unit_id[id] =
+      formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
+
+    formValues.product_list.recieved[id] =
+      formValues.product_list.recieved[id] ?? 0;
+
+    if (formValues?.product_list?.tax_id) {
+      formValues.product_list.tax_id[id] =
+        formValues.product_list?.tax_id?.[id] ?? tax_id;
+    }
+  }
 }
 
 export const PurchaseProductTable = ({
@@ -251,32 +274,15 @@ export const PurchaseProductTable = ({
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-  //   const warehouseId = Form.useWatch("warehouse_id", form);
-
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-  });
-
-  const [productEditModal, setProductEditModal] = useState(false);
-  const [productId, setProductId] = useState(undefined);
-  const [productName, setProductName] = useState(null);
-
-  const handleProductEdit = (id, name) => {
-    setProductId(id);
-    setProductName(name);
-    setProductEditModal(true);
-  };
-
-  const hideModal = () => {
-    setProductEditModal(false);
-  };
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty + 1;
+      const newQty = parseInt(currentQty) + 1;
 
       return {
         ...prevFormValues,
@@ -294,7 +300,7 @@ export const PurchaseProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty - 1;
+      const newQty = Math.min(parseInt(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
@@ -322,13 +328,99 @@ export const PurchaseProductTable = ({
     }));
   };
 
+  const incrementReceivedCounter = (id) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.recieved[id] || 0;
+      const newQty = parseInt(currentQty) + 1;
+
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          recieved: {
+            ...prevFormValues.product_list.recieved,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const decrementReceivedCounter = (id) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.recieved[id] || 0;
+      const newQty = Math.min(parseInt(currentQty) - 1, 0);
+
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          recieved: {
+            ...prevFormValues.product_list.recieved,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const onReceivedChange = (id, value) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        recieved: {
+          ...prevFormValues.product_list.recieved,
+          [id]: parseInt(value, 10) || 0,
+        },
+      },
+    }));
+  };
+
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
+  // };
+
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      const { product_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+      };
+    });
   };
 
-  console.log(formValues);
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
+
+  const handleProductEdit = (id, name) => {
+    setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
+  };
+
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
 
   const dataSource = products?.map((product) => {
     const {
@@ -336,26 +428,28 @@ export const PurchaseProductTable = ({
       name,
       sku,
       buying_price: unit_cost,
-      sale_unit_id,
-      sale_units,
+      purchase_unit_id,
+      purchase_units,
+      tax_id,
+      taxes,
     } = product ?? {};
-
-    console.log(product);
 
     setFormValuesId(
       id,
-      sale_unit_id,
+      purchase_unit_id,
       unit_cost,
-      sale_units,
+      purchase_units,
       formValues,
-      productUnits
+      productUnits,
+      tax_id,
+      taxes
     );
 
     return {
       id,
       name,
       sku,
-      unitCost: formValues.product_list.net_unit_price[id],
+      unitCost: formValues.product_list.net_unit_cost[id],
       delete: true,
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],
@@ -363,92 +457,76 @@ export const PurchaseProductTable = ({
       incrementCounter,
       decrementCounter,
       onQuantityChange,
+      incrementReceivedCounter,
+      decrementReceivedCounter,
+      onReceivedChange,
       onDelete,
       handleProductEdit,
     };
   });
 
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalReceived, setTotalReceived] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
 
   useEffect(() => {
     const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseInt(cur),
       0
     );
     setTotalQuantity(total);
 
+    const totalR = Object.values(formValues.product_list.recieved).reduce(
+      (acc, cur) => acc + parseInt(cur),
+      0
+    );
+    setTotalReceived(totalR);
+
     const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseFloat(cur),
       0
     );
     setTotalPrice(totalPrice?.toFixed(2));
 
     const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseFloat(cur),
       0
     );
     setTotalTax(totalTax.toFixed(2));
 
     const totalDiscount = Object.values(
       formValues.product_list.discount
-    ).reduce((acc, cur) => acc + cur, 0);
+    ).reduce((acc, cur) => acc + parseFloat(cur), 0);
 
     setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);
 
   products.length > 0 &&
     dataSource.push({
-      //   key: "total",
       id: "",
       name: "Total",
       quantity: totalQuantity,
+      received: totalReceived,
       subTotal: totalPrice,
       tax: totalTax,
       discount: totalDiscount,
       action: false,
     });
 
-  //   useEffect(() => {
-  //     if (
-  //       products.length === 0 &&
-  //       !Object.keys(formValues.product_list.qty).length > 0
-  //     ) {
-  //       setFormValues({
-  //         product_list: {
-  //           qty: {},
-  //           sale_unit_id: {},
-  //           net_unit_price: {},
-  //           discount: {},
-  //           tax_rate: {},
-  //           tax: {},
-  //           total: {},
-  //         },
-  //       });
-
-  //       setProductUnits({
-  //         sale_units: {},
-  //       });
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [products, setFormValues]);
-
   form.setFieldsValue(formValues);
 
-  const columns = ProductColumns();
+  const type = Form.useWatch("purchase_status", form);
 
   return (
     <>
-      {/* {warehouseId && ( */}
       <ProductController
         products={products}
         setProducts={setProducts}
-        columns={columns}
+        columns={type === "Partial" ? partialColumns : columns}
         dataSource={dataSource}
       />
-      {/* )} */}
 
       <ProductFormComponent
         productEditModal={productEditModal}

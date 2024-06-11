@@ -7,10 +7,8 @@ import { selectPagination } from "../../redux/services/pagination/paginationSlic
 import {
   useDeleteSaleMutation,
   useGetAllSaleQuery,
-  useUpdateSaleStatusMutation,
 } from "../../redux/services/sale/saleApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { SaleEdit } from "./SaleEdit";
 
@@ -19,9 +17,6 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
-
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -32,28 +27,11 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateSaleStatusMutation();
-
   const [deleteSale, { isLoading: isDeleting }] = useDeleteSaleMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
-  };
-
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
-
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
-
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
   };
 
   const handleDeleteModal = (id) => {
@@ -70,7 +48,7 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.sale?.map((item) => {
-      const { id, sale_at, is_active, reference_id } = item ?? {};
+      const { id, sale_at, reference_id } = item ?? {};
       const date = dayjs(sale_at).format("DD-MM-YYYY");
 
       return {
@@ -78,15 +56,13 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
         date: date,
         reference: reference_id,
-        status: is_active,
-        handleStatusModal,
+
         handleEdit,
         handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -100,16 +76,10 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
         isLoading={isLoading}
         isRowSelection={true}
         created_at={false}
+        status={false}
       />
 
       <SaleEdit id={editId} setId={setEditId} />
-
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
 
       <DeleteModal
         deleteModal={deleteModal}

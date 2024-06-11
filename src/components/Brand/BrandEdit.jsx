@@ -22,6 +22,8 @@ export const BrandEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
 
+  console.log(isEditDrawerOpen, id);
+
   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
   useEffect(() => {

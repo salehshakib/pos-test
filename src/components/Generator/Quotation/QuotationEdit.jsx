@@ -32,7 +32,7 @@ const QuotationEdit = ({ id }) => {
         child: 1,
       },
     },
-    { skip: !id }
+    { skip: !id || !isEditDrawerOpen }
   );
   const [updateQuotation, { isLoading }] = useUpdateQuotationMutation();
 
@@ -58,7 +58,28 @@ const QuotationEdit = ({ id }) => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (!isEditDrawerOpen) {
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProducts([]);
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [isEditDrawerOpen]);
+
+  useEffect(() => {
+    if (data && isEditDrawerOpen) {
       data?.quotation_products?.forEach((item) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -123,7 +144,7 @@ const QuotationEdit = ({ id }) => {
 
       setFields(fieldData);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
@@ -215,6 +236,10 @@ const QuotationEdit = ({ id }) => {
         },
       });
       setProducts([]);
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
     }
 
     if (error) {
@@ -223,6 +248,8 @@ const QuotationEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
+
+  if (!id) return;
 
   return (
     <CustomDrawer

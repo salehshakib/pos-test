@@ -28,7 +28,7 @@ const brandApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [BRAND],
+      // providesTags: (result, error, { id }) => [{ type: BRAND, id }],
     }),
 
     createBrand: build.mutation({

@@ -91,19 +91,21 @@ const ProductFormComponent = ({
   const [productForm] = Form.useForm();
 
   useEffect(() => {
-    productForm.setFieldsValue({
-      quantity: formValues?.product_list?.qty[productId],
-      unit_discount: formValues?.product_list?.discount[productId],
-      unit_price: formValues?.product_list?.net_unit_price[productId],
-      sale_unit_id: {
-        [productId]:
-          formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
-      },
-      tax_id: {
-        [productId]:
-          formValues?.product_list?.tax_id[productId]?.toString() ?? "",
-      },
-    });
+    if (productId) {
+      productForm.setFieldsValue({
+        quantity: formValues?.product_list?.qty[productId],
+        unit_discount: formValues?.product_list?.discount[productId],
+        unit_price: formValues?.product_list?.net_unit_price[productId],
+        sale_unit_id: {
+          [productId]:
+            formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
+        },
+        tax_id: {
+          [productId]:
+            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+        },
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, productForm, productId]);
 
@@ -133,7 +135,7 @@ const ProductFormComponent = ({
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productUnits?.tax_rate[productId],
+            [productId]: productUnits?.tax_rate?.[productId] ?? 0,
           },
           tax: {
             ...prevFormValues.product_list.tax,
@@ -282,13 +284,11 @@ export const QuotationProductTable = ({
     );
 
     setFormValues((prevFormValues) => {
-      // Destructure product_list from the previous form values
       const { product_list } = prevFormValues;
 
-      // Create a new product_list object without the specified product ID
       const updatedProductList = Object.keys(product_list).reduce(
         (acc, key) => {
-          // Filter out the product ID from each nested object
+          // eslint-disable-next-line no-unused-vars
           const { [id]: _, ...rest } = product_list[key];
           acc[key] = rest;
           return acc;
@@ -296,7 +296,6 @@ export const QuotationProductTable = ({
         {}
       );
 
-      // Return the updated form values
       return {
         ...prevFormValues,
         product_list: updatedProductList,

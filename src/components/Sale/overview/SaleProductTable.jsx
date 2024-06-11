@@ -1,4 +1,4 @@
-import { Col, Form, Modal, Row } from "antd";
+import { Button, Col, Form, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
@@ -8,7 +8,152 @@ import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
-import { columns } from "./productColumns";
+import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
+import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import { MdDelete } from "react-icons/md";
+
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    align: "center",
+    width: 150,
+    render: (name, record) => (
+      <div
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
+        onClick={() => {
+          record?.handleProductEdit(record?.id, record?.name);
+        }}
+      >
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+        {name !== "Total" && <FaEdit className="primary-text" />}
+      </div>
+    ),
+  },
+  {
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    title: "Unit Cost",
+    dataIndex: "unitCost",
+    key: "unitCost",
+    align: "center",
+    render: (unitCost) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {unitCost ? "$" + unitCost : ""}
+      </span>
+    ),
+  },
+
+  {
+    title: "Quantity",
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+    width: 140,
+    render: (quantity, record) => {
+      return quantity > -1 ? (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {quantity}
+        </span>
+      ) : (
+        <div className="flex gap-1 justify-center items-center">
+          <div>
+            <Button
+              key={"sub"}
+              icon={<FaMinus />}
+              type="primary"
+              onClick={() => record.decrementCounter(record?.id)}
+            />
+          </div>
+          <CustomQuantityInput
+            name={["product_list", "qty", record?.id]}
+            noStyle={true}
+            onChange={(value) => record.onQuantityChange(record.id, value)}
+          />
+          <div>
+            <Button
+              key={"add"}
+              icon={<FaPlus />}
+              type="primary"
+              onClick={() => record.incrementCounter(record?.id)}
+              className=""
+            />
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    title: "Discount",
+    dataIndex: "discount",
+    key: "discount",
+    align: "center",
+    render: (discount) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        ${discount}
+      </span>
+    ),
+  },
+  {
+    title: "Tax",
+    dataIndex: "tax",
+    key: "tax",
+    align: "center",
+    render: (tax) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        ${tax}
+      </span>
+    ),
+  },
+  {
+    title: "SubTotal",
+    dataIndex: "subTotal",
+    key: "subTotal",
+    align: "center",
+    render: (subTotal) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        ${subTotal}
+      </span>
+    ),
+  },
+  {
+    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    dataIndex: "delete",
+    key: "delete",
+    align: "center",
+    width: 50,
+    fixed: "right",
+    render: (props, record) => {
+      return (
+        props && (
+          <div className="flex justify-center items-center gap-3">
+            <button
+              onClick={() => record.onDelete(record.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              type="button"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+          </div>
+        )
+      );
+    },
+  },
+];
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const { data, isLoading } = useGetAllTaxQuery({});
@@ -87,19 +232,21 @@ const ProductFormComponent = ({
   const [productForm] = Form.useForm();
 
   useEffect(() => {
-    productForm.setFieldsValue({
-      quantity: formValues?.product_list?.qty[productId],
-      unit_discount: formValues?.product_list?.discount[productId],
-      unit_price: formValues?.product_list?.net_unit_price[productId],
-      sale_unit_id: {
-        [productId]:
-          formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
-      },
-      tax_id: {
-        [productId]:
-          formValues?.product_list?.tax_id[productId]?.toString() ?? "",
-      },
-    });
+    if (productId) {
+      productForm.setFieldsValue({
+        quantity: formValues?.product_list?.qty[productId],
+        unit_discount: formValues?.product_list?.discount[productId],
+        unit_price: formValues?.product_list?.net_unit_price[productId],
+        sale_unit_id: {
+          [productId]:
+            formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
+        },
+        tax_id: {
+          [productId]:
+            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+        },
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, productForm, productId]);
 
@@ -216,66 +363,22 @@ const ProductFormComponent = ({
   );
 };
 
-// function setFormValuesId(
-//   id,
-//   sale_unit_id,
-//   unit_cost,
-//   sale_units,
-//   formValues,
-//   productUnits
-// ) {
-//   formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
-
-//   formValues.product_list.sale_unit_id[id] =
-//     formValues.product_list.sale_unit_id[id] ?? sale_unit_id;
-
-//   formValues.product_list.net_unit_price[id] = unit_cost;
-
-//   formValues.product_list.discount[id] =
-//     formValues.product_list.discount[id] ?? 0;
-
-//   formValues.product_list.tax[id] = parseFloat(
-//     (
-//       (parseInt(productUnits.sale_units[id]) *
-//         parseInt(formValues.product_list.tax_rate[id]) *
-//         parseInt(formValues.product_list.net_unit_price[id]) *
-//         parseInt(formValues.product_list.qty[id])) /
-//       100
-//     ).toFixed(2)
-//   );
-
-//   formValues.product_list.tax_rate[id] =
-//     formValues.product_list.tax_rate[id] ?? 0;
-
-//   productUnits.sale_units[id] =
-//     productUnits?.sale_units[id] ?? sale_units?.operation_value ?? 1;
-
-//   formValues.product_list.total[id] =
-//     productUnits.sale_units[id] *
-//       parseInt(unit_cost) *
-//       formValues.product_list.qty[id] -
-//     formValues.product_list.discount[id] +
-//     formValues.product_list.tax[id];
-// }
-
 export const SaleProductTable = ({
   formValues,
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-  // const warehouseId = Form.useWatch("warehouse_id", form);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-  });
+  console.log(form.getFieldValue("product_list"));
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty + 1;
+      const newQty = parseInt(currentQty) + 1;
 
       return {
         ...prevFormValues,
@@ -293,7 +396,7 @@ export const SaleProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty - 1;
+      const newQty = parseInt(currentQty) - 1;
 
       return {
         ...prevFormValues,
@@ -321,10 +424,35 @@ export const SaleProductTable = ({
     }));
   };
 
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
+  // };
+
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      const { product_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+      };
+    });
   };
 
   const [productEditModal, setProductEditModal] = useState(false);
@@ -340,6 +468,8 @@ export const SaleProductTable = ({
   const hideModal = () => {
     setProductEditModal(false);
   };
+
+  console.log(formValues);
 
   const dataSource = products?.map((product) => {
     const {
@@ -390,26 +520,26 @@ export const SaleProductTable = ({
 
   useEffect(() => {
     const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseInt(cur),
       0
     );
     setTotalQuantity(total);
 
     const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseFloat(cur),
       0
     );
     setTotalPrice(totalPrice?.toFixed(2));
 
     const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseFloat(cur),
       0
     );
     setTotalTax(totalTax.toFixed(2));
 
     const totalDiscount = Object.values(
       formValues.product_list.discount
-    ).reduce((acc, cur) => acc + cur, 0);
+    ).reduce((acc, cur) => acc + parseFloat(cur), 0);
 
     setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);

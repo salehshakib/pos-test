@@ -1,6 +1,6 @@
 import { Form } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../../redux/services/sale/saleApi";
@@ -43,10 +43,15 @@ export const SaleCreate = () => {
   });
 
   const [products, setProducts] = useState([]);
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
+  });
 
-  // const { data: pettyCashData } = useGetAllPettyCashQuery({});
-
-  //due amount = recieved - paid
+  // useEffect(() => {
+  //   if (!isCreateDrawerOpen) {
+  //     form.resetFields();
+  //   }
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
@@ -143,6 +148,28 @@ export const SaleCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -165,6 +192,8 @@ export const SaleCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

@@ -208,10 +208,35 @@ export const AdjustmentProductTable = ({
     }));
   };
 
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
+  // };
+
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      const { product_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+      };
+    });
   };
 
   console.log(products);

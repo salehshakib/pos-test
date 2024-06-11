@@ -142,10 +142,36 @@ export const InitialStockComponent = ({
     }));
   };
 
+  console.log(formValues.qty_list);
+
   const onDelete = (id) => {
     setInitialWarehouses((prevWarehouse) =>
       prevWarehouse.filter((warehouse) => warehouse.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      const updatedQtyList = Object.keys(prevFormValues.qty_list.qty).reduce(
+        (acc, productId) => {
+          if (prevFormValues.qty_list.qty[productId] !== undefined) {
+            // eslint-disable-next-line no-unused-vars
+            const { [id]: _, ...rest } = prevFormValues.qty_list.qty[productId];
+            if (Object.keys(rest).length > 0) {
+              acc[productId] = rest;
+            }
+          }
+          return acc;
+        },
+        {}
+      );
+
+      return {
+        ...prevFormValues,
+        qty_list: {
+          ...prevFormValues.qty_list,
+          qty: updatedQtyList,
+        },
+      };
+    });
   };
 
   const dataSource =

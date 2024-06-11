@@ -25,10 +25,10 @@ const ProductListEdit = ({ id }) => {
       id,
       params: {
         parent: 1,
-        // child: 1,
+        child: 1,
       },
     },
-    { skip: !id }
+    { skip: !id || !isEditDrawerOpen }
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
@@ -50,7 +50,60 @@ const ProductListEdit = ({ id }) => {
   const [priceWarehouses, setPriceWarehouses] = useState([]);
 
   useEffect(() => {
-    if (data) {
+    if (!isEditDrawerOpen) {
+      setFormValues({
+        product_list: {
+          qty: {},
+          amount: {},
+        },
+        qty_list: {
+          qty: {},
+        },
+        price_list: {
+          price: {},
+        },
+      });
+
+      setProducts([]);
+
+      setInitialWarehouses([]);
+
+      setPriceWarehouses([]);
+    }
+  }, [isEditDrawerOpen]);
+
+  const updateStateWithProductData = (product_prices, product_qties) => {
+    // Update state with product prices
+    product_prices.forEach((item) => {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        price_list: {
+          ...prevFormValues.price_list,
+          price: {
+            ...prevFormValues.price_list.price,
+            [item.warehouse_id.toString()]: item.price,
+          },
+        },
+      }));
+    });
+
+    // Update state with product quantities
+    product_qties.forEach((item) => {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        qty_list: {
+          ...prevFormValues.qty_list,
+          qty: {
+            ...prevFormValues.qty_list.qty,
+            [item.warehouse_id.toString()]: item.qty,
+          },
+        },
+      }));
+    });
+  };
+
+  useEffect(() => {
+    if (data && isEditDrawerOpen) {
       const {
         name,
         sku,
@@ -104,75 +157,40 @@ const ProductListEdit = ({ id }) => {
         details,
       });
 
-      console.log(data);
+      updateStateWithProductData(data?.product_prices, data?.product_qties);
 
-      const qtyListArray =
-        JSON.parse(data?.qty_list)?.map((item) => item) ?? [];
-      const productListArray =
-        JSON.parse(data?.product_list)?.map((item) => item) ?? [];
-      const priceListArray =
-        JSON.parse(data?.price_list)?.map((item) => item) ?? [];
+      data?.product_prices?.forEach((item) => {
+        setInitialWarehouses((prevWarehouses) => [
+          ...prevWarehouses,
+          {
+            id: item.warehouse_id,
+            name: item.name,
+          },
+        ]);
+      });
+
+      data?.product_qties?.forEach((item) => {
+        setPriceWarehouses((prevWarehouses) => [
+          ...prevWarehouses,
+          {
+            id: item.warehouse_id,
+            name: item.name,
+          },
+        ]);
+      });
 
       const newFieldData = [
         ...fieldData,
-
-        {
-          name: "product_id",
-          value: productListArray?.map((item) => item?.product_id.toString()),
-          errors: "",
-        },
-        ...productListArray.map((item) => {
-          return {
-            name: [
-              "product_list",
-              "unit_price",
-              `${item?.product_id.toString()}`,
-            ],
-            value: item?.price,
-            errors: "",
-          };
-        }),
-        ...productListArray.map((item) => {
-          return {
-            name: ["product_list", "qty", `${item?.product_id.toString()}`],
-            value: item?.qty,
-            errors: "",
-          };
-        }),
         {
           name: "has_stock",
           value: has_stock === "1" ? true : false,
           errors: "",
         },
         {
-          name: "initial_stock_warehouse_id",
-          value: qtyListArray?.map((item) => item?.warehouse_id?.toString()),
-          errors: "",
-        },
-        ...qtyListArray.map((item) => {
-          return {
-            name: ["qty_list", "qty", item?.warehouse_id?.toString()],
-            value: item?.qty,
-            errors: "",
-          };
-        }),
-        {
           name: "has_different_price",
           value: has_different_price === "1" ? true : false,
           errors: "",
         },
-        {
-          name: "warehouse_id",
-          value: priceListArray?.map((item) => item?.warehouse_id?.toString()),
-          errors: "",
-        },
-        ...priceListArray.map((item) => {
-          return {
-            name: ["price_list", "price", item?.warehouse_id?.toString()],
-            value: item?.price,
-            errors: "",
-          };
-        }),
         {
           name: "has_promotion",
           value: has_promotion === "1" ? true : false,
@@ -222,25 +240,11 @@ const ProductListEdit = ({ id }) => {
         },
       ];
 
-      // ecommerce_sync,
-      // has_featured, has_stock, has_variant, embedded_barcode,
-      // has_promotion, has_different_price,
-      // has_expired_date,
-
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-
-      // ];
-
-      console.log(newFieldData);
-
       setFields(newFieldData);
     }
-  }, [data, setFields]);
+  }, [data, isEditDrawerOpen, setFields]);
+
+  console.log(formValues);
 
   const handleUpdate = async (values) => {
     const {
@@ -374,8 +378,6 @@ const ProductListEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
-
-  console.log(formValues);
 
   return (
     <CustomDrawer

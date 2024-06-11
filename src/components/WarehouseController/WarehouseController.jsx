@@ -63,7 +63,7 @@ const SearchWarehouse = ({ setWarehouses }) => {
       }
 
       message.warning("Warehouse already exists in the list");
-      return warehouseExists;
+      return prevWarehouse;
     });
     setValue(null);
   };

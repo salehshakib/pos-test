@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
@@ -13,10 +13,10 @@ const SaleReturnCreate = () => {
 
   const [formValues, setFormValues] = useState({
     product_list: {
+      qty: {},
       sale_id: {},
       product_id: {},
-      qty: {},
-      recieved: {},
+      // recieved: {},
       sale_unit_id: {},
       net_unit_price: {},
       discount: {},
@@ -26,10 +26,38 @@ const SaleReturnCreate = () => {
     },
   });
 
-  //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+  });
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    if (!isCreateDrawerOpen) {
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_id: {},
+          product_id: {},
+          // recieved: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProductUnits({ sale_units: {} });
+
+      setProducts([]);
+      form.resetFields();
+    }
+  }, [form, isCreateDrawerOpen]);
 
   const handleSubmit = async (values) => {
     console.log(values);
+    console.log(formValues.product_list);
     // const { data, error } = await createDepartment({
     //   data: values,
     // });
@@ -54,6 +82,10 @@ const SaleReturnCreate = () => {
         form={form}
         formValues={formValues}
         setFormValues={setFormValues}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
+        products={products}
+        setProducts={setProducts}
       />
     </CustomDrawer>
   );

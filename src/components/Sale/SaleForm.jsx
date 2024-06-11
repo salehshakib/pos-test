@@ -134,6 +134,8 @@ export const SaleForm = ({
   setFormValues,
   products,
   setProducts,
+  productUnits,
+  setProductUnits,
   ...props
 }) => {
   const discount = Form.useWatch("discount", props.form);
@@ -182,6 +184,8 @@ export const SaleForm = ({
             setFormValues={setFormValues}
             products={products}
             setProducts={setProducts}
+            productUnits={productUnits}
+            setProductUnits={setProductUnits}
           />
 
           <Col {...colLayout}>

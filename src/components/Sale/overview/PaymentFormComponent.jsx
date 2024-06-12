@@ -1,4 +1,4 @@
-import { Col, Form, message } from "antd";
+import { Col, Form } from "antd";
 import { useEffect } from "react";
 import {
   colLayout,
@@ -157,11 +157,7 @@ export const PaymentTypeComponent = () => {
   const paymentType = Form.useWatch("payment_type", form);
 
   useEffect(() => {
-    if (paidAmount > receivedAmount) {
-      message.error("Paid Amount is greater than Recieved Amount");
-      form.setFieldValue("paid_amount", receivedAmount);
-    }
-    if (paymentStatus === "Paid") {
+    if (paidAmount > receivedAmount || paymentStatus === "Paid") {
       form.setFieldValue("paid_amount", receivedAmount);
     }
   }, [paidAmount, receivedAmount, form, paymentStatus]);

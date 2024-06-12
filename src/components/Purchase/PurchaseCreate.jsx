@@ -95,8 +95,30 @@ export const PurchaseCreate = () => {
         0
       ) ?? 0;
 
+    const {
+      attachment,
+      warehouse_id,
+      supplier_id,
+      purchase_status,
+      currency,
+      exchange_rate,
+      purchase_note,
+      payment_status,
+      paid_amount,
+      payment_type,
+    } = values;
+
     const postObj = {
-      ...values,
+      warehouse_id,
+      supplier_id,
+      purchase_status,
+      currency,
+      exchange_rate,
+      purchase_note,
+      payment_status,
+      payment_type,
+      paid_amount: paid_amount && decimalConverter(paid_amount),
+      due_amount: paid_amount ? decimalConverter(totalPrice - paid_amount) : 0,
       purchase_at: dayjs(values?.purchase_at).format("YYYY-MM-DD"),
       discount: decimalConverter(values?.discount),
       shipping_cost: decimalConverter(values?.shipping_cost),
@@ -118,13 +140,13 @@ export const PurchaseCreate = () => {
       petty_cash_id: 8,
     };
 
-    const { attachment } = values;
-
     if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
     }
 
     appendToFormData(postObj, formData);
+
+    console.log(postObj);
 
     const { data, error } = await createPurchase({
       data: formData,

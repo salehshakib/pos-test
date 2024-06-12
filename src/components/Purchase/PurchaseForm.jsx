@@ -98,6 +98,109 @@ const TaxComponent = () => {
   );
 };
 
+const PaymentComponent = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue("payment_status", "Due");
+  }, [form]);
+
+  const options = [
+    {
+      value: "Due",
+      label: "Due",
+    },
+    {
+      value: "Partial",
+      label: "Partial",
+    },
+    {
+      value: "Paid",
+      label: "Paid",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      label="Payment Status"
+      options={options}
+      name={"payment_status"}
+    />
+  );
+};
+
+const PaymentType = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue("payment_type", "Cash");
+  }, [form]);
+
+  const options = [
+    {
+      value: "Cash",
+      label: "Cash",
+    },
+    {
+      value: "Card",
+      label: "Card",
+    },
+    {
+      value: "Cheque",
+      label: "Cheque",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      label="Payment Type"
+      options={options}
+      name={"payment_type"}
+      required={true}
+    />
+  );
+};
+
+const PaymentTypeComponent = ({ formValues }) => {
+  const form = Form.useFormInstance();
+  const paymentStatus = Form.useWatch("payment_status", form);
+
+  const paid_amount = Form.useWatch("paid_amount", form);
+
+  useEffect(() => {
+    const totalPrice = calculateTotalPrice(formValues.product_list);
+
+    if (paymentStatus === "Paid") {
+      form.setFieldValue("paid_amount", totalPrice);
+    }
+
+    if (paymentStatus === "Partial") {
+      if (Number(paid_amount) > totalPrice) {
+        form.setFieldValue("paid_amount", totalPrice);
+      }
+    }
+  }, [paymentStatus, form, formValues, paid_amount]);
+
+  return (
+    (paymentStatus === "Paid" || paymentStatus === "Partial") && (
+      <>
+        <Col {...colLayout}>
+          <PaymentType />
+        </Col>
+
+        <Col {...colLayout}>
+          <CustomInput
+            type={"number"}
+            name="paid_amount"
+            label="Paid Amount"
+            required={true}
+          />
+        </Col>
+      </>
+    )
+  );
+};
+
 export const PurchaseForm = ({
   formValues,
   setFormValues,
@@ -176,6 +279,12 @@ export const PurchaseForm = ({
               name={"shipping_cost"}
             />
           </Col>
+
+          <Col {...colLayout}>
+            <PaymentComponent />
+          </Col>
+
+          <PaymentTypeComponent formValues={formValues} />
 
           <Col {...fullColLayout}>
             <CustomUploader label={"Attach Document"} name={"attachment"} />

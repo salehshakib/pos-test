@@ -10,33 +10,10 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
+import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
-
-const updateProductList = (values, product_list) => {
-  // Extract IDs to keep from the values.delete object where the value is true
-  const idsToKeep = Object.keys(values.delete).filter(
-    (key) => values.delete[key]
-  );
-
-  // Create a new product list keeping only the entries for the IDs to keep
-  const updatedProductList = {};
-
-  Object.keys(product_list).forEach((key) => {
-    updatedProductList[key] = {};
-    idsToKeep.forEach((id) => {
-      if (product_list[key][id] !== undefined) {
-        updatedProductList[key][id] = product_list[key][id];
-      }
-    });
-  });
-
-  return updatedProductList;
-};
-
-const decimalConverter = (value = 0) => {
-  return Number(value).toFixed(2);
-};
 
 const SaleReturnCreate = () => {
   const dispatch = useDispatch();
@@ -50,9 +27,7 @@ const SaleReturnCreate = () => {
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
-      sale_id: {},
       product_id: {},
-      // recieved: {},
       sale_unit_id: {},
       net_unit_price: {},
       discount: {},
@@ -79,9 +54,7 @@ const SaleReturnCreate = () => {
       setFormValues({
         product_list: {
           qty: {},
-          sale_id: {},
           product_id: {},
-          // recieved: {},
           sale_unit_id: {},
           net_unit_price: {},
           discount: {},
@@ -108,7 +81,6 @@ const SaleReturnCreate = () => {
           .map((product_id) => ({
             product_id: parseInt(product_id),
             qty: updatedList.qty[product_id],
-            sale_id: updatedList.sale_id[product_id],
             sale_unit_id: updatedList.sale_unit_id[product_id],
             net_unit_price: decimalConverter(
               updatedList.net_unit_price[product_id]
@@ -180,9 +152,7 @@ const SaleReturnCreate = () => {
       setFormValues({
         product_list: {
           qty: {},
-          sale_id: {},
           product_id: {},
-          // recieved: {},
           sale_unit_id: {},
           net_unit_price: {},
           discount: {},

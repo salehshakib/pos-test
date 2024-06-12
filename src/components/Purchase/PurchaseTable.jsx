@@ -27,7 +27,7 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllPurchaseQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -70,21 +70,54 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const dataSource =
-    data?.results?.sale?.map((item) => {
-      const { id, created_at, is_active } = item ?? {};
+    data?.results?.purchase?.map((item) => {
+      const {
+        id,
+        created_at,
+        reference_id,
+        suppliers,
+        purchase_status,
+        payment_status,
+        grand_total,
+        paid_amount,
+        due_amount,
+        is_active,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-
-        created_at: date,
-
+        date,
+        reference: reference_id,
+        supplier: suppliers?.name,
+        purchaseStatus: purchase_status,
+        paymentStatus: payment_status,
+        grandTotal: grand_total,
+        paid: paid_amount,
+        due: due_amount,
         status: is_active,
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
       };
     }) ?? [];
+
+  // const dataSource =
+  //   data?.results?.purchase?.map((item) => {
+  //     const { id, created_at, is_active } = item ?? {};
+  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+
+  //     return {
+  //       id,
+
+  //       created_at: date,
+
+  //       status: is_active,
+  //       handleStatusModal,
+  //       handleEdit,
+  //       handleDeleteModal,
+  //     };
+  //   }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
@@ -100,6 +133,7 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        created_at={false}
       />
 
       <PurchaseEdit id={editId} setId={setEditId} />

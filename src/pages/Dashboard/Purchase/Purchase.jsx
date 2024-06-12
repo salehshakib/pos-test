@@ -8,6 +8,7 @@ const columns = [
     title: "Date",
     dataIndex: "date",
     key: "date",
+    align: "center",
     render: (date) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {date}
@@ -18,6 +19,8 @@ const columns = [
     title: "Reference",
     dataIndex: "reference",
     key: "reference",
+    align: "center",
+
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}
@@ -39,6 +42,8 @@ const columns = [
     title: "Purchase Status",
     dataIndex: "purchaseStatus",
     key: "purchaseStatus",
+    align: "center",
+
     render: (purchaseStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {purchaseStatus}
@@ -49,6 +54,8 @@ const columns = [
     title: "Payment Status",
     dataIndex: "paymentStatus",
     key: "paymentStatus",
+    align: "center",
+
     render: (paymentStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {paymentStatus}
@@ -82,16 +89,6 @@ const columns = [
     render: (due) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {due}
-      </span>
-    ),
-  },
-  {
-    title: "Returned Amount",
-    dataIndex: "returnedAmount",
-    key: "returnedAmount",
-    render: (returnedAmount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {returnedAmount}
       </span>
     ),
   },

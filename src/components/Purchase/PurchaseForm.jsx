@@ -46,22 +46,23 @@ const PurchaseStatus = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("purchase_status", "Pending");
+    form.setFieldValue("purchase_status", "Received");
   }, [form]);
 
   const options = [
     {
-      value: "Pending",
-      label: "Pending",
-    },
-    {
-      value: "Due",
-      label: "Due",
+      value: "Received",
+      label: "Received",
     },
     {
       value: "Partial",
       label: "Partial",
     },
+    {
+      value: "Pending",
+      label: "Pending",
+    },
+
     {
       value: "Ordered",
       label: "Ordered",

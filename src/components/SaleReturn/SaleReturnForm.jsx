@@ -87,6 +87,10 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       <ReturnProductTable {...props} />
 
       <Col {...colLayout}>
+        <TaxComponent />
+      </Col>
+
+      <Col {...colLayout}>
         <CustomDatepicker
           label="Return Date"
           required={true}
@@ -94,9 +98,6 @@ const ReturnComponent = ({ reference_id, ...props }) => {
         />
       </Col>
 
-      <Col {...colLayout}>
-        <TaxComponent />
-      </Col>
       <Col {...colLayout}>
         <PaymentType form={props.form} />
       </Col>
@@ -113,25 +114,6 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       </Col>
     </Row>
   );
-};
-
-const updateProductList = (deleteValue, product_list) => {
-  // Extract IDs to keep from the values.deleteValue object where the value is true
-  const idsToKeep = Object.keys(deleteValue).filter((key) => deleteValue[key]);
-
-  // Create a new product list keeping only the entries for the IDs to keep
-  const updatedProductList = {};
-
-  Object.keys(product_list).forEach((key) => {
-    updatedProductList[key] = {};
-    idsToKeep.forEach((id) => {
-      if (product_list[key][id] !== undefined) {
-        updatedProductList[key][id] = product_list[key][id];
-      }
-    });
-  });
-
-  return updatedProductList;
 };
 
 const SaleReturnForm = ({
@@ -203,10 +185,7 @@ const SaleReturnForm = ({
                 ...prevFormValues.product_list.tax_id,
                 [item.product_id.toString()]: item.products?.tax_id.toString(),
               },
-              sale_id: {
-                ...prevFormValues.product_list.sale_id,
-                [item.product_id.toString()]: item.sale_id?.toString(),
-              },
+
               max_return: {
                 ...prevFormValues.product_list.max_return,
                 [item.product_id.toString()]: item.qty?.toString(),

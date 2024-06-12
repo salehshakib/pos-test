@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
@@ -137,6 +136,70 @@ const columns = [
   },
 ];
 
+function setFormValuesId(
+  id,
+  purchase_unit_id,
+  unit_cost,
+  purchase_units,
+  formValues,
+  productUnits,
+  tax_id,
+  // eslint-disable-next-line no-unused-vars
+  taxes
+) {
+  if (id) {
+    formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
+
+    formValues.product_list.net_unit_price[id] =
+      formValues.product_list.net_unit_price[id] ?? unit_cost ?? "0";
+
+    formValues.product_list.discount[id] =
+      formValues.product_list.discount[id] ?? 0;
+
+    formValues.product_list.tax[id] = parseFloat(
+      (
+        (parseInt(productUnits.purchase_units?.[id] ?? 1) *
+          parseInt(formValues.product_list.tax_rate[id]) *
+          parseInt(formValues.product_list.net_unit_price[id]) *
+          parseInt(formValues.product_list.qty[id])) /
+        100
+      ).toFixed(2)
+    );
+
+    // console.log(purchase_units);
+    // console.log(productUnits);
+
+    // console.log(formValues.product_list);
+
+    formValues.product_list.tax_rate[id] =
+      formValues.product_list.tax_rate[id] ?? 0;
+
+    const saleUnitsOperationValue = purchase_units
+      ? purchase_units?.operation_value !== null
+        ? purchase_units?.operation_value
+        : 1
+      : 1;
+
+    productUnits.purchase_units[id] =
+      productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
+
+    formValues.product_list.total[id] =
+      productUnits.purchase_units[id] *
+        parseInt(formValues.product_list.net_unit_price[id] ?? 0) *
+        formValues.product_list.qty[id] -
+      formValues.product_list.discount[id] +
+      formValues.product_list.tax[id];
+
+    formValues.product_list.purchase_unit_id[id] =
+      formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
+
+    if (formValues?.product_list?.tax_id) {
+      formValues.product_list.tax_id[id] =
+        formValues.product_list?.tax_id?.[id] ?? tax_id;
+    }
+  }
+}
+
 export const ReturnProductTable = ({
   formValues,
   setFormValues,
@@ -236,16 +299,16 @@ export const ReturnProductTable = ({
       name,
       sku,
       buying_price: unit_cost,
-      sale_unit_id,
-      sale_units,
+      purchase_unit_id,
+      purchase_units,
       taxes,
     } = product ?? {};
 
     setFormValuesId(
       id,
-      sale_unit_id,
+      purchase_unit_id,
       unit_cost,
-      sale_units,
+      purchase_units,
       formValues,
       productUnits,
       taxes

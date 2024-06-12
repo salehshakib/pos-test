@@ -9,3 +9,4 @@ export const STOCK_COUNT = "inventory/stock-count";
 export const PURCHASE = "inventory/purchase";
 export const SALE = "inventory/sale";
 export const SALE_RETURN = "inventory/sale-return";
+export const PURCHASE_RETURN = "inventory/purchase-return";

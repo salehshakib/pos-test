@@ -13,7 +13,6 @@ import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-  transformQuotationProducts,
 } from "../../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "../Quotation/QuotationForm";
@@ -47,29 +46,135 @@ const InvoiceEdit = ({ id }) => {
       tax_rate: {},
       tax: {},
       total: {},
+
+      tax_id: {},
     },
   });
 
+  const [products, setProducts] = useState([]);
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
+  });
+
   useEffect(() => {
-    if (data) {
+    if (!isEditDrawerOpen) {
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProducts([]);
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [isEditDrawerOpen]);
+
+  useEffect(() => {
+    if (data && isEditDrawerOpen) {
+      data?.invoice_products?.forEach((item) => {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          product_list: {
+            ...prevFormValues.product_list,
+            qty: {
+              ...prevFormValues.product_list.qty,
+              [item?.product_id.toString()]: item?.qty,
+            },
+            sale_unit_id: {
+              ...prevFormValues.product_list.sale_unit_id,
+              [item?.product_id.toString()]: item?.sale_unit_id,
+            },
+            net_unit_price: {
+              ...prevFormValues.product_list.net_unit_price,
+              [item?.product_id.toString()]: item?.net_unit_price,
+            },
+            discount: {
+              ...prevFormValues.product_list.discount,
+              [item?.product_id.toString()]: item?.discount,
+            },
+            tax_rate: {
+              ...prevFormValues.product_list.tax_rate,
+              [item?.product_id.toString()]: item?.tax_rate,
+            },
+            tax: {
+              ...prevFormValues.product_list.tax,
+              [item?.product_id.toString()]: item?.tax,
+            },
+            total: {
+              ...prevFormValues.product_list.total,
+              [item?.product_id.toString()]: item?.total,
+            },
+          },
+        }));
+
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            id: item?.product_id,
+            sku: item?.products?.sku,
+            name: item?.products?.name,
+            sale_unit_id: item?.sale_unit_id,
+            tax_id: item?.products?.tax_id,
+            taxes: item?.products?.taxes,
+            sale_units: item?.products?.sale_units,
+            buying_price: item?.products?.buying_price,
+          },
+        ]);
+
+        setProductUnits((prevProductUnits) => ({
+          ...prevProductUnits,
+
+          sale_units: {
+            ...prevProductUnits.sale_units,
+            [item?.product_id.toString()]: item?.products?.sale_unit_id,
+          },
+        }));
+      });
+
       const fieldData = fieldsToUpdate(data);
 
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        product_list: transformQuotationProducts(data?.quotation_products),
-      }));
+      const newFieldData = [
+        ...fieldData,
+        {
+          name: "warehouse_id",
+          value: data?.warehouse_id?.toString(),
+          errors: "",
+        },
+        {
+          name: "cashier_id",
+          value: data?.cashier_id?.toString(),
+          errors: "",
+        },
+        {
+          name: "supplier_id",
+          value: data?.supplier_id?.toString(),
+          errors: "",
+        },
+        {
+          name: "customer_id",
+          value: data?.customer_id?.toString(),
+          errors: "",
+        },
+      ];
 
-      setFields(fieldData);
+      setFields(newFieldData);
     }
-  }, [data, setFields]);
-
-  console.log(formValues);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    const { product_list } = formValues ?? {};
-
+    const { product_list } = formValues;
     const { attachment, discount, shipping_cost, tax_rate } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -92,21 +197,19 @@ const InvoiceEdit = ({ id }) => {
 
     const totalQty =
       Object.values(formValues.product_list?.qty).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
     const totalDiscount =
       Object.values(formValues.product_list?.discount).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
-    console.log(formValues.product_list);
-
     const totalTax =
       Object.values(formValues.product_list?.tax).reduce(
-        (acc, cur) => acc + cur,
+        (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
 
@@ -121,6 +224,7 @@ const InvoiceEdit = ({ id }) => {
       total_tax: Number(totalTax).toFixed(2),
       total_price: Number(totalPrice).toFixed(2),
       tax: Number(orderTax).toFixed(2),
+
       grand_total: calculateGrandTotal(
         totalPrice,
         orderTax,
@@ -128,11 +232,10 @@ const InvoiceEdit = ({ id }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
-
       _method: "PUT",
     };
 
-    if (attachment) {
+    if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
     }
 
@@ -145,6 +248,23 @@ const InvoiceEdit = ({ id }) => {
 
     if (data?.success) {
       dispatch(closeEditDrawer());
+
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+        },
+      });
+      setProducts([]);
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
     }
 
     if (error) {
@@ -154,12 +274,13 @@ const InvoiceEdit = ({ id }) => {
     }
   };
 
-  const [products, setProducts] = useState([]);
+  if (!id) return;
   return (
     <CustomDrawer
       title={"Edit Invoice"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
+      width={1400}
     >
       <QuotationForm
         handleSubmit={handleUpdate}
@@ -170,6 +291,8 @@ const InvoiceEdit = ({ id }) => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

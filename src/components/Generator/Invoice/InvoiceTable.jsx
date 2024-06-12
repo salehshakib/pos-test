@@ -124,6 +124,8 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
+        created_at={false}
       />
 
       <InvoiceEdit id={editId} />
@@ -135,13 +137,6 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
           hideModal={hideModal}
         />
       )}
-
-      {/* <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

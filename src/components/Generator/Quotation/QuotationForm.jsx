@@ -101,6 +101,9 @@ export const QuotationForm = ({
       <CustomForm {...props}>
         <Row {...rowLayout}>
           <Col {...largeLayout}>
+            <WarehouseComponent />
+          </Col>
+          <Col {...largeLayout}>
             <CashierComponent />
           </Col>
           <Col {...largeLayout}>
@@ -108,9 +111,6 @@ export const QuotationForm = ({
           </Col>
           <Col {...largeLayout}>
             <CustomerComponent />
-          </Col>
-          <Col {...largeLayout}>
-            <WarehouseComponent />
           </Col>
 
           <QuotationProductTable

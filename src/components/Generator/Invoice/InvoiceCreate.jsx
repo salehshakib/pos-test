@@ -30,14 +30,20 @@ const InvoiceCreate = () => {
       tax_rate: {},
       tax: {},
       total: {},
+
+      tax_id: {},
     },
+  });
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
   });
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
-
     const { attachment, discount, shipping_cost, tax_rate } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -70,8 +76,6 @@ const InvoiceCreate = () => {
         0
       ) ?? 0;
 
-    console.log(formValues.product_list);
-
     const totalTax =
       Object.values(formValues.product_list?.tax).reduce(
         (acc, cur) => acc + cur,
@@ -96,11 +100,13 @@ const InvoiceCreate = () => {
         discount,
         shipping_cost
       ),
-      attachment: attachment?.[0].originFileObj,
+      // attachment: attachment?.[0].originFileObj,
       product_list: JSON.stringify(productListArray),
     };
 
-    console.log(postObj);
+    if (attachment?.[0].originFileObj) {
+      postObj.attachment = attachment?.[0].originFileObj;
+    }
 
     appendToFormData(postObj, formData);
 
@@ -125,7 +131,7 @@ const InvoiceCreate = () => {
     <CustomDrawer
       title={"Create Invoice"}
       open={isCreateDrawerOpen}
-      form={form}
+      width={1400}
     >
       <QuotationForm
         handleSubmit={handleSubmit}
@@ -136,6 +142,8 @@ const InvoiceCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

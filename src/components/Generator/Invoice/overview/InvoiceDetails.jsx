@@ -5,7 +5,16 @@ import { CustomDescription } from "../../../Shared/Description/CustomDescription
 import CustomModal from "../../../Shared/Modal/CustomModal";
 
 export const InvoiceDetails = ({ id, ...props }) => {
-  const { data, isFetching } = useGetInvoiceDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetInvoiceDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !id }
+  );
 
   const details = createDetailsLayout(data);
 

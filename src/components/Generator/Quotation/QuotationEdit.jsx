@@ -142,7 +142,31 @@ const QuotationEdit = ({ id }) => {
 
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const newFieldData = [
+        ...fieldData,
+        {
+          name: "warehouse_id",
+          value: data?.warehouse_id.toString(),
+          errors: "",
+        },
+        {
+          name: "cashier_id",
+          value: data?.cashier_id.toString(),
+          errors: "",
+        },
+        {
+          name: "supplier_id",
+          value: data?.supplier_id.toString(),
+          errors: "",
+        },
+        {
+          name: "customer_id",
+          value: data?.customer_id.toString(),
+          errors: "",
+        },
+      ];
+
+      setFields(newFieldData);
     }
   }, [data, setFields, isEditDrawerOpen]);
 

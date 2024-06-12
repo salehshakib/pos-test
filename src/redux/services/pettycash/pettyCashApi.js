@@ -1,6 +1,6 @@
 // Import necessary dependencies
 import { PETTY_CASH } from "../../../utilities/apiEndpoints/account.api";
-import { openNotification } from "../../../utilities/lib/notification";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -19,16 +19,16 @@ const pettyCashApi = baseApi.injectEndpoints({
       ],
     }),
 
-    getPettyCashDetails: build.query({
-      query: ({ id }) => {
-        return {
-          url: `${PETTY_CASH}/show/${id}`,
-          method: "GET",
-        };
-      },
-      transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: PETTY_CASH, id }],
-    }),
+    // getPettyCashDetails: build.query({
+    //   query: ({ id }) => {
+    //     return {
+    //       url: `${PETTY_CASH}/show/${id}`,
+    //       method: "GET",
+    //     };
+    //   },
+    //   transformResponse: (response) => verifyToken(response.data),
+    //   providesTags: (result, error, { id }) => [{ type: PETTY_CASH, id }],
+    // }),
 
     createPettyCash: build.mutation({
       query: ({ data }) => {
@@ -50,47 +50,47 @@ const pettyCashApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      invalidatesTags: (result) => {
-        return result ? [PETTY_CASH] : [];
-      },
+      // invalidatesTags: (result) => {
+      //   return result ? [PETTY_CASH] : [];
+      // },
     }),
 
-    updatePettyCash: build.mutation({
-      query: ({ id, data }) => {
-        return {
-          url: `/${PETTY_CASH}/update/${id}`,
-          method: "POST",
-          body: data,
-        };
-      },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification("success", response?.message);
-          return response;
-        }
-      },
-      invalidatesTags: (result) => {
-        return result ? [PETTY_CASH] : [];
-      },
-    }),
+    // updatePettyCash: build.mutation({
+    //   query: ({ id, data }) => {
+    //     return {
+    //       url: `/${PETTY_CASH}/update/${id}`,
+    //       method: "POST",
+    //       body: data,
+    //     };
+    //   },
+    //   transformResponse: (response) => {
+    //     if (response?.success) {
+    //       openNotification("success", response?.message);
+    //       return response;
+    //     }
+    //   },
+    //   invalidatesTags: (result) => {
+    //     return result ? [PETTY_CASH] : [];
+    //   },
+    // }),
 
-    updatePettyCashStatus: build.mutation({
-      query: (id) => {
-        return {
-          url: `/${PETTY_CASH}/status/${id}`,
-          method: "POST",
-        };
-      },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification("success", response?.message);
-          return response;
-        }
-      },
-      invalidatesTags: (result) => {
-        return result ? [PETTY_CASH] : [];
-      },
-    }),
+    // updatePettyCashStatus: build.mutation({
+    //   query: (id) => {
+    //     return {
+    //       url: `/${PETTY_CASH}/status/${id}`,
+    //       method: "POST",
+    //     };
+    //   },
+    //   transformResponse: (response) => {
+    //     if (response?.success) {
+    //       openNotification("success", response?.message);
+    //       return response;
+    //     }
+    //   },
+    //   invalidatesTags: (result) => {
+    //     return result ? [PETTY_CASH] : [];
+    //   },
+    // }),
 
     deletePettyCash: build.mutation({
       query: (id) => {
@@ -132,10 +132,10 @@ const pettyCashApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllPettyCashQuery,
-  useGetPettyCashDetailsQuery,
-  useCreatePettyCashMutation,
-  useUpdatePettyCashMutation,
-  useUpdatePettyCashStatusMutation,
+  // useGetPettyCashDetailsQuery,
+  // useUpdatePettyCashMutation,
+  // useUpdatePettyCashStatusMutation,
   useDeletePettyCashMutation,
+  useCreatePettyCashMutation,
   useCheckPettyCashQuery,
 } = pettyCashApi;

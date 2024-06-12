@@ -1,4 +1,4 @@
-import { Card, Divider, Skeleton, Spin } from "antd";
+import { App, Card, Divider, Skeleton, Spin, Tooltip } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
@@ -6,7 +6,9 @@ import { GlobalUtilityStyle } from "../../../container/Styled";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 const { Meta } = Card;
 
-const PosProducts = () => {
+const PosProducts = ({ setProducts }) => {
+  const { message } = App.useApp();
+
   const [pagination, setPagination] = useState({
     page: 1,
     perPage: 13,
@@ -17,6 +19,17 @@ const PosProducts = () => {
     params: {
       ...pagination,
       attachmentable: 1,
+      selectValue: [
+        "id",
+        "sku",
+        "name",
+        "buying_price",
+        "tax_id",
+        "sale_unit_id",
+        "purchase_unit_id",
+      ],
+      // child: 1,
+      parent: 1,
     },
   });
 
@@ -51,10 +64,26 @@ const PosProducts = () => {
     );
   }
 
+  const onSelect = (selectedProduct) => {
+    setProducts((prevProducts) => {
+      const productExists = prevProducts.some((product) => {
+        return product?.id === selectedProduct?.product?.id;
+      });
+
+      if (!productExists) {
+        return [...prevProducts, selectedProduct.product];
+      }
+
+      message.warning("Product already exists in the list");
+      return prevProducts;
+    });
+    // setValue(null);
+  };
+
   return (
     <GlobalUtilityStyle className="p-3 pb-0 flex flex-col h-full overflow-auto">
       <div className="grow">
-        <div className="overflow-auto h-[calc(100vh-16.5rem)]" id="scrollable">
+        <div className="overflow-auto " id="scrollable">
           <InfiniteScroll
             dataLength={newData?.length}
             next={loadMoreData}
@@ -71,7 +100,7 @@ const PosProducts = () => {
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-1">
               {products &&
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);
@@ -80,7 +109,7 @@ const PosProducts = () => {
                     <Card
                       bordered
                       hoverable
-                      className="border-secondary-hover          "
+                      className="border-secondary-hover"
                       style={{
                         backgroundColor: "white",
                         // height: "100px",
@@ -90,7 +119,7 @@ const PosProducts = () => {
                         <div className="w-full">
                           <img
                             alt="example"
-                            className="h-[6rem] mx-auto object-cover px-4 "
+                            className="h-[4rem] mx-auto object-cover "
                             src={
                               // images?.attach_file?.[0]?.url ??
                               // images?.attachments?.[0]?.url ??
@@ -99,10 +128,19 @@ const PosProducts = () => {
                           />
                         </div>
                       }
+                      onClick={() => onSelect({ product })}
                     >
                       <Meta
                         className="text-center"
-                        title={product.name}
+                        title={
+                          <Tooltip
+                            title={product.name}
+                            showArrow={false}
+                            placement="top"
+                          >
+                            {product.name}
+                          </Tooltip>
+                        }
                         description={product.sku}
                       />
                     </Card>

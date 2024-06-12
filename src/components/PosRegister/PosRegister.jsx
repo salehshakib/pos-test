@@ -1,18 +1,17 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { AutoComplete, Col, Form, Row, Tooltip } from "antd";
+import { Button, Col, Form, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
-import { FaPlus, FaSearch } from "react-icons/fa";
-import { useDebouncedCallback } from "use-debounce";
+import { FaPlus, FaRegEdit } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../container/Styled";
 
 import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
 import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
-import { useGetAllProductsQuery } from "../../redux/services/product/productApi";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomerCreate from "../Customer/CustomerCreate";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomInput from "../Shared/Input/CustomInput";
+import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduct";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
@@ -189,58 +188,58 @@ const CurrencyExchangeComponent = () => {
   );
 };
 
-const SearchProductComponent = () => {
-  const [keyword, setKeyword] = useState(null);
-  const [value, setValue] = useState(null);
+// const SearchProductComponent = () => {
+//   const [keyword, setKeyword] = useState(null);
+//   const [value, setValue] = useState(null);
 
-  const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
-      setKeyword(value);
-    }
-  }, 1000);
+//   const debounce = useDebouncedCallback(async (value) => {
+//     if (value.trim() !== "") {
+//       setKeyword(value);
+//     }
+//   }, 1000);
 
-  const { data } = useGetAllProductsQuery(
-    {
-      params: {
-        selectValue: ["id", "name", "sku", "buying_price"],
-        keyword,
-      },
-    },
-    {
-      skip: !keyword,
-    }
-  );
+//   const { data } = useGetAllProductsQuery(
+//     {
+//       params: {
+//         selectValue: ["id", "name", "sku", "buying_price"],
+//         keyword,
+//       },
+//     },
+//     {
+//       skip: !keyword,
+//     }
+//   );
 
-  const options =
-    data?.results?.product?.map((product) => ({
-      value: product.id.toString(),
-      label: product.name,
-    })) ?? [];
+//   const options =
+//     data?.results?.product?.map((product) => ({
+//       value: product.id.toString(),
+//       label: product.name,
+//     })) ?? [];
 
-  const onSelect = (value, option) => {
-    console.log(value, option);
-    setValue(null);
-  };
+//   const onSelect = (value, option) => {
+//     console.log(value, option);
+//     setValue(null);
+//   };
 
-  const onChange = (value) => {
-    setValue(value);
-  };
+//   const onChange = (value) => {
+//     setValue(value);
+//   };
 
-  return (
-    <AutoComplete
-      options={options}
-      className="mt-1 w-full"
-      size="large"
-      onSelect={onSelect}
-      onSearch={debounce}
-      value={value}
-      onChange={onChange}
-      placeholder="Search Product"
-      suffixIcon={<FaSearch />}
-      allowClear={true}
-    />
-  );
-};
+//   return (
+//     <AutoComplete
+//       options={options}
+//       className="mt-1 w-full"
+//       size="large"
+//       onSelect={onSelect}
+//       onSearch={debounce}
+//       value={value}
+//       onChange={onChange}
+//       placeholder="Search Product"
+//       suffixIcon={<FaSearch />}
+//       allowClear={true}
+//     />
+//   );
+// };
 
 const colLayout = {
   xs: 24,
@@ -248,13 +247,9 @@ const colLayout = {
   xl: 8,
 };
 
-const fullColLayout = {
-  xs: 24,
-};
-
-const RegisterForm = () => {
+const RegisterForm = ({ products, setProducts }) => {
   return (
-    <GlobalUtilityStyle className="h-full">
+    <GlobalUtilityStyle className="pb-5">
       <div className="flex flex-col">
         <Row gutter={10}>
           <Col {...colLayout}>
@@ -287,17 +282,64 @@ const RegisterForm = () => {
               </Col>
             </Row>
           </Col>
-          <Col {...fullColLayout}>
-            <SearchProductComponent />
-          </Col>
+          <SearchProduct products={products} setProducts={setProducts} />
         </Row>
       </div>
     </GlobalUtilityStyle>
   );
 };
 
-export const PosRegister = () => {
+export const PosRegister = ({ products, setProducts }) => {
   const [form] = Form.useForm();
+
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      product_id: {},
+      qty: {},
+      sale_unit_id: {},
+      net_unit_price: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+
+      tax_id: {},
+    },
+  });
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rates: {},
+  });
+
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const total = Object.values(formValues.product_list.qty).reduce(
+      (acc, cur) => acc + parseInt(cur),
+      0
+    );
+    setTotalQuantity(total);
+
+    const totalPrice = Object.values(formValues.product_list.total).reduce(
+      (acc, cur) => acc + parseFloat(cur),
+      0
+    );
+    setTotalPrice(totalPrice?.toFixed(2));
+
+    // const totalTax = Object.values(formValues.product_list.tax).reduce(
+    //   (acc, cur) => acc + parseFloat(cur),
+    //   0
+    // );
+    // setTotalTax(totalTax.toFixed(2));
+
+    // const totalDiscount = Object.values(
+    //   formValues.product_list.discount
+    // ).reduce((acc, cur) => acc + parseFloat(cur), 0);
+
+    // setTotalDiscount(totalDiscount.toFixed(2));
+  }, [formValues, products]);
 
   return (
     <Form
@@ -305,14 +347,86 @@ export const PosRegister = () => {
       layout="vertical"
       autoComplete="on"
       scrollToFirstError
-      className="h-full"
+      className="h-[90vh]"
     >
-      <div className="p-4 flex flex-col gap-5 h-full">
-        <div>
-          <RegisterForm />
+      <div className="p-4 flex flex-col h-full">
+        <div className="flex-none">
+          <RegisterForm products={products} setProducts={setProducts} />
         </div>
-        <div className="grow">
-          <ProductTableComponent />
+
+        <div className="flex-grow overflow-y-auto bg-white">
+          <ProductTableComponent
+            products={products}
+            setProducts={setProducts}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            productUnits={productUnits}
+            setProductUnits={setProductUnits}
+          />
+        </div>
+
+        <div className="flex-none bg-white py-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
+          <hr />
+
+          <div className=" grid grid-cols-8 px-2">
+            <span className="text-md font-semibold col-span-6">Total</span>
+
+            <span className="text-md font-semibold">{totalQuantity}</span>
+            <span className="text-md font-semibold">{totalPrice}</span>
+          </div>
+
+          <hr />
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2">
+            <div className="grid grid-cols-2">
+              <span>Items</span>
+              <span>0</span>
+            </div>
+            <div className="grid grid-cols-2">
+              <span>Total</span>
+              <span>0</span>
+            </div>
+            <div className="grid grid-cols-2">
+              <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
+                Discount
+                <FaRegEdit className="primary-text" />
+              </span>
+              <span>0</span>
+            </div>
+            <div className="grid grid-cols-2">
+              <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
+                Coupon
+                <FaRegEdit className="primary-text" />
+              </span>
+              <span>0</span>
+            </div>
+            <div className="grid grid-cols-2">
+              <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline ">
+                Tax
+                <FaRegEdit className="primary-text" />
+              </span>
+              <span>0</span>
+            </div>
+            <div className="grid grid-cols-2">
+              <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
+                Shipping
+                <FaRegEdit className="primary-text" />
+              </span>
+              <span>0</span>
+            </div>
+          </div>
+
+          <div className="text-center secondary-bg primary-text text-lg py-1 font-semibold rounded-sm">
+            Grand Total
+          </div>
+
+          <Button
+            type="primary"
+            // icon={<MdOutlineCancel />}
+            onClick={() => form.resetFields()}
+            className=" flex justify-center items-center gap-2"
+          >
+            Reset
+          </Button>
         </div>
       </div>
     </Form>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pettyCash: {},
+  pettyCash: "Close",
 };
 
 const pettyCashSlice = createSlice({
@@ -10,10 +10,11 @@ const pettyCashSlice = createSlice({
   reducers: {
     setPettyCash: (state, action) => {
       const { data } = action.payload;
+
       state.pettyCash = data;
     },
     clearPettyCash: (state) => {
-      state.pettyCash = {};
+      state.pettyCash = "Close";
     },
   },
 });

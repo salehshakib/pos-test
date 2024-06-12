@@ -1,364 +1,536 @@
-import { useBreakpoint } from "@ant-design/pro-components";
-import { Button, Form } from "antd";
+import { Button, Col, Form, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
-import { FaMinus, FaPlus, FaRegEdit } from "react-icons/fa";
+import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { colLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import { useGetAllUnitQuery } from "../../redux/services/unit/unitApi";
+import { setFormValuesId } from "../../utilities/lib/updateFormValues/updateFormValues";
+import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomProductTable from "../Shared/Table/CustomProductTable";
 
-const ProductTableComponent = () => {
-  const form = Form.useFormInstance();
-
-  const screens = useBreakpoint();
-  const isMobile = screens === "xs" || screens === "sm" || screens === "md";
-
-  const isLg = screens === "lg";
-
-  const tableStyleProps = {
-    scroll: { y: isMobile ? "15vh" : isLg ? "28vh" : "40vh", x: 600 },
-  };
-
-  const [counters, setCounters] = useState({});
-
-  const incrementCounter = (id, stock = 5) => {
-    if (counters[id] >= stock) return;
-
-    if (counters[id] === undefined) {
-      setCounters((prevCounters) => ({
-        ...prevCounters,
-        [id]: 2,
-      }));
-      return;
-    }
-
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [id]: (prevCounters[id] || 0) + 1,
-    }));
-  };
-
-  const decrementCounter = (id) => {
-    if (counters[id] <= 0) return;
-
-    if (!counters[id]) {
-      setCounters((prevCounters) => ({
-        ...prevCounters,
-        [id]: 0,
-      }));
-      return;
-    }
-
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [id]: (prevCounters[id] || 0) - 1,
-    }));
-  };
-
-  // useEffect(()=> {
-  //   form.setFieldValue(['product_list', 'qty'], counters)
-  // }, [counters])
-
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      render: (id) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {id}
-        </span>
-      ),
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
-      render: (name) => (
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name, record) => (
+      <div
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
+        onClick={() => {
+          record?.handleProductEdit(record?.id, record?.name);
+        }}
+      >
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {name}
         </span>
-      ),
-    },
-    {
-      title: "SKU",
-      dataIndex: "sku",
-      key: "sku",
-      align: "center",
-      render: (sku) => (
+        {name !== "Total" && <FaEdit className="primary-text" />}
+      </div>
+    ),
+  },
+  {
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    width: 100,
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    title: "Unit Cost",
+    dataIndex: "unitCost",
+    key: "unitCost",
+    align: "center",
+    width: 100,
+    render: (unitCost) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {unitCost}
+      </span>
+    ),
+  },
+  {
+    title: "Quantity",
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+    width: 140,
+    render: (quantity, record) => {
+      return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {sku}
+          {quantity}
         </span>
-      ),
-    },
-    {
-      title: "Unit Cost",
-      dataIndex: "unitCost",
-      key: "unitCost",
-      align: "center",
-      render: (unitCost) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {unitCost}
-        </span>
-      ),
-    },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      align: "center",
-      width: 150,
-      render: (quantity, record) => {
-        return quantity >= 0 ? (
-          <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-            {quantity}
-          </span>
-        ) : (
-          <div className="flex gap-1 justify-center items-center">
-            <div>
-              <Button
-                key={"sub"}
-                icon={<FaMinus />}
-                type="primary"
-                onClick={() => decrementCounter(record?.id)}
-              />
-            </div>
-            <CustomInput
-              type={"number"}
-              name={["product_list", "qty", record?.id]}
-              placeholder="quantity"
-              noStyle={true}
+      ) : (
+        <div className="flex gap-1 justify-center items-center">
+          <div>
+            <Button
+              key={"sub"}
+              icon={<FaMinus />}
+              type="primary"
+              onClick={() => record.decrementCounter(record?.id)}
             />
-            <div>
-              <Button
-                key={"add"}
-                icon={<FaPlus />}
-                type="primary"
-                onClick={() => incrementCounter(record?.id)}
-                className=""
-              />
-            </div>
           </div>
-        );
-      },
+          <CustomQuantityInput
+            name={["product_list", "qty", record?.id]}
+            noStyle={true}
+            onChange={(value) => record.onQuantityChange(record.id, value)}
+          />
+          <div>
+            <Button
+              key={"add"}
+              icon={<FaPlus />}
+              type="primary"
+              onClick={() => record.incrementCounter(record?.id)}
+              className=""
+            />
+          </div>
+        </div>
+      );
     },
-    {
-      title: "Sub Total",
-      dataIndex: "subTotal",
-      key: "subTotal",
-      align: "center",
-      render: (subTotal) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {subTotal}
-        </span>
-      ),
+  },
+  {
+    title: "Sub Total",
+    dataIndex: "subTotal",
+    key: "subTotal",
+    align: "center",
+    width: 100,
+    render: (subTotal) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {subTotal}
+      </span>
+    ),
+  },
+  {
+    title: "",
+    dataIndex: "delete",
+    key: "delete",
+    align: "center",
+    width: 50,
+    fixed: "right",
+    render: (props, record) => {
+      return (
+        props && (
+          <div className="flex justify-center items-center gap-3">
+            <button
+              onClick={() => record.onDelete(record.id)}
+              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              type="button"
+            >
+              <MdDelete className="text-lg md:text-xl" />
+            </button>
+          </div>
+        )
+      );
     },
-    {
-      // title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-      dataIndex: "delete",
-      key: "delete",
-      align: "center",
-      width: 50,
-      fixed: "right",
-      render: (props, record) => {
-        const { setRowId } = props ?? {};
-        return (
-          props && (
-            <div className="flex justify-center items-center gap-3">
-              <button
-                onClick={() => setRowId(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-                type="button"
-              >
-                <MdDelete className="text-lg md:text-xl" />
-              </button>
-            </div>
-          )
-        );
-      },
-    },
-  ];
+  },
+];
 
-  const [dataSource, setDataSource] = useState([]);
+const TaxComponent = ({ productId, setProductUnits }) => {
+  const { data, isLoading } = useGetAllTaxQuery({});
 
-  const dummyData = [
-    {
-      key: "1",
-      name: "Product A",
-      sku: "A123",
-      unitCost: "$10.00",
-      subTotal: "$10.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 1,
-    },
-    {
-      key: "2",
-      name: "Product B",
-      sku: "B456",
-      unitCost: "$20.00",
-      subTotal: "$20.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 2,
-    },
-    {
-      key: "3",
-      name: "Product C",
-      sku: "C789",
-      unitCost: "$30.00",
-      subTotal: "$30.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 3,
-    },
-    {
-      key: "4",
-      name: "Product D",
-      sku: "D012",
-      unitCost: "$40.00",
-      subTotal: "$40.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 4,
-    },
-    {
-      key: "5",
-      name: "Product E",
-      sku: "E345",
-      unitCost: "$50.00",
-      subTotal: "$50.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 5,
-    },
-    {
-      key: "6",
-      name: "Product E",
-      sku: "E345",
-      unitCost: "$50.00",
-      subTotal: "$50.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 6,
-    },
-    {
-      key: "7",
-      name: "Product E",
-      sku: "E345",
-      unitCost: "$50.00",
-      subTotal: "$50.00",
-      delete: {
-        setRowId: (id) => console.log(`Deleting row with id: ${id}`),
-      },
-      id: 7,
-    },
-  ];
+  const options = data?.results?.tax?.map((tax) => ({
+    value: tax.id?.toString(),
+    label: tax.name,
+    rate: tax.rate,
+  }));
 
-  useEffect(() => {
-    setDataSource(
-      dummyData.map((item) => {
-        return {
-          ...item,
-          quantity: form.setFieldValue(
-            ["product_list", "qty", item.id],
-            counters[item.id] ?? 1
-          ),
-        };
-      }) ?? []
-    );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counters, form]);
-
-  // useEffect(() => {
-  //   setDataSource((prevDataSource) =>
-  //     prevDataSource.map((item) => ({
-  //       ...item,
-  //       quantity: form.setFieldValue(
-  //         ["product_list", "qty", item.id],
-  //         counters[item.id]
-  //       ),
-  //     }))
-  //   );
-  // }, [counters, form]);
+  const onSelect = (value, option) => {
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        tax_rate: {
+          [productId]: option.rate ?? 0,
+        },
+      };
+    });
+  };
 
   return (
-    <GlobalUtilityStyle className="h-full">
-      <div
-        className="border p-2 bg-white rounded-lg shadow-md h-full
-      overflow-hidden flex flex-col gap-2"
-      >
-        <div className="flex-grow">
-          <CustomProductTable
-            columns={columns}
-            dataSource={dataSource}
-            showPaging={false}
-            tableStyleProps={tableStyleProps}
-          />
-        </div>
+    <CustomSelect
+      name={["tax_id", productId]}
+      options={options}
+      label="Product Tax"
+      isLoading={isLoading}
+      onSelect={onSelect}
+    />
+  );
+};
 
-        <hr />
-        <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2">
-          <div className="grid grid-cols-2">
-            <span>Items</span>
-            <span>0</span>
-          </div>
-          <div className="grid grid-cols-2">
-            <span>Total</span>
-            <span>0</span>
-          </div>
-          <div className="grid grid-cols-2">
-            <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
-              Discount
-              <FaRegEdit className="primary-text" />
-            </span>
-            <span>0</span>
-          </div>
-          <div className="grid grid-cols-2">
-            <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
-              Coupon
-              <FaRegEdit className="primary-text" />
-            </span>
-            <span>0</span>
-          </div>
-          <div className="grid grid-cols-2">
-            <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline ">
-              Tax
-              <FaRegEdit className="primary-text" />
-            </span>
-            <span>0</span>
-          </div>
-          <div className="grid grid-cols-2">
-            <span className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline">
-              Shipping
-              <FaRegEdit className="primary-text" />
-            </span>
-            <span>0</span>
-          </div>
-        </div>
+const ProductUnitComponent = ({ setProductUnits, productId }) => {
+  const { data, isLoading } = useGetAllUnitQuery({});
 
-        <div className="text-center secondary-bg primary-text text-lg lg:text-xl py-1 lg:py-3 font-semibold rounded-sm">
-          Grand Total
-        </div>
+  const productUnits = data?.results?.unit
+    ?.filter((unit) => unit.for === "sale-unit")
+    .map((unit) => ({
+      value: unit.id.toString(),
+      label: unit.name,
+      operationValue: unit.operation_value,
+    }));
 
-        <Button
-          type="primary"
-          // icon={<MdOutlineCancel />}
-          onClick={() => form.resetFields()}
-          className=" flex justify-center items-center gap-2"
-        >
-          Reset
-        </Button>
+  const onSelect = (value, option) => {
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        sale_units: {
+          [productId]: option.operationValue ?? 1,
+        },
+      };
+    });
+  };
+
+  return (
+    <CustomSelect
+      label="Sale Unit"
+      options={productUnits}
+      isLoading={isLoading}
+      name={["sale_unit_id", productId]}
+      onSelect={onSelect}
+    />
+  );
+};
+
+const ProductFormComponent = ({
+  productId,
+  productName,
+  productEditModal,
+  hideModal,
+  formValues,
+  setFormValues,
+  productUnits,
+  setProductUnits,
+}) => {
+  const [productForm] = Form.useForm();
+
+  useEffect(() => {
+    if (productId) {
+      productForm.setFieldsValue({
+        quantity: formValues?.product_list?.qty[productId],
+        unit_discount: formValues?.product_list?.discount[productId],
+        unit_price: formValues?.product_list?.net_unit_price[productId],
+        sale_unit_id: {
+          [productId]:
+            formValues?.product_list?.sale_unit_id[productId]?.toString() ?? "",
+        },
+        tax_id: {
+          [productId]:
+            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formValues, productForm, productId]);
+
+  const handleSubmit = () => {
+    setFormValues((prevFormValues) => {
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [productId]: productForm.getFieldValue("quantity"),
+          },
+          sale_unit_id: {
+            ...prevFormValues.product_list.sale_unit_id,
+            [productId]: productForm.getFieldValue(["sale_unit_id", productId]),
+          },
+          discount: {
+            ...prevFormValues.product_list.discount,
+            [productId]: productForm.getFieldValue("unit_discount"),
+          },
+          net_unit_price: {
+            ...prevFormValues.product_list.net_unit_price,
+            [productId]: productForm.getFieldValue("unit_price"),
+          },
+          tax_rate: {
+            ...prevFormValues.product_list.tax_rate,
+            [productId]: productUnits?.tax_rate[productId],
+          },
+          tax: {
+            ...prevFormValues.product_list.tax,
+            [productId]: parseFloat(
+              (parseInt(productUnits.sale_units[productId]) *
+                parseInt(productUnits.tax_rate[productId]) *
+                parseInt(productForm.getFieldValue("quantity")) *
+                parseInt(productForm.getFieldValue("unit_price"))) /
+                100
+            ).toFixed(2),
+          },
+          tax_id: {
+            ...prevFormValues.product_list.tax_id,
+            [productId]: productForm.getFieldValue(["tax_id", productId]),
+          },
+        },
+      };
+    });
+
+    hideModal();
+  };
+
+  return (
+    <Modal
+      title={productName}
+      open={productEditModal}
+      onCancel={hideModal}
+      centered
+      width={800}
+      okText="Update"
+      onOk={handleSubmit}
+    >
+      <CustomForm submitBtn={false} form={productForm}>
+        <Row {...rowLayout}>
+          <Col {...colLayout}>
+            <CustomInput
+              label="Quantity"
+              type={"number"}
+              name={"quantity"}
+              placeholder={"Enter product name"}
+            />
+          </Col>
+          <Col {...colLayout}>
+            <CustomInput
+              label="Unit Price"
+              type={"number"}
+              name={"unit_price"}
+            />
+          </Col>
+          <Col {...colLayout}>
+            <ProductUnitComponent
+              setProductUnits={setProductUnits}
+              productId={productId}
+            />
+          </Col>
+          <Col {...mdColLayout}>
+            <CustomInput
+              label="Unit Discount"
+              type={"number"}
+              name={"unit_discount"}
+            />
+          </Col>
+
+          <Col {...mdColLayout}>
+            <TaxComponent
+              productId={productId}
+              setProductUnits={setProductUnits}
+            />
+          </Col>
+        </Row>
+      </CustomForm>
+    </Modal>
+  );
+};
+
+const ProductTableComponent = ({
+  products,
+  setProducts,
+  formValues,
+  setFormValues,
+  productUnits,
+  setProductUnits,
+}) => {
+  const form = Form.useFormInstance();
+
+  const incrementCounter = (id) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = parseInt(currentQty) + 1;
+
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const decrementCounter = (id) => {
+    setFormValues((prevFormValues) => {
+      const currentQty = prevFormValues.product_list.qty[id] || 1;
+      const newQty = Math.min(parseInt(currentQty) - 1, 0);
+
+      return {
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: newQty,
+          },
+        },
+      };
+    });
+  };
+
+  const onQuantityChange = (id, value) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        qty: {
+          ...prevFormValues.product_list.qty,
+          [id]: parseInt(value, 10) || 0,
+        },
+      },
+    }));
+  };
+
+  const onDelete = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+
+    setFormValues((prevFormValues) => {
+      const { product_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+      };
+    });
+  };
+
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
+
+  const handleProductEdit = (id, name) => {
+    setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
+  };
+
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
+
+  const dataSource = products?.map((product) => {
+    const {
+      id,
+      name,
+      sku,
+      buying_price: unit_cost,
+      sale_unit_id,
+      sale_units,
+      tax_id,
+      taxes,
+    } = product ?? {};
+
+    setFormValuesId(
+      id,
+      sale_unit_id,
+      unit_cost,
+      sale_units,
+      formValues,
+      productUnits,
+      tax_id,
+      taxes
+    );
+
+    return {
+      id,
+      name,
+      sku,
+      unitCost: formValues.product_list.net_unit_price[id],
+      delete: true,
+      discount: formValues.product_list.discount[id],
+      tax: formValues.product_list.tax[id],
+      subTotal: formValues.product_list.total[id],
+      incrementCounter,
+      decrementCounter,
+      onQuantityChange,
+      onDelete,
+      handleProductEdit,
+    };
+  });
+
+  // const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
+  // // const [totalTax, setTotalTax] = useState(0);
+  // // const [totalDiscount, setTotalDiscount] = useState(0);
+
+  // useEffect(() => {
+  //   const total = Object.values(formValues.product_list.qty).reduce(
+  //     (acc, cur) => acc + parseInt(cur),
+  //     0
+  //   );
+  //   setTotalQuantity(total);
+
+  //   const totalPrice = Object.values(formValues.product_list.total).reduce(
+  //     (acc, cur) => acc + parseFloat(cur),
+  //     0
+  //   );
+  //   setTotalPrice(totalPrice?.toFixed(2));
+
+  //   // const totalTax = Object.values(formValues.product_list.tax).reduce(
+  //   //   (acc, cur) => acc + parseFloat(cur),
+  //   //   0
+  //   // );
+  //   // setTotalTax(totalTax.toFixed(2));
+
+  //   // const totalDiscount = Object.values(
+  //   //   formValues.product_list.discount
+  //   // ).reduce((acc, cur) => acc + parseFloat(cur), 0);
+
+  //   // setTotalDiscount(totalDiscount.toFixed(2));
+  // }, [formValues, products]);
+
+  // products.length > 0 &&
+  //   dataSource.push({
+  //     id: "",
+  //     name: "Total",
+  //     quantity: totalQuantity,
+  //     subTotal: totalPrice,
+  //     // tax: totalTax,
+  //     // discount: totalDiscount,
+  //     action: false,
+  //   });
+
+  form.setFieldsValue(formValues);
+
+  return (
+    <GlobalUtilityStyle className="">
+      <div className="flex-grow px-2">
+        <CustomProductTable
+          columns={columns}
+          dataSource={dataSource}
+          showPaging={false}
+        />
       </div>
+
+      <ProductFormComponent
+        productEditModal={productEditModal}
+        productId={productId}
+        productName={productName}
+        hideModal={hideModal}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
+      />
     </GlobalUtilityStyle>
   );
 };

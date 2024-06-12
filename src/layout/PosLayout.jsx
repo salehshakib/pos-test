@@ -1,6 +1,7 @@
-import { App, Button, Layout, Spin } from "antd";
+import { Button, Layout, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
@@ -9,56 +10,35 @@ import PosFilterComponent from "../components/PosRegister/PosFilterComponent";
 import { PosRegister } from "../components/PosRegister/PosRegister";
 import { GlobalUtilityStyle } from "../container/Styled";
 import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
-import { useCheckPettyCashQuery } from "../redux/services/pettycash/pettyCashApi";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 
 const { Footer } = Layout;
 
 const PosLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const { message } = App.useApp();
-
   const navigate = useNavigate();
+  const { pettyCash } = useSelector((state) => state.pettyCash);
+  const [collapsed, setCollapsed] = useState(false);
 
-  const warehouseId = "4";
-
-  const { data, isFetching } = useCheckPettyCashQuery(
-    {
-      params: {
-        warehouse_id: parseInt(warehouseId),
-      },
-    },
-    {
-      skip: !warehouseId,
-    }
-  );
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (data?.data === "Close") {
-      message.info("No cash register found. Open a new cash register");
-
+    if (pettyCash === "Close") {
       navigate("/dashboard");
     }
-  }, [data, message, navigate]);
+  }, [navigate, pettyCash]);
 
-  if (isFetching) {
-    return (
-      <Spin className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-    );
-  }
-
-  if (!data?.data === "Open") {
+  if (pettyCash === "Open") {
     return (
       <GlobalUtilityStyle>
         <div className="flex flex-col relative h-screen">
-          <div className="grow min-h-[60vh] overflow-auto h-full bg-[#F5F5F5]">
-            <div className="grid grid-cols-2 h-full">
+          <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
+            <div className="grid grid-cols-2 h-[85vh] ">
               <div>
-                <PosRegister />
+                <PosRegister products={products} setProducts={setProducts} />
               </div>
 
-              <div className="relative flex flex-col ">
+              <div className="relative flex flex-col h-[90vh] ">
                 <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
                   <div className="flex items-center gap-6 text-2xl">
                     <Button
@@ -70,15 +50,15 @@ const PosLayout = () => {
                     <Logo />
                   </div>
                   {mode === "local" && (
-                    <span className="text-xs p-2 rounded-lg font-bold bg-gray-300">
+                    <Tag color="processing" className="font-semibold">
                       {mode.toUpperCase()} MODE
-                    </span>
+                    </Tag>
                   )}
                   <Profile />
                 </div>
 
-                <div className="flex grow">
-                  <div className="flex flex-col w-full h-full">
+                <div className="flex grow ">
+                  <div className="flex flex-col w-full ">
                     <div>
                       <PosFilterComponent />
                     </div>
@@ -88,7 +68,10 @@ const PosLayout = () => {
                       }}
                       className="shadow-md grow m-4 bg-gray-200 "
                     >
-                      <PosProducts />
+                      <PosProducts
+                        products={products}
+                        setProducts={setProducts}
+                      />
                     </div>
                   </div>
                 </div>

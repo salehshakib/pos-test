@@ -12,7 +12,7 @@ const createDetailsLayout = (data) => {
   ];
   const fullRowKeys = ["details", "product_list", "address", "qty_list"];
 
-  console.log(data);
+  // console.log(data);
 
   const details = Object.entries(data ?? {}).reduce(
     (acc, [key, value], index) => {

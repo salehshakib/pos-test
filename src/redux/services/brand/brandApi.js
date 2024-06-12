@@ -1,5 +1,5 @@
 import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
-import { openNotification } from "../../../utilities/lib/notification";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -42,6 +42,7 @@ const brandApi = baseApi.injectEndpoints({
       transformResponse: (response) => {
         if (response?.success) {
           openNotification("success", response?.message);
+          //  useNotification({ message: response?.message });
           return response;
         }
       },

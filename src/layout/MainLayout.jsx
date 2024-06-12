@@ -1,4 +1,4 @@
-import { Button, Layout } from "antd";
+import { Button, Layout, Tag } from "antd";
 // import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -28,9 +28,9 @@ const MainLayout = () => {
             <Logo />
           </div>
           {mode === "local" && (
-            <span className="text-xs  p-2 rounded-lg font-bold bg-gray-300">
+            <Tag color="processing" className="font-semibold">
               {mode.toUpperCase()} MODE
-            </span>
+            </Tag>
           )}
           <Profile />
         </Header>

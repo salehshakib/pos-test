@@ -1,5 +1,5 @@
 import { EXPENSE_CATEGORY } from "../../../utilities/apiEndpoints/account.api";
-import { openNotification } from "../../../utilities/lib/notification";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 

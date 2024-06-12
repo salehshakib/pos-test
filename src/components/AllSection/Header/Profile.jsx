@@ -10,10 +10,6 @@ import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout } from "../../../redux/services/auth/authSlice";
 import {
-  clearCashRegister,
-  setCashRegister,
-} from "../../../redux/services/cashRegister/cashRegisterSlice";
-import {
   useCheckPettyCashQuery,
   useCreatePettyCashMutation,
 } from "../../../redux/services/pettycash/pettyCashApi";
@@ -57,16 +53,20 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     }
   }, [data, message, navigate]);
 
+  // const { register } = useSelector((state) => state.cashRegister);
+  const { pettyCash } = useSelector((state) => state.pettyCash);
+
+  console.log(pettyCash);
+
   const handleSubmit = async (values) => {
-    // setWarehouseId(values.warehouse_id)
     const { data, error } = await createPettyCash({
       data: { ...values, status: "Open" },
     });
 
     if (data?.success) {
-      dispatch(setCashRegister());
-      dispatch(setPettyCash({ data: data?.data }));
+      dispatch(setPettyCash({ data: data?.data.status }));
       hideModal();
+
       form.resetFields();
       navigate("/pos");
     }
@@ -99,7 +99,6 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
       footer={null}
     >
       <Form
-        isLoading={false}
         fields={errorFields}
         layout="vertical"
         form={form}
@@ -110,9 +109,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
           <Col {...fullColLayout}>
             <WarehouseComponent />
           </Col>
-          {/* {isFetching && (
-            <Spin className="w-full justify-center flex items-center" />
-          )} */}
+
           {!isFetching && data && (
             <Col {...fullColLayout}>
               <CustomInput
@@ -143,11 +140,12 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
 const PosComponent = () => {
   const navigate = useNavigate();
-  const { register } = useSelector((state) => state.cashRegister);
+  const { pettyCash } = useSelector((state) => state.pettyCash);
+
   const [open, setOpen] = useState(false);
 
   const posRegister = () => {
-    if (!register) {
+    if (pettyCash === "Close") {
       setOpen(true);
     } else navigate("/pos");
   };
@@ -179,11 +177,9 @@ const CashRegisterComponent = () => {
   const { pathname } = location;
 
   const { pettyCash } = useSelector((state) => state.pettyCash);
-  const { register } = useSelector((state) => state.cashRegister);
+  // const { register } = useSelector((state) => state.cashRegister);
 
-  // const [updateGiftCard, { isLoading }] = useUpdatePettyCashMutation();
-
-  console.log(pettyCash, register);
+  const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
 
   const [open, setOpen] = useState(false);
 
@@ -197,14 +193,16 @@ const CashRegisterComponent = () => {
   };
 
   const closeCashRegister = async () => {
-    // const { data, error } = await updateGiftCard({
-    //   data: { pettyCash.id, ...values },
-    // });
-    dispatch(clearPettyCash());
-    dispatch(clearCashRegister());
-    navigate("/dashboard");
+    const { data } = await createPettyCash({
+      data: { warehouse_id: 4, status: "Close" },
+    });
 
-    hideModal();
+    if (data?.success) {
+      dispatch(clearPettyCash());
+
+      hideModal();
+      navigate("/dashboard");
+    }
   };
 
   const hideModal = () => {
@@ -219,13 +217,11 @@ const CashRegisterComponent = () => {
         icon={<FaCashRegister size={18} />}
         className="flex justify-center items-center gap-1 shadow-md"
         onClick={handleCashRegister}
-        // size="large"
       />
 
       <Modal
         width={800}
         centered
-        // title={"Cash Register Close"}
         open={open}
         onCancel={hideModal}
         footer={null}
@@ -237,7 +233,7 @@ const CashRegisterComponent = () => {
             htmlType="button"
             onClick={closeCashRegister}
             type="primary"
-            // loading={isLoading}
+            loading={isLoading}
           >
             Close
           </Button>

@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
-import { router } from "../routes/routes";
-import { theme } from "../utilities/configs/theme";
 import { ThemeProvider } from "styled-components";
 import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
 import {
   setPrimaryColor,
   setSecondaryColor,
 } from "../redux/services/theme/themeSlice";
+import { router } from "../routes/routes";
+import { theme } from "../utilities/configs/theme";
 
 export const ProviderConfig = ({ children }) => {
   const dispatch = useDispatch();
@@ -39,10 +39,12 @@ export const ProviderConfig = ({ children }) => {
         }}
       >
         {/* styled components */}
-        <ThemeProvider theme={{ ...customTheme }}>
-          <RouterProvider router={router}>{children}</RouterProvider>
-          <Toaster position="top-center" richColors />
-        </ThemeProvider>
+        <App>
+          <ThemeProvider theme={{ ...customTheme }}>
+            <RouterProvider router={router}>{children}</RouterProvider>
+            <Toaster position="top-center" richColors />
+          </ThemeProvider>
+        </App>
       </ConfigProvider>
     </React.StrictMode>
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { GiftCardDesignForm } from "./GiftCardDesignForm";
-import { Form, message } from "antd";
+import { Form, App } from "antd";
 import { useCreateGiftCardDesignMutation } from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
@@ -19,6 +19,7 @@ const dataURItoBlob = (dataURI) => {
 };
 
 export const GiftCardDesignCreate = () => {
+  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();

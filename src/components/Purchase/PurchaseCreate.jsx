@@ -1,23 +1,21 @@
-import { Form } from "antd";
+import { App, Form } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreatePurchaseMutation } from "../../redux/services/purchase/purchaseApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PurchaseForm } from "./PurchaseForm";
-import dayjs from "dayjs";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-
-const decimalConverter = (value) => {
-  return Number(value).toFixed(2);
-};
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { PurchaseForm } from "./PurchaseForm";
 
 export const PurchaseCreate = () => {
+  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -49,9 +47,6 @@ export const PurchaseCreate = () => {
   });
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    console.log(formValues);
-
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -73,6 +68,11 @@ export const PurchaseCreate = () => {
             total: decimalConverter(product_list.total[product_id]),
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(product_list);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

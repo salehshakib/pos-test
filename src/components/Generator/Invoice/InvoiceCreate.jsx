@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { App, Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../../redux/services/drawer/drawerSlice";
@@ -13,6 +13,7 @@ import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "../Quotation/QuotationForm";
 
 const InvoiceCreate = () => {
+  const { message } = App.useApp();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -60,6 +61,11 @@ const InvoiceCreate = () => {
             total: product_list.total[product_id],
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(product_list);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

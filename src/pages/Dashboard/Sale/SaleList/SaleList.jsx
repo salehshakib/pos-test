@@ -37,9 +37,9 @@ const columns = [
     ),
   },
   {
-    title: "Biller",
-    dataIndex: "biller",
-    key: "biller",
+    title: "Cashier",
+    dataIndex: "cashier",
+    key: "cashier",
     render: (biller) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {biller}
@@ -103,16 +103,6 @@ const columns = [
     render: (due) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {due}
-      </span>
-    ),
-  },
-  {
-    title: "Returned Amount",
-    dataIndex: "returnedAmount",
-    key: "returnedAmount",
-    render: (returnedAmount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {returnedAmount}
       </span>
     ),
   },

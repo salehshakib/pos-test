@@ -150,8 +150,8 @@ function setFormValuesId(
   if (id) {
     formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
 
-    formValues.product_list.net_unit_price[id] =
-      formValues.product_list.net_unit_price[id] ?? unit_cost ?? "0";
+    formValues.product_list.net_unit_cost[id] =
+      formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
 
     formValues.product_list.discount[id] =
       formValues.product_list.discount[id] ?? 0;
@@ -160,7 +160,7 @@ function setFormValuesId(
       (
         (parseInt(productUnits.purchase_units?.[id] ?? 1) *
           parseInt(formValues.product_list.tax_rate[id]) *
-          parseInt(formValues.product_list.net_unit_price[id]) *
+          parseInt(formValues.product_list.net_unit_cost[id]) *
           parseInt(formValues.product_list.qty[id])) /
         100
       ).toFixed(2)
@@ -185,7 +185,7 @@ function setFormValuesId(
 
     formValues.product_list.total[id] =
       productUnits.purchase_units[id] *
-        parseInt(formValues.product_list.net_unit_price[id] ?? 0) *
+        parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
         formValues.product_list.qty[id] -
       formValues.product_list.discount[id] +
       formValues.product_list.tax[id];
@@ -318,7 +318,7 @@ export const ReturnProductTable = ({
       id,
       name,
       sku,
-      unitCost: formValues.product_list.net_unit_price[id],
+      unitCost: formValues.product_list.net_unit_cost[id],
       delete: true,
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],

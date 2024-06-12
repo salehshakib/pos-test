@@ -1,4 +1,4 @@
-import { AutoComplete, Col, message, Spin } from "antd";
+import { AutoComplete, Col, App, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
@@ -6,6 +6,7 @@ import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 
 export const SearchProduct = ({ setProducts }) => {
+  const { message } = App.useApp();
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 

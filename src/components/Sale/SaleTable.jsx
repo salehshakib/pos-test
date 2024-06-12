@@ -46,17 +46,52 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
+  // const dataSource =
+  //   data?.results?.sale?.map((item) => {
+  //     const { id, sale_at, reference_id } = item ?? {};
+  //     const date = dayjs(sale_at).format("DD-MM-YYYY");
+
+  //     return {
+  //       id,
+
+  //       date: date,
+  //       reference: reference_id,
+
+  //       handleEdit,
+  //       handleDeleteModal,
+  //     };
+  //   }) ?? [];
+
   const dataSource =
     data?.results?.sale?.map((item) => {
-      const { id, sale_at, reference_id } = item ?? {};
+      const {
+        id,
+        sale_at,
+        reference_id,
+        customers,
+        cashiers,
+        sale_status,
+        payment_status,
+        delivery_status,
+        grand_total,
+        paid_amount,
+        due_amount,
+      } = item ?? {};
+
       const date = dayjs(sale_at).format("DD-MM-YYYY");
 
       return {
-        id,
-
-        date: date,
+        key: id, // Unique key for each row
+        date,
         reference: reference_id,
-
+        customer: customers?.name,
+        cashier: cashiers?.name,
+        saleStatus: sale_status,
+        paymentStatus: payment_status,
+        deliveryStatus: delivery_status,
+        grandTotal: grand_total,
+        paid: paid_amount,
+        due: due_amount,
         handleEdit,
         handleDeleteModal,
       };

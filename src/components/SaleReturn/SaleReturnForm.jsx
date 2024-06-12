@@ -1,4 +1,4 @@
-import { Col, Form, message, Row } from "antd";
+import { Col, Form, App, Row } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -129,6 +129,8 @@ const SaleReturnForm = ({
   ...props
 }) => {
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
+
+  const { message } = App.useApp();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);

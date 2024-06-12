@@ -1,18 +1,19 @@
-import { Form } from "antd";
+import { App, Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../../redux/services/drawer/drawerSlice";
 import { useCreateQuotationMutation } from "../../../redux/services/quotation/quotationApi";
 import { appendToFormData } from "../../../utilities/lib/appendFormData";
-import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
-import { QuotationForm } from "./QuotationForm";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../../utilities/lib/generator/generatorUtils";
+import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
+import { QuotationForm } from "./QuotationForm";
 
 const QuotationCreate = () => {
+  const { message } = App.useApp();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -60,6 +61,11 @@ const QuotationCreate = () => {
             total: product_list.total[product_id],
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(product_list);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

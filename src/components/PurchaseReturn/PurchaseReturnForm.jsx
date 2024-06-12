@@ -1,4 +1,4 @@
-import { Col, Form, message, Row } from "antd";
+import { Col, Form, App, Row } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -49,20 +49,12 @@ const PaymentType = () => {
       label: "Cash",
     },
     {
-      value: "Gift Card",
-      label: "Gift Card",
-    },
-    {
       value: "Card",
       label: "Card",
     },
     {
       value: "Cheque",
       label: "Cheque",
-    },
-    {
-      value: "Points",
-      label: "Points",
     },
   ];
 
@@ -116,7 +108,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
   );
 };
 
-const PurchaseReturnForm = (
+const PurchaseReturnForm = ({
   formValues,
   setFormValues,
   productUnits,
@@ -127,8 +119,10 @@ const PurchaseReturnForm = (
   id,
   referenceId,
   ...props
-) => {
+}) => {
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
+
+  const { message } = App.useApp();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
@@ -136,7 +130,7 @@ const PurchaseReturnForm = (
   const handleSubmit = async (values) => {
     const { data } = await checkReference({ data: values });
 
-    if (!data) {
+    if (!data.data) {
       message.error(
         "Purchase Reference doesnot exist or Purchase Return is Pending"
       );
@@ -144,8 +138,10 @@ const PurchaseReturnForm = (
       setRefId(null);
     } else {
       setSaleData(data?.data);
-      data?.data?.sale_products?.map((item) => {
+
+      data?.data?.purchase_products?.map((item) => {
         console.log(item);
+
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,

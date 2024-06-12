@@ -1,4 +1,4 @@
-import { AutoComplete, Col, message, Spin } from "antd";
+import { AutoComplete, Col, App, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
@@ -7,6 +7,7 @@ import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseA
 import { ProductTable } from "../Shared/ProductControllerComponent/ProductTable";
 
 const SearchWarehouse = ({ setWarehouses }) => {
+  const { message } = App.useApp();
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 

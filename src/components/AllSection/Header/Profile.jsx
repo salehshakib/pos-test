@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
+import { App, Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
 import { useEffect, useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
@@ -16,7 +16,6 @@ import {
 import {
   useCheckPettyCashQuery,
   useCreatePettyCashMutation,
-  useUpdatePettyCashMutation,
 } from "../../../redux/services/pettycash/pettyCashApi";
 import {
   clearPettyCash,
@@ -29,6 +28,7 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -49,13 +49,13 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     }
   );
 
-  console.log(data);
-
   useEffect(() => {
     if (data?.data === "Open") {
       navigate("/pos");
+    } else if (data?.data === "Close") {
+      message.info("No cash register found. Open a new cash register");
     }
-  }, [data, navigate]);
+  }, [data, message, navigate]);
 
   const handleSubmit = async (values) => {
     // setWarehouseId(values.warehouse_id)
@@ -181,7 +181,7 @@ const CashRegisterComponent = () => {
   const { pettyCash } = useSelector((state) => state.pettyCash);
   const { register } = useSelector((state) => state.cashRegister);
 
-  const [updateGiftCard, { isLoading }] = useUpdatePettyCashMutation();
+  // const [updateGiftCard, { isLoading }] = useUpdatePettyCashMutation();
 
   console.log(pettyCash, register);
 
@@ -237,7 +237,7 @@ const CashRegisterComponent = () => {
             htmlType="button"
             onClick={closeCashRegister}
             type="primary"
-            loading={isLoading}
+            // loading={isLoading}
           >
             Close
           </Button>

@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Dropdown, message } from "antd";
+import { App, Button, Dropdown } from "antd";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 
 const items = [
@@ -22,6 +22,8 @@ const items = [
 ];
 
 const CreateComponent = () => {
+  const { message } = App.useApp();
+
   const handleMenuClick = (e) => {
     message.info("Click on menu item.");
     console.log("click", e);

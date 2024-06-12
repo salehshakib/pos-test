@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form, App } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,35 +15,13 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
+import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SaleReturnForm from "./SaleReturnForm";
 
-const updateProductList = (values, product_list) => {
-  // Extract IDs to keep from the values.delete object where the value is true
-  const idsToKeep = Object.keys(values.delete).filter(
-    (key) => values.delete[key]
-  );
-
-  // Create a new product list keeping only the entries for the IDs to keep
-  const updatedProductList = {};
-
-  Object.keys(product_list).forEach((key) => {
-    updatedProductList[key] = {};
-    idsToKeep.forEach((id) => {
-      if (product_list[key][id] !== undefined) {
-        updatedProductList[key][id] = product_list[key][id];
-      }
-    });
-  });
-
-  return updatedProductList;
-};
-
-const decimalConverter = (value = 0) => {
-  return Number(value).toFixed(2);
-};
-
 const SaleReturnEdit = ({ id, setId }) => {
+  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -225,6 +203,11 @@ const SaleReturnEdit = ({ id, setId }) => {
             total: decimalConverter(updatedList.total[product_id]),
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(updatedList);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

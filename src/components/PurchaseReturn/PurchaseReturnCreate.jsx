@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { App, Form } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import PurchaseReturnForm from "./PurchaseReturnForm";
 
 const PurchaseReturnCreate = () => {
   const dispatch = useDispatch();
+  const { message } = App.useApp();
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
@@ -45,6 +46,7 @@ const PurchaseReturnCreate = () => {
   });
 
   const [products, setProducts] = useState([]);
+
   const [saleData, setSaleData] = useState();
   // const [saleData, setSaleData] = useState();
 
@@ -92,6 +94,11 @@ const PurchaseReturnCreate = () => {
             total: decimalConverter(updatedList.total[product_id]),
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(updatedList);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

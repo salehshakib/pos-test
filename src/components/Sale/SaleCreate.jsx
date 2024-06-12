@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,6 +78,11 @@ export const SaleCreate = () => {
             total: decimalConverter(product_list.total[product_id]),
           }))
       : [];
+
+    if (productListArray.length === 0) {
+      message.info("Please add atleast one product");
+      return;
+    }
 
     const totalPrice = calculateTotalPrice(product_list);
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);

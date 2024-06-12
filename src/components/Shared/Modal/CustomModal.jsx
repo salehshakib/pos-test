@@ -1,12 +1,6 @@
 import { Button, Modal } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const modalProps = {
-  footer: null,
-  centered: true,
-  maskClosable: true,
-};
-
 const CustomModal = ({
   title,
   openModal,
@@ -14,7 +8,19 @@ const CustomModal = ({
   showCloseButton = true,
   children,
   width = 1000,
+  footer = false,
+  modalStyleProps,
+  onOk,
 }) => {
+  const modalProps = {
+    centered: true,
+    maskClosable: true,
+    ...modalStyleProps,
+  };
+
+  if (!footer) {
+    modalProps.footer = null;
+  }
   return (
     <GlobalUtilityStyle>
       <Modal
@@ -22,6 +28,8 @@ const CustomModal = ({
         open={openModal}
         onCancel={hideModal}
         width={width}
+        okText="Save"
+        onOk={onOk}
         {...modalProps}
       >
         <GlobalUtilityStyle>

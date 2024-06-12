@@ -289,9 +289,7 @@ const RegisterForm = ({ products, setProducts }) => {
   );
 };
 
-export const PosRegister = ({ products, setProducts }) => {
-  const [form] = Form.useForm();
-
+export const PosRegister = ({ products, setProducts, form }) => {
   const [formValues, setFormValues] = useState({
     product_list: {
       product_id: {},
@@ -368,11 +366,17 @@ export const PosRegister = ({ products, setProducts }) => {
         <div className="flex-none bg-white py-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
           <hr />
 
-          <div className=" grid grid-cols-8 px-2">
-            <span className="text-md font-semibold col-span-6">Total</span>
+          <div className=" grid grid-cols-12 px-2">
+            <span className="text-md font-semibold col-span-7">Total</span>
 
-            <span className="text-md font-semibold">{totalQuantity}</span>
-            <span className="text-md font-semibold">{totalPrice}</span>
+            <span className="col-span-5 flex flex-col lg:flex-row justify-around">
+              <span className="text-md font-semibold ">
+                Qty: ({totalQuantity})
+              </span>
+              <span className="text-md font-semibold ">
+                SubTotal: ({totalPrice})
+              </span>
+            </span>
           </div>
 
           <hr />

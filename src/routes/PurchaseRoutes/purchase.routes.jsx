@@ -3,7 +3,7 @@ import Purchase from "../../pages/Dashboard/Purchase/Purchase";
 
 export const purchasePaths = [
   {
-    name: "Purchase List",
+    name: "Purchases",
     path: "purchase-list",
     icon: AiOutlineShoppingCart,
     element: <Purchase />,

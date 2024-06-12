@@ -18,6 +18,7 @@ import {
   setPettyCash,
 } from "../../../redux/services/pettycash/pettyCashSlice";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
 import { CustomDescription } from "../../Shared/Description/CustomDescription";
 import CustomInput from "../../Shared/Input/CustomInput";
@@ -47,16 +48,18 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   useEffect(() => {
     if (data?.data === "Open") {
+      dispatch(setPettyCash({ data: data?.data }));
+
       navigate("/pos");
     } else if (data?.data === "Close") {
-      message.info("No cash register found. Open a new cash register");
+      dispatch(setPettyCash({ data: data?.data }));
+
+      openNotification(
+        "warning",
+        "No cash register found. Open a new cash register"
+      );
     }
-  }, [data, message, navigate]);
-
-  // const { register } = useSelector((state) => state.cashRegister);
-  const { pettyCash } = useSelector((state) => state.pettyCash);
-
-  console.log(pettyCash);
+  }, [data, dispatch, message, navigate]);
 
   const handleSubmit = async (values) => {
     const { data, error } = await createPettyCash({
@@ -89,6 +92,8 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     return null;
   }
 
+  console.log(isFetching);
+
   return (
     <Modal
       width={600}
@@ -110,7 +115,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
             <WarehouseComponent />
           </Col>
 
-          {!isFetching && data && (
+          {data?.data === "Close" && (
             <Col {...fullColLayout}>
               <CustomInput
                 label="Opening Balance"
@@ -143,6 +148,8 @@ const PosComponent = () => {
   const { pettyCash } = useSelector((state) => state.pettyCash);
 
   const [open, setOpen] = useState(false);
+
+  console.log(pettyCash);
 
   const posRegister = () => {
     if (pettyCash === "Close") {

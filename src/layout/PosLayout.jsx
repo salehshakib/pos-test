@@ -1,4 +1,4 @@
-import { Button, Layout, Tag } from "antd";
+import { Button, Form, Layout, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector } from "react-redux";
@@ -17,6 +17,8 @@ const { Footer } = Layout;
 
 const PosLayout = () => {
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+
   const { pettyCash } = useSelector((state) => state.pettyCash);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -28,6 +30,10 @@ const PosLayout = () => {
     }
   }, [navigate, pettyCash]);
 
+  const handleSubmit = async () => {
+    console.log(form.getFieldValue("paid_amount"));
+  };
+
   if (pettyCash === "Open") {
     return (
       <GlobalUtilityStyle>
@@ -35,7 +41,11 @@ const PosLayout = () => {
           <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
             <div className="grid grid-cols-2 h-[85vh] ">
               <div>
-                <PosRegister products={products} setProducts={setProducts} />
+                <PosRegister
+                  products={products}
+                  setProducts={setProducts}
+                  form={form}
+                />
               </div>
 
               <div className="relative flex flex-col h-[90vh] ">
@@ -85,7 +95,7 @@ const PosLayout = () => {
             }}
             className="py-4"
           >
-            <Payment />
+            <Payment handleSubmit={handleSubmit} />
           </Footer>
 
           <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">

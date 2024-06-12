@@ -72,13 +72,13 @@ const BrandFilterComponent = () => {
 
 const PosFilterComponent = () => {
   return (
-    <div className="grid grid-cols-3 gap-3 px-4 pt-5">
+    <div className="grid grid-cols-2 gap-3 px-4 pt-5">
       <CategoryFilterComponent />
 
       <BrandFilterComponent />
-      <Button type="primary" size="large" className="w-full">
+      {/* <Button type="primary" size="large" className="w-full">
         Featured
-      </Button>
+      </Button> */}
     </div>
   );
 };

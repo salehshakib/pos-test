@@ -40,7 +40,7 @@ const pettyCashApi = baseApi.injectEndpoints({
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          // openNotification("success", response?.message);
           return response;
         }
       },

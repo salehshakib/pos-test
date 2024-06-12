@@ -13,10 +13,13 @@ export const openNotification = (type, message) => {
           <div className="flex-shrink-0 pt-0.5">
             <img className="h-10 w-10 rounded-full" src={logo} alt="" />
           </div>
-          <div className="ml-3 flex-1">
-            <p className="text-sm font-medium text-gray-900">
-              {type === "success" ? "Success" : "Failed"}
-            </p>
+          <div className="ml-3 flex-1 text-sm font-semibold">
+            {type === "success" ? (
+              <span className="text-green-600 ">Success</span>
+            ) : (
+              <span className="text-red-600 ">Failed</span>
+            )}
+
             <p className="mt-1 text-sm text-gray-500">
               {message ?? "No Message is provided. Task Completed Successfully"}
             </p>

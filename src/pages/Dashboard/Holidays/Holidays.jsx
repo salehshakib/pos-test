@@ -21,7 +21,7 @@ export const Holidays = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Designation"
+      pageTitle="Holidays"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

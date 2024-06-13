@@ -21,7 +21,7 @@ export const Payroll = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Designation"
+      pageTitle="Payroll"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

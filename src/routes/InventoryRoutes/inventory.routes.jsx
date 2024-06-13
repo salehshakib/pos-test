@@ -1,26 +1,27 @@
+import { AiOutlineStock } from "react-icons/ai";
+import { GoChecklist } from "react-icons/go";
+import { PiWarehouse } from "react-icons/pi";
+import AdjustmentList from "../../pages/Dashboard/AdjustmentList/AdjustmentList";
+import StockCount from "../../pages/Dashboard/StockCount/StockCount";
+import Warehouse from "../../pages/Dashboard/Warehouse/Warehouse";
+
 export const inventoryPaths = [
-  // {
-  //   name: "Category",
-  //   path: "category",
-  //   icon: MdCategory,
-  //   element: <Category />,
-  // },
-  // {
-  //   name: "Brand",
-  //   path: "brand",
-  //   icon: FaBagShopping,
-  //   element: <Brand />,
-  // },
-  // {
-  //   name: "Warehouse",
-  //   path: "warehouse",
-  //   icon: FaWarehouse,
-  //   element: <Warehouse />,
-  // },
-  // {
-  //   name: "Unit",
-  //   path: "unit",
-  //   icon: SiUnitedairlines,
-  //   element: <UnitList />,
-  // },
+  {
+    name: "Warehouse",
+    path: "warehouse",
+    icon: PiWarehouse,
+    element: <Warehouse />,
+  },
+  {
+    name: "Adjustment",
+    path: "adjustment",
+    icon: GoChecklist,
+    element: <AdjustmentList />,
+  },
+  {
+    name: "Stock Count",
+    path: "stock-count",
+    icon: AiOutlineStock,
+    element: <StockCount />,
+  },
 ];

@@ -4,7 +4,6 @@ import { CiDiscount1 } from "react-icons/ci";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { LuClipboardList, LuClipboardType } from "react-icons/lu";
 import { MdOutlineSettingsApplications } from "react-icons/md";
-import { PiWarehouse } from "react-icons/pi";
 import { RiVerifiedBadgeLine } from "react-icons/ri";
 import { TbReceiptTax } from "react-icons/tb";
 import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
@@ -16,7 +15,6 @@ import RolePermission from "../../pages/Dashboard/RolePermission/RolePermission"
 import TaxList from "../../pages/Dashboard/Tax/TaxList";
 import Types from "../../pages/Dashboard/Type/Types";
 import UnitList from "../../pages/Dashboard/Unit/UnitList";
-import Warehouse from "../../pages/Dashboard/Warehouse/Warehouse";
 
 export const settingPaths = [
   {
@@ -42,12 +40,6 @@ export const settingPaths = [
     path: "customer-group",
     icon: FaPeopleGroup,
     element: <CustomerGroup />,
-  },
-  {
-    name: "Warehouse",
-    path: "warehouse",
-    icon: PiWarehouse,
-    element: <Warehouse />,
   },
   {
     name: "Types",

@@ -11,13 +11,19 @@ const CustomDatepicker = ({
   type = "date",
   name,
   disabledDate = false,
+  placeholder,
 }) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item
         label={label}
         name={name}
-        rules={[{ required: required, message: `Please input ${label}!` }]}
+        rules={[
+          {
+            required: required,
+            message: `Please input ${label ?? placeholder}!`,
+          },
+        ]}
       >
         {type === "date" && (
           <DatePicker

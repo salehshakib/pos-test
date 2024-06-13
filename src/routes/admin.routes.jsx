@@ -7,7 +7,11 @@ import {
   IoPeopleCircle,
 } from "react-icons/io5";
 import { LuArchive } from "react-icons/lu";
-import { MdOutlineSettings, MdOutlineSpaceDashboard } from "react-icons/md";
+import {
+  MdOutlineInventory2,
+  MdOutlineSettings,
+  MdOutlineSpaceDashboard,
+} from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
 import {
   TbFilePercent,
@@ -33,6 +37,7 @@ import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
 import { transferPaths } from "./TransaferRoutes/transfer.routes";
+import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 
 export const adminPaths = [
   {
@@ -46,6 +51,12 @@ export const adminPaths = [
     path: "products",
     icon: LuArchive,
     children: productPaths,
+  },
+  {
+    name: "Inventory",
+    path: "inventory",
+    icon: MdOutlineInventory2,
+    children: inventoryPaths,
   },
   {
     name: "Purchase",

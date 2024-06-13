@@ -289,27 +289,15 @@ const RegisterForm = ({ products, setProducts }) => {
   );
 };
 
-export const PosRegister = ({ products, setProducts, form }) => {
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      tax_id: {},
-    },
-  });
-
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rates: {},
-  });
-
+export const PosRegister = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+  productUnits,
+  setProductUnits,
+  form,
+}) => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 

@@ -17,12 +17,32 @@ const { Footer } = Layout;
 
 const PosLayout = () => {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
+  const [posForm] = Form.useForm();
 
   const { pettyCash } = useSelector((state) => state.pettyCash);
   const [collapsed, setCollapsed] = useState(false);
 
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      product_id: {},
+      qty: {},
+      sale_unit_id: {},
+      net_unit_price: {},
+      discount: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+
+      tax_id: {},
+    },
+  });
+
   const [products, setProducts] = useState([]);
+
+  const [productUnits, setProductUnits] = useState({
+    sale_units: {},
+    tax_rate: {},
+  });
 
   useEffect(() => {
     if (pettyCash === "Close") {
@@ -31,7 +51,19 @@ const PosLayout = () => {
   }, [navigate, pettyCash]);
 
   const handleSubmit = async () => {
-    console.log(form.getFieldValue("paid_amount"));
+    posForm
+      .validateFields()
+      .then(() => {
+        const values = posForm.getFieldsValue();
+        console.log(values);
+        console.log(formValues);
+      })
+      .catch((error) => {
+        console.error("Validation failed:", error);
+      });
+    // .finally(() => {
+    //   form.resetFields();
+    // });
   };
 
   if (pettyCash === "Open") {
@@ -42,9 +74,13 @@ const PosLayout = () => {
             <div className="grid grid-cols-2 h-[85vh] ">
               <div>
                 <PosRegister
+                  formValues={formValues}
+                  setFormValues={setFormValues}
                   products={products}
                   setProducts={setProducts}
-                  form={form}
+                  productUnits={productUnits}
+                  setProductUnits={setProductUnits}
+                  form={posForm}
                 />
               </div>
 
@@ -95,7 +131,7 @@ const PosLayout = () => {
             }}
             className="py-4"
           >
-            <Payment handleSubmit={handleSubmit} />
+            <Payment handleSubmit={handleSubmit} form={posForm} />
           </Footer>
 
           <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">

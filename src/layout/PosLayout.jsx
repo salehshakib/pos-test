@@ -66,11 +66,15 @@ const PosLayout = () => {
     }
   }, [navigate, pettyCash]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleSubmit = () => {
     posForm
       .validateFields()
       .then(async () => {
         const values = posForm.getFieldsValue();
+
+        console.log(values);
 
         const { discount, shipping_cost, tax_rate, sale_at, paid_amount } =
           values ?? {};
@@ -124,6 +128,7 @@ const PosLayout = () => {
 
         const postObj = {
           ...values,
+          sale_status: "Completed",
           sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
           discount: decimalConverter(discount),
           shipping_cost: decimalConverter(shipping_cost),
@@ -200,6 +205,7 @@ const PosLayout = () => {
         console.error("Validation failed:", error);
       })
       .finally(() => {
+        setIsModalOpen(false);
         posForm.resetFields();
       });
   };
@@ -275,6 +281,8 @@ const PosLayout = () => {
               form={posForm}
               fields={errorFields}
               isLoading={isLoading}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
             />
           </Footer>
 

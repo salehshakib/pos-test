@@ -10,6 +10,7 @@ const CustomModal = ({
   width = 1000,
   footer = false,
   modalStyleProps,
+  loading,
   onOk,
 }) => {
   const modalProps = {
@@ -30,6 +31,7 @@ const CustomModal = ({
         width={width}
         okText="Save"
         onOk={onOk}
+        confirmLoading={loading}
         {...modalProps}
       >
         <GlobalUtilityStyle>

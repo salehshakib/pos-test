@@ -10,9 +10,15 @@ import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomModal from "../Shared/Modal/CustomModal";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
+import { RiCoupon3Line } from "react-icons/ri";
 
-const Payment = ({ handleSubmit, form }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Payment = ({
+  handleSubmit,
+  form,
+  isModalOpen,
+  setIsModalOpen,
+  isLoading,
+}) => {
   const [paymentType, setPaymentType] = useState("Card");
 
   const handleOpenModal = (value) => {
@@ -25,7 +31,7 @@ const Payment = ({ handleSubmit, form }) => {
   return (
     <>
       <div className="bg-[#F5F5F5]">
-        <div className="mx-auto grid grid-cols-3 lg:grid-cols-6 gap-x-3 gap-y-2">
+        <div className="mx-auto grid grid-cols-3 lg:grid-cols-7 gap-x-3 gap-y-2">
           <Button
             type="primary"
             icon={<BsCash />}
@@ -43,14 +49,14 @@ const Payment = ({ handleSubmit, form }) => {
             Card
           </Button>
 
-          {/* <Button
+          <Button
             type="primary"
-            icon={<FiFlag />}
+            icon={<RiCoupon3Line />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Draft")}
+            onClick={() => handleOpenModal("Coupon")}
           >
-            Draft
-          </Button> */}
+            Coupon
+          </Button>
           <Button
             type="primary"
             icon={<HiOutlineBanknotes />}
@@ -103,6 +109,7 @@ const Payment = ({ handleSubmit, form }) => {
         width={800}
         footer={true}
         onOk={handleSubmit}
+        loading={isLoading}
       >
         <Form layout="vertical" form={form}>
           <Row {...rowLayout}>

@@ -1,5 +1,15 @@
 import { UserOutlined } from "@ant-design/icons";
-import { App, Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
+import {
+  App,
+  Avatar,
+  Button,
+  Col,
+  Form,
+  Modal,
+  Popover,
+  Row,
+  Spin,
+} from "antd";
 import { useEffect, useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
@@ -91,8 +101,6 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   if (!open) {
     return null;
   }
-
-  console.log(isFetching);
 
   return (
     <Modal

@@ -1,4 +1,4 @@
-import { App, Card, Divider, Skeleton, Spin, Tooltip } from "antd";
+import { App, Badge, Card, Divider, Skeleton, Spin, Tooltip } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
@@ -56,7 +56,7 @@ const PosProducts = ({ setProducts }) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-full">
         <div className="text-center text-lg mt-4">
           <Spin />
         </div>
@@ -100,50 +100,68 @@ const PosProducts = ({ setProducts }) => {
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 p-1 overflow-hidden">
               {products &&
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);
 
+                  console.log(product);
+
                   return (
-                    <Card
-                      bordered
-                      hoverable
-                      className="border-secondary-hover"
-                      style={{
-                        backgroundColor: "white",
-                        // height: "100px",
-                      }}
-                      key={product.id}
-                      cover={
-                        <div className="w-full">
-                          <img
-                            alt="example"
-                            className="h-[4rem] mx-auto object-cover "
-                            src={
-                              // images?.attach_file?.[0]?.url ??
-                              // images?.attachments?.[0]?.url ??
-                              productImage
+                    <div key={product.id} className="w-full p-2">
+                      <Badge
+                        count={100}
+                        overflowCount={99}
+                        className=" w-full"
+                        offset={[-15, 0]}
+                      >
+                        <Card
+                          bordered
+                          hoverable
+                          className="border-secondary-hover"
+                          style={{
+                            backgroundColor: "white",
+                          }}
+                          styles={{
+                            body: {
+                              padding: "12px 8px",
+                            },
+                          }}
+                          key={product.id}
+                          cover={
+                            <div className="w-full">
+                              <img
+                                alt="example"
+                                className="h-[3.5rem] mx-auto object-cover "
+                                src={
+                                  // images?.attach_file?.[0]?.url ??
+                                  // images?.attachments?.[0]?.url ??
+                                  productImage
+                                }
+                              />
+                            </div>
+                          }
+                          onClick={() => onSelect({ product })}
+                        >
+                          <Meta
+                            className="text-center"
+                            style={{
+                              fontSize: "12px",
+                            }}
+                            title={
+                              <Tooltip
+                                title={product.name}
+                                showArrow={false}
+                                placement="top"
+                              >
+                                <span className="text-sm">{product.name}</span>
+                              </Tooltip>
                             }
+                            description={product.sku}
                           />
-                        </div>
-                      }
-                      onClick={() => onSelect({ product })}
-                    >
-                      <Meta
-                        className="text-center"
-                        title={
-                          <Tooltip
-                            title={product.name}
-                            showArrow={false}
-                            placement="top"
-                          >
-                            {product.name}
-                          </Tooltip>
-                        }
-                        description={product.sku}
-                      />
-                    </Card>
+                        </Card>
+                      </Badge>
+                    </div>
                   );
                 })}
             </div>

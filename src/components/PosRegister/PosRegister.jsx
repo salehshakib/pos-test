@@ -1,13 +1,14 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, Tooltip } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../container/Styled";
-
-import dayjs from "dayjs";
+import { fullColLayout } from "../../layout/FormLayout";
 import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
 import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
+import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import CustomerCreate from "../Customer/CustomerCreate";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
@@ -17,7 +18,7 @@ import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduc
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
-import { colLayout } from "../../layout/FormLayout";
+// import { colLayout } from "../../layout/FormLayout";
 
 const WarehouseComponent = () => {
   const form = Form.useFormInstance();
@@ -34,7 +35,7 @@ const WarehouseComponent = () => {
 
   useEffect(() => {
     if (options?.length) {
-      form.setFieldValue("warehouse", options[0].value);
+      form.setFieldValue("warehouse_id", options[0].value);
     }
   }, [form, options]);
 
@@ -45,7 +46,7 @@ const WarehouseComponent = () => {
       isLoading={isLoading}
       options={options}
       required={true}
-      name="warehouse"
+      name="warehouse_id"
     />
   );
 };
@@ -65,7 +66,7 @@ const CashierComponent = () => {
 
   useEffect(() => {
     if (options?.length) {
-      form.setFieldValue("cashier", options[0].value);
+      form.setFieldValue("cashier_id", options[0].value);
     }
   }, [form, options]);
 
@@ -76,7 +77,7 @@ const CashierComponent = () => {
       isLoading={isLoading}
       options={options}
       required={true}
-      name="cashier"
+      name="cashier_id"
     />
   );
 };
@@ -98,7 +99,7 @@ const CustomerComponent = () => {
 
   useEffect(() => {
     if (options?.length) {
-      form.setFieldValue("customer", options[0].value);
+      form.setFieldValue("customer_id", options[0].value);
     }
   }, [form, options]);
 
@@ -120,7 +121,7 @@ const CustomerComponent = () => {
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}
         required={true}
-        name="customer"
+        name="customer_id"
       />
 
       <CustomerCreate
@@ -189,6 +190,31 @@ const CurrencyExchangeComponent = () => {
       suffix={content}
     />
   );
+};
+
+const TaxComponent = () => {
+  const { data, isFetching } = useGetAllTaxQuery({});
+
+  const options = data?.results?.tax?.map((item) => {
+    return {
+      value: item.rate,
+      label: item.name,
+    };
+  });
+  return (
+    <CustomSelect
+      options={options}
+      name={"tax_rate"}
+      isLoading={isFetching}
+      placeholder={"Tax"}
+    />
+  );
+};
+
+const colLayout = {
+  xs: 24,
+  lg: 12,
+  xxl: 8,
 };
 
 const RegisterForm = ({ products, setProducts }) => {
@@ -282,6 +308,13 @@ export const PosRegister = ({
     // setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);
 
+  // const discount = Form.useWatch("Discount", form);
+  // const tax = Form.useWatch("Tax", form);
+  // const shipping = Form.useWatch("Shipping", form);
+
+  const [discount, setDiscount] = useState(0);
+  const [shipping, setShipping] = useState(0);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
@@ -293,6 +326,28 @@ export const PosRegister = ({
     setIsModalOpen(false);
     setModalType(null);
   };
+
+  const taxRate = Form.useWatch("tax_rate", form);
+
+  const handleSubmit = async () => {
+    if (modalType === "Discount") {
+      setDiscount(form.getFieldValue(modalType));
+    }
+
+    if (modalType === "Shipping Cost") {
+      setShipping(form.getFieldValue(modalType));
+    }
+
+    hideModal();
+  };
+
+  const tax = (totalPrice * (taxRate ?? 0)) / 100;
+
+  const grandTotal =
+    parseFloat(totalPrice) +
+    parseFloat(tax ?? 0) +
+    parseFloat(shipping) -
+    parseFloat(discount);
 
   return (
     <>
@@ -324,7 +379,7 @@ export const PosRegister = ({
             <hr />
 
             <div className=" grid grid-cols-12 px-2">
-              <span className="text-md font-semibold col-span-7">Total</span>
+              <span className="text-md font-semibold col-span-6">Total</span>
 
               <span className="col-span-5 flex flex-col lg:flex-row justify-around">
                 <span className="text-md font-semibold ">
@@ -340,62 +395,88 @@ export const PosRegister = ({
             <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2">
               <div className="grid grid-cols-2">
                 <span>Items</span>
-                <span>0</span>
+                <span>{Object.keys(formValues.product_list.qty).length}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span>Total</span>
-                <span>0</span>
+                <span>{totalPrice}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("discount")}
+                  onClick={() => showModal("Discount")}
                 >
                   Discount
                   <FaRegEdit className="primary-text" />
                 </span>
-                <span>0</span>
+                <Form.Item name="Discount" noStyle></Form.Item>
+                <span>{discount ?? 0}</span>
               </div>
-              <div className="grid grid-cols-2">
+              {/* <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("coupon")}
+                  onClick={() => showModal("Coupon")}
                 >
                   Coupon
                   <FaRegEdit className="primary-text" />
                 </span>
+                <Form.Item name="Coupon" noStyle></Form.Item>
                 <span>0</span>
-              </div>
+              </div> */}
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline "
-                  onClick={() => showModal("tax")}
+                  onClick={() => showModal("Tax")}
                 >
                   Tax
                   <FaRegEdit className="primary-text" />
                 </span>
-                <span>0</span>
+                <Form.Item name="Tax" noStyle></Form.Item>
+                <span>{tax ?? 0}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("shipping")}
+                  onClick={() => showModal("Shipping Cost")}
                 >
                   Shipping
                   <FaRegEdit className="primary-text" />
                 </span>
-                <span>0</span>
+                <Form.Item name="Shipping" noStyle></Form.Item>
+                <span>{shipping ?? 0}</span>
               </div>
             </div>
 
             <div className="text-center secondary-bg primary-text text-lg py-1 font-semibold rounded-sm">
-              Grand Total
+              Grand Total {grandTotal.toFixed(2) ?? 0}
             </div>
 
             <Button
               type="primary"
-              // icon={<MdOutlineCancel />}
-              onClick={() => form.resetFields()}
+              onClick={() => {
+                form.resetFields();
+                setFormValues({
+                  product_list: {
+                    product_id: {},
+                    qty: {},
+                    sale_unit_id: {},
+                    net_unit_price: {},
+                    discount: {},
+                    tax_rate: {},
+                    tax: {},
+                    total: {},
+
+                    tax_id: {},
+                  },
+                });
+
+                setProducts([]);
+
+                setProductUnits({
+                  sale_units: {},
+                  tax_rate: {},
+                });
+              }}
               className=" flex justify-center items-center gap-2"
             >
               Reset
@@ -404,7 +485,37 @@ export const PosRegister = ({
         </div>
       </Form>
 
-      <CustomModal></CustomModal>
+      <CustomModal
+        openModal={isModalOpen}
+        hideModal={hideModal}
+        title={modalType}
+        width={600}
+        showCloseButton={false}
+        footer={true}
+        onOk={handleSubmit}
+      >
+        <Form
+          form={form}
+          fields={fields}
+          layout="vertical"
+          autoComplete="on"
+          scrollToFirstError
+        >
+          <Row>
+            <Col {...fullColLayout}>
+              {modalType === "Tax" ? (
+                <TaxComponent />
+              ) : (
+                <CustomInput
+                  type="number"
+                  name={modalType}
+                  placeholder={modalType}
+                />
+              )}
+            </Col>
+          </Row>
+        </Form>
+      </CustomModal>
     </>
   );
 };

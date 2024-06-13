@@ -12,7 +12,7 @@ const CustomDrawer = ({
   open,
   isLoading = false,
   onClose,
-  width = 800,
+  width = 900,
 }) => {
   const dispatch = useDispatch();
 

@@ -126,7 +126,7 @@ const CustomInput = (props) => {
     required = false,
     prefix,
     suffix,
-    requireMsg,
+    requireMsg = undefined,
     noStyle = false,
     addonAfter,
     tooltip,
@@ -136,22 +136,21 @@ const CustomInput = (props) => {
 
   const commonProps = {
     placeholder: `Enter ${placeholder ?? label}`,
-    className: "mt-1 border-2",
     size: "large",
     prefix,
-    suffix,
-    allowClear: true,
     value,
   };
 
   const renderInputComponent = () => {
     switch (type) {
       case "password":
-        return <Password {...commonProps} />;
+        return <Password {...commonProps} className="mt-1 border-2" />;
       case "textarea":
         return (
           <TextArea
             {...commonProps}
+            className="mt-1 border-2"
+            allowClear={true}
             autoSize={{ minRows: 2, maxRows: 5 }}
             showCount
           />
@@ -161,7 +160,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="w-full"
+            className="mt-1 border-2 w-full"
             min={0}
             max={100}
             suffix="%"
@@ -172,7 +171,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="w-full ant-group-number"
+            className="mt-1 border-2 w-full ant-group-number"
             placeholder="01XXXX123XX"
             addonBefore="+88"
             controls={false}
@@ -184,17 +183,24 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="w-full ant-group-addOn"
+            className="mt-1 border-2 w-full ant-group-addOn"
             addonAfter={suffix}
             controls={false}
             changeOnWheel={false}
             onChange={onChange}
           />
         );
-      case "select":
-        return <h1>Use Custom select component</h1>;
       default:
-        return <Input {...commonProps} type={type} addonAfter={addonAfter} />;
+        return (
+          <Input
+            {...commonProps}
+            type={type}
+            allowClear={true}
+            className="mt-1 border-2"
+            suffix={suffix}
+            addonAfter={addonAfter}
+          />
+        );
     }
   };
 
@@ -205,7 +211,7 @@ const CustomInput = (props) => {
         name={name}
         rules={[
           {
-            required,
+            required: required,
             message: `Please Input ${requireMsg ?? label}!`,
           },
         ]}

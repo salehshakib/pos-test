@@ -8,6 +8,13 @@ import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const PaymentType = ({ paymentType }) => {
   const form = Form.useFormInstance();
+  const payment = Form.useWatch("payment_type", form);
+
+  useEffect(() => {
+    if (!payment) {
+      form.setFieldValue("payment_type", "Cash");
+    }
+  }, [form, payment]);
 
   useEffect(() => {
     form.setFieldValue("payment_type", paymentType);

@@ -2,23 +2,27 @@ import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateDesignationMutation } from "../../redux/services/hrm/designation/designationApi";
+import { useCreateAnnouncementMutation } from "../../redux/services/hrm/announcement/announcementApi";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { DesignationForm } from "./DesignationForm";
+import { AnnouncementForm } from "./AnnouncementForm";
+import dayjs from "dayjs";
 
-export const DesignationCreate = () => {
+export const AnnoucementCreate = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createDesignation, { isLoading }] = useCreateDesignationMutation();
+  const [createAnnouncement, { isLoading }] = useCreateAnnouncementMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    const { data, error } = await createDesignation({
-      data: values,
+    const { data, error } = await createAnnouncement({
+      data: {
+        ...values,
+        start_date: dayjs(values?.start_Date).format("YYYY-MM-DD"),
+        end_date: dayjs(values?.end_Date)?.format("YYYY-MM-DD"),
+      },
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());
@@ -34,8 +38,8 @@ export const DesignationCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Designation"} open={isCreateDrawerOpen}>
-      <DesignationForm
+    <CustomDrawer title={"Create Announcement"} open={isCreateDrawerOpen}>
+      <AnnouncementForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}

@@ -1,8 +1,11 @@
 import { CiDesktop } from "react-icons/ci";
 import { FaBuilding } from "react-icons/fa";
 import { FaPeopleRoof } from "react-icons/fa6";
-import { MdPayment, MdTimeToLeave } from "react-icons/md";
+import { GrAnnounce } from "react-icons/gr";
+import { MdCoPresent, MdPayment, MdTimeToLeave } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
+import { Announcement } from "../../pages/Dashboard/Announcement/Announcement";
+import { Attendence } from "../../pages/Dashboard/Attendence/Attendence";
 import Department from "../../pages/Dashboard/Department/Department";
 import Designation from "../../pages/Dashboard/Designation/Designation";
 import Employee from "../../pages/Dashboard/Employee/Employee";
@@ -29,6 +32,13 @@ export const hrmPaths = [
     icon: FaPeopleRoof,
     element: <Employee />,
   },
+
+  {
+    name: "Attendence",
+    path: "attendence",
+    icon: MdCoPresent,
+    element: <Attendence />,
+  },
   {
     name: "Leave",
     path: "leave",
@@ -46,5 +56,11 @@ export const hrmPaths = [
     path: "holidays",
     icon: MdTimeToLeave,
     element: <Holidays />,
+  },
+  {
+    name: "Announcement",
+    path: "announcement",
+    icon: GrAnnounce,
+    element: <Announcement />,
   },
 ];

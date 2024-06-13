@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { EMPLOYEE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { ANNOUNCEMENT } from "../../../../utilities/apiEndpoints/hrm.api";
+import { openNotification } from "../../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const employee = baseApi.injectEndpoints({
+const announcementApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllEntity: build.query({
+    getAllAnnouncement: build.query({
       query: ({ params }) => ({
-        url: `/${EMPLOYEE}`,
+        url: `/${ANNOUNCEMENT}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: EMPLOYEE, params },
-        EMPLOYEE,
+        { type: ANNOUNCEMENT, params },
+        ANNOUNCEMENT,
       ],
     }),
 
-    getEntityDetails: build.query({
+    getAnnouncementDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${EMPLOYEE}/show/${id}`,
+          url: `${ANNOUNCEMENT}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: EMPLOYEE, id }],
+      providesTags: (result, error, { id }) => [{ type: ANNOUNCEMENT, id }],
     }),
 
-    createEntity: build.mutation({
+    createAnnouncement: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${EMPLOYEE}/store`,
+          url: `/${ANNOUNCEMENT}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const employee = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [EMPLOYEE] : [];
+        return result ? [ANNOUNCEMENT] : [];
       },
     }),
 
-    updateEntity: build.mutation({
+    updateAnnouncement: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${EMPLOYEE}/update/${id}`,
+          url: `/${ANNOUNCEMENT}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const employee = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [EMPLOYEE] : [];
+        return result ? [ANNOUNCEMENT] : [];
       },
     }),
 
-    updateEntityStatus: build.mutation({
+    updateAnnouncementStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${EMPLOYEE}/status/${id}`,
+          url: `/${ANNOUNCEMENT}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const employee = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [EMPLOYEE] : [];
+        return result ? [ANNOUNCEMENT] : [];
       },
     }),
 
-    deleteEntity: build.mutation({
+    deleteAnnouncement: build.mutation({
       query: (id) => {
         return {
-          url: `/${EMPLOYEE}/delete/${id}`,
+          url: `/${ANNOUNCEMENT}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const employee = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [EMPLOYEE] : [];
+        return result ? [ANNOUNCEMENT] : [];
       },
     }),
 
-    exportEntity: build.mutation({
+    exportAnnouncement: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${EMPLOYEE}/export`,
+          url: `/${ANNOUNCEMENT}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const employee = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllEntityQuery,
-  useGetEntityDetailsQuery,
-  useCreateEntityMutation,
-  useUpdateEntityMutation,
-  useUpdateEntityStatusMutation,
-  useDeleteEntityMutation,
-  useExportEntityMutation,
-} = employee;
+  useGetAllAnnouncementQuery,
+  useGetAnnouncementDetailsQuery,
+  useCreateAnnouncementMutation,
+  useUpdateAnnouncementMutation,
+  useUpdateAnnouncementStatusMutation,
+  useDeleteAnnouncementMutation,
+  useExportAnnouncementMutation,
+} = announcementApi;

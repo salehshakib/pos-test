@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { ANNOUNCEMENT } from "../../../../utilities/apiEndpoints/hrm.api";
+import { HOLIDAY } from "../../../../utilities/apiEndpoints/hrm.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const announcement = baseApi.injectEndpoints({
+const holidayApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllAnnouncement: build.query({
+    getAllHoliday: build.query({
       query: ({ params }) => ({
-        url: `/${ANNOUNCEMENT}`,
+        url: `/${HOLIDAY}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: ANNOUNCEMENT, params },
-        ANNOUNCEMENT,
+        { type: HOLIDAY, params },
+        HOLIDAY,
       ],
     }),
 
-    getAnnouncementDetails: build.query({
+    getHolidayDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${ANNOUNCEMENT}/show/${id}`,
+          url: `${HOLIDAY}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: ANNOUNCEMENT, id }],
+      providesTags: (result, error, { id }) => [{ type: HOLIDAY, id }],
     }),
 
-    createAnnouncement: build.mutation({
+    createHoliday: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ANNOUNCEMENT}/store`,
+          url: `/${HOLIDAY}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const announcement = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ANNOUNCEMENT] : [];
+        return result ? [HOLIDAY] : [];
       },
     }),
 
-    updateAnnouncement: build.mutation({
+    updateHoliday: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${ANNOUNCEMENT}/update/${id}`,
+          url: `/${HOLIDAY}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const announcement = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ANNOUNCEMENT] : [];
+        return result ? [HOLIDAY] : [];
       },
     }),
 
-    updateAnnouncementStatus: build.mutation({
+    updateHolidayStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${ANNOUNCEMENT}/status/${id}`,
+          url: `/${HOLIDAY}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const announcement = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ANNOUNCEMENT] : [];
+        return result ? [HOLIDAY] : [];
       },
     }),
 
-    deleteAnnouncement: build.mutation({
+    deleteHoliday: build.mutation({
       query: (id) => {
         return {
-          url: `/${ANNOUNCEMENT}/delete/${id}`,
+          url: `/${HOLIDAY}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const announcement = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ANNOUNCEMENT] : [];
+        return result ? [HOLIDAY] : [];
       },
     }),
 
-    exportAnnouncement: build.mutation({
+    exportHoliday: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ANNOUNCEMENT}/export`,
+          url: `/${HOLIDAY}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const announcement = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllAnnouncementQuery,
-  useGetAnnouncementDetailsQuery,
-  useCreateAnnouncementMutation,
-  useUpdateAnnouncementMutation,
-  useUpdateAnnouncementStatusMutation,
-  useDeleteAnnouncementMutation,
-  useExportAnnouncementMutation,
-} = announcement;
+  useGetAllHolidayQuery,
+  useGetHolidayDetailsQuery,
+  useCreateHolidayMutation,
+  useUpdateHolidayMutation,
+  useUpdateHolidayStatusMutation,
+  useDeleteHolidayMutation,
+  useExportHolidayMutation,
+} = holidayApi;

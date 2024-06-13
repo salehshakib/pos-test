@@ -1,35 +1,22 @@
 import { useState } from "react";
-import { LeaveTypeCreate } from "../../../../components/LeaveType/LeaveTypeCreate";
-import { LeaveTypeTable } from "../../../../components/LeaveType/LeaveTypeTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import AttendenceCreate from "../../../components/Attendence/AttendenceCreate";
+import { AttendenceTable } from "../../../components/Attendence/AttendenceTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (name) => (
+    title: "Brand",
+    dataIndex: "brand",
+    key: "brand",
+    render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {name}
-      </span>
-    ),
-  },
-
-  {
-    title: "Attachmentable",
-    dataIndex: "attachmentable",
-    key: "attachmentable",
-    align: "center",
-
-    render: (attachmentable) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {attachmentable === 1 ? "Needed" : "Don't Needed"}
+        {brand}
       </span>
     ),
   },
 ];
 
-export const LeaveType = () => {
+export const Attendence = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -45,15 +32,15 @@ export const LeaveType = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Leave Type"
+      pageTitle="Attendence"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
       // handleExport={handleExport}
     >
-      <LeaveTypeCreate />
+      <AttendenceCreate />
 
-      <LeaveTypeTable
+      <AttendenceTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />

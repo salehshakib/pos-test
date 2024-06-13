@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { ATTENDENCE } from "../../../../utilities/apiEndpoints/hrm.api";
+import { PAYROLL } from "../../../../utilities/apiEndpoints/hrm.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const attendence = baseApi.injectEndpoints({
+const payrollApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllAttendence: build.query({
+    getAllPayroll: build.query({
       query: ({ params }) => ({
-        url: `/${ATTENDENCE}`,
+        url: `/${PAYROLL}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: ATTENDENCE, params },
-        ATTENDENCE,
+        { type: PAYROLL, params },
+        PAYROLL,
       ],
     }),
 
-    getAttendenceDetails: build.query({
+    getPayrollDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${ATTENDENCE}/show/${id}`,
+          url: `${PAYROLL}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: ATTENDENCE, id }],
+      providesTags: (result, error, { id }) => [{ type: PAYROLL, id }],
     }),
 
-    createAttendence: build.mutation({
+    createPayroll: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ATTENDENCE}/store`,
+          url: `/${PAYROLL}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const attendence = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [PAYROLL] : [];
       },
     }),
 
-    updateAttendence: build.mutation({
+    updatePayroll: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${ATTENDENCE}/update/${id}`,
+          url: `/${PAYROLL}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const attendence = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [PAYROLL] : [];
       },
     }),
 
-    updateAttendenceStatus: build.mutation({
+    updatePayrollStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${ATTENDENCE}/status/${id}`,
+          url: `/${PAYROLL}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const attendence = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [PAYROLL] : [];
       },
     }),
 
-    deleteAttendence: build.mutation({
+    deletePayroll: build.mutation({
       query: (id) => {
         return {
-          url: `/${ATTENDENCE}/delete/${id}`,
+          url: `/${PAYROLL}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const attendence = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [PAYROLL] : [];
       },
     }),
 
-    exportAttendence: build.mutation({
+    exportPayroll: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ATTENDENCE}/export`,
+          url: `/${PAYROLL}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const attendence = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllAttendenceQuery,
-  useGetAttendenceDetailsQuery,
-  useCreateAttendenceMutation,
-  useUpdateAttendenceMutation,
-  useUpdateAttendenceStatusMutation,
-  useDeleteAttendenceMutation,
-  useExportAttendenceMutation,
-} = attendence;
+  useGetAllPayrollQuery,
+  useGetPayrollDetailsQuery,
+  useCreatePayrollMutation,
+  useUpdatePayrollMutation,
+  useUpdatePayrollStatusMutation,
+  useDeletePayrollMutation,
+  useExportPayrollMutation,
+} = payrollApi;

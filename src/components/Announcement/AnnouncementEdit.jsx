@@ -2,16 +2,14 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import {
-  useGetDesignationDetailsQuery,
-  useUpdateDesignationMutation,
-} from "../../redux/services/hrm/designation/designationApi";
+import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
+import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveType";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { DesignationForm } from "./DesignationForm";
+import { AnnouncementForm } from "./AnnouncementForm";
 
-export const DesignationEdit = ({ id, setId }) => {
+export const AnnouncementEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -19,19 +17,17 @@ export const DesignationEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetDesignationDetailsQuery(
+  const { data, isFetching } = useGetAnnouncementDetailsQuery(
     {
       id,
       params: {
-        parent: 1,
+        child: 1,
       },
     },
     { skip: !id }
   );
 
-  console.log(isEditDrawerOpen, id);
-
-  const [updateDesignation, { isLoading }] = useUpdateDesignationMutation();
+  const [updateLeaveType, { isLoading }] = useUpdateLeaveTypeMutation();
 
   useEffect(() => {
     if (data) {
@@ -39,9 +35,9 @@ export const DesignationEdit = ({ id, setId }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "department_id",
-          value: data?.departments?.id.toString(),
-          errors: "",
+          name: "department_ids",
+          value: data?.departments?.map((item) => item?.id?.toString()),
+          erros: "",
         },
       ];
 
@@ -50,18 +46,7 @@ export const DesignationEdit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    // const formData = new FormData();
-
-    console.log(values);
-
-    // const postData = {
-    //   ...values,
-    //   _method: "PUT",
-    // };
-
-    // appendToFormData(postData, formData);
-
-    const { data, error } = await updateDesignation({
+    const { data, error } = await updateLeaveType({
       id,
       data: { ...values, _method: "PUT" },
     });
@@ -80,11 +65,11 @@ export const DesignationEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Designation"}
+      title={"Edit Annoucement"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <DesignationForm
+      <AnnouncementForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}

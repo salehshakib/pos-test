@@ -1,4 +1,5 @@
 export const DEPARTMENT = "human-resource/department";
+export const DESIGNATION = "human-resource/designation";
 export const EMPLOYEE = "human-resource/employee";
 export const ANNOUNCEMENT = "human-resource/announcement";
 export const ATTENDENCE = "human-resource/attendence";

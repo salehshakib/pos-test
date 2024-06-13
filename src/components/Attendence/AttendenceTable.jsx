@@ -1,20 +1,20 @@
+import dayjs from "dayjs";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import { DesignationEdit } from "./DesignationEdit";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import { useState } from "react";
 import {
-  useDeleteDesignationMutation,
-  useGetAllDesignationQuery,
-  useUpdateDesignationStatusMutation,
-} from "../../redux/services/hrm/designation/designationApi";
+  useDeleteBrandMutation,
+  useGetBrandsQuery,
+  useUpdateBrandStatusMutation,
+} from "../../redux/services/brand/brandApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import dayjs from "dayjs";
-import StatusModal from "../Shared/Modal/StatusModal";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { AttendenceEdit } from "./AttendenceEdit";
 
-export const DesignationTable = ({ newColumns, setSelectedRows }) => {
+export const AttendenceTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
@@ -26,17 +26,16 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllDesignationQuery({
-    params: { ...pagination, parent: 1 },
+  const { data, isLoading } = useGetBrandsQuery({
+    params: pagination,
   });
 
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateDesignationStatusMutation();
+    useUpdateBrandStatusMutation();
 
-  const [deleteDesignation, { isLoading: isDeleting }] =
-    useDeleteDesignationMutation();
+  const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -63,21 +62,21 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteDesignation(deleteId);
+    const { data } = await deleteBrand(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
   };
 
   const dataSource =
-    data?.results?.designation?.map((item) => {
-      const { id, name, departments, created_at, is_active } = item ?? {};
+    data?.results?.brand?.map((item) => {
+      const { id, name, created_at, attachments, is_active } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        name: name,
-        departments: departments?.name,
+        brand: name,
+        image: attachments?.[0]?.url,
         created_at: date,
 
         status: is_active,
@@ -103,7 +102,7 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
 
-      <DesignationEdit id={editId} setId={setEditId} />
+      <AttendenceEdit id={editId} setId={setEditId} />
 
       <StatusModal
         statusModal={statusModal}

@@ -60,18 +60,18 @@ const columns = [
       </span>
     ),
   },
-  {
-    //department
-    title: "Department",
-    dataIndex: "department",
-    key: "department",
-    align: "center",
-    render: (department) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {department}
-      </span>
-    ),
-  },
+  // {
+  //   //department
+  //   title: "Department",
+  //   dataIndex: "department",
+  //   key: "department",
+  //   align: "center",
+  //   render: (department) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {department}
+  //     </span>
+  //   ),
+  // },
 ];
 
 const Employee = () => {
@@ -80,7 +80,7 @@ const Employee = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Employee List"
+      pageTitle="Employee"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { LEAVE_TYPE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { LEAVE } from "../../../../utilities/apiEndpoints/hrm.api";
+import { openNotification } from "../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../utilities/lib/verifyToken";
+import { baseApi } from "../../api/baseApi";
 
-const leaveType = baseApi.injectEndpoints({
+const leaveApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllLeaveType: build.query({
+    getAllLeave: build.query({
       query: ({ params }) => ({
-        url: `/${LEAVE_TYPE}`,
+        url: `/${LEAVE}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: LEAVE_TYPE, params },
-        LEAVE_TYPE,
+        { type: LEAVE, params },
+        LEAVE,
       ],
     }),
 
-    getLeaveTypeDetails: build.query({
+    getLeaveDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${LEAVE_TYPE}/show/${id}`,
+          url: `${LEAVE}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: LEAVE_TYPE, id }],
+      providesTags: (result, error, { id }) => [{ type: LEAVE, id }],
     }),
 
-    createLeaveType: build.mutation({
+    createLeave: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${LEAVE_TYPE}/store`,
+          url: `/${LEAVE}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const leaveType = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE_TYPE] : [];
+        return result ? [LEAVE] : [];
       },
     }),
 
-    updateLeaveType: build.mutation({
+    updateLeave: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${LEAVE_TYPE}/update/${id}`,
+          url: `/${LEAVE}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const leaveType = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE_TYPE] : [];
+        return result ? [LEAVE] : [];
       },
     }),
 
-    updateLeaveTypeStatus: build.mutation({
+    updateLeaveStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${LEAVE_TYPE}/status/${id}`,
+          url: `/${LEAVE}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const leaveType = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE_TYPE] : [];
+        return result ? [LEAVE] : [];
       },
     }),
 
-    deleteLeaveType: build.mutation({
+    deleteLeave: build.mutation({
       query: (id) => {
         return {
-          url: `/${LEAVE_TYPE}/delete/${id}`,
+          url: `/${LEAVE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const leaveType = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE_TYPE] : [];
+        return result ? [LEAVE] : [];
       },
     }),
 
-    exportLeaveType: build.mutation({
+    exportLeave: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${LEAVE_TYPE}/export`,
+          url: `/${LEAVE}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const leaveType = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllLeaveTypeQuery,
-  useGetLeaveTypeDetailsQuery,
-  useCreateLeaveTypeMutation,
-  useUpdateLeaveTypeMutation,
-  useUpdateLeaveTypeStatusMutation,
-  useDeleteLeaveTypeMutation,
-  useExportLeaveTypeMutation,
-} = leaveType;
+  useGetAllLeaveQuery,
+  useGetLeaveDetailsQuery,
+  useCreateLeaveMutation,
+  useUpdateLeaveMutation,
+  useUpdateLeaveStatusMutation,
+  useDeleteLeaveMutation,
+  useExportLeaveMutation,
+} = leaveApi;

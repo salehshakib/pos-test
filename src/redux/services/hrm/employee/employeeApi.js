@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { LEAVE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { EMPLOYEE } from "../../../../utilities/apiEndpoints/hrm.api";
+import { openNotification } from "../../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const leave = baseApi.injectEndpoints({
+const employeeApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllLeave: build.query({
+    getAllEmployee: build.query({
       query: ({ params }) => ({
-        url: `/${LEAVE}`,
+        url: `/${EMPLOYEE}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: LEAVE, params },
-        LEAVE,
+        { type: EMPLOYEE, params },
+        EMPLOYEE,
       ],
     }),
 
-    getLeaveDetails: build.query({
+    getEmployeeDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${LEAVE}/show/${id}`,
+          url: `${EMPLOYEE}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: LEAVE, id }],
+      providesTags: (result, error, { id }) => [{ type: EMPLOYEE, id }],
     }),
 
-    createLeave: build.mutation({
+    createEmployee: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${LEAVE}/store`,
+          url: `/${EMPLOYEE}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const leave = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE] : [];
+        return result ? [EMPLOYEE] : [];
       },
     }),
 
-    updateLeave: build.mutation({
+    updateEmployee: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${LEAVE}/update/${id}`,
+          url: `/${EMPLOYEE}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const leave = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE] : [];
+        return result ? [EMPLOYEE] : [];
       },
     }),
 
-    updateLeaveStatus: build.mutation({
+    updateEmployeeStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${LEAVE}/status/${id}`,
+          url: `/${EMPLOYEE}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const leave = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE] : [];
+        return result ? [EMPLOYEE] : [];
       },
     }),
 
-    deleteLeave: build.mutation({
+    deleteEmployee: build.mutation({
       query: (id) => {
         return {
-          url: `/${LEAVE}/delete/${id}`,
+          url: `/${EMPLOYEE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const leave = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [LEAVE] : [];
+        return result ? [EMPLOYEE] : [];
       },
     }),
 
-    exportLeave: build.mutation({
+    exportEmployee: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${LEAVE}/export`,
+          url: `/${EMPLOYEE}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const leave = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllLeaveQuery,
-  useGetLeaveDetailsQuery,
-  useCreateLeaveMutation,
-  useUpdateLeaveMutation,
-  useUpdateLeaveStatusMutation,
-  useDeleteLeaveMutation,
-  useExportLeaveMutation,
-} = leave;
+  useGetAllEmployeeQuery,
+  useGetEmployeeDetailsQuery,
+  useCreateEmployeeMutation,
+  useUpdateEmployeeMutation,
+  useUpdateEmployeeStatusMutation,
+  useDeleteEmployeeMutation,
+  useExportEmployeeMutation,
+} = employeeApi;

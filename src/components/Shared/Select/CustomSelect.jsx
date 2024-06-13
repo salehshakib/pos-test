@@ -1,4 +1,5 @@
 import { Empty, Form, Select, Spin } from "antd";
+import { FaAngleDown } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const CustomSelect = (props) => {
@@ -28,7 +29,7 @@ const CustomSelect = (props) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        label={label && `Select ${label}`}
+        label={label && `${label}`}
         name={name}
         rules={[
           {
@@ -67,6 +68,7 @@ const CustomSelect = (props) => {
             allowClear={true}
             defaultActiveFirstOption
             onSelect={onSelect}
+            suffixIcon={<FaAngleDown color="black" />}
           />
         ) : (
           <Select
@@ -93,6 +95,7 @@ const CustomSelect = (props) => {
             allowClear={true}
             defaultActiveFirstOption
             onSelect={onSelect}
+            suffixIcon={<FaAngleDown color="black" />}
           />
         )}
       </Form.Item>

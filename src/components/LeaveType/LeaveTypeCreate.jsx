@@ -2,22 +2,22 @@ import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateDesignationMutation } from "../../redux/services/hrm/designation/designationApi";
+import { useCreateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveType";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { DesignationForm } from "./DesignationForm";
+import { LeaveTypeForm } from "./LeaveTypeForm";
 
-export const DesignationCreate = () => {
+export const LeaveTypeCreate = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createDesignation, { isLoading }] = useCreateDesignationMutation();
+  const [createLeaveType, { isLoading }] = useCreateLeaveTypeMutation();
 
   const handleSubmit = async (values) => {
     console.log(values);
-    const { data, error } = await createDesignation({
+    const { data, error } = await createLeaveType({
       data: values,
     });
     if (data?.success) {
@@ -34,8 +34,8 @@ export const DesignationCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Designation"} open={isCreateDrawerOpen}>
-      <DesignationForm
+    <CustomDrawer title={"Create Leave Type"} open={isCreateDrawerOpen}>
+      <LeaveTypeForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}

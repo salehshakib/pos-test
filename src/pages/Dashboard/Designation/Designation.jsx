@@ -3,7 +3,28 @@ import { DesignationCreate } from "../../../components/Designation/DesignationCr
 import { DesignationTable } from "../../../components/Designation/DesignationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
-const columns = [];
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    title: "Department",
+    dataIndex: "department",
+    key: "department",
+    render: (department) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {department}
+      </span>
+    ),
+  },
+];
 
 const Designation = () => {
   const [newColumns, setNewColumns] = useState(columns);

@@ -8,7 +8,7 @@ const EmployeeCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
+  // const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
 
   const handleSubmit = async (values) => {
     console.log(values);

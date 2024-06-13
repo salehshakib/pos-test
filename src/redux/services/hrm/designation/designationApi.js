@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { HOLIDAY } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { DESIGNATION } from "../../../../utilities/apiEndpoints/hrm.api";
+import { openNotification } from "../../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
-const holiday = baseApi.injectEndpoints({
+const designationApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllHoliday: build.query({
+    getAllDesignation: build.query({
       query: ({ params }) => ({
-        url: `/${HOLIDAY}`,
+        url: `/${DESIGNATION}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: HOLIDAY, params },
-        HOLIDAY,
+        { type: DESIGNATION, params },
+        DESIGNATION,
       ],
     }),
 
-    getHolidayDetails: build.query({
+    getDesignationDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${HOLIDAY}/show/${id}`,
+          url: `${DESIGNATION}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: HOLIDAY, id }],
+      providesTags: (result, error, { id }) => [{ type: DESIGNATION, id }],
     }),
 
-    createHoliday: build.mutation({
+    createDesignation: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${HOLIDAY}/store`,
+          url: `/${DESIGNATION}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const holiday = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [HOLIDAY] : [];
+        return result ? [DESIGNATION] : [];
       },
     }),
 
-    updateHoliday: build.mutation({
+    updateDesignation: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${HOLIDAY}/update/${id}`,
+          url: `/${DESIGNATION}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const holiday = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [HOLIDAY] : [];
+        return result ? [DESIGNATION] : [];
       },
     }),
 
-    updateHolidayStatus: build.mutation({
+    updateDesignationStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${HOLIDAY}/status/${id}`,
+          url: `/${DESIGNATION}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const holiday = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [HOLIDAY] : [];
+        return result ? [DESIGNATION] : [];
       },
     }),
 
-    deleteHoliday: build.mutation({
+    deleteDesignation: build.mutation({
       query: (id) => {
         return {
-          url: `/${HOLIDAY}/delete/${id}`,
+          url: `/${DESIGNATION}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const holiday = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [HOLIDAY] : [];
+        return result ? [DESIGNATION] : [];
       },
     }),
 
-    exportHoliday: build.mutation({
+    exportDesignation: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${HOLIDAY}/export`,
+          url: `/${DESIGNATION}/export`,
           method: "GET",
           body: data,
         };
@@ -130,11 +130,11 @@ const holiday = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllHolidayQuery,
-  useGetHolidayDetailsQuery,
-  useCreateHolidayMutation,
-  useUpdateHolidayMutation,
-  useUpdateHolidayStatusMutation,
-  useDeleteHolidayMutation,
-  useExportHolidayMutation,
-} = holiday;
+  useGetAllDesignationQuery,
+  useGetDesignationDetailsQuery,
+  useCreateDesignationMutation,
+  useUpdateDesignationMutation,
+  useUpdateDesignationStatusMutation,
+  useDeleteDesignationMutation,
+  useExportDesignationMutation,
+} = designationApi;

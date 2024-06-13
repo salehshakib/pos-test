@@ -1,14 +1,14 @@
-import { Dropdown, Table, Tooltip } from "antd";
+import { Dropdown, Table } from "antd";
+import { FiMoreHorizontal } from "react-icons/fi";
+import { MdDelete, MdEditSquare } from "react-icons/md";
+import { PiBroom } from "react-icons/pi";
+import { TbListDetails } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPagination,
   updatePage,
   updatePageSize,
 } from "../../../redux/services/pagination/paginationSlice";
-import { MdDelete, MdEditSquare } from "react-icons/md";
-import { TbListDetails } from "react-icons/tb";
-import { PiBroom } from "react-icons/pi";
-import { FiMoreHorizontal } from "react-icons/fi";
 
 const CustomTable = ({
   columns,
@@ -74,6 +74,7 @@ const CustomTable = ({
     }),
     scroll: {
       x: "max-content",
+      // x: 1200,
     },
     ...tableStyleProps,
   };

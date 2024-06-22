@@ -233,22 +233,26 @@ const ComboProductsComponent = ({
   const [totalUnitPrice, setTotalUnitPrice] = useState(0);
 
   useEffect(() => {
-    const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + cur,
-      0
-    );
-    setTotalQuantity(total);
+    const sanitizeValue = (value) => {
+      const number = parseFloat(value);
+      return isNaN(number) ? 0 : number;
+    };
 
-    console.log(formValues);
+    if (products.length > 0) {
+      const total = Object.values(formValues.product_list.qty).reduce(
+        (acc, cur) => acc + sanitizeValue(cur),
+        0
+      );
+      setTotalQuantity(total);
 
-    const totalAmount = Object.values(formValues.product_list.amount).reduce(
-      (acc, cur) => acc + cur,
-      0
-    );
+      console.log(formValues);
 
-    setTotalUnitPrice(totalAmount);
-
-    console.log(totalAmount);
+      const totalAmount = Object.values(formValues.product_list.amount).reduce(
+        (acc, cur) => acc + sanitizeValue(cur),
+        0
+      );
+      setTotalUnitPrice(totalAmount);
+    }
   }, [formValues, products]);
 
   products.length > 0 &&

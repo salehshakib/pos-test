@@ -393,28 +393,32 @@ export const QuotationProductTable = ({
 
   useEffect(() => {
     if (products.length > 0) {
+      const sanitizeValue = (value) => {
+        const number = parseFloat(value);
+        return isNaN(number) ? 0 : number;
+      };
+
       const total = Object.values(formValues.product_list.qty).reduce(
-        (acc, cur) => acc + parseFloat(cur),
+        (acc, cur) => acc + sanitizeValue(cur),
         0
       );
       setTotalQuantity(total);
 
       const totalPrice = Object.values(formValues.product_list.total).reduce(
-        (acc, cur) => acc + parseFloat(cur),
+        (acc, cur) => acc + sanitizeValue(cur),
         0
       );
       setTotalPrice(totalPrice.toFixed(2));
 
       const totalTax = Object.values(formValues.product_list.tax).reduce(
-        (acc, cur) => acc + parseFloat(cur),
+        (acc, cur) => acc + sanitizeValue(cur),
         0
       );
       setTotalTax(totalTax.toFixed(2));
 
       const totalDiscount = Object.values(
         formValues.product_list.discount
-      ).reduce((acc, cur) => acc + parseFloat(cur), 0);
-
+      ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
       setTotalDiscount(totalDiscount.toFixed(2));
     }
   }, [formValues, products]);

@@ -498,23 +498,35 @@ export const TransferProductTable = ({
   const [totalTax, setTotalTax] = useState(0);
 
   useEffect(() => {
-    const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + parseInt(cur),
-      0
-    );
-    setTotalQuantity(total);
+    if (products.length > 0) {
+      const sanitizeIntValue = (value) => {
+        const number = parseInt(value);
+        return isNaN(number) ? 0 : number;
+      };
 
-    const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + parseFloat(cur),
-      0
-    );
-    setTotalPrice(totalPrice?.toFixed(2));
+      const sanitizeFloatValue = (value) => {
+        const number = parseFloat(value);
+        return isNaN(number) ? 0 : number;
+      };
 
-    const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + parseFloat(cur),
-      0
-    );
-    setTotalTax(totalTax.toFixed(2));
+      const total = Object.values(formValues.product_list.qty).reduce(
+        (acc, cur) => acc + sanitizeIntValue(cur),
+        0
+      );
+      setTotalQuantity(total);
+
+      const totalPrice = Object.values(formValues.product_list.total).reduce(
+        (acc, cur) => acc + sanitizeFloatValue(cur),
+        0
+      );
+      setTotalPrice(totalPrice.toFixed(2));
+
+      const totalTax = Object.values(formValues.product_list.tax).reduce(
+        (acc, cur) => acc + sanitizeFloatValue(cur),
+        0
+      );
+      setTotalTax(totalTax.toFixed(2));
+    }
   }, [formValues, products]);
 
   products?.length > 0 &&

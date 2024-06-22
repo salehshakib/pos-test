@@ -1,8 +1,8 @@
 // Import necessary dependencies
 import { HOLIDAY } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { openNotification } from "../../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
 const holidayApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -32,11 +32,11 @@ const holidayApi = baseApi.injectEndpoints({
     }),
 
     createHoliday: build.mutation({
-      query: ({ data }) => {
+      query: ({ formData }) => {
         return {
           url: `/${HOLIDAY}/store`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       transformResponse: (response) => {

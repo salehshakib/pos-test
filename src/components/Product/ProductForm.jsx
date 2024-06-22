@@ -1,11 +1,11 @@
 import { Col, Form, Row } from "antd";
-import dayjs from "dayjs";
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
+import { disabledDate } from "../../utilities/lib/currentDate";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -109,20 +109,22 @@ const PromotionalPriceComponent = () => {
   const form = Form.useFormInstance();
   const hasPromotionalPrice = Form.useWatch("has_promotion", form);
 
-  const disabledDate = (current) => {
-    return current < dayjs().startOf("day");
-  };
+  // const disabledDate = (current) => {
+  //   return current < dayjs().startOf("day");
+  // };
 
   const start_date = Form.useWatch(["promotion", "starting_date"], form);
 
   const disabledDateStart = (current) => {
-    if (start_date) {
-      return (
-        current && start_date && current < dayjs(start_date).startOf("day")
-      );
-    } else {
-      return current < dayjs().startOf("day");
-    }
+    // if (start_date) {
+    //   return (
+    //     current && start_date && current < dayjs(start_date).startOf("day")
+    //   );
+    // } else {
+    //   return current < dayjs().startOf("day");
+    // }
+
+    return disabledDate(current, start_date);
   };
 
   return (
@@ -141,26 +143,28 @@ const PromotionalPriceComponent = () => {
               required={true}
             />
           </Col>
-          <Row {...rowLayout}>
-            <Col {...mdColLayout}>
-              <CustomDatepicker
-                type={"date"}
-                label={"Start Date"}
-                name={["promotion", "starting_date"]}
-                required={true}
-                disabledDate={disabledDate}
-              />
-            </Col>
-            <Col {...mdColLayout}>
-              <CustomDatepicker
-                type={"date"}
-                label={"End Date"}
-                name={["promotion", "last_date"]}
-                required={true}
-                disabledDate={disabledDateStart}
-              />
-            </Col>
-          </Row>
+          <Col {...mdColLayout}>
+            <Row {...rowLayout}>
+              <Col {...mdColLayout}>
+                <CustomDatepicker
+                  type={"date"}
+                  label={"Start Date"}
+                  name={["promotion", "starting_date"]}
+                  required={true}
+                  disabledDate={disabledDate}
+                />
+              </Col>
+              <Col {...mdColLayout}>
+                <CustomDatepicker
+                  type={"date"}
+                  label={"End Date"}
+                  name={["promotion", "last_date"]}
+                  required={true}
+                  disabledDate={disabledDateStart}
+                />
+              </Col>
+            </Row>
+          </Col>
         </>
       )}
     </Row>

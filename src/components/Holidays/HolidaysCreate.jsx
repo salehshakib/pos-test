@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { HolidaysForm } from "./HolidaysForm";
+import { useCreateHolidayMutation } from "../../redux/services/hrm/holiday/holidayApi";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 export const HolidaysCreate = () => {
   const dispatch = useDispatch();
@@ -12,35 +15,47 @@ export const HolidaysCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  // const [createGiftCard, { isLoading }] = useCreateGiftCardMutation();
+  const [createHoliday, { isLoading }] = useCreateHolidayMutation();
 
-  // const handleSubmit = async (values) => {
-  //   console.log(values);
-  //   const { data, error } = await createGiftCard({
-  //     data: {
-  //       ...values,
-  //       for_user: values?.for_user ? 1 : 0,
-  //       expired_date: dayjs(values?.expired_date).format("YYYY-MM-DD"),
-  //     },
-  //   });
-  //   if (data?.success) {
-  //     dispatch(closeCreateDrawer());
-  //     form.resetFields();
-  //   }
-  //   if (error) {
-  //     const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
-  //       name: fieldName,
-  //       errors: error?.data?.errors[fieldName],
-  //     }));
-  //     setErrorFields(errorFields);
-  //   }
-  // };
+  const handleSubmit = async (values) => {
+    const formData = new FormData();
+
+    const postObj = {
+      ...values,
+      department_ids: JSON.stringify(values?.department_ids),
+      start_date: dayjs(values?.start_date).format("YYYY-MM-DD"),
+    };
+
+    if (values?.end_date) {
+      postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
+    } else {
+      postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
+    }
+
+    appendToFormData(postObj, formData);
+
+    const { data, error } = await createHoliday({
+      formData,
+    });
+
+    if (data?.success) {
+      dispatch(closeCreateDrawer());
+      form.resetFields();
+    }
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+      setErrorFields(errorFields);
+    }
+  };
 
   return (
-    <CustomDrawer title={"Create Gift Card"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={"Create Holiday"} open={isCreateDrawerOpen}>
       <HolidaysForm
-        //   handleSubmit={handleSubmit}
-        //   isLoading={isLoading}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
         fields={errorFields}
         form={form}
       />

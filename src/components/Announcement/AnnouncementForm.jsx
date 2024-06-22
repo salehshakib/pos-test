@@ -1,23 +1,29 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
 import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
+import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useEffect } from "react";
-import dayjs from "dayjs";
 
 const DateComponent = () => {
   const form = Form.useFormInstance();
+
   useEffect(() => {
-    const currentDate = dayjs(new Date());
     form.setFieldsValue({
-      start_date: currentDate,
-      end_date: currentDate,
+      start_date: getCurrentDate,
+      end_date: getCurrentDate,
     });
   }, [form]);
+
+  const startDate = Form.useWatch("start_date", form);
+
+  const disabledDateStart = (current) => {
+    return disabledDate(current, startDate);
+  };
 
   return (
     <>
@@ -30,7 +36,12 @@ const DateComponent = () => {
       </Col>
 
       <Col {...mdColLayout}>
-        <CustomDatepicker label="End Date" name={"end_date"} required={true} />
+        <CustomDatepicker
+          label="End Date"
+          name={"end_date"}
+          required={true}
+          disabledDate={disabledDateStart}
+        />
       </Col>
     </>
   );
@@ -98,8 +109,6 @@ export const AnnouncementForm = (props) => {
           />
         </Col>
 
-        <DateComponent />
-
         <Col {...fullColLayout} className="mb-2">
           <AllDepartmentsComponent />
         </Col>
@@ -107,6 +116,8 @@ export const AnnouncementForm = (props) => {
         <Col {...fullColLayout}>
           <DepartmentComponent />
         </Col>
+
+        <DateComponent />
 
         <Col {...fullColLayout}>
           <CustomCheckbox label="Send Email" name={"is_send_email"} />

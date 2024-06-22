@@ -208,6 +208,69 @@ const ProductFormComponent = ({
   );
 };
 
+// function setFormValuesId(
+//   id,
+//   purchase_unit_id,
+//   unit_cost,
+//   purchase_units,
+//   formValues,
+//   productUnits,
+//   tax_id,
+
+//   // eslint-disable-next-line no-unused-vars
+//   taxes
+// ) {
+//   if (id) {
+//     formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
+
+//     formValues.product_list.net_unit_cost[id] =
+//       formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
+
+//     formValues.product_list.discount[id] =
+//       formValues.product_list.discount[id] ?? 0;
+
+//     formValues.product_list.tax[id] = parseFloat(
+//       (
+//         (parseInt(productUnits.purchase_units?.[id] ?? 1) *
+//           parseInt(formValues.product_list.tax_rate[id]) *
+//           parseInt(formValues.product_list.net_unit_cost[id]) *
+//           parseInt(formValues.product_list.qty[id])) /
+//         100
+//       ).toFixed(2)
+//     );
+
+//     formValues.product_list.tax_rate[id] =
+//       formValues.product_list.tax_rate[id] ?? 0;
+
+//     const saleUnitsOperationValue = purchase_units
+//       ? purchase_units?.operation_value !== null
+//         ? purchase_units?.operation_value
+//         : 1
+//       : 1;
+
+//     productUnits.purchase_units[id] =
+//       productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
+
+//     formValues.product_list.total[id] =
+//       productUnits.purchase_units[id] *
+//         parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
+//         formValues.product_list.qty[id] -
+//       formValues.product_list.discount[id] +
+//       formValues.product_list.tax[id];
+
+//     formValues.product_list.purchase_unit_id[id] =
+//       formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
+
+//     formValues.product_list.recieved[id] =
+//       formValues.product_list.recieved[id] ?? 0;
+
+//     if (formValues?.product_list?.tax_id) {
+//       formValues.product_list.tax_id[id] =
+//         formValues.product_list?.tax_id?.[id] ?? tax_id;
+//     }
+//   }
+// }
+
 function setFormValuesId(
   id,
   purchase_unit_id,
@@ -216,57 +279,70 @@ function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-
   // eslint-disable-next-line no-unused-vars
   taxes
 ) {
+  const sanitizeIntValue = (value) => {
+    const number = parseInt(value);
+    return isNaN(number) ? 0 : number;
+  };
+
+  const sanitizeFloatValue = (value) => {
+    const number = parseFloat(value);
+    return isNaN(number) ? 0 : number;
+  };
+
   if (id) {
-    formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
+    formValues.product_list.qty[id] = sanitizeIntValue(
+      formValues.product_list.qty?.[id] || 1
+    );
 
     formValues.product_list.net_unit_cost[id] =
-      formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
+      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
+      sanitizeFloatValue(unit_cost) ||
+      "0";
 
-    formValues.product_list.discount[id] =
-      formValues.product_list.discount[id] ?? 0;
+    formValues.product_list.discount[id] = sanitizeFloatValue(
+      formValues.product_list.discount?.[id] ?? 0
+    );
 
-    formValues.product_list.tax[id] = parseFloat(
+    formValues.product_list.tax_rate[id] = sanitizeIntValue(
+      formValues.product_list.tax_rate?.[id] ?? 0
+    );
+
+    formValues.product_list.tax[id] = sanitizeFloatValue(
       (
-        (parseInt(productUnits.purchase_units?.[id] ?? 1) *
-          parseInt(formValues.product_list.tax_rate[id]) *
-          parseInt(formValues.product_list.net_unit_cost[id]) *
-          parseInt(formValues.product_list.qty[id])) /
+        (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
+          sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
+          sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
+          sanitizeIntValue(formValues.product_list.qty?.[id])) /
         100
       ).toFixed(2)
     );
 
-    formValues.product_list.tax_rate[id] =
-      formValues.product_list.tax_rate[id] ?? 0;
-
-    const saleUnitsOperationValue = purchase_units
-      ? purchase_units?.operation_value !== null
-        ? purchase_units?.operation_value
-        : 1
-      : 1;
+    const saleUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
     productUnits.purchase_units[id] =
-      productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
+      sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
+      saleUnitsOperationValue;
 
     formValues.product_list.total[id] =
-      productUnits.purchase_units[id] *
-        parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
-        formValues.product_list.qty[id] -
-      formValues.product_list.discount[id] +
-      formValues.product_list.tax[id];
+      sanitizeIntValue(productUnits.purchase_units?.[id]) *
+        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+        sanitizeIntValue(formValues.product_list.qty?.[id]) -
+      sanitizeFloatValue(formValues.product_list.discount?.[id]) +
+      sanitizeFloatValue(formValues.product_list.tax?.[id]);
 
     formValues.product_list.purchase_unit_id[id] =
-      formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
+      formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
 
-    formValues.product_list.recieved[id] =
-      formValues.product_list.recieved[id] ?? 0;
+    formValues.product_list.recieved[id] = sanitizeIntValue(
+      formValues.product_list.recieved?.[id] ?? 0
+    );
 
     if (formValues?.product_list?.tax_id) {
       formValues.product_list.tax_id[id] =
-        formValues.product_list?.tax_id?.[id] ?? tax_id;
+        formValues.product_list.tax_id?.[id] ?? tax_id;
     }
   }
 }

@@ -32,6 +32,8 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
     params: { ...pagination, parent: 1 },
   });
 
+  console.log(data);
+
   const total = data?.meta?.total;
 
   const [deleteAdjustment, { isLoading: isDeleting }] =

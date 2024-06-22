@@ -319,10 +319,6 @@ const ProductListEdit = ({ id }) => {
           ? values.attachments?.map((file) => file.originFileObj)
           : [],
 
-      attach_file:
-        values.attach_file?.length > 0 && !values?.attach_file?.[0].url
-          ? values.attach_file?.[0].originFileObj
-          : [],
       name,
       sku,
       type,
@@ -363,6 +359,12 @@ const ProductListEdit = ({ id }) => {
 
       _method: "PUT",
     };
+
+    if (values?.attach_file) {
+      postObj.attach_file = values?.attach_file?.[0].url
+        ? values.attach_file?.[0].originFileObj
+        : [];
+    }
 
     appendToFormData(postObj, formData);
 

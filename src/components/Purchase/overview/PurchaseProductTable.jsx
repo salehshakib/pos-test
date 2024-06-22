@@ -451,7 +451,7 @@ export const PurchaseProductTable = ({
       id,
       name,
       sku,
-      unitCost: formValues.product_list.net_unit_cost[id],
+      unitCost: "$" + formValues.product_list.net_unit_cost[id],
       delete: true,
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],
@@ -509,6 +509,7 @@ export const PurchaseProductTable = ({
     dataSource.push({
       id: "",
       name: "Total",
+      unitCost: "",
       quantity: totalQuantity,
       received: totalReceived,
       subTotal: totalPrice,

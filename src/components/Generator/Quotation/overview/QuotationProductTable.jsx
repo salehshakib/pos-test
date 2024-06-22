@@ -345,7 +345,7 @@ export const QuotationProductTable = ({
       id,
       name,
       sku,
-      unitCost: formValues.product_list.net_unit_price[id],
+      unitCost: "$" + formValues.product_list.net_unit_price[id],
       delete: true,
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],
@@ -423,6 +423,7 @@ export const QuotationProductTable = ({
     dataSource.push({
       id: "",
       name: "Total",
+      unitCost: "",
       quantity: totalQuantity,
       subTotal: totalPrice,
       tax: totalTax,

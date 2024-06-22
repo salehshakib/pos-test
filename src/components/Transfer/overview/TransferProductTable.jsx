@@ -51,7 +51,7 @@ const columns = [
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost}
+        {unitCost ?? 0}
       </span>
     ),
   },
@@ -481,7 +481,7 @@ export const TransferProductTable = ({
         id,
         name,
         sku,
-        unitCost: formValues.product_list.net_unit_cost[id],
+        unitCost: "$" + formValues.product_list.net_unit_cost[id],
         delete: true,
         incrementCounter,
         decrementCounter,

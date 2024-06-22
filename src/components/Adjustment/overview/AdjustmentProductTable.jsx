@@ -257,7 +257,7 @@ export const AdjustmentProductTable = ({
         id,
         name,
         sku,
-        unitCost: `$${unit_cost}`,
+        unitCost: `$${unit_cost ?? 0}`,
         action: true,
         delete: true,
         incrementCounter,
@@ -282,6 +282,7 @@ export const AdjustmentProductTable = ({
     dataSource.push({
       id: "",
       name: "Total",
+      unitCost: "",
       quantity: totalQuantity,
       action: false,
     });

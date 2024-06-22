@@ -53,7 +53,7 @@ const columns = [
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost ? "$" + unitCost : ""}
+        {unitCost ?? 0}
       </span>
     ),
   },
@@ -318,7 +318,7 @@ export const ReturnProductTable = ({
       id,
       name,
       sku,
-      unitCost: formValues.product_list.net_unit_cost[id],
+      unitCost: "$" + formValues.product_list.net_unit_cost[id],
       delete: true,
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],

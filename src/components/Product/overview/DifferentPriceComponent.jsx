@@ -74,15 +74,15 @@ export const DifferentPriceComponent = ({
 
   const incrementCounter = (id, stock = 5) => {
     setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.price_list.qty[id] || 1;
+      const currentQty = prevFormValues.price_list.price[id] || 1;
       const newQty = Math.min(currentQty + 1, stock);
 
       return {
         ...prevFormValues,
         price_list: {
           ...prevFormValues.price_list,
-          qty: {
-            ...prevFormValues.price_list.qty,
+          price: {
+            ...prevFormValues.price_list.price,
             [id]: newQty,
           },
         },
@@ -92,15 +92,15 @@ export const DifferentPriceComponent = ({
 
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.price_list.qty[id] || 1;
+      const currentQty = prevFormValues.price_list.price[id] || 1;
       const newQty = Math.max(currentQty - 1, 0);
 
       return {
         ...prevFormValues,
         price_list: {
           ...prevFormValues.price_list,
-          qty: {
-            ...prevFormValues.price_list.qty,
+          price: {
+            ...prevFormValues.price_list.price,
             [id]: newQty,
           },
         },
@@ -108,13 +108,13 @@ export const DifferentPriceComponent = ({
     });
   };
 
-  const onQuantityChange = (id, value) => {
+  const onUnitPriceChange = (id, value) => {
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       price_list: {
         ...prevFormValues.price_list,
-        qty: {
-          ...prevFormValues.price_list.qty,
+        price: {
+          ...prevFormValues.price_list.price,
           [id]: parseInt(value, 10) || 0,
         },
       },
@@ -143,7 +143,7 @@ export const DifferentPriceComponent = ({
         delete: true,
         incrementCounter,
         decrementCounter,
-        onQuantityChange,
+        onUnitPriceChange,
         onDelete,
       };
     }) ?? [];

@@ -83,6 +83,8 @@ export function setFormValuesId(
     return isNaN(number) ? 0 : number;
   };
 
+  console.log(taxes);
+
   if (id) {
     formValues.product_list.qty[id] = sanitizeIntValue(
       formValues.product_list.qty?.[id] || 1
@@ -98,7 +100,7 @@ export function setFormValuesId(
     );
 
     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      formValues.product_list.tax_rate?.[id] ?? 0
+      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
     );
 
     formValues.product_list.tax[id] = sanitizeFloatValue(

@@ -376,46 +376,42 @@ function setFormValuesId(
 
   if (id) {
     formValues.product_list.qty[id] = sanitizeIntValue(
-      formValues.product_list.qty[id] || 1
+      formValues.product_list.qty?.[id] || 1
     );
 
     formValues.product_list.net_unit_cost[id] =
-      sanitizeFloatValue(formValues.product_list.net_unit_cost[id]) ||
+      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
       sanitizeFloatValue(unit_cost) ||
       "0";
 
     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      formValues.product_list.tax_rate[id] ?? 0
+      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
     );
 
     formValues.product_list.tax[id] = sanitizeFloatValue(
       (
         (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-          sanitizeIntValue(formValues.product_list.tax_rate[id]) *
-          sanitizeFloatValue(formValues.product_list.net_unit_cost[id]) *
-          sanitizeIntValue(formValues.product_list.qty[id])) /
+          sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
+          sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
+          sanitizeIntValue(formValues.product_list.qty?.[id])) /
         100
       ).toFixed(2)
     );
 
-    const saleUnitsOperationValue = purchase_units
-      ? purchase_units.operation_value !== null
-        ? purchase_units.operation_value
-        : 1
-      : 1;
+    const saleUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
     productUnits.purchase_units[id] =
-      sanitizeIntValue(productUnits?.purchase_units[id]) ||
+      sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
       saleUnitsOperationValue;
 
     formValues.product_list.total[id] =
-      sanitizeIntValue(productUnits.purchase_units[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_cost[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty[id]) +
-      sanitizeFloatValue(formValues.product_list.tax[id]);
+      sanitizeIntValue(productUnits.purchase_units?.[id]) *
+        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+        sanitizeIntValue(formValues.product_list.qty?.[id]) +
+      sanitizeFloatValue(formValues.product_list.tax?.[id]);
 
     formValues.product_list.purchase_unit_id[id] =
-      formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
+      formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
 
     if (formValues?.product_list?.tax_id) {
       formValues.product_list.tax_id[id] =

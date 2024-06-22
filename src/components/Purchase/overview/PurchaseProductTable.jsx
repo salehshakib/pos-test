@@ -307,7 +307,7 @@ function setFormValuesId(
     );
 
     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      formValues.product_list.tax_rate?.[id] ?? 0
+      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
     );
 
     formValues.product_list.tax[id] = sanitizeFloatValue(

@@ -18,6 +18,7 @@ const Payment = ({
   isModalOpen,
   setIsModalOpen,
   isLoading,
+  grandTotal,
 }) => {
   const [paymentType, setPaymentType] = useState("Card");
 
@@ -116,6 +117,7 @@ const Payment = ({
             <PaymentTypeComponent
               paymentType={paymentType}
               setPaymentType={setPaymentType}
+              grandTotal={grandTotal}
             />
 
             <Col {...mdColLayout}>

@@ -277,6 +277,8 @@ export const PosRegister = ({
   setProductUnits,
   form,
   fields,
+
+  setGrandTotal,
 }) => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -347,6 +349,10 @@ export const PosRegister = ({
     parseFloat(tax ?? 0) +
     parseFloat(shipping) -
     parseFloat(discount);
+
+  useEffect(() => {
+    setGrandTotal(grandTotal);
+  }, [grandTotal, setGrandTotal]);
 
   return (
     <>

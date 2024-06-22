@@ -218,6 +218,8 @@ const PosLayout = () => {
   //   // });
   // };
 
+  const [grandTotal, setGrandTotal] = useState(0);
+
   const handleSubmit = async () => {
     const values = posForm.getFieldsValue();
 
@@ -370,6 +372,7 @@ const PosLayout = () => {
                   setProductUnits={setProductUnits}
                   form={posForm}
                   fields={errorFields}
+                  setGrandTotal={setGrandTotal}
                 />
               </div>
 
@@ -427,6 +430,7 @@ const PosLayout = () => {
               isLoading={isLoading}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
+              grandTotal={grandTotal}
             />
           </Footer>
 

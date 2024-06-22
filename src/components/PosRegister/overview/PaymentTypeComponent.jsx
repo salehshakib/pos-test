@@ -1,4 +1,4 @@
-import { Button, Col, Form } from "antd";
+import { App, Button, Col, Form } from "antd";
 import { useEffect } from "react";
 import { BsCash } from "react-icons/bs";
 import { fullColLayout, mdColLayout } from "../../../layout/FormLayout";
@@ -152,8 +152,12 @@ const ChequeComponent = () => {
   );
 };
 
-export const PaymentTypeComponent = ({ paymentType: payment_type }) => {
+export const PaymentTypeComponent = ({
+  paymentType: payment_type,
+  grandTotal,
+}) => {
   const form = Form.useFormInstance();
+  const { message } = App.useApp();
 
   //   const paymentStatus = Form.useWatch("payment_status", form);
 
@@ -162,11 +166,26 @@ export const PaymentTypeComponent = ({ paymentType: payment_type }) => {
 
   const paymentType = Form.useWatch("payment_type", form);
 
+  // useEffect(() => {
+  //   if (paidAmount > receivedAmount) {
+  //     form.setFieldValue("paid_amount", receivedAmount);
+  //   }
+  // }, [paidAmount, receivedAmount, form]);
+
+  console.log(grandTotal);
+
   useEffect(() => {
     if (paidAmount > receivedAmount) {
       form.setFieldValue("paid_amount", receivedAmount);
     }
-  }, [paidAmount, receivedAmount, form]);
+    if (paidAmount > grandTotal) {
+      form.setFieldValue("paid_amount", grandTotal);
+      message.error("Paid amount cannot be greater than total amount");
+    }
+    if (receivedAmount < grandTotal) {
+      form.setFieldValue("paid_amount", receivedAmount);
+    }
+  }, [paidAmount, receivedAmount, grandTotal, form, message]);
 
   const change = Number(
     parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)

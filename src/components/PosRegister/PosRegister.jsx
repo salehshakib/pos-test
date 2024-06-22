@@ -184,7 +184,6 @@ const CurrencyExchangeComponent = () => {
   return (
     <CustomInput
       type={"number"}
-      required={true}
       name={"exchange_rate"}
       placeholder={"Exchange Rate"}
       suffix={content}

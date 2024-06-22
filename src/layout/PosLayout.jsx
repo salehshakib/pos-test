@@ -105,6 +105,16 @@ const PosLayout = () => {
           return;
         }
 
+        if (!sale_at) {
+          message.info("Please select date");
+          return;
+        }
+
+        if (!values?.reference_number) {
+          message.info("Please add reference number");
+          return;
+        }
+
         const totalPrice = calculateTotalPrice(product_list);
         const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
 

@@ -1,23 +1,9 @@
 import { useState } from "react";
-import { MdDelete, MdEditSquare } from "react-icons/md";
 import TransferCreate from "../../../components/Transfer/TransferCreate";
 import TransferTable from "../../../components/Transfer/TransferTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
-    width: 80,
-    render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {id}
-      </span>
-    ),
-  },
   {
     title: "Reference",
     dataIndex: "reference",
@@ -99,45 +85,29 @@ const columns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    width: "80px",
+    width: "100px",
     align: "center",
-    render: ({ status, handleStatusModal }, record) => {
-      return (
+    render: (status, record) => {
+      return record?.handleStatusModal ? (
         <button
           className={`p-0 ${
-            status === 1 ? "bg-[#22C55E]" : "bg-[#EF4444]"
+            status === "Completed" || status === "Sent"
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
-          onClick={() => handleStatusModal(record.id)}
+          onClick={() => record?.handleStatusModal(record.id)}
         >
-          <span className="font-medium text-xs px-2 w-full">
-            {status === 1 ? "Active" : "Inactive"}
-          </span>
+          <span className="font-medium text-xs px-2 w-full">{status}</span>
         </button>
-      );
-    },
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
-    width: 70,
-    fixed: "right",
-    render: ({ handleEdit, handleDeleteModal }, record) => {
-      return (
-        <div className="flex justify-center items-center gap-3 ">
-          <button
-            onClick={() => handleEdit(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdEditSquare className="text-lg md:text-xl" />
-          </button>
-          <button
-            onClick={() => handleDeleteModal(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-          >
-            <MdDelete className="text-lg md:text-xl" />
-          </button>
+      ) : (
+        <div
+          className={`p-0 ${
+            status === "Completed" || status === "Sent"
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
+        >
+          <span className="font-medium text-xs px-2 w-full">{status}</span>
         </div>
       );
     },

@@ -224,11 +224,6 @@ export const QuotationProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  // const [productUnits, setProductUnits] = useState({
-  //   sale_units: {},
-  //   tax_rate: {},
-  // });
-
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;

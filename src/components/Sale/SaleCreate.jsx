@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { App, Form } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +12,15 @@ import {
 } from "../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 
-const decimalConverter = (value) => {
-  return Number(value).toFixed(2);
-};
+// const decimalConverter = (value) => {
+//   return Number(value).toFixed(2);
+// };
 
 export const SaleCreate = () => {
   const dispatch = useDispatch();
+  const { message } = App.useApp();
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);

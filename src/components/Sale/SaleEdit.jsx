@@ -17,10 +17,7 @@ import {
 } from "../../utilities/lib/generator/generatorUtils";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
-
-const decimalConverter = (value) => {
-  return Number(value).toFixed(2);
-};
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 
 export const SaleEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

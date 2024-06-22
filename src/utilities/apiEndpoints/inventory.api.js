@@ -2,6 +2,7 @@
 
 export const CATEGORY = "inventory/category";
 export const WAREHOUSE = "inventory/warehouse";
+export const TRANSFER = "inventory/transfer";
 export const BRAND = "inventory/brand";
 export const PRODUCT = "inventory/product";
 export const ADJUSTMENT = "inventory/adjustment";

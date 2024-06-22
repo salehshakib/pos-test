@@ -1,5 +1,5 @@
 // Import necessary dependencies
-import { CUSTOMER } from "../../../utilities/apiEndpoints/people.api";
+import { TRANSFER } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
@@ -8,32 +8,33 @@ const transferApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllTransfer: build.query({
       query: ({ params }) => ({
-        url: `/${CUSTOMER}`,
+        url: `/${TRANSFER}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: CUSTOMER, params },
-        CUSTOMER,
+        { type: TRANSFER, params },
+        TRANSFER,
       ],
     }),
 
     getTransferDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
-          url: `${CUSTOMER}/show/${id}`,
+          url: `${TRANSFER}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: CUSTOMER, id }],
+      providesTags: (result, error, { id }) => [{ type: TRANSFER, id }],
     }),
 
     createTransfer: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${CUSTOMER}/store`,
+          url: `/${TRANSFER}/store`,
           method: "POST",
           body: data,
         };
@@ -51,14 +52,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CUSTOMER] : [];
+        return result ? [TRANSFER] : [];
       },
     }),
 
     updateTransfer: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${CUSTOMER}/update/${id}`,
+          url: `/${TRANSFER}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -70,14 +71,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CUSTOMER] : [];
+        return result ? [TRANSFER] : [];
       },
     }),
 
     updateTransferStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${CUSTOMER}/status/${id}`,
+          url: `/${TRANSFER}/status/${id}`,
           method: "POST",
         };
       },
@@ -88,14 +89,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CUSTOMER] : [];
+        return result ? [TRANSFER] : [];
       },
     }),
 
     deleteTransfer: build.mutation({
       query: (id) => {
         return {
-          url: `/${CUSTOMER}/delete/${id}`,
+          url: `/${TRANSFER}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -106,7 +107,23 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CUSTOMER] : [];
+        return result ? [TRANSFER] : [];
+      },
+    }),
+
+    exportTransfer: build.mutation({
+      query: ({ data }) => {
+        return {
+          url: `/${TRANSFER}/export`,
+          method: "GET",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
       },
     }),
   }),
@@ -119,4 +136,5 @@ export const {
   useUpdateTransferMutation,
   useUpdateTransferStatusMutation,
   useDeleteTransferMutation,
+  useExportTransferMutation,
 } = transferApi;

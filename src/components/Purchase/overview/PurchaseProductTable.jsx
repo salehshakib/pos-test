@@ -487,20 +487,20 @@ export const PurchaseProductTable = ({
     setTotalReceived(totalR);
 
     const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + parseFloat(cur),
+      (acc, cur) => acc + Number(cur),
       0
     );
     setTotalPrice(totalPrice?.toFixed(2));
 
     const totalTax = Object.values(formValues.product_list.tax).reduce(
-      (acc, cur) => acc + parseFloat(cur),
+      (acc, cur) => acc + Number(cur),
       0
     );
     setTotalTax(totalTax.toFixed(2));
 
     const totalDiscount = Object.values(
       formValues.product_list.discount
-    ).reduce((acc, cur) => acc + parseFloat(cur), 0);
+    ).reduce((acc, cur) => acc + Number(cur), 0);
 
     setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);

@@ -466,7 +466,7 @@ export const SaleProductTable = ({
     setFormValuesId(
       id,
       sale_unit_id,
-      unit_cost,
+      unit_cost ?? 0,
       sale_units,
       formValues,
       productUnits,

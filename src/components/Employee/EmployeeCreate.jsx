@@ -28,11 +28,7 @@ const EmployeeCreate = () => {
   };
 
   return (
-    <CustomDrawer
-      title={"Create Employee"}
-      open={isCreateDrawerOpen}
-      // width={1000}
-    >
+    <CustomDrawer title={"Create Employee"} open={isCreateDrawerOpen}>
       <EmployeeForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}

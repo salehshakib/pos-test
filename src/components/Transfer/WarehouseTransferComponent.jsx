@@ -1,7 +1,7 @@
 import { Col } from "antd";
-import { colLayout } from "../../layout/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { largeLayout } from "../../layout/FormLayout";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const WarehouseTransferComponent = () => {
   const { data, isLoading } = useGetWarehousesQuery({
@@ -17,7 +17,7 @@ export const WarehouseTransferComponent = () => {
 
   return (
     <>
-      <Col {...colLayout}>
+      <Col {...largeLayout}>
         <CustomSelect
           label="Warehouse (From)"
           placeholder={"Warehouse (From)"}
@@ -28,7 +28,7 @@ export const WarehouseTransferComponent = () => {
           required={true}
         />
       </Col>
-      <Col {...colLayout}>
+      <Col {...largeLayout}>
         <CustomSelect
           label="Warehouse (To)"
           placeholder={"Warehouse (To)"}

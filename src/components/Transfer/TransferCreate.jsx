@@ -9,6 +9,27 @@ const TransferCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
+  const [formValues, setFormValues] = useState({
+    product_list: {
+      product_id: {},
+      qty: {},
+      purchase_unit_id: {},
+      net_unit_cost: {},
+      tax_rate: {},
+      tax: {},
+      total: {},
+
+      tax_id: {},
+    },
+  });
+
+  const [products, setProducts] = useState([]);
+
+  const [productUnits, setProductUnits] = useState({
+    purchase_units: {},
+    tax_rate: {},
+  });
+
   //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
 
   const handleSubmit = async (values) => {
@@ -27,11 +48,21 @@ const TransferCreate = () => {
     // }
   };
   return (
-    <CustomDrawer title={"Create Transfer"} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={"Create Transfer"}
+      open={isCreateDrawerOpen}
+      width={1400}
+    >
       <TransferForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}
         fields={errorFields}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        products={products}
+        setProducts={setProducts}
+        productUnits={productUnits}
+        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

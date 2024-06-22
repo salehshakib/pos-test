@@ -1,23 +1,35 @@
-import { Col, Row } from "antd";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
-import { SearchProductComponent } from "../Adjustment/overview/SearchProductComponent";
+import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
+import {
+  colLayout,
+  fullColLayout,
+  largeLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import TransferListTable from "./TransferListTable";
+import { TransferProductTable } from "./overview/TransferProductTable";
 import { WarehouseTransferComponent } from "./WarehouseTransferComponent";
+import { getCurrentDate } from "../../utilities/lib/currentDate";
 
 const FileStatusComponent = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue("status", "Completed");
+  }, [form]);
+
   const options = [
     {
-      value: "completed",
+      value: "Completed",
       label: "Completed",
     },
-    { value: "pending", label: "Pending" },
+    { value: "Pending", label: "Pending" },
     {
-      value: "sent",
+      value: "Sent",
       label: "Sent",
     },
   ];
@@ -27,46 +39,58 @@ const FileStatusComponent = () => {
       label="File Status"
       placeholder={"File Status"}
       options={options}
-      // showSearch={true}
-      // required={true}
-      // name={"adjustment_name"}
+      name={"status"}
     />
   );
 };
 
-const TransferForm = (props) => {
+const TransferDateComponent = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue("date", getCurrentDate);
+  }, [form]);
+
+  return (
+    <CustomDatepicker
+      label="Date"
+      type={"date"}
+      required={true}
+      name={"date"}
+    />
+  );
+};
+
+const TransferForm = ({
+  formValues,
+  setFormValues,
+  products,
+  setProducts,
+  productUnits,
+  setProductUnits,
+  ...props
+}) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
         <WarehouseTransferComponent />
-        <Col {...colLayout}>
-          <CustomDatepicker
-            label="Date"
-            type={"date"}
-            required={true}
-            name={"adjustment_name"}
-            // picker
-          />
+
+        <Col {...largeLayout}>
+          <TransferDateComponent />
         </Col>
-        <Col {...colLayout}>
+        <Col {...largeLayout}>
           <FileStatusComponent />
         </Col>
-      </Row>
 
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          {/* <CustomSelect
-            label="Product"
-            placeholder={"Product"}
-            showSearch={true}
-            // required={true}
-            // name={"adjustment_name"}
-          /> */}
-          <SearchProductComponent />
-        </Col>
-      </Row>
+        <TransferProductTable
+          formValues={formValues}
+          setFormValues={setFormValues}
+          products={products}
+          setProducts={setProducts}
+          productUnits={productUnits}
+          setProductUnits={setProductUnits}
+        />
 
-      <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
             label="Shipping Cost"
@@ -75,23 +99,17 @@ const TransferForm = (props) => {
             name={"total_cost"}
           />
         </Col>
-        <Col {...colLayout}>
+
+        <Col {...fullColLayout}>
           <CustomUploader label={"Attach Document"} />
         </Col>
-      </Row>
 
-      <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomInput
-            label="Sale Note"
-            type={"textarea"}
-            // required={true}
-            // name={"adjustment_name"}
-          />
+          <CustomInput label="Sale Note" type={"textarea"} name={"note"} />
         </Col>
       </Row>
 
-      <TransferListTable />
+      {/* <TransferListTable />
       <Row {...rowLayout} className="my-5">
         <Col lg={4} md={8} sm={12} className="border border-black py-5">
           Items
@@ -111,7 +129,7 @@ const TransferForm = (props) => {
         <Col lg={4} md={8} sm={12} className="border border-black py-5">
           Grand Total
         </Col>
-      </Row>
+      </Row> */}
     </CustomForm>
   );
 };

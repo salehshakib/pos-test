@@ -307,7 +307,7 @@ export const ReturnProductTable = ({
     setFormValuesId(
       id,
       purchase_unit_id,
-      unit_cost,
+      unit_cost ?? 0,
       purchase_units,
       formValues,
       productUnits,

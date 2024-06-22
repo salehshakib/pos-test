@@ -37,7 +37,7 @@ export const LeaveCreate = () => {
   // };
 
   return (
-    <CustomDrawer title={"Create Gift Card"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={"Create Leave"} open={isCreateDrawerOpen}>
       <LeaveForm
         //   handleSubmit={handleSubmit}
         //   isLoading={isLoading}

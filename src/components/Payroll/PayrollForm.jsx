@@ -1,20 +1,132 @@
 import { Col, Row } from "antd";
+import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
+import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
+import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
+
+const EmployeeComponent = () => {
+  const { data, isFetching } = useGetAllEmployeeQuery({});
+
+  const options = data?.results?.employee?.map((item) => ({
+    value: item?.id?.toString(),
+    label: item?.name,
+  }));
+  return (
+    <CustomSelect
+      label="Employee"
+      name="employee_id"
+      options={options}
+      required={true}
+      isLoading={isFetching}
+    />
+  );
+};
+
+const DepartmentComponent = () => {
+  const { data, isFetching } = useGetDepartmentsQuery({});
+
+  const options = data?.results?.department?.map((item) => ({
+    value: item?.id?.toString(),
+    label: item?.name,
+  }));
+
+  return (
+    <CustomSelect
+      label="Department"
+      name="department_ids"
+      options={options}
+      isLoading={isFetching}
+      required={true}
+    />
+  );
+};
+
+const PaymentTypeComponent = () => {
+  const options = [
+    {
+      value: "Cash",
+      label: "Cash",
+    },
+    {
+      value: "Cheque",
+      label: "Cheque",
+    },
+    {
+      value: "Mobile Transfer",
+      label: "Mobile Transfer",
+    },
+    {
+      value: "Bank",
+      label: "Bank",
+    },
+    {
+      value: "Card",
+      label: "Card",
+    },
+    {
+      value: "Others",
+      label: "Others",
+    },
+  ];
+
+  return (
+    <CustomSelect
+      label="Payment Type"
+      name="payment_type"
+      options={options}
+      required={true}
+    />
+  );
+};
 
 export const PayrollForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
+        <Col {...colLayout}>
+          <CustomDatepicker name="date" label="Date" required={true} />
+        </Col>
+        <Col {...colLayout}>
+          <DepartmentComponent />
+        </Col>
+        <Col {...colLayout}>
+          <EmployeeComponent />
+        </Col>
+        <Col {...colLayout}>
+          <PaymentTypeComponent />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Bonus"
+            name="bonus"
+            type={"number"}
+            required={true}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Loan"
+            name="loan"
+            type={"number"}
+            required={true}
+          />
+        </Col>
+
         <Col {...fullColLayout}>
           <CustomInput
-            label="Brand Name"
-            type={"text"}
+            label="Description"
+            name="description"
+            type={"textarea"}
             required={true}
-            name={"name"}
-            placeholder={"Brand Name"}
           />
+        </Col>
+
+        <Col {...fullColLayout}>
+          <CustomCheckbox name="is_send_email" label="Send Email" />
         </Col>
       </Row>
     </CustomForm>

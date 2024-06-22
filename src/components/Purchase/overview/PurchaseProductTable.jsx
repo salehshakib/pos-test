@@ -505,6 +505,8 @@ export const PurchaseProductTable = ({
     setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);
 
+  console.log(totalDiscount, totalTax, totalPrice);
+
   products.length > 0 &&
     dataSource.push({
       id: "",

@@ -165,16 +165,19 @@ export const PaymentTypeComponent = ({
 
   const paymentType = Form.useWatch("payment_type", form);
 
+  console.log(grandTotal);
+
   useEffect(() => {
-    if (paidAmount > receivedAmount) {
-      form.setFieldValue("paid_amount", receivedAmount);
-    }
-    if (paidAmount > grandTotal) {
-      form.setFieldValue("paid_amount", grandTotal);
-    }
-    if (receivedAmount < grandTotal) {
-      form.setFieldValue("paid_amount", receivedAmount);
-    }
+    form.setFieldValue("paid_amount", grandTotal ?? 0);
+    // if (paidAmount > receivedAmount) {
+    //   form.setFieldValue("paid_amount", receivedAmount);
+    // }
+    // if (paidAmount > grandTotal) {
+    //   form.setFieldValue("paid_amount", grandTotal);
+    // }
+    // if (receivedAmount < grandTotal) {
+    //   form.setFieldValue("paid_amount", receivedAmount);
+    // }
   }, [paidAmount, receivedAmount, grandTotal, form]);
 
   const change = Number(

@@ -18,6 +18,7 @@ import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduc
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
+import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
 // import { colLayout } from "../../layout/FormLayout";
 
 const WarehouseComponent = () => {
@@ -215,6 +216,31 @@ const TaxComponent = () => {
   );
 };
 
+const CouponComponent = ({ setType }) => {
+  const { data, isFetching } = useGetAllCouponQuery({});
+
+  const options = data?.results?.coupon?.map((item) => {
+    return {
+      value: item.amount,
+      label: item.code,
+      type: item.type,
+    };
+  });
+
+  const onSelect = (value, option) => {
+    setType(option.type);
+  };
+  return (
+    <CustomSelect
+      options={options}
+      name={"coupon_rate"}
+      isLoading={isFetching}
+      placeholder={"Coupon"}
+      onSelect={onSelect}
+    />
+  );
+};
+
 const colLayout = {
   xs: 24,
   lg: 12,
@@ -286,6 +312,8 @@ export const PosRegister = ({
   fields,
 
   setGrandTotal,
+  type,
+  setType,
 }) => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -348,7 +376,12 @@ export const PosRegister = ({
     }
 
     if (modalType === "Coupon") {
-      setCoupon(form.getFieldValue(modalType));
+      if (type.toLowerCase() === "fixed") {
+        setCoupon(form.getFieldValue("coupon_rate"));
+      }
+      if (type.toLowerCase() === "percentage") {
+        setCoupon((totalPrice * form.getFieldValue("coupon_rate")) / 100);
+      }
     }
 
     hideModal();
@@ -356,15 +389,16 @@ export const PosRegister = ({
 
   const tax = (totalPrice * (taxRate ?? 0)) / 100;
 
-  const grandTotal =
+  const grand_total =
     parseFloat(totalPrice) +
     parseFloat(tax ?? 0) +
     parseFloat(shipping) -
-    parseFloat(discount);
+    parseFloat(discount) -
+    parseFloat(coupon);
 
   useEffect(() => {
-    setGrandTotal(grandTotal);
-  }, [grandTotal, setGrandTotal]);
+    setGrandTotal(grand_total);
+  }, [grand_total, setGrandTotal]);
 
   return (
     <>
@@ -466,7 +500,7 @@ export const PosRegister = ({
             </div>
 
             <div className="text-center secondary-bg primary-text text-lg py-1 font-semibold rounded-sm">
-              Grand Total {grandTotal.toFixed(2) ?? 0}
+              Grand Total {grand_total.toFixed(2) ?? 0}
             </div>
 
             <Button
@@ -524,7 +558,7 @@ export const PosRegister = ({
               {modalType === "Tax" ? (
                 <TaxComponent />
               ) : modalType === "Coupon" ? (
-                <>Coupon modal</>
+                <CouponComponent setType={setType} />
               ) : (
                 <CustomInput
                   type="number"

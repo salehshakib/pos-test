@@ -16,9 +16,9 @@ const emailSettingsApi = baseApi.injectEndpoints({
     }),
 
     updateEmailSettings: build.mutation({
-      query: ({ id, data }) => {
+      query: ({ data }) => {
         return {
-          url: `/${EMAIL_SETTING}/update/${id}`,
+          url: `/${EMAIL_SETTING}/update/1`,
           method: "POST",
           body: data,
         };

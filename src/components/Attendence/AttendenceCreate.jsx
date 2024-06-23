@@ -1,8 +1,8 @@
 import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCreateBrandMutation } from "../../redux/services/brand/brandApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateAttendenceMutation } from "../../redux/services/hrm/attendence/attendenceApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { AttendenceForm } from "./AttendenceForm";
@@ -20,20 +20,22 @@ const AttendenceCreate = ({
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createBrand, { isLoading }] = useCreateBrandMutation();
+  const [createAttendence, { isLoading }] = useCreateAttendenceMutation();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
     const postData = {
       ...values,
-      logo: values?.logo?.[0].originFileObj,
+      date: values.date.format("YYYY-MM-DD"),
+      check_in: values.check_in.format("HH:mm:ss"),
+      check_out: values.check_out.format("HH:mm:ss"),
     };
 
     appendToFormData(postData, formData);
 
-    const { data, error } = await createBrand({
-      formData,
+    const { data, error } = await createAttendence({
+      data: formData,
     });
 
     if (data?.success) {
@@ -58,7 +60,7 @@ const AttendenceCreate = ({
 
   return (
     <CustomDrawer
-      title={"Create Attendence"}
+      title={"Create Attendance"}
       open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
       onClose={subDrawer && handleCloseSubDrawer}
     >

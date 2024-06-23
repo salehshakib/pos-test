@@ -1,10 +1,10 @@
 import { PageContainer } from "@ant-design/pro-layout";
 import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
-import GeneralSettingForm from "./GeneralSettingForm";
+import { useGetAllEmailSettingsQuery } from "../../../redux/services/settings/emailSettings/emailSettingsApi";
+import { EmailConfigForm } from "./EmailConfigForm";
 
-const GeneralSettings = () => {
-  const { data, isLoading } = useGetGeneralSettingsQuery();
+export const EmailConfig = () => {
+  const { data, isLoading } = useGetAllEmailSettingsQuery();
 
   return (
     <GlobalUtilityStyle>
@@ -16,7 +16,7 @@ const GeneralSettings = () => {
             </div>
           ),
           subTitle: (
-            <div className="text-2xl lg:text-3xl py-1">General Settings</div>
+            <div className="text-2xl lg:text-3xl py-1">Email Settings</div>
           ),
         }}
         loading={isLoading}
@@ -42,10 +42,8 @@ const GeneralSettings = () => {
         //   },
         // }}
       >
-        <GeneralSettingForm data={data} />
+        <EmailConfigForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );
 };
-
-export default GeneralSettings;

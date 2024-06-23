@@ -1,40 +1,40 @@
 // Import necessary dependencies
-import { ATTENDENCE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { ATTENDANCE } from "../../../../utilities/apiEndpoints/hrm.api";
+import { openNotification } from "../../../../utilities/lib/openToaster";
+import { verifyToken } from "../../../../utilities/lib/verifyToken";
+import { baseApi } from "../../../api/baseApi";
 
 const attendenceApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllAttendence: build.query({
       query: ({ params }) => ({
-        url: `/${ATTENDENCE}`,
+        url: `/${ATTENDANCE}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: ATTENDENCE, params },
-        ATTENDENCE,
+        { type: ATTENDANCE, params },
+        ATTENDANCE,
       ],
     }),
 
     getAttendenceDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${ATTENDENCE}/show/${id}`,
+          url: `${ATTENDANCE}/show/${id}`,
           method: "GET",
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: ATTENDENCE, id }],
+      providesTags: (result, error, { id }) => [{ type: ATTENDANCE, id }],
     }),
 
     createAttendence: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ATTENDENCE}/store`,
+          url: `/${ATTENDANCE}/store`,
           method: "POST",
           body: data,
         };
@@ -52,14 +52,14 @@ const attendenceApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [ATTENDANCE] : [];
       },
     }),
 
     updateAttendence: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${ATTENDENCE}/update/${id}`,
+          url: `/${ATTENDANCE}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -71,14 +71,14 @@ const attendenceApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [ATTENDANCE] : [];
       },
     }),
 
     updateAttendenceStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${ATTENDENCE}/status/${id}`,
+          url: `/${ATTENDANCE}/status/${id}`,
           method: "POST",
         };
       },
@@ -89,14 +89,14 @@ const attendenceApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [ATTENDANCE] : [];
       },
     }),
 
     deleteAttendence: build.mutation({
       query: (id) => {
         return {
-          url: `/${ATTENDENCE}/delete/${id}`,
+          url: `/${ATTENDANCE}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -107,14 +107,14 @@ const attendenceApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ATTENDENCE] : [];
+        return result ? [ATTENDANCE] : [];
       },
     }),
 
     exportAttendence: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${ATTENDENCE}/export`,
+          url: `/${ATTENDANCE}/export`,
           method: "GET",
           body: data,
         };

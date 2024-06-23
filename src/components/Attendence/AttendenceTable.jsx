@@ -2,12 +2,12 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import {
-  useDeleteBrandMutation,
-  useGetBrandsQuery,
-  useUpdateBrandStatusMutation,
-} from "../../redux/services/brand/brandApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteAttendenceMutation,
+  useGetAllAttendenceQuery,
+  useUpdateAttendenceStatusMutation,
+} from "../../redux/services/hrm/attendence/attendenceApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
@@ -26,16 +26,17 @@ export const AttendenceTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetBrandsQuery({
+  const { data, isLoading } = useGetAllAttendenceQuery({
     params: pagination,
   });
 
   const total = data?.meta?.total;
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateBrandStatusMutation();
+    useUpdateAttendenceStatusMutation();
 
-  const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
+  const [deleteAttendence, { isLoading: isDeleting }] =
+    useDeleteAttendenceMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -62,20 +63,22 @@ export const AttendenceTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    const { data } = await deleteBrand(deleteId);
+    const { data } = await deleteAttendence(deleteId);
     if (data?.success) {
       setDeleteModal(false);
     }
   };
 
   const dataSource =
-    data?.results?.brand?.map((item) => {
-      const { id, name, created_at, attachments, is_active } = item ?? {};
+    data?.results?.attendance?.map((item) => {
+      const { id, name, email, created_at, attachments, is_active } =
+        item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        brand: name,
+        name,
+        email,
         image: attachments?.[0]?.url,
         created_at: date,
 

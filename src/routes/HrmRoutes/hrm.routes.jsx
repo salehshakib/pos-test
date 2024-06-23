@@ -34,8 +34,8 @@ export const hrmPaths = [
   },
 
   {
-    name: "Attendence",
-    path: "attendence",
+    name: "Attendance",
+    path: "attendance",
     icon: MdCoPresent,
     element: <Attendence />,
   },

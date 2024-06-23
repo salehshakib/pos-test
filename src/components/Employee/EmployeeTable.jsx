@@ -72,12 +72,13 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.employee?.map((item) => {
-      const { id, name, join_date, address, phone_number } = item;
+      const { id, name, email, join_date, address, phone_number } = item;
       const date = dayjs(join_date).format("DD-MM-YYYY");
 
       return {
         id,
         name,
+        email,
         address,
         phone: phone_number,
         handleStatusModal,

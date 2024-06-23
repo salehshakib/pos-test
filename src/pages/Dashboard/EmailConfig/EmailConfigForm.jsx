@@ -121,7 +121,7 @@ export const EmailConfigForm = ({ data }) => {
         layout="vertical"
         autoComplete="on"
         onFinishFailed={onFinishFailed}
-        // disabled={!data}
+        disabled={!data}
       >
         <Row {...rowLayout}>
           <Col {...mdColLayout}>

@@ -7,16 +7,12 @@ import { baseApi } from "../../../api/baseApi";
 const emailSettingsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllEmailSettings: build.query({
-      query: ({ params }) => ({
-        url: `/${EMAIL_SETTING}`,
+      query: () => ({
+        url: `/${EMAIL_SETTING}/show/1`,
         method: "GET",
-        params,
       }),
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { params }) => [
-        { type: EMAIL_SETTING, params },
-        EMAIL_SETTING,
-      ],
+      providesTags: () => [{ type: EMAIL_SETTING }, EMAIL_SETTING],
     }),
 
     updateEmailSettings: build.mutation({

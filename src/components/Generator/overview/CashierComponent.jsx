@@ -1,7 +1,7 @@
 import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
-export const CashierComponent = () => {
+export const CashierComponent = ({ required = true }) => {
   const { data, isLoading } = useGetAllCashierQuery({
     params: {
       selectValue: ["id", "name"],
@@ -18,7 +18,7 @@ export const CashierComponent = () => {
       options={options}
       isLoading={isLoading}
       name="cashier_id"
-      required={true}
+      required={required}
     />
   );
 };

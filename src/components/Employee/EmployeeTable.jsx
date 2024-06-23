@@ -1,8 +1,16 @@
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteEmployeeMutation,
+  useGetAllEmployeeQuery,
+  useUpdateEmployeeStatusMutation,
+} from "../../redux/services/hrm/employee/employeeApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import EmployeeEdit from "./EmployeeEdit";
 
@@ -19,14 +27,17 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllEmployeeQuery({
+    params: pagination,
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdateEmployeeStatusMutation();
+
+  const [deleteEmployee, { isLoading: isDeleting }] =
+    useDeleteEmployeeMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -39,13 +50,12 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleStatus = async () => {
-    console.log(id);
-    // const { data } = await updateStatus( id);
+    const { data } = await updateStatus(statusId);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
   };
 
   const handleDeleteModal = (id) => {
@@ -54,25 +64,28 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deleteEmployee(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  const dataSource =
+    data?.results?.employee?.map((item) => {
+      const { id, name, join_date, address, phone_number } = item;
+      const date = dayjs(join_date).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      return {
+        id,
+        name,
+        address,
+        phone: phone_number,
+        handleStatusModal,
+        join_date: date,
+        handleEdit,
+        handleDeleteModal,
+      };
+    }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
@@ -84,28 +97,31 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         isRowSelection={true}
+        status={false}
+        created_at={false}
       />
 
       <EmployeeEdit id={editId} setId={setEditId} />
 
-      {/* <StatusModal
-    statusModal={statusModal}
-    hideModal={hideModal}
-    handleStatus={handleStatus}
-    isLoading={isStatusUpdating}
-  />
-  
-  <DeleteModal
-    deleteModal={deleteModal}
-    hideModal={hideModal}
-    handleDelete={handleDelete}
-    isLoading={isDeleting}
-  /> */}
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+        item={"employee"}
+      />
     </GlobalUtilityStyle>
   );
 };

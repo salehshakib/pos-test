@@ -15,7 +15,7 @@ export const WarehouseComponent = () => {
 
   return (
     <CustomSelect
-      label="Warehouse "
+      label="Warehouse"
       showSearch={true}
       isLoading={isLoading}
       options={options}

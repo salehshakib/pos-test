@@ -10,7 +10,6 @@ import { mdColLayout, rowLayout } from "../../layout/FormLayout";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomModal from "../Shared/Modal/CustomModal";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
-import { RiCoupon3Line } from "react-icons/ri";
 
 const Payment = ({
   handleSubmit,
@@ -32,7 +31,7 @@ const Payment = ({
   return (
     <>
       <div className="bg-[#F5F5F5]">
-        <div className="mx-auto grid grid-cols-3 lg:grid-cols-7 gap-x-3 gap-y-2">
+        <div className="mx-auto grid grid-cols-3 lg:grid-cols-6 gap-x-3 gap-y-2">
           <Button
             type="primary"
             icon={<BsCash />}
@@ -50,14 +49,14 @@ const Payment = ({
             Card
           </Button>
 
-          <Button
+          {/* <Button
             type="primary"
             icon={<RiCoupon3Line />}
             className=" flex justify-center items-center min-w-fit"
             onClick={() => handleOpenModal("Coupon")}
           >
             Coupon
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             icon={<HiOutlineBanknotes />}

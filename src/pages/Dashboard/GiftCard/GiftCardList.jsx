@@ -1,27 +1,26 @@
 import { useState } from "react";
-import defaultUser from "../../../assets/data/defaultUserImage";
 import GiftCardCreate from "../../../components/GiftCard/GiftCardCreate";
 import GiftCardTable from "../../../components/GiftCard/GiftCardTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
-  {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
-    fixed: "left",
-    align: "center",
-    width: 70,
-    render: (img) => (
-      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
-        <img
-          src={img ?? defaultUser}
-          alt="defaultUser"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    ),
-  },
+  // {
+  //   title: "Img",
+  //   dataIndex: "image",
+  //   key: "image",
+  //   fixed: "left",
+  //   align: "center",
+  //   width: 70,
+  //   render: (img) => (
+  //     <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
+  //       <img
+  //         src={img ?? defaultUser}
+  //         alt="defaultUser"
+  //         className="w-full h-full object-cover"
+  //       />
+  //     </div>
+  //   ),
+  // },
   {
     title: "Customer",
     dataIndex: "customer",

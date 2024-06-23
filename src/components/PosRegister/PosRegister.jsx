@@ -47,6 +47,7 @@ const WarehouseComponent = () => {
       options={options}
       required={true}
       name="warehouse_id"
+      customStyle={true}
     />
   );
 };
@@ -78,6 +79,7 @@ const CashierComponent = () => {
       options={options}
       required={true}
       name="cashier_id"
+      customStyle={true}
     />
   );
 };
@@ -122,6 +124,7 @@ const CustomerComponent = () => {
         onClick={handleOpenSubDrawer}
         required={true}
         name="customer_id"
+        customStyle={true}
       />
 
       <CustomerCreate
@@ -160,6 +163,7 @@ const CurrencyComponent = () => {
       options={options}
       required={true}
       name="currency"
+      customStyle={true}
     />
   );
 };
@@ -187,6 +191,7 @@ const CurrencyExchangeComponent = () => {
       name={"exchange_rate"}
       placeholder={"Exchange Rate"}
       suffix={content}
+      customStyle={true}
     />
   );
 };
@@ -224,14 +229,15 @@ const RegisterForm = ({ products, setProducts }) => {
     form.setFieldValue("sale_at", currentDate);
   }, [form]);
   return (
-    <GlobalUtilityStyle className="pb-5">
+    <GlobalUtilityStyle className="pb-5 ">
       <div className="flex flex-col">
-        <Row gutter={10}>
+        <Row gutter={5}>
           <Col {...colLayout}>
             <CustomDatepicker
               name={"sale_at"}
               required={true}
               placeholder={"Date"}
+              customStyle={true}
             />
           </Col>
           <Col {...colLayout}>
@@ -240,6 +246,7 @@ const RegisterForm = ({ products, setProducts }) => {
               required={true}
               placeholder={"Reference Number"}
               name={"reference_number"}
+              customStyle={true}
             />
           </Col>
           <Col {...colLayout}>
@@ -315,6 +322,7 @@ export const PosRegister = ({
 
   const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(0);
+  const [coupon, setCoupon] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -337,6 +345,10 @@ export const PosRegister = ({
 
     if (modalType === "Shipping Cost") {
       setShipping(form.getFieldValue(modalType));
+    }
+
+    if (modalType === "Coupon") {
+      setCoupon(form.getFieldValue(modalType));
     }
 
     hideModal();
@@ -363,6 +375,7 @@ export const PosRegister = ({
         autoComplete="on"
         scrollToFirstError
         className="h-[90vh]"
+        noStyle
       >
         <div className="p-4 flex flex-col h-full">
           <div className="flex-none">
@@ -417,7 +430,7 @@ export const PosRegister = ({
                 <Form.Item name="Discount" noStyle></Form.Item>
                 <span>{discount ?? 0}</span>
               </div>
-              {/* <div className="grid grid-cols-2">
+              <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
                   onClick={() => showModal("Coupon")}
@@ -426,8 +439,8 @@ export const PosRegister = ({
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Coupon" noStyle></Form.Item>
-                <span>0</span>
-              </div> */}
+                <span>{coupon ?? 0}</span>
+              </div>
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline "
@@ -510,6 +523,8 @@ export const PosRegister = ({
             <Col {...fullColLayout}>
               {modalType === "Tax" ? (
                 <TaxComponent />
+              ) : modalType === "Coupon" ? (
+                <>Coupon modal</>
               ) : (
                 <CustomInput
                   type="number"

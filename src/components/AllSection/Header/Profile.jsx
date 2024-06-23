@@ -1,15 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import {
-  App,
-  Avatar,
-  Button,
-  Col,
-  Form,
-  Modal,
-  Popover,
-  Row,
-  Spin,
-} from "antd";
+import { App, Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
 import { useEffect, useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
@@ -157,7 +147,7 @@ const PosComponent = () => {
 
   const [open, setOpen] = useState(false);
 
-  console.log(pettyCash);
+  // console.log(pettyCash);
 
   const posRegister = () => {
     if (pettyCash === "Close") {

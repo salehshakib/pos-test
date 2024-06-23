@@ -132,6 +132,10 @@ const CustomInput = (props) => {
     tooltip,
     onChange,
     value,
+    addonBefore = "+88",
+
+    //for mb-0
+    customStyle = false,
   } = props;
 
   const commonProps = {
@@ -173,7 +177,21 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 border-2 w-full ant-group-number"
             placeholder="01XXXX123XX"
-            addonBefore="+88"
+            addonBefore={addonBefore}
+            controls={false}
+            changeOnWheel={false}
+          />
+        );
+
+      case "staff":
+        return (
+          <InputNumber
+            {...commonProps}
+            type="number"
+            className="mt-1 border-2 w-full ant-group-number"
+            placeholder="staff_id"
+            max={9999}
+            addonBefore={addonBefore}
             controls={false}
             changeOnWheel={false}
           />
@@ -217,6 +235,7 @@ const CustomInput = (props) => {
         ]}
         tooltip={tooltip}
         noStyle={noStyle}
+        className={customStyle && "mb-0"}
       >
         {renderInputComponent()}
       </Form.Item>

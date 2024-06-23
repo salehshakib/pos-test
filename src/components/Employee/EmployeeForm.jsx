@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
+import { company_code } from "../../assets/data/companyCode";
 import {
   colLayout,
   fullColLayout,
@@ -7,6 +8,10 @@ import {
 } from "../../layout/FormLayout";
 import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
 import { useGetAllDesignationQuery } from "../../redux/services/hrm/designation/designationApi";
+import { useGetAllRolesQuery } from "../../redux/services/roles/rolesApi";
+import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
+import { CashierComponent } from "../Generator/overview/CashierComponent";
+import { WarehouseComponent } from "../Generator/overview/WarehouseComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -81,6 +86,81 @@ const EmployeeStatusComponent = () => {
   );
 };
 
+const StaffIdComponent = () => {
+  const form = Form.useFormInstance();
+  const joinDate = Form.useWatch("join_date", form);
+
+  const addonBefore = staffIdGenerator(company_code, joinDate);
+
+  return (
+    <CustomInput
+      label="Staff ID"
+      type={"staff"}
+      addonBefore={addonBefore}
+      name={"staff_id"}
+      required={true}
+    />
+  );
+};
+
+const RoleComponent = () => {
+  const { data, isLoading } = useGetAllRolesQuery({
+    params: {
+      selectValue: ["id", "name"],
+    },
+  });
+
+  const options = data?.results?.role?.map((role) => ({
+    value: role?.id?.toString(),
+    label: role?.name,
+  }));
+
+  return (
+    <>
+      <Col {...mdColLayout}>
+        <CustomSelect
+          label="Role"
+          showSearch={true}
+          isLoading={isLoading}
+          options={options}
+          name="role_id"
+          required={true}
+        />
+      </Col>
+
+      <Col {...mdColLayout}>
+        <WarehouseComponent />
+      </Col>
+
+      <Col {...mdColLayout}>
+        <CashierComponent required={false} />
+      </Col>
+    </>
+  );
+};
+
+const SoftwareAccessComponent = () => {
+  const form = Form.useFormInstance();
+  const softwareAccess = Form.useWatch("have_access", form);
+
+  return (
+    softwareAccess && (
+      <Row {...rowLayout} className="mt-2">
+        <Col {...mdColLayout}>
+          <CustomInput
+            label="Password"
+            name="password"
+            required={true}
+            type="password"
+          />
+        </Col>
+
+        <RoleComponent />
+      </Row>
+    )
+  );
+};
+
 const EmployeeForm = (props) => {
   return (
     <CustomForm {...props}>
@@ -92,7 +172,7 @@ const EmployeeForm = (props) => {
           <CustomInput label="Email" name={"email"} required={true} />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="NID Number" name={"nid_number"} required={true} />
+          <CustomInput label="NID Number" name={"id_number"} required={true} />
         </Col>
         <Col {...mdColLayout}>
           <CustomInput
@@ -111,7 +191,7 @@ const EmployeeForm = (props) => {
         <Col {...colLayout}>
           <CustomDatepicker
             label="Joining Date"
-            name={"joining_date"}
+            name={"join_date"}
             required={true}
           />
         </Col>
@@ -152,10 +232,15 @@ const EmployeeForm = (props) => {
           />
         </Col>
 
+        <Col {...fullColLayout}>
+          <StaffIdComponent />
+        </Col>
         <Col {...colLayout}>
-          <CustomCheckbox label="Software Access" name={"software_access"} />
+          <CustomCheckbox label="Software Access" name={"have_access"} />
         </Col>
       </Row>
+
+      <SoftwareAccessComponent />
     </CustomForm>
   );
 };

@@ -1,4 +1,5 @@
 //components
+import TransferList from "antd/es/transfer/list";
 import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
 import {
@@ -25,19 +26,18 @@ import { VscDiffAdded } from "react-icons/vsc";
 import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
-import People from "../pages/Dashboard/People/People";
+import Purchase from "../pages/Dashboard/Purchase/Purchase";
+import { Roles } from "../pages/Dashboard/Roles/Roles";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
 import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
+import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 import { peoplePaths } from "./PeopleRoutes/people.routes";
 import { productPaths } from "./ProductRoutes/product.routes";
-import { purchasePaths } from "./PurchaseRoutes/purchase.routes";
 import { reportPaths } from "./ReportRoutes/report.routes";
 import { returnPaths } from "./ReturnRoutes/return.routes";
 import { salePaths } from "./SaleRoutes/sale.routes";
 import { settingPaths } from "./SettingRoutes/settings.routes";
-import { transferPaths } from "./TransaferRoutes/transfer.routes";
-import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
 
 export const adminPaths = [
   {
@@ -62,7 +62,8 @@ export const adminPaths = [
     name: "Purchase",
     path: "purchase",
     icon: FiShoppingBag,
-    children: purchasePaths,
+    element: <Purchase />,
+    // children: purchasePaths,
   },
   {
     name: "Sales",
@@ -86,7 +87,8 @@ export const adminPaths = [
     name: "Transfer",
     path: "transfer",
     icon: TbTransferIn,
-    children: transferPaths,
+    element: <TransferList />,
+    // children: transferPaths,
   },
   {
     name: "Return",
@@ -129,7 +131,7 @@ export const adminPaths = [
     name: "Roles",
     path: "roles",
     icon: IoPeopleCircle,
-    element: <People />,
+    element: <Roles />,
   },
   {
     name: "Documents",

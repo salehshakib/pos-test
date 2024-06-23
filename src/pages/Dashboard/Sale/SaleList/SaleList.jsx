@@ -67,16 +67,6 @@ const columns = [
     ),
   },
   {
-    title: "Delivery Status",
-    dataIndex: "deliveryStatus",
-    key: "deliveryStatus",
-    render: (deliveryStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {deliveryStatus}
-      </span>
-    ),
-  },
-  {
     title: "Grand Total",
     dataIndex: "grandTotal",
     key: "grandTotal",

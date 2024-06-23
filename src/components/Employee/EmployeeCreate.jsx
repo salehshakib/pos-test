@@ -6,6 +6,8 @@ import { useCreateEmployeeMutation } from "../../redux/services/hrm/employee/emp
 import dayjs from "dayjs";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
+import { company_code } from "../../assets/data/companyCode";
 
 const EmployeeCreate = () => {
   const dispatch = useDispatch();
@@ -22,9 +24,17 @@ const EmployeeCreate = () => {
 
     const formData = new FormData();
 
+    console.log(values);
+
     const postObj = {
       ...values,
-      joining_date: dayjs(values?.joining_date).format("YYYY-MM-DD"),
+      join_date: dayjs(values?.join_date).format("YYYY-MM-DD"),
+      have_access: values?.have_access == true ? "1" : "0",
+      staff_id: staffIdGenerator(
+        company_code,
+        values?.join_date,
+        values?.staff_id
+      ),
     };
 
     if (profile_picture) {
@@ -65,7 +75,7 @@ const EmployeeCreate = () => {
     <CustomDrawer title={"Create Employee"} open={isCreateDrawerOpen}>
       <EmployeeForm
         handleSubmit={handleSubmit}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         fields={errorFields}
       />
     </CustomDrawer>

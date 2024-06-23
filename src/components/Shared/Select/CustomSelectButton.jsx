@@ -15,6 +15,10 @@ export const CustomSelectButton = (props) => {
     options = [],
     isLoading,
     styleProps,
+
+    //for mb-0
+
+    customStyle,
   } = props;
 
   const filterOption = (input, option) =>
@@ -27,7 +31,11 @@ export const CustomSelectButton = (props) => {
 
   return (
     <GlobalUtilityStyle>
-      <Form.Item label={label} required={required}>
+      <Form.Item
+        label={label}
+        required={required}
+        className={customStyle && "mb-0"}
+      >
         <Space.Compact style={{ width: "100%" }}>
           <Form.Item
             name={name}

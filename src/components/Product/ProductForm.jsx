@@ -23,7 +23,6 @@ import ProductTypeComponent from "./overview/ProductTypeComponent";
 import { TaxComponent } from "./overview/TaxComponent";
 import TaxTypeComponent from "./overview/TaxTypeComponent";
 import UnitComponent from "./overview/UnitComponent";
-import { VarientComponent } from "./overview/VarientComponent";
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
@@ -304,7 +303,7 @@ const ProductForm = ({
         </Col>
       </Row>
 
-      <VarientComponent />
+      {/* <VarientComponent /> */}
 
       <Row {...rowLayout}>
         <Col {...fullColLayout}>

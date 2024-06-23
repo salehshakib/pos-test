@@ -42,6 +42,7 @@ const columns = [
     title: "Address",
     dataIndex: "address",
     key: "address",
+    width: 300,
     render: (address) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {address}
@@ -57,6 +58,18 @@ const columns = [
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {phone}
+      </span>
+    ),
+  },
+  {
+    //phone
+    title: "Join Date",
+    dataIndex: "join_date",
+    key: "join_date",
+    align: "center",
+    render: (join_date) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {join_date}
       </span>
     ),
   },

@@ -1,7 +1,7 @@
 import { Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/data/defaultLogo";
 import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
@@ -25,6 +25,7 @@ const getLevelKeys = (items1) => {
 };
 
 const SideBar = ({ collapsed, setCollapsed }) => {
+  const navigate = useNavigate();
   const userData = useSelector(useCurrentUser);
   const menu = userData?.roles?.menu;
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
@@ -33,6 +34,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    if (pathname === "/") {
+      navigate("/dashboard");
+    }
     if (pathname === "/dashboard") {
       setStateOpenKeys(["Dashboard"]);
       setSelectedKeys(["Dashboard"]);
@@ -41,7 +45,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     if (pathname.includes("/pos")) {
       setCollapsed(true);
     }
-  }, [pathname, setCollapsed]);
+  }, [navigate, pathname, setCollapsed]);
 
   const filteredPaths = adminPaths.filter((item) => {
     return menu?.some(

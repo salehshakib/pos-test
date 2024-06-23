@@ -28,7 +28,7 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { data, isLoading } = useGetAllGiftCardQuery({
-    params: pagination,
+    params: { ...pagination, parent: 1 },
   });
 
   const total = data?.meta?.total;
@@ -70,8 +70,6 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
-
   const dataSource =
     data?.results?.giftcard?.map((item) => {
       const {
@@ -82,8 +80,8 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
         expired_date,
         is_active,
         created_at,
-        customer_id,
         created_by,
+        customers,
       } = item ?? {};
 
       const date = dayjs(created_at).format("DD-MM-YYYY");
@@ -95,7 +93,7 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
         expense: expense ?? "N/A",
         expiredDate: dayjs(expired_date).format("DD-MM-YYYY"),
         status: is_active,
-        customer: customer_id,
+        customer: customers?.name ?? "N/A",
         balance: amount - expense,
         createdBy: created_by ?? "N/A",
         created_at: date,

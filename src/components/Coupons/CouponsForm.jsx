@@ -52,7 +52,7 @@ const TypeComponent = () => {
 
   return (
     <CustomSelect
-      label="Coupon Code"
+      label="Coupon Type"
       required={true}
       name={"type"}
       options={options}

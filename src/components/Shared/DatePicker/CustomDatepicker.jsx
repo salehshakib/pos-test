@@ -95,6 +95,9 @@ const CustomDatepicker = ({
   disabledDate = false,
   placeholder = "Choose Date",
   onChange,
+
+  //for mb-0
+  customStyle = false,
 }) => {
   const getFormat = () => {
     switch (picker) {
@@ -162,6 +165,7 @@ const CustomDatepicker = ({
             message: `Please input ${label ?? placeholder}!`,
           },
         ]}
+        className={customStyle && "mb-0"}
       >
         {renderPicker()}
       </Form.Item>

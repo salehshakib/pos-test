@@ -16,6 +16,9 @@ const CustomSelect = (props) => {
     styleProps,
     onChange,
     onSelect,
+
+    //for mb-0
+    customStyle = false,
   } = props;
 
   const filterOption = (input, option) =>
@@ -37,6 +40,7 @@ const CustomSelect = (props) => {
             message: `Please Select ${label ?? placeholder}!`,
           },
         ]}
+        className={customStyle && "mb-0"}
         noStyle={noStyle}
       >
         {showSearch ? (

@@ -72,7 +72,6 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
         cashiers,
         sale_status,
         payment_status,
-        delivery_status,
         grand_total,
         paid_amount,
         due_amount,
@@ -80,15 +79,17 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
       const date = dayjs(sale_at).format("DD-MM-YYYY");
 
+      console.log(due_amount, paid_amount, payment_status);
+
       return {
         key: id, // Unique key for each row
+        id,
         date,
         reference: reference_id,
         customer: customers?.name,
         cashier: cashiers?.name,
         saleStatus: sale_status,
         paymentStatus: payment_status,
-        deliveryStatus: delivery_status,
         grandTotal: grand_total,
         paid: paid_amount,
         due: due_amount,

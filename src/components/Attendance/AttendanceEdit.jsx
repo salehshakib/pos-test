@@ -2,19 +2,21 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
-import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveType";
+import {
+  useGetAttendenceDetailsQuery,
+  useUpdateAttendenceMutation,
+} from "../../redux/services/hrm/attendence/attendenceApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import {
   fieldsToUpdate,
   updateFieldValues,
 } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { AnnouncementForm } from "./AnnouncementForm";
+import { AttendanceForm } from "./AttendanceForm";
 import dayjs from "dayjs";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 
-export const AnnouncementEdit = ({ id, setId }) => {
+export const AttendanceEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -22,31 +24,41 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetAnnouncementDetailsQuery(
-    {
-      id,
-      params: {
-        child: 1,
-      },
-    },
+  const { data, isFetching } = useGetAttendenceDetailsQuery(
+    { id },
     { skip: !id }
   );
 
-  const [updateLeaveType, { isLoading }] = useUpdateLeaveTypeMutation();
+  const [updateAttendence, { isLoading }] = useUpdateAttendenceMutation();
 
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      const updateFieldData = [
+      const updateFieldValue = [
         {
-          name: "department_ids",
-          value: data?.departments?.map((item) => item?.id?.toString()),
-          erros: "",
+          name: "department_id",
+          value: data?.department_id.toString(),
+          errors: "",
+        },
+        {
+          name: "employee_id",
+          value: data?.employee_id.toString(),
+          errors: "",
+        },
+        {
+          name: "check_in",
+          value: dayjs(data?.check_in, "HH:mm:ss"),
+          errors: "",
+        },
+        {
+          name: "check_out",
+          value: dayjs(data?.check_out, "HH:mm:ss"),
+          errors: "",
         },
       ];
 
-      const newFieldData = updateFieldValues(fieldData, updateFieldData);
+      const newFieldData = updateFieldValues(fieldData, updateFieldValue);
 
       setFields(newFieldData);
     }
@@ -55,17 +67,21 @@ export const AnnouncementEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
+    const timeString = values?.hours ?? "00:00:00";
+    const [hours] = timeString.split(":").map(Number);
+
     const postData = {
       ...values,
-      start_date: dayjs(values?.start_Date).format("YYYY-MM-DD"),
-      end_date: dayjs(values?.end_Date)?.format("YYYY-MM-DD"),
-      department_ids: JSON.stringify(values?.department_ids),
+      date: values.date.format("YYYY-MM-DD"),
+      check_in: values.check_in.format("HH:mm:ss"),
+      check_out: values.check_out.format("HH:mm:ss"),
+      hours: hours,
       _method: "PUT",
     };
 
     appendToFormData(postData, formData);
 
-    const { data, error } = await updateLeaveType({
+    const { data, error } = await updateAttendence({
       id,
       data: formData,
     });
@@ -84,11 +100,11 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Annoucement"}
+      title={"Edit Attendance"}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <AnnouncementForm
+      <AttendanceForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}

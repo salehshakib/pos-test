@@ -47,3 +47,12 @@ export const fieldsToUpdate = (details) => {
 
   return fieldsToUpdate;
 };
+
+export const updateFieldValues = (fields, newFieldData) => {
+  return fields.map((field) => {
+    const newField = newFieldData.find(
+      (newField) => newField.name === field.name
+    );
+    return newField || field;
+  });
+};

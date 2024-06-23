@@ -1,4 +1,5 @@
 import { GlobalUtilityStyle } from "../../container/Styled";
+import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveEdit } from "./LeaveEdit";
 
 export const LeaveTable = ({ newColumns, setSelectedRows }) => {
@@ -80,14 +81,14 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
 
   return (
     <GlobalUtilityStyle>
-      {/* <CustomTable
-            columns={newColumns}
-            dataSource={dataSource}
-            total={total}
-            setSelectedRows={setSelectedRows}
-            isLoading={isLoading}
-            isRowSelection={true}
-          /> */}
+      <CustomTable
+        columns={newColumns}
+        // dataSource={dataSource}
+        // total={total}
+        setSelectedRows={setSelectedRows}
+        // isLoading={isLoading}
+        isRowSelection={true}
+      />
 
       {/* <LeaveEdit id={editId} setId={setEditId} /> */}
       {/*   

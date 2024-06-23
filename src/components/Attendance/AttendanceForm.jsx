@@ -117,7 +117,7 @@ const DateComponent = () => {
   );
 };
 
-export const AttendenceForm = (props) => {
+export const AttendanceForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>

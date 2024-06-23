@@ -1,5 +1,10 @@
 import { Col, Row } from "antd";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
+import {
+  colLayout,
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from "../../layout/FormLayout";
 import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
 import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
@@ -76,7 +81,7 @@ const PaymentTypeComponent = () => {
   return (
     <CustomSelect
       label="Payment Type"
-      name="payment_type"
+      name="peyment_type"
       options={options}
       required={true}
     />
@@ -96,10 +101,18 @@ export const PayrollForm = (props) => {
         <Col {...colLayout}>
           <EmployeeComponent />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <PaymentTypeComponent />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
+          <CustomInput
+            label="Salary"
+            name="salary"
+            type={"number"}
+            required={true}
+          />
+        </Col>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Bonus"
             name="bonus"
@@ -107,7 +120,7 @@ export const PayrollForm = (props) => {
             required={true}
           />
         </Col>
-        <Col {...colLayout}>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Loan"
             name="loan"

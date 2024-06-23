@@ -5,9 +5,9 @@ import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateAttendenceMutation } from "../../redux/services/hrm/attendence/attendenceApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { AttendenceForm } from "./AttendenceForm";
+import { AttendanceForm } from "./AttendanceForm";
 
-const AttendenceCreate = ({
+const AttendanceCreate = ({
   subDrawer,
   isSubDrawerOpen,
   handleCloseSubDrawer,
@@ -25,11 +25,15 @@ const AttendenceCreate = ({
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
+    const timeString = values?.hours ?? "00:00:00";
+    const [hours] = timeString.split(":").map(Number);
+
     const postData = {
       ...values,
       date: values.date.format("YYYY-MM-DD"),
       check_in: values.check_in.format("HH:mm:ss"),
       check_out: values.check_out.format("HH:mm:ss"),
+      hours: hours,
     };
 
     appendToFormData(postData, formData);
@@ -64,7 +68,7 @@ const AttendenceCreate = ({
       open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
       onClose={subDrawer && handleCloseSubDrawer}
     >
-      <AttendenceForm
+      <AttendanceForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -75,4 +79,4 @@ const AttendenceCreate = ({
   );
 };
 
-export default AttendenceCreate;
+export default AttendanceCreate;

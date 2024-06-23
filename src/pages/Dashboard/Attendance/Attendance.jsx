@@ -1,8 +1,8 @@
 import { useState } from "react";
-import AttendenceCreate from "../../../components/Attendence/AttendenceCreate";
-import { AttendenceTable } from "../../../components/Attendence/AttendenceTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import defaultUser from "../../../assets/data/defaultUserImage";
+import AttendanceCreate from "../../../components/Attendance/AttendanceCreate";
+import { AttendanceTable } from "../../../components/Attendance/AttendanceTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 
 const columns = [
   {
@@ -61,9 +61,21 @@ const columns = [
       </span>
     ),
   },
+  {
+    //phone
+    title: "Attendance Date",
+    dataIndex: "date",
+    key: "date",
+    align: "center",
+    render: (date) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {date}
+      </span>
+    ),
+  },
 ];
 
-export const Attendence = () => {
+export const Attendance = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -85,9 +97,9 @@ export const Attendence = () => {
       setNewColumns={setNewColumns}
       // handleExport={handleExport}
     >
-      <AttendenceCreate />
+      <AttendanceCreate />
 
-      <AttendenceTable
+      <AttendanceTable
         newColumns={newColumns}
         setSelectedRows={setSelectedRows}
       />

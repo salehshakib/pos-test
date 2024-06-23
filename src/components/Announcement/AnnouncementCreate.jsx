@@ -6,6 +6,7 @@ import { useCreateAnnouncementMutation } from "../../redux/services/hrm/announce
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { AnnouncementForm } from "./AnnouncementForm";
 import dayjs from "dayjs";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 export const AnnoucementCreate = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,18 @@ export const AnnoucementCreate = () => {
   const [createAnnouncement, { isLoading }] = useCreateAnnouncementMutation();
 
   const handleSubmit = async (values) => {
+    const formData = new FormData();
+
+    const postData = {
+      ...values,
+      start_date: dayjs(values?.start_Date).format("YYYY-MM-DD"),
+      end_date: dayjs(values?.end_Date)?.format("YYYY-MM-DD"),
+      department_ids: JSON.stringify(values?.department_ids),
+    };
+
+    appendToFormData(postData, formData);
     const { data, error } = await createAnnouncement({
-      data: {
-        ...values,
-        start_date: dayjs(values?.start_Date).format("YYYY-MM-DD"),
-        end_date: dayjs(values?.end_Date)?.format("YYYY-MM-DD"),
-      },
+      data: formData,
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());

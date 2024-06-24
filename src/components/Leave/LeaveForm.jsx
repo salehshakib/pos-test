@@ -11,7 +11,7 @@ import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomRadio from "../Shared/Radio/CustomRadio";
-import { getCurrentDate } from "../../utilities/lib/currentDate";
+import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import { useEffect } from "react";
 import CustomUploader from "../Shared/Upload/CustomUploader";
@@ -86,29 +86,28 @@ const LeaveTypeComponent = () => {
   );
 };
 
-const LeaveDuration = () => {
+const LeaveDurationComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("leave_duration", "Half Day");
+    form.setFieldValue("leave_duration", "single-day");
   }, [form]);
 
   const options = [
     {
-      value: "Half Day",
-      label: <span className="font-semibold">Half Day</span>,
-    },
-    {
-      value: "Single Day",
+      value: "single-day",
       label: <span className="font-semibold">Single Day</span>,
     },
     {
-      value: "Multiple Days",
+      value: "multi-day",
       label: <span className="font-semibold">Multiple Days</span>,
     },
-
     {
-      value: "Hours",
+      value: "half-day",
+      label: <span className="font-semibold">Half Day</span>,
+    },
+    {
+      value: "hours",
       label: <span className="font-semibold">Hours</span>,
     },
   ];
@@ -125,16 +124,24 @@ const LeaveDuration = () => {
 const LeaveStartComponent = () => {
   const form = Form.useFormInstance();
 
+  const LeaveDuration = Form.useWatch("leave_duration", form);
+
   useEffect(() => {
     form.setFieldValue("leave_start_date", getCurrentDate);
   }, [form]);
 
-  return (
-    <CustomDatepicker
-      name="leave_start_date"
-      label="Start Date"
-      required={true}
-    />
+  return LeaveDuration === "single-day" ? (
+    <Col {...fullColLayout}>
+      <CustomDatepicker name="leave_start_date" label="Date" required={true} />{" "}
+    </Col>
+  ) : (
+    <Col {...mdColLayout}>
+      <CustomDatepicker
+        name="leave_start_date"
+        label={LeaveDuration === "multi-day" ? "Start Date" : "Date"}
+        required={true}
+      />
+    </Col>
   );
 };
 
@@ -144,17 +151,17 @@ const HalfDayComponent = () => {
 
   const options = [
     {
-      value: "First Half",
+      value: "first-half",
       label: <span className="font-semibold">First Half</span>,
     },
     {
-      value: "Second Half",
+      value: "second-half",
       label: <span className="font-semibold">Second Half</span>,
     },
   ];
 
   return (
-    durationType === "Half Day" && (
+    durationType === "half-day" && (
       <Col {...mdColLayout}>
         <CustomRadio
           label={"Select Half Day"}
@@ -170,20 +177,24 @@ const HalfDayComponent = () => {
 const LeaveEndComponent = () => {
   const form = Form.useFormInstance();
   const durationType = Form.useWatch("leave_duration", form);
+
   useEffect(() => {
-    if (durationType === "Single Day") {
+    if (durationType === "single-day") {
       form.setFieldValue("leave_end_date", getCurrentDate);
     }
   }, [durationType, form]);
 
-  console.log(durationType);
+  const disabledDateStart = (current) => {
+    return disabledDate(current, form.getFieldValue("leave_start_date"));
+  };
 
   return (
-    (durationType === "Single Day" || durationType === "Multiple Days") && (
+    durationType === "multi-day" && (
       <Col {...mdColLayout}>
         <CustomDatepicker
           name="leave_end_date"
           label="End Date"
+          disabledDate={disabledDateStart}
           required={true}
         />
       </Col>
@@ -194,19 +205,20 @@ const HoursComponent = () => {
   const form = Form.useFormInstance();
   const durationType = Form.useWatch("leave_duration", form);
   useEffect(() => {
-    if (durationType === "Hours") {
+    if (durationType === "hours") {
       form.setFieldValue("leave_end_date", getCurrentDate);
     }
   }, [durationType, form]);
 
   return (
-    durationType === "Hours" && (
+    durationType === "hours" && (
       <Col {...mdColLayout}>
         <Row {...rowLayout}>
           <Col {...mdColLayout}>
             <CustomDatepicker
               name="leave_start_time"
               label="Leave Start Time"
+              placeholder="Leave Start Time"
               required={true}
             />
           </Col>
@@ -215,6 +227,7 @@ const HoursComponent = () => {
             <CustomDatepicker
               name="leave_end_time"
               label="Leave End Time"
+              placeholder="Leave End Time"
               required={true}
             />
           </Col>
@@ -225,6 +238,8 @@ const HoursComponent = () => {
 };
 
 export const LeaveForm = (props) => {
+  // console.log(Leaveduration);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -238,11 +253,9 @@ export const LeaveForm = (props) => {
           <LeaveTypeComponent />
         </Col>
         <Col {...fullColLayout}>
-          <LeaveDuration />
+          <LeaveDurationComponent />
         </Col>
-        <Col {...mdColLayout}>
-          <LeaveStartComponent />
-        </Col>
+        <LeaveStartComponent />
 
         <HalfDayComponent />
 

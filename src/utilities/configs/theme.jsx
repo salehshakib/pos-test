@@ -5,7 +5,7 @@ export function theme({ primaryColor, secondaryColor }) {
       colorPrimary: primaryColor,
       colorBorder: secondaryColor,
       colorPrimaryBorder: secondaryColor,
-      colorTextDisabled: "#fff",
+      // colorTextDisabled: "#fff",
     },
     components: {
       Input: {

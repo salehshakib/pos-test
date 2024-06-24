@@ -15,10 +15,12 @@ const ProtocolComponent = () => {
     {
       label: "POP3",
       value: "pop3",
+      disabled: true,
     },
     {
       label: "IMAP",
       value: "imap",
+      disabled: true,
     },
   ];
 

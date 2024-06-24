@@ -6,58 +6,65 @@
 //   formValues,
 //   productUnits,
 //   tax_id,
-//   // eslint-disable-next-line no-unused-vars
 //   taxes
 // ) {
+//   const sanitizeIntValue = (value) => {
+//     const number = parseInt(value);
+//     return isNaN(number) ? 0 : number;
+//   };
+
+//   const sanitizeFloatValue = (value) => {
+//     const number = parseFloat(value);
+//     return isNaN(number) ? 0 : number;
+//   };
+
 //   if (id) {
-//     formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
+//     formValues.product_list.qty[id] = sanitizeIntValue(
+//       formValues.product_list.qty?.[id] || 1
+//     );
 
 //     formValues.product_list.net_unit_price[id] =
-//       formValues.product_list.net_unit_price[id] ?? unit_cost ?? "0";
+//       sanitizeFloatValue(formValues.product_list.net_unit_price?.[id]) ||
+//       sanitizeFloatValue(unit_cost) ||
+//       "0";
 
-//     formValues.product_list.discount[id] =
-//       formValues.product_list.discount[id] ?? 0;
+//     formValues.product_list.discount[id] = sanitizeFloatValue(
+//       formValues.product_list.discount?.[id] ?? 0
+//     );
 
-//     formValues.product_list.tax[id] = parseFloat(
+//     formValues.product_list.tax_rate[id] = sanitizeIntValue(
+//       taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
+//     );
+
+//     formValues.product_list.tax[id] = sanitizeFloatValue(
 //       (
-//         (parseInt(productUnits.sale_units?.[id] ?? 1) *
-//           parseInt(formValues.product_list.tax_rate[id]) *
-//           parseInt(formValues.product_list.net_unit_price[id]) *
-//           parseInt(formValues.product_list.qty[id])) /
+//         (sanitizeIntValue(productUnits.sale_units?.[id] ?? 1) *
+//           sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
+//           sanitizeFloatValue(formValues.product_list.net_unit_price?.[id]) *
+//           sanitizeIntValue(formValues.product_list.qty?.[id])) /
 //         100
 //       ).toFixed(2)
 //     );
 
-//     // console.log(sale_units);
-//     // console.log(productUnits);
-
-//     // console.log(formValues.product_list);
-
-//     formValues.product_list.tax_rate[id] =
-//       formValues.product_list.tax_rate[id] ?? 0;
-
-//     const saleUnitsOperationValue = sale_units
-//       ? sale_units?.operation_value !== null
-//         ? sale_units?.operation_value
-//         : 1
-//       : 1;
+//     const saleUnitsOperationValue = sale_units?.operation_value ?? 1;
 
 //     productUnits.sale_units[id] =
-//       productUnits?.sale_units[id] ?? saleUnitsOperationValue;
+//       sanitizeIntValue(productUnits?.sale_units?.[id]) ||
+//       saleUnitsOperationValue;
 
 //     formValues.product_list.total[id] =
-//       productUnits.sale_units[id] *
-//         parseInt(formValues.product_list.net_unit_price[id] ?? 0) *
-//         formValues.product_list.qty[id] -
-//       formValues.product_list.discount[id] +
-//       formValues.product_list.tax[id];
+//       sanitizeIntValue(productUnits.sale_units?.[id]) *
+//         sanitizeFloatValue(formValues.product_list.net_unit_price?.[id] ?? 0) *
+//         sanitizeIntValue(formValues.product_list.qty?.[id]) -
+//       sanitizeFloatValue(formValues.product_list.discount?.[id]) +
+//       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 
 //     formValues.product_list.sale_unit_id[id] =
-//       formValues.product_list.sale_unit_id[id] ?? sale_unit_id;
+//       formValues.product_list.sale_unit_id?.[id] ?? sale_unit_id;
 
 //     if (formValues?.product_list?.tax_id) {
 //       formValues.product_list.tax_id[id] =
-//         formValues.product_list?.tax_id?.[id] ?? tax_id;
+//         formValues.product_list.tax_id?.[id] ?? tax_id;
 //     }
 //   }
 // }
@@ -70,68 +77,58 @@ export function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-  // eslint-disable-next-line no-unused-vars
   taxes
 ) {
-  const sanitizeIntValue = (value) => {
-    const number = parseInt(value);
-    return isNaN(number) ? 0 : number;
-  };
+  const sanitizeIntValue = (value) => parseInt(value) || 0;
+  const sanitizeFloatValue = (value) => parseFloat(value) || 0.0;
 
-  const sanitizeFloatValue = (value) => {
-    const number = parseFloat(value);
-    return isNaN(number) ? 0 : number;
-  };
+  if (!id) return;
 
-  console.log(taxes);
+  const formProductList = formValues.product_list;
+  const formProductQty = formProductList.qty;
+  const formProductNetUnitPrice = formProductList.net_unit_price;
+  const formProductDiscount = formProductList.discount;
+  const formProductTaxRate = formProductList.tax_rate;
+  const formProductTax = formProductList.tax;
+  const formProductTotal = formProductList.total;
+  const formProductSaleUnitId = formProductList.sale_unit_id;
+  const formProductTaxId = formProductList.tax_id;
 
-  if (id) {
-    formValues.product_list.qty[id] = sanitizeIntValue(
-      formValues.product_list.qty?.[id] || 1
-    );
+  const productSaleUnits = productUnits.sale_units;
 
-    formValues.product_list.net_unit_price[id] =
-      sanitizeFloatValue(formValues.product_list.net_unit_price?.[id]) ||
-      sanitizeFloatValue(unit_cost) ||
-      "0";
+  formProductQty[id] = sanitizeIntValue(formProductQty?.[id] || 1);
 
-    formValues.product_list.discount[id] = sanitizeFloatValue(
-      formValues.product_list.discount?.[id] ?? 0
-    );
+  formProductNetUnitPrice[id] =
+    sanitizeFloatValue(formProductNetUnitPrice?.[id]) ||
+    sanitizeFloatValue(unit_cost);
 
-    formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
-    );
+  formProductDiscount[id] = sanitizeFloatValue(formProductDiscount?.[id]);
 
-    formValues.product_list.tax[id] = sanitizeFloatValue(
-      (
-        (sanitizeIntValue(productUnits.sale_units?.[id] ?? 1) *
-          sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
-          sanitizeFloatValue(formValues.product_list.net_unit_price?.[id]) *
-          sanitizeIntValue(formValues.product_list.qty?.[id])) /
-        100
-      ).toFixed(2)
-    );
+  formProductTaxRate[id] = sanitizeIntValue(
+    taxes?.rate ?? formProductTaxRate?.[id]
+  );
 
-    const saleUnitsOperationValue = sale_units?.operation_value ?? 1;
+  const qty = sanitizeIntValue(formProductQty[id]);
+  const netUnitPrice = sanitizeFloatValue(formProductNetUnitPrice[id]);
+  const taxRate = sanitizeIntValue(formProductTaxRate[id]);
+  const discount = sanitizeFloatValue(formProductDiscount[id]);
 
-    productUnits.sale_units[id] =
-      sanitizeIntValue(productUnits?.sale_units?.[id]) ||
-      saleUnitsOperationValue;
+  const saleUnitsOperationValue = sale_units?.operation_value ?? 1;
+  productSaleUnits[id] =
+    sanitizeIntValue(productSaleUnits?.[id]) || saleUnitsOperationValue;
 
-    formValues.product_list.total[id] =
-      sanitizeIntValue(productUnits.sale_units?.[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_price?.[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty?.[id]) -
-      sanitizeFloatValue(formValues.product_list.discount?.[id]) +
-      sanitizeFloatValue(formValues.product_list.tax?.[id]);
+  const tax = ((qty * taxRate * netUnitPrice) / 100).toFixed(2);
+  formProductTax[id] = sanitizeFloatValue(tax);
 
-    formValues.product_list.sale_unit_id[id] =
-      formValues.product_list.sale_unit_id?.[id] ?? sale_unit_id;
+  formProductTotal[id] = (
+    productSaleUnits[id] * netUnitPrice * qty -
+    discount +
+    sanitizeFloatValue(formProductTax[id])
+  ).toFixed(2);
 
-    if (formValues?.product_list?.tax_id) {
-      formValues.product_list.tax_id[id] =
-        formValues.product_list.tax_id?.[id] ?? tax_id;
-    }
+  formProductSaleUnitId[id] = formProductSaleUnitId?.[id] ?? sale_unit_id;
+
+  if (formProductTaxId) {
+    formProductTaxId[id] = formProductTaxId?.[id] ?? tax_id;
   }
 }

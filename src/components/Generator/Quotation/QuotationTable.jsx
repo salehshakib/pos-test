@@ -129,7 +129,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
         created_at={false}
       />
 
-      <QuotationEdit id={editId} setEditId={setEditId} />
+      <QuotationEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <QuotationDetails

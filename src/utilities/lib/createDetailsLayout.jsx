@@ -12,8 +12,16 @@ const createDetailsLayout = (data, nostyle) => {
     "adjustment_products",
     "purchase_products",
     "sale_products",
+    "quotation_products",
   ];
-  const fullRowKeys = ["details", "address", "attachments"];
+  const fullRowKeys = [
+    "details",
+    "address",
+    "attachments",
+    "reason",
+    "notes",
+    "description",
+  ];
 
   const renderValue = (key, value) => {
     if (typeof value === "object" && value !== null && !Array.isArray(value)) {
@@ -79,7 +87,7 @@ const createDetailsLayout = (data, nostyle) => {
         return acc;
       }
 
-      if (key.includes("_id")) {
+      if (key.includes("_id") && key !== "reference_id") {
         return acc;
       }
 

@@ -60,6 +60,7 @@ const AdjustmentDetails = ({ id, ...props }) => {
 
   const dataSource = data?.adjustment_products?.map((item) => {
     return {
+      id: item.id,
       product_name:
         item?.products?.name +
           (item?.products?.sku ? ` (${item?.products?.sku})` : "") ??

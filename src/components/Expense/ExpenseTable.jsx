@@ -2,10 +2,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import {
-  openEditDrawer,
-  setEditId,
-} from "../../redux/services/drawer/drawerSlice";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteExpenseMutation,
   useGetAllExpenseQuery,
@@ -13,13 +10,17 @@ import {
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
 
 const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -35,6 +36,11 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDeleteModal = (id) => {
@@ -55,7 +61,6 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
         id,
         name,
         created_at,
-
         reference_id,
         warehouses,
         expense_categories,
@@ -72,9 +77,8 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
         amount,
         note: reason,
         name: name,
-        // status: is_active,
         created_at: date,
-        // handleStatusModal,
+        handleDetailsModal,
         handleEdit,
         handleDeleteModal,
       };
@@ -82,6 +86,7 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
 
   const hideModal = () => {
     setDeleteModal(false);
+    setDetailsModal(false);
   };
 
   return (
@@ -96,7 +101,15 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
         status={false}
       />
 
-      <ExpenseEdit id={editId} />
+      <ExpenseEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <ExpenseDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

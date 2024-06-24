@@ -88,6 +88,7 @@ export const PurchaseDetails = ({ id, ...props }) => {
 
   const dataSource = data?.purchase_products?.map((item) => {
     return {
+      id: item?.id,
       product_name:
         item?.products?.name +
           (item?.products?.sku ? ` (${item?.products?.sku})` : "") ??

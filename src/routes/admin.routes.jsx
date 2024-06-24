@@ -1,11 +1,7 @@
 //components
 import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
-import {
-  IoCardOutline,
-  IoDocumentTextOutline,
-  IoPeopleCircle,
-} from "react-icons/io5";
+import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
 import { LuArchive } from "react-icons/lu";
 import {
   MdOutlineInventory2,
@@ -96,19 +92,19 @@ export const adminPaths = [
     icon: TbTruckReturn,
     children: returnPaths,
   },
-  {
-    name: "Accounting",
-    path: "accounting",
-    icon: IoCardOutline,
-    // children: [
-    //   {
-    //     name: "Sub Accounting",
-    //     path: "sub-accounting",
-    //     icon: TbDashboard,
-    //     element: <Accounting />,
-    //   },
-    // ],
-  },
+  // {
+  //   name: "Accounting",
+  //   path: "accounting",
+  //   icon: IoCardOutline,
+  //   // children: [
+  //   //   {
+  //   //     name: "Sub Accounting",
+  //   //     path: "sub-accounting",
+  //   //     icon: TbDashboard,
+  //   //     element: <Accounting />,
+  //   //   },
+  //   // ],
+  // },
   {
     name: "HRM",
     path: "human-resources",

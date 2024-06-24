@@ -22,7 +22,7 @@ export const WarehouseDetails = ({ id, ...props }) => {
         <CustomDescription
           title="Warehouse Details"
           items={details}
-          nostyle={true}
+          // nostyle={true}
         />
       )}
     </CustomModal>

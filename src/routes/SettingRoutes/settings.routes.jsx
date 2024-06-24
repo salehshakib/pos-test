@@ -13,6 +13,7 @@ import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
 import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 import { EmailConfig } from "../../pages/Dashboard/EmailConfig/EmailConfig";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
+import { HrmSettings } from "../../pages/Dashboard/HrmSetting/HrmSettings";
 import RolePermission from "../../pages/Dashboard/RolePermission/RolePermission";
 import { LeaveType } from "../../pages/Dashboard/Settings/LeaveType/LeaveType";
 import TaxList from "../../pages/Dashboard/Tax/TaxList";
@@ -73,6 +74,12 @@ export const settingPaths = [
     path: "leave-type",
     icon: MdTimeToLeave,
     element: <LeaveType />,
+  },
+  {
+    name: "Hrm Settings",
+    path: "hrm-settings",
+    icon: MdTimeToLeave,
+    element: <HrmSettings />,
   },
   {
     name: "Email Configuration",

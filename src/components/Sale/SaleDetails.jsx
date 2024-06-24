@@ -78,12 +78,17 @@ export const SaleDetails = ({ id, ...props }) => {
 
   const saleStatus = createDetailsLayout({
     sale_date: data?.sale_at,
-    sale_note: data?.sale_note,
-    staff_note: data?.staff_note,
     sale_status: data?.sale_status,
+    sale_note: data?.sale_note,
   });
 
-  const attachments = createDetailsLayout({ attachments: data?.attachments });
+  const additionalInfo = createDetailsLayout({
+    staff_note: data?.staff_note,
+  });
+
+  const attachments = createDetailsLayout({
+    attachments: data?.attachments,
+  });
 
   const title = () => (
     <span className="text-black font-semibold">Purchase Products</span>
@@ -109,16 +114,16 @@ export const SaleDetails = ({ id, ...props }) => {
         <div className="space-y-5">
           {/* <CustomDescription title="Sale Details" items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
-          <CustomDescription title="Payment Info" items={paymentInfo} />
           <CustomDescription title="Sale Info" items={saleStatus} />
-          <CustomDescription title="Attachments" items={attachments} />
-
           <Table
             {...tableProps}
             title={title}
             columns={columns}
             dataSource={dataSource}
           />
+          <CustomDescription title="Payment Info" items={paymentInfo} />
+          <CustomDescription title="Attachments" items={attachments} />
+          <CustomDescription title="Additional Info" items={additionalInfo} />
         </div>
       )}
     </CustomModal>

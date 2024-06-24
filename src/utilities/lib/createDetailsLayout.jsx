@@ -19,7 +19,7 @@ const createDetailsLayout = (data, nostyle) => {
     "address",
     "attachments",
     "reason",
-    "notes",
+    "note",
     "description",
   ];
 
@@ -100,7 +100,11 @@ const createDetailsLayout = (data, nostyle) => {
           key: index + 1,
           label: capitalizedLabel,
           children: renderValue(key, value),
-          span: nostyle ? 2 : fullRowKeys.includes(key) ? 4 : 2,
+          span: nostyle
+            ? 2
+            : fullRowKeys.includes(key) || key.includes("note")
+            ? 4
+            : 2,
         };
         acc.push(item);
       }

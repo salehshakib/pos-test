@@ -1,18 +1,23 @@
 import { useBreakpoint } from "@ant-design/pro-components";
 import { Descriptions } from "antd";
-import { desLayout, nostyleLayout } from "../../../layout/DescriptionLayout";
+import {
+  desLayout,
+  detailsLayout,
+  singleDesLayout,
+} from "../../../layout/DescriptionLayout";
 
-export const CustomDescription = ({ title, items, nostyle }) => {
+export const CustomDescription = ({ title, items = [], nostyle }) => {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
-  const layout = desLayout({ isMobile });
+  const getLayout = () => {
+    if (nostyle) return detailsLayout;
+    return items.length > 1
+      ? desLayout({ isMobile })
+      : singleDesLayout({ isMobile });
+  };
 
-  return (
-    <Descriptions
-      {...(nostyle ? nostyleLayout : layout)}
-      title={title}
-      items={items}
-    />
-  );
+  console.log(isMobile, getLayout());
+
+  return <Descriptions {...getLayout()} title={title} items={items} />;
 };

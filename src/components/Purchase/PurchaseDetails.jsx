@@ -106,16 +106,15 @@ export const PurchaseDetails = ({ id, ...props }) => {
         <div className="space-y-5">
           {/* <CustomDescription title="Purchase Details" items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
-          <CustomDescription title="Payment Info" items={paymentInfo} />
           <CustomDescription title="Purchase Info" items={purchaseStatus} />
-          <CustomDescription title="Attachments" items={attachments} />
-
           <Table
             {...tableProps}
             title={title}
             columns={columns}
             dataSource={dataSource}
           />
+          <CustomDescription title="Payment Info" items={paymentInfo} />
+          <CustomDescription title="Attachments" items={attachments} />
         </div>
       )}
     </CustomModal>

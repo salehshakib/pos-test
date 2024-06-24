@@ -20,14 +20,15 @@ const categoryApi = baseApi.injectEndpoints({
       ],
     }),
     getCategoryDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${CATEGORY}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [CATEGORY],
+      providesTags: (result, error, { id }) => [{ type: CATEGORY, id }],
     }),
     createCategory: build.mutation({
       query: ({ data }) => {

@@ -12,6 +12,7 @@ import { selectPagination } from "../../redux/services/pagination/paginationSlic
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { CategoryDetails } from "./CategoryDetails";
 import Categoryedit from "./Categoryedit";
 
 const CategoryTable = ({ newColumns, setSelectedRows }) => {
@@ -19,6 +20,9 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -41,6 +45,11 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -86,10 +95,12 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setStatusModal(false);
     setDeleteModal(false);
   };
@@ -105,6 +116,14 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
       />
       <Categoryedit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <CategoryDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

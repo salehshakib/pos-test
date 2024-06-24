@@ -1,63 +1,99 @@
 import { Badge } from "antd";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
+import defaultUser from "../../assets/data/defaultUserImage";
 
-const createDetailsLayout = (data) => {
+const createDetailsLayout = (data, nostyle) => {
   const ignoredKeys = [
     "id",
     "created_at",
     "updated_at",
     "deleted_at",
-    // "attachments",
+    "adjustment_products",
+    "purchase_products",
+    "sale_products",
   ];
-  const fullRowKeys = ["details", "product_list", "address", "qty_list"];
+  const fullRowKeys = ["details", "address", "attachments"];
 
-  // console.log(data);
+  const renderValue = (key, value) => {
+    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      return value.name || "N/A";
+    }
+
+    switch (key) {
+      case "is_active":
+        return value.toString() === "1" ? (
+          <Badge status="success" text="Active" key={"active"} />
+        ) : (
+          <Badge status="default" text="Inactive" key={"inactive"} />
+        );
+
+      case "details":
+        return value ? <div>{parse(value)}</div> : "N/A";
+
+      case "attachments":
+        return Array.isArray(value) ? (
+          <div className="flex items-center gap-3" key={"attachments"}>
+            {value.map(({ label, url }) => (
+              <img
+                src={defaultUser}
+                // src={url ?? defaultUser}
+                alt={label}
+                key={url}
+                className="w-24"
+              />
+            ))}
+          </div>
+        ) : (
+          "N/A"
+        );
+
+      default:
+        if (key.includes("status")) {
+          if (!value) return <Badge status="warning" text={"Incomplete"} />;
+
+          return value?.toLowerCase() === "pending" ||
+            value?.toLowerCase() === "incomplete" ? (
+            <Badge status="warning" text={value} />
+          ) : (
+            <Badge status="success" text={value} />
+          );
+        }
+        if (key.includes("date")) {
+          return dayjs(value).format("DD-MM-YYYY");
+        }
+        if (value === "1") {
+          return "True";
+        }
+        if (value === "0") {
+          return "False";
+        }
+
+        if (!Array.isArray(value)) return value || "N/A";
+    }
+  };
 
   const details = Object.entries(data ?? {}).reduce(
     (acc, [key, value], index) => {
-      if (!ignoredKeys.includes(key)) {
-        let children;
+      if (ignoredKeys.includes(key)) {
+        return acc;
+      }
 
-        if (key === "is_active") {
-          children =
-            value === "1" ? (
-              <Badge status="success" text="Active" />
-            ) : (
-              <Badge status="default" text="Inactive" />
-            );
-        } else if (key.includes("status")) {
-          children =
-            value.toLowerCase() === "pending" ? (
-              <Badge status="warning" text={value} />
-            ) : (
-              <Badge status="success" text={value} />
-            );
-        } else if (key.includes("date")) {
-          children = dayjs(value).format("DD-MM-YYYY");
-        } else if (value === "1") {
-          children = "True";
-        } else if (value === "0") {
-          children = "False";
-        } else if (key === "details") {
-          children = value ? <div>{parse(value)}</div> : "N/A";
-        } else if (key === "attachments") {
-          children = Array.isArray(value)
-            ? value.map(({ label, url }) => (
-                <img src={url} alt={label} key={url} />
-              ))
-            : "N/A";
-        } else if (typeof value !== "object") {
-          children = value ? value : "N/A";
-        }
+      if (key.includes("_id")) {
+        return acc;
+      }
+
+      if (!ignoredKeys.includes(key)) {
+        const capitalizedLabel = key
+          .replace(/_/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
 
         const item = {
           key: index + 1,
-          label: key.replace(/_/g, " ").toUpperCase(),
-          children,
-          span: fullRowKeys.includes(key) ? 4 : 2,
+          label: capitalizedLabel,
+          children: renderValue(key, value),
+          span: nostyle ? 2 : fullRowKeys.includes(key) ? 4 : 2,
         };
-
         acc.push(item);
       }
       return acc;
@@ -65,122 +101,9 @@ const createDetailsLayout = (data) => {
     []
   );
 
-  if (details.some((item) => item.label === "PRODUCT LIST")) {
-    const productListItem = details.find(
-      (item) => item.label === "PRODUCT LIST"
-    );
-    if (data?.product_list) {
-      try {
-        const productList = JSON.parse(data.product_list);
-        productListItem.children = (
-          <>
-            {productList.map((item, index) => (
-              <div key={index}>{JSON.stringify(item)}</div>
-            ))}
-          </>
-        );
-      } catch (error) {
-        console.error("Error parsing product_list JSON:", error);
-        productListItem.children = "Invalid product list data";
-      }
-    }
-  }
+  console.log(details);
 
   return details;
 };
 
 export default createDetailsLayout;
-
-// import { Badge } from "antd";
-// import dayjs from "dayjs";
-// import parse from "html-react-parser";
-
-// const createDetailsLayout = (data) => {
-//   const ignoredKeys = ["id", "created_at", "updated_at", "deleted_at"];
-//   const fullRowKeys = ["details", "product_list", "address", "qty_list"];
-
-//   const processValue = (key, value) => {
-//     if (key === "is_active") {
-//       return value === "1" ? (
-//         <Badge status="success" text="Active" />
-//       ) : (
-//         <Badge status="default" text="Inactive" />
-//       );
-//     } else if (key.includes("status")) {
-//       return value.toLowerCase() === "pending" ? (
-//         <Badge status="warning" text={value} />
-//       ) : (
-//         <Badge status="success" text={value} />
-//       );
-//     } else if (
-//       key.includes("date") ||
-//       key === "created_at" ||
-//       key === "updated_at"
-//     ) {
-//       return dayjs(value).format("DD-MM-YYYY");
-//     } else if (value === "1") {
-//       return "True";
-//     } else if (value === "0") {
-//       return "False";
-//     } else if (key === "details") {
-//       return value ? <div>{parse(value)}</div> : "N/A";
-//     } else if (Array.isArray(value)) {
-//       return value.length > 0
-//         ? value.map((item, index) => (
-//             <div key={index}>{JSON.stringify(item)}</div>
-//           ))
-//         : "N/A";
-//     } else if (typeof value === "object" && value !== null) {
-//       return createDetailsLayout(value);
-//     } else {
-//       return value ? value : "N/A";
-//     }
-//   };
-
-//   const details = Object.entries(data ?? {}).reduce(
-//     (acc, [key, value], index) => {
-//       if (!ignoredKeys.includes(key)) {
-//         const item = (
-//           <div
-//             key={index}
-//             style={{
-//               gridColumn: fullRowKeys.includes(key) ? "span 4" : "span 2",
-//             }}
-//           >
-//             <strong>{key.replace(/_/g, " ").toUpperCase()}</strong>:{" "}
-//             {processValue(key, value)}
-//           </div>
-//         );
-
-//         acc.push(item);
-//       }
-//       return acc;
-//     },
-//     []
-//   );
-
-//   if (details.some((item) => item.props.children[0] === "PRODUCT LIST")) {
-//     const productListItem = details.find(
-//       (item) => item.props.children[0] === "PRODUCT LIST"
-//     );
-//     if (data?.product_list) {
-//       try {
-//         const productList = JSON.parse(data.product_list);
-//         productListItem.props.children[1] = (
-//           <div>
-//             {productList.map((item, index) => (
-//               <div key={index}>{JSON.stringify(item)}</div>
-//             ))}
-//           </div>
-//         );
-//       } catch (error) {
-//         console.error("Error parsing product_list JSON:", error);
-//         productListItem.props.children[1] = "Invalid product list data";
-//       }
-//     }
-//   }
-
-//   return details;
-// };
-
-// export default createDetailsLayout;

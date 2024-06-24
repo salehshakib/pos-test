@@ -17,7 +17,7 @@ import {
 import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "./QuotationForm";
 
-const QuotationEdit = ({ id }) => {
+const QuotationEdit = ({ id, setId }) => {
   const { message } = App.useApp();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -252,6 +252,7 @@ const QuotationEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
 
       setFormValues({

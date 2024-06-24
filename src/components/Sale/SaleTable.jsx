@@ -11,12 +11,16 @@ import {
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { SaleEdit } from "./SaleEdit";
+import { SaleDetails } from "./SaleDetails";
 
 export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -34,6 +38,11 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
+
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
@@ -45,22 +54,6 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
       setDeleteModal(false);
     }
   };
-
-  // const dataSource =
-  //   data?.results?.sale?.map((item) => {
-  //     const { id, sale_at, reference_id } = item ?? {};
-  //     const date = dayjs(sale_at).format("DD-MM-YYYY");
-
-  //     return {
-  //       id,
-
-  //       date: date,
-  //       reference: reference_id,
-
-  //       handleEdit,
-  //       handleDeleteModal,
-  //     };
-  //   }) ?? [];
 
   const dataSource =
     data?.results?.sale?.map((item) => {
@@ -79,8 +72,6 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
 
       const date = dayjs(sale_at).format("DD-MM-YYYY");
 
-      console.log(due_amount, paid_amount, payment_status);
-
       return {
         key: id, // Unique key for each row
         id,
@@ -95,10 +86,12 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
         due: due_amount,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -116,6 +109,14 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <SaleEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <SaleDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

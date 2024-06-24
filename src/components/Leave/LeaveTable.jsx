@@ -1,111 +1,134 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeleteLeaveMutation,
+  useGetAllLeaveQuery,
+} from "../../redux/services/hrm/leave/leaveApi";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { LeaveDetails } from "./LeaveDetails";
 import { LeaveEdit } from "./LeaveEdit";
 
+function calculateLeaveDays(leaveStartDate, leaveEndDate) {
+  const startDate = new Date(leaveStartDate);
+  const endDate = new Date(leaveEndDate);
+
+  const timeDifference = endDate.getTime() - startDate.getTime();
+
+  const dayDifference = timeDifference / (1000 * 3600 * 24);
+
+  if (dayDifference === 0) {
+    return "half day";
+  }
+
+  return dayDifference + " Days";
+}
+
 export const LeaveTable = ({ newColumns, setSelectedRows }) => {
-  // const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
+  const dispatch = useDispatch();
+  const pagination = useSelector(selectPagination);
 
-  // const [editId, setEditId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [deleteId, setDeleteId] = useState(undefined);
-  // const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetBrandsQuery({
-  //   params: pagination,
-  // });
+  const { data, isLoading } = useGetAllLeaveQuery({
+    params: { ...pagination, parent: 1 },
+  });
 
-  // const total = data?.meta?.total;
+  const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateBrandStatusMutation();
+  const [deleteLeave, { isLoading: isDeleting }] = useDeleteLeaveMutation();
 
-  // const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
+  const handleEdit = (id) => {
+    setEditId(id);
+    dispatch(openEditDrawer());
+  };
 
-  // const handleEdit = (id) => {
-  //   setEditId(id);
-  //   dispatch(openEditDrawer());
-  // };
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
+    setDeleteModal(true);
+  };
 
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
+  const handleDelete = async () => {
+    const { data } = await deleteLeave(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
 
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
+  const dataSource =
+    data?.results?.leave?.map((item) => {
+      console.log(item);
+      const {
+        id,
 
-  // const handleDeleteModal = (id) => {
-  //   setDeleteId(id);
-  //   setDeleteModal(true);
-  // };
+        // created_at,
 
-  // const handleDelete = async () => {
-  //   const { data } = await deleteBrand(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
+        leave_start_date,
+        leave_end_date,
+        leave_duration,
+      } = item ?? {};
 
-  // const dataSource =
-  //   data?.results?.brand?.map((item) => {
-  //     const { id, name, created_at, attachments, is_active } = item ?? {};
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+      // const date = dayjs(created_at).format("DD-MM-YYYY");
 
-  //     return {
-  //       id,
-  //       brand: name,
-  //       image: attachments?.[0]?.url,
-  //       created_at: date,
+      return {
+        id,
+        leaveDuration: leave_duration,
+        days: calculateLeaveDays(leave_start_date, leave_end_date),
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
+      };
+    }) ?? [];
 
-  //       status: is_active,
-  //       handleStatusModal,
-  //       handleEdit,
-  //       handleDeleteModal,
-  //     };
-  //   }) ?? [];
-
-  // const hideModal = () => {
-  //   setStatusModal(false);
-  //   setDeleteModal(false);
-  // };
+  const hideModal = () => {
+    setDetailsModal(false);
+    setDeleteModal(false);
+  };
 
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+        dataSource={dataSource}
+        total={total}
         setSelectedRows={setSelectedRows}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         isRowSelection={true}
+        status={false}
+        created_at={false}
       />
 
-      {/* <LeaveEdit id={editId} setId={setEditId} /> */}
-      {/*   
-          <StatusModal
-            statusModal={statusModal}
-            hideModal={hideModal}
-            handleStatus={handleStatus}
-            isLoading={isStatusUpdating}
-          />
-    
-          <DeleteModal
-            deleteModal={deleteModal}
-            hideModal={hideModal}
-            handleDelete={handleDelete}
-            isLoading={isDeleting}
-            item={"brand"}
-          /> */}
+      <LeaveEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <LeaveDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+        item={"brand"}
+      />
     </GlobalUtilityStyle>
   );
 };

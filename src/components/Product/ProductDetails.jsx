@@ -75,6 +75,13 @@ export const ProductDetails = ({ id, ...props }) => {
     embedded_barcode: data?.embedded_barcode,
   });
 
+  const productAttachments = createDetailsLayout(
+    {
+      attachments: data?.attachments,
+    },
+    true
+  );
+
   return (
     <CustomModal {...props}>
       {isFetching ? (
@@ -98,6 +105,12 @@ export const ProductDetails = ({ id, ...props }) => {
               <div>{parse(data?.details)}</div>
             </Descriptions.Item>
           </Descriptions>
+
+          <CustomDescription
+            title="Attachments"
+            items={productAttachments}
+            nostyle={true}
+          />
         </div>
       )}
     </CustomModal>

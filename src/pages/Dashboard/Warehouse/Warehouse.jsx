@@ -23,29 +23,18 @@ const columns = [
     align: "center",
     render: (email) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {email}
+        {email ?? "N/A"}
       </span>
     ),
   },
   {
-    title: "Phone",
+    title: "Phone Number",
     dataIndex: "phone",
     key: "phone",
     align: "center",
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {phone}
-      </span>
-    ),
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-    width: 300,
-    render: (address) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {address}
+        {phone ?? "N/A"}
       </span>
     ),
   },

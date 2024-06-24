@@ -20,10 +20,11 @@ const giftCardApi = baseApi.injectEndpoints({
     }),
 
     getGiftCardDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${GIFT_CARD}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

@@ -7,11 +7,10 @@ import { selectPagination } from "../../redux/services/pagination/paginationSlic
 import {
   useDeletePurchaseMutation,
   useGetAllPurchaseQuery,
-  useUpdatePurchaseStatusMutation,
 } from "../../redux/services/purchase/purchaseApi";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { PurchaseDetails } from "./PurchaseDetails";
 import { PurchaseEdit } from "./PurchaseEdit";
 
 export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
@@ -20,8 +19,11 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
 
   const [editId, setEditId] = useState(undefined);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
+
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -32,8 +34,8 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdatePurchaseStatusMutation();
+  // const [updateStatus, { isLoading: isStatusUpdating }] =
+  //   useUpdatePurchaseStatusMutation();
 
   const [deletePurchase, { isLoading: isDeleting }] =
     useDeletePurchaseMutation();
@@ -43,19 +45,24 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+  // const handleStatusModal = (id) => {
+  //   setStatusId(id);
+  //   setStatusModal(true);
+  // };
 
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
-  };
+  // const handleStatus = async () => {
+  //   const { data } = await updateStatus(statusId);
+
+  //   if (data?.success) {
+  //     setStatusId(undefined);
+  //     setStatusModal(false);
+  //   }
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -96,31 +103,16 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
         paid: paid_amount,
         due: due_amount,
         status: is_active,
-        handleStatusModal,
+        // handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
-  // const dataSource =
-  //   data?.results?.purchase?.map((item) => {
-  //     const { id, created_at, is_active } = item ?? {};
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
-
-  //     return {
-  //       id,
-
-  //       created_at: date,
-
-  //       status: is_active,
-  //       handleStatusModal,
-  //       handleEdit,
-  //       handleDeleteModal,
-  //     };
-  //   }) ?? [];
-
   const hideModal = () => {
-    setStatusModal(false);
+    setDetailsModal(false);
+    // setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -133,17 +125,26 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
         created_at={false}
       />
 
       <PurchaseEdit id={editId} setId={setEditId} />
 
-      <StatusModal
+      {detailsId && (
+        <PurchaseDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
+
+      {/* <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      />
+      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

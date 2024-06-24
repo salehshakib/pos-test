@@ -6,7 +6,10 @@ import {
   useUpdateGiftCardMutation,
 } from "../../redux/services/giftcard/giftcard/giftCardApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import {
+  fieldsToUpdate,
+  updateFieldValues,
+} from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import GiftCardForm from "./GiftCardForm";
 import dayjs from "dayjs";
@@ -25,9 +28,9 @@ const GiftCardEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-      const fieldData = [
-        ...fieldsToUpdate(data),
+      const fieldData = fieldsToUpdate(data);
+
+      const updateFieldData = [
         {
           name: "customer_id",
           value: data?.customer_id?.toString(),
@@ -35,14 +38,20 @@ const GiftCardEdit = ({ id, setId }) => {
         },
       ];
 
-      setFields(fieldData);
+      const newFieldData = updateFieldValues(fieldData, updateFieldData);
+
+      setFields(newFieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateGiftCard({
       id,
-      data: { ...values, _method: "PUT" },
+      data: {
+        ...values,
+        expired_date: dayjs(values?.expired_date).format("YYYY-MM-DD"),
+        _method: "PUT",
+      },
     });
 
     if (data?.success) {

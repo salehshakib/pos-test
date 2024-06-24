@@ -9,10 +9,11 @@ import {
   useUpdateGiftCardDesignStatusMutation,
 } from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
-import CustomTable from "../Shared/Table/CustomTable";
-import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { GiftCardDesigneDetails } from "./GiftCardDesignDetails";
+import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
 
 const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,9 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -45,6 +49,11 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -86,10 +95,12 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setStatusModal(false);
     setDeleteModal(false);
   };
@@ -106,6 +117,14 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <GiftCardDesignEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <GiftCardDesigneDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

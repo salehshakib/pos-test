@@ -45,11 +45,11 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
 
       const frontSideUrl = data?.attachments?.find(
         (item) => item.label === "front_side"
-      ).url;
+      )?.url;
 
       const backSideUrl = data?.attachments?.find(
         (item) => item.label === "back_side"
-      ).url;
+      )?.url;
 
       form.setFieldValue("frontImageUrl", frontSideUrl);
       form.setFieldValue("backImageUrl", backSideUrl);

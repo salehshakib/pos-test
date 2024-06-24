@@ -13,6 +13,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import GiftCardEdit from "./GiftCardEdit";
 import dayjs from "dayjs";
+import { GiftCardDetails } from "./GiftCardDetails";
 
 const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,9 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -42,6 +46,11 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -100,10 +109,12 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setStatusModal(false);
     setDeleteModal(false);
   };
@@ -121,6 +132,14 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <GiftCardEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <GiftCardDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

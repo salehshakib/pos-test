@@ -1,23 +1,28 @@
+import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import CouponsEdit from "./CouponsEdit";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import StatusModal from "../Shared/Modal/StatusModal";
-import DeleteModal from "../Shared/Modal/DeleteModal";
 import {
   useDeleteCouponMutation,
   useGetAllCouponQuery,
   useUpdateCouponStatusMutation,
 } from "../../redux/services/coupon/couponApi";
-import dayjs from "dayjs";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { CouponsDetails } from "./CouponsDetails";
+import CouponsEdit from "./CouponsEdit";
 
 const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
+  const pagination = useSelector(selectPagination);
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -39,6 +44,11 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -104,11 +114,13 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -120,7 +132,6 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
         dataSource={dataSource}
         total={total}
         pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
@@ -128,6 +139,14 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <CouponsEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <CouponsDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

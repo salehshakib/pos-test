@@ -1,5 +1,4 @@
 //components
-import TransferList from "antd/es/transfer/list";
 import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
 import {
@@ -28,6 +27,7 @@ import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
 import { Roles } from "../pages/Dashboard/Roles/Roles";
+import TransferList from "../pages/Dashboard/Transfer/TransferList";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
 import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";

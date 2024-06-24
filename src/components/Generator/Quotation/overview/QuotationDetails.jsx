@@ -1,9 +1,9 @@
 import { Spin, Table } from "antd";
+import { tableProps } from "../../../../layout/TableLayout";
 import { useGetQuotationDetailsQuery } from "../../../../redux/services/quotation/quotationApi";
 import createDetailsLayout from "../../../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../../../Shared/Description/CustomDescription";
 import CustomModal from "../../../Shared/Modal/CustomModal";
-import { tableProps } from "../../../../layout/TableLayout";
 
 const columns = [
   {

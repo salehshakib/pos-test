@@ -20,15 +20,17 @@ export const SearchProduct = ({ setProducts }) => {
     {
       params: {
         keyword,
-        selectValue: [
-          "id",
-          "sku",
-          "name",
-          "buying_price",
-          "tax_id",
-          "sale_unit_id",
-          "purchase_unit_id",
-        ],
+        // selectValue: [
+        //   "id",
+        //   "sku",
+        //   "name",
+        //   "buying_price",
+        //   "selling_price",
+        //   "symbology",
+        //   "tax_id",
+        //   "sale_unit_id",
+        //   "purchase_unit_id",
+        // ],
         // child: 1,
         parent: 1,
       },

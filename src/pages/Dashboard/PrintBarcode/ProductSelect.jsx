@@ -2,10 +2,8 @@ import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-// import { columns } from "./columns/ProductColumns";
+import { CustomQuantityInput } from "../../../components/Shared/Input/CustomQuantityInput";
+import { ProductController } from "../../../components/Shared/ProductControllerComponent/ProductController";
 
 const columns = [
   {
@@ -71,28 +69,7 @@ const columns = [
       );
     },
   },
-  {
-    title: "UnitPrice",
-    dataIndex: "unitPrice",
-    key: "unitPrice",
-    align: "center",
-    width: 200,
-    render: (unitPrice, record) => {
-      return unitPrice > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {unitPrice}
-        </span>
-      ) : (
-        <CustomInput
-          type={"number"}
-          name={["product_list", "amount", record?.id]}
-          placeholder="quantity"
-          noStyle={true}
-          onChange={(value) => record.onUnitPriceChange(record.id, value)}
-        />
-      );
-    },
-  },
+
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
     dataIndex: "delete",
@@ -118,7 +95,7 @@ const columns = [
   },
 ];
 
-const ComboProductsComponent = ({
+const ProductSelect = ({
   formValues,
   setFormValues,
   products,
@@ -126,10 +103,10 @@ const ComboProductsComponent = ({
 }) => {
   const form = Form.useFormInstance();
 
-  const incrementCounter = (id, stock = 5) => {
+  const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(currentQty + 1, stock);
+      const newQty = Math.min(currentQty + 1);
 
       return {
         ...prevFormValues,
@@ -175,62 +152,31 @@ const ComboProductsComponent = ({
     }));
   };
 
-  // const onActionChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       action: {
-  //         ...prevFormValues.product_list.action,
-  //         [id]: value,
-  //       },
-  //     },
-  //   }));
-  // };
-
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
   };
 
-  const onUnitPriceChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        amount: {
-          ...prevFormValues.product_list.amount,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
-
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku, buying_price: unitPrice } = product;
+      const { id, name, sku } = product;
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
-      formValues.product_list.amount[id] =
-        formValues.product_list.amount[id] ?? parseInt(unitPrice) ?? 0;
 
       return {
         id,
         name,
         sku,
-        unitPrice: `$${formValues.product_list.amount[id]}`,
         delete: true,
         incrementCounter,
         decrementCounter,
         onQuantityChange,
         onDelete,
-        onUnitPriceChange,
       };
     }) ?? [];
 
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalUnitPrice, setTotalUnitPrice] = useState(0);
 
   useEffect(() => {
     const sanitizeValue = (value) => {
@@ -244,12 +190,6 @@ const ComboProductsComponent = ({
         0
       );
       setTotalQuantity(total);
-
-      const totalAmount = Object.values(formValues.product_list.amount).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalUnitPrice(totalAmount);
     }
   }, [formValues, products]);
 
@@ -258,7 +198,6 @@ const ComboProductsComponent = ({
       id: "",
       name: "Total",
       quantity: totalQuantity,
-      unitPrice: Number(totalUnitPrice)?.toFixed(2),
     });
 
   form?.setFieldsValue(formValues);
@@ -273,4 +212,4 @@ const ComboProductsComponent = ({
   );
 };
 
-export default ComboProductsComponent;
+export default ProductSelect;

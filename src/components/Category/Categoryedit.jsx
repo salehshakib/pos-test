@@ -12,6 +12,7 @@ import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CategoryForm from "./CategoryForm";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
+import defaultUser from "../../assets/data/defaultUserImage";
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -32,15 +33,34 @@ const Categoryedit = ({ id, setId }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      let newFieldData = fieldData;
+
+      if (data?.attachments?.length === 0) {
+        newFieldData = [
+          ...fieldData,
+          {
+            name: "attachment",
+            value: [
+              {
+                url: defaultUser,
+              },
+            ],
+            erros: "",
+          },
+        ];
+      }
+
+      setFields(newFieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const postObj = values;
-    postObj._method = "PUT";
+    const postObj = { ...values, _method: "PUT" };
 
-    if (values?.attachment?.length > 0) {
+    if (
+      values?.attachment?.length > 0 &&
+      values?.attachment?.[0]?.originFileObj
+    ) {
       postObj.attachment = values?.attachment?.[0]?.originFileObj;
     }
 

@@ -10,14 +10,7 @@ export const useCustomDebounce = () => {
     } else {
       setKeyword(null);
     }
-  }, 1000);
-
-  //   const debounce = (value) => {
-  //     //console.log(value);
-  //     debounceCallback(value);
-  //   };
-
-  //   //console.log(first)
+  }, 800);
 
   return {
     keyword,

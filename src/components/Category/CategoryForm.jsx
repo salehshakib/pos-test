@@ -8,7 +8,7 @@ import {
 } from "../../utilities/hooks/useParams";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
-import { CustomAutoComplete } from "../Shared/Select/CustomAutoComplete";
+import DebounceSelect from "../Shared/Select/DebounceSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
 const ParentCategoryComponent = () => {
@@ -31,12 +31,15 @@ const ParentCategoryComponent = () => {
   );
 
   const options = data?.results?.category?.map((category) => ({
+    key: category.id,
     value: category.id?.toString(),
     label: category.name,
   }));
 
+  console.log(isFetching);
+
   return (
-    <CustomAutoComplete
+    <DebounceSelect
       label="Parent Category"
       name={"parent_id"}
       placeholder={"Parent Category"}

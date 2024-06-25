@@ -3,6 +3,7 @@ import defaultUser from "../../../assets/data/defaultUserImage";
 import CategoryCreate from "../../../components/Category/CategoryCreate";
 import CategoryTable from "../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { CATEGORY } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -54,6 +55,7 @@ const Category = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={CATEGORY}
     >
       <CategoryCreate />
       <CategoryTable

@@ -1,7 +1,7 @@
 import { Form, Select, Spin } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
-const DebouceSelect = (props) => {
+const DebounceSelect = (props) => {
   const {
     name,
     label,
@@ -18,14 +18,15 @@ const DebouceSelect = (props) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item
-        label={label && `Select ${label}`}
+        label={label && `${label}`}
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
         noStyle={noStyle}
       >
         <Select
-          placeholder={`Type ${placeholder ?? label}`}
-          className="mt-2 custom-selector"
+          showSearch
+          placeholder={`Search ${placeholder ?? label}`}
+          className="mt-1 custom-selector"
           size="large"
           mode={mode}
           filterOption={false}
@@ -39,6 +40,7 @@ const DebouceSelect = (props) => {
               />
             )
           }
+          loading={isLoading}
           onSelect={onSelect}
           allowClear={true}
         />
@@ -47,4 +49,4 @@ const DebouceSelect = (props) => {
   );
 };
 
-export default DebouceSelect;
+export default DebounceSelect;

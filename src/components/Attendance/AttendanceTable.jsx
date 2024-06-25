@@ -77,6 +77,7 @@ export const AttendanceTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.attendance?.map((item) => {
+      console.log(item);
       const { id, name, email, attachments, date, check_in, check_out } =
         item ?? {};
       // const date = dayjs(created_at).format("DD-MM-YYYY");

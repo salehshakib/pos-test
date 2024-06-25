@@ -107,7 +107,7 @@ const brandApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${BRAND}/export`,
-          method: "POST",
+          method: "GET",
           body: data,
         };
       },

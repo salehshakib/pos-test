@@ -3,6 +3,7 @@ import defaultUser from "../../../assets/data/defaultUserImage";
 import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -132,6 +133,7 @@ const ProductList = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={PRODUCT}
     >
       <ProductCreate />
 

@@ -26,14 +26,14 @@ const AttendanceCreate = ({
     const formData = new FormData();
 
     const timeString = values?.hours ?? "00:00:00";
-    const [hours] = timeString.split(":").map(Number);
+    const [hours, minutes] = timeString.split(":").map(Number);
 
     const postData = {
       ...values,
       date: values.date.format("YYYY-MM-DD"),
       check_in: values.check_in.format("HH:mm:ss"),
       check_out: values.check_out.format("HH:mm:ss"),
-      hours: hours,
+      hours: hours + ":" + minutes,
     };
 
     appendToFormData(postData, formData);

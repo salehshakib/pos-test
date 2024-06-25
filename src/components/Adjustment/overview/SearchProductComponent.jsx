@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useDebouncedCallback } from "use-debounce";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { setProduct } from "../../../redux/services/product/productSlice";
-import DebouceSelect from "../../Shared/Select/DebounceSelect";
+import DebounceSelect from "../../Shared/Select/DebounceSelect";
 
 export const SearchProductComponent = () => {
   const [keyword, setKeyword] = useState(null);
@@ -50,7 +50,7 @@ export const SearchProductComponent = () => {
   };
 
   return (
-    <DebouceSelect
+    <DebounceSelect
       label="Product"
       onSearch={debounce}
       placeholder={"Product Name"}

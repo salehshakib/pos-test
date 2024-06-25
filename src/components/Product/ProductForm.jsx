@@ -18,11 +18,65 @@ import { CategoryComponent } from "./overview/CategoryComponent";
 import ComboProductsComponent from "./overview/ComboProductsComponent";
 import { DifferentPriceComponent } from "./overview/DifferentPriceComponent";
 import { InitialStockComponent } from "./overview/InitialStockComponent";
-import ProductCodeComponent from "./overview/ProductCodeComponent";
-import ProductTypeComponent from "./overview/ProductTypeComponent";
+// import ProductCodeComponent from "./overview/ProductCodeComponent";
+// import ProductTypeComponent from "./overview/ProductTypeComponent";
 import { TaxComponent } from "./overview/TaxComponent";
 import TaxTypeComponent from "./overview/TaxTypeComponent";
 import UnitComponent from "./overview/UnitComponent";
+import { useEffect } from "react";
+import CustomSelect from "../Shared/Select/CustomSelect";
+import { generateRandomCode } from "../../utilities/lib/generateCode";
+import CustomInputButton from "../Shared/Input/CustomInputButton";
+import { RiRefreshLine } from "react-icons/ri";
+
+const ProductTypeComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("type", form);
+
+  const options = [
+    { value: "Standard", label: "Standard" },
+    { value: "Combo", label: "Combo" },
+    { value: "Digital", label: "Digital" },
+    { value: "Service", label: "Service" },
+  ];
+
+  useEffect(() => {
+    if (!productType) {
+      form.setFieldValue("type", "Standard");
+    }
+  }, [form, productType]);
+
+  return (
+    <CustomSelect
+      label="Product Type"
+      required={true}
+      options={options}
+      name={"type"}
+    />
+  );
+};
+
+const ProductCodeComponent = () => {
+  const form = Form.useFormInstance();
+
+  const generate = () => {
+    const randomCode = generateRandomCode(6);
+
+    form?.setFieldValue("sku", randomCode);
+  };
+
+  return (
+    <CustomInputButton
+      label="Sku"
+      type={"text"}
+      required={true}
+      name={"sku"}
+      placeholder={"Generate Sku"}
+      onClick={generate}
+      icon={<RiRefreshLine className="text-xl" />}
+    />
+  );
+};
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();

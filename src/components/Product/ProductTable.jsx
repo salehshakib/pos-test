@@ -6,24 +6,22 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
   useUpdateProductStatusMutation,
 } from "../../redux/services/product/productApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
-  const pagination = useSelector(selectPagination);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -36,6 +34,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isPagination: true,
+    isDefaultParams: false,
     params: {
       parent: 1,
     },
@@ -45,13 +44,10 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     // selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  //console.log(params);
+  console.log(params);
 
   const { data, isLoading } = useGetAllProductsQuery({
-    params: {
-      ...pagination,
-      parent: 1,
-    },
+    params,
   });
 
   const total = data?.meta?.total;

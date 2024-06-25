@@ -3,7 +3,7 @@ import defaultUser from "../../../assets/data/defaultUserImage";
 import BrandCreate from "../../../components/Brand/BrandCreate";
 import { BrandTable } from "../../../components/Brand/BrandTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { useExportBrandMutation } from "../../../redux/services/brand/brandApi";
+import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -39,23 +39,13 @@ const Brand = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  const handleExport = async (format) => {
-    const { data, error } = await exportBrand({
-      data: { format },
-    });
-
-    //console.log(data);
-  };
-
   return (
     <GlobalContainer
       pageTitle="Brand"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      handleExport={handleExport}
+      api={BRAND}
     >
       <BrandCreate />
 

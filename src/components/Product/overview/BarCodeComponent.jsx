@@ -1,33 +1,65 @@
 import { Form } from "antd";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { useEffect } from "react";
-
 const options = [
   {
-    value: "Code 128",
-    label: "Code 128",
+    value: "CODE128",
+    label: "CODE128",
   },
   {
-    value: "Code 39",
-    label: "Code 39",
+    value: "CODE128A",
+    label: "CODE128A",
   },
   {
-    value: "UPC-A",
-    label: "UPC-A",
+    value: "CODE128B",
+    label: "CODE128B",
   },
   {
-    value: "UPC-E",
-    label: "UPC-E",
+    value: "CODE128C",
+    label: "CODE128C",
   },
   {
-    value: "EAN-8",
-    label: "EAN-8",
+    value: "EAN13",
+    label: "EAN13",
   },
   {
-    value: "EAN-13",
-    label: "EAN-13",
+    value: "EAN8",
+    label: "EAN8",
+  },
+  {
+    value: "EAN5",
+    label: "EAN5",
+  },
+  {
+    value: "EAN2",
+    label: "EAN2",
+  },
+  {
+    value: "UPCA",
+    label: "UPCA",
+  },
+  {
+    value: "UPCE",
+    label: "UPCE",
+  },
+  {
+    value: "CODE39",
+    label: "CODE39",
+  },
+  {
+    value: "ITF14",
+    label: "ITF14",
+  },
+  {
+    value: "MSI",
+    label: "MSI",
+  },
+  {
+    value: "Pharmacode",
+    label: "Pharmacode",
   },
 ];
+
 const BarCodeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);

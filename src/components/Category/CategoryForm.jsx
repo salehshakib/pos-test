@@ -1,14 +1,33 @@
 import { Col, Row } from "antd";
-import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
-import CustomForm from "../Shared/Form/CustomForm";
 import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
+import { useCustomDebounce } from "../../utilities/hooks/useDebounce";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
+import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { CustomAutoComplete } from "../Shared/Select/CustomAutoComplete";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 
-const CategoryForm = (props) => {
-  const { data, isLoading: isParentCategoryLoading } = useGetAllCategoryQuery(
-    {}
+const ParentCategoryComponent = () => {
+  const { keyword, debounce } = useCustomDebounce();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    // isDefaultParams: true,
+    // isRelationalParams: true,
+    // selectValueParams: ["is_active"],
+    selectValue: DEFAULT_SELECT_VALUES,
+    keyword,
+  });
+
+  const { data, isFetching } = useGetAllCategoryQuery(
+    { params },
+    {
+      skip: !keyword,
+    }
   );
 
   const options = data?.results?.category?.map((category) => ({
@@ -16,6 +35,22 @@ const CategoryForm = (props) => {
     label: category.name,
   }));
 
+  return (
+    <CustomAutoComplete
+      label="Parent Category"
+      name={"parent_id"}
+      placeholder={"Parent Category"}
+      onSearch={debounce}
+      // required={true}
+      options={options}
+      // mode={"multiple"}
+      isLoading={isFetching}
+      // onSelect={onSelect}
+    />
+  );
+};
+
+const CategoryForm = (props) => {
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -29,13 +64,7 @@ const CategoryForm = (props) => {
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomSelect
-            label="Parent Category"
-            name={"parent_id"}
-            options={options}
-            placeholder={"Parent Category"}
-            isLoading={isParentCategoryLoading}
-          />
+          <ParentCategoryComponent />
         </Col>
         <Col {...fullColLayout}>
           <CustomUploader

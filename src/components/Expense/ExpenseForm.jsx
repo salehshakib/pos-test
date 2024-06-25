@@ -18,7 +18,7 @@ const ExpenseCategoryComponent = () => {
   return (
     <CustomSelect
       label={"Expense Category"}
-      name={"category_id"}
+      name={"expense_category_id"}
       options={options}
       isLoading={isLoading}
     />

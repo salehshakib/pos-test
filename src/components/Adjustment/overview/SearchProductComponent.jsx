@@ -5,7 +5,7 @@ import { useGetAllProductsQuery } from "../../../redux/services/product/productA
 import { setProduct } from "../../../redux/services/product/productSlice";
 import DebouceSelect from "../../Shared/Select/DebounceSelect";
 
-export const SearchProductComponent = ({ options: editOptions = [] }) => {
+export const SearchProductComponent = () => {
   const [keyword, setKeyword] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {

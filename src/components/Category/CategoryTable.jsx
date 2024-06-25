@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCategoryMutation,
@@ -8,7 +8,7 @@ import {
   useUpdateCategoryStatusMutation,
 } from "../../redux/services/category/categoryApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -17,7 +17,7 @@ import Categoryedit from "./Categoryedit";
 
 const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -30,9 +30,19 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCategoryQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    params: {
+      parent: 1,
+    },
+    // isRelationalParams: true,
+    // selectValueParams: ["is_active"],
   });
+
+  console.log(params);
+
+  const { data, isLoading } = useGetAllCategoryQuery({ params });
 
   const total = data?.meta?.total;
 

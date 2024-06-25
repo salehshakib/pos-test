@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteBrandMutation,
@@ -8,7 +8,7 @@ import {
   useUpdateBrandStatusMutation,
 } from "../../redux/services/brand/brandApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -17,7 +17,6 @@ import { BrandEdit } from "./BrandEdit";
 
 export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -30,9 +29,15 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetBrandsQuery({
-    params: pagination,
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    // isRelationalParams: true,
   });
+
+  console.log(params);
+
+  const { data, isLoading } = useGetBrandsQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -87,7 +92,6 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
         brand: name,
         image: attachments?.[0]?.url,
         created_at: date,
-
         status: is_active,
         handleStatusModal,
         handleEdit,

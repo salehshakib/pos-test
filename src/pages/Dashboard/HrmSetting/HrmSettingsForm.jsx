@@ -67,12 +67,12 @@ export const HrmSettingForm = ({ data }) => {
 
     const { start_time, end_time } = values;
 
-    const timeString = values?.office_hours ?? "00:00:00";
-    const [hours] = timeString.split(":").map(Number);
+    // const timeString = values?.office_hours ?? "00:00:00";
+    // const [hours] = timeString.split(":").map(Number);
     const postData = {
       start_time: start_time.format("HH:mm:ss"),
       end_time: end_time.format("HH:mm:ss"),
-      office_hours: hours,
+      // office_hours: hours,
       _method: "PUT",
     };
 

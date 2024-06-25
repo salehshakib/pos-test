@@ -9,7 +9,10 @@ import {
 } from "../../redux/services/sale/saleApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import {
+  fieldsToUpdate,
+  updateFieldValues,
+} from "../../utilities/lib/fieldsToUpdate";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
@@ -159,19 +162,21 @@ export const SaleEdit = ({ id, setId }) => {
       });
 
       const fieldData = fieldsToUpdate(data);
-      const newFieldData = [
-        ...fieldData,
+      const updatedFieldData = [
+        // ...fieldData,
         {
           name: "warehouse_id",
-          value: data?.warehouse_id.toString(),
+          value: data?.warehouse_id?.toString(),
           errors: "",
         },
         {
           name: "supplier_id",
-          value: data?.supplier_id.toString(),
+          value: data?.supplier_id?.toString(),
           errors: "",
         },
       ];
+
+      const newFieldData = updateFieldValues(fieldData, updatedFieldData);
       setFields(newFieldData);
     }
   }, [data, isEditDrawerOpen, setFields]);

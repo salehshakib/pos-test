@@ -63,7 +63,7 @@ const GiftCardComponent = () => {
     };
   });
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <Col {...fullColLayout}>
@@ -165,7 +165,7 @@ export const PaymentTypeComponent = ({
 
   const paymentType = Form.useWatch("payment_type", form);
 
-  console.log(grandTotal);
+  //console.log(grandTotal);
 
   useEffect(() => {
     form.setFieldValue("paid_amount", grandTotal ?? 0);

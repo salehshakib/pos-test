@@ -8,10 +8,11 @@ import {
 } from "../../redux/services/expense/expenseApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { ExpenseForm } from "./ExpenseForm";
 
-export const ExpenseEdit = ({ id }) => {
+export const ExpenseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -31,12 +32,15 @@ export const ExpenseEdit = ({ id }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
+    //console.log(sanitizeObj(values));
+
     const { data, error } = await updateExpense({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...sanitizeObj(values), _method: "PUT" },
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

@@ -17,7 +17,7 @@ export const CustomDescription = ({ title, items = [], nostyle }) => {
       : singleDesLayout({ isMobile });
   };
 
-  console.log(isMobile, getLayout());
+  //console.log(isMobile, getLayout());
 
   return <Descriptions {...getLayout()} title={title} items={items} />;
 };

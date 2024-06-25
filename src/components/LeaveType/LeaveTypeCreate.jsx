@@ -16,7 +16,7 @@ export const LeaveTypeCreate = () => {
   const [createLeaveType, { isLoading }] = useCreateLeaveTypeMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
     const { data, error } = await createLeaveType({
       data: values,
     });

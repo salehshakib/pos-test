@@ -97,7 +97,7 @@ export const HrmSettingForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    //console.log(errorInfo);
   };
 
   return (

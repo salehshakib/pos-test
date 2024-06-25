@@ -1,6 +1,7 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import defaultUser from "../../assets/data/defaultUserImage";
 import {
   useGetBrandDetailsQuery,
   useUpdateBrandMutation,
@@ -9,6 +10,7 @@ import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import BrandForm from "./BrandForm";
 
@@ -22,35 +24,72 @@ export const BrandEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
 
-  console.log(isEditDrawerOpen, id);
-
   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
+  // const [defaultValue, setDefaultValue] = useState(null);
+
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
+
+      let newFieldData = fieldData;
+
+      if (data?.attachments?.length === 0) {
+        newFieldData = [
+          ...fieldData,
+          {
+            name: "logo",
+            value: [
+              {
+                url: defaultUser,
+              },
+            ],
+            erros: "",
+          },
+        ];
+      }
+
+      //   ]
+
+      // const newFieldData = [
+      //   ...fieldData,
+      //   data?.attachments?.length < 1 && {
+      //     name: "logo",
+      //     value: [
+      //       {
+      //         url: defaultUser,
+      //       },
+      //     ],
+      //     erros: "",
       //   },
       // ];
 
-      setFields(fieldData);
+      // //console.log(first)
+
+      // //console.log(data?.attachments);
+      // if (data?.attachments?.length > 0) {
+      //   setDefaultValue(data?.attachments?.[0]?.url);
+      // } else {
+      //   setDefaultValue(null);
+      // }
+
+      setFields(newFieldData);
     }
-  }, [data, setFields]);
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    console.log(values);
+    //console.log(values);
 
     const postData = {
-      ...values,
-      logo: values?.logo?.[0].originFileObj,
+      ...sanitizeObj(values),
       _method: "PUT",
     };
+
+    if (values?.logo?.length > 0) {
+      postData.logo = values?.logo?.[0]?.originFileObj;
+    }
 
     appendToFormData(postData, formData);
 
@@ -70,6 +109,8 @@ export const BrandEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
+
+  //console.log(fields);
 
   return (
     <CustomDrawer

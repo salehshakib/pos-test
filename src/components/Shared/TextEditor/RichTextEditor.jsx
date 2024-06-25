@@ -7,7 +7,7 @@ import { GlobalUtilityStyle } from "../../../container/Styled";
 const RichTextEditor = ({ value, onChange, name, required, label }) => {
   // const handleChange = (content, delta, source, editor) => {
   //   // onChange(content);
-  //   console.log(content);
+  //   //console.log(content);
   // };
 
   return (

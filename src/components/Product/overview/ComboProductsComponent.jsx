@@ -86,7 +86,7 @@ const columns = [
         <CustomInput
           type={"number"}
           name={["product_list", "amount", record?.id]}
-          placeholder="quantity"
+          placeholder="Unit Price"
           noStyle={true}
           onChange={(value) => record.onUnitPriceChange(record.id, value)}
         />
@@ -175,23 +175,51 @@ const ComboProductsComponent = ({
     }));
   };
 
-  // const onActionChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       action: {
-  //         ...prevFormValues.product_list.action,
-  //         [id]: value,
-  //       },
-  //     },
-  //   }));
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
   // };
 
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
+
+    setFormValues((prevFormValues) => {
+      const { product_list, qty_list, price_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      const updatedQtyList = Object.keys(qty_list).reduce((acc, key) => {
+        // eslint-disable-next-line no-unused-vars
+        const { [id]: _, ...rest } = qty_list[key];
+        acc[key] = rest;
+        return acc;
+      }, {});
+
+      const updatedPriceList = Object.keys(price_list).reduce((acc, key) => {
+        // eslint-disable-next-line no-unused-vars
+        const { [id]: _, ...rest } = price_list[key];
+        acc[key] = rest;
+        return acc;
+      }, {});
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+        qty_list: updatedQtyList,
+        price_list: updatedPriceList,
+      };
+    });
   };
 
   const onUnitPriceChange = (id, value) => {
@@ -245,7 +273,7 @@ const ComboProductsComponent = ({
       );
       setTotalQuantity(total);
 
-      console.log(formValues);
+      //console.log(formValues);
 
       const totalAmount = Object.values(formValues.product_list.amount).reduce(
         (acc, cur) => acc + sanitizeValue(cur),

@@ -29,7 +29,7 @@ export const DesignationEdit = ({ id, setId }) => {
     { skip: !id }
   );
 
-  console.log(isEditDrawerOpen, id);
+  //console.log(isEditDrawerOpen, id);
 
   const [updateDesignation, { isLoading }] = useUpdateDesignationMutation();
 
@@ -52,7 +52,7 @@ export const DesignationEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     // const formData = new FormData();
 
-    console.log(values);
+    //console.log(values);
 
     // const postData = {
     //   ...values,

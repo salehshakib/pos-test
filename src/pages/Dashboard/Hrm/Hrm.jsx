@@ -107,7 +107,7 @@ const columns = [
 const Hrm = () => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
+      //console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
         selectedRows

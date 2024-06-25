@@ -58,7 +58,7 @@ const GiftCardComponent = () => {
     };
   });
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <Col {...fullColLayout}>

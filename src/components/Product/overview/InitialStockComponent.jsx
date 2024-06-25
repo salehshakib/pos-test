@@ -141,7 +141,7 @@ export const InitialStockComponent = ({
     }));
   };
 
-  console.log(formValues.qty_list);
+  //console.log(formValues.qty_list);
 
   const onDelete = (id) => {
     setInitialWarehouses((prevWarehouse) =>

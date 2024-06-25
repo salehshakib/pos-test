@@ -34,7 +34,7 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteExpense, { isLoading: isDeleting }] = useDeleteExpenseMutation();
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 

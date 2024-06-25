@@ -4,8 +4,8 @@ import { mode } from "../configs/base_url";
 export const verifyToken = (token) => {
   // var jwt = require("jsonwebtoken");
 
-  // console.log(token);
-  // console.log(api_key);
+  // //console.log(token);
+  // //console.log(api_key);
 
   if (mode !== "local") {
     try {

@@ -320,10 +320,10 @@ const ProductFormComponent = ({
 //       ).toFixed(2)
 //     );
 
-//     // console.log(purchase_units);
-//     // console.log(productUnits);
+//     // //console.log(purchase_units);
+//     // //console.log(productUnits);
 
-//     // console.log(formValues.product_list);
+//     // //console.log(formValues.product_list);
 
 //     formValues.product_list.tax_rate[id] =
 //       formValues.product_list.tax_rate[id] ?? 0;
@@ -531,7 +531,7 @@ export const TransferProductTable = ({
         taxes,
       } = product ?? {};
 
-      console.log(id);
+      //console.log(id);
 
       setFormValuesId(
         id,
@@ -605,7 +605,7 @@ export const TransferProductTable = ({
       tax: totalTax,
     });
 
-  console.log(Object.keys(formValues.product_list.qty).length);
+  //console.log(Object.keys(formValues.product_list.qty).length);
 
   // useEffect(() => {
 

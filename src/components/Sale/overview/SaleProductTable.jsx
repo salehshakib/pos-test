@@ -463,7 +463,7 @@ export const SaleProductTable = ({
       taxes,
     } = product ?? {};
 
-    console.log(products);
+    //console.log(products);
 
     setFormValuesId(
       id,

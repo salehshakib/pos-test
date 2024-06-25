@@ -41,7 +41,7 @@ const GlobalContainer = ({
       setCheckedMenuOpen(false);
     }
 
-    console.log(e);
+    //console.log(e);
   };
   const handleOpenChange = (nextOpen, info) => {
     if (info.source === "trigger" || nextOpen) {

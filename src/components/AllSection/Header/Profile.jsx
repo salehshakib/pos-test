@@ -147,7 +147,7 @@ const PosComponent = () => {
 
   const [open, setOpen] = useState(false);
 
-  // console.log(pettyCash);
+  // //console.log(pettyCash);
 
   const posRegister = () => {
     if (pettyCash === "Close") {

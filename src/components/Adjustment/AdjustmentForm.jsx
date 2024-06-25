@@ -13,8 +13,8 @@ const AdjustmentForm = ({
   setProducts,
   ...props
 }) => {
-  console.log(formValues);
-  console.log(products);
+  //console.log(formValues);
+  //console.log(products);
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>

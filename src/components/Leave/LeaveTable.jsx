@@ -71,7 +71,7 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.leave?.map((item) => {
-      console.log(item);
+      //console.log(item);
       const {
         id,
 

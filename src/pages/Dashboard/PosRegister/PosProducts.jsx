@@ -47,7 +47,7 @@ const PosProducts = ({ setProducts }) => {
 
   useEffect(() => {
     if (products?.length > 0 && pagination.page > 1) {
-      console.log(products);
+      //console.log(products);
       setNewData((prevData) => [...prevData, ...products]);
     } else if (products?.length > 0) {
       setNewData(products);
@@ -105,7 +105,7 @@ const PosProducts = ({ setProducts }) => {
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);
 
-                  console.log(product);
+                  //console.log(product);
 
                   return (
                     <div key={product.id} className="w-full p-2">

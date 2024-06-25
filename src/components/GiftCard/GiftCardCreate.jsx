@@ -17,7 +17,7 @@ const GiftCardCreate = () => {
   const [createGiftCard, { isLoading }] = useCreateGiftCardMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
     const { data, error } = await createGiftCard({
       data: {
         ...values,

@@ -37,9 +37,8 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleStatus = async () => {
-    console.log(id);
+    //console.log(id);
     // const { data } = await updateStatus( id);
-
     // if (data?.success) {
     //   setId(undefined);
     //   setStatusModal(false);
@@ -77,7 +76,7 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
+  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable

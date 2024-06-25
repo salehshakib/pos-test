@@ -85,7 +85,7 @@ export const PurchaseEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      console.log(data);
+      //console.log(data);
       data?.purchase_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -274,7 +274,7 @@ export const PurchaseEdit = ({ id, setId }) => {
 
     appendToFormData(postData, formData);
 
-    console.log(postData);
+    //console.log(postData);
 
     // logo: values?.logo?.[0].originFileObj,
 

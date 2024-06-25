@@ -122,10 +122,10 @@ const columns = [
 export const ProductTableComponent = () => {
   const form = Form.useFormInstance();
   const productData = Form.useWatch("product_name", form);
-  const warehouseData = Form.useWatch("warehouse_id", form);
+  // const warehouseData = Form.useWatch("warehouse_id", form);
   const productListData = Form.useWatch("product_list", form);
 
-  console.log(productData);
+  //console.log(productData);
 
   const [rowId, setRowId] = useState(undefined);
 

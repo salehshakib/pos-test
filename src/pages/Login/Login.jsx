@@ -25,7 +25,7 @@ const Login = () => {
       const user = jwtDecode(res.user);
       const userData = user?.data?.data?.[0];
 
-      console.log(user);
+      //console.log(user);
       dispatch(setUser({ user: userData, token: res.access }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
       navigate(`/dashboard`);

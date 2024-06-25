@@ -78,7 +78,7 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
+  //console.log(data);
 
   const dataSource =
     data?.results?.invoice?.map((item) => {

@@ -113,7 +113,7 @@ const createDetailsLayout = (data, nostyle) => {
     []
   );
 
-  console.log(details);
+  //console.log(details);
 
   return details;
 };

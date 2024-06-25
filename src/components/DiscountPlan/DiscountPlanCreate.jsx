@@ -11,7 +11,7 @@ const DiscountPlanCreate = () => {
   //   const [createDepartment, { isLoading }] = useCreateDepartmentMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
     // const { data, error } = await createDepartment({
     //   data: values,
     // });

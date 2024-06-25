@@ -5,7 +5,7 @@ import { RewardForm } from "../../../../components/Settings/RewardSettings/Rewar
 export const RewardSettings = () => {
   //   const { data, isLoading } = useGetGeneralSettingsQuery();
 
-  //   console.log(data);
+  //   //console.log(data);
 
   return (
     <GlobalUtilityStyle>

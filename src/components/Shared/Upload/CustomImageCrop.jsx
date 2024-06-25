@@ -42,7 +42,7 @@ const CustomImageCrop = ({
     setFileList(newFileList);
   };
 
-  console.log(fileList);
+  //console.log(fileList);
 
   return (
     <GlobalUtilityStyle>
@@ -73,10 +73,10 @@ const CustomImageCrop = ({
           showReset
           // onVisibleChange
           // onModalOk={(s) => {
-          //   console.log(s);
+          //   //console.log(s);
           // }}
           // onModalCancel={(s) => {
-          //   console.log(s);
+          //   //console.log(s);
           // }}
         >
           <Upload
@@ -86,8 +86,8 @@ const CustomImageCrop = ({
             onChange={handleFileChange}
             onPreview={handlePreview}
             beforeUpload={(file, s) => {
-              console.log(file);
-              console.log(s);
+              //console.log(file);
+              //console.log(s);
               setFileList([...fileList, file]);
               return false;
             }}

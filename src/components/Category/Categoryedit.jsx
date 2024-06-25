@@ -40,7 +40,7 @@ const Categoryedit = ({ id, setId }) => {
     const postObj = values;
     postObj._method = "PUT";
 
-    if (values?.attachment?.[0]?.originFileObj) {
+    if (values?.attachment?.length > 0) {
       postObj.attachment = values?.attachment?.[0]?.originFileObj;
     }
 

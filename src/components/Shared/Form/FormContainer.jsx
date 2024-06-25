@@ -55,7 +55,7 @@ const FromContainer = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    //console.log(errorInfo);
   };
 
   return (

@@ -47,7 +47,7 @@ const CustomLogoUploader = ({ name }) => {
     setFileList(newFileList);
   };
 
-  // console.log(fileList);
+  // //console.log(fileList);
 
   return (
     <GlobalUtilityStyle>

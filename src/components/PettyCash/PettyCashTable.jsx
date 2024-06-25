@@ -37,7 +37,7 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
+  //console.log(data);
 
   const dataSource =
     data?.results?.pettycash?.map((item) => {

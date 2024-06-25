@@ -183,7 +183,7 @@ const ProductCreate = () => {
       });
     }
 
-    console.log(error);
+    //console.log(error);
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,
@@ -198,7 +198,7 @@ const ProductCreate = () => {
   const [initialWarehouses, setInitialWarehouses] = useState([]);
   const [priceWarehouses, setPriceWarehouses] = useState([]);
 
-  console.log(formValues);
+  //console.log(formValues);
 
   return (
     <CustomDrawer

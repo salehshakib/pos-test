@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import defaultUser from "../../assets/data/defaultUserImage";
 import {
   useGetAdjustmentDetailsQuery,
   useUpdateAdjustmentMutation,
@@ -33,7 +34,19 @@ const AdjustmentEdit = ({ id }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (data) {
+    if (!isEditDrawerOpen) {
+      setFormValues({
+        product_list: {
+          qty: {},
+          action: {},
+        },
+      });
+      setProducts([]);
+    }
+  }, [isEditDrawerOpen]);
+
+  useEffect(() => {
+    if (data && isEditDrawerOpen) {
       data?.adjustment_products?.forEach((item) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -80,7 +93,15 @@ const AdjustmentEdit = ({ id }) => {
               ],
               errors: "",
             }
-          : {},
+          : {
+              name: "attachment",
+              value: [
+                {
+                  url: defaultUser,
+                },
+              ],
+              errors: "",
+            },
         {
           name: "note",
           value: data?.note,
@@ -116,7 +137,7 @@ const AdjustmentEdit = ({ id }) => {
       _method: "PUT",
     };
 
-    if (attachment?.length > 0 && attachment?.[0]?.url) {
+    if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0]?.originFileObj;
     }
 

@@ -17,7 +17,7 @@ const CustomerGroupCreate = () => {
   const [createCustomerGroup, { isLoading }] = useCreateCustomerGroupMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
 
     const { data, error } = await createCustomerGroup({
       data: { ...values, percentage: values.percentage.toString() },

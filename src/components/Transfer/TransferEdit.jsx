@@ -55,7 +55,7 @@ const TransferEdit = ({ id, setId }) => {
     tax_rate: {},
   });
 
-  console.log(data);
+  //console.log(data);
 
   useEffect(() => {
     if (!isEditDrawerOpen) {

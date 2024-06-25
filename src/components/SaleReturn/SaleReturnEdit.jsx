@@ -99,7 +99,7 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      console.log(data);
+      //console.log(data);
 
       data?.sale_return_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({

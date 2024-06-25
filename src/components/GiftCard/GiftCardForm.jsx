@@ -24,7 +24,7 @@ const GiftCardTypeComponent = () => {
     label: giftCardType.name,
   }));
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <CustomSelect

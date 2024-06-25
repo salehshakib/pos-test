@@ -55,7 +55,7 @@ const mutationApi = baseApi.injectEndpoints({
     }),
     // delete: build.mutation({
     //   query: ({ url, data }) => {
-    //     console.log(data);
+    //     //console.log(data);
     //     return {
     //       //   url: "/department/",
     //       //   method: "DELETE",

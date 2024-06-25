@@ -36,7 +36,7 @@ const FileInput = ({
     removeImage();
   };
 
-  console.log(imageUrl);
+  //console.log(imageUrl);
 
   return (
     <div>
@@ -272,7 +272,7 @@ const GiftCardTypeComponent = () => {
     label: giftCardType.name,
   }));
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <CustomSelect

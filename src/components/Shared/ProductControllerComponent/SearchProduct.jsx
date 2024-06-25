@@ -38,7 +38,7 @@ export const SearchProduct = ({ setProducts }) => {
     }
   );
 
-  // console.log(data);
+  // //console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center ">

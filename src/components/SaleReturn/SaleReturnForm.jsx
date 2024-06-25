@@ -145,7 +145,7 @@ const SaleReturnForm = ({
     } else {
       setSaleData(data?.data);
       data?.data?.sale_products?.map((item) => {
-        console.log(item);
+        //console.log(item);
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,
@@ -228,7 +228,7 @@ const SaleReturnForm = ({
 
   // const deleteRow = Form.useWatch("delete", props.form);
 
-  // console.log(formValues);
+  // //console.log(formValues);
 
   // const updatedList = saleExists
   //   ? updateProductList(deleteRow, formValues.product_list)

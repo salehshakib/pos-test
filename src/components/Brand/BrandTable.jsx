@@ -35,7 +35,7 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
     // isRelationalParams: true,
   });
 
-  console.log(params);
+  //console.log(params);
 
   const { data, isLoading } = useGetBrandsQuery({ params });
 

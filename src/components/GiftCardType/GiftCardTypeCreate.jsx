@@ -16,7 +16,7 @@ export const GiftCardTypeCreate = () => {
   const [createGiftCardType, { isLoading }] = useCreateGiftCardTypeMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
     const { data, error } = await createGiftCardType({
       data: values,
     });

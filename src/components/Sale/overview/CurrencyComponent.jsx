@@ -9,13 +9,13 @@ const CurrencyComponent = () => {
   const form = Form.useFormInstance();
   const { data, isLoading } = useGetAllCurrencyQuery({
     params: {
-      selectValue: ["id", "name", "is_default"],
+      selectValue: ["id", "name", "is_default", "code"],
     },
   });
 
   const options = data?.results?.currency?.map((currency) => ({
     value: currency.id?.toString(),
-    label: currency.name,
+    label: currency.name + " " + currency?.code,
   }));
 
   useEffect(() => {

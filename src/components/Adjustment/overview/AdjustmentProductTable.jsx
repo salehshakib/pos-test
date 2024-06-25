@@ -145,7 +145,7 @@ export const AdjustmentProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  console.log(formValues);
+  //console.log(formValues);
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -240,13 +240,13 @@ export const AdjustmentProductTable = ({
     });
   };
 
-  console.log(products);
+  //console.log(products);
 
   const dataSource =
     products?.map((product) => {
       const { id, name, sku, buying_price: unit_cost } = product ?? {};
 
-      console.log(id);
+      //console.log(id);
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
@@ -287,7 +287,7 @@ export const AdjustmentProductTable = ({
       action: false,
     });
 
-  console.log(Object.keys(formValues.product_list.qty).length);
+  //console.log(Object.keys(formValues.product_list.qty).length);
 
   // useEffect(() => {
 

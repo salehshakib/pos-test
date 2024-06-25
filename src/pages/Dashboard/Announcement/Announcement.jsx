@@ -69,7 +69,7 @@ export const Announcement = () => {
   //     data: { format },
   //   });
 
-  //   console.log(data);
+  //   //console.log(data);
   // };
 
   return (

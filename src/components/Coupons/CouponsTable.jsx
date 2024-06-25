@@ -77,7 +77,7 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
+  //console.log(data);
 
   const dataSource =
     data?.results?.coupon?.map((item) => {
@@ -124,7 +124,7 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
+  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable

@@ -93,7 +93,7 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
+  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable

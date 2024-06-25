@@ -92,7 +92,7 @@ const ComboTableComponent = () => {
   const productData = Form.useWatch("product_id", form);
   const productListData = Form.useWatch("product_list", form);
 
-  console.log(productData);
+  //console.log(productData);
 
   const [rowId, setRowId] = useState(undefined);
 
@@ -159,7 +159,7 @@ const ComboTableComponent = () => {
     }
   }, [rowId]);
 
-  console.log(rowId);
+  //console.log(rowId);
 
   // const { productDetails } = useSelector((state) => state.product);
 
@@ -167,7 +167,7 @@ const ComboTableComponent = () => {
   //   productData?.includes(product.value)
   // );
 
-  // console.log(filteredProducts);
+  // //console.log(filteredProducts);
 
   const dataSource =
     productData?.map((item) => {

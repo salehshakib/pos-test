@@ -78,7 +78,7 @@ const PosLayout = () => {
     const { discount, shipping_cost, tax_rate, sale_at, paid_amount } =
       values ?? {};
 
-    console.log(values);
+    //console.log(values);
     const { product_list } = formValues;
 
     const productListArray = product_list?.qty

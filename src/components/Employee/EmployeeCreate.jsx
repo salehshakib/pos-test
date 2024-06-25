@@ -17,14 +17,14 @@ const EmployeeCreate = () => {
   const [createEmployee, { isLoading }] = useCreateEmployeeMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
 
     const { profile_picture, nid_front, nid_back, joining_doc, cv } =
       values ?? {};
 
     const formData = new FormData();
 
-    console.log(values);
+    //console.log(values);
 
     const postObj = {
       ...values,

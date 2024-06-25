@@ -110,7 +110,7 @@ const ProductFormComponent = ({
   }, [formValues, productForm, productId]);
 
   const handleSubmit = () => {
-    // console.log(productForm.getFieldsValue());
+    // //console.log(productForm.getFieldsValue());
 
     setFormValues((prevFormValues) => {
       return {
@@ -159,7 +159,7 @@ const ProductFormComponent = ({
     // productForm.resetFields();
   };
 
-  // console.log(formValues);
+  // //console.log(formValues);
 
   return (
     <Modal
@@ -312,11 +312,11 @@ export const QuotationProductTable = ({
     setProductEditModal(false);
   };
 
-  // console.log(formValues);
+  // //console.log(formValues);
 
-  // console.log(products);
+  // //console.log(products);
 
-  // console.log(productUnits);
+  // //console.log(productUnits);
 
   const dataSource = products?.map((product) => {
     const {

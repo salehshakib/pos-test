@@ -49,7 +49,7 @@ export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.announcement?.map((item) => {
-      console.log(item);
+      //console.log(item);
       const { id, start_date, end_date, description, title } = item ?? {};
       const startDate = dayjs(start_date).format("DD-MM-YYYY");
       const endDate = dayjs(end_date).format("DD-MM-YYYY");

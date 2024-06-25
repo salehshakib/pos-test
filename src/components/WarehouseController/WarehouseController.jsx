@@ -30,7 +30,7 @@ const SearchWarehouse = ({ setWarehouses }) => {
     }
   );
 
-  console.log(data);
+  //console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center ">
@@ -99,7 +99,17 @@ export const WarehouseController = ({
   return (
     <>
       <SearchWarehouse warehouses={warehouses} setWarehouses={setWarehouses} />
-      <ProductTable columns={columns} dataSource={dataSource} />
+      <ProductTable
+        columns={columns}
+        dataSource={dataSource}
+        styleProps={{
+          width: "100%",
+          scroll: {
+            y: 400,
+            x: "min-content",
+          },
+        }}
+      />
     </>
   );
 };

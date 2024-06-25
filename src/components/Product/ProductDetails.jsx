@@ -18,7 +18,7 @@ export const ProductDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  console.log(data);
+  //console.log(data);
 
   const basicInfo = createDetailsLayout({
     name: data?.name,

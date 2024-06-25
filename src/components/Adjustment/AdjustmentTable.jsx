@@ -32,7 +32,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
     params: { ...pagination, parent: 1 },
   });
 
-  console.log(data);
+  //console.log(data);
 
   const total = data?.meta?.total;
 

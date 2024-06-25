@@ -26,7 +26,7 @@ const CreateComponent = () => {
 
   const handleMenuClick = (e) => {
     message.info("Click on menu item.");
-    console.log("click", e);
+    //console.log("click", e);
   };
 
   const menuProps = {

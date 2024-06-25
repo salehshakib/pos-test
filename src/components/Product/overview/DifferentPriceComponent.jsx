@@ -127,11 +127,11 @@ export const DifferentPriceComponent = ({
     );
   };
 
-  console.log(priceWarehouses);
+  //console.log(priceWarehouses);
 
   const dataSource =
     priceWarehouses?.map((warehouse) => {
-      console.log(warehouse);
+      //console.log(warehouse);
 
       const { id, name } = warehouse;
 

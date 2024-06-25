@@ -79,7 +79,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
+  //console.log(data);
 
   const dataSource =
     data?.results?.quotation?.map((item) => {

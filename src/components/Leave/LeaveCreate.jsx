@@ -29,7 +29,7 @@ export const LeaveCreate = () => {
       is_send_email: values?.is_send_email == true ? 1 : 0,
     };
 
-    if (values?.attachment) {
+    if (values?.attachment?.length > 0) {
       postData.attachment = values?.attachment?.[0]?.originFileObj;
     }
 

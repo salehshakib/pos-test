@@ -42,9 +42,8 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleStatus = async () => {
-    console.log(id);
+    //console.log(id);
     // const { data } = await updateStatus( id);
-
     // if (data?.success) {
     //   setId(undefined);
     //   setStatusModal(false);
@@ -82,7 +81,7 @@ const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // console.log(data?.results?.department);
+  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable

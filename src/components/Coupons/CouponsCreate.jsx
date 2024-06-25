@@ -17,7 +17,7 @@ const CouponsCreate = () => {
   const [createCoupon, { isLoading }] = useCreateCouponMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
 
     const { expired_date } = values;
 

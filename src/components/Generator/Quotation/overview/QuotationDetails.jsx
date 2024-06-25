@@ -53,7 +53,7 @@ export const QuotationDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  // console.log(data?.quotation_products);
+  // //console.log(data?.quotation_products);
 
   const details = createDetailsLayout(data);
 

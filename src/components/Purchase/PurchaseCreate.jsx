@@ -146,7 +146,7 @@ export const PurchaseCreate = () => {
 
     appendToFormData(postObj, formData);
 
-    console.log(postObj);
+    //console.log(postObj);
 
     const { data, error } = await createPurchase({
       data: formData,

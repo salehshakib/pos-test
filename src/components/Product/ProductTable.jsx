@@ -17,6 +17,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -32,6 +33,19 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const params = useGlobalParams({
+    isPagination: true,
+    params: {
+      parent: 1,
+    },
+    // isDefaultParams: true,
+    // isRelationalParams: true,
+    // selectValueParams: ["is_active"],
+    // selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  //console.log(params);
 
   const { data, isLoading } = useGetAllProductsQuery({
     params: {
@@ -83,7 +97,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  console.log(data);
+  //console.log(data);
 
   const dataSource =
     data?.results?.product?.map((item) => {

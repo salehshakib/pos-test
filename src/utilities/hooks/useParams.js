@@ -60,7 +60,7 @@ export const useGlobalParams = ({
     keyword,
   ]);
 
-  console.log(globalParams);
+  //console.log(globalParams);
 
   return {
     ...globalParams.pagination,

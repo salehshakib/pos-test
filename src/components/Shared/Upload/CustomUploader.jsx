@@ -12,6 +12,7 @@ const getBase64 = (file) =>
   });
 
 const normFile = (e) => {
+  //console.log(e);
   if (Array.isArray(e)) {
     return e;
   }
@@ -38,10 +39,12 @@ const CustomUploader = ({
   };
 
   const handleFileChange = ({ fileList: newFileList }) => {
-    console.log(newFileList);
+    //console.log(newFileList);
 
     setFileList(newFileList);
   };
+
+  // //console.log(defaultValue);
 
   return (
     <GlobalUtilityStyle>
@@ -65,19 +68,18 @@ const CustomUploader = ({
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
-        {/* <ImgCrop showGrid rotationSlider aspectSlider showReset> */}
         <Upload
           listType="picture-card"
           name={"file"}
           fileList={fileList}
           onChange={handleFileChange}
           onPreview={handlePreview}
-          // beforeUpload={(file) => {
-          //   setFileList([...fileList, file]);
-          //   console.log(file);
-          //   return false;
-          // }}
-          beforeUpload={() => false}
+          beforeUpload={(file) => {
+            setFileList([...fileList, file]);
+            //console.log(file);
+            return false;
+          }}
+          // beforeUpload={() => false}
           // customRequest={}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
@@ -87,7 +89,7 @@ const CustomUploader = ({
               : "custom-single-upload"
           } mt-2`}
         >
-          {(fileList.length < 1 || multiple) && (
+          {(multiple || (!multiple && fileList.length < 1)) && (
             <button
               style={{
                 border: 0,

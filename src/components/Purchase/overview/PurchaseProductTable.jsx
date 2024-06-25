@@ -587,7 +587,7 @@ export const PurchaseProductTable = ({
     }
   }, [formValues, products]);
 
-  console.log(totalDiscount, totalTax, totalPrice);
+  //console.log(totalDiscount, totalTax, totalPrice);
 
   products.length > 0 &&
     dataSource.push({

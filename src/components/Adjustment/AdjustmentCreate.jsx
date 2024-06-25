@@ -59,7 +59,7 @@ const AdjustmentCreate = () => {
       note,
     };
 
-    if (attachment?.length > 0 && attachment?.[0]?.url) {
+    if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0]?.originFileObj;
     }
 

@@ -1,3 +1,5 @@
+import { Form } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -5,13 +7,11 @@ import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../redux/services/product/productApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ProductForm from "./ProductForm";
-import dayjs from "dayjs";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { Form } from "antd";
 
 const ProductListEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -72,7 +72,11 @@ const ProductListEdit = ({ id }) => {
     }
   }, [isEditDrawerOpen]);
 
-  const updateStateWithProductData = (product_prices, product_qties) => {
+  const updateStateWithProductData = ({
+    product_prices,
+    product_qties,
+    product_combos,
+  }) => {
     // Update state with product prices
     product_prices.forEach((item) => {
       setFormValues((prevFormValues) => ({
@@ -96,6 +100,23 @@ const ProductListEdit = ({ id }) => {
           qty: {
             ...prevFormValues.qty_list.qty,
             [item.warehouse_id.toString()]: item.qty,
+          },
+        },
+      }));
+    });
+
+    product_combos.forEach((item) => {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [item.combo_product_id.toString()]: item.qty,
+          },
+          amount: {
+            ...prevFormValues.product_list.amount,
+            [item.combo_product_id.toString()]: item.price,
           },
         },
       }));
@@ -135,7 +156,7 @@ const ProductListEdit = ({ id }) => {
         attachments,
       } = data;
 
-      console.log(data);
+      //console.log(data);
 
       const fieldData = fieldsToUpdate({
         name,
@@ -157,24 +178,39 @@ const ProductListEdit = ({ id }) => {
         details,
       });
 
-      updateStateWithProductData(data?.product_prices, data?.product_qties);
+      updateStateWithProductData({
+        product_prices: data?.product_prices,
+        product_qties: data?.product_qties,
+        product_combos: data?.product_combos,
+      });
 
       data?.product_prices?.forEach((item) => {
-        setInitialWarehouses((prevWarehouses) => [
+        setPriceWarehouses((prevWarehouses) => [
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item.name,
+            name: item?.name ?? "need backend relation",
           },
         ]);
       });
 
       data?.product_qties?.forEach((item) => {
-        setPriceWarehouses((prevWarehouses) => [
+        setInitialWarehouses((prevWarehouses) => [
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item.name,
+            name: item?.name ?? "need backend relation",
+          },
+        ]);
+      });
+
+      data?.product_combos?.forEach((item) => {
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            id: item?.combo_product_id,
+            name: item?.name ?? "need backend relation",
+            sku: item?.sku ?? "need backend relation",
           },
         ]);
       });
@@ -244,16 +280,16 @@ const ProductListEdit = ({ id }) => {
     }
   }, [data, isEditDrawerOpen, setFields]);
 
-  console.log(formValues);
+  //console.log(formValues);
 
   const handleUpdate = async (values) => {
     const {
       name,
       type,
       sku,
-      qty_list,
-      price_list,
-      product_list,
+      // qty_list,
+      // price_list,
+      // product_list,
       symbology,
       brand_id,
       category_id,
@@ -279,46 +315,47 @@ const ProductListEdit = ({ id }) => {
       details,
     } = values ?? {};
 
-    const qtyListArray = Object.keys(qty_list?.qty || {})?.map(
-      (warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          qty: qty_list?.qty[warehouseId],
-        };
-      }
-    );
+    const { qty_list, price_list, product_list } = formValues;
+
+    //console.log(qty_list, price_list);
+
+    const qtyListArray = has_stock
+      ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
+          return {
+            warehouse_id: warehouseId,
+            qty: qty_list?.qty?.[warehouseId],
+          };
+        })
+      : [];
 
     const qty = qtyListArray?.reduce((sum, item) => sum + item.qty, 0);
 
-    const priceListArray = Object.keys(price_list?.price || {})?.map(
-      (warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          price: price_list?.price[warehouseId],
-        };
-      }
-    );
+    //console.log(has_different_price);
+
+    const priceListArray = has_different_price
+      ? Object.keys(price_list?.price || {}).map((warehouseId) => {
+          return {
+            warehouse_id: warehouseId,
+            price: price_list?.price?.[warehouseId],
+          };
+        })
+      : [];
 
     const productListArray = Object.keys(product_list?.qty || {})?.map(
       (product_id) => {
         return {
-          product_id: parseInt(product_id),
-          qty: product_list?.qty[product_id],
-          price: product_list?.unit_price[product_id],
+          combo_product_id: parseInt(product_id),
+          qty: product_list?.qty?.[product_id],
+          price: product_list?.amount?.[product_id],
         };
       }
     );
 
     const formData = new FormData();
 
-    console.log(values);
+    //console.log(values);
 
     const postObj = {
-      attachments:
-        values.attachments?.length > 0
-          ? values.attachments?.map((file) => file.originFileObj)
-          : [],
-
       name,
       sku,
       type,
@@ -360,10 +397,19 @@ const ProductListEdit = ({ id }) => {
       _method: "PUT",
     };
 
-    if (values?.attach_file) {
-      postObj.attach_file = values?.attach_file?.[0].url
-        ? values.attach_file?.[0].originFileObj
-        : [];
+    console.log(values?.attachments);
+
+    if (
+      values.attachments?.[0]?.originFileObj &&
+      values?.attachments.length > 0
+    ) {
+      postObj.attachments = values.attachments?.map(
+        (file) => file?.originFileObj
+      );
+    }
+
+    if (values?.attach_file?.[0].url) {
+      postObj.attach_file = values.attach_file?.[0].originFileObj;
     }
 
     appendToFormData(postObj, formData);
@@ -380,6 +426,8 @@ const ProductListEdit = ({ id }) => {
       setFields(errorFields);
     }
   };
+
+  //console.log(products);
 
   return (
     <CustomDrawer

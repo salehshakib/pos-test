@@ -14,7 +14,7 @@ export const HoidaysEdit = ({ id, setId }) => {
 
   // const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
 
-  // console.log(isEditDrawerOpen, id);
+  // //console.log(isEditDrawerOpen, id);
 
   // const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
@@ -36,7 +36,7 @@ export const HoidaysEdit = ({ id, setId }) => {
   // const handleUpdate = async (values) => {
   //   const formData = new FormData();
 
-  //   console.log(values);
+  //   //console.log(values);
 
   //   const postData = {
   //     ...values,

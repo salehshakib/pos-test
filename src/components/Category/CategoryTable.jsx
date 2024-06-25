@@ -40,7 +40,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
     // selectValueParams: ["is_active"],
   });
 
-  console.log(params);
+  //console.log(params);
 
   const { data, isLoading } = useGetAllCategoryQuery({ params });
 

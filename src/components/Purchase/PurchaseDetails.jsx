@@ -53,7 +53,7 @@ export const PurchaseDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  console.log(data);
+  //console.log(data);
 
   //   const details = createDetailsLayout(data);
 

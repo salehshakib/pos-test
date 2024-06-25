@@ -35,7 +35,7 @@ const CategoryCreate = ({
       data: formData,
     });
 
-    console.log(subDrawer);
+    //console.log(subDrawer);
 
     if (data?.success) {
       if (subDrawer) {

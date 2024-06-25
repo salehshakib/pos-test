@@ -26,7 +26,7 @@ export const LeaveEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetLeaveDetailsQuery({ id }, { skip: !id });
 
-  // console.log(isEditDrawerOpen, id);
+  // //console.log(isEditDrawerOpen, id);
 
   const [updateLeave, { isLoading }] = useUpdateLeaveMutation();
 
@@ -61,7 +61,7 @@ export const LeaveEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    console.log(values);
+    //console.log(values);
 
     const postData = {
       ...values,
@@ -74,7 +74,7 @@ export const LeaveEdit = ({ id, setId }) => {
       _method: "PUT",
     };
 
-    if (values?.attachment) {
+    if (values?.attachment?.length > 0) {
       postData.attachment = values?.attachment?.[0]?.originFileObj;
     }
 

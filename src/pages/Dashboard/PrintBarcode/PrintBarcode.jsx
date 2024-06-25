@@ -74,7 +74,6 @@ const PrintBarcode = () => {
     }
   };
 
-  console.log(products);
   return (
     <PageContainer
       header={{

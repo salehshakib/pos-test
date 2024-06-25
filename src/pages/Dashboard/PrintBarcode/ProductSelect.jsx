@@ -208,6 +208,12 @@ const ProductSelect = ({
       setProducts={setProducts}
       columns={columns}
       dataSource={dataSource}
+      styleProps={{
+        width: "100%",
+        scroll: {
+          x: "min-content",
+        },
+      }}
     />
   );
 };

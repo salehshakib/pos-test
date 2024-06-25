@@ -6,11 +6,16 @@ export const ProductController = ({
   setProducts,
   columns,
   dataSource,
+  styleProps,
 }) => {
   return (
     <>
       <SearchProduct products={products} setProducts={setProducts} />
-      <ProductTable columns={columns} dataSource={dataSource} />
+      <ProductTable
+        columns={columns}
+        dataSource={dataSource}
+        styleProps={styleProps}
+      />
     </>
   );
 };

@@ -1,24 +1,22 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteWarehouseMutation,
   useGetWarehousesQuery,
   useUpdateWarehouseStatusMutation,
 } from "../../redux/services/warehouse/warehouseApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import WarehouseEdit from "./WarehouseEdit";
 import { WarehouseDetails } from "./WarehouseDetails";
+import WarehouseEdit from "./WarehouseEdit";
 
 const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -31,9 +29,13 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetWarehousesQuery({
-    params: pagination,
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    // isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetWarehousesQuery({ params });
 
   const total = data?.meta?.total;
 

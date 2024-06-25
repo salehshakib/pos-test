@@ -2,6 +2,7 @@ import { useState } from "react";
 import WarehouseCreate from "../../../components/Warehouse/WarehouseCreate";
 import WarehouseTable from "../../../components/Warehouse/WarehouseTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { WAREHOUSE } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -50,6 +51,7 @@ const Warehouse = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={WAREHOUSE}
     >
       <WarehouseCreate />
 

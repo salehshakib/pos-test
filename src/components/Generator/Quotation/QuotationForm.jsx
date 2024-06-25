@@ -19,6 +19,7 @@ import { CustomerComponent } from "../overview/CustomerComponent";
 import { SupplierComponent } from "../overview/SupplierComponent";
 import { WarehouseComponent } from "../overview/WarehouseComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();
@@ -42,7 +43,15 @@ const StatusComponent = () => {
 };
 
 const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  // const { data, isFetching } = useGetAllTaxQuery({});
+
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {

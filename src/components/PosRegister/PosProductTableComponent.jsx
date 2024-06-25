@@ -12,6 +12,7 @@ import CustomInput from "../Shared/Input/CustomInput";
 import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomProductTable from "../Shared/Table/CustomProductTable";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -135,7 +136,13 @@ const columns = [
 ];
 
 const TaxComponent = ({ productId, setProductUnits }) => {
-  const { data, isLoading } = useGetAllTaxQuery({});
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isLoading } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),

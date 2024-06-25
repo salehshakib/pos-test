@@ -1,4 +1,4 @@
-import { Col, Form, App, Row } from "antd";
+import { App, Col, Form, Row } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -8,6 +8,7 @@ import {
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
@@ -16,7 +17,15 @@ import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
 
 const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  // const { data, isFetching } = useGetAllTaxQuery({});
+
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {

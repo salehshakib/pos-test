@@ -8,9 +8,18 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { columns, partialColumns } from "./productColumns";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
-  const { data, isLoading } = useGetAllTaxQuery({});
+  // const { data, isLoading } = useGetAllTaxQuery({});
+
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isLoading } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),

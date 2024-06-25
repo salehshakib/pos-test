@@ -1,7 +1,4 @@
-import { Form } from "antd";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { useEffect } from "react";
-const options = [
+export const barcodeOptions = [
   {
     value: "CODE128",
     label: "CODE128",
@@ -59,25 +56,3 @@ const options = [
     label: "Pharmacode",
   },
 ];
-
-const BarCodeComponent = () => {
-  const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
-
-  useEffect(() => {
-    if (!productType) {
-      form.setFieldValue("symbology", "Code 128");
-    }
-  }, [form, productType]);
-
-  return (
-    <CustomSelect
-      label="Barcode Symbology"
-      options={options}
-      required={true}
-      name={"symbology"}
-    />
-  );
-};
-
-export default BarCodeComponent;

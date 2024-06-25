@@ -1,8 +1,15 @@
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
 export const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  const params = useGlobalParams({
+    selectValue: ["id", "name"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {
@@ -10,6 +17,7 @@ export const TaxComponent = () => {
       label: item.name,
     };
   });
+
   return (
     <CustomSelect
       label="Order Tax"

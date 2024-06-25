@@ -23,6 +23,7 @@ import { CurrencyFormComponent } from "./overview/CurrencyComponent";
 import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();
@@ -83,7 +84,15 @@ const PaymentComponent = () => {
 };
 
 const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  // const { data, isFetching } = useGetAllTaxQuery({});
+
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {

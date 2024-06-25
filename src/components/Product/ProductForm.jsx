@@ -1,4 +1,8 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
+import { RiRefreshLine } from "react-icons/ri";
+import { barcodeOptions } from "../../assets/data/barcode";
+import { taxTypeOptions } from "../../assets/data/taxType";
 import {
   colLayout,
   fullColLayout,
@@ -6,28 +10,22 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { disabledDate } from "../../utilities/lib/currentDate";
+import { generateRandomCode } from "../../utilities/lib/generateCode";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
+import CustomInputButton from "../Shared/Input/CustomInputButton";
+import CustomSelect from "../Shared/Select/CustomSelect";
 import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import BarCodeComponent from "./overview/BarCodeComponent";
 import { BrandComponent } from "./overview/BrandComponent";
 import { CategoryComponent } from "./overview/CategoryComponent";
 import ComboProductsComponent from "./overview/ComboProductsComponent";
 import { DifferentPriceComponent } from "./overview/DifferentPriceComponent";
 import { InitialStockComponent } from "./overview/InitialStockComponent";
-// import ProductCodeComponent from "./overview/ProductCodeComponent";
-// import ProductTypeComponent from "./overview/ProductTypeComponent";
 import { TaxComponent } from "./overview/TaxComponent";
-import TaxTypeComponent from "./overview/TaxTypeComponent";
 import UnitComponent from "./overview/UnitComponent";
-import { useEffect } from "react";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import { generateRandomCode } from "../../utilities/lib/generateCode";
-import CustomInputButton from "../Shared/Input/CustomInputButton";
-import { RiRefreshLine } from "react-icons/ri";
 
 const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
@@ -78,21 +76,24 @@ const ProductCodeComponent = () => {
   );
 };
 
-const ProductCostComponent = () => {
+const BarCodeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
-  if (productType === "Standard")
-    return (
-      <Col {...colLayout}>
-        <CustomInput
-          label="Product Buying Cost"
-          type={"number"}
-          required={true}
-          name={"buying_price"}
-        />
-      </Col>
-    );
+  useEffect(() => {
+    if (!productType) {
+      form.setFieldValue("symbology", "Code 128");
+    }
+  }, [form, productType]);
+
+  return (
+    <CustomSelect
+      label="Barcode Symbology"
+      options={barcodeOptions}
+      required={true}
+      name={"symbology"}
+    />
+  );
 };
 
 const AttachmentComponent = () => {
@@ -106,6 +107,23 @@ const AttachmentComponent = () => {
           label={"Attachment"}
           name={"attach_file"}
           required={true}
+        />
+      </Col>
+    );
+};
+
+const ProductCostComponent = () => {
+  const form = Form.useFormInstance();
+  const productType = Form.useWatch("type", form);
+
+  if (productType === "Standard")
+    return (
+      <Col {...colLayout}>
+        <CustomInput
+          label="Product Buying Cost"
+          type={"number"}
+          required={true}
+          name={"buying_price"}
         />
       </Col>
     );
@@ -127,6 +145,18 @@ const AlertComponent = () => {
       </Col>
     );
   }
+};
+
+const TaxTypeComponent = () => {
+  return (
+    <CustomSelect
+      label="Tax Method"
+      options={taxTypeOptions}
+      required={true}
+      name={"tax_method"}
+      showSearch={true}
+    />
+  );
 };
 
 const ExpireComponent = () => {
@@ -280,6 +310,7 @@ const ProductForm = ({
         </Col>
 
         <UnitComponent />
+
         <ProductCostComponent />
 
         <Col {...colLayout}>
@@ -325,7 +356,7 @@ const ProductForm = ({
           setFormValues={setFormValues}
         />
 
-        <Col {...fullColLayout}>
+        {/* <Col {...fullColLayout}>
           <CustomCheckbox
             label="Featured Product"
             name="has_featured"
@@ -334,7 +365,7 @@ const ProductForm = ({
         </Col>
         <Col {...fullColLayout}>
           <CustomCheckbox label="Embeded Barcode" name="embedded_barcode" />
-        </Col>
+        </Col> */}
       </Row>
 
       <Row {...rowLayout} justify={"center"} align={"middle"}>
@@ -378,15 +409,6 @@ const ProductForm = ({
       <ExpireComponent />
 
       <PromotionalPriceComponent />
-
-      {/* <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="Disable Ecommerce Sync"
-            name="ecommerce_sync"
-          />
-        </Col>
-      </Row> */}
     </CustomForm>
   );
 };

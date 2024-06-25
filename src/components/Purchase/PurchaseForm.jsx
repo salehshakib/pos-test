@@ -20,6 +20,7 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { PurchaseProductTable } from "./overview/PurchaseProductTable";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 // const StatusComponent = () => {
 //   const form = Form.useFormInstance();
@@ -79,7 +80,14 @@ const PurchaseStatus = () => {
 };
 
 const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  // const { data, isFetching } = useGetAllTaxQuery({});
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {

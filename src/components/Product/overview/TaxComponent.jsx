@@ -3,23 +3,25 @@ import { FaPlus } from "react-icons/fa";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 import TaxCreate from "../../Tax/TaxCreate";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 export const TaxComponent = () => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+  const params = useGlobalParams({
+    selectValue: ["id", "name"],
   });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
+
   const options = data?.results?.tax?.map((item) => {
     return {
       value: item.id.toString(),
       label: item.name,
     };
   });
-
-  // //console.log(options);
 
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);

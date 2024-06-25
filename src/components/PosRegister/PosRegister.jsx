@@ -19,6 +19,7 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
 import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 // import { colLayout } from "../../layout/FormLayout";
 
 const WarehouseComponent = () => {
@@ -198,7 +199,13 @@ const CurrencyExchangeComponent = () => {
 };
 
 const TaxComponent = () => {
-  const { data, isFetching } = useGetAllTaxQuery({});
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isFetching } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((item) => {
     return {

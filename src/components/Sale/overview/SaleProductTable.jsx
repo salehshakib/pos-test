@@ -11,6 +11,7 @@ import CustomSelect from "../../Shared/Select/CustomSelect";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { MdDelete } from "react-icons/md";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -159,7 +160,15 @@ const columns = [
 ];
 
 const TaxComponent = ({ productId, setProductUnits }) => {
-  const { data, isLoading } = useGetAllTaxQuery({});
+  // const { data, isLoading } = useGetAllTaxQuery({});
+
+  const params = useGlobalParams({
+    selectValue: ["id", "name", "rate"],
+  });
+
+  const { data, isLoading } = useGetAllTaxQuery({
+    params,
+  });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),

@@ -19,7 +19,7 @@ const CurrencyComponent = () => {
   }));
 
   useEffect(() => {
-    if (options?.length) {
+    if (options?.length && !form.getFieldValue("currency")) {
       form.setFieldValue("currency", options[0].value);
     }
   }, [form, options]);

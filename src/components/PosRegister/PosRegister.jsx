@@ -102,7 +102,7 @@ const CustomerComponent = () => {
   }));
 
   useEffect(() => {
-    if (options?.length) {
+    if (options?.length && !form.getFieldValue("customer_id")) {
       form.setFieldValue("customer_id", options[0].value);
     }
   }, [form, options]);
@@ -223,24 +223,33 @@ const TaxComponent = () => {
   );
 };
 
-const CouponComponent = ({ setType }) => {
+const CouponComponent = ({ setType, setProductUnits }) => {
   const { data, isFetching } = useGetAllCouponQuery({});
+
+  console.log(data);
 
   const options = data?.results?.coupon?.map((item) => {
     return {
-      value: item.amount,
+      value: item.id?.toString(),
       label: item.code,
       type: item.type,
+      rate: item.amount,
     };
   });
 
   const onSelect = (value, option) => {
     setType(option.type);
+    setProductUnits((prevValues) => {
+      return {
+        ...prevValues,
+        coupon_rate: option.rate,
+      };
+    });
   };
   return (
     <CustomSelect
       options={options}
-      name={"coupon_rate"}
+      name={"coupon_id"}
       isLoading={isFetching}
       placeholder={"Coupon"}
       onSelect={onSelect}
@@ -261,6 +270,7 @@ const RegisterForm = ({ products, setProducts }) => {
     const currentDate = dayjs(new Date());
     form.setFieldValue("sale_at", currentDate);
   }, [form]);
+
   return (
     <GlobalUtilityStyle className="pb-5 ">
       <div className="flex flex-col">
@@ -283,10 +293,10 @@ const RegisterForm = ({ products, setProducts }) => {
             />
           </Col>
           <Col {...colLayout}>
-            <WarehouseComponent />
+            <WarehouseComponent label={false} />
           </Col>
           <Col {...colLayout}>
-            <CashierComponent />
+            <CashierComponent label={false} />
           </Col>
           <Col {...colLayout}>
             <CustomerComponent />
@@ -384,10 +394,10 @@ export const PosRegister = ({
 
     if (modalType === "Coupon") {
       if (type.toLowerCase() === "fixed") {
-        setCoupon(form.getFieldValue("coupon_rate"));
+        setCoupon(productUnits.coupon_rate);
       }
       if (type.toLowerCase() === "percentage") {
-        setCoupon((totalPrice * form.getFieldValue("coupon_rate")) / 100);
+        setCoupon((totalPrice * productUnits.coupon_rate) / 100);
       }
     }
 
@@ -565,7 +575,10 @@ export const PosRegister = ({
               {modalType === "Tax" ? (
                 <TaxComponent />
               ) : modalType === "Coupon" ? (
-                <CouponComponent setType={setType} />
+                <CouponComponent
+                  setType={setType}
+                  setProductUnits={setProductUnits}
+                />
               ) : (
                 <CustomInput
                   type="number"

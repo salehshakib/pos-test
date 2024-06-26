@@ -22,6 +22,7 @@ import {
 import { appendToFormData } from "../utilities/lib/appendFormData";
 import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
 import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
+import { sanitizeObj } from "../utilities/lib/sanitizeObj";
 
 const { Footer } = Layout;
 
@@ -58,6 +59,7 @@ const PosLayout = () => {
   const [productUnits, setProductUnits] = useState({
     sale_units: {},
     tax_rate: {},
+    coupon_rate: {},
   });
 
   const [type, setType] = useState("fixed");
@@ -134,8 +136,10 @@ const PosLayout = () => {
         0
       ) ?? 0;
 
+    console.log(values);
+
     const postObj = {
-      ...values,
+      ...sanitizeObj(values),
       sale_status: "Completed",
       sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
       discount: decimalConverter(discount),
@@ -209,6 +213,8 @@ const PosLayout = () => {
       posForm.resetFields();
     }
   };
+
+  console.log(productUnits);
 
   if (pettyCash === "Open") {
     return (

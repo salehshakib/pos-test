@@ -7,7 +7,11 @@ import {
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";
 
-export const CashierComponent = ({ required = true, name = "cashier_id" }) => {
+export const CashierComponent = ({
+  required = true,
+  name = "cashier_id",
+  label = true,
+}) => {
   const form = Form.useFormInstance();
 
   const params = useGlobalParams({
@@ -29,18 +33,19 @@ export const CashierComponent = ({ required = true, name = "cashier_id" }) => {
 
   //set redux stored value here
   useEffect(() => {
-    if (options?.length) {
+    if (options?.length && !form.getFieldValue(name)) {
       form.setFieldValue(name, options[0].value);
     }
   }, [form, name, options]);
 
   return (
     <CustomSelect
-      label="Cashier"
+      label={label && "Cashier"}
       options={options}
       isLoading={isLoading}
       name={name}
       required={required}
+      customStyle={!label}
     />
   );
 };

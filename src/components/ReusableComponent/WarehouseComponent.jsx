@@ -7,7 +7,7 @@ import {
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";
 
-export const WarehouseComponent = ({ name = "warehouse_id" }) => {
+export const WarehouseComponent = ({ name = "warehouse_id", label = true }) => {
   const form = Form.useFormInstance();
 
   const params = useGlobalParams({
@@ -29,19 +29,21 @@ export const WarehouseComponent = ({ name = "warehouse_id" }) => {
 
   //get data from redux store
   useEffect(() => {
-    if (options?.length) {
+    if (options?.length && !form.getFieldValue(name)) {
       form.setFieldValue(name, options[0].value);
     }
-  }, [form, name, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, options]);
 
   return (
     <CustomSelect
-      label="Warehouse"
+      label={label && "Warehouse"}
       showSearch={true}
       isLoading={isLoading}
       options={options}
       name={name}
       required={true}
+      customStyle={!label}
     />
   );
 };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SaleCreate } from "../../../../components/Sale/SaleCreate";
 import { SaleTable } from "../../../../components/Sale/SaleTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import { SALE } from "../../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -108,6 +109,7 @@ const SaleList = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={SALE}
     >
       <SaleCreate />
 

@@ -217,9 +217,8 @@ const PurchaseReturnForm = ({
           ...prevProductUnits,
           purchase_units: {
             ...prevProductUnits.purchase_units,
-            [item.product_id.toString()]: item.products?.purchase_units
-              ? item.products?.purchase_units?.operation_value ?? 1
-              : 1 ?? 1,
+            [item.product_id.toString()]:
+              item.products?.purchase_units?.operation_value ?? 1,
           },
         }));
       });

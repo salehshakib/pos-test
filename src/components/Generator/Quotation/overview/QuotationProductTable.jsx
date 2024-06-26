@@ -13,13 +13,21 @@ import { ProductController } from "../../../Shared/ProductControllerComponent/Pr
 import CustomSelect from "../../../Shared/Select/CustomSelect";
 import { columns } from "./productColumns";
 import { setFormValuesId } from "../../../../utilities/lib/updateFormValues/updateFormValues";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../../utilities/hooks/useParams";
+import {
+  decrementCounter,
+  incrementCounter,
+  onDelete,
+  onQuantityChange,
+} from "../../../../utilities/lib/productTable/counters";
+import { calculateTotals } from "../../../../utilities/lib/calculateTotals";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
-  // const { data, isLoading } = useGetAllTaxQuery({});
-
   const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
   const { data, isLoading } = useGetAllTaxQuery({
@@ -119,8 +127,6 @@ const ProductFormComponent = ({
   }, [formValues, productForm, productId]);
 
   const handleSubmit = () => {
-    // //console.log(productForm.getFieldsValue());
-
     setFormValues((prevFormValues) => {
       return {
         ...prevFormValues,
@@ -165,10 +171,7 @@ const ProductFormComponent = ({
     });
 
     hideModal();
-    // productForm.resetFields();
   };
-
-  // //console.log(formValues);
 
   return (
     <Modal
@@ -233,79 +236,79 @@ export const QuotationProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  const incrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Number(currentQty) + 1;
+  // const incrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Number(currentQty) + 1;
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const decrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Number(currentQty) - 1;
+  // const decrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Math.max(Number(currentQty) - 1, 0);
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const onQuantityChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
+  // const onQuantityChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: parseInt(value, 10) || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
-  const onDelete = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
 
-    setFormValues((prevFormValues) => {
-      const { product_list } = prevFormValues;
+  //   setFormValues((prevFormValues) => {
+  //     const { product_list } = prevFormValues;
 
-      const updatedProductList = Object.keys(product_list).reduce(
-        (acc, key) => {
-          // eslint-disable-next-line no-unused-vars
-          const { [id]: _, ...rest } = product_list[key];
-          acc[key] = rest;
-          return acc;
-        },
-        {}
-      );
+  //     const updatedProductList = Object.keys(product_list).reduce(
+  //       (acc, key) => {
+  //         // eslint-disable-next-line no-unused-vars
+  //         const { [id]: _, ...rest } = product_list[key];
+  //         acc[key] = rest;
+  //         return acc;
+  //       },
+  //       {}
+  //     );
 
-      return {
-        ...prevFormValues,
-        product_list: updatedProductList,
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: updatedProductList,
+  //     };
+  //   });
+  // };
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -320,12 +323,6 @@ export const QuotationProductTable = ({
   const hideModal = () => {
     setProductEditModal(false);
   };
-
-  // //console.log(formValues);
-
-  // //console.log(products);
-
-  // //console.log(productUnits);
 
   const dataSource = products?.map((product) => {
     const {
@@ -364,6 +361,10 @@ export const QuotationProductTable = ({
       onQuantityChange,
       onDelete,
       handleProductEdit,
+      products,
+      setProducts,
+      formValues,
+      setFormValues,
     };
   });
 
@@ -374,62 +375,44 @@ export const QuotationProductTable = ({
 
   // useEffect(() => {
   //   if (products.length > 0) {
+  //     const sanitizeValue = (value) => {
+  //       const number = parseFloat(value);
+  //       return isNaN(number) ? 0 : number;
+  //     };
+
   //     const total = Object.values(formValues.product_list.qty).reduce(
-  //       (acc, cur) => acc + cur,
+  //       (acc, cur) => acc + sanitizeValue(cur),
   //       0
   //     );
   //     setTotalQuantity(total);
 
   //     const totalPrice = Object.values(formValues.product_list.total).reduce(
-  //       (acc, cur) => acc + cur,
+  //       (acc, cur) => acc + sanitizeValue(cur),
   //       0
   //     );
-  //     setTotalPrice(totalPrice?.toFixed(2));
+  //     setTotalPrice(totalPrice.toFixed(2));
 
   //     const totalTax = Object.values(formValues.product_list.tax).reduce(
-  //       (acc, cur) => acc + cur,
+  //       (acc, cur) => acc + sanitizeValue(cur),
   //       0
   //     );
   //     setTotalTax(totalTax.toFixed(2));
 
   //     const totalDiscount = Object.values(
   //       formValues.product_list.discount
-  //     ).reduce((acc, cur) => acc + cur, 0);
-
+  //     ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
   //     setTotalDiscount(totalDiscount.toFixed(2));
   //   }
   // }, [formValues, products]);
 
   useEffect(() => {
-    if (products.length > 0) {
-      const sanitizeValue = (value) => {
-        const number = parseFloat(value);
-        return isNaN(number) ? 0 : number;
-      };
+    const { totalQuantity, totalPrice, totalTax, totalDiscount } =
+      calculateTotals(formValues);
 
-      const total = Object.values(formValues.product_list.qty).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalQuantity(total);
-
-      const totalPrice = Object.values(formValues.product_list.total).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalPrice(totalPrice.toFixed(2));
-
-      const totalTax = Object.values(formValues.product_list.tax).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalTax(totalTax.toFixed(2));
-
-      const totalDiscount = Object.values(
-        formValues.product_list.discount
-      ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
-      setTotalDiscount(totalDiscount.toFixed(2));
-    }
+    setTotalQuantity(totalQuantity);
+    setTotalPrice(totalPrice);
+    setTotalTax(totalTax);
+    setTotalDiscount(totalDiscount);
   }, [formValues, products]);
 
   products?.length > 0 &&
@@ -443,30 +426,6 @@ export const QuotationProductTable = ({
       discount: totalDiscount,
       action: false,
     });
-
-  // useEffect(() => {
-  //   if (
-  //     products.length === 0 &&
-  //     !Object.keys(formValues.product_list.qty).length > 0
-  //   ) {
-  //     setFormValues({
-  //       product_list: {
-  //         qty: {},
-  //         sale_unit_id: {},
-  //         net_unit_price: {},
-  //         discount: {},
-  //         tax_rate: {},
-  //         tax: {},
-  //         total: {},
-  //       },
-  //     });
-
-  //     setProductUnits({
-  //       sale_units: {},
-  //     });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [products, setFormValues]);
 
   form.setFieldsValue(formValues);
 

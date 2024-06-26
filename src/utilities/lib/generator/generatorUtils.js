@@ -14,30 +14,28 @@ export const calculateTotalTax = (totalPrice, taxRate = 0) => {
 
 export const calculateGrandTotal = (
   totalPrice,
-  totalTax,
+  taxRate,
   discount,
   shipping_cost
+  // orderTaxRate
 ) => {
-  // Ensure all inputs are parsed as numbers
   const parsedTotalPrice = parseFloat(totalPrice) || 0;
-  const parsedTotalTax = parseFloat(totalTax) || 0;
+  const parsedTax = parseFloat(calculateTotalTax(totalPrice, taxRate)) || 0;
+
   const parsedDiscount = parseFloat(discount) || 0;
   const parsedShippingCost = parseFloat(shipping_cost) || 0;
 
-  // Calculate the grand total
-  let grandTotal = parsedTotalPrice + parsedTotalTax;
+  let grandTotal = parsedTotalPrice + parsedTax;
+  // + parsedOrderTaxRate;
 
-  // Apply discount if provided
   if (parsedDiscount) {
-    grandTotal -= parsedDiscount;
+    grandTotal = grandTotal - parsedDiscount;
   }
 
-  // Add shipping cost if provided
   if (parsedShippingCost) {
-    grandTotal += parsedShippingCost;
+    grandTotal = grandTotal + parsedShippingCost;
   }
 
-  // Return the formatted grand total
   return grandTotal ? Number(grandTotal).toFixed(2) : "0.00";
 };
 

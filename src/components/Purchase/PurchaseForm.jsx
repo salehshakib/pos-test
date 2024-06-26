@@ -1,5 +1,5 @@
 import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { paymentStatusOptions } from "../../assets/data/paymentStatus";
 import { purchaseStatusOptions } from "../../assets/data/purchaseStatus";
 import {
@@ -27,6 +27,7 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
 import { PurchaseProductTable } from "./overview/PurchaseProductTable";
+import { TotalRow } from "../ReusableComponent/TotalRow";
 
 const useSetFieldValue = (field, value) => {
   const form = Form.useFormInstance();
@@ -82,46 +83,6 @@ const TaxComponent = () => {
   );
 };
 
-const TotalRow = ({
-  totalItems,
-  totalQty,
-  totalPrice,
-  taxRate,
-  discount,
-  shippingCost,
-  grandTotal,
-}) => {
-  return (
-    <Row className="pb-20">
-      <Col {...fullColLayout}>
-        <Row className="rounded-md overflow-hidden">
-          {[
-            { label: "Items", value: `${totalItems} (${totalQty})` },
-            { label: "Total", value: totalPrice },
-            { label: "Tax", value: taxRate },
-            { label: "Discount", value: discount },
-            { label: "Shipping Cost", value: shippingCost },
-            { label: "Grand Total", value: grandTotal },
-          ].map(({ label, value }) => (
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-base"
-              key={label}
-            >
-              <span className="font-semibold">{label}</span>
-              <span>
-                {typeof value === "string"
-                  ? value
-                  : Number(value ?? 0)?.toFixed(2)}
-              </span>
-            </Col>
-          ))}
-        </Row>
-      </Col>
-    </Row>
-  );
-};
-
 export const PurchaseForm = ({
   formValues,
   setFormValues,
@@ -129,32 +90,63 @@ export const PurchaseForm = ({
   setProducts,
   productUnits,
   setProductUnits,
-  form,
+  ...props
 }) => {
+  const form = props.form;
   const discount = Form.useWatch("discount", form);
   const shipping_cost = Form.useWatch("shipping_cost", form);
-  const tax_rate = Form.useWatch("tax_rate", form);
+  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
 
   const paymentStatus = Form.useWatch("payment_status", form);
   const paid_amount = Form.useWatch("paid_amount", form);
 
-  const totalItems = Object.keys(formValues.product_list?.qty).length ?? 0;
-  const totalQty = Object.values(formValues.product_list?.qty).reduce(
-    (acc, cur) => acc + (parseFloat(cur) || 0),
-    0
-  );
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
 
-  const totalPrice = calculateTotalPrice(formValues.product_list);
-  const grandTotal = calculateGrandTotal(
-    totalPrice,
-    tax_rate ?? 0,
-    discount,
-    shipping_cost
-  );
+  useEffect(() => {
+    const calculatedTotalItems =
+      Object.keys(formValues.product_list?.qty).length ?? 0;
+
+    const calculatedTotalQty = Object.values(
+      formValues.product_list?.qty
+    ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
+
+    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+
+    const calculatedGrandTotal = calculateGrandTotal(
+      calculatedTotalPrice,
+      tax_rate ?? 0,
+      discount,
+      shipping_cost
+    );
+
+    setTotalItems(calculatedTotalItems);
+    setTotalQty(calculatedTotalQty);
+    setTotalPrice(calculatedTotalPrice);
+    setGrandTotal(calculatedGrandTotal);
+  }, [discount, formValues, shipping_cost, tax_rate, products]);
+
+  console.log(tax_rate);
+
+  // const totalItems = Object.keys(formValues.product_list?.qty).length ?? 0;
+  // const totalQty = Object.values(formValues.product_list?.qty).reduce(
+  //   (acc, cur) => acc + (parseFloat(cur) || 0),
+  //   0
+  // );
+
+  // const totalPrice = calculateTotalPrice(formValues.product_list);
+  // const grandTotal = calculateGrandTotal(
+  //   totalPrice,
+  //   tax_rate ?? 0,
+  //   discount,
+  //   shipping_cost
+  // );
 
   useEffect(() => {
     if (paymentStatus === "Paid") {
-      form.setFieldValue("paid_amount", totalPrice);
+      form.setFieldValue("paid_amount", grandTotal);
     }
 
     if (paymentStatus === "Partial") {
@@ -162,11 +154,11 @@ export const PurchaseForm = ({
         form.setFieldValue("paid_amount", totalPrice);
       }
     }
-  }, [paymentStatus, form, totalPrice, paid_amount]);
+  }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
 
   return (
     <>
-      <CustomForm form={form}>
+      <CustomForm {...props}>
         <Row {...rowLayout}>
           <Col {...colLayout}>
             <WarehouseComponent />

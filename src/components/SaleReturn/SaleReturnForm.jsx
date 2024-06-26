@@ -221,9 +221,8 @@ const SaleReturnForm = ({
           ...prevProductUnits,
           sale_units: {
             ...prevProductUnits.sale_units,
-            [item.product_id.toString()]: item.products?.sale_units
-              ? item.products?.sale_units?.operation_value ?? 1
-              : 1 ?? 1,
+            [item.product_id.toString()]:
+              item?.products?.sale_units?.operation_value ?? 1,
           },
         }));
       });

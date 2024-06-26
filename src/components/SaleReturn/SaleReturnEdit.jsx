@@ -169,7 +169,8 @@ const SaleReturnEdit = ({ id, setId }) => {
 
           sale_units: {
             ...prevProductUnits.sale_units,
-            [product?.product_id.toString()]: product?.products?.sale_unit_id,
+            [product?.product_id.toString()]:
+              product?.products?.sale_units?.operation_value ?? 1,
           },
         }));
       });

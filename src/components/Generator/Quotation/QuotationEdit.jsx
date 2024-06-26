@@ -136,7 +136,8 @@ const QuotationEdit = ({ id, setId }) => {
 
           sale_units: {
             ...prevProductUnits.sale_units,
-            [item?.product_id.toString()]: item?.products?.sale_unit_id,
+            [item?.product_id.toString()]:
+              item?.products?.sale_units?.operation_value ?? 1,
           },
         }));
       });
@@ -232,7 +233,7 @@ const QuotationEdit = ({ id, setId }) => {
 
       grand_total: calculateGrandTotal(
         totalPrice,
-        orderTax,
+        values.tax_rate,
         discount,
         shipping_cost
       ),

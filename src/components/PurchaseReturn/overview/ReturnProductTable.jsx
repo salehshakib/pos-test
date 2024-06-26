@@ -3,6 +3,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
+import { onDelete } from "../../../utilities/lib/productTable/counters";
 
 const columns = [
   {
@@ -80,8 +81,8 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "qty", record?.id]}
-            // value={record?.qty}
+            // name={["product_list", "qty", record?.id]}
+            value={record.formValues.product_list.qty[record?.id] || 0}
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -136,70 +137,6 @@ const columns = [
   },
 ];
 
-// function setFormValuesId(
-//   id,
-//   purchase_unit_id,
-//   unit_cost,
-//   purchase_units,
-//   formValues,
-//   productUnits,
-//   tax_id,
-//   // eslint-disable-next-line no-unused-vars
-//   taxes
-// ) {
-//   if (id) {
-//     formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
-
-//     formValues.product_list.net_unit_cost[id] =
-//       formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
-
-//     formValues.product_list.discount[id] =
-//       formValues.product_list.discount[id] ?? 0;
-
-//     formValues.product_list.tax[id] = parseFloat(
-//       (
-//         (parseInt(productUnits.purchase_units?.[id] ?? 1) *
-//           parseInt(formValues.product_list.tax_rate[id]) *
-//           parseInt(formValues.product_list.net_unit_cost[id]) *
-//           parseInt(formValues.product_list.qty[id])) /
-//         100
-//       ).toFixed(2)
-//     );
-
-//     // //console.log(purchase_units);
-//     // //console.log(productUnits);
-
-//     // //console.log(formValues.product_list);
-
-//     formValues.product_list.tax_rate[id] =
-//       formValues.product_list.tax_rate[id] ?? 0;
-
-//     const saleUnitsOperationValue = purchase_units
-//       ? purchase_units?.operation_value !== null
-//         ? purchase_units?.operation_value
-//         : 1
-//       : 1;
-
-//     productUnits.purchase_units[id] =
-//       productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
-
-//     formValues.product_list.total[id] =
-//       productUnits.purchase_units[id] *
-//         parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
-//         formValues.product_list.qty[id] -
-//       formValues.product_list.discount[id] +
-//       formValues.product_list.tax[id];
-
-//     formValues.product_list.purchase_unit_id[id] =
-//       formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
-
-//     if (formValues?.product_list?.tax_id) {
-//       formValues.product_list.tax_id[id] =
-//         formValues.product_list?.tax_id?.[id] ?? tax_id;
-//     }
-//   }
-// }
-
 function setFormValuesId(
   id,
   purchase_unit_id,
@@ -236,13 +173,13 @@ function setFormValuesId(
     );
 
     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
+      formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
     );
 
     formValues.product_list.tax[id] = sanitizeFloatValue(
       (
         (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-          sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
+          sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
           sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
           sanitizeIntValue(formValues.product_list.qty?.[id])) /
         100
@@ -284,7 +221,7 @@ export const ReturnProductTable = ({
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
       const newQty = Math.min(
-        parseInt(currentQty) + 1,
+        Number(currentQty) + 1,
         parseInt(formValues?.product_list?.max_return?.[id])
       );
 
@@ -304,8 +241,8 @@ export const ReturnProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(
-        parseInt(currentQty) - 1,
+      const newQty = Math.max(
+        Number(currentQty) - 1,
         parseInt(formValues?.product_list?.max_return?.[id])
       );
 
@@ -340,30 +277,30 @@ export const ReturnProductTable = ({
     }));
   };
 
-  const onDelete = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
 
-    setFormValues((prevFormValues) => {
-      const { product_list } = prevFormValues;
+  //   setFormValues((prevFormValues) => {
+  //     const { product_list } = prevFormValues;
 
-      const updatedProductList = Object.keys(product_list).reduce(
-        (acc, key) => {
-          // eslint-disable-next-line no-unused-vars
-          const { [id]: _, ...rest } = product_list[key];
-          acc[key] = rest;
-          return acc;
-        },
-        {}
-      );
+  //     const updatedProductList = Object.keys(product_list).reduce(
+  //       (acc, key) => {
+  //         // eslint-disable-next-line no-unused-vars
+  //         const { [id]: _, ...rest } = product_list[key];
+  //         acc[key] = rest;
+  //         return acc;
+  //       },
+  //       {}
+  //     );
 
-      return {
-        ...prevFormValues,
-        product_list: updatedProductList,
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: updatedProductList,
+  //     };
+  //   });
+  // };
 
   const dataSource = products?.map((product) => {
     const {
@@ -400,6 +337,10 @@ export const ReturnProductTable = ({
       decrementCounter,
       onQuantityChange,
       onDelete,
+      products,
+      setProducts,
+      formValues,
+      setFormValues,
     };
   });
 

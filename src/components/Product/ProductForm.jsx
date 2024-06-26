@@ -82,7 +82,7 @@ const BarCodeComponent = () => {
 
   useEffect(() => {
     if (!productType) {
-      form.setFieldValue("symbology", "Code 128");
+      form.setFieldValue("symbology", barcodeOptions[0].value);
     }
   }, [form, productType]);
 
@@ -185,7 +185,7 @@ const ExpireComponent = () => {
         )}
       </Row>
     );
-  }
+  } else return null;
 };
 
 const PromotionalPriceComponent = () => {

@@ -152,7 +152,7 @@ const PosLayout = () => {
       ),
       grand_total: calculateGrandTotal(
         totalPrice,
-        orderTax,
+        values.tax_rate,
         discount,
         shipping_cost
       ),

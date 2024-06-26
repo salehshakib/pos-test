@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import CustomInput from "../../Shared/Input/CustomInput";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
+import { onQuantityChange } from "../../../utilities/lib/productTable/counters";
 // import { columns } from "./columns/ProductColumns";
 
 const columns = [
@@ -50,20 +51,27 @@ const columns = [
               key={"sub"}
               icon={<FaMinus />}
               type="primary"
-              onClick={() => record.decrementCounter(record?.id)}
+              onClick={() =>
+                record.decrementCounter(record?.id, record.setFormValues)
+              }
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "qty", record?.id]}
+            // name={["product_list", "qty", record?.id]}
             noStyle={true}
-            onChange={(value) => record.onQuantityChange(record.id, value)}
+            onChange={(value) =>
+              record.onQuantityChange(record.id, value, record.setFormValues)
+            }
+            value={record.formValues.product_list.qty[record.id] ?? 0}
           />
           <div>
             <Button
               key={"add"}
               icon={<FaPlus />}
               type="primary"
-              onClick={() => record.incrementCounter(record?.id)}
+              onClick={() =>
+                record.incrementCounter(record?.id, record.setFormValues)
+              }
               className=""
             />
           </div>
@@ -162,18 +170,18 @@ const ComboProductsComponent = ({
     });
   };
 
-  const onQuantityChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
+  // const onQuantityChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: parseInt(value, 10) || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
   // const onDelete = (id) => {
   //   setProducts((prevProducts) =>
@@ -254,6 +262,8 @@ const ComboProductsComponent = ({
         onQuantityChange,
         onDelete,
         onUnitPriceChange,
+        formValues,
+        setFormValues,
       };
     }) ?? [];
 

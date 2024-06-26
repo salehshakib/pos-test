@@ -144,7 +144,7 @@ const TransferEdit = ({ id, setId }) => {
           purchase_units: {
             ...prevProductUnits.purchase_units,
             [product?.product_id.toString()]:
-              product?.products?.purchase_unit_id,
+              product?.products?.sale_units?.operation_value ?? 1,
           },
         }));
       });

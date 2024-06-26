@@ -129,11 +129,12 @@ export const PurchaseCreate = () => {
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax: decimalConverter(orderTax),
+
       grand_total: calculateGrandTotal(
         totalPrice,
-        orderTax,
-        values?.discount,
-        values?.shipping_cost
+        values.tax_rate,
+        values?.discount ?? 0,
+        values?.shipping_cost ?? 0
       ),
 
       product_list: JSON.stringify(productListArray),

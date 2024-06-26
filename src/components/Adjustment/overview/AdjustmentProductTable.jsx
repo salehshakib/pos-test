@@ -5,6 +5,13 @@ import { MdDelete } from "react-icons/md";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import {
+  decrementCounter,
+  incrementCounter,
+  onActionChange,
+  onDelete,
+  onQuantityChange,
+} from "../../../utilities/lib/productTable/counters";
 
 const columns = [
   {
@@ -59,20 +66,27 @@ const columns = [
               key={"sub"}
               icon={<FaMinus />}
               type="primary"
-              onClick={() => record.decrementCounter(record?.id)}
+              onClick={() =>
+                record.decrementCounter(record?.id, record.setFormValues)
+              }
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "qty", record?.id]}
+            // name={["product_list", "qty", record?.id]}
             noStyle={true}
-            onChange={(value) => record.onQuantityChange(record.id, value)}
+            onChange={(value) =>
+              record.onQuantityChange(record.id, value, record.setFormValues)
+            }
+            value={record?.formValues.product_list.qty?.[record?.id] ?? 0}
           />
           <div>
             <Button
               key={"add"}
               icon={<FaPlus />}
               type="primary"
-              onClick={() => record.incrementCounter(record?.id)}
+              onClick={() =>
+                record.incrementCounter(record?.id, record.setFormValues)
+              }
               className=""
             />
           </div>
@@ -103,7 +117,9 @@ const columns = [
                   label: "Subtraction (-)",
                 },
               ]}
-              onChange={(value) => record.onActionChange(record.id, value)}
+              onChange={(value) =>
+                record.onActionChange(record.id, value, record.setFormValues)
+              }
               styleProps={{ width: "9rem" }}
               noStyle={true}
             />
@@ -124,7 +140,13 @@ const columns = [
         props && (
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => record.onDelete(record.id)}
+              onClick={() =>
+                record.onDelete(
+                  record.id,
+                  record.setProducts,
+                  record.setFormValues
+                )
+              }
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               type="button"
             >
@@ -145,108 +167,78 @@ export const AdjustmentProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  //console.log(formValues);
+  // const decrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Math.max(Number(currentQty) - 1, 0);
 
-  const incrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = currentQty + 1;
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  // const onQuantityChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: parseInt(value, 10) || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
-  const decrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.max(currentQty - 1, 0);
-
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
-
-  const onQuantityChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
-
-  const onActionChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        action: {
-          ...prevFormValues.product_list.action,
-          [id]: value,
-        },
-      },
-    }));
-  };
+  // const onActionChange = (id, value, setFormValues) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       action: {
+  //         ...prevFormValues.product_list.action,
+  //         [id]: value,
+  //       },
+  //     },
+  //   }));
+  // };
 
   // const onDelete = (id) => {
   //   setProducts((prevProducts) =>
   //     prevProducts.filter((product) => product.id !== id)
   //   );
+
+  //   setFormValues((prevFormValues) => {
+  //     const { product_list } = prevFormValues;
+
+  //     const updatedProductList = Object.keys(product_list).reduce(
+  //       (acc, key) => {
+  //         // eslint-disable-next-line no-unused-vars
+  //         const { [id]: _, ...rest } = product_list[key];
+  //         acc[key] = rest;
+  //         return acc;
+  //       },
+  //       {}
+  //     );
+
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: updatedProductList,
+  //     };
+  //   });
   // };
-
-  const onDelete = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
-
-    setFormValues((prevFormValues) => {
-      const { product_list } = prevFormValues;
-
-      const updatedProductList = Object.keys(product_list).reduce(
-        (acc, key) => {
-          // eslint-disable-next-line no-unused-vars
-          const { [id]: _, ...rest } = product_list[key];
-          acc[key] = rest;
-          return acc;
-        },
-        {}
-      );
-
-      return {
-        ...prevFormValues,
-        product_list: updatedProductList,
-      };
-    });
-  };
-
-  //console.log(products);
 
   const dataSource =
     products?.map((product) => {
       const { id, name, sku, buying_price: unit_cost } = product ?? {};
-
-      //console.log(id);
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
@@ -265,6 +257,10 @@ export const AdjustmentProductTable = ({
         onQuantityChange,
         onActionChange,
         onDelete,
+        products,
+        setProducts,
+        formValues,
+        setFormValues,
       };
     }) ?? [];
 
@@ -286,21 +282,6 @@ export const AdjustmentProductTable = ({
       quantity: totalQuantity,
       action: false,
     });
-
-  //console.log(Object.keys(formValues.product_list.qty).length);
-
-  // useEffect(() => {
-
-  //   if (
-  //     products.length === 0 &&
-  //     Object.keys(formValues.product_list.qty).length === 0
-  //   ) {
-  //     setFormValues({
-  //       product_list: { qty: {}, action: {} },
-  //     });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [products, setFormValues]);
 
   form.setFieldsValue(formValues);
 

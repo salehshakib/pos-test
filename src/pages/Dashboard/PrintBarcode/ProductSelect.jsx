@@ -4,6 +4,12 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CustomQuantityInput } from "../../../components/Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../../components/Shared/ProductControllerComponent/ProductController";
+import {
+  decrementCounter,
+  incrementCounter,
+  onDelete,
+  onQuantityChange,
+} from "../../../utilities/lib/productTable/counters";
 
 const columns = [
   {
@@ -48,20 +54,27 @@ const columns = [
               key={"sub"}
               icon={<FaMinus />}
               type="primary"
-              onClick={() => record.decrementCounter(record?.id)}
+              onClick={() =>
+                record.decrementCounter(record?.id, record.setFormValues)
+              }
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "qty", record?.id]}
+            // name={["product_list", "qty", record?.id]}
             noStyle={true}
-            onChange={(value) => record.onQuantityChange(record.id, value)}
+            onChange={(value) =>
+              record.onQuantityChange(record.id, value, record.setFormValues)
+            }
+            value={record.formValues.product_list.qty[record.id]}
           />
           <div>
             <Button
               key={"add"}
               icon={<FaPlus />}
               type="primary"
-              onClick={() => record.incrementCounter(record?.id)}
+              onClick={() =>
+                record.incrementCounter(record?.id, record.setFormValues)
+              }
               className=""
             />
           </div>
@@ -103,60 +116,60 @@ const ProductSelect = ({
 }) => {
   const form = Form.useFormInstance();
 
-  const incrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(currentQty + 1);
+  // const incrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Number(currentQty) + 1;
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const decrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.max(currentQty - 1, 0);
+  // const decrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Math.max(Number(currentQty) - 1, 0);
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const onQuantityChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
+  // const onQuantityChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: parseInt(value, 10) || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
-  const onDelete = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
-  };
+  // const onDelete = (id) => {
+  //   setProducts((prevProducts) =>
+  //     prevProducts.filter((product) => product.id !== id)
+  //   );
+  // };
 
   const dataSource =
     products?.map((product) => {
@@ -173,6 +186,10 @@ const ProductSelect = ({
         decrementCounter,
         onQuantityChange,
         onDelete,
+        products,
+        setProducts,
+        formValues,
+        setFormValues,
       };
     }) ?? [];
 

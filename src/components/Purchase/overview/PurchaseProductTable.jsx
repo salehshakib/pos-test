@@ -12,6 +12,13 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { calculateTotals } from "../../../utilities/lib/calculateTotals";
+import {
+  decrementCounter,
+  incrementCounter,
+  onDelete,
+  onQuantityChange,
+} from "../../../utilities/lib/productTable/counters";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
@@ -117,6 +124,7 @@ const ProductFormComponent = ({
 
   const handleSubmit = () => {
     setFormValues((prevFormValues) => {
+      console.log(productUnits, productId);
       return {
         ...prevFormValues,
         product_list: {
@@ -238,6 +246,8 @@ function setFormValuesId(
     return isNaN(number) ? 0 : number;
   };
 
+  console.log(purchase_units);
+
   if (id) {
     formValues.product_list.qty[id] = sanitizeIntValue(
       formValues.product_list.qty?.[id] || 1
@@ -253,24 +263,28 @@ function setFormValuesId(
     );
 
     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      taxes?.rate ?? formValues.product_list.tax_rate?.[id] ?? 0
+      formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
     );
 
     formValues.product_list.tax[id] = sanitizeFloatValue(
       (
         (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-          sanitizeIntValue(formValues.product_list.tax_rate?.[id]) *
+          sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
           sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
           sanitizeIntValue(formValues.product_list.qty?.[id])) /
         100
       ).toFixed(2)
     );
 
-    const saleUnitsOperationValue = purchase_units?.operation_value ?? 1;
+    const saleUnitsOperationValue = purchase_units.operation_value ?? 1;
+
+    console.log(saleUnitsOperationValue);
 
     productUnits.purchase_units[id] =
       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
       saleUnitsOperationValue;
+
+    console.log(productUnits);
 
     formValues.product_list.total[id] =
       sanitizeIntValue(productUnits.purchase_units?.[id]) *
@@ -317,54 +331,54 @@ export const PurchaseProductTable = ({
     setProductEditModal(false);
   };
 
-  const incrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = parseInt(currentQty) + 1;
+  // const incrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Number(currentQty) + 1;
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const decrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(parseInt(currentQty) - 1, 0);
+  // const decrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+  //     const newQty = Math.max(Number(currentQty) - 1, 0);
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const onQuantityChange = (id, value) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: parseInt(value, 10) || 0,
-        },
-      },
-    }));
-  };
+  // const onQuantityChange = (id, value) => {
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: parseInt(value, 10) || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
   const incrementReceivedCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -419,32 +433,26 @@ export const PurchaseProductTable = ({
   //   setProducts((prevProducts) =>
   //     prevProducts.filter((product) => product.id !== id)
   //   );
+
+  //   setFormValues((prevFormValues) => {
+  //     const { product_list } = prevFormValues;
+
+  //     const updatedProductList = Object.keys(product_list).reduce(
+  //       (acc, key) => {
+  //         // eslint-disable-next-line no-unused-vars
+  //         const { [id]: _, ...rest } = product_list[key];
+  //         acc[key] = rest;
+  //         return acc;
+  //       },
+  //       {}
+  //     );
+
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: updatedProductList,
+  //     };
+  //   });
   // };
-
-  const onDelete = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
-
-    setFormValues((prevFormValues) => {
-      const { product_list } = prevFormValues;
-
-      const updatedProductList = Object.keys(product_list).reduce(
-        (acc, key) => {
-          // eslint-disable-next-line no-unused-vars
-          const { [id]: _, ...rest } = product_list[key];
-          acc[key] = rest;
-          return acc;
-        },
-        {}
-      );
-
-      return {
-        ...prevFormValues,
-        product_list: updatedProductList,
-      };
-    });
-  };
 
   const dataSource = products?.map((product) => {
     const {
@@ -486,6 +494,10 @@ export const PurchaseProductTable = ({
       onReceivedChange,
       onDelete,
       handleProductEdit,
+      products,
+      setProducts,
+      formValues,
+      setFormValues,
     };
   });
 
@@ -496,44 +508,20 @@ export const PurchaseProductTable = ({
   const [totalDiscount, setTotalDiscount] = useState(0);
 
   useEffect(() => {
-    const sanitizeValue = (value) => {
-      const number = parseFloat(value);
-      return isNaN(number) ? 0 : number;
-    };
+    const {
+      totalQuantity,
+      totalReceived,
+      totalPrice,
+      totalTax,
+      totalDiscount,
+    } = calculateTotals(formValues);
 
-    if (products.length > 0) {
-      const total = Object.values(formValues.product_list.qty).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalQuantity(total);
-
-      const totalR = Object.values(formValues.product_list.recieved).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalReceived(totalR);
-
-      const totalPrice = Object.values(formValues.product_list.total).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalPrice(totalPrice.toFixed(2));
-
-      const totalTax = Object.values(formValues.product_list.tax).reduce(
-        (acc, cur) => acc + sanitizeValue(cur),
-        0
-      );
-      setTotalTax(totalTax.toFixed(2));
-
-      const totalDiscount = Object.values(
-        formValues.product_list.discount
-      ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
-      setTotalDiscount(totalDiscount.toFixed(2));
-    }
+    setTotalQuantity(totalQuantity);
+    setTotalReceived(totalReceived);
+    setTotalPrice(totalPrice);
+    setTotalTax(totalTax);
+    setTotalDiscount(totalDiscount);
   }, [formValues, products]);
-
-  //console.log(totalDiscount, totalTax, totalPrice);
 
   products.length > 0 &&
     dataSource.push({
@@ -551,6 +539,8 @@ export const PurchaseProductTable = ({
   form.setFieldsValue(formValues);
 
   const type = Form.useWatch("purchase_status", form);
+
+  console.log(formValues);
 
   return (
     <>

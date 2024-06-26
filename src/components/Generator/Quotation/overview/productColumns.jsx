@@ -67,20 +67,27 @@ export const columns = [
               key={"sub"}
               icon={<FaMinus />}
               type="primary"
-              onClick={() => record.decrementCounter(record?.id)}
+              onClick={() =>
+                record.decrementCounter(record?.id, record.setFormValues)
+              }
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "qty", record?.id]}
+            // name={["product_list", "qty", record?.id]}
             noStyle={true}
-            onChange={(value) => record.onQuantityChange(record.id, value)}
+            onChange={(value) =>
+              record.onQuantityChange(record.id, value, record.setFormValues)
+            }
+            value={record?.formValues?.product_list?.qty[record?.id] ?? 0}
           />
           <div>
             <Button
               key={"add"}
               icon={<FaPlus />}
               type="primary"
-              onClick={() => record.incrementCounter(record?.id)}
+              onClick={() =>
+                record.incrementCounter(record?.id, record.setFormValues)
+              }
               className=""
             />
           </div>
@@ -136,7 +143,13 @@ export const columns = [
         props && (
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => record.onDelete(record.id)}
+              onClick={() =>
+                record.onDelete(
+                  record.id,
+                  record.setProducts,
+                  record.setFormValues
+                )
+              }
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               type="button"
             >

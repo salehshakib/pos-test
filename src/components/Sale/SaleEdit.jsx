@@ -21,6 +21,7 @@ import {
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
+import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 
 export const SaleEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -156,7 +157,8 @@ export const SaleEdit = ({ id, setId }) => {
 
           sale_units: {
             ...prevProductUnits.sale_units,
-            [product?.product_id.toString()]: product?.products?.sale_unit_id,
+            [product?.product_id.toString()]:
+              product?.products?.sale_units?.operation_value ?? 1,
           },
         }));
       });
@@ -239,7 +241,7 @@ export const SaleEdit = ({ id, setId }) => {
       ) ?? 0;
 
     const postObj = {
-      ...values,
+      ...sanitizeObj(values),
       sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
       discount: Number(discount ?? 0).toFixed(2),
       shipping_cost: Number(shipping_cost ?? 0).toFixed(2),
@@ -253,7 +255,7 @@ export const SaleEdit = ({ id, setId }) => {
       change: values?.recieved_amount - values?.paid_amount,
       grand_total: calculateGrandTotal(
         totalPrice,
-        orderTax,
+        values.tax_rate,
         discount,
         shipping_cost
       ),

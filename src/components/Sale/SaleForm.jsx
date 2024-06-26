@@ -1,5 +1,8 @@
 import { Col, Form, Row } from "antd";
 import { useEffect } from "react";
+import { discountTypeOptions } from "../../assets/data/discountTypes";
+import { paymentStatusOptions } from "../../assets/data/paymentStatus";
+import { saleStatusOptions } from "../../assets/data/saleStatus";
 import {
   colLayout,
   fullColLayout,
@@ -8,12 +11,16 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../utilities/lib/generator/generatorUtils";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
+import { TotalRow } from "../ReusableComponent/TotalRow";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -25,74 +32,42 @@ import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
 
-const StatusComponent = () => {
+const useSetFieldValue = (field, value) => {
   const form = Form.useFormInstance();
-
   useEffect(() => {
-    form.setFieldValue("sale_status", "Completed");
-  }, [form]);
-
-  const options = [
-    {
-      value: "Completed",
-      label: "Completed",
-    },
-    {
-      value: "Pending",
-      label: "Pending",
-    },
-  ];
-
-  return (
-    <CustomSelect label="Sale Status" options={options} name={"sale_status"} />
-  );
+    form.setFieldValue(field, value);
+  }, [form, field, value]);
 };
 
-const PaymentComponent = () => {
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue("payment_status", "Pending");
-  }, [form]);
-
-  const options = [
-    {
-      value: "Pending",
-      label: "Pending",
-    },
-    {
-      value: "Due",
-      label: "Due",
-    },
-    {
-      value: "Partial",
-      label: "Partial",
-    },
-    {
-      value: "Paid",
-      label: "Paid",
-    },
-  ];
+const StatusComponent = () => {
+  useSetFieldValue("sale_status", saleStatusOptions[0].value);
 
   return (
     <CustomSelect
+      label="Sale Status"
+      options={saleStatusOptions}
+      name={"sale_status"}
+    />
+  );
+};
+
+const PaymentStatusComponent = () => {
+  useSetFieldValue("payment_status", paymentStatusOptions[0].value);
+  return (
+    <CustomSelect
       label="Payment Status"
-      options={options}
-      name={"payment_status"}
+      options={paymentStatusOptions}
+      name="payment_status"
     />
   );
 };
 
 const TaxComponent = () => {
-  // const { data, isFetching } = useGetAllTaxQuery({});
-
   const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
+  const { data, isFetching } = useGetAllTaxQuery({ params });
 
   const options = data?.results?.tax?.map((item) => {
     return {
@@ -115,23 +90,11 @@ const TaxComponent = () => {
 const DiscountTypeComponent = () => {
   const form = Form.useFormInstance();
   const discount = Form.useWatch("discount", form);
-
-  const required = discount ? true : false;
-
-  const options = [
-    {
-      value: "Fixed",
-      label: "Fixed",
-    },
-    {
-      value: "Percentage",
-      label: "Percentage",
-    },
-  ];
+  const required = !!discount;
 
   return (
     <CustomSelect
-      options={options}
+      options={discountTypeOptions}
       label="Discount Type"
       name={"discount_type"}
       required={required}
@@ -148,9 +111,11 @@ export const SaleForm = ({
   setProductUnits,
   ...props
 }) => {
-  const discount = Form.useWatch("discount", props.form);
-  const shipping_cost = Form.useWatch("shipping_cost", props.form);
-  const tax_rate = Form.useWatch("tax_rate", props.form);
+  const form = props.form;
+
+  const discount = Form.useWatch("discount", form);
+  const shipping_cost = Form.useWatch("shipping_cost", form);
+  const tax_rate = Form.useWatch("tax_rate", form);
 
   const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
   const totalQty = Object.values(formValues.product_list?.qty).reduce(
@@ -166,6 +131,8 @@ export const SaleForm = ({
     discount,
     shipping_cost
   );
+
+  console.log(totalItems, totalQty, totalPrice, grandTotal);
 
   return (
     <>
@@ -219,7 +186,7 @@ export const SaleForm = ({
           </Col>
 
           <Col {...colLayout}>
-            <PaymentComponent />
+            <PaymentStatusComponent />
           </Col>
 
           <PaymentTypeComponent />
@@ -241,56 +208,15 @@ export const SaleForm = ({
         </Row>
       </CustomForm>
 
-      <Row className="pb-20">
-        <Col {...fullColLayout}>
-          <Row className="rounded-md overflow-hidden">
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Items</span>
-              <span>
-                {totalItems} ({totalQty})
-              </span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Total</span>
-              <span>{Number(totalPrice).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Tax</span>
-              <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Discount</span>
-              <span>{Number(discount ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Shipping Cost</span>
-              <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Grand Total</span>
-              <span>{Number(grandTotal).toFixed(2)}</span>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <TotalRow
+        totalItems={totalItems}
+        totalQty={totalQty}
+        totalPrice={totalPrice}
+        taxRate={tax_rate}
+        discount={discount}
+        shippingCost={shipping_cost}
+        grandTotal={grandTotal}
+      />
     </>
   );
 };

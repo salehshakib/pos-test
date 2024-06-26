@@ -141,16 +141,16 @@ const ProductListEdit = ({ id }) => {
         daily_sale_qty,
         tax_method,
         tax_id,
-        embedded_barcode,
         has_promotion,
-        has_featured,
         promotion_price,
         starting_date,
         last_date,
         has_different_price,
         has_expired_date,
         expired_date,
-        ecommerce_sync,
+        // has_featured,
+        // embedded_barcode,
+        // ecommerce_sync,
         details,
         has_stock,
         attachments,
@@ -219,17 +219,17 @@ const ProductListEdit = ({ id }) => {
         ...fieldData,
         {
           name: "has_stock",
-          value: has_stock === "1" ? true : false,
+          value: has_stock.toString() === "1" ? true : false,
           errors: "",
         },
         {
           name: "has_different_price",
-          value: has_different_price === "1" ? true : false,
+          value: has_different_price.toString() === "1" ? true : false,
           errors: "",
         },
         {
           name: "has_promotion",
-          value: has_promotion === "1" ? true : false,
+          value: has_promotion.toString() === "1" ? true : false,
           errors: "",
         },
         {
@@ -240,40 +240,47 @@ const ProductListEdit = ({ id }) => {
         {
           name: ["promotion", "starting_date"],
           value:
-            has_promotion === "1" ? dayjs(starting_date, "YYYY-MM-DD") : "",
+            has_promotion.toString() === "1"
+              ? dayjs(starting_date, "YYYY-MM-DD")
+              : "",
           errors: "",
         },
         {
           name: ["promotion", "last_date"],
-          value: has_promotion === "1" ? dayjs(last_date, "YYYY-MM-DD") : "",
+          value:
+            has_promotion.toString() === "1"
+              ? dayjs(last_date, "YYYY-MM-DD")
+              : "",
           errors: "",
         },
         {
           name: "has_expired_date",
-          value: has_expired_date === "1" ? true : false,
+          value: has_expired_date.toString() === "1" ? true : false,
           errors: "",
         },
         {
           name: ["product_expire", "expired_date"],
           value:
-            has_expired_date === "1" ? dayjs(expired_date, "YYYY-MM-DD") : "",
+            has_expired_date.toString() === "1"
+              ? dayjs(expired_date, "YYYY-MM-DD")
+              : "",
           errors: "",
         },
-        {
-          name: "ecommerce_sync",
-          value: ecommerce_sync === "1" ? true : false,
-          errors: "",
-        },
-        {
-          name: "has_featured",
-          value: has_featured === "1" ? true : false,
-          errors: "",
-        },
-        {
-          name: "embedded_barcode",
-          value: embedded_barcode === "1" ? true : false,
-          errors: "",
-        },
+        // {
+        //   name: "ecommerce_sync",
+        //   value: ecommerce_sync === "1" ? true : false,
+        //   errors: "",
+        // },
+        // {
+        //   name: "has_featured",
+        //   value: has_featured === "1" ? true : false,
+        //   errors: "",
+        // },
+        // {
+        //   name: "embedded_barcode",
+        //   value: embedded_barcode === "1" ? true : false,
+        //   errors: "",
+        // },
       ];
 
       setFields(newFieldData);
@@ -302,16 +309,16 @@ const ProductListEdit = ({ id }) => {
       daily_sale_qty,
       tax_method,
       tax_id,
-      has_featured,
+      // has_featured,
       has_stock,
       has_variant,
-      embedded_barcode,
+      // embedded_barcode,
       has_promotion,
       promotion,
       has_different_price,
       has_expired_date,
       product_expire,
-      ecommerce_sync,
+      // ecommerce_sync,
       details,
     } = values ?? {};
 
@@ -373,11 +380,9 @@ const ProductListEdit = ({ id }) => {
       daily_sale_qty,
       tax_method,
       tax_id,
-      has_featured: has_featured ? 1 : 0,
       has_stock: has_stock ? 1 : 0,
       qty_list: has_stock && JSON.stringify(qtyListArray),
       has_variant: has_variant ? 1 : 0,
-      embedded_barcode: embedded_barcode ? 1 : 0,
       has_promotion: has_promotion ? 1 : 0,
       promotion_price: promotion?.promotion_price,
       starting_date:
@@ -391,7 +396,9 @@ const ProductListEdit = ({ id }) => {
         has_expired_date &&
         dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
 
-      ecommerce_sync: ecommerce_sync ? 1 : 0,
+      // has_featured: has_featured ? 1 : 0,
+      // embedded_barcode: embedded_barcode ? 1 : 0,
+      // ecommerce_sync: ecommerce_sync ? 1 : 0,
       details,
 
       _method: "PUT",

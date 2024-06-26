@@ -150,7 +150,7 @@ export const PurchaseEdit = ({ id, setId }) => {
           purchase_units: {
             ...prevProductUnits.purchase_units,
             [product?.product_id.toString()]:
-              product?.products?.purchase_unit_id,
+              product?.products?.purchase_units?.operation_value ?? 1,
           },
         }));
       });
@@ -258,7 +258,7 @@ export const PurchaseEdit = ({ id, setId }) => {
       tax: decimalConverter(orderTax),
       grand_total: calculateGrandTotal(
         totalPrice,
-        orderTax,
+        values.tax_rate,
         values?.discount,
         values?.shipping_cost
       ),

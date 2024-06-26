@@ -1,21 +1,20 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteSaleMutation,
   useGetAllSaleQuery,
 } from "../../redux/services/sale/saleApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { SaleEdit } from "./SaleEdit";
 import { SaleDetails } from "./SaleDetails";
+import { SaleEdit } from "./SaleEdit";
 
 export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -25,9 +24,13 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllSaleQuery({
-    params: { ...pagination, parent: 1, child: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetAllSaleQuery({ params });
 
   const total = data?.meta?.total;
 

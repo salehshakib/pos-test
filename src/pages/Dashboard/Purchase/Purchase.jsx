@@ -2,6 +2,7 @@ import { useState } from "react";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { PurchaseCreate } from "../../../components/Purchase/PurchaseCreate";
 import { PurchaseTable } from "../../../components/Purchase/PurchaseTable";
+import { PURCHASE } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -104,6 +105,7 @@ const Purchase = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={PURCHASE}
     >
       <PurchaseCreate />
 

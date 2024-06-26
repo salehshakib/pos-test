@@ -102,7 +102,8 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         type: type,
         created_at: date,
         warehouse: stock_warehouses?.name,
-
+        category: stock_categories?.name,
+        brand: stock_brands?.name,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -123,6 +124,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <StockCountEdit id={editId} setId={setEditId} />

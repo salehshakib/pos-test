@@ -8,18 +8,17 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { columns, partialColumns } from "./productColumns";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
-  // const { data, isLoading } = useGetAllTaxQuery({});
-
   const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
-  const { data, isLoading } = useGetAllTaxQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllTaxQuery({ params });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),
@@ -28,14 +27,13 @@ const TaxComponent = ({ productId, setProductUnits }) => {
   }));
 
   const onSelect = (value, option) => {
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        tax_rate: {
-          [productId]: option.rate ?? 0,
-        },
-      };
-    });
+    setProductUnits((prevValues) => ({
+      ...prevValues,
+      tax_rate: {
+        ...prevValues.tax_rate,
+        [productId]: option.rate ?? 0,
+      },
+    }));
   };
 
   return (
@@ -50,25 +48,28 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({});
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "purchase-unit")
     .map((unit) => ({
       value: unit.id.toString(),
       label: unit.name,
-      operationValue: unit.operation_value,
+      operationValue: unit?.operation_value,
     }));
 
   const onSelect = (value, option) => {
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        purchase_units: {
-          [productId]: option.operationValue ?? 1,
-        },
-      };
-    });
+    setProductUnits((prevValues) => ({
+      ...prevValues,
+      purchase_units: {
+        ...prevValues.purchase_units,
+        [productId]: option.operationValue ?? 1,
+      },
+    }));
   };
 
   return (
@@ -217,69 +218,6 @@ const ProductFormComponent = ({
   );
 };
 
-// function setFormValuesId(
-//   id,
-//   purchase_unit_id,
-//   unit_cost,
-//   purchase_units,
-//   formValues,
-//   productUnits,
-//   tax_id,
-
-//   // eslint-disable-next-line no-unused-vars
-//   taxes
-// ) {
-//   if (id) {
-//     formValues.product_list.qty[id] = formValues.product_list.qty[id] || 1;
-
-//     formValues.product_list.net_unit_cost[id] =
-//       formValues.product_list.net_unit_cost[id] ?? unit_cost ?? "0";
-
-//     formValues.product_list.discount[id] =
-//       formValues.product_list.discount[id] ?? 0;
-
-//     formValues.product_list.tax[id] = parseFloat(
-//       (
-//         (parseInt(productUnits.purchase_units?.[id] ?? 1) *
-//           parseInt(formValues.product_list.tax_rate[id]) *
-//           parseInt(formValues.product_list.net_unit_cost[id]) *
-//           parseInt(formValues.product_list.qty[id])) /
-//         100
-//       ).toFixed(2)
-//     );
-
-//     formValues.product_list.tax_rate[id] =
-//       formValues.product_list.tax_rate[id] ?? 0;
-
-//     const saleUnitsOperationValue = purchase_units
-//       ? purchase_units?.operation_value !== null
-//         ? purchase_units?.operation_value
-//         : 1
-//       : 1;
-
-//     productUnits.purchase_units[id] =
-//       productUnits?.purchase_units[id] ?? saleUnitsOperationValue;
-
-//     formValues.product_list.total[id] =
-//       productUnits.purchase_units[id] *
-//         parseInt(formValues.product_list.net_unit_cost[id] ?? 0) *
-//         formValues.product_list.qty[id] -
-//       formValues.product_list.discount[id] +
-//       formValues.product_list.tax[id];
-
-//     formValues.product_list.purchase_unit_id[id] =
-//       formValues.product_list.purchase_unit_id[id] ?? purchase_unit_id;
-
-//     formValues.product_list.recieved[id] =
-//       formValues.product_list.recieved[id] ?? 0;
-
-//     if (formValues?.product_list?.tax_id) {
-//       formValues.product_list.tax_id[id] =
-//         formValues.product_list?.tax_id?.[id] ?? tax_id;
-//     }
-//   }
-// }
-
 function setFormValuesId(
   id,
   purchase_unit_id,
@@ -288,7 +226,6 @@ function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-  // eslint-disable-next-line no-unused-vars
   taxes
 ) {
   const sanitizeIntValue = (value) => {
@@ -365,6 +302,20 @@ export const PurchaseProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
+
+  const [productEditModal, setProductEditModal] = useState(false);
+  const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState(null);
+
+  const handleProductEdit = (id, name) => {
+    setProductId(id);
+    setProductName(name);
+    setProductEditModal(true);
+  };
+
+  const hideModal = () => {
+    setProductEditModal(false);
+  };
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -493,20 +444,6 @@ export const PurchaseProductTable = ({
         product_list: updatedProductList,
       };
     });
-  };
-
-  const [productEditModal, setProductEditModal] = useState(false);
-  const [productId, setProductId] = useState(undefined);
-  const [productName, setProductName] = useState(null);
-
-  const handleProductEdit = (id, name) => {
-    setProductId(id);
-    setProductName(name);
-    setProductEditModal(true);
-  };
-
-  const hideModal = () => {
-    setProductEditModal(false);
   };
 
   const dataSource = products?.map((product) => {

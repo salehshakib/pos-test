@@ -15,11 +15,11 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { CustomerComponent } from "../overview/CustomerComponent";
-import { SupplierComponent } from "../overview/SupplierComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { CashierComponent } from "../../ReusableComponent/CashierComponent";
 import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
+import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();

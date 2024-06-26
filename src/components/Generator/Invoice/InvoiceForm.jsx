@@ -8,7 +8,7 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../../layout/FormLayout";
-import { SupplierComponent } from "../overview/SupplierComponent";
+import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { QuotationProductTable } from "../Quotation/overview/QuotationProductTable";
 import { TaxComponent } from "../overview/TaxComponent";

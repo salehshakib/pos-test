@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeletePurchaseMutation,
   useGetAllPurchaseQuery,
 } from "../../redux/services/purchase/purchaseApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PurchaseDetails } from "./PurchaseDetails";
@@ -15,22 +15,25 @@ import { PurchaseEdit } from "./PurchaseEdit";
 
 export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllPurchaseQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    params: {
+      parent: 1,
+    },
+    // isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetAllPurchaseQuery({ params });
 
   const total = data?.meta?.total;
 

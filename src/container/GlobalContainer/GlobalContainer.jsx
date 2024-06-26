@@ -324,14 +324,12 @@
 
 import { PageContainer } from "@ant-design/pro-layout";
 import { Button, Checkbox, Dropdown, Input, Popover, Space } from "antd";
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { FaFileImport } from "react-icons/fa";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FaFileCsv, FaFileExcel, FaFilePdf, FaUpload } from "react-icons/fa";
 import {
   FaCirclePlus,
   FaEllipsis,
   FaEye,
-  FaFileCsv,
-  FaFilePdf,
   FaPrint,
   FaTrash,
 } from "react-icons/fa6";
@@ -433,6 +431,7 @@ const GlobalContainer = ({
         console.error("Error:", error);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [api, token]
   );
 
@@ -489,35 +488,35 @@ const GlobalContainer = ({
           <div>View</div>
         </Dropdown>
       ),
-      icon: <FaEye className="text-xl" />,
+      icon: <FaEye size={16} />,
     },
     {
       label: "Import",
       key: "import",
-      icon: <FaFileImport className="text-xl" />,
+      icon: <FaUpload size={16} />,
     },
     {
       label: "PDF",
       key: "pdf",
       onClick: () => handleExport("pdf"),
-      icon: <FaFilePdf className="text-xl" />,
+      icon: <FaFilePdf size={16} />,
     },
     {
       label: "Excel",
       key: "excel",
       onClick: () => handleExport("xlsx"),
-      icon: <FaFileCsv className="text-xl" />,
+      icon: <FaFileExcel size={16} />,
     },
     {
       label: "CSV",
       key: "csv",
       onClick: () => handleExport("csv"),
-      icon: <FaFileCsv className="text-xl" />,
+      icon: <FaFileCsv size={16} />,
     },
     {
       label: "Print",
       key: "print",
-      icon: <FaPrint className="text-xl" />,
+      icon: <FaPrint size={16} />,
     },
   ];
 

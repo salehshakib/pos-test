@@ -163,7 +163,13 @@ const columns = [
         props && (
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => record.onDelete(record.id)}
+              onClick={() =>
+                record.onDelete(
+                  record.id,
+                  record.setProducts,
+                  record.setFormValues
+                )
+              }
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               type="button"
             >
@@ -307,7 +313,7 @@ const ProductFormComponent = ({
             ...prevFormValues.product_list.tax,
             [productId]: parseFloat(
               (parseInt(productUnits.sale_units[productId]) *
-                parseInt(productUnits.tax_rate[productId]) *
+                parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
                 100
@@ -487,8 +493,6 @@ export const SaleProductTable = ({
       taxes,
     } = product ?? {};
 
-    //console.log(products);
-
     setFormValuesId(
       id,
       sale_unit_id,
@@ -514,6 +518,8 @@ export const SaleProductTable = ({
       onQuantityChange,
       onDelete,
       handleProductEdit,
+      products,
+      setProducts,
       formValues,
       setFormValues,
     };

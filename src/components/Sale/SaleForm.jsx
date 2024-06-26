@@ -1,5 +1,5 @@
 import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { discountTypeOptions } from "../../assets/data/discountTypes";
 import { paymentStatusOptions } from "../../assets/data/paymentStatus";
 import { saleStatusOptions } from "../../assets/data/saleStatus";
@@ -115,22 +115,50 @@ export const SaleForm = ({
 
   const discount = Form.useWatch("discount", form);
   const shipping_cost = Form.useWatch("shipping_cost", form);
-  const tax_rate = Form.useWatch("tax_rate", form);
+  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
 
-  const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
-  const totalQty = Object.values(formValues.product_list?.qty).reduce(
-    (acc, cur) => acc + (parseFloat(cur) || 0),
-    0
-  );
+  // const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
+  // const totalQty = Object.values(formValues.product_list?.qty).reduce(
+  //   (acc, cur) => acc + (parseFloat(cur) || 0),
+  //   0
+  // );
 
-  const totalPrice = calculateTotalPrice(formValues.product_list);
+  // const totalPrice = calculateTotalPrice(formValues.product_list);
 
-  const grandTotal = calculateGrandTotal(
-    totalPrice,
-    tax_rate ?? 0,
-    discount,
-    shipping_cost
-  );
+  // const grandTotal = calculateGrandTotal(
+  //   totalPrice,
+  //   tax_rate ?? 0,
+  //   discount,
+  //   shipping_cost
+  // );
+
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    const calculatedTotalItems =
+      Object.keys(formValues.product_list?.qty).length ?? 0;
+
+    const calculatedTotalQty = Object.values(
+      formValues.product_list?.qty
+    ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
+
+    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+
+    const calculatedGrandTotal = calculateGrandTotal(
+      calculatedTotalPrice,
+      tax_rate ?? 0,
+      discount,
+      shipping_cost
+    );
+
+    setTotalItems(calculatedTotalItems);
+    setTotalQty(calculatedTotalQty);
+    setTotalPrice(calculatedTotalPrice);
+    setGrandTotal(calculatedGrandTotal);
+  }, [discount, formValues, shipping_cost, tax_rate, products]);
 
   console.log(totalItems, totalQty, totalPrice, grandTotal);
 

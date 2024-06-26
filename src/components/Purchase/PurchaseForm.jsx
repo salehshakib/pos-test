@@ -93,6 +93,7 @@ export const PurchaseForm = ({
   ...props
 }) => {
   const form = props.form;
+
   const discount = Form.useWatch("discount", form);
   const shipping_cost = Form.useWatch("shipping_cost", form);
   const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
@@ -127,22 +128,6 @@ export const PurchaseForm = ({
     setTotalPrice(calculatedTotalPrice);
     setGrandTotal(calculatedGrandTotal);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
-
-  console.log(tax_rate);
-
-  // const totalItems = Object.keys(formValues.product_list?.qty).length ?? 0;
-  // const totalQty = Object.values(formValues.product_list?.qty).reduce(
-  //   (acc, cur) => acc + (parseFloat(cur) || 0),
-  //   0
-  // );
-
-  // const totalPrice = calculateTotalPrice(formValues.product_list);
-  // const grandTotal = calculateGrandTotal(
-  //   totalPrice,
-  //   tax_rate ?? 0,
-  //   discount,
-  //   shipping_cost
-  // );
 
   useEffect(() => {
     if (paymentStatus === "Paid") {

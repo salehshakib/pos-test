@@ -19,10 +19,10 @@ import {
 } from "../../../redux/services/pettycash/pettyCashSlice";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
 import { openNotification } from "../../../utilities/lib/openToaster";
-import { WarehouseComponent } from "../../Generator/overview/WarehouseComponent";
 import { CustomDescription } from "../../Shared/Description/CustomDescription";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
+import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const { message } = App.useApp();

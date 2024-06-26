@@ -8,14 +8,14 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../../layout/FormLayout";
-import { CashierComponent } from "../overview/CashierComponent";
 import { SupplierComponent } from "../overview/SupplierComponent";
 import { CustomerComponent } from "../overview/CustomerComponent";
-import { WarehouseComponent } from "../overview/WarehouseComponent";
 import { QuotationProductTable } from "../Quotation/overview/QuotationProductTable";
 import { TaxComponent } from "../overview/TaxComponent";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
+import { CashierComponent } from "../../ReusableComponent/CashierComponent";
+import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();

@@ -11,15 +11,14 @@ import {
   selectEditId,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentDetails from "./AdjustmentDetails";
 import AdjustmentEdit from "./AdjustmentEdit";
-
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+
   const editId = useSelector(selectEditId);
 
   const [detailsId, setDetailsId] = useState(undefined);
@@ -28,9 +27,16 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllAdjustmentQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    params: {
+      parent: 1,
+    },
+    // isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetAllAdjustmentQuery({ params });
 
   //console.log(data);
 

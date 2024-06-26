@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { fullColLayout } from "../../layout/FormLayout";
-import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
+import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
 import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import CustomerCreate from "../Customer/CustomerCreate";
+import { CashierComponent } from "../ReusableComponent/CashierComponent";
+import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomModal from "../Shared/Modal/CustomModal";
@@ -18,73 +20,71 @@ import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduc
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
-import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
 // import { colLayout } from "../../layout/FormLayout";
 
-const WarehouseComponent = () => {
-  const form = Form.useFormInstance();
-  const { data, isLoading } = useGetWarehousesQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
-  });
+// const WarehouseComponent = () => {
+//   const form = Form.useFormInstance();
+//   const { data, isLoading } = useGetWarehousesQuery({
+//     params: {
+//       selectValue: ["id", "name"],
+//     },
+//   });
 
-  const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse.id?.toString(),
-    label: warehouse.name,
-  }));
+//   const options = data?.results?.warehouse?.map((warehouse) => ({
+//     value: warehouse.id?.toString(),
+//     label: warehouse.name,
+//   }));
 
-  useEffect(() => {
-    if (options?.length) {
-      form.setFieldValue("warehouse_id", options[0].value);
-    }
-  }, [form, options]);
+// useEffect(() => {
+//   if (options?.length) {
+//     form.setFieldValue("warehouse_id", options[0].value);
+//   }
+// }, [form, options]);
 
-  return (
-    <CustomSelect
-      placeholder={"Warehouse"}
-      showSearch={true}
-      isLoading={isLoading}
-      options={options}
-      required={true}
-      name="warehouse_id"
-      customStyle={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       placeholder={"Warehouse"}
+//       showSearch={true}
+//       isLoading={isLoading}
+//       options={options}
+//       required={true}
+//       name="warehouse_id"
+//       customStyle={true}
+//     />
+//   );
+// };
 
-const CashierComponent = () => {
-  const form = Form.useFormInstance();
-  const { data, isLoading } = useGetAllCashierQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
-  });
+// const CashierComponent = () => {
+//   const form = Form.useFormInstance();
+//   const { data, isLoading } = useGetAllCashierQuery({
+//     params: {
+//       selectValue: ["id", "name"],
+//     },
+//   });
 
-  const options = data?.results?.cashier?.map((cashier) => ({
-    value: cashier.id?.toString(),
-    label: cashier.name,
-  }));
+//   const options = data?.results?.cashier?.map((cashier) => ({
+//     value: cashier.id?.toString(),
+//     label: cashier.name,
+//   }));
 
-  useEffect(() => {
-    if (options?.length) {
-      form.setFieldValue("cashier_id", options[0].value);
-    }
-  }, [form, options]);
+// useEffect(() => {
+//   if (options?.length) {
+//     form.setFieldValue("cashier_id", options[0].value);
+//   }
+// }, [form, options]);
 
-  return (
-    <CustomSelect
-      placeholder={"Cashier"}
-      showSearch={true}
-      isLoading={isLoading}
-      options={options}
-      required={true}
-      name="cashier_id"
-      customStyle={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       placeholder={"Cashier"}
+//       showSearch={true}
+//       isLoading={isLoading}
+//       options={options}
+//       required={true}
+//       name="cashier_id"
+//       customStyle={true}
+//     />
+//   );
+// };
 
 const CustomerComponent = () => {
   const form = Form.useFormInstance();

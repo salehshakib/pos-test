@@ -14,12 +14,12 @@ import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
-import { CashierComponent } from "../overview/CashierComponent";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { SupplierComponent } from "../overview/SupplierComponent";
-import { WarehouseComponent } from "../overview/WarehouseComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { CashierComponent } from "../../ReusableComponent/CashierComponent";
+import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();

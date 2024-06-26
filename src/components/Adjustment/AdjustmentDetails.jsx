@@ -4,6 +4,7 @@ import { useGetAdjustmentDetailsQuery } from "../../redux/services/adjustment/ad
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -41,14 +42,17 @@ const columns = [
 ];
 
 const AdjustmentDetails = ({ id, ...props }) => {
+  const params = useGlobalParams({
+    // isPagination: true,
+    // isDefaultParams: false,
+    // params: {
+    //   parent: 1,
+    // },
+    isRelationalParams: true,
+  });
+
   const { data, isFetching } = useGetAdjustmentDetailsQuery(
-    {
-      id,
-      params: {
-        parent: 1,
-        child: 1,
-      },
-    },
+    { id, params },
     { skip: !id }
   );
 

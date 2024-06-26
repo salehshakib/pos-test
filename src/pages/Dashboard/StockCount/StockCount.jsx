@@ -2,6 +2,7 @@ import { useState } from "react";
 import StockCountCreate from "../../../components/StockCount/StockCountCreate";
 import StockCountTable from "../../../components/StockCount/StockCountTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
   {
@@ -131,6 +132,7 @@ const StockCount = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={STOCK_COUNT}
     >
       <StockCountCreate />
 

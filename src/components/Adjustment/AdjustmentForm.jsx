@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import { WarehouseComponent } from "../Generator/overview/WarehouseComponent";
+import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";

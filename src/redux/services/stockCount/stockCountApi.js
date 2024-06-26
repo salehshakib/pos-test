@@ -21,10 +21,11 @@ const stockCountApi = baseApi.injectEndpoints({
     }),
 
     getStockCountDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${STOCK_COUNT}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

@@ -1,39 +1,48 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteStockCountMutation,
   useGetStockCountsQuery,
-  useUpdateStockCountStatusMutation,
 } from "../../redux/services/stockCount/stockCountApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { StockCountDetails } from "./StockCountDetails";
 import StockCountEdit from "./StockCountEdit";
-import StatusModal from "../Shared/Modal/StatusModal";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
+
+  // const [statusId, setStatusId] = useState(undefined);
+  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetStockCountsQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    // parms: {
+    //   parent: 1,
+    // }
+    isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetStockCountsQuery({ params });
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdateStockCountStatusMutation();
+  // const [updateStatus, { isLoading: isStatusUpdating }] =
+  //   useUpdateStockCountStatusMutation();
 
   const [deleteStockCount, { isLoading: isDeleting }] =
     useDeleteStockCountMutation();
@@ -43,19 +52,24 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+  // const handleStatusModal = (id) => {
+  //   setStatusId(id);
+  //   setStatusModal(true);
+  // };
 
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
-  };
+  // const handleStatus = async () => {
+  //   const { data } = await updateStatus(statusId);
+
+  //   if (data?.success) {
+  //     setStatusId(undefined);
+  //     setStatusModal(false);
+  //   }
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -71,21 +85,32 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.stockcount?.map((item) => {
-      const { id, reference_id, created_at, is_active, type } = item;
+      const {
+        id,
+        reference_id,
+        created_at,
+        type,
+        stock_warehouses,
+        stock_categories,
+        stock_brands,
+      } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         reference: reference_id,
         type: type,
-        status: { status: is_active, handleStatusModal },
         created_at: date,
-        action: { handleEdit, handleDeleteModal },
+        warehouse: stock_warehouses?.name,
+
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -102,12 +127,20 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
 
       <StockCountEdit id={editId} setId={setEditId} />
 
-      <StatusModal
+      {detailsId && (
+        <StockCountDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
+
+      {/* <StatusModal
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      />
+      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

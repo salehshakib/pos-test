@@ -7,50 +7,49 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
-import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
+import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
+import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
 
-const DepartmentComponent = () => {
-  const { data, isFetching } = useGetDepartmentsQuery({});
+// const DepartmentComponent = () => {
+//   const { data, isFetching } = useGetDepartmentsQuery({});
 
-  const options = data?.results?.department?.map((item) => ({
-    value: item?.id?.toString(),
-    label: item?.name,
-  }));
+//   const options = data?.results?.department?.map((item) => ({
+//     value: item?.id?.toString(),
+//     label: item?.name,
+//   }));
 
-  return (
-    <CustomSelect
-      label={"Department"}
-      name={"department_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label={"Department"}
+//       name={"department_id"}
+//       options={options}
+//       isLoading={isFetching}
+//       required={true}
+//     />
+//   );
+// };
 
-const EmployeeComponent = () => {
-  const { data, isFetching } = useGetAllEmployeeQuery({});
+// const EmployeeComponent = () => {
+//   const { data, isFetching } = useGetAllEmployeeQuery({});
 
-  const options = data?.results?.employee?.map((item) => ({
-    value: item?.id?.toString(),
-    label: item?.name,
-  }));
+//   const options = data?.results?.employee?.map((item) => ({
+//     value: item?.id?.toString(),
+//     label: item?.name,
+//   }));
 
-  return (
-    <CustomSelect
-      label={"Employee"}
-      name={"employee_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label={"Employee"}
+//       name={"employee_id"}
+//       options={options}
+//       isLoading={isFetching}
+//       required={true}
+//     />
+//   );
+// };
 
 const DateComponent = () => {
   const form = Form.useFormInstance();

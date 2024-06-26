@@ -1,72 +1,23 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
-import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
 import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType/leaveType";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomRadio from "../Shared/Radio/CustomRadio";
 import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import { useEffect } from "react";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import CustomInput from "../Shared/Input/CustomInput";
+import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
+import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
+import CustomRadio from "../Shared/Radio/CustomRadio";
+import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomUploader from "../Shared/Upload/CustomUploader";
 
-const DepartmentComponent = () => {
-  const { data, isFetching } = useGetDepartmentsQuery({});
-
-  const options = data?.results?.department?.map((item) => ({
-    value: item?.id?.toString(),
-    label: item?.name,
-  }));
-
-  return (
-    <CustomSelect
-      label={"Department"}
-      name={"department_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
-
-const EmployeeComponent = () => {
-  const form = Form.useFormInstance();
-  const department = Form.useWatch("department_id", form);
-
-  const { data, isFetching } = useGetAllEmployeeQuery(
-    {
-      params: {
-        department_id: department,
-      },
-    },
-    {
-      skip: !department,
-    }
-  );
-
-  const options = data?.results?.employee?.map((item) => ({
-    value: item?.id?.toString(),
-    label: item?.name,
-  }));
-
-  return (
-    <CustomSelect
-      label={"Employee"}
-      name={"employee_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
 const LeaveTypeComponent = () => {
   const { data, isFetching } = useGetAllLeaveTypeQuery({});
 

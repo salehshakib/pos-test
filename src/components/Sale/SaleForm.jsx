@@ -8,12 +8,13 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../utilities/lib/generator/generatorUtils";
-import { CashierComponent } from "../Generator/overview/CashierComponent";
-import { WarehouseComponent } from "../Generator/overview/WarehouseComponent";
+import { CashierComponent } from "../ReusableComponent/CashierComponent";
+import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
@@ -23,7 +24,6 @@ import { CurrencyFormComponent } from "./overview/CurrencyComponent";
 import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();

@@ -8,6 +8,7 @@ import {
 import {
   calculateGrandTotal,
   calculateTotalPrice,
+  calculateTotalTax,
 } from "../../../utilities/lib/generator/generatorUtils";
 import { CashierComponent } from "../../ReusableComponent/CashierComponent";
 import { OrderTaxComponent } from "../../ReusableComponent/OrderTaxComponent";
@@ -56,6 +57,7 @@ export const InvoiceForm = ({
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
+  const [taxRate, setTaxRate] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
@@ -69,6 +71,8 @@ export const InvoiceForm = ({
 
     const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
 
+    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,
       tax_rate ?? 0,
@@ -80,23 +84,8 @@ export const InvoiceForm = ({
     setTotalQty(calculatedTotalQty);
     setTotalPrice(calculatedTotalPrice);
     setGrandTotal(calculatedGrandTotal);
+    setTaxRate(orderTax);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
-
-  // useEffect(() => {
-  //   setTotalItems(Object.keys(formValues.product_list?.qty)?.length ?? 0);
-
-  //   setTotalQty(
-  //     Object.values(formValues.product_list?.qty).reduce(
-  //       (acc, cur) => acc + (parseFloat(cur) || 0),
-  //       0
-  //     )
-  //   );
-
-  //   setTotalPrice(calculateTotalPrice(formValues.product_list));
-  //   setGrandTotal(
-  //     calculateGrandTotal(totalPrice, tax_rate ?? 0, discount, shipping_cost)
-  //   );
-  // }, [discount, formValues, shipping_cost, tax_rate, totalPrice]);
 
   return (
     <>
@@ -150,63 +139,13 @@ export const InvoiceForm = ({
         </Row>
       </CustomForm>
 
-      {/* <Row className="pb-20">
-        <Col {...fullColLayout}>
-          <Row className="rounded-md overflow-hidden">
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Items</span>
-              <span>
-                {totalItems} ({totalQty})
-              </span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Total</span>
-              <span>{Number(totalPrice).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Tax</span>
-              <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Discount</span>
-              <span>{Number(discount ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Shipping Cost</span>
-              <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Grand Total</span>
-              <span>{Number(grandTotal).toFixed(2)}</span>
-            </Col>
-          </Row>
-        </Col>
-      </Row> */}
       <TotalRow
         totalItems={totalItems}
         totalQty={totalQty}
         totalPrice={totalPrice}
-        taxRate={tax_rate}
-        discount={discount}
-        shippingCost={shipping_cost}
+        taxRate={taxRate ?? 0}
+        discount={discount ?? 0}
+        shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}
       />
     </>

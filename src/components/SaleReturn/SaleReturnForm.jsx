@@ -1,5 +1,5 @@
-import { App, Col, Row } from "antd";
-import { useState } from "react";
+import { App, Col, Form, Row } from "antd";
+import { useEffect, useState } from "react";
 import {
   colLayout,
   fullColLayout,
@@ -7,8 +7,15 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+  calculateTotalTax,
+} from "../../utilities/lib/generator/generatorUtils";
+import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
+import { TotalRow } from "../ReusableComponent/TotalRow";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
@@ -104,11 +111,57 @@ const SaleReturnForm = ({
   referenceId,
   ...props
 }) => {
+  const { form } = props;
   const { message } = App.useApp();
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
+
+  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
+  const deleteRows = Form.useWatch("delete", form);
+
+  const updatedProductList = updateProductList(
+    {
+      delete: deleteRows,
+    },
+    formValues.product_list
+  );
+
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
+  const [taxRate, setTaxRate] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    if (!updatedProductList?.qty) return;
+
+    const calculatedTotalItems =
+      Object.keys(updatedProductList?.qty).length ?? 0;
+
+    const calculatedTotalQty = Object.values(updatedProductList?.qty).reduce(
+      (acc, cur) => acc + (parseFloat(cur) || 0),
+      0
+    );
+
+    const calculatedTotalPrice = calculateTotalPrice(updatedProductList);
+
+    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+
+    const calculatedGrandTotal = calculateGrandTotal(
+      calculatedTotalPrice,
+      tax_rate ?? 0,
+      0,
+      0
+    );
+
+    setTotalItems(calculatedTotalItems);
+    setTotalQty(calculatedTotalQty);
+    setTotalPrice(calculatedTotalPrice);
+    setGrandTotal(calculatedGrandTotal);
+    setTaxRate(orderTax);
+  }, [formValues, tax_rate, products, updatedProductList]);
 
   const handleSubmit = async (values) => {
     const { data, error } = await checkReference({ data: values });
@@ -222,18 +275,29 @@ const SaleReturnForm = ({
           </Row>
         </CustomForm>
       ) : (
-        <CustomForm {...props}>
-          <ReturnComponent
-            reference_id={referenceId ?? refId}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            products={products}
-            setProducts={setProducts}
-            productUnits={productUnits}
-            setProductUnits={setProductUnits}
-            form={props.form}
+        <>
+          <CustomForm {...props}>
+            <ReturnComponent
+              reference_id={referenceId ?? refId}
+              formValues={formValues}
+              setFormValues={setFormValues}
+              products={products}
+              setProducts={setProducts}
+              productUnits={productUnits}
+              setProductUnits={setProductUnits}
+              form={props.form}
+            />
+          </CustomForm>
+          <TotalRow
+            totalItems={totalItems}
+            totalQty={totalQty}
+            totalPrice={totalPrice}
+            taxRate={taxRate ?? 0}
+            // discount={discount}
+            // shippingCost={shipping_cost}
+            grandTotal={grandTotal}
           />
-        </CustomForm>
+        </>
       )}
     </>
   );

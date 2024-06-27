@@ -13,6 +13,7 @@ import {
 import {
   calculateGrandTotal,
   calculateTotalPrice,
+  calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
@@ -124,6 +125,7 @@ export const SaleForm = ({
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
+  const [taxRate, setTaxRate] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
@@ -136,6 +138,7 @@ export const SaleForm = ({
     ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
 
     const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
 
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,
@@ -148,6 +151,7 @@ export const SaleForm = ({
     setTotalQty(calculatedTotalQty);
     setTotalPrice(calculatedTotalPrice);
     setGrandTotal(calculatedGrandTotal);
+    setTaxRate(orderTax);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
 
   console.log(totalItems, totalQty, totalPrice, grandTotal);
@@ -230,9 +234,9 @@ export const SaleForm = ({
         totalItems={totalItems}
         totalQty={totalQty}
         totalPrice={totalPrice}
-        taxRate={tax_rate}
-        discount={discount}
-        shippingCost={shipping_cost}
+        taxRate={taxRate ?? 0}
+        discount={discount ?? 0}
+        shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}
       />
     </>

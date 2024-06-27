@@ -20,6 +20,7 @@ import { TotalRow } from "../ReusableComponent/TotalRow";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
+  calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
 
 // const TaxComponent = () => {
@@ -150,6 +151,7 @@ const PurchaseReturnForm = ({
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
+  const [taxRate, setTaxRate] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
@@ -166,6 +168,8 @@ const PurchaseReturnForm = ({
 
     const calculatedTotalPrice = calculateTotalPrice(updatedProductList);
 
+    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,
       tax_rate ?? 0,
@@ -177,6 +181,7 @@ const PurchaseReturnForm = ({
     setTotalQty(calculatedTotalQty);
     setTotalPrice(calculatedTotalPrice);
     setGrandTotal(calculatedGrandTotal);
+    setTaxRate(orderTax);
   }, [formValues, tax_rate, products, updatedProductList]);
 
   const handleSubmit = async (values) => {
@@ -271,24 +276,6 @@ const PurchaseReturnForm = ({
     }
   };
 
-  // const deleteRow = Form.useWatch("delete", props.form);
-
-  // //console.log(formValues);
-
-  // const updatedList = purchaseExists
-  //   ? updateProductList(deleteRow, formValues.product_list)
-  //   : [];
-
-  // const totalItems = Object.keys(updatedList?.qty)?.length ?? 0;
-  // const totalQty = Object.values(updatedList?.qty).reduce(
-  //   (acc, cur) => acc + (parseFloat(cur) || 0),
-  //   0
-  // );
-
-  // const totalPrice = calculateTotalPrice(updatedList);
-
-  // const grandTotal = calculateGrandTotal(totalPrice, tax_rate ?? 0);
-
   return (
     <>
       {!purchaseExists && !id ? (
@@ -326,7 +313,7 @@ const PurchaseReturnForm = ({
             totalItems={totalItems}
             totalQty={totalQty}
             totalPrice={totalPrice}
-            taxRate={tax_rate ?? 0}
+            taxRate={taxRate ?? 0}
             // discount={discount}
             // shippingCost={shipping_cost}
             grandTotal={grandTotal}

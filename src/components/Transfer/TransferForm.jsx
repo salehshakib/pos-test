@@ -157,7 +157,7 @@ const TransferForm = ({
         totalPrice={totalPrice}
         // taxRate={tax_rate}
         // discount={discount}
-        shippingCost={shipping_cost}
+        shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}
       />
     </>

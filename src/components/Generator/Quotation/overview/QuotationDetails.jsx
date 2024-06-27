@@ -53,9 +53,32 @@ export const QuotationDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  // //console.log(data?.quotation_products);
+  const referenceId = createDetailsLayout({ reference_id: data.reference_id });
 
-  const details = createDetailsLayout(data);
+  const benDetails = createDetailsLayout({
+    warehouse: data?.warehouses,
+    cashier: data?.cashiers,
+    customer: data?.customers,
+    supplier: data?.suppliers,
+  });
+
+  const quotationDetails = createDetailsLayout({
+    item: data?.item,
+    total_qty: data?.total_qty,
+    total_discount: data?.total_discount,
+    total_tax: data?.total_tax,
+    total_price: data?.total_price,
+    discount: data?.discount,
+    shipping_cost: data?.shipping_cost,
+    grand_total: data?.grand_total,
+    quotation_status: data?.quotation_status,
+  });
+
+  const attachment = createDetailsLayout({
+    attachments: data?.attachments,
+  });
+
+  const additionalInfo = createDetailsLayout({ note: data?.note });
 
   const title = () => (
     <span className="text-black font-semibold text-base -ml-2">
@@ -81,12 +104,23 @@ export const QuotationDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <div className="space-y-5">
-          <CustomDescription title="Quotation Details" items={details} />
+          <CustomDescription title="Reference" items={referenceId} />
+          <CustomDescription title="Beneficiary Details" items={benDetails} />
+
+          <CustomDescription
+            title="Quotation Details"
+            items={quotationDetails}
+          />
           <Table
             {...tableProps}
             title={title}
             columns={columns}
             dataSource={dataSource}
+          />
+          <CustomDescription title="Attachemnt Details" items={attachment} />
+          <CustomDescription
+            title="Additional Details"
+            items={additionalInfo}
           />
         </div>
       )}

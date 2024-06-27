@@ -53,7 +53,7 @@ export const TransferDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const referenceId = createDetailsLayout({ reference_id: data.reference_id });
+  const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
 
   const warehouseDetails = createDetailsLayout({
     "warehouse_(from)": data?.from_warehouses,
@@ -67,6 +67,7 @@ export const TransferDetails = ({ id, ...props }) => {
     total_cost: data?.total_cost,
     shipping_cost: data?.shipping_cost,
     grand_total: data?.grand_total,
+    status: data?.status,
   });
 
   const attachment = createDetailsLayout({
@@ -99,7 +100,7 @@ export const TransferDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <div className="space-y-5">
-          <CustomDescription title="Reference Id" items={referenceId} />
+          <CustomDescription title="Reference" items={referenceId} />
           <CustomDescription
             title="Warehouse Details"
             items={warehouseDetails}

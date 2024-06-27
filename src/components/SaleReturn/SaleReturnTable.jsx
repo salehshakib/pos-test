@@ -7,22 +7,30 @@ import {
   useDeleteSaleReturnMutation,
   useGetAllSaleReturnQuery,
 } from "../../redux/services/return/saleReturnApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { SaleReturnDetails } from "./SaleReturnDetails";
 import SaleReturnEdit from "./SaleReturnEdit";
 
 const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllSaleReturnQuery({
-    params: pagination,
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetAllSaleReturnQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -32,6 +40,11 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDeleteModal = (id) => {
@@ -49,19 +62,23 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
   const dataSource =
     data?.results?.salereturn?.map((item) => {
       const { id, created_at, reference_id } = item;
+
+      console.log(item);
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
 
-        referenceNo: reference_id,
+        // referenceNo: reference_id,
         created_at: date,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -71,15 +88,22 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
-        pagination={pagination}
-        setPagination={setPagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-        created_at={false}
+        isRowSelection={true}
         status={false}
+        created_at={false}
       />
 
       <SaleReturnEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <SaleReturnDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

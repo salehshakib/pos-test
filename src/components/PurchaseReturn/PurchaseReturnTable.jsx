@@ -1,48 +1,49 @@
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import CustomTable from "../Shared/Table/CustomTable";
-import PurchaseReturnEdit from "./PurchaseReturnEdit";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeletePurchaseReturnMutation,
+  useGetAllPurchaseReturnQuery,
+} from "../../redux/services/return/purchaseReturnApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { PurchaseReturnDetails } from "./PurchaseReturnDetails";
+import PurchaseReturnEdit from "./PurchaseReturnEdit";
 
 const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
-
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const { data, isLoading } = useGetDepartmentsQuery({
-  //   params: pagination,
-  // });
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
+  });
 
-  // const total = data?.meta?.total;
+  const { data, isLoading } = useGetAllPurchaseReturnQuery({ params });
 
-  // const [deleteDepartment, { isLoading: isDeleting }] =
-  // useDeleteDepartmentMutation();
+  const total = data?.meta?.total;
+
+  const [deletePurchaseReturn, { isLoading: isDeleting }] =
+    useDeletePurchaseReturnMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
   };
 
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
-
-  const handleStatus = async () => {
-    //console.log(id);
-    // const { data } = await updateStatus( id);
-    // if (data?.success) {
-    //   setId(undefined);
-    //   setStatusModal(false);
-    // }
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDeleteModal = (id) => {
@@ -51,60 +52,63 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
   };
 
   const handleDelete = async () => {
-    // const { data } = await deleteDepartment( id);
-    // if (data?.success) {
-    //   setDeleteModal(false);
-    // }
+    const { data } = await deletePurchaseReturn(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
   };
 
-  // const dataSource =
-  //   data?.results?.department?.map((item) => {
-  //     const { id, name, created_at, is_active } = item;
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+  const dataSource =
+    data?.results?.purchasereturn?.map((item) => {
+      const { id, name, created_at, is_active } = item;
 
-  //     return {
-  //       id,
-  //       department: name,
-  //       status: { status: is_active, handleStatusModal },
-  //       created_at: date,
-  //       action: { handleEdit, handleDeleteModal },
-  //     };
-  //   }) ?? [];
+      console.log(item);
+      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      return {
+        id,
+        // referenceNo: reference_id,
+        created_at: date,
+        handleEdit,
+        handleDeleteModal,
+        handleDetailsModal,
+      };
+    }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
-  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
-        pagination={pagination}
-        setPagination={setPagination}
+        dataSource={dataSource}
+        total={total}
         setSelectedRows={setSelectedRows}
-
-        // isLoading={isLoading}
+        isLoading={isLoading}
+        isRowSelection={true}
+        status={false}
+        created_at={false}
       />
 
       <PurchaseReturnEdit id={editId} setId={setEditId} />
 
-      {/* <StatusModal
-  statusModal={statusModal}
-  hideModal={hideModal}
-  handleStatus={handleStatus}
-  isLoading={isStatusUpdating}
-/>
+      {detailsId && (
+        <PurchaseReturnDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
-<DeleteModal
-  deleteModal={deleteModal}
-  hideModal={hideModal}
-  handleDelete={handleDelete}
-  isLoading={isDeleting}
-/> */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+      />
     </GlobalUtilityStyle>
   );
 };

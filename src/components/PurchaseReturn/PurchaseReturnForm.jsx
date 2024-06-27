@@ -23,35 +23,6 @@ import {
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
 
-// const TaxComponent = () => {
-//   // const { data, isFetching } = useGetAllTaxQuery({});
-
-//   const params = useGlobalParams({
-//     selectValue: ["id", "name", "rate"],
-//   });
-
-//   const { data, isFetching } = useGetAllTaxQuery({
-//     params,
-//   });
-
-//   const options = data?.results?.tax?.map((item) => {
-//     return {
-//       value: item.rate,
-//       label: item.name,
-//       tax_rate: item?.rate,
-//     };
-//   });
-
-//   return (
-//     <CustomSelect
-//       label="Order Tax"
-//       options={options}
-//       name={"tax_rate"}
-//       isLoading={isFetching}
-//     />
-//   );
-// };
-
 const options = [
   {
     value: "Cash",
@@ -120,7 +91,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
   );
 };
 
-const PurchaseReturnForm = ({
+export const PurchaseReturnForm = ({
   formValues,
   setFormValues,
   productUnits,
@@ -323,4 +294,3 @@ const PurchaseReturnForm = ({
     </>
   );
 };
-export default PurchaseReturnForm;

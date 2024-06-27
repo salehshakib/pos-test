@@ -6,7 +6,7 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
+import { useCheckSaleReferenceMutation } from "../../redux/services/return/saleReturnApi";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
@@ -99,7 +99,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
   );
 };
 
-const SaleReturnForm = ({
+export const SaleReturnForm = ({
   formValues,
   setFormValues,
   productUnits,
@@ -113,7 +113,7 @@ const SaleReturnForm = ({
 }) => {
   const { form } = props;
   const { message } = App.useApp();
-  const [checkReference, { isLoading }] = useCheckReferenceMutation();
+  const [checkSaleReference, { isLoading }] = useCheckSaleReferenceMutation();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
@@ -164,7 +164,7 @@ const SaleReturnForm = ({
   }, [formValues, tax_rate, products, updatedProductList]);
 
   const handleSubmit = async (values) => {
-    const { data, error } = await checkReference({ data: values });
+    const { data, error } = await checkSaleReference({ data: values });
 
     if (data?.data) {
       setSaleData(data?.data);
@@ -302,5 +302,3 @@ const SaleReturnForm = ({
     </>
   );
 };
-
-export default SaleReturnForm;

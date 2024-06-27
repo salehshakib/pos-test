@@ -13,7 +13,7 @@ import {
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import SaleReturnForm from "./SaleReturnForm";
+import { SaleReturnForm } from "./SaleReturnForm";
 
 const SaleReturnCreate = () => {
   const dispatch = useDispatch();

@@ -13,7 +13,7 @@ import {
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import PurchaseReturnForm from "./PurchaseReturnForm";
+import { PurchaseReturnForm } from "./PurchaseReturnForm";
 
 const PurchaseReturnCreate = () => {
   const dispatch = useDispatch();
@@ -73,7 +73,6 @@ const PurchaseReturnCreate = () => {
   }, [form, isCreateDrawerOpen]);
 
   const handleSubmit = async (values) => {
-    console.log(values);
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();
@@ -114,13 +113,6 @@ const PurchaseReturnCreate = () => {
         (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
-
-    // setSummary({
-    //   totalItems: productListArray?.length,
-    //   totalQty: totalQty,
-    //   totalPrice: totalPrice,
-    //   grandTotal: calculateGrandTotal(totalPrice, orderTax),
-    // });
 
     const postData = {
       purchase_return_at: dayjs(values?.purchase_return_at).format(

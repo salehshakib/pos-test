@@ -111,7 +111,7 @@ const saleReturnApi = baseApi.injectEndpoints({
       },
     }),
 
-    checkReference: build.mutation({
+    checkSaleReference: build.mutation({
       query: ({ data }) => {
         return {
           url: `/${SALE_RETURN}/reference`,
@@ -146,6 +146,6 @@ export const {
   useUpdateSaleReturnMutation,
   useUpdateSaleReturnStatusMutation,
   useDeleteSaleReturnMutation,
-  useCheckReferenceMutation,
+  useCheckSaleReferenceMutation,
   useExportSaleReturnMutation,
 } = saleReturnApi;

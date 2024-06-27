@@ -18,7 +18,7 @@ import {
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import SaleReturnForm from "./SaleReturnForm";
+import { SaleReturnForm } from "./SaleReturnForm";
 
 const SaleReturnEdit = ({ id, setId }) => {
   const { message } = App.useApp();
@@ -51,9 +51,7 @@ const SaleReturnEdit = ({ id, setId }) => {
   });
 
   const [products, setProducts] = useState([]);
-
   const [saleData, setSaleData] = useState();
-
   const [referenceId, setReferenceId] = useState(null);
 
   // const [summary, setSummary] = useState({});
@@ -68,6 +66,7 @@ const SaleReturnEdit = ({ id, setId }) => {
     },
     { skip: !id }
   );
+
   const [updateSaleReturn, { isLoading }] = useUpdateSaleReturnMutation();
 
   useEffect(() => {
@@ -77,7 +76,6 @@ const SaleReturnEdit = ({ id, setId }) => {
           qty: {},
           sale_id: {},
           product_id: {},
-          // recieved: {},
           sale_unit_id: {},
           net_unit_price: {},
           discount: {},
@@ -99,8 +97,6 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      //console.log(data);
-
       data?.sale_return_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -275,16 +271,6 @@ const SaleReturnEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
-
-  // useEffect(()=> {
-
-  //   setSummary({
-  //     totalItems: productListArray?.length,
-  //     totalQty: totalQty,
-  //     totalPrice: totalPrice,
-  //     grandTotal: calculateGrandTotal(totalPrice, orderTax),
-  //   });
-  // }, [formValues])
 
   return (
     <CustomDrawer

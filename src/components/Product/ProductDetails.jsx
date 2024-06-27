@@ -70,10 +70,10 @@ export const ProductDetails = ({ id, ...props }) => {
     tax_method: data?.tax_method,
   });
 
-  const miscellaneousInfo = createDetailsLayout({
-    ecommerce_sync: data?.ecommerce_sync,
-    embedded_barcode: data?.embedded_barcode,
-  });
+  // const miscellaneousInfo = createDetailsLayout({
+  //   ecommerce_sync: data?.ecommerce_sync,
+  //   embedded_barcode: data?.embedded_barcode,
+  // });
 
   const productAttachments = createDetailsLayout(
     {
@@ -95,9 +95,15 @@ export const ProductDetails = ({ id, ...props }) => {
           <CustomDescription title="Features Info" items={featuresInfo} />
           <CustomDescription title="Variant Info" items={variantsInfo} />
           <CustomDescription title="Tax Info" items={taxInfo} />
-          <CustomDescription
+          {/* <CustomDescription
             title="Miscellaneous Info"
             items={miscellaneousInfo}
+          /> */}
+
+          <CustomDescription
+            title="Attachments"
+            items={productAttachments}
+            nostyle={true}
           />
 
           <Descriptions {...detailsLayout} title="Additional Info">
@@ -105,12 +111,6 @@ export const ProductDetails = ({ id, ...props }) => {
               <div>{parse(data?.details)}</div>
             </Descriptions.Item>
           </Descriptions>
-
-          <CustomDescription
-            title="Attachments"
-            items={productAttachments}
-            nostyle={true}
-          />
         </div>
       )}
     </CustomModal>

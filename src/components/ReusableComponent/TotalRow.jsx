@@ -23,11 +23,11 @@ export const TotalRow = ({
     options.push({ label: "Discount", value: discount });
   }
 
-  options = [
-    ...options,
-    { label: "Shipping Cost", value: shippingCost },
-    { label: "Grand Total", value: grandTotal },
-  ];
+  if (shippingCost) {
+    options.push({ label: "Shipping Cost", value: shippingCost });
+  }
+
+  options = [...options, { label: "Grand Total", value: grandTotal }];
 
   return (
     <Row className="pb-20">
@@ -35,7 +35,7 @@ export const TotalRow = ({
         <Row className="rounded-md overflow-hidden">
           {options.map(({ label, value }) => (
             <Col
-              span={taxRate ? 4 : 6}
+              span={24 / options.length}
               className="border flex justify-between items-center px-2 py-5 text-sm lg:text-base"
               key={label}
             >

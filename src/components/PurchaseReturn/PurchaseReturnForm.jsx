@@ -7,65 +7,67 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/purchaseReturnApi";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
+import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
+import { updateProductList } from "../../utilities/lib/return/updateProductList";
+import { TotalRow } from "../ReusableComponent/TotalRow";
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+} from "../../utilities/lib/generator/generatorUtils";
 
-const TaxComponent = () => {
-  // const { data, isFetching } = useGetAllTaxQuery({});
+// const TaxComponent = () => {
+//   // const { data, isFetching } = useGetAllTaxQuery({});
 
-  const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
-  });
+//   const params = useGlobalParams({
+//     selectValue: ["id", "name", "rate"],
+//   });
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
+//   const { data, isFetching } = useGetAllTaxQuery({
+//     params,
+//   });
 
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-      tax_rate: item?.rate,
-    };
-  });
+//   const options = data?.results?.tax?.map((item) => {
+//     return {
+//       value: item.rate,
+//       label: item.name,
+//       tax_rate: item?.rate,
+//     };
+//   });
 
-  return (
-    <CustomSelect
-      label="Order Tax"
-      options={options}
-      name={"tax_rate"}
-      isLoading={isFetching}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Order Tax"
+//       options={options}
+//       name={"tax_rate"}
+//       isLoading={isFetching}
+//     />
+//   );
+// };
+
+const options = [
+  {
+    value: "Cash",
+    label: "Cash",
+  },
+  {
+    value: "Card",
+    label: "Card",
+  },
+  {
+    value: "Cheque",
+    label: "Cheque",
+  },
+];
 
 const PaymentType = () => {
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue("payment_type", "Cash");
-  }, [form]);
-
-  const options = [
-    {
-      value: "Cash",
-      label: "Cash",
-    },
-    {
-      value: "Card",
-      label: "Card",
-    },
-    {
-      value: "Cheque",
-      label: "Cheque",
-    },
-  ];
+  useSetFieldValue("payment_type", options[0].value);
 
   return (
     <CustomSelect
@@ -88,7 +90,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       <ReturnProductTable {...props} />
 
       <Col {...colLayout}>
-        <TaxComponent />
+        <OrderTaxComponent />
       </Col>
 
       <Col {...colLayout}>
@@ -100,7 +102,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       </Col>
 
       <Col {...colLayout}>
-        <PaymentType form={props.form} />
+        <PaymentType />
       </Col>
 
       <Col {...fullColLayout}>
@@ -129,28 +131,61 @@ const PurchaseReturnForm = ({
   referenceId,
   ...props
 }) => {
+  const { form } = props;
+  const { message } = App.useApp();
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
-  const { message } = App.useApp();
-
-  const [saleExists, setSaleExists] = useState(false);
+  const [purchaseExists, setPurchaseExists] = useState(false);
   const [refId, setRefId] = useState(null);
 
-  const handleSubmit = async (values) => {
-    const { data } = await checkReference({ data: values });
+  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
+  const deleteRows = Form.useWatch("delete", form);
 
-    if (!data.data) {
-      message.error(
-        "Purchase Reference doesnot exist or Purchase Return is Pending"
-      );
-      setSaleExists(false);
-      setRefId(null);
-    } else {
+  const updatedProductList = updateProductList(
+    {
+      delete: deleteRows,
+    },
+    formValues.product_list
+  );
+
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    if (!updatedProductList?.qty) return;
+
+    const calculatedTotalItems =
+      Object.keys(updatedProductList?.qty).length ?? 0;
+
+    const calculatedTotalQty = Object.values(updatedProductList?.qty).reduce(
+      (acc, cur) => acc + (parseFloat(cur) || 0),
+      0
+    );
+
+    const calculatedTotalPrice = calculateTotalPrice(updatedProductList);
+
+    const calculatedGrandTotal = calculateGrandTotal(
+      calculatedTotalPrice,
+      tax_rate ?? 0,
+      0,
+      0
+    );
+
+    setTotalItems(calculatedTotalItems);
+    setTotalQty(calculatedTotalQty);
+    setTotalPrice(calculatedTotalPrice);
+    setGrandTotal(calculatedGrandTotal);
+  }, [formValues, tax_rate, products, updatedProductList]);
+
+  const handleSubmit = async (values) => {
+    const { data, error } = await checkReference({ data: values });
+
+    if (data?.data) {
       setSaleData(data?.data);
 
       data?.data?.purchase_products?.map((item) => {
-        //console.log(item);
-
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,
@@ -224,17 +259,23 @@ const PurchaseReturnForm = ({
       });
 
       setRefId(values.reference_id);
-      setSaleExists(true);
+      setPurchaseExists(true);
+    }
+    if (error) {
+      message.error(
+        error?.data?.message ??
+          "Purchase Reference doesnot exist or Purchase Return is Pending"
+      );
+      setPurchaseExists(false);
+      setRefId(null);
     }
   };
-
-  // const tax_rate = Form.useWatch("tax_rate", props.form);
 
   // const deleteRow = Form.useWatch("delete", props.form);
 
   // //console.log(formValues);
 
-  // const updatedList = saleExists
+  // const updatedList = purchaseExists
   //   ? updateProductList(deleteRow, formValues.product_list)
   //   : [];
 
@@ -250,7 +291,7 @@ const PurchaseReturnForm = ({
 
   return (
     <>
-      {!saleExists && !id ? (
+      {!purchaseExists && !id ? (
         <CustomForm
           handleSubmit={handleSubmit}
           form={props.form}
@@ -281,43 +322,15 @@ const PurchaseReturnForm = ({
               form={props.form}
             />
           </CustomForm>
-          {/* <Row className="pb-20">
-              <Col {...fullColLayout}>
-                <Row className="rounded-md overflow-hidden">
-                  <Col
-                    span={6}
-                    className="border flex justify-between items-center px-2 py-5 text-lg"
-                  >
-                    <span className="font-semibold ">Items</span>
-                    <span>
-                      {totalItems} ({totalQty})
-                    </span>
-                  </Col>
-                  <Col
-                    span={6}
-                    className="border flex justify-between items-center px-2 py-5 text-lg"
-                  >
-                    <span className="font-semibold ">Total</span>
-                    <span>{Number(totalPrice).toFixed(2)}</span>
-                  </Col>
-                  <Col
-                    span={6}
-                    className="border flex justify-between items-center px-2 py-5 text-lg"
-                  >
-                    <span className="font-semibold ">Tax</span>
-                    <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
-                  </Col>
-  
-                  <Col
-                    span={6}
-                    className="border flex justify-between items-center px-2 py-5 text-lg"
-                  >
-                    <span className="font-semibold ">Grand Total</span>
-                    <span>{Number(grandTotal).toFixed(2)}</span>
-                  </Col>
-                </Row>
-              </Col>
-            </Row> */}
+          <TotalRow
+            totalItems={totalItems}
+            totalQty={totalQty}
+            totalPrice={totalPrice}
+            taxRate={tax_rate ?? 0}
+            // discount={discount}
+            // shippingCost={shipping_cost}
+            grandTotal={grandTotal}
+          />
         </>
       )}
     </>

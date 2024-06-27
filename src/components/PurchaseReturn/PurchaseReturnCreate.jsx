@@ -48,7 +48,6 @@ const PurchaseReturnCreate = () => {
   const [products, setProducts] = useState([]);
 
   const [saleData, setSaleData] = useState();
-  // const [saleData, setSaleData] = useState();
 
   useEffect(() => {
     if (!isCreateDrawerOpen) {
@@ -74,6 +73,7 @@ const PurchaseReturnCreate = () => {
   }, [form, isCreateDrawerOpen]);
 
   const handleSubmit = async (values) => {
+    console.log(values);
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();

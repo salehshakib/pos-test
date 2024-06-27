@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { App, Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
@@ -217,9 +217,16 @@ export const ReturnProductTable = ({
   productUnits,
   form,
 }) => {
+  const { message } = App.useApp();
+
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
+
+      if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
+        message.error("Maximum quantity reached");
+      }
+
       const newQty = Math.min(
         Number(currentQty) + 1,
         parseInt(formValues?.product_list?.max_return?.[id])
@@ -241,7 +248,8 @@ export const ReturnProductTable = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.max(
+
+      const newQty = Math.min(
         Number(currentQty) - 1,
         parseInt(formValues?.product_list?.max_return?.[id])
       );

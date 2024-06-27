@@ -53,7 +53,7 @@ export const QuotationDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const referenceId = createDetailsLayout({ reference_id: data.reference_id });
+  const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
 
   const benDetails = createDetailsLayout({
     warehouse: data?.warehouses,

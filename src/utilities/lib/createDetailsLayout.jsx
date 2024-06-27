@@ -25,7 +25,15 @@ const createDetailsLayout = (data, nostyle) => {
     "reference_id",
   ];
 
-  const booleanKeys = ["is_active"];
+  const booleanKeys = [
+    "is_active",
+    "has_stock",
+    "has_featured",
+    "has_promotion",
+    "has_different_price",
+    "has_expired_date",
+    "has_variants",
+  ];
 
   const renderValue = (key, value) => {
     if (typeof value === "object" && value !== null && !Array.isArray(value)) {

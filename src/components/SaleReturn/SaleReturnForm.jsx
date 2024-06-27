@@ -1,5 +1,5 @@
-import { App, Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { App, Col, Row } from "antd";
+import { useState } from "react";
 import {
   colLayout,
   fullColLayout,
@@ -7,8 +7,8 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/saleReturnApi";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
+import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
@@ -16,64 +16,31 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
 
-const TaxComponent = () => {
-  // const { data, isFetching } = useGetAllTaxQuery({});
-
-  const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
-  });
-
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
-
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-      tax_rate: item?.rate,
-    };
-  });
-
-  return (
-    <CustomSelect
-      label="Order Tax"
-      options={options}
-      name={"tax_rate"}
-      isLoading={isFetching}
-    />
-  );
-};
+const options = [
+  {
+    value: "Cash",
+    label: "Cash",
+  },
+  {
+    value: "Gift Card",
+    label: "Gift Card",
+  },
+  {
+    value: "Card",
+    label: "Card",
+  },
+  {
+    value: "Cheque",
+    label: "Cheque",
+  },
+  {
+    value: "Points",
+    label: "Points",
+  },
+];
 
 const PaymentType = () => {
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue("payment_type", "Cash");
-  }, [form]);
-
-  const options = [
-    {
-      value: "Cash",
-      label: "Cash",
-    },
-    {
-      value: "Gift Card",
-      label: "Gift Card",
-    },
-    {
-      value: "Card",
-      label: "Card",
-    },
-    {
-      value: "Cheque",
-      label: "Cheque",
-    },
-    {
-      value: "Points",
-      label: "Points",
-    },
-  ];
+  useSetFieldValue("payment_type", options[0].value);
 
   return (
     <CustomSelect
@@ -96,7 +63,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       <ReturnProductTable {...props} />
 
       <Col {...colLayout}>
-        <TaxComponent />
+        <OrderTaxComponent />
       </Col>
 
       <Col {...colLayout}>
@@ -108,7 +75,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       </Col>
 
       <Col {...colLayout}>
-        <PaymentType form={props.form} />
+        <PaymentType />
       </Col>
 
       <Col {...fullColLayout}>
@@ -137,24 +104,18 @@ const SaleReturnForm = ({
   referenceId,
   ...props
 }) => {
-  const [checkReference, { isLoading }] = useCheckReferenceMutation();
-
   const { message } = App.useApp();
+  const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
 
   const handleSubmit = async (values) => {
-    const { data } = await checkReference({ data: values });
+    const { data, error } = await checkReference({ data: values });
 
-    if (!data) {
-      message.error("Sale Reference doesnot exist or Sale Return is Pending");
-      setSaleExists(false);
-      setRefId(null);
-    } else {
+    if (data?.data) {
       setSaleData(data?.data);
       data?.data?.sale_products?.map((item) => {
-        //console.log(item);
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,
@@ -230,27 +191,16 @@ const SaleReturnForm = ({
       setRefId(values.reference_id);
       setSaleExists(true);
     }
+
+    if (error) {
+      message.error(
+        error?.data?.message ??
+          "Sale Reference doesnot exist or Sale Return is Pending"
+      );
+      setSaleExists(false);
+      setRefId(null);
+    }
   };
-
-  // const tax_rate = Form.useWatch("tax_rate", props.form);
-
-  // const deleteRow = Form.useWatch("delete", props.form);
-
-  // //console.log(formValues);
-
-  // const updatedList = saleExists
-  //   ? updateProductList(deleteRow, formValues.product_list)
-  //   : [];
-
-  // const totalItems = Object.keys(updatedList?.qty)?.length ?? 0;
-  // const totalQty = Object.values(updatedList?.qty).reduce(
-  //   (acc, cur) => acc + (parseFloat(cur) || 0),
-  //   0
-  // );
-
-  // const totalPrice = calculateTotalPrice(updatedList);
-
-  // const grandTotal = calculateGrandTotal(totalPrice, tax_rate ?? 0);
 
   return (
     <>
@@ -272,57 +222,18 @@ const SaleReturnForm = ({
           </Row>
         </CustomForm>
       ) : (
-        <>
-          <CustomForm {...props}>
-            <ReturnComponent
-              reference_id={referenceId ?? refId}
-              formValues={formValues}
-              setFormValues={setFormValues}
-              products={products}
-              setProducts={setProducts}
-              productUnits={productUnits}
-              setProductUnits={setProductUnits}
-              form={props.form}
-            />
-          </CustomForm>
-          {/* <Row className="pb-20">
-            <Col {...fullColLayout}>
-              <Row className="rounded-md overflow-hidden">
-                <Col
-                  span={6}
-                  className="border flex justify-between items-center px-2 py-5 text-lg"
-                >
-                  <span className="font-semibold ">Items</span>
-                  <span>
-                    {totalItems} ({totalQty})
-                  </span>
-                </Col>
-                <Col
-                  span={6}
-                  className="border flex justify-between items-center px-2 py-5 text-lg"
-                >
-                  <span className="font-semibold ">Total</span>
-                  <span>{Number(totalPrice).toFixed(2)}</span>
-                </Col>
-                <Col
-                  span={6}
-                  className="border flex justify-between items-center px-2 py-5 text-lg"
-                >
-                  <span className="font-semibold ">Tax</span>
-                  <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
-                </Col>
-
-                <Col
-                  span={6}
-                  className="border flex justify-between items-center px-2 py-5 text-lg"
-                >
-                  <span className="font-semibold ">Grand Total</span>
-                  <span>{Number(grandTotal).toFixed(2)}</span>
-                </Col>
-              </Row>
-            </Col>
-          </Row> */}
-        </>
+        <CustomForm {...props}>
+          <ReturnComponent
+            reference_id={referenceId ?? refId}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            products={products}
+            setProducts={setProducts}
+            productUnits={productUnits}
+            setProductUnits={setProductUnits}
+            form={props.form}
+          />
+        </CustomForm>
       )}
     </>
   );

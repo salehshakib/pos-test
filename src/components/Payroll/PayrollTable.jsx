@@ -1,110 +1,146 @@
+import dayjs from "dayjs";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useDeletePayrollMutation,
+  useGetAllPayrollQuery,
+  useUpdatePayrollStatusMutation,
+} from "../../redux/services/hrm/payroll/payrollApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
+import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
+import { PayrollDetails } from "./PayrollDetails";
 import { PayrollEdit } from "./PayrollEdit";
 
 export const PayrollTable = ({ newColumns, setSelectedRows }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const pagination = useSelector(selectPagination);
 
-  // const [editId, setEditId] = useState(undefined);
+  const [editId, setEditId] = useState(undefined);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [deleteId, setDeleteId] = useState(undefined);
-  // const [deleteModal, setDeleteModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
-  // const { data, isLoading } = useGetBrandsQuery({
-  //   params: pagination,
-  // });
+  const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  // const total = data?.meta?.total;
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
+  });
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateBrandStatusMutation();
+  const { data, isLoading } = useGetAllPayrollQuery({ params });
 
-  // const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
+  const total = data?.meta?.total;
 
-  // const handleEdit = (id) => {
-  //   setEditId(id);
-  //   dispatch(openEditDrawer());
-  // };
+  const [updateStatus, { isLoading: isStatusUpdating }] =
+    useUpdatePayrollStatusMutation();
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
+  const [deletePayroll, { isLoading: isDeleting }] = useDeletePayrollMutation();
 
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
+  const handleEdit = (id) => {
+    setEditId(id);
+    dispatch(openEditDrawer());
+  };
 
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
 
-  // const handleDeleteModal = (id) => {
-  //   setDeleteId(id);
-  //   setDeleteModal(true);
-  // };
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
 
-  // const handleDelete = async () => {
-  //   const { data } = await deleteBrand(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
+  const handleStatus = async () => {
+    const { data } = await updateStatus(statusId);
 
-  // const dataSource =
-  //   data?.results?.brand?.map((item) => {
-  //     const { id, name, created_at, attachments, is_active } = item ?? {};
-  //     const date = dayjs(created_at).format("DD-MM-YYYY");
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
+  };
 
-  //     return {
-  //       id,
-  //       brand: name,
-  //       image: attachments?.[0]?.url,
-  //       created_at: date,
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
+    setDeleteModal(true);
+  };
 
-  //       status: is_active,
-  //       handleStatusModal,
-  //       handleEdit,
-  //       handleDeleteModal,
-  //     };
-  //   }) ?? [];
+  const handleDelete = async () => {
+    const { data } = await deletePayroll(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
 
-  // const hideModal = () => {
-  //   setStatusModal(false);
-  //   setDeleteModal(false);
-  // };
+  const dataSource =
+    data?.results?.payroll?.map((item) => {
+      const { id, name, created_at, attachments, is_active } = item ?? {};
+      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      return {
+        id,
+        // brand: name,
+        // image: attachments?.[0]?.url,
+        created_at: date,
+
+        status: is_active,
+        handleStatusModal,
+        handleEdit,
+        handleDeleteModal,
+      };
+    }) ?? [];
+
+  const hideModal = () => {
+    setStatusModal(false);
+    setDetailsModal(false);
+    setDeleteModal(false);
+  };
 
   return (
     <GlobalUtilityStyle>
-      {/* <CustomTable
-            columns={newColumns}
-            dataSource={dataSource}
-            total={total}
-            setSelectedRows={setSelectedRows}
-            isLoading={isLoading}
-            isRowSelection={true}
-          /> */}
+      <CustomTable
+        columns={newColumns}
+        dataSource={dataSource}
+        total={total}
+        setSelectedRows={setSelectedRows}
+        isLoading={isLoading}
+        isRowSelection={true}
+        created_at={false}
+      />
 
-      {/* <PayrollEdit id={editId} setId={setEditId} /> */}
-      {/*   
-          <StatusModal
-            statusModal={statusModal}
-            hideModal={hideModal}
-            handleStatus={handleStatus}
-            isLoading={isStatusUpdating}
-          />
-    
-          <DeleteModal
-            deleteModal={deleteModal}
-            hideModal={hideModal}
-            handleDelete={handleDelete}
-            isLoading={isDeleting}
-            item={"brand"}
-          /> */}
+      <PayrollEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <PayrollDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
+
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        handleDelete={handleDelete}
+        isLoading={isDeleting}
+        item={"payroll"}
+      />
     </GlobalUtilityStyle>
   );
 };

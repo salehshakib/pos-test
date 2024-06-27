@@ -48,8 +48,8 @@ export const fieldsToUpdate = (details) => {
   return fieldsToUpdate;
 };
 
-export const updateFieldValues = (fields, newFieldData) => {
-  return fields.map((field) => {
+export const updateFieldValues = (fieldData, newFieldData) => {
+  return fieldData.map((field) => {
     const newField = newFieldData.find(
       (newField) => newField.name === field.name
     );

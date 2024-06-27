@@ -20,7 +20,7 @@ import {
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
-  const departmentId = Form.useWatch("department_id", form);
+  const departmentId = Form.useWatch("department_ids", form);
 
   const params = useGlobalParams({
     // isPagination: true,
@@ -34,7 +34,13 @@ const EmployeeComponent = () => {
     },
     selectValue: DEFAULT_SELECT_VALUES,
   });
-  const { data, isFetching } = useGetAllEmployeeQuery({ params });
+
+  const { data, isFetching } = useGetAllEmployeeQuery(
+    { params },
+    {
+      skip: !departmentId,
+    }
+  );
 
   const options = data?.results?.employee?.map((item) => ({
     value: item?.id?.toString(),

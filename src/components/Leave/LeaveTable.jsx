@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteLeaveMutation,
   useGetAllLeaveQuery,
 } from "../../redux/services/hrm/leave/leaveApi";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveDetails } from "./LeaveDetails";
@@ -29,7 +29,6 @@ function calculateLeaveDays(leaveStartDate, leaveEndDate) {
 
 export const LeaveTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -39,9 +38,15 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllLeaveQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    params: {
+      parent: 1,
+    },
   });
+
+  const { data, isLoading } = useGetAllLeaveQuery({ params });
 
   const total = data?.meta?.total;
 

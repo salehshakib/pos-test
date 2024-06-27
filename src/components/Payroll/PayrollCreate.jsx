@@ -1,11 +1,12 @@
 import { Form } from "antd";
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreatePayrollMutation } from "../../redux/services/hrm/payroll/payrollApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PayrollForm } from "./PayrollForm";
-import { useCreatePayrollMutation } from "../../redux/services/hrm/payroll/payrollApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 
 export const PayrollCreate = () => {
   const dispatch = useDispatch();
@@ -17,16 +18,23 @@ export const PayrollCreate = () => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
 
   const handleSubmit = async (values) => {
+    const formData = new FormData();
+
+    const postData = {
+      ...sanitizeObj(values),
+      // date: dayjs(values?.date).format("YYYY-MM-DD"),
+      is_send_email: values?.is_send_email == true ? 1 : 0,
+      bonus: Number(values?.bonus).toFixed(2),
+      loan: Number(values?.loan).toFixed(2),
+      salary: Number(values?.salary).toFixed(2),
+    };
+
+    appendToFormData(postData, formData);
+
     const { data, error } = await createPayroll({
-      data: {
-        ...values,
-        date: dayjs(values?.date).format("YYYY-MM-DD"),
-        is_send_email: values?.is_send_email == true ? 1 : 0,
-        bonus: Number(values?.bonus).toFixed(2),
-        // loan: Number(values?.loan).toFixed(2),
-        salary: Number(values?.salary).toFixed(2),
-      },
+      data: formData,
     });
+
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();

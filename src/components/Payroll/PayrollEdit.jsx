@@ -1,6 +1,18 @@
 import { Form } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import {
+  useGetPayrollDetailsQuery,
+  useUpdatePayrollMutation,
+} from "../../redux/services/hrm/payroll/payrollApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import {
+  fieldsToUpdate,
+  updateFieldValues,
+} from "../../utilities/lib/fieldsToUpdate";
+import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PayrollForm } from "./PayrollForm";
 
@@ -12,66 +24,70 @@ export const PayrollEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  // const { data, isFetching } = useGetBrandDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetPayrollDetailsQuery({ id }, { skip: !id });
 
   // //console.log(isEditDrawerOpen, id);
 
-  // const [updateBrand, { isLoading }] = useUpdateBrandMutation();
+  const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
-  // useEffect(() => {
-  //   if (data) {
-  //     const fieldData = fieldsToUpdate(data);
-  //     // const fieldData = [
-  //     //   {
-  //     //     name: "name",
-  //     //     value: data?.name,
-  //     //     errors: "",
-  //     //   },
-  //     // ];
+  useEffect(() => {
+    if (data) {
+      const fieldData = fieldsToUpdate(data);
 
-  //     setFields(fieldData);
-  //   }
-  // }, [data, setFields]);
+      const udpateFieldData = [
+        {
+          name: "is_send_email",
+          value: data?.is_send_email.toString() === "1" ? true : false,
+          errors: "",
+        },
+      ];
 
-  // const handleUpdate = async (values) => {
-  //   const formData = new FormData();
+      const newFieldData = updateFieldValues(fieldData, udpateFieldData);
 
-  //   //console.log(values);
+      setFields(newFieldData);
+    }
+  }, [data, setFields]);
 
-  //   const postData = {
-  //     ...values,
-  //     logo: values?.logo?.[0].originFileObj,
-  //     _method: "PUT",
-  //   };
+  const handleUpdate = async (values) => {
+    const formData = new FormData();
 
-  //   appendToFormData(postData, formData);
+    const postData = {
+      ...sanitizeObj(values),
+      is_send_email: values?.is_send_email == true ? 1 : 0,
+      bonus: Number(values?.bonus).toFixed(2),
+      loan: Number(values?.loan).toFixed(2),
+      salary: Number(values?.salary).toFixed(2),
+      _method: "PUT",
+    };
 
-  //   const { data, error } = await updateBrand({
-  //     id,
-  //     data: formData,
-  //   });
+    appendToFormData(postData, formData);
 
-  //   if (data?.success) {
-  //     setId(undefined);
-  //     dispatch(closeEditDrawer());
-  //   }
+    const { data, error } = await updatePayroll({
+      id,
+      data: formData,
+    });
 
-  //   if (error) {
-  //     const errorFields = errorFieldsUpdate(fields, error);
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+    }
 
-  //     setFields(errorFields);
-  //   }
-  // };
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
+
+      setFields(errorFields);
+    }
+  };
 
   return (
     <CustomDrawer
       title={"Edit Brand"}
       open={isEditDrawerOpen}
-      // isLoading={isFetching}
+      isLoading={isFetching}
     >
       <PayrollForm
-        //   handleSubmit={handleUpdate}
-        //   isLoading={isLoading}
+        handleSubmit={handleUpdate}
+        isLoading={isLoading}
         fields={fields}
         form={form}
       />

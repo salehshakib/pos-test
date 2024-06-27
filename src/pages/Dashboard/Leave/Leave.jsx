@@ -2,25 +2,9 @@ import { useState } from "react";
 import { LeaveCreate } from "../../../components/Leave/LeaveCreate";
 import { LeaveTable } from "../../../components/Leave/LeaveTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { LEAVE } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
-  // {
-  //   title: "Img",
-  //   dataIndex: "image",
-  //   key: "image",
-  //   fixed: "left",
-  //   align: "center",
-  //   width: 70,
-  //   render: (img) => (
-  //     <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
-  //       <img
-  //         src={img ?? defaultUser}
-  //         alt="defaultUser"
-  //         className="w-full h-full object-cover"
-  //       />
-  //     </div>
-  //   ),
-  // },
   {
     title: "Name",
     dataIndex: "name",
@@ -74,23 +58,13 @@ export const Leave = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  // const handleExport = async (format) => {
-  //   const { data, error } = await exportBrand({
-  //     data: { format },
-  //   });
-
-  //   //console.log(data);
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Leave"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      // handleExport={handleExport}
+      api={LEAVE}
     >
       <LeaveCreate />
 

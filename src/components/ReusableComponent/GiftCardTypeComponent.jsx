@@ -3,7 +3,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
-import useInitialFormField from "../../utilities/lib/updateFormValues/useInitialFormField";
+import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const GiftCardTypeComponent = ({ name = "gift_card_type_id" }) => {

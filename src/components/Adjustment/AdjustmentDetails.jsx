@@ -43,11 +43,6 @@ const columns = [
 
 const AdjustmentDetails = ({ id, ...props }) => {
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
     isRelationalParams: true,
   });
 
@@ -59,7 +54,9 @@ const AdjustmentDetails = ({ id, ...props }) => {
   const details = createDetailsLayout(data);
 
   const title = () => (
-    <span className="text-black font-semibold">Adjustment Products</span>
+    <span className="text-black font-semibold text-base -ml-2">
+      Adjustment Products
+    </span>
   );
 
   const dataSource = data?.adjustment_products?.map((item) => {

@@ -27,13 +27,7 @@ import { CurrencyFormComponent } from "./overview/CurrencyComponent";
 import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
-
-const useSetFieldValue = (field, value) => {
-  const form = Form.useFormInstance();
-  useEffect(() => {
-    form.setFieldValue(field, value);
-  }, [form, field, value]);
-};
+import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 
 const StatusComponent = () => {
   useSetFieldValue("sale_status", saleStatusOptions[0].value);

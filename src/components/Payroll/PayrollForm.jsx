@@ -23,12 +23,6 @@ const EmployeeComponent = () => {
   const departmentId = Form.useWatch("department_ids", form);
 
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     params: {
       department_id: departmentId,
     },

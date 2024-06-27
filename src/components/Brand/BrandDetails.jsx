@@ -23,7 +23,9 @@ export const BrandDetails = ({ id, ...props }) => {
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
-        <CustomDescription title="Brand Details" items={details} />
+        <div className="space-y-5">
+          <CustomDescription title="Brand Details" items={details} />
+        </div>
       )}
     </CustomModal>
   );

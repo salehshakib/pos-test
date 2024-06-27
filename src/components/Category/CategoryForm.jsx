@@ -15,10 +15,6 @@ const ParentCategoryComponent = () => {
   const { keyword, debounce } = useCustomDebounce();
 
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: true,
-    // isRelationalParams: true,
-    // selectValueParams: ["is_active"],
     selectValue: DEFAULT_SELECT_VALUES,
     keyword,
   });

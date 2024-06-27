@@ -130,7 +130,7 @@ const CustomTable = ({
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status == 1 ? "Active" : "Inactive"}
+            {status.toString() === "1" ? "Active" : "Inactive"}
           </span>
         </button>
       ) : (
@@ -142,7 +142,7 @@ const CustomTable = ({
           } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status == 1 ? "Active" : "Inactive"}
+            {status.toString() === "1" ? "Active" : "Inactive"}
           </span>
         </div>
       );

@@ -11,7 +11,7 @@ const columns = [
     dataIndex: "product_name",
     key: "product_name",
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
       </span>
     ),
@@ -22,7 +22,7 @@ const columns = [
     key: "qty",
     align: "center",
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
       </span>
     ),
@@ -34,7 +34,7 @@ const columns = [
     key: "price",
     align: "center",
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
       </span>
     ),
@@ -91,7 +91,9 @@ export const SaleDetails = ({ id, ...props }) => {
   });
 
   const title = () => (
-    <span className="text-black font-semibold">Purchase Products</span>
+    <span className="text-black font-semibold text-base -ml-2">
+      Purchase Products
+    </span>
   );
 
   const dataSource = data?.sale_products?.map((item) => {

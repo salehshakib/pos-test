@@ -1,29 +1,38 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteTransferMutation,
   useGetAllTransferQuery,
 } from "../../redux/services/transfer/transferApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
 
 const TransferTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
-  const pagination = useSelector(selectPagination);
   const [editId, setEditId] = useState(undefined);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllTransferQuery({
-    params: { ...pagination, parent: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    params: {
+      parent: 1,
+    },
   });
+
+  const { data, isLoading } = useGetAllTransferQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -33,6 +42,11 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     setEditId(id);
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDeleteModal = (id) => {
@@ -73,10 +87,12 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
       status,
       handleEdit,
       handleDeleteModal,
+      handleDetailsModal,
     };
   });
 
   const hideModal = () => {
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -94,6 +110,14 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
       />
 
       <TransferEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <TransferDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

@@ -7,9 +7,6 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const SupplierComponent = ({ name = "supplier_id" }) => {
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 

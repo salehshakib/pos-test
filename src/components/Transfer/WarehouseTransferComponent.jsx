@@ -1,18 +1,35 @@
-import { Col } from "antd";
+import { Col, Form } from "antd";
 import { largeLayout } from "../../layout/FormLayout";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
+import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const WarehouseTransferComponent = () => {
-  const { data, isLoading } = useGetWarehousesQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+  const form = Form.useFormInstance();
+
+  const warehouseFrom = Form.useWatch("from_warehouse_id", form);
+
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const options = data?.results?.warehouse?.map((warehouse) => ({
+  const { data, isLoading } = useGetWarehousesQuery({ params });
+
+  const warehouseFromOptions = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
     label: warehouse.name,
+  }));
+
+  useInitialFormField("from_warehouse_id", warehouseFromOptions);
+
+  const warehouseToOptions = data?.results?.warehouse?.map((warehouse) => ({
+    value: warehouse.id?.toString(),
+    label: warehouse.name,
+    disabled: warehouse.id.toString() === warehouseFrom,
   }));
 
   return (
@@ -23,7 +40,7 @@ export const WarehouseTransferComponent = () => {
           placeholder={"Warehouse (From)"}
           showSearch={true}
           isLoading={isLoading}
-          options={options}
+          options={warehouseFromOptions}
           name="from_warehouse_id"
           required={true}
         />
@@ -34,7 +51,7 @@ export const WarehouseTransferComponent = () => {
           placeholder={"Warehouse (To)"}
           showSearch={true}
           isLoading={isLoading}
-          options={options}
+          options={warehouseToOptions}
           name="to_warehouse_id"
           required={true}
         />

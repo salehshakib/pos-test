@@ -1,14 +1,19 @@
 import { Form } from "antd";
 import { useEffect } from "react";
 
-const useInitialFormField = (name, options) => {
+export const useInitialFormField = (name, options) => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    if (options.length && !form.getFieldValue(name)) {
+    if (options?.length && !form.getFieldValue(name)) {
       form.setFieldValue(name, options[0].value);
     }
   }, [form, name, options]);
 };
 
-export default useInitialFormField;
+export const useSetFieldValue = (field, value) => {
+  const form = Form.useFormInstance();
+  useEffect(() => {
+    form.setFieldValue(field, value);
+  }, [form, field, value]);
+};

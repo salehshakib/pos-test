@@ -20,13 +20,7 @@ import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
 import { TotalRow } from "../../ReusableComponent/TotalRow";
-
-const useSetFieldValue = (field, value) => {
-  const form = Form.useFormInstance();
-  useEffect(() => {
-    form.setFieldValue(field, value);
-  }, [form, field, value]);
-};
+import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
 
 const StatusComponent = () => {
   useSetFieldValue("status", "Pending");
@@ -44,35 +38,6 @@ const StatusComponent = () => {
 
   return <CustomSelect label="Status" options={options} name={"status"} />;
 };
-
-// const TaxComponent = () => {
-//   // const { data, isFetching } = useGetAllTaxQuery({});
-
-//   const params = useGlobalParams({
-//     selectValue: ["id", "name", "rate"],
-//   });
-
-//   const { data, isFetching } = useGetAllTaxQuery({
-//     params,
-//   });
-
-//   const options = data?.results?.tax?.map((item) => {
-//     return {
-//       value: item.rate,
-//       label: item.name,
-//       tax_rate: item?.rate,
-//     };
-//   });
-
-//   return (
-//     <CustomSelect
-//       label="Order Tax"
-//       options={options}
-//       name={"tax_rate"}
-//       isLoading={isFetching}
-//     />
-//   );
-// };
 
 export const QuotationForm = ({
   formValues,

@@ -95,7 +95,7 @@ const TransferCreate = () => {
       item: productListArray.length,
       total_qty: totalQty,
       total_tax: decimalConverter(totalTax),
-      total_price: decimalConverter(totalPrice),
+      total_cost: decimalConverter(totalPrice),
       tax: decimalConverter(orderTax),
       change: decimalConverter(
         Number(values?.recieved_amount ?? 0) - Number(values?.paid_amount ?? 0)
@@ -103,7 +103,7 @@ const TransferCreate = () => {
       grand_total: calculateGrandTotal(totalPrice, orderTax, 0, shipping_cost),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: 8,
+      // petty_cash_id: 8,
     };
 
     if (attachment?.[0].originFileObj) {

@@ -10,12 +10,6 @@ export const CategoryComponent = ({
   mode = "single",
 }) => {
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 

@@ -7,12 +7,6 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const BrandComponent = ({ name = "brand_id", mode = "single" }) => {
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 

@@ -7,16 +7,14 @@ import {
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";
 
-export const WarehouseComponent = ({ name = "warehouse_id", label = true }) => {
+export const WarehouseComponent = ({
+  name = "warehouse_id",
+  label = true,
+  title = "Warehouse",
+}) => {
   const form = Form.useFormInstance();
 
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
@@ -36,7 +34,7 @@ export const WarehouseComponent = ({ name = "warehouse_id", label = true }) => {
 
   return (
     <CustomSelect
-      label={label && "Warehouse"}
+      label={label && title}
       showSearch={true}
       isLoading={isLoading}
       options={options}

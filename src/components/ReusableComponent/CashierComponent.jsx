@@ -15,12 +15,6 @@ export const CashierComponent = ({
   const form = Form.useFormInstance();
 
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 

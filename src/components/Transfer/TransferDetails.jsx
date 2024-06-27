@@ -1,9 +1,9 @@
 import { Spin, Table } from "antd";
-import { useGetPurchaseDetailsQuery } from "../../redux/services/purchase/purchaseApi";
+import { tableProps } from "../../layout/TableLayout";
+import { useGetTransferDetailsQuery } from "../../redux/services/transfer/transferApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
-import { tableProps } from "../../layout/TableLayout";
 
 const columns = [
   {
@@ -41,8 +41,8 @@ const columns = [
   },
 ];
 
-export const PurchaseDetails = ({ id, ...props }) => {
-  const { data, isFetching } = useGetPurchaseDetailsQuery(
+export const TransferDetails = ({ id, ...props }) => {
+  const { data, isFetching } = useGetTransferDetailsQuery(
     {
       id,
       params: {
@@ -53,42 +53,35 @@ export const PurchaseDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  //console.log(data);
+  const referenceId = createDetailsLayout({ reference_id: data.reference_id });
 
-  //   const details = createDetailsLayout(data);
-
-  const basicInfo = createDetailsLayout({
-    reference_id: data?.reference_id,
-    warehouse: data?.warehouses?.name,
-    supplier: data?.suppliers?.name,
+  const warehouseDetails = createDetailsLayout({
+    "warehouse_(from)": data?.from_warehouses,
+    "warehouse_(to)": data?.to_warehouses,
   });
 
-  const paymentInfo = createDetailsLayout({
-    order_tax: data?.tax,
-    order_discount: data?.discount,
+  const transferDetails = createDetailsLayout({
+    item: data?.item,
+    total_qty: data?.total_qty,
+    total_tax: data?.total_tax,
+    total_cost: data?.total_cost,
     shipping_cost: data?.shipping_cost,
     grand_total: data?.grand_total,
-    paid_amount: data?.paid_amount,
-    due_amount: data?.due_amount,
-    payment_type: data?.payment_type,
-    payment_status: data?.purchase_status,
   });
 
-  const purchaseStatus = createDetailsLayout({
-    purchase_date: data?.purchase_at,
-    purchase_note: data?.purchase_note,
-    purchase_status: data?.purchase_status,
+  const attachment = createDetailsLayout({
+    attachments: data?.attachments,
   });
 
-  const attachments = createDetailsLayout({ attachments: data?.attachments });
+  const additionalInfo = createDetailsLayout({ note: data?.note });
 
   const title = () => (
-    <span className="text-black font-semibold text-base -ml-2">
-      Purchase Products
+    <span className="text-black font-semibold text-base -ml-2 ">
+      Transfer Products
     </span>
   );
 
-  const dataSource = data?.purchase_products?.map((item) => {
+  const dataSource = data?.transfer_products?.map((item) => {
     return {
       id: item?.id,
       product_name:
@@ -106,17 +99,24 @@ export const PurchaseDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <div className="space-y-5">
-          {/* <CustomDescription title="Purchase Details" items={details} /> */}
-          <CustomDescription title="Basic Info" items={basicInfo} />
-          <CustomDescription title="Purchase Info" items={purchaseStatus} />
+          <CustomDescription title="Reference Id" items={referenceId} />
+          <CustomDescription
+            title="Warehouse Details"
+            items={warehouseDetails}
+          />
+          <CustomDescription title="Transfer Details" items={transferDetails} />
+
           <Table
             {...tableProps}
             title={title}
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Payment Info" items={paymentInfo} />
-          <CustomDescription title="Attachments" items={attachments} />
+          <CustomDescription title="Attachemnt Details" items={attachment} />
+          <CustomDescription
+            title="Additional Details"
+            items={additionalInfo}
+          />
         </div>
       )}
     </CustomModal>

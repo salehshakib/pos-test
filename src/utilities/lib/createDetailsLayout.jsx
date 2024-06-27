@@ -14,6 +14,7 @@ const createDetailsLayout = (data, nostyle) => {
     "sale_products",
     "quotation_products",
   ];
+
   const fullRowKeys = [
     "details",
     "address",
@@ -21,7 +22,10 @@ const createDetailsLayout = (data, nostyle) => {
     "reason",
     "note",
     "description",
+    "reference_id",
   ];
+
+  const booleanKeys = ["is_active"];
 
   const renderValue = (key, value) => {
     if (typeof value === "object" && value !== null && !Array.isArray(value)) {
@@ -70,10 +74,10 @@ const createDetailsLayout = (data, nostyle) => {
         if (key.includes("date")) {
           return dayjs(value).format("DD-MM-YYYY");
         }
-        if (value === "1") {
+        if (booleanKeys.includes(key) && value.toString() === "1") {
           return "True";
         }
-        if (value === "0") {
+        if (booleanKeys.includes(key) && value.toString() === "0") {
           return "False";
         }
 

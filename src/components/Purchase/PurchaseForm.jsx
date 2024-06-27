@@ -12,6 +12,7 @@ import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../utilities/lib/generator/generatorUtils";
+import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import { SupplierComponent } from "../ReusableComponent/SupplierComponent";
 import { TotalRow } from "../ReusableComponent/TotalRow";
@@ -24,13 +25,6 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
 import { PurchaseProductTable } from "./overview/PurchaseProductTable";
-
-const useSetFieldValue = (field, value) => {
-  const form = Form.useFormInstance();
-  useEffect(() => {
-    form.setFieldValue(field, value);
-  }, [form, field, value]);
-};
 
 const PurchaseStatus = () => {
   useSetFieldValue("purchase_status", purchaseStatusOptions[0].value);

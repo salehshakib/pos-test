@@ -92,12 +92,6 @@ const StaffIdComponent = () => {
 
 const RoleComponent = () => {
   const params = useGlobalParams({
-    // isPagination: true,
-    // isDefaultParams: false,
-    // params: {
-    //   parent: 1,
-    // },
-    // isRelationalParams: true,
     selectValue: DEFAULT_SELECT_VALUES,
   });
 

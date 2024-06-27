@@ -10,20 +10,32 @@ export const TotalRow = ({
   shippingCost,
   grandTotal,
 }) => {
+  let options = [
+    { label: "Items", value: `${totalItems} (${totalQty})` },
+    { label: "Total", value: totalPrice },
+  ];
+
+  if (taxRate) {
+    options.push({ label: "Tax", value: taxRate });
+  }
+
+  if (discount) {
+    options.push({ label: "Discount", value: discount });
+  }
+
+  options = [
+    ...options,
+    { label: "Shipping Cost", value: shippingCost },
+    { label: "Grand Total", value: grandTotal },
+  ];
+
   return (
     <Row className="pb-20">
       <Col {...fullColLayout}>
         <Row className="rounded-md overflow-hidden">
-          {[
-            { label: "Items", value: `${totalItems} (${totalQty})` },
-            { label: "Total", value: totalPrice },
-            { label: "Tax", value: parseFloat(totalPrice * (taxRate / 100)) },
-            { label: "Discount", value: discount },
-            { label: "Shipping Cost", value: shippingCost },
-            { label: "Grand Total", value: grandTotal },
-          ].map(({ label, value }) => (
+          {options.map(({ label, value }) => (
             <Col
-              span={4}
+              span={taxRate ? 4 : 6}
               className="border flex justify-between items-center px-2 py-5 text-sm lg:text-base"
               key={label}
             >

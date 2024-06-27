@@ -30,9 +30,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
-  const { data, isLoading } = useGetAllTaxQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllTaxQuery({ params });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),
@@ -41,14 +39,13 @@ const TaxComponent = ({ productId, setProductUnits }) => {
   }));
 
   const onSelect = (value, option) => {
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        tax_rate: {
-          [productId]: option.rate ?? 0,
-        },
-      };
-    });
+    setProductUnits((prevValues) => ({
+      ...prevValues,
+      tax_rate: {
+        ...prevValues.tax_rate,
+        [productId]: option.rate ?? 0,
+      },
+    }));
   };
 
   return (
@@ -150,13 +147,13 @@ const ProductFormComponent = ({
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: productUnits?.tax_rate?.[productId] ?? 0,
+            [productId]: productUnits?.tax_rate[productId],
           },
           tax: {
             ...prevFormValues.product_list.tax,
             [productId]: parseFloat(
               (parseInt(productUnits.sale_units[productId]) *
-                parseInt(productUnits.tax_rate[productId]) *
+                parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
                 100

@@ -8,34 +8,36 @@ import {
 } from "../../layout/FormLayout";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 import { generateRandomCode } from "../../utilities/lib/generateCode";
+import { GiftCardTypeComponent } from "../ReusableComponent/GiftCardTypeComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomInputButton from "../Shared/Input/CustomInputButton";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useGetAllGiftCardTypeQuery } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
 
-const GiftCardTypeComponent = () => {
-  const { data, isFetching } = useGetAllGiftCardTypeQuery({});
+// const GiftCardTypeComponent = () => {
+//   const params = useGlobalParams({
+//     selectValue: DEFAULT_SELECT_VALUES,
+//   });
 
-  const options = data?.results?.giftcardtype?.map((giftCardType) => ({
-    value: giftCardType.id?.toString(),
-    label: giftCardType.name,
-  }));
+//   const { data, isFetching } = useGetAllGiftCardTypeQuery({ params });
 
-  //console.log(data);
+//   const options = data?.results?.giftcardtype?.map((giftCardType) => ({
+//     value: giftCardType.id?.toString(),
+//     label: giftCardType.name,
+//   }));
 
-  return (
-    <CustomSelect
-      label="Gift Card Type"
-      name={"gift_card_type_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Gift Card Type"
+//       name={"gift_card_type_id"}
+//       options={options}
+//       isLoading={isFetching}
+//       required={true}
+//     />
+//   );
+// };
 
 const GiftCardComponent = () => {
   const form = Form.useFormInstance();

@@ -8,16 +8,13 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../utilities/lib/generator/generatorUtils";
+import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import { SupplierComponent } from "../ReusableComponent/SupplierComponent";
+import { TotalRow } from "../ReusableComponent/TotalRow";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import { CurrencyFormComponent } from "../Sale/overview/CurrencyComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
@@ -27,7 +24,6 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
 import { PurchaseProductTable } from "./overview/PurchaseProductTable";
-import { TotalRow } from "../ReusableComponent/TotalRow";
 
 const useSetFieldValue = (field, value) => {
   const form = Form.useFormInstance();
@@ -58,30 +54,30 @@ const PaymentStatusComponent = () => {
   );
 };
 
-const TaxComponent = () => {
-  const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
-  });
+// const TaxComponent = () => {
+//   const params = useGlobalParams({
+//     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
+//   });
 
-  const { data, isFetching } = useGetAllTaxQuery({ params });
+//   const { data, isFetching } = useGetAllTaxQuery({ params });
 
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-      tax_rate: item?.rate,
-    };
-  });
+//   const options = data?.results?.tax?.map((item) => {
+//     return {
+//       value: item.rate,
+//       label: item.name,
+//       tax_rate: item?.rate,
+//     };
+//   });
 
-  return (
-    <CustomSelect
-      label="Order Tax"
-      options={options}
-      name={"tax_rate"}
-      isLoading={isFetching}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Order Tax"
+//       options={options}
+//       name={"tax_rate"}
+//       isLoading={isFetching}
+//     />
+//   );
+// };
 
 export const PurchaseForm = ({
   formValues,
@@ -171,7 +167,7 @@ export const PurchaseForm = ({
           />
 
           <Col {...colLayout}>
-            <TaxComponent />
+            <OrderTaxComponent />
           </Col>
           <Col {...colLayout}>
             <CustomInput label="Discount" type="number" name="discount" />

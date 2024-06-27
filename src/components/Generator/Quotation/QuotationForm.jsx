@@ -5,28 +5,31 @@ import {
   largeLayout,
   rowLayout,
 } from "../../../layout/FormLayout";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../../utilities/lib/generator/generatorUtils";
+import { CashierComponent } from "../../ReusableComponent/CashierComponent";
+import { OrderTaxComponent } from "../../ReusableComponent/OrderTaxComponent";
+import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
+import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
-import { CashierComponent } from "../../ReusableComponent/CashierComponent";
-import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
-import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
+import { TotalRow } from "../../ReusableComponent/TotalRow";
+
+const useSetFieldValue = (field, value) => {
+  const form = Form.useFormInstance();
+  useEffect(() => {
+    form.setFieldValue(field, value);
+  }, [form, field, value]);
+};
 
 const StatusComponent = () => {
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue("status", "Pending");
-  }, [form]);
+  useSetFieldValue("status", "Pending");
 
   const options = [
     {
@@ -42,34 +45,34 @@ const StatusComponent = () => {
   return <CustomSelect label="Status" options={options} name={"status"} />;
 };
 
-const TaxComponent = () => {
-  // const { data, isFetching } = useGetAllTaxQuery({});
+// const TaxComponent = () => {
+//   // const { data, isFetching } = useGetAllTaxQuery({});
 
-  const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
-  });
+//   const params = useGlobalParams({
+//     selectValue: ["id", "name", "rate"],
+//   });
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
+//   const { data, isFetching } = useGetAllTaxQuery({
+//     params,
+//   });
 
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-      tax_rate: item?.rate,
-    };
-  });
+//   const options = data?.results?.tax?.map((item) => {
+//     return {
+//       value: item.rate,
+//       label: item.name,
+//       tax_rate: item?.rate,
+//     };
+//   });
 
-  return (
-    <CustomSelect
-      label="Order Tax"
-      options={options}
-      name={"tax_rate"}
-      isLoading={isFetching}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Order Tax"
+//       options={options}
+//       name={"tax_rate"}
+//       isLoading={isFetching}
+//     />
+//   );
+// };
 
 export const QuotationForm = ({
   formValues,
@@ -80,9 +83,11 @@ export const QuotationForm = ({
   setProductUnits,
   ...props
 }) => {
-  const discount = Form.useWatch("discount", props.form);
-  const shipping_cost = Form.useWatch("shipping_cost", props.form);
-  const tax_rate = Form.useWatch("tax_rate", props.form);
+  const form = props.form;
+
+  const discount = Form.useWatch("discount", form);
+  const shipping_cost = Form.useWatch("shipping_cost", form);
+  const tax_rate = Form.useWatch("tax_rate", form);
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
@@ -90,20 +95,43 @@ export const QuotationForm = ({
   const [grandTotal, setGrandTotal] = useState(0);
 
   useEffect(() => {
-    setTotalItems(Object.keys(formValues.product_list?.qty)?.length ?? 0);
+    const calculatedTotalItems =
+      Object.keys(formValues.product_list?.qty).length ?? 0;
 
-    setTotalQty(
-      Object.values(formValues.product_list?.qty).reduce(
-        (acc, cur) => acc + (parseFloat(cur) || 0),
-        0
-      )
+    const calculatedTotalQty = Object.values(
+      formValues.product_list?.qty
+    ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
+
+    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+
+    const calculatedGrandTotal = calculateGrandTotal(
+      calculatedTotalPrice,
+      tax_rate ?? 0,
+      discount,
+      shipping_cost
     );
 
-    setTotalPrice(calculateTotalPrice(formValues.product_list));
-    setGrandTotal(
-      calculateGrandTotal(totalPrice, tax_rate ?? 0, discount, shipping_cost)
-    );
-  }, [discount, formValues, shipping_cost, tax_rate, totalPrice]);
+    setTotalItems(calculatedTotalItems);
+    setTotalQty(calculatedTotalQty);
+    setTotalPrice(calculatedTotalPrice);
+    setGrandTotal(calculatedGrandTotal);
+  }, [discount, formValues, shipping_cost, tax_rate, products]);
+
+  // useEffect(() => {
+  //   setTotalItems(Object.keys(formValues.product_list?.qty)?.length ?? 0);
+
+  //   setTotalQty(
+  //     Object.values(formValues.product_list?.qty).reduce(
+  //       (acc, cur) => acc + (parseFloat(cur) || 0),
+  //       0
+  //     )
+  //   );
+
+  //   setTotalPrice(calculateTotalPrice(formValues.product_list));
+  //   setGrandTotal(
+  //     calculateGrandTotal(totalPrice, tax_rate ?? 0, discount, shipping_cost)
+  //   );
+  // }, [discount, formValues, shipping_cost, tax_rate, totalPrice]);
 
   return (
     <>
@@ -132,7 +160,7 @@ export const QuotationForm = ({
           />
 
           <Col {...largeLayout}>
-            <TaxComponent />
+            <OrderTaxComponent />
           </Col>
           <Col {...largeLayout}>
             <CustomInput label="Discount" type={"number"} name={"discount"} />
@@ -157,7 +185,7 @@ export const QuotationForm = ({
         </Row>
       </CustomForm>
 
-      <Row className="pb-20">
+      {/* <Row className="pb-20">
         <Col {...fullColLayout}>
           <Row className="rounded-md overflow-hidden">
             <Col
@@ -206,7 +234,16 @@ export const QuotationForm = ({
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
+      <TotalRow
+        totalItems={totalItems}
+        totalQty={totalQty}
+        totalPrice={totalPrice}
+        taxRate={tax_rate}
+        discount={discount}
+        shippingCost={shipping_cost}
+        grandTotal={grandTotal}
+      />
     </>
   );
 };

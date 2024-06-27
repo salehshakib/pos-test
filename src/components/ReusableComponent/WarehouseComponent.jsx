@@ -32,8 +32,7 @@ export const WarehouseComponent = ({ name = "warehouse_id", label = true }) => {
     if (options?.length && !form.getFieldValue(name)) {
       form.setFieldValue(name, options[0].value);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, options]);
+  }, [form, name, options]);
 
   return (
     <CustomSelect

@@ -4,10 +4,9 @@ import Cropper from "react-easy-crop";
 import { BiImageAdd } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetAllGiftCardTypeQuery } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
 import { cropImage } from "../../utilities/lib/cropImage";
+import { GiftCardTypeComponent } from "../ReusableComponent/GiftCardTypeComponent";
 import CustomForm from "../Shared/Form/CustomForm";
-import CustomSelect from "../Shared/Select/CustomSelect";
 
 const FileInput = ({
   imageUrl,
@@ -264,26 +263,26 @@ const BackImageCroppper = () => {
   );
 };
 
-const GiftCardTypeComponent = () => {
-  const { data, isFetching } = useGetAllGiftCardTypeQuery({});
+// const GiftCardTypeComponent = () => {
+//   const { data, isFetching } = useGetAllGiftCardTypeQuery({});
 
-  const options = data?.results?.giftcardtype?.map((giftCardType) => ({
-    value: giftCardType.id?.toString(),
-    label: giftCardType.name,
-  }));
+//   const options = data?.results?.giftcardtype?.map((giftCardType) => ({
+//     value: giftCardType.id?.toString(),
+//     label: giftCardType.name,
+//   }));
 
-  //console.log(data);
+//   //console.log(data);
 
-  return (
-    <CustomSelect
-      label="Gift Card Type"
-      name={"gift_card_type_id"}
-      options={options}
-      isLoading={isFetching}
-      required={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Gift Card Type"
+//       name={"gift_card_type_id"}
+//       options={options}
+//       isLoading={isFetching}
+//       required={true}
+//     />
+//   );
+// };
 
 export const GiftCardDesignForm = (props) => {
   return (

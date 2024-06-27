@@ -3,14 +3,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import {
-  useDeleteQuotationMutation,
-  useGetAllQuotationQuery,
-} from "../../../redux/services/quotation/quotationApi";
-import {
   openEditDrawer,
   setEditId,
 } from "../../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../../redux/services/pagination/paginationSlice";
+import {
+  useDeleteQuotationMutation,
+  useGetAllQuotationQuery,
+} from "../../../redux/services/quotation/quotationApi";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
@@ -18,27 +18,24 @@ import { QuotationDetails } from "./overview/QuotationDetails";
 
 const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllQuotationQuery({
-    params: { ...pagination, parent: 1, child: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
   });
 
-  const total = data?.meta?.total;
+  const { data, isLoading } = useGetAllQuotationQuery({ params });
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateCustomerStatusMutation();
+  const total = data?.meta?.total;
 
   const [deleteQuotation, { isLoading: isDeleting }] =
     useDeleteQuotationMutation();
@@ -53,20 +50,6 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
-
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
@@ -78,8 +61,6 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
       setDeleteModal(false);
     }
   };
-
-  //console.log(data);
 
   const dataSource =
     data?.results?.quotation?.map((item) => {

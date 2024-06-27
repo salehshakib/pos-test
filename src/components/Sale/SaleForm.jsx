@@ -10,16 +10,12 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
 } from "../../utilities/lib/generator/generatorUtils";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
+import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import { TotalRow } from "../ReusableComponent/TotalRow";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
@@ -62,30 +58,30 @@ const PaymentStatusComponent = () => {
   );
 };
 
-const TaxComponent = () => {
-  const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
-  });
+// const TaxComponent = () => {
+//   const params = useGlobalParams({
+//     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
+//   });
 
-  const { data, isFetching } = useGetAllTaxQuery({ params });
+//   const { data, isFetching } = useGetAllTaxQuery({ params });
 
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-      tax_rate: item?.rate,
-    };
-  });
+//   const options = data?.results?.tax?.map((item) => {
+//     return {
+//       value: item.rate,
+//       label: item.name,
+//       tax_rate: item?.rate,
+//     };
+//   });
 
-  return (
-    <CustomSelect
-      label="Order Tax"
-      options={options}
-      name={"tax_rate"}
-      isLoading={isFetching}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       label="Order Tax"
+//       options={options}
+//       name={"tax_rate"}
+//       isLoading={isFetching}
+//     />
+//   );
+// };
 
 const DiscountTypeComponent = () => {
   const form = Form.useFormInstance();
@@ -193,7 +189,7 @@ export const SaleForm = ({
             setProductUnits={setProductUnits}
           />
           <Col {...largeLayout}>
-            <TaxComponent />
+            <OrderTaxComponent />
           </Col>
 
           <Col {...largeLayout}>

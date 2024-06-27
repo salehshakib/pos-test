@@ -7,7 +7,7 @@ const RELATIONAL_PARAMS = {
 };
 
 const DEFAULT_PARAMS = {
-  // is_active: 1,
+  is_active: 1,
 };
 
 export const DEFAULT_SELECT_VALUES = ["id", "name"];

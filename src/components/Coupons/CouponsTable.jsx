@@ -14,6 +14,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -30,9 +31,13 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCouponQuery({
-    params: { ...pagination, parent: 1, child: 1 },
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
   });
+
+  const { data, isLoading } = useGetAllCouponQuery({ params });
 
   const total = data?.meta?.total;
 

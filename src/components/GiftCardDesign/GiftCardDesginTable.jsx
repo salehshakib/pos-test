@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -8,7 +8,7 @@ import {
   useGetAllGiftCardDesignQuery,
   useUpdateGiftCardDesignStatusMutation,
 } from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -17,8 +17,6 @@ import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
 
 const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -31,12 +29,15 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllGiftCardDesignQuery({
+  const params = useGlobalParams({
+    isPagination: true,
+    isDefaultParams: false,
     params: {
-      ...pagination,
       parent: 1,
     },
   });
+
+  const { data, isLoading } = useGetAllGiftCardDesignQuery({ params });
 
   const total = data?.meta?.total;
 

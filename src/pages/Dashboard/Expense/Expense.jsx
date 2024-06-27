@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ExpenseCreate } from "../../../components/Expense/ExpenseCreate";
 import ExpenseTable from "../../../components/Expense/ExpenseTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { EXPENSE } from "../../../utilities/apiEndpoints/account.api";
 
 const columns = [
   {
@@ -70,6 +71,7 @@ const Expense = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={EXPENSE}
     >
       <ExpenseCreate />
 

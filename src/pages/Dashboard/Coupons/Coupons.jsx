@@ -2,6 +2,7 @@ import { useState } from "react";
 import CouponsCreate from "../../../components/Coupons/CouponsCreate";
 import CouponsTable from "../../../components/Coupons/CouponsTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { COUPON } from "../../../utilities/apiEndpoints/offer.api";
 
 const columns = [
   {
@@ -115,6 +116,7 @@ const Coupons = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={COUPON}
     >
       <CouponsCreate />
 

@@ -87,7 +87,7 @@ export const ProductDetails = ({ id, ...props }) => {
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Category & Units" items={categoryInfo} />
           <CustomDescription title="Pricing Info" items={pricingInfo} />

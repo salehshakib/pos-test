@@ -231,7 +231,7 @@ const CashRegisterComponent = () => {
         onCancel={hideModal}
         footer={null}
       >
-        <CustomDescription title={"Cash Register Details"} items={details} />
+        <CustomDescription title={"Cash Register"} items={details} />
 
         <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
           <Button

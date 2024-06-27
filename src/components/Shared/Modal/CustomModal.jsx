@@ -2,7 +2,7 @@ import { Button, Modal } from "antd";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 const CustomModal = ({
-  title,
+  title = "Details",
   openModal,
   hideModal,
   showCloseButton = true,
@@ -22,6 +22,7 @@ const CustomModal = ({
   if (!footer) {
     modalProps.footer = null;
   }
+
   return (
     <GlobalUtilityStyle>
       <Modal
@@ -32,10 +33,16 @@ const CustomModal = ({
         okText="Save"
         onOk={onOk}
         confirmLoading={loading}
+        styles={{
+          header: {
+            borderBottom: "2px solid #F0F0F0",
+            paddingBottom: "5px",
+          },
+        }}
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          {children}
+          <div className="pt-2">{children}</div>
           {showCloseButton && (
             <div className="w-full flex justify-end items-center gap-3 mt-5">
               <Button type="primary" onClick={hideModal}>

@@ -9,9 +9,9 @@ const columns = [
     dataIndex: "saleReference",
     key: "saleReference",
     align: "center",
-    render: (saleReference) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {saleReference}
+        {text}
       </span>
     ),
   },
@@ -20,9 +20,9 @@ const columns = [
     dataIndex: "referenceNo",
     key: "referenceNo",
     align: "center",
-    render: (referenceNo) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {referenceNo}
+        {text}
       </span>
     ),
   },
@@ -31,20 +31,20 @@ const columns = [
     dataIndex: "warehouse",
     key: "warehouse",
     align: "center",
-    render: (warehouse) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouse}
+        {text}
       </span>
     ),
   },
   {
-    title: "Supplier",
-    dataIndex: "supplier",
-    key: "supplier",
+    title: "Cashier",
+    dataIndex: "cashier",
+    key: "cashier",
     align: "center",
-    render: (supplier) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {supplier}
+        {text}
       </span>
     ),
   },
@@ -53,9 +53,9 @@ const columns = [
     dataIndex: "date",
     key: "date",
     align: "center",
-    render: (date) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {date}
+        {text}
       </span>
     ),
   },
@@ -64,9 +64,9 @@ const columns = [
     dataIndex: "grandTotal",
     key: "grandTotal",
     align: "center",
-    render: (grandTotal) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {grandTotal}
+        {text}
       </span>
     ),
   },

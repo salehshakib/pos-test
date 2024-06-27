@@ -74,7 +74,7 @@ const CustomTable = ({
     }),
     scroll: {
       x: "max-content",
-      // x: 1200,
+      y: "60vh",
     },
     ...tableStyleProps,
   };

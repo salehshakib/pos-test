@@ -18,7 +18,7 @@ export const StockCountDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <CustomDescription
-          title="StockCount Details"
+          title="StockCount"
           items={details}
           // nostyle={true}
         />

@@ -60,15 +60,25 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.purchasereturn?.map((item) => {
-      const { id, name, created_at, is_active } = item;
+      const {
+        id,
+        reference_id,
+        warehouses,
+        suppliers,
+        purchase_return_at,
+        grand_total,
+      } = item ?? {};
 
       console.log(item);
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+      const date = dayjs(purchase_return_at).format("DD-MM-YYYY");
 
       return {
         id,
-        // referenceNo: reference_id,
-        created_at: date,
+        referenceNo: reference_id,
+        warehouse: warehouses?.name,
+        supplier: suppliers?.name,
+        Date: date,
+        grandTotal: grand_total,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,

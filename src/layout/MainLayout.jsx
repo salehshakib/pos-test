@@ -16,7 +16,7 @@ const MainLayout = () => {
 
   return (
     <GlobalUtilityStyle>
-      <div className="relative">
+      <div className="relative h-[100vh] ">
         <Header className="bg-white flex justify-between items-center px-5 sticky w-full top-0 z-50 shadow-md">
           <div className="flex items-center gap-6 text-2xl">
             <Button
@@ -36,18 +36,19 @@ const MainLayout = () => {
         </Header>
 
         <div className="flex">
-          <div className="h-[100vh] sticky z-40 top-[4rem] left-0 ">
+          <div className="h-[calc(100vh-4rem)] sticky z-40 top-[4rem] left-0 ">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 ">
+          <Layout className="w-48 flex flex-col  h-[calc(100vh-4rem)]">
             <Content
               style={{
                 margin: "16px",
                 backgroundColor: "white",
                 borderRadius: "8px",
               }}
-              className="shadow-md "
+              className="shadow-md flex-grow 
+               "
             >
               <GlobalUtilityStyle>
                 <Outlet />
@@ -56,6 +57,7 @@ const MainLayout = () => {
             <Footer
               style={{
                 textAlign: "center",
+                padding: "16px",
               }}
             >
               POS Inventory ©{new Date().getFullYear()} Created by Vitasoft

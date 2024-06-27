@@ -8,5 +8,15 @@
     "not ios_saf <= 17.4",
     "not safari <= 17.4",
     "not samsung <= 23"
-  ]
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "cursor: -webkit-grab"
+        ]
+      }
+    ]
+  }
 }

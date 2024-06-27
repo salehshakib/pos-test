@@ -20,7 +20,7 @@ export const WarehouseDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
         <CustomDescription
-          title="Warehouse Details"
+          title="Warehouse"
           items={details}
           // nostyle={true}
         />

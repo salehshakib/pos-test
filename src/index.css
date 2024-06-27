@@ -3,28 +3,38 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  /* width: 2px; */
-  width: 2px;
+  width: 5px;
 }
 
-/* ::-webkit-scrollbar-track {
-  background: #dcbfff;
+::-webkit-scrollbar-track {
+  background: var(--secondColor) !important;
+  border-radius: 80px !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #51258f;
-} */
+  background: var(--firstColor) !important;
+
+  cursor: -webkit-grab !important;
+  border-radius: 80px !important;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   scrollbar-gutter: stable both-edges;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
-/* 
-
-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-} */
 
 .ant-input-number-input-wrap {
   font-size: 14px;

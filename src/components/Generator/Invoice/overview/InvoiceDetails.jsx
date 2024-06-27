@@ -103,22 +103,19 @@ export const InvoiceDetails = ({ id, ...props }) => {
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
           <CustomDescription title="Reference" items={referenceId} />
-          <CustomDescription title="Beneficiary Details" items={benDetails} />
+          <CustomDescription title="Beneficiary " items={benDetails} />
 
-          <CustomDescription title="Invoice Details" items={invoiceDetails} />
+          <CustomDescription title="Invoice " items={invoiceDetails} />
           <Table
             {...tableProps}
             title={title}
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Attachemnt Details" items={attachment} />
-          <CustomDescription
-            title="Additional Details"
-            items={additionalInfo}
-          />
+          <CustomDescription title="Attachemnt " items={attachment} />
+          <CustomDescription title="Additional" items={additionalInfo} />
         </div>
       )}
     </CustomModal>

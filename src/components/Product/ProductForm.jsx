@@ -380,11 +380,7 @@ const ProductForm = ({
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <RichTextEditor
-            label="Product Details"
-            name="details"
-            required={true}
-          />
+          <RichTextEditor label="Product" name="details" required={true} />
         </Col>
       </Row>
 

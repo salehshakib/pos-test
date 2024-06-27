@@ -113,8 +113,8 @@ export const SaleDetails = ({ id, ...props }) => {
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center mt-10" />
       ) : (
-        <div className="space-y-5">
-          {/* <CustomDescription title="Sale Details" items={details} /> */}
+        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
+          {/* <CustomDescription title="Sale " items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Sale Info" items={saleStatus} />
           <Table

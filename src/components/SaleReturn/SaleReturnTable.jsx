@@ -61,16 +61,24 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
 
   const dataSource =
     data?.results?.salereturn?.map((item) => {
-      const { id, created_at, reference_id } = item;
+      const {
+        id,
+        reference_id,
+        warehouses,
+        cashiers,
+        sale_return_at,
+        grand_total,
+      } = item ?? {};
 
-      console.log(item);
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+      const date = dayjs(sale_return_at).format("DD-MM-YYYY");
 
       return {
         id,
-
-        // referenceNo: reference_id,
-        created_at: date,
+        referenceNo: reference_id,
+        warehouse: warehouses?.name,
+        cashier: cashiers?.name,
+        date,
+        grandTotal: grand_total,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,

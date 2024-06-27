@@ -25,6 +25,15 @@ export const ProviderConfig = ({ children }) => {
     if (data) {
       dispatch(setPrimaryColor(data.primary_color));
       dispatch(setSecondaryColor(data.secendary_color));
+
+      document.documentElement.style.setProperty(
+        "--firstColor",
+        data?.primary_color ? data?.primary_color : "#842577"
+      );
+      document.documentElement.style.setProperty(
+        "--secondColor",
+        data?.secendary_color ? data?.secendary_color : "#B391AC"
+      );
     }
   }, [data, dispatch]);
 

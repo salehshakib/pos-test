@@ -1,4 +1,4 @@
-import { Dropdown, Table } from "antd";
+import { Dropdown, Table, Pagination } from "antd";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
@@ -74,7 +74,7 @@ const CustomTable = ({
     }),
     scroll: {
       x: "max-content",
-      y: "60vh",
+      // y: "60vh",
     },
     ...tableStyleProps,
   };
@@ -271,12 +271,21 @@ const CustomTable = ({
   }
 
   return (
-    <Table
-      {...tableProps}
-      columns={newColumns}
-      dataSource={dataSource}
-      pagination={showPaging ? { ...paginationProps } : false}
-    />
+    <>
+      <div className="h-[60vh] overflow-auto">
+        <Table
+          {...tableProps}
+          pagination={showPaging ? { ...paginationProps } : false}
+          columns={newColumns}
+          dataSource={dataSource}
+        />
+      </div>
+      <Pagination
+        {...paginationProps}
+        size="large"
+        className="w-full flex justify-end"
+      />
+    </>
   );
 };
 

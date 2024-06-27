@@ -167,6 +167,7 @@ const CustomInput = (props) => {
             className="mt-1 border-2 w-full"
             min={0}
             max={100}
+            controls={false}
             suffix="%"
           />
         );

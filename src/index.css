@@ -69,6 +69,11 @@ html {
   height: 37px !important;
 }
 
+.ant-table {
+  /* scrollbar-color: initial !important; */
+  /* scrollbar-: "10px" !important; */
+}
+
 @media screen and (max-width: 730px) {
   .ant-page-header-heading {
     justify-content: center !important;

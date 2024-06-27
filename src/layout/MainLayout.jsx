@@ -40,15 +40,15 @@ const MainLayout = () => {
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 flex flex-col  h-[calc(100vh-4rem)]">
+          <Layout className="w-48 flex flex-col ">
             <Content
               style={{
                 margin: "16px",
+                marginBottom: 0,
                 backgroundColor: "white",
                 borderRadius: "8px",
               }}
-              className="shadow-md flex-grow 
-               "
+              className="shadow-md flex-grow overflow-auto"
             >
               <GlobalUtilityStyle>
                 <Outlet />

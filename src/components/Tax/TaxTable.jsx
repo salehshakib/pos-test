@@ -5,20 +5,23 @@ import {
   useDeleteTaxMutation,
   useGetAllTaxQuery,
 } from "../../redux/services/tax/taxApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { useSelector } from "react-redux";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 
 const TaxTable = ({ newColumns, setSelectedRows }) => {
-  const pagination = useSelector(selectPagination);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllTaxQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: pagination,
   });
+
+  const { data, isLoading } = useGetAllTaxQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -60,6 +63,9 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

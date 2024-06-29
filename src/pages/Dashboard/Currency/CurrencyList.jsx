@@ -2,6 +2,7 @@ import { useState } from "react";
 import CurrencyCreate from "../../../components/Currency/CurrencyCreate";
 import CurrencyTable from "../../../components/Currency/CurrencyTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { CURRENCY } from "../../../utilities/apiEndpoints/helper.api";
 
 const columns = [
   {
@@ -50,6 +51,7 @@ const CurrencyList = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={CURRENCY}
     >
       <CurrencyCreate />
 

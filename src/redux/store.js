@@ -15,9 +15,9 @@ import authSlice from "./services/auth/authSlice";
 import cashRegisterSlice from "./services/cashRegister/cashRegisterSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
 import paginationSlice from "./services/pagination/paginationSlice";
+import pettyCashSlice from "./services/pettycash/pettyCashSlice";
 import productSlice from "./services/product/productSlice";
 import themeSlice from "./services/theme/themeSlice";
-import pettyCashSlice from "./services/pettycash/pettyCashSlice";
 
 const persistConfig = {
   key: ["auth", "theme"],
@@ -28,10 +28,10 @@ const persistedAuthReducer = persistReducer(persistConfig, authSlice);
 
 const persistedThemeReducer = persistReducer(persistConfig, themeSlice);
 
-const persistemPaginationReducer = persistReducer(
-  persistConfig,
-  paginationSlice
-);
+// const persistedPaginationReducer = persistReducer(
+//   persistConfig,
+//   paginationSlice
+// );
 
 const persistedCashRegister = persistReducer(persistConfig, cashRegisterSlice);
 const persistePettyCash = persistReducer(persistConfig, pettyCashSlice);
@@ -41,7 +41,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     theme: persistedThemeReducer,
-    pagination: persistemPaginationReducer,
+    pagination: paginationSlice,
     cashRegister: persistedCashRegister,
     pettyCash: persistePettyCash,
     drawer: drawerSlice,

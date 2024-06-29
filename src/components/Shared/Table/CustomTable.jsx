@@ -1,20 +1,17 @@
-import { Dropdown, Table, Pagination } from "antd";
+import { Dropdown, Table } from "antd";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { PiBroom } from "react-icons/pi";
 import { TbListDetails } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectPagination,
-  updatePage,
-  updatePageSize,
-} from "../../../redux/services/pagination/paginationSlice";
 
 const CustomTable = ({
   columns,
   dataSource,
   isRowSelection = false,
   total,
+  pagination,
+  updatePage,
+  updatePageSize,
   setSelectedRows,
   isLoading,
   showPaging = true,
@@ -23,8 +20,6 @@ const CustomTable = ({
   created_at = true,
   action = true,
 }) => {
-  const dispatch = useDispatch();
-
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRows(selectedRows);
@@ -35,25 +30,16 @@ const CustomTable = ({
     }),
   };
 
-  // const updatePage = (newPage) => {
-  //   setPagination((prevPagination) => ({ ...prevPagination, page: newPage }));
-  // };
-
-  // const updatePageSize = (newPageSize) => {
-  //   setPagination((prevPagination) => ({
-  //     ...prevPagination,
-  //     perPage: newPageSize,
-  //   }));
-  // };
-
-  const pagination = useSelector(selectPagination);
-
   const handlePageChange = (newPage) => {
-    dispatch(updatePage({ page: newPage }));
+    console.log(newPage);
+    updatePage(newPage);
+    // dispatch(updatePage({ page: newPage }));
   };
 
   const handlePageSizeChange = (newPageSize) => {
-    dispatch(updatePageSize({ perPage: newPageSize }));
+    console.log(newPageSize);
+    updatePageSize(newPageSize);
+    // dispatch(updatePageSize({ perPage: newPageSize }));
   };
 
   const tableProps = {
@@ -196,6 +182,7 @@ const CustomTable = ({
                       </div>
                     ),
                     onClick: () => record?.handleEdit(record?.id),
+                    disabled: !record.handleEdit,
                   },
                   {
                     key: "due",
@@ -205,6 +192,7 @@ const CustomTable = ({
                         Due Clear
                       </div>
                     ),
+                    disabled: !record.handleDue,
                   },
                   {
                     key: "delete",
@@ -215,6 +203,7 @@ const CustomTable = ({
                       </div>
                     ),
                     onClick: () => record?.handleDeleteModal(record?.id),
+                    disabled: !record.handleDeleteModal,
                   },
                 ],
               }}
@@ -272,19 +261,28 @@ const CustomTable = ({
 
   return (
     <>
-      <div className="h-[60vh] overflow-auto">
-        <Table
-          {...tableProps}
-          pagination={showPaging ? { ...paginationProps } : false}
-          columns={newColumns}
-          dataSource={dataSource}
-        />
-      </div>
-      <Pagination
-        {...paginationProps}
-        size="large"
-        className="w-full flex justify-end"
+      {/* <div className="h-[60vh] overflow-auto"> */}
+      <Table
+        {...tableProps}
+        // pagination={false}
+        pagination={showPaging ? { ...paginationProps } : false}
+        columns={newColumns}
+        dataSource={dataSource}
       />
+      {/* </div> */}
+      {/* {showPaging && !isLoading && (
+        <Pagination
+          {...paginationProps}
+          total={dataSource?.length || 0}
+          // showSizeChanger={true}
+          // showTotal={
+          //   (total, range) => `${range[0]}-${range[1]} of ${total} items`
+          //   // console.log(total)
+          // }
+          size="large"
+          className="w-full flex justify-end mt-10"
+        />
+      )} */}
     </>
   );
 };

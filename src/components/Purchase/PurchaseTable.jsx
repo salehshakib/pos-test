@@ -12,6 +12,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PurchaseDetails } from "./PurchaseDetails";
 import { PurchaseEdit } from "./PurchaseEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -24,10 +25,13 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     params: {
+      ...pagination,
       parent: 1,
     },
     // isRelationalParams: true,
@@ -125,6 +129,9 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

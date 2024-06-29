@@ -5,7 +5,7 @@ import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useGetLeaveTypeDetailsQuery,
   useUpdateLeaveTypeMutation,
-} from "../../redux/services/settings/leaveType/leaveType";
+} from "../../redux/services/settings/leaveType/leaveTypeApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { LeaveTypeForm } from "./LeaveTypeForm";

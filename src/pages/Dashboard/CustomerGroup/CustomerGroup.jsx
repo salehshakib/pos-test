@@ -2,6 +2,7 @@ import { useState } from "react";
 import CustomerGroupCreate from "../../../components/CustomerGroup/CustomerGroupCreate";
 import CustomerGroupTable from "../../../components/CustomerGroup/CustomerGroupTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { CUSTOMER_GROUP } from "../../../utilities/apiEndpoints/helper.api";
 
 const columns = [
   {
@@ -37,6 +38,7 @@ const CustomerGroup = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={CUSTOMER_GROUP}
     >
       <CustomerGroupCreate />
 

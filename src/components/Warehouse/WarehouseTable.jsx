@@ -14,6 +14,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { WarehouseDetails } from "./WarehouseDetails";
 import WarehouseEdit from "./WarehouseEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -29,10 +30,12 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
-    // isRelationalParams: true,
+    params: pagination,
   });
 
   const { data, isLoading } = useGetWarehousesQuery({ params });
@@ -114,6 +117,9 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

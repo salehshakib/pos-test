@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
-import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveType";
+import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveTypeApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import {
   fieldsToUpdate,

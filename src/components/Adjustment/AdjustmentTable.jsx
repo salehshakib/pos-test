@@ -16,6 +16,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentDetails from "./AdjustmentDetails";
 import AdjustmentEdit from "./AdjustmentEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
@@ -27,10 +28,13 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     params: {
+      ...pagination,
       parent: 1,
     },
     // isRelationalParams: true,
@@ -96,6 +100,9 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

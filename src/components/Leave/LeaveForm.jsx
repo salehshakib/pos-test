@@ -6,7 +6,7 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType/leaveType";
+import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType/leaveTypeApi";
 import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
 import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
 import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
@@ -17,9 +17,16 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomRadio from "../Shared/Radio/CustomRadio";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 
 const LeaveTypeComponent = () => {
-  const { data, isFetching } = useGetAllLeaveTypeQuery({});
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+  const { data, isFetching } = useGetAllLeaveTypeQuery({ params });
 
   const options = data?.results?.leavetype?.map((item) => ({
     value: item?.id?.toString(),
@@ -189,8 +196,6 @@ const HoursComponent = () => {
 };
 
 export const LeaveForm = (props) => {
-  // //console.log(Leaveduration);
-
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>

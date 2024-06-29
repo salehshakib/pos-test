@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import CustomTable from "../Shared/Table/CustomTable";
 
 export const ProductReportTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   //   const [editId, setEditId] = useState(undefined);
 
@@ -14,6 +13,8 @@ export const ProductReportTable = ({ newColumns, setSelectedRows }) => {
 
   //   const [deleteId, setDeleteId] = useState(undefined);
   //   const [deleteModal, setDeleteModal] = useState(false);
+
+  const { pagination, updatePage, updatePageSize } = usePagination();
 
   //   const { data, isLoading } = useGetBrandsQuery({
   //     params: pagination,
@@ -86,6 +87,10 @@ export const ProductReportTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         // dataSource={dataSource}
         // total={total}
+
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         // isLoading={isLoading}
         setSelectedRows={setSelectedRows}
         isRowSelection={true}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import TaxCreate from "../../../components/Tax/TaxCreate";
 import TaxTable from "../../../components/Tax/TaxTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { TAX } from "../../../utilities/apiEndpoints/helper.api";
 
 const columns = [
   {
@@ -38,6 +39,7 @@ const TaxList = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={TAX}
     >
       <TaxCreate />
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnnoucementCreate } from "../../../components/Announcement/AnnouncementCreate";
 import { AnnouncementTable } from "../../../components/Announcement/AnnouncementTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { ANNOUNCEMENT } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
@@ -62,23 +63,13 @@ export const Announcement = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  // const handleExport = async (format) => {
-  //   const { data, error } = await exportBrand({
-  //     data: { format },
-  //   });
-
-  //   //console.log(data);
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Announcement"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      // handleExport={handleExport}
+      api={ANNOUNCEMENT}
     >
       <AnnoucementCreate />
 

@@ -17,6 +17,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -32,10 +33,13 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     params: {
+      ...pagination,
       parent: 1,
     },
     // isDefaultParams: true,
@@ -145,6 +149,9 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

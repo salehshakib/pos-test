@@ -12,6 +12,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { SaleDetails } from "./SaleDetails";
 import { SaleEdit } from "./SaleEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -24,10 +25,13 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
+    params: pagination,
   });
 
   const { data, isLoading } = useGetAllSaleQuery({ params });
@@ -104,6 +108,9 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

@@ -145,6 +145,7 @@ export const ProductReport = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      // api={PRODUCT}
     >
       <ProductReportTable
         newColumns={newColumns}

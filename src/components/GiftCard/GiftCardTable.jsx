@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -7,18 +8,16 @@ import {
   useGetAllGiftCardQuery,
   useUpdateGiftCardStatusMutation,
 } from "../../redux/services/giftcard/giftcard/giftCardApi";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import GiftCardEdit from "./GiftCardEdit";
-import dayjs from "dayjs";
 import { GiftCardDetails } from "./GiftCardDetails";
+import GiftCardEdit from "./GiftCardEdit";
 
 const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -31,9 +30,14 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllGiftCardQuery({
-    params: { ...pagination, parent: 1 },
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
+    params: pagination,
   });
+
+  const { data, isLoading } = useGetAllGiftCardQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -119,13 +123,15 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

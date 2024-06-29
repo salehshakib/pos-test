@@ -7,45 +7,30 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 // import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
+import { employeeStatusOptions } from "../../assets/data/employeeStatus";
 import { useGetAllDesignationQuery } from "../../redux/services/hrm/designation/designationApi";
 import { useGetAllRolesQuery } from "../../redux/services/roles/rolesApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
 import { CashierComponent } from "../Generator/overview/CashierComponent";
+import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
+import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
-import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
-import { employeeStatusOptions } from "../../assets/data/employeeStatus";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
-
-// const DepartmentComponent = () => {
-//   const { data, isFetching } = useGetDepartmentsQuery({});
-
-//   const options = data?.results?.department?.map((item) => ({
-//     value: item?.id?.toString(),
-//     label: item?.name,
-//   }));
-
-//   return (
-//     <CustomSelect
-//       label={"Department"}
-//       name={"department_id"}
-//       options={options}
-//       isLoading={isFetching}
-//       required={true}
-//     />
-//   );
-// };
 
 const DesignationComponent = () => {
-  const { data, isFetching } = useGetAllDesignationQuery({});
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isFetching } = useGetAllDesignationQuery({ params });
 
   const options = data?.results?.designation?.map((item) => ({
     value: item?.id?.toString(),

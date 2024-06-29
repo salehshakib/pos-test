@@ -2,17 +2,16 @@ import { useState } from "react";
 import DepartmentCreate from "../../../components/Department/DepartmentCreate";
 import DepartmentTable from "../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { DEPARTMENT } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
-    //department
     title: "Department",
     dataIndex: "department",
     key: "department",
-    // align: "center",
-    render: (department) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {department}
+        {text}
       </span>
     ),
   },
@@ -28,6 +27,7 @@ const Department = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={DEPARTMENT}
     >
       <DepartmentCreate />
 

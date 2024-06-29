@@ -8,6 +8,7 @@ import {
   useUpdateCategoryStatusMutation,
 } from "../../redux/services/category/categoryApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
@@ -30,10 +31,13 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     params: {
+      ...pagination,
       parent: 1,
     },
     // isRelationalParams: true,
@@ -121,6 +125,9 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

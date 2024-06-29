@@ -3,6 +3,7 @@ import defaultUser from "../../../assets/data/defaultUserImage";
 import EmployeeCreate from "../../../components/Employee/EmployeeCreate";
 import EmployeeTable from "../../../components/Employee/EmployeeTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { EMPLOYEE } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
@@ -43,9 +44,9 @@ const columns = [
     dataIndex: "address",
     key: "address",
     width: 300,
-    render: (address) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {address}
+        {text}
       </span>
     ),
   },
@@ -55,9 +56,9 @@ const columns = [
     dataIndex: "phone",
     key: "phone",
     align: "center",
-    render: (phone) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {phone}
+        {text}
       </span>
     ),
   },
@@ -67,24 +68,12 @@ const columns = [
     dataIndex: "join_date",
     key: "join_date",
     align: "center",
-    render: (join_date) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {join_date}
+        {text}
       </span>
     ),
   },
-  // {
-  //   //department
-  //   title: "Department",
-  //   dataIndex: "department",
-  //   key: "department",
-  //   align: "center",
-  //   render: (department) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {department}
-  //     </span>
-  //   ),
-  // },
 ];
 
 const Employee = () => {
@@ -97,6 +86,7 @@ const Employee = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={EMPLOYEE}
     >
       <EmployeeCreate />
 

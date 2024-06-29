@@ -15,10 +15,11 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -31,10 +32,13 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
+    params: pagination,
   });
 
   const { data, isLoading } = useGetAllCouponQuery({ params });
@@ -82,8 +86,6 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
-  //console.log(data);
-
   const dataSource =
     data?.results?.coupon?.map((item) => {
       const {
@@ -129,13 +131,15 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         pagination={pagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}

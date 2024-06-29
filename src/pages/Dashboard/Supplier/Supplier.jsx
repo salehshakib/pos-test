@@ -2,6 +2,7 @@ import { useState } from "react";
 import SupplierCreate from "../../../components/Supplier/SupplierCreate";
 import SupplierTable from "../../../components/Supplier/SupplierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { SUPPLIER } from "../../../utilities/apiEndpoints/people.api";
 
 const columns = [
   // {
@@ -80,6 +81,7 @@ export const Supplier = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={SUPPLIER}
     >
       <SupplierCreate />
 

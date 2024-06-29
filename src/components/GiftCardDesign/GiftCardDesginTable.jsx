@@ -14,6 +14,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardDesigneDetails } from "./GiftCardDesignDetails";
 import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -29,10 +30,13 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     params: {
+      ...pagination,
       parent: 1,
     },
   });
@@ -112,6 +116,9 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

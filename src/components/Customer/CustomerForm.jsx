@@ -11,15 +11,19 @@ import { useGetAllCustomerGroupQuery } from "../../redux/services/customerGroup/
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 
 const CustomerGroupComonent = () => {
   const form = Form.useFormInstance();
 
-  const { data, isLoading } = useGetAllCustomerGroupQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
   });
+
+  const { data, isLoading } = useGetAllCustomerGroupQuery({ params });
 
   const options = data?.results?.customergroup?.map((item) => ({
     value: item.id?.toString(),
@@ -116,11 +120,9 @@ export const CustomerForm = (props) => {
         </Col>
 
         <Col {...mdColLayout}>
-          {/* <CustomInput label="Country" type={"text"} name={"country"} /> */}
           <CountriesForm />
         </Col>
         <Col {...mdColLayout}>
-          {/* <CustomInput label="City" type={"text"} name={"city"} /> */}
           <CitiesForm />
         </Col>
         <Col {...mdColLayout}>

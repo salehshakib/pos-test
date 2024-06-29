@@ -14,6 +14,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { BrandDetails } from "./BrandDetails";
 import { BrandEdit } from "./BrandEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -29,13 +30,14 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
+    params: pagination,
     // isRelationalParams: true,
   });
-
-  //console.log(params);
 
   const { data, isLoading } = useGetBrandsQuery({ params });
 
@@ -112,6 +114,9 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

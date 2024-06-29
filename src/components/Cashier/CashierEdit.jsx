@@ -11,7 +11,7 @@ import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CashierForm from "./CashierForm";
 
-const CashierEdit = ({ id }) => {
+const CashierEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -37,6 +37,7 @@ const CashierEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

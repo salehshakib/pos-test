@@ -12,7 +12,7 @@ import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import SupplierForm from "./SupplierForm";
 import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 
-const SupplierEdit = ({ id }) => {
+const SupplierEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -41,6 +41,7 @@ const SupplierEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

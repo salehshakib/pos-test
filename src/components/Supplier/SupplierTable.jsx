@@ -6,22 +6,26 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteSupplierMutation,
   useGetAllSupplierQuery,
   useUpdateSupplierStatusMutation,
 } from "../../redux/services/supplier/supplierApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { SupplierDetails } from "./SupplierDetails";
 import SupplierEdit from "./SupplierEdit";
 
 const SupplierTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -29,9 +33,14 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllSupplierQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
     params: pagination,
   });
+  const { data, isLoading } = useGetAllSupplierQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -44,6 +53,11 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -97,6 +111,7 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
@@ -111,12 +126,23 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
       />
 
-      <SupplierEdit id={editId} />
+      <SupplierEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <SupplierDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

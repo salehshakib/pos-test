@@ -10,7 +10,8 @@ import {
   useDeleteInvoiceMutation,
   useGetAllInvoiceQuery,
 } from "../../../redux/services/invoice/invoiceApi";
-import { selectPagination } from "../../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import InvoiceEdit from "./InvoiceEdit";
@@ -18,27 +19,27 @@ import { InvoiceDetails } from "./overview/InvoiceDetails";
 
 const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
-
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllInvoiceQuery({
-    params: { ...pagination, parent: 1, child: 1 },
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
+    isRelationalParams: true,
+    params: pagination,
   });
 
-  const total = data?.meta?.total;
+  const { data, isLoading } = useGetAllInvoiceQuery({ params });
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateCustomerStatusMutation();
+  const total = data?.meta?.total;
 
   const [deleteInvoice, { isLoading: isDeleting }] = useDeleteInvoiceMutation();
 
@@ -52,20 +53,6 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
     dispatch(openEditDrawer());
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
-
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
@@ -77,8 +64,6 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
       setDeleteModal(false);
     }
   };
-
-  //console.log(data);
 
   const dataSource =
     data?.results?.invoice?.map((item) => {
@@ -121,6 +106,9 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

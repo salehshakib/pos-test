@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LeaveTypeCreate } from "../../../../components/LeaveType/LeaveTypeCreate";
 import { LeaveTypeTable } from "../../../../components/LeaveType/LeaveTypeTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
+import { LEAVE_TYPE } from "../../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
@@ -33,23 +34,13 @@ export const LeaveType = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  // const handleExport = async (format) => {
-  //   const { data, error } = await exportBrand({
-  //     data: { format },
-  //   });
-
-  //   //console.log(data);
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Leave Type"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      // handleExport={handleExport}
+      api={LEAVE_TYPE}
     >
       <LeaveTypeCreate />
 

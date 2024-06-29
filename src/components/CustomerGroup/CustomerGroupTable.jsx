@@ -10,23 +10,33 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { CustomerGroupDetails } from "./CustomerGroupDetails";
 import { CustomerGroupEdit } from "./CustomerGroupEdit";
 
 const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCustomerGroupQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
     params: pagination,
   });
+
+  const { data, isLoading } = useGetAllCustomerGroupQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -36,6 +46,11 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDeleteModal = (id) => {
@@ -62,10 +77,12 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
         created_at: date,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -75,13 +92,24 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
       />
 
-      <CustomerGroupEdit id={editId} />
+      <CustomerGroupEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <CustomerGroupDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

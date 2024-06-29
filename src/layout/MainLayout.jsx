@@ -16,7 +16,7 @@ const MainLayout = () => {
 
   return (
     <GlobalUtilityStyle>
-      <div className="relative h-[100vh] ">
+      <div className="relative ">
         <Header className="bg-white flex justify-between items-center px-5 sticky w-full top-0 z-50 shadow-md">
           <div className="flex items-center gap-6 text-2xl">
             <Button

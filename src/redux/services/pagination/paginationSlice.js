@@ -19,6 +19,7 @@ const paginationSlice = createSlice({
     updatePageSize: (state, action) => {
       const { perPage } = action.payload;
       state.pagination.perPage = perPage;
+      state.pagination.page = 1;
     },
   },
 });

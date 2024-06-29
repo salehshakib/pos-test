@@ -6,24 +6,27 @@ import {
   useGetAllUnitQuery,
   useUpdateUnitStatusMutation,
 } from "../../redux/services/unit/unitApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { useSelector } from "react-redux";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import StatusModal from "../Shared/Modal/StatusModal";
+import CustomTable from "../Shared/Table/CustomTable";
 
 const UnitTable = ({ newColumns, setSelectedRows }) => {
-  const pagination = useSelector(selectPagination);
-
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllUnitQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: pagination,
   });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -99,6 +102,9 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

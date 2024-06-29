@@ -3,6 +3,7 @@ import defaultUser from "../../../assets/data/defaultUserImage";
 import AttendanceCreate from "../../../components/Attendance/AttendanceCreate";
 import { AttendanceTable } from "../../../components/Attendance/AttendanceTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { ATTENDANCE } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
@@ -79,23 +80,13 @@ export const Attendance = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  // const handleExport = async (format) => {
-  //   const { data, error } = await exportBrand({
-  //     data: { format },
-  //   });
-
-  //   //console.log(data);
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Attendance"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      // handleExport={handleExport}
+      api={ATTENDANCE}
     >
       <AttendanceCreate />
 

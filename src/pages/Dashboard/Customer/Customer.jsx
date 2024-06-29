@@ -2,6 +2,7 @@ import { useState } from "react";
 import CustomerCreate from "../../../components/Customer/CustomerCreate";
 import CustomerTable from "../../../components/Customer/CustomerTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { CUSTOMER } from "../../../utilities/apiEndpoints/people.api";
 
 const columns = [
   {
@@ -62,6 +63,7 @@ const Customer = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={CUSTOMER}
     >
       <CustomerCreate />
 

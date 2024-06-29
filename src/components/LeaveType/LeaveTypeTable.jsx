@@ -1,28 +1,35 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteLeaveTypeMutation,
   useGetAllLeaveTypeQuery,
-} from "../../redux/services/settings/leaveType/leaveType";
+} from "../../redux/services/settings/leaveType/leaveTypeApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveTypeEdit } from "./LeaveTypeEdit";
 
 export const LeaveTypeTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllLeaveTypeQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: pagination,
+  });
+
+  const { data, isLoading } = useGetAllLeaveTypeQuery({
+    params,
   });
 
   const total = data?.meta?.total;
@@ -71,6 +78,9 @@ export const LeaveTypeTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

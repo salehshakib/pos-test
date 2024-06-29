@@ -1,48 +1,53 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCurrencyMutation,
   useGetAllCurrencyQuery,
+  useUpdateCurrencyDefaultMutation,
 } from "../../redux/services/currency/currencyApi";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
+import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
-  const pagination = useSelector(selectPagination);
-
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCurrencyQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: pagination,
   });
 
+  const { data, isLoading } = useGetAllCurrencyQuery({ params });
+
   const total = data?.meta?.total;
 
-  // const [updateCurrencyDefault, { isLoading: isStatusUpdating }] =
-  //   useUpdateCurrencyDefaultMutation();
+  const [updateCurrencyDefault, { isLoading: isStatusUpdating }] =
+    useUpdateCurrencyDefaultMutation();
 
   const [deleteCurrency, { isLoading: isDeleting }] =
     useDeleteCurrencyMutation();
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
 
-  // const handleStatus = async () => {
-  //   const { data } = await updateCurrencyDefault(statusId);
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
+  const handleStatus = async () => {
+    const { data } = await updateCurrencyDefault(statusId);
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
+  };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -67,14 +72,14 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
         code: code,
         exchangeRate: exchange_rate,
         status: is_default,
-        // handleStatusModal,
+        handleStatusModal,
         created_at: date,
         handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    // setStatusModal(false);
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -84,18 +89,21 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
       />
 
-      {/* <StatusModal
+      <StatusModal
         text="Do you want to change this currency default?"
         statusModal={statusModal}
         hideModal={hideModal}
         handleStatus={handleStatus}
         isLoading={isStatusUpdating}
-      /> */}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

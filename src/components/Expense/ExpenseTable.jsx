@@ -12,6 +12,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
+import { usePagination } from "../../utilities/hooks/usePagination";
 
 const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -24,10 +25,13 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
+    params: pagination,
   });
 
   const { data, isLoading } = useGetAllExpenseQuery({ params });
@@ -98,6 +102,9 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

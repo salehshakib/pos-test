@@ -2,6 +2,7 @@ import { useState } from "react";
 import InvoiceCreate from "../../../components/Generator/Invoice/InvoiceCreate";
 import InvoiceTable from "../../../components/Generator/Invoice/InvoiceTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { GENERATE_INVOICE } from "../../../utilities/apiEndpoints/generate.api";
 
 const columns = [
   {
@@ -87,6 +88,7 @@ const Invoice = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={GENERATE_INVOICE}
     >
       <InvoiceCreate />
 

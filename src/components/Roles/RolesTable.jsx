@@ -1,24 +1,32 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeleteRolesMutation,
   useGetAllRolesQuery,
 } from "../../redux/services/roles/rolesApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { RoleDetails } from "./RoleDetails";
 
 export const RolesTable = ({ newColumns, setSelectedRows }) => {
-  const pagination = useSelector(selectPagination);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllRolesQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
     params: pagination,
   });
+
+  const { data, isLoading } = useGetAllRolesQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -27,6 +35,11 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleDelete = async () => {
@@ -48,11 +61,13 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
         created_at: date,
 
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     setDeleteModal(false);
+    setDetailsModal(false);
   };
 
   return (
@@ -61,11 +76,22 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
       />
+
+      {detailsId && (
+        <RoleDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <DeleteModal
         deleteModal={deleteModal}

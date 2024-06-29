@@ -187,9 +187,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
-  const { data, isLoading } = useGetAllTaxQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllTaxQuery({ params });
 
   const options = data?.results?.tax?.map((tax) => ({
     value: tax.id?.toString(),
@@ -220,7 +218,11 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({});
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")

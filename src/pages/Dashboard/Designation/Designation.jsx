@@ -2,15 +2,16 @@ import { useState } from "react";
 import { DesignationCreate } from "../../../components/Designation/DesignationCreate";
 import { DesignationTable } from "../../../components/Designation/DesignationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { DESIGNATION } from "../../../utilities/apiEndpoints/hrm.api";
 
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (name) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {name}
+        {text}
       </span>
     ),
   },
@@ -18,9 +19,9 @@ const columns = [
     title: "Department",
     dataIndex: "department",
     key: "department",
-    render: (department) => (
+    render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {department}
+        {text}
       </span>
     ),
   },
@@ -30,23 +31,13 @@ const Designation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const [exportBrand, { isLoading }] = useExportBrandMutation();
-
-  // const handleExport = async (format) => {
-  //   const { data, error } = await exportBrand({
-  //     data: { format },
-  //   });
-
-  //   //console.log(data);
-  // };
-
   return (
     <GlobalContainer
       pageTitle="Designation"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
-      // handleExport={handleExport}
+      api={DESIGNATION}
     >
       <DesignationCreate />
 

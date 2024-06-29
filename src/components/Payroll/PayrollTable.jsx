@@ -8,6 +8,7 @@ import {
   useGetAllPayrollQuery,
   useUpdatePayrollStatusMutation,
 } from "../../redux/services/hrm/payroll/payrollApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
@@ -17,7 +18,6 @@ import { PayrollEdit } from "./PayrollEdit";
 
 export const PayrollTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -30,10 +30,13 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
   const params = useGlobalParams({
-    isPagination: true,
+    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
+    params: pagination,
   });
 
   const { data, isLoading } = useGetAllPayrollQuery({ params });
@@ -96,6 +99,7 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
@@ -111,6 +115,9 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

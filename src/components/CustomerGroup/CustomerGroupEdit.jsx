@@ -11,7 +11,7 @@ import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CustomerGroupForm from "./CustomerGroupForm";
 
-export const CustomerGroupEdit = ({ id }) => {
+export const CustomerGroupEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -44,6 +44,7 @@ export const CustomerGroupEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

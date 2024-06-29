@@ -11,17 +11,22 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { CustomerDetails } from "./CustomerDetails";
 import CustomerEdit from "./CustomerEdit";
 
 const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -29,9 +34,18 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllCustomerQuery({
-    params: { ...pagination, parent: 1 },
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
+    params: {
+      ...pagination,
+      parent: 1,
+    },
   });
+
+  const { data, isLoading } = useGetAllCustomerQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -44,6 +58,11 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const handleEdit = (id) => {
     dispatch(setEditId(id));
     dispatch(openEditDrawer());
+  };
+
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
   };
 
   const handleStatusModal = (id) => {
@@ -97,11 +116,13 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         handleStatusModal,
         handleEdit,
         handleDeleteModal,
+        handleDetailsModal,
       };
     }) ?? [];
 
   const hideModal = () => {
     setStatusModal(false);
+    setDetailsModal(false);
     setDeleteModal(false);
   };
 
@@ -111,12 +132,23 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
       />
 
-      <CustomerEdit id={editId} />
+      <CustomerEdit id={editId} setId={setEditId} />
+
+      {detailsId && (
+        <CustomerDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
 
       <StatusModal
         statusModal={statusModal}

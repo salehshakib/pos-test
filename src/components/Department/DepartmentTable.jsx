@@ -11,7 +11,8 @@ import {
   useGetDepartmentsQuery,
   useUpdateDepartmentStatusMutation,
 } from "../../redux/services/hrm/department/departmentApi";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -19,7 +20,7 @@ import DepartmentEdit from "./DepartmentEdit";
 
 const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 
@@ -29,9 +30,13 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetDepartmentsQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: pagination,
   });
+  const { data, isLoading } = useGetDepartmentsQuery({ params });
 
   const total = data?.meta?.total;
 
@@ -100,6 +105,9 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

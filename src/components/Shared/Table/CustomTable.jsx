@@ -1,8 +1,38 @@
 import { Dropdown, Table } from "antd";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { IoIosLock } from "react-icons/io";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import { PiBroom } from "react-icons/pi";
 import { TbListDetails } from "react-icons/tb";
+
+const getMenuItems = (record) =>
+  [
+    {
+      key: "edit",
+      icon: <MdEditSquare size={20} />,
+      label: <div className="flex justify-start items-center gap-3">Edit</div>,
+      onClick: () => record?.handleEdit(record?.id),
+      disabled: !record.handleEdit,
+    },
+    record?.handleChangePermission && {
+      key: "permission",
+      icon: <IoIosLock size={20} />,
+      label: (
+        <div className="flex justify-start items-center gap-3">
+          Change Permission
+        </div>
+      ),
+      onClick: () => record?.handleChangePermission(record?.id),
+    },
+    {
+      key: "delete",
+      icon: <MdDelete size={20} />,
+      label: (
+        <div className="flex justify-start items-center gap-3">Delete</div>
+      ),
+      onClick: () => record?.handleDeleteModal(record?.id),
+      disabled: !record.handleDeleteModal,
+    },
+  ].filter(Boolean);
 
 const CustomTable = ({
   columns,
@@ -48,7 +78,7 @@ const CustomTable = ({
     style: {
       width: "100%",
     },
-    rowKey: (record) => record.id,
+    rowKey: (record) => record?.id,
     rowSelection: isRowSelection
       ? {
           type: "checkbox",
@@ -69,13 +99,13 @@ const CustomTable = ({
     size: "default",
     total: total,
     defaultCurrent: 1,
-    current: pagination.page,
+    current: pagination?.page,
     onChange: (page) => {
       handlePageChange(page);
     },
     showSizeChanger: true,
     // hideOnSinglePage: true,
-    defaultPageSize: pagination.perPage,
+    defaultPageSize: pagination?.perPage,
     onShowSizeChange: (current, size) => {
       handlePageSizeChange(size);
     },
@@ -172,43 +202,15 @@ const CustomTable = ({
             {/* <Tooltip title="More Actions"> */}
             <Dropdown
               menu={{
-                items: [
-                  {
-                    key: "edit",
-                    icon: <MdEditSquare size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Edit
-                      </div>
-                    ),
-                    onClick: () => record?.handleEdit(record?.id),
-                    disabled: !record.handleEdit,
-                  },
-                  {
-                    key: "due",
-                    icon: <PiBroom size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Due Clear
-                      </div>
-                    ),
-                    disabled: !record.handleDue,
-                  },
-                  {
-                    key: "delete",
-                    icon: <MdDelete size={20} />,
-                    label: (
-                      <div className="flex justify-start items-center gap-3">
-                        Delete
-                      </div>
-                    ),
-                    onClick: () => record?.handleDeleteModal(record?.id),
-                    disabled: !record.handleDeleteModal,
-                  },
-                ],
+                items: getMenuItems(record),
+              }}
+              overlayStyle={{
+                width: "max-content",
               }}
               placement="bottom"
               trigger={["click"]}
+              autoAdjustOverflow
+              arrow={{ pointAtCenter: true }}
             >
               <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
                 <FiMoreHorizontal className="text-lg md:text-xl" />

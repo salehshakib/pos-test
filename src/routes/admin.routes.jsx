@@ -1,7 +1,7 @@
 //components
 import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
-import { IoDocumentTextOutline, IoPeopleCircle } from "react-icons/io5";
+import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuArchive } from "react-icons/lu";
 import {
   MdOutlineInventory2,
@@ -22,7 +22,6 @@ import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Documents from "../pages/Dashboard/Documents/Documents";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import { Roles } from "../pages/Dashboard/Roles/Roles";
 import TransferList from "../pages/Dashboard/Transfer/TransferList";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
 import { generatorPaths } from "./Generator/generator.routes";
@@ -123,12 +122,12 @@ export const adminPaths = [
     icon: TbReport,
     children: reportPaths,
   },
-  {
-    name: "Roles",
-    path: "roles",
-    icon: IoPeopleCircle,
-    element: <Roles />,
-  },
+  // {
+  //   name: "Roles",
+  //   path: "roles",
+  //   icon: IoPeopleCircle,
+  //   element: <Roles />,
+  // },
   {
     name: "Documents",
     path: "documents",

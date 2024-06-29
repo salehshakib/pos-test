@@ -10,6 +10,8 @@ import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { RoleDetails } from "./RoleDetails";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import RolePermission from "./RolePermission";
 
 export const RolesTable = ({ newColumns, setSelectedRows }) => {
   const [detailsId, setDetailsId] = useState(undefined);
@@ -49,6 +51,14 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
     }
   };
 
+  const [changePermissionId, setChangePermissionId] = useState(undefined);
+  const [changePermissionDrawer, setChangePermissionDrawer] = useState(false);
+
+  const handleChangePermission = (id) => {
+    setChangePermissionId(id);
+    setChangePermissionDrawer(true);
+  };
+
   const dataSource =
     data?.results?.role?.map((item) => {
       const { id, name, created_at } = item ?? {};
@@ -62,12 +72,18 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
 
         handleDeleteModal,
         handleDetailsModal,
+        handleChangePermission,
       };
     }) ?? [];
 
   const hideModal = () => {
     setDeleteModal(false);
     setDetailsModal(false);
+  };
+
+  const closeDrawer = () => {
+    setChangePermissionId(undefined);
+    setChangePermissionDrawer(false);
   };
 
   return (
@@ -84,6 +100,14 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
         isRowSelection={true}
         status={false}
       />
+
+      {changePermissionId && (
+        <RolePermission
+          changePermissionId={changePermissionId}
+          open={changePermissionDrawer}
+          closeDrawer={closeDrawer}
+        />
+      )}
 
       {detailsId && (
         <RoleDetails

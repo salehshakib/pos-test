@@ -23,7 +23,7 @@ export const Roles = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Roles"
+      pageTitle="Role Permission"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

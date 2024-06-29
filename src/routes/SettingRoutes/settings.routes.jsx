@@ -14,7 +14,7 @@ import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 import { EmailConfig } from "../../pages/Dashboard/EmailConfig/EmailConfig";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
 import { HrmSettings } from "../../pages/Dashboard/HrmSetting/HrmSettings";
-import RolePermission from "../../pages/Dashboard/RolePermission/RolePermission";
+import { Roles } from "../../pages/Dashboard/Roles/Roles";
 import { LeaveType } from "../../pages/Dashboard/Settings/LeaveType/LeaveType";
 import TaxList from "../../pages/Dashboard/Tax/TaxList";
 import Types from "../../pages/Dashboard/Type/Types";
@@ -25,7 +25,7 @@ export const settingPaths = [
     name: "Role Permission",
     path: "role-permission",
     icon: RiVerifiedBadgeLine,
-    element: <RolePermission />,
+    element: <Roles />,
   },
   // {
   //   name: "Discount Plan",

@@ -591,7 +591,7 @@ const GlobalContainer = ({
                 selectable: true,
                 onSelect: (value) => value.key !== "view" && setOpen(false),
               }}
-              placement="bottomRight"
+              placement="bottom"
             >
               <Button style={{ padding: "0 12px" }} size="large">
                 <FaEllipsis />

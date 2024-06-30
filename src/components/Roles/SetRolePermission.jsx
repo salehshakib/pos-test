@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetAllRolePermissionQuery } from "../../redux/services/rolePermission/rolePermissionApi";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
@@ -148,9 +148,49 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
   const formData = Form.useWatch("permission", form);
 
-  console.log(dataSource, formData);
+  function transformData(formData) {
+    let transformedData = [];
 
-  // const result = filterObjects(formData);
+    for (let key in formData) {
+      let obj = {
+        id: key,
+        name: key,
+        action: [],
+      };
+
+      let includeObject = false;
+
+      if (formData[key]) {
+        for (let actionKey in formData[key]) {
+          if (formData[key][actionKey]) {
+            let actionObj = {
+              id: Math.floor(Math.random() * 100),
+              name: `${key}.${actionKey}`,
+            };
+            obj.action.push(actionObj);
+            includeObject = true;
+          } else {
+            includeObject = false;
+            break;
+          }
+        }
+      }
+
+      if (includeObject) {
+        transformedData.push(obj);
+      }
+    }
+
+    return transformedData;
+  }
+
+  const result = useMemo(() => transformData(formData), [formData]);
+
+  useEffect(() => {
+    if (result.length > 0) {
+      setSelectedRows(result);
+    }
+  }, [result]);
 
   return (
     <CustomDrawer

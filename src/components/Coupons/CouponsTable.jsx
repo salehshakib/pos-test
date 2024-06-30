@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCouponMutation,
@@ -8,14 +8,13 @@ import {
   useUpdateCouponStatusMutation,
 } from "../../redux/services/coupon/couponApi";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { usePagination } from "../../utilities/hooks/usePagination";
 
 const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -140,7 +139,6 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
         pagination={pagination}
         updatePage={updatePage}
         updatePageSize={updatePageSize}
-        pagination={pagination}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

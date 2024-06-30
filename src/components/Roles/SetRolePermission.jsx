@@ -28,18 +28,30 @@ const columns = [
     align: "left",
     render: (text, record) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 ">
-        {text?.map((action, index) => {
-          const label = action?.name?.split(".")[1];
+        {record.formData &&
+          text?.map((action, index) => {
+            const label = action?.name?.split(".")[1].toLowerCase();
 
-          return (
-            <div key={action?.id ?? index}>
-              <CustomCheckbox
-                name={["permission", record.name, label]}
-                label={label}
-              />
-            </div>
-          );
-        })}
+            const checked =
+              record.formData?.[record.name.toLowerCase()]?.[label];
+
+            console.log(record.formData);
+
+            console.log(record.name.toLowerCase(), label);
+
+            return (
+              <div key={action?.id ?? index}>
+                <CustomCheckbox
+                  // name={["permission", record.name.toLowerCase(), label]}
+                  label={label}
+                  checked={checked}
+                  onChange={() =>
+                    record.onPermissionChange(record.name.toLowerCase(), label)
+                  }
+                />
+              </div>
+            );
+          })}
       </span>
     ),
   },
@@ -56,32 +68,34 @@ function filterMissingObject(oldValue, newValue) {
   return filteredObject;
 }
 
-function filterObjects(obj) {
-  const filteredObj = {};
+function transformToFormData(data) {
+  let formData = {};
 
-  if (!obj) {
-    return filteredObj;
-  }
+  // Iterate over each object in the input data array
+  data.forEach((item) => {
+    const { module, actions } = item;
 
-  Object.keys(obj).forEach((key) => {
-    // Check if any value inside the object is not undefined
-    if (Object.values(obj[key]).some((value) => value !== undefined)) {
-      // Remove properties where the value is undefined
-      const filteredValues = {};
-      Object.entries(obj[key]).forEach(([subKey, subValue]) => {
-        if (subValue !== undefined && subValue) {
-          filteredValues[subKey] = subValue;
-        }
-      });
+    // Extract module name and convert to camelCase
+    const moduleName = module.charAt(0).toLowerCase() + module.slice(1);
 
-      // Add to filteredObj if there are filtered values
-      if (Object.keys(filteredValues).length > 0) {
-        filteredObj[key] = filteredValues;
-      }
+    // Initialize module in formData if not exists
+    if (!formData[moduleName]) {
+      formData[moduleName] = {};
     }
+
+    // Iterate over actions array and map action names to false
+    actions.forEach((action) => {
+      const { id, name } = action;
+
+      // Split action name by '.' and extract the action name
+      const actionName = name.split(".")[1];
+
+      // Map actionName to false in the module
+      formData[moduleName][actionName] = false;
+    });
   });
 
-  return filteredObj;
+  return formData;
 }
 
 const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
@@ -93,17 +107,25 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     },
   });
 
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (data) {
+      setFormData(transformToFormData(data));
+    }
+  }, [data]);
+
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     if (selectedRows.length) {
       selectedRows.map((item) => {
         item?.action?.map((action) => {
-          const label = action?.name?.split(".")[1];
+          const label = action?.name?.split(".")[1].toLowerCase();
 
           form.setFieldsValue({
             permission: {
-              [item.name]: {
+              [item.name.toLowerCase()]: {
                 [label]: true,
               },
             },
@@ -120,12 +142,12 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       const deleteRow = filterMissingObject(selectedRows, newSelectedRows);
 
       deleteRow?.action?.map((action) => {
-        const label = action?.name?.split(".")[1];
+        const label = action?.name?.split(".")[1].toLowerCase();
 
         form.setFieldsValue({
           permission: {
-            [deleteRow.name]: {
-              [label]: undefined,
+            [deleteRow.name.toLowerCase()]: {
+              [label]: false,
             },
           },
         });
@@ -139,6 +161,35 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
   };
 
+  const onPermissionChange = (name, label) => {
+    // const [name, route, label] = id && id.split("_");
+
+    const checked = formData[name][label];
+
+    console.log(formData[name][label]);
+
+    setFormData((prev) => {
+      return {
+        ...prev,
+
+        [name]: {
+          ...prev[name],
+          [label]: !checked,
+        },
+      };
+    });
+  };
+
+  // const onPermissionChange = (name, label) => {
+  //   setFormData((prev) => {
+
+  //     const value = form.getFieldValue(['permission', name, label]);
+
+  //     console.log(value)
+
+  //   });
+  // };
+
   const dataSource =
     data?.map((item) => {
       const { module, actions } = item ?? {};
@@ -147,56 +198,60 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
         id: module,
         name: module,
         action: actions,
+        formData,
+        onPermissionChange,
       };
     }) ?? [];
 
-  const formData = Form.useWatch("permission", form);
-
-  function transformData(formData) {
-    let transformedData = [];
-
-    for (let key in formData) {
-      let obj = {
-        id: key,
-        name: key,
-        action: [],
-      };
-
-      let includeObject = false;
-
-      if (formData[key]) {
-        for (let actionKey in formData[key]) {
-          if (formData[key][actionKey]) {
-            let actionObj = {
-              id: Math.floor(Math.random() * 100),
-              name: `${key}.${actionKey}`,
-            };
-            obj.action.push(actionObj);
-            includeObject = true;
-          } else {
-            includeObject = false;
-            break;
-          }
-        }
-      }
-
-      if (includeObject) {
-        transformedData.push(obj);
-      }
-    }
-
-    return transformedData;
-  }
+  // const formData = Form.useWatch("permission", form);
 
   console.log(formData);
 
-  const result = useMemo(() => transformData(formData), [formData]);
+  // function transformData(formData) {
+  //   let transformedData = [];
 
-  useEffect(() => {
-    if (result.length > 0) {
-      setSelectedRows(result);
-    }
-  }, [result]);
+  //   for (let key in formData) {
+  //     let obj = {
+  //       id: key,
+  //       name: key,
+  //       action: [],
+  //     };
+
+  //     let includeObject = false;
+
+  //     if (formData[key]) {
+  //       for (let actionKey in formData[key]) {
+  //         if (formData[key][actionKey]) {
+  //           let actionObj = {
+  //             id: Math.floor(Math.random() * 100),
+  //             name: `${key}.${actionKey}`,
+  //           };
+  //           obj.action.push(actionObj);
+  //           includeObject = true;
+  //         } else {
+  //           includeObject = false;
+  //           break;
+  //         }
+  //       }
+  //     }
+
+  //     if (includeObject) {
+  //       transformedData.push(obj);
+  //     }
+  //   }
+
+  //   return transformedData;
+  // }
+
+  // const result = useMemo(() => transformData(formData), [formData]);
+
+  // useEffect(() => {
+  //   if (result.length > 0) {
+  //     setSelectedRows(result);
+  //   }
+  // }, [result]);
+
+  // form.setFieldsValue(formData);
 
   return (
     <CustomDrawer
@@ -206,7 +261,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       onClose={closeDrawer}
       isLoading={isFetching}
     >
-      <CustomForm form={form}>
+      <CustomForm form={form} onClose={closeDrawer}>
         <CustomTable
           columns={columns}
           dataSource={dataSource}

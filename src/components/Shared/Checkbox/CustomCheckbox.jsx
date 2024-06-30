@@ -10,6 +10,8 @@ const CustomCheckbox = (props) => {
     required = false,
     mode = "single",
     options = [],
+    onChange,
+    checked,
   } = props;
 
   return (
@@ -23,7 +25,12 @@ const CustomCheckbox = (props) => {
         noStyle
       >
         {mode === "single" && (
-          <Checkbox className="my-1" required={required}>
+          <Checkbox
+            className="my-1"
+            required={required}
+            onChange={onChange}
+            checked={checked}
+          >
             <span>{label}</span>
             <span className="text-sm text-gray-500 px-2">{subLabel}</span>
           </Checkbox>

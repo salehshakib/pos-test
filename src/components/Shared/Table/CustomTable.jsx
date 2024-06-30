@@ -43,6 +43,8 @@ const CustomTable = ({
   updatePage,
   updatePageSize,
   setSelectedRows,
+  selectedRows,
+  changeSelectedRows,
   isLoading,
   showPaging = true,
   tableStyleProps = {},
@@ -50,9 +52,13 @@ const CustomTable = ({
   created_at = true,
   action = true,
 }) => {
+  console.log(selectedRows);
   const rowSelection = {
+    selectedRowKeys: selectedRows?.map((item) => item?.id),
     onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows);
+      changeSelectedRows
+        ? changeSelectedRows(selectedRows)
+        : setSelectedRows(selectedRows);
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
@@ -116,19 +122,19 @@ const CustomTable = ({
   };
 
   const baseColumns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      fixed: "left",
-      align: "center",
-      width: 60,
-      render: (id) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {id}
-        </span>
-      ),
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   fixed: "left",
+    //   align: "center",
+    //   width: 60,
+    //   render: (id) => (
+    //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+    //       {id}
+    //     </span>
+    //   ),
+    // },
     ...columns,
   ];
 
@@ -265,30 +271,12 @@ const CustomTable = ({
   }
 
   return (
-    <>
-      {/* <div className="h-[60vh] overflow-auto"> */}
-      <Table
-        {...tableProps}
-        // pagination={false}
-        pagination={showPaging ? { ...paginationProps } : false}
-        columns={newColumns}
-        dataSource={dataSource}
-      />
-      {/* </div> */}
-      {/* {showPaging && !isLoading && (
-        <Pagination
-          {...paginationProps}
-          total={dataSource?.length || 0}
-          // showSizeChanger={true}
-          // showTotal={
-          //   (total, range) => `${range[0]}-${range[1]} of ${total} items`
-          //   // console.log(total)
-          // }
-          size="large"
-          className="w-full flex justify-end mt-10"
-        />
-      )} */}
-    </>
+    <Table
+      {...tableProps}
+      pagination={showPaging ? { ...paginationProps } : false}
+      columns={newColumns}
+      dataSource={dataSource}
+    />
   );
 };
 

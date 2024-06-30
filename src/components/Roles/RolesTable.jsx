@@ -10,8 +10,7 @@ import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { RoleDetails } from "./RoleDetails";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import RolePermission from "./RolePermission";
+import SetRolePermission from "./SetRolePermission";
 
 export const RolesTable = ({ newColumns, setSelectedRows }) => {
   const [detailsId, setDetailsId] = useState(undefined);
@@ -102,7 +101,7 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
       />
 
       {changePermissionId && (
-        <RolePermission
+        <SetRolePermission
           changePermissionId={changePermissionId}
           open={changePermissionDrawer}
           closeDrawer={closeDrawer}

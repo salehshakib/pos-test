@@ -1,10 +1,10 @@
 import { Form } from "antd";
-import { useGetAllRolePermissionQuery } from "../../redux/services/rolePermission/rolePermissionApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CustomTable from "../Shared/Table/CustomTable";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import { useEffect, useState } from "react";
+import { useGetAllRolePermissionQuery } from "../../redux/services/rolePermission/rolePermissionApi";
+import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomTable from "../Shared/Table/CustomTable";
 
 const columns = [
   {
@@ -29,10 +29,6 @@ const columns = [
     render: (text, record) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 ">
         {text?.map((action, index) => {
-          // const label = action.name
-          //   .split(record.name.toLowerCase())[1]
-          //   .split(".")[1];
-
           const label = action?.name?.split(".")[1];
 
           return (
@@ -49,7 +45,46 @@ const columns = [
   },
 ];
 
-const RolePermission = ({ changePermissionId, open, closeDrawer }) => {
+function filterMissingObject(oldValue, newValue) {
+  const newValueIds = {};
+  newValue.forEach((obj) => {
+    newValueIds[obj.id] = true;
+  });
+
+  const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
+
+  return filteredObject;
+}
+
+function filterObjects(obj) {
+  const filteredObj = {};
+
+  if (!obj) {
+    return filteredObj;
+  }
+
+  Object.keys(obj).forEach((key) => {
+    // Check if any value inside the object is not undefined
+    if (Object.values(obj[key]).some((value) => value !== undefined)) {
+      // Remove properties where the value is undefined
+      const filteredValues = {};
+      Object.entries(obj[key]).forEach(([subKey, subValue]) => {
+        if (subValue !== undefined && subValue) {
+          filteredValues[subKey] = subValue;
+        }
+      });
+
+      // Add to filteredObj if there are filtered values
+      if (Object.keys(filteredValues).length > 0) {
+        filteredObj[key] = filteredValues;
+      }
+    }
+  });
+
+  return filteredObj;
+}
+
+const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   const [form] = Form.useForm();
 
   const { data, isFetching } = useGetAllRolePermissionQuery({
@@ -60,22 +95,12 @@ const RolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
   const [selectedRows, setSelectedRows] = useState([]);
 
-  console.log(selectedRows);
-
-  console.log(form.getFieldValue(["permission", "Accesstoken"]));
-
   useEffect(() => {
     if (selectedRows.length) {
       selectedRows.map((item) => {
         item?.action?.map((action) => {
           const label = action?.name?.split(".")[1];
 
-          // <div key={action?.id ?? index}>
-          //   <CustomCheckbox
-          //     name={["permission", item.name, label]}
-          //     label={label}
-          //   />
-          // </div>
           form.setFieldsValue({
             permission: {
               [item.name]: {
@@ -90,24 +115,42 @@ const RolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
   }, [form, selectedRows]);
 
-  console.log(form.getFieldsValue("permission"));
+  const changeSelectedRows = (newSelectedRows) => {
+    if (selectedRows?.length > newSelectedRows.length) {
+      const deleteRow = filterMissingObject(selectedRows, newSelectedRows);
+
+      deleteRow?.action?.map((action) => {
+        const label = action?.name?.split(".")[1];
+
+        form.setFieldsValue({
+          permission: {
+            [deleteRow.name]: {
+              [label]: undefined,
+            },
+          },
+        });
+      });
+    }
+
+    setSelectedRows(newSelectedRows);
+  };
 
   const dataSource =
-    data?.map((item, index) => {
+    data?.map((item) => {
       const { module, actions } = item ?? {};
 
       return {
-        id: index + 1,
+        id: module,
         name: module,
         action: actions,
       };
     }) ?? [];
 
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(data);
-  //   }
-  // }, [data]);
+  const formData = Form.useWatch("permission", form);
+
+  console.log(dataSource, formData);
+
+  // const result = filterObjects(formData);
 
   return (
     <CustomDrawer
@@ -127,6 +170,8 @@ const RolePermission = ({ changePermissionId, open, closeDrawer }) => {
           action={false}
           isRowSelection={true}
           setSelectedRows={setSelectedRows}
+          selectedRows={selectedRows}
+          changeSelectedRows={changeSelectedRows}
           tableStyleProps={{
             scroll: {
               y: "73vh",
@@ -138,4 +183,4 @@ const RolePermission = ({ changePermissionId, open, closeDrawer }) => {
   );
 };
 
-export default RolePermission;
+export default SetRolePermission;

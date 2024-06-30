@@ -38,6 +38,7 @@ const CustomForm = (props) => {
     submitBtnText = "Save",
     onClose,
     form,
+    onChange,
   } = props;
 
   const onFinish = (values) => {
@@ -68,6 +69,7 @@ const CustomForm = (props) => {
         layout="vertical"
         autoComplete="on"
         onFinishFailed={onFinishFailed}
+        onChange={onChange}
         scrollToFirstError
       >
         {children}

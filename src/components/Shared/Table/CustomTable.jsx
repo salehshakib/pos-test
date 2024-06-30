@@ -18,7 +18,7 @@ const getMenuItems = (record) =>
       icon: <IoIosLock size={20} />,
       label: (
         <div className="flex justify-start items-center gap-3">
-          Change Permission
+          Set Permissions
         </div>
       ),
       onClick: () => record?.handleChangePermission(record?.id),
@@ -92,6 +92,9 @@ const CustomTable = ({
       x: "max-content",
       // y: "60vh",
     },
+    // sticky: {
+    //   offsetHeader: 64,
+    // },
     ...tableStyleProps,
   };
 

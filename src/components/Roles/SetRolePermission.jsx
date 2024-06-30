@@ -133,6 +133,10 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
 
     setSelectedRows(newSelectedRows);
+
+    if (!newSelectedRows?.length) {
+      form.resetFields();
+    }
   };
 
   const dataSource =
@@ -183,6 +187,8 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
     return transformedData;
   }
+
+  console.log(formData);
 
   const result = useMemo(() => transformData(formData), [formData]);
 

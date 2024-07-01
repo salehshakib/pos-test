@@ -16,6 +16,10 @@ import {
   onQuantityChange,
 } from "../../../utilities/lib/productTable/counters";
 import { calculateTotals } from "../../../utilities/lib/calculateTotals";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -164,7 +168,11 @@ const columns = [
 ];
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({});
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "purchase-unit")

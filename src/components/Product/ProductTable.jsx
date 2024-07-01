@@ -18,6 +18,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const ProductTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -50,9 +51,12 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
 
   console.log(params);
 
-  const { data, isLoading } = useGetAllProductsQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllProductsQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

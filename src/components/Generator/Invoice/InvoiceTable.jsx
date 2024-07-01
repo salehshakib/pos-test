@@ -16,6 +16,7 @@ import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import InvoiceEdit from "./InvoiceEdit";
 import { InvoiceDetails } from "./overview/InvoiceDetails";
+import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 
 const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllInvoiceQuery({ params });
+  const { data, isLoading } = useGetAllInvoiceQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

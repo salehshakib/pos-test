@@ -11,6 +11,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { RoleDetails } from "./RoleDetails";
 import SetRolePermission from "./SetRolePermission";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const RolesTable = ({ newColumns, setSelectedRows }) => {
   const [detailsId, setDetailsId] = useState(undefined);
@@ -27,7 +28,12 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllRolesQuery({ params });
+  const { data, isLoading } = useGetAllRolesQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -8,6 +8,7 @@ import {
 } from "../../redux/services/hrm/attendence/attendenceApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { AttendanceEdit } from "./AttendanceEdit";
@@ -29,7 +30,12 @@ export const AttendanceTable = ({ newColumns, setSelectedRows }) => {
       parent: 1,
     },
   });
-  const { data, isLoading } = useGetAllAttendenceQuery({ params });
+  const { data, isLoading } = useGetAllAttendenceQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

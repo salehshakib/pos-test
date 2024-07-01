@@ -13,6 +13,7 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -40,7 +41,12 @@ const CashierTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllCashierQuery({ params });
+  const { data, isLoading } = useGetAllCashierQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

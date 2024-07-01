@@ -24,6 +24,7 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const DesignationComponent = () => {
   const params = useGlobalParams({
@@ -80,7 +81,12 @@ const RoleComponent = () => {
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllRolesQuery({ params });
+  const { data, isLoading } = useGetAllRolesQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const options = data?.results?.role?.map((role) => ({
     value: role?.id?.toString(),

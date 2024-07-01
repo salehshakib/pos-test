@@ -9,7 +9,10 @@ import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
 import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 import CustomerCreate from "../Customer/CustomerCreate";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
@@ -91,10 +94,12 @@ const CustomerComponent = () => {
   const form = Form.useFormInstance();
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
   const { data, isLoading } = useGetAllCustomerQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+    params,
   });
 
   const options = data?.results?.customer?.map((customer) => ({
@@ -141,10 +146,13 @@ const CustomerComponent = () => {
 
 const CurrencyComponent = () => {
   const form = Form.useFormInstance();
+
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
   const { data, isLoading } = useGetAllCurrencyQuery({
-    params: {
-      selectValue: ["id", "name", "is_default"],
-    },
+    params,
   });
 
   const options = data?.results?.currency?.map((currency) => ({
@@ -201,7 +209,7 @@ const CurrencyExchangeComponent = () => {
 
 const TaxComponent = () => {
   const params = useGlobalParams({
-    selectValue: ["id", "name", "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
   });
 
   const { data, isFetching } = useGetAllTaxQuery({
@@ -225,9 +233,11 @@ const TaxComponent = () => {
 };
 
 const CouponComponent = ({ setType, setProductUnits }) => {
-  const { data, isFetching } = useGetAllCouponQuery({});
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "code", "type", "amount"],
+  });
 
-  console.log(data);
+  const { data, isFetching } = useGetAllCouponQuery({ params });
 
   const options = data?.results?.coupon?.map((item) => {
     return {

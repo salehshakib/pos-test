@@ -13,6 +13,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { PurchaseDetails } from "./PurchaseDetails";
 import { PurchaseEdit } from "./PurchaseEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
     // isRelationalParams: true,
   });
 
-  const { data, isLoading } = useGetAllPurchaseQuery({ params });
+  const { data, isLoading } = useGetAllPurchaseQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

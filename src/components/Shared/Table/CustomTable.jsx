@@ -3,36 +3,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
-
-const getMenuItems = (record) =>
-  [
-    {
-      key: "edit",
-      icon: <MdEditSquare size={20} />,
-      label: <div className="flex justify-start items-center gap-3">Edit</div>,
-      onClick: () => record?.handleEdit(record?.id),
-      disabled: !record.handleEdit,
-    },
-    record?.handleChangePermission && {
-      key: "permission",
-      icon: <IoIosLock size={20} />,
-      label: (
-        <div className="flex justify-start items-center gap-3">
-          Set Permissions
-        </div>
-      ),
-      onClick: () => record?.handleChangePermission(record?.id),
-    },
-    {
-      key: "delete",
-      icon: <MdDelete size={20} />,
-      label: (
-        <div className="flex justify-start items-center gap-3">Delete</div>
-      ),
-      onClick: () => record?.handleDeleteModal(record?.id),
-      disabled: !record.handleDeleteModal,
-    },
-  ].filter(Boolean);
+import { usePermission } from "../../../utilities/lib/getPermission";
 
 const CustomTable = ({
   columns,
@@ -52,7 +23,8 @@ const CustomTable = ({
   created_at = true,
   action = true,
 }) => {
-  console.log(selectedRows);
+  const route = window.location.pathname.substring(1);
+
   const rowSelection = {
     selectedRowKeys: selectedRows?.map((item) => item?.id),
     onChange: (selectedRowKeys, selectedRows) => {
@@ -78,6 +50,43 @@ const CustomTable = ({
     // dispatch(updatePageSize({ perPage: newPageSize }));
   };
 
+  const isDetailsPermitted = usePermission(route, "show");
+  const isEditPermitted = usePermission(route, "update");
+  const isDeletePermitted = usePermission(route, "delete");
+  const isStatusPermitted = usePermission(route, "status");
+
+  const getMenuItems = (record) =>
+    [
+      isEditPermitted && {
+        key: "edit",
+        icon: <MdEditSquare size={20} />,
+        label: (
+          <div className="flex justify-start items-center gap-3">Edit</div>
+        ),
+        onClick: () => record?.handleEdit(record?.id),
+        disabled: !record.handleEdit,
+      },
+      record?.handleChangePermission && {
+        key: "permission",
+        icon: <IoIosLock size={20} />,
+        label: (
+          <div className="flex justify-start items-center gap-3">
+            Set Permissions
+          </div>
+        ),
+        onClick: () => record?.handleChangePermission(record?.id),
+      },
+      isDeletePermitted && {
+        key: "delete",
+        icon: <MdDelete size={20} />,
+        label: (
+          <div className="flex justify-start items-center gap-3">Delete</div>
+        ),
+        onClick: () => record?.handleDeleteModal(record?.id),
+        disabled: !record.handleDeleteModal,
+      },
+    ].filter(Boolean);
+
   const tableProps = {
     loading: isLoading,
     size: "small",
@@ -96,11 +105,8 @@ const CustomTable = ({
     }),
     scroll: {
       x: "max-content",
-      // y: "60vh",
     },
-    // sticky: {
-    //   offsetHeader: 64,
-    // },
+
     ...tableStyleProps,
   };
 
@@ -196,19 +202,15 @@ const CustomTable = ({
     width: "80px",
     fixed: "right",
     render: (props, record) => {
-      if (record?.handleDetailsModal) {
+      if (record?.handleDetailsModal && isDetailsPermitted) {
         return (
           <div className="flex justify-center items-center gap-2">
-            {/* <Tooltip title="Details"> */}
             <button
               onClick={() => record?.handleDetailsModal(record?.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
             >
               <TbListDetails className="text-lg md:text-xl" />
             </button>
-            {/* </Tooltip> */}
-
-            {/* <Tooltip title="More Actions"> */}
             <Dropdown
               menu={{
                 items: getMenuItems(record),
@@ -225,31 +227,26 @@ const CustomTable = ({
                 <FiMoreHorizontal className="text-lg md:text-xl" />
               </button>
             </Dropdown>
-            {/* </Tooltip> */}
           </div>
         );
       } else {
         return (
           <div className="flex justify-center items-center gap-2">
             {record?.handleEdit && (
-              // <Tooltip title="Edit">
               <button
                 onClick={() => record?.handleEdit(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               >
                 <MdEditSquare className="text-lg md:text-xl" />
               </button>
-              //  </Tooltip>
             )}
 
-            {/* <Tooltip title="Delete"> */}
             <button
               onClick={() => record?.handleDeleteModal(record?.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
             >
               <MdDelete className="text-lg md:text-xl" />
             </button>
-            {/* </Tooltip> */}
           </div>
         );
       }
@@ -258,7 +255,7 @@ const CustomTable = ({
 
   const newColumns = [...baseColumns];
 
-  if (status) {
+  if (status && isStatusPermitted) {
     newColumns.splice(newColumns.length, 0, statusColumn);
   }
 
@@ -269,6 +266,8 @@ const CustomTable = ({
   if (action) {
     newColumns.splice(newColumns.length, 0, actionColumn);
   }
+
+  console.log(route);
 
   return (
     <Table

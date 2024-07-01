@@ -4,6 +4,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
 const { Meta } = Card;
 
 const PosProducts = ({ setProducts }) => {
@@ -15,22 +19,40 @@ const PosProducts = ({ setProducts }) => {
     allData: 1,
   });
 
-  const { data, isLoading } = useGetAllProductsQuery({
+  const params = useGlobalParams({
+    isDefaultParams: false,
     params: {
       ...pagination,
       attachmentable: 1,
-      selectValue: [
-        "id",
-        "sku",
-        "name",
-        "buying_price",
-        "tax_id",
-        "sale_unit_id",
-        "purchase_unit_id",
-      ],
-      // child: 1,
       parent: 1,
     },
+    selectValue: [
+      ...DEFAULT_SELECT_VALUES,
+      "sku",
+      "buying_price",
+      "tax_id",
+      "sale_unit_id",
+      "purchase_unit_id",
+    ],
+  });
+
+  const { data, isLoading } = useGetAllProductsQuery({
+    params,
+    // : {
+    //   ...pagination,
+    //   attachmentable: 1,
+    //   selectValue: [
+    //     "id",
+    //     "sku",
+    //     "name",
+    //     "buying_price",
+    //     "tax_id",
+    //     "sale_unit_id",
+    //     "purchase_unit_id",
+    //   ],
+    //   // child: 1,
+    //   parent: 1,
+    // },
   });
 
   const [newData, setNewData] = useState([]);

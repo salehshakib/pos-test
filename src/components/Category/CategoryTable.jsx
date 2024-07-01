@@ -10,6 +10,7 @@ import {
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -46,7 +47,13 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
 
   //console.log(params);
 
-  const { data, isLoading } = useGetAllCategoryQuery({ params });
+  const { data, isLoading } = useGetAllCategoryQuery(
+    { params },
+
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

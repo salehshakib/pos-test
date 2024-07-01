@@ -18,6 +18,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { SupplierDetails } from "./SupplierDetails";
 import SupplierEdit from "./SupplierEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const SupplierTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,12 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
     isDefaultParams: false,
     params: pagination,
   });
-  const { data, isLoading } = useGetAllSupplierQuery({ params });
+  const { data, isLoading } = useGetAllSupplierQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -15,6 +15,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { BrandDetails } from "./BrandDetails";
 import { BrandEdit } from "./BrandEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -39,7 +40,12 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
     // isRelationalParams: true,
   });
 
-  const { data, isLoading } = useGetBrandsQuery({ params });
+  const { data, isLoading } = useGetBrandsQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

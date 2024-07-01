@@ -12,6 +12,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveDetails } from "./LeaveDetails";
 import { LeaveEdit } from "./LeaveEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   const startDate = new Date(leaveStartDate);
@@ -50,7 +51,12 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
     },
   });
 
-  const { data, isLoading } = useGetAllLeaveQuery({ params });
+  const { data, isLoading } = useGetAllLeaveQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

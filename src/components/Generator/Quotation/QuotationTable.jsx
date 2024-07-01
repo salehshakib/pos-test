@@ -16,6 +16,7 @@ import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
 import { QuotationDetails } from "./overview/QuotationDetails";
 import { usePagination } from "../../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 
 const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllQuotationQuery({ params });
+  const { data, isLoading } = useGetAllQuotationQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -13,6 +13,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const TransferTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,12 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
     },
   });
 
-  const { data, isLoading } = useGetAllTransferQuery({ params });
+  const { data, isLoading } = useGetAllTransferQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

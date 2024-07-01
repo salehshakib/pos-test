@@ -17,6 +17,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentDetails from "./AdjustmentDetails";
 import AdjustmentEdit from "./AdjustmentEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
 
@@ -40,7 +41,12 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
     // isRelationalParams: true,
   });
 
-  const { data, isLoading } = useGetAllAdjustmentQuery({ params });
+  const { data, isLoading } = useGetAllAdjustmentQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   //console.log(data);
 

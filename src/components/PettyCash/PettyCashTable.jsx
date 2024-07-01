@@ -1,23 +1,32 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import {
   useDeletePettyCashMutation,
   useGetAllPettyCashQuery,
 } from "../../redux/services/pettycash/pettyCashApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
-  const pagination = useSelector(selectPagination);
+  // const pagination = useSelector(selectPagination);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const { data, isLoading } = useGetAllPettyCashQuery({
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const params = useGlobalParams({
+    // isPagination: true,
+    isDefaultParams: false,
     params: { ...pagination, parent: 1 },
+    // isRelationalParams: true,
+  });
+
+  const { data, isLoading } = useGetAllPettyCashQuery({
+    params,
   });
 
   const total = data?.meta?.total;
@@ -74,6 +83,9 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
         columns={newColumns}
         dataSource={dataSource}
         total={total}
+        pagination={pagination}
+        updatePage={updatePage}
+        updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}

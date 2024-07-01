@@ -66,11 +66,7 @@ const CategoryForm = (props) => {
           <ParentCategoryComponent />
         </Col>
         <Col {...fullColLayout}>
-          <CustomUploader
-            label={"Category Image"}
-            name={"attachment"}
-            required={true}
-          />
+          <CustomUploader label={"Category Image"} name={"attachment"} />
         </Col>
       </Row>
     </CustomForm>

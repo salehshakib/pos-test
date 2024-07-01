@@ -15,6 +15,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PayrollDetails } from "./PayrollDetails";
 import { PayrollEdit } from "./PayrollEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const PayrollTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -39,7 +40,12 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllPayrollQuery({ params });
+  const { data, isLoading } = useGetAllPayrollQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 const { Meta } = Card;
 
 export const Categories = () => {
@@ -12,8 +13,12 @@ export const Categories = () => {
     allData: 1,
   });
 
-  const { data, isLoading } = useGetAllCategoryQuery({
+  const params = useGlobalParams({
     params: pagination,
+  });
+
+  const { data, isLoading } = useGetAllCategoryQuery({
+    params,
   });
 
   const [newData, setNewData] = useState([]);

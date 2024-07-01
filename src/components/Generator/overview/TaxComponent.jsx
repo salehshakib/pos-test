@@ -1,15 +1,24 @@
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
 export const TaxComponent = () => {
   const params = useGlobalParams({
-    selectValue: ["id", "name"],
+    selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
+  const { data, isFetching } = useGetAllTaxQuery(
+    {
+      params,
+    },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const options = data?.results?.tax?.map((item) => {
     return {

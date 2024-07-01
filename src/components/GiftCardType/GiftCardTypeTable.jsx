@@ -14,6 +14,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardTypeEdit } from "./GiftCardTypeEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllGiftCardTypeQuery({ params });
+  const { data, isLoading } = useGetAllGiftCardTypeQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

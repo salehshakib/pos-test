@@ -13,6 +13,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { AnnouncementDetails } from "./AnnouncementDetails";
 import { AnnouncementEdit } from "./AnnouncementEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -32,7 +33,12 @@ export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
     params: { ...pagination, parent: 1, child: 1 },
   });
 
-  const { data, isLoading } = useGetAllAnnouncementQuery({ params });
+  const { data, isLoading } = useGetAllAnnouncementQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

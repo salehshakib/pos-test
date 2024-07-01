@@ -17,6 +17,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
@@ -29,10 +30,12 @@ const EmployeeComponent = () => {
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
+  const isPermitted = useUrlIndexPermission();
+
   const { data, isFetching } = useGetAllEmployeeQuery(
     { params },
     {
-      skip: !departmentId,
+      skip: !departmentId && !isPermitted,
     }
   );
 

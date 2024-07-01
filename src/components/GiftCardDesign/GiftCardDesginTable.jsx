@@ -15,6 +15,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardDesigneDetails } from "./GiftCardDesignDetails";
 import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const GiftCardDesginTable = ({ newColumns, setSelectedRows }) => {
     },
   });
 
-  const { data, isLoading } = useGetAllGiftCardDesignQuery({ params });
+  const { data, isLoading } = useGetAllGiftCardDesignQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -15,6 +15,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,12 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllCouponQuery({ params });
+  const { data, isLoading } = useGetAllCouponQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

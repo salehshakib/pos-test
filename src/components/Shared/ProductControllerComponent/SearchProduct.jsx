@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 export const SearchProduct = ({ setProducts }) => {
   const { message } = App.useApp();
@@ -16,31 +17,19 @@ export const SearchProduct = ({ setProducts }) => {
     }
   }, 1000);
 
+  const params = useGlobalParams({
+    // selectValue: ["id", "name"],
+    params: { keyword, parent: 1 },
+  });
+
   const { data, isFetching } = useGetAllProductsQuery(
     {
-      params: {
-        keyword,
-        // selectValue: [
-        //   "id",
-        //   "sku",
-        //   "name",
-        //   "buying_price",
-        //   "selling_price",
-        //   "symbology",
-        //   "tax_id",
-        //   "sale_unit_id",
-        //   "purchase_unit_id",
-        // ],
-        // child: 1,
-        parent: 1,
-      },
+      params,
     },
     {
       skip: !keyword,
     }
   );
-
-  // //console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center ">

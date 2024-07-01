@@ -13,6 +13,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { SaleReturnDetails } from "./SaleReturnDetails";
 import SaleReturnEdit from "./SaleReturnEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ const SaleReturnTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllSaleReturnQuery({ params });
+  const { data, isLoading } = useGetAllSaleReturnQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -12,6 +12,7 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CustomerGroupDetails } from "./CustomerGroupDetails";
@@ -36,7 +37,12 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllCustomerGroupQuery({ params });
+  const { data, isLoading } = useGetAllCustomerGroupQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

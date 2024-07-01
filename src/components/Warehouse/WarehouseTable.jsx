@@ -15,6 +15,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { WarehouseDetails } from "./WarehouseDetails";
 import WarehouseEdit from "./WarehouseEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -38,7 +39,12 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetWarehousesQuery({ params });
+  const { data, isLoading } = useGetWarehousesQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

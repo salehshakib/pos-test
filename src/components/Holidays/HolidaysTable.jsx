@@ -15,6 +15,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { HolidayDetails } from "./HolidayDetails";
 import { HolidaysEdit } from "./HolidaysEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const HolidaysTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -38,7 +39,12 @@ export const HolidaysTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllHolidayQuery({ params });
+  const { data, isLoading } = useGetAllHolidayQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

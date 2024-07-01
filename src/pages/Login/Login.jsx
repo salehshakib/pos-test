@@ -15,24 +15,18 @@ const Login = () => {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  // const token = useSelector(useCurrentToken)
-
   const handleSubmit = async (data) => {
     const toastId = toast.loading("Logging in...");
 
-    console.log(data);
-
     try {
       const res = await login(data).unwrap();
-      console.log(res);
 
       // const user = jwtDecode(res.user);
       const userData = res?.data?.user;
       const token = res?.data.token;
 
-      console.log(token);
+      console.log(userData);
 
-      //console.log(user);
       dispatch(setUser({ user: userData, token }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
       navigate(`/dashboard`);
@@ -43,12 +37,6 @@ const Login = () => {
       });
     }
   };
-
-  // useEffect(()=> {
-  //   if(token) {
-  //     navigate('/dashboard')
-  //   }
-  // }, [navigate])
 
   return (
     <div className="h-screen">

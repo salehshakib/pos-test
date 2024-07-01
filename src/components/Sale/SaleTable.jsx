@@ -13,6 +13,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { SaleDetails } from "./SaleDetails";
 import { SaleEdit } from "./SaleEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllSaleQuery({ params });
+  const { data, isLoading } = useGetAllSaleQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

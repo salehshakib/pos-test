@@ -60,7 +60,11 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({});
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")

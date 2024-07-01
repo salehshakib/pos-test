@@ -11,6 +11,7 @@ import { useGlobalParams } from "../../utilities/hooks/useParams";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const CurrencyTable = ({ newColumns, setSelectedRows }) => {
   const [statusId, setStatusId] = useState(undefined);
@@ -26,7 +27,12 @@ const CurrencyTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllCurrencyQuery({ params });
+  const { data, isLoading } = useGetAllCurrencyQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

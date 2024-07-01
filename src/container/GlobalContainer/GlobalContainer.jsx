@@ -341,6 +341,7 @@ import { useCurrentToken } from "../../redux/services/auth/authSlice";
 import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { base_url } from "../../utilities/configs/base_url";
 import { GlobalUtilityStyle } from "../Styled";
+import { usePermission } from "../../utilities/lib/getPermission";
 
 const GlobalContainer = ({
   pageTitle,
@@ -490,24 +491,24 @@ const GlobalContainer = ({
       ),
       icon: <FaEye size={16} />,
     },
-    {
+    usePermission(api, "import") && {
       label: "Import",
       key: "import",
       icon: <FaUpload size={16} />,
     },
-    {
+    usePermission(api, "export") && {
       label: "PDF",
       key: "pdf",
       onClick: () => handleExport("pdf"),
       icon: <FaFilePdf size={16} />,
     },
-    {
+    usePermission(api, "export") && {
       label: "Excel",
       key: "excel",
       onClick: () => handleExport("xlsx"),
       icon: <FaFileExcel size={16} />,
     },
-    {
+    usePermission(api, "export") && {
       label: "CSV",
       key: "csv",
       onClick: () => handleExport("csv"),
@@ -519,23 +520,22 @@ const GlobalContainer = ({
       icon: <FaPrint size={16} />,
     },
   ];
-
+  console.log(api);
   const header = {
     title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
-    subTitle: !["/petty-cash", "/reports"].some((path) =>
-      pathname.includes(path)
-    ) && (
-      <div className="w-full">
-        <Button
-          key={"create"}
-          type="text"
-          icon={<FaCirclePlus size={28} />}
-          style={{ width: "45px", height: "100%" }}
-          onClick={handleDrawerOpen}
-          className="primary-text flex justify-center items-center"
-        />
-      </div>
-    ),
+    subTitle: usePermission(api, "store") &&
+      !["/petty-cash", "/reports"].some((path) => pathname.includes(path)) && (
+        <div className="w-full">
+          <Button
+            key={"create"}
+            type="text"
+            icon={<FaCirclePlus size={28} />}
+            style={{ width: "45px", height: "100%" }}
+            onClick={handleDrawerOpen}
+            className="primary-text flex justify-center items-center"
+          />
+        </div>
+      ),
   };
 
   return (

@@ -17,6 +17,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllExpenseCategoryQuery({ params });
+  const { data, isLoading } = useGetAllExpenseCategoryQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

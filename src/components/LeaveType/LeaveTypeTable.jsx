@@ -9,6 +9,7 @@ import {
 } from "../../redux/services/settings/leaveType/leaveTypeApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveTypeEdit } from "./LeaveTypeEdit";
@@ -28,9 +29,14 @@ export const LeaveTypeTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllLeaveTypeQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllLeaveTypeQuery(
+    {
+      params,
+    },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

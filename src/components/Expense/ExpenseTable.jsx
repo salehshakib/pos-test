@@ -13,6 +13,7 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllExpenseQuery({ params });
+  const { data, isLoading } = useGetAllExpenseQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

@@ -14,6 +14,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { DesignationEdit } from "./DesignationEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const DesignationTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,12 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
     },
   });
 
-  const { data, isLoading } = useGetAllDesignationQuery({ params });
+  const { data, isLoading } = useGetAllDesignationQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

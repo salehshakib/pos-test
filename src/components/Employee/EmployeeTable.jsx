@@ -14,6 +14,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import EmployeeEdit from "./EmployeeEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const EmployeeTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -35,7 +36,12 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
     params: pagination,
   });
 
-  const { data, isLoading } = useGetAllEmployeeQuery({ params });
+  const { data, isLoading } = useGetAllEmployeeQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

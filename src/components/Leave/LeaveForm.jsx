@@ -21,12 +21,18 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const LeaveTypeComponent = () => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
-  const { data, isFetching } = useGetAllLeaveTypeQuery({ params });
+  const { data, isFetching } = useGetAllLeaveTypeQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const options = data?.results?.leavetype?.map((item) => ({
     value: item?.id?.toString(),

@@ -3,6 +3,12 @@ import { useDispatch } from "react-redux";
 import { useDebouncedCallback } from "use-debounce";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { setProduct } from "../../../redux/services/product/productSlice";
+import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
+import { usePermission } from "../../../utilities/lib/getPermission";
 import DebounceSelect from "../../Shared/Select/DebounceSelect";
 
 export const SearchProductComponent = () => {
@@ -14,15 +20,25 @@ export const SearchProductComponent = () => {
     }
   }, 1000);
 
+  const params = useGlobalParams({
+    selectValue: [...DEFAULT_SELECT_VALUES, "sku", "buying_price"],
+    params: keyword,
+  });
+
+  console.log(params);
+
+  const isPermitted = usePermission(PRODUCT, "index");
+
   const { data, isFetching } = useGetAllProductsQuery(
     {
-      params: {
-        selectValue: ["id", "name", "sku", "buying_price"],
-        keyword,
-      },
+      params,
+      // : {
+      //   selectValue: ["id", "name", "sku", "buying_price"],
+      //   keyword,
+      // },
     },
     {
-      // skip: !keyword,
+      skip: !keyword && !isPermitted,
     }
   );
 

@@ -18,6 +18,7 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CustomerDetails } from "./CustomerDetails";
 import CustomerEdit from "./CustomerEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -45,7 +46,12 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
     },
   });
 
-  const { data, isLoading } = useGetAllCustomerQuery({ params });
+  const { data, isLoading } = useGetAllCustomerQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const total = data?.meta?.total;
 

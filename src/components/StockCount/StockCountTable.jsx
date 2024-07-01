@@ -13,6 +13,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { StockCountDetails } from "./StockCountDetails";
 import StockCountEdit from "./StockCountEdit";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
     isRelationalParams: true,
   });
 
-  const { data, isLoading } = useGetStockCountsQuery({ params });
+  const { data, isLoading } = useGetStockCountsQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
   const total = data?.meta?.total;
 
   const [deleteStockCount, { isLoading: isDeleting }] =

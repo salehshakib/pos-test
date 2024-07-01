@@ -1,4 +1,4 @@
-import { Button, Col, Form, Modal, Row } from "antd";
+import { Button, Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
@@ -580,19 +580,57 @@ export const SaleProductTable = ({
   //   }
   // }, [formValues, products]);
 
-  products.length > 0 &&
-    dataSource.push({
-      id: "",
-      name: "Total",
-      unitCost: "",
-      quantity: totalQuantity,
-      subTotal: totalPrice,
-      tax: totalTax,
-      discount: totalDiscount,
-      action: false,
-    });
+  // products.length > 0 &&
+  //   dataSource.push({
+  //     id: "",
+  //     name: "Total",
+  //     unitCost: "",
+  //     quantity: totalQuantity,
+  //     subTotal: totalPrice,
+  //     tax: totalTax,
+  //     discount: totalDiscount,
+  //     action: false,
+  //   });
 
   form.setFieldsValue(formValues);
+
+  const tableStyle = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={3}>
+              <Typography.Text className="font-bold" type="">
+                Total
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalQuantity}
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={4} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalDiscount}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={5} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalTax}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={6} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalPrice}
+              </Typography.Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+  };
 
   return (
     <>
@@ -601,6 +639,7 @@ export const SaleProductTable = ({
         setProducts={setProducts}
         columns={columns}
         dataSource={dataSource}
+        tableStyle={tableStyle}
       />
 
       <ProductFormComponent

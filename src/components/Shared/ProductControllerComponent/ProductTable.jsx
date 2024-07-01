@@ -2,7 +2,12 @@ import { Col } from "antd";
 import { fullColLayout } from "../../../layout/FormLayout";
 import CustomProductTable from "../Table/CustomProductTable";
 
-export const ProductTable = ({ columns, dataSource, styleProps }) => {
+export const ProductTable = ({
+  columns,
+  dataSource,
+  styleProps,
+  tableStyle,
+}) => {
   const tableStyleProps = {
     // bordered: true,
     scroll: {
@@ -18,7 +23,9 @@ export const ProductTable = ({ columns, dataSource, styleProps }) => {
         dataSource={dataSource}
         showPaging={false}
         tableStyleProps={
-          styleProps ? { ...styleProps } : { ...tableStyleProps }
+          styleProps
+            ? { ...styleProps, ...tableStyle }
+            : { ...tableStyleProps, ...tableStyle }
         }
       />
     </Col>

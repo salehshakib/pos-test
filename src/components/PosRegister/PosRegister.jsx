@@ -433,7 +433,8 @@ export const PosRegister = ({
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
 
-          <div className="flex-grow overflow-y-auto bg-white">
+          {/* <div className="flex-grow overflow-y-auto bg-white"> */}
+          <div className=" bg-white">
             <ProductTableComponent
               products={products}
               setProducts={setProducts}
@@ -441,6 +442,8 @@ export const PosRegister = ({
               setFormValues={setFormValues}
               productUnits={productUnits}
               setProductUnits={setProductUnits}
+              qty={totalQuantity}
+              subTotal={totalPrice}
             />
           </div>
 

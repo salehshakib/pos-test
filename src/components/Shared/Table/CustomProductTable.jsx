@@ -1,10 +1,11 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPagination,
   updatePage,
   updatePageSize,
 } from "../../../redux/services/pagination/paginationSlice";
+const { Text } = Typography;
 
 const CustomProductTable = ({
   columns,
@@ -15,6 +16,8 @@ const CustomProductTable = ({
   isLoading,
   showPaging = true,
   tableStyleProps = {},
+  qty,
+  subTotal,
 }) => {
   const dispatch = useDispatch();
 
@@ -56,6 +59,7 @@ const CustomProductTable = ({
     loading: isLoading,
     scroll: {
       x: "max-content",
+      y: 500,
     },
     ...tableStyleProps,
   };
@@ -100,6 +104,33 @@ const CustomProductTable = ({
       columns={newColumns}
       dataSource={dataSource}
       pagination={showPaging ? { ...paginationProps } : false}
+      summary={(pageData) => {
+        // let totalBorrow = 0;
+        // let totalRepayment = 0;
+        // pageData.forEach(({ borrow, repayment }) => {
+        //   totalBorrow += borrow;
+        //   totalRepayment += repayment;
+        // });
+        return (
+          <Table.Summary fixed>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={1}>Total</Table.Summary.Cell>
+              {/* <Table.Summary.Cell index={1}></Table.Summary.Cell>
+              <Table.Summary.Cell index={2}></Table.Summary.Cell> */}
+              <Table.Summary.Cell
+                index={2}
+                className="border border-red-600"
+                align="middle"
+              >
+                Quantity: {qty}
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={3} align="right">
+                {subTotal}
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </Table.Summary>
+        );
+      }}
     />
   );
 };

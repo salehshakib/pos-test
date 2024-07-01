@@ -59,8 +59,9 @@ const CustomProductTable = ({
     loading: isLoading,
     scroll: {
       x: "max-content",
-      y: 500,
+      // y: 440,
     },
+
     ...tableStyleProps,
   };
 
@@ -81,55 +82,41 @@ const CustomProductTable = ({
     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
   };
 
-  const newColumns = [
-    // {
-    //   title: "ID",
-    //   dataIndex: "id",
-    //   key: "id",
-    //   fixed: "left",
-    //   align: "center",
-    //   width: 60,
-    //   render: (id) => (
-    //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-    //       {id}
-    //     </span>
-    //   ),
-    // },
-    ...columns,
-  ];
+  // const newColumns = [...columns];
 
   return (
     <Table
       {...tableProps}
-      columns={newColumns}
+      columns={columns}
       dataSource={dataSource}
       pagination={showPaging ? { ...paginationProps } : false}
-      summary={(pageData) => {
-        // let totalBorrow = 0;
-        // let totalRepayment = 0;
-        // pageData.forEach(({ borrow, repayment }) => {
-        //   totalBorrow += borrow;
-        //   totalRepayment += repayment;
-        // });
+      summary={() => {
         return (
-          <Table.Summary fixed>
+          <Table.Summary fixed="bottom">
             <Table.Summary.Row>
-              <Table.Summary.Cell index={1}>Total</Table.Summary.Cell>
-              {/* <Table.Summary.Cell index={1}></Table.Summary.Cell>
-              <Table.Summary.Cell index={2}></Table.Summary.Cell> */}
-              <Table.Summary.Cell
-                index={2}
-                className="border border-red-600"
-                align="middle"
-              >
-                Quantity: {qty}
+              <Table.Summary.Cell index={1} colSpan={3}>
+                <Text className="font-bold" type="">
+                  Total
+                </Text>
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={3} align="right">
-                {subTotal}
+
+              <Table.Summary.Cell index={2} align="center">
+                <Text type="" className="font-bold">
+                  {qty}
+                </Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={3} align="center">
+                <Text type="" className="font-bold">
+                  {subTotal}
+                </Text>
               </Table.Summary.Cell>
             </Table.Summary.Row>
           </Table.Summary>
         );
+      }}
+      sticky={{
+        // offsetHeader: 440,
+        offsetScroll: 400,
       }}
     />
   );

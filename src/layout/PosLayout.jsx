@@ -64,6 +64,8 @@ const PosLayout = () => {
 
   const [type, setType] = useState("fixed");
 
+  console.log(pettyCash);
+
   useEffect(() => {
     if (pettyCash === "Close") {
       navigate("/dashboard");

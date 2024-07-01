@@ -392,9 +392,9 @@ const ProductListEdit = ({ id }) => {
       price_list: has_different_price && JSON.stringify(priceListArray),
       product_list: JSON.stringify(productListArray),
       has_expired_date: has_expired_date ? 1 : 0,
-      expired_date:
-        has_expired_date &&
-        dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
+      // expired_date:
+      //   has_expired_date &&
+      //   dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
 
       // has_featured: has_featured ? 1 : 0,
       // embedded_barcode: embedded_barcode ? 1 : 0,
@@ -417,6 +417,12 @@ const ProductListEdit = ({ id }) => {
 
     if (values?.attach_file?.[0].url) {
       postObj.attach_file = values.attach_file?.[0].originFileObj;
+    }
+
+    if (has_expired_date) {
+      postObj.expired_date = dayjs(product_expire?.expired_date).format(
+        "YYYY-MM-DD"
+      );
     }
 
     appendToFormData(postObj, formData);

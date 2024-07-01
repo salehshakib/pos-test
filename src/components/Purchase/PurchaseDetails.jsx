@@ -92,9 +92,9 @@ export const PurchaseDetails = ({ id, ...props }) => {
     return {
       id: item?.id,
       product_name:
-        item?.products?.name +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : "") ??
-        "Unknown Product",
+        item?.products?.name ??
+        "Unknown Product" +
+          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
       qty: item.qty ?? "Unknown Quantity",
       price: item.net_unit_cost ?? "Unknown Price",
     };

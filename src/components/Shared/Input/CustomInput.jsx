@@ -235,6 +235,7 @@ const CustomInput = (props) => {
           },
         ]}
         tooltip={tooltip}
+        // noStyle={noStyle}
         noStyle={noStyle}
         className={customStyle && "mb-0"}
       >

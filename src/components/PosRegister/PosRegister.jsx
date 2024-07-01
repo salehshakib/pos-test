@@ -433,8 +433,8 @@ export const PosRegister = ({
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
 
-          {/* <div className="flex-grow overflow-y-auto bg-white"> */}
-          <div className=" bg-white">
+          <div className="flex-grow overflow-y-auto bg-white">
+            {/* <div className=" bg-white"> */}
             <ProductTableComponent
               products={products}
               setProducts={setProducts}
@@ -447,8 +447,8 @@ export const PosRegister = ({
             />
           </div>
 
-          <div className="flex-none bg-white py-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
-            <hr />
+          <div className="flex-none bg-white pb-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
+            {/* <hr />
 
             <div className=" grid grid-cols-12 px-2">
               <span className="text-md font-semibold col-span-6">Total</span>
@@ -461,17 +461,19 @@ export const PosRegister = ({
                   SubTotal: ({totalPrice})
                 </span>
               </span>
-            </div>
+            </div> */}
 
-            <hr />
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2">
+            {/* <hr /> */}
+            <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2 px-2">
               <div className="grid grid-cols-2">
                 <span>Items</span>
-                <span>{Object.keys(formValues.product_list.qty).length}</span>
+                <span className="font-semibold">
+                  {Object.keys(formValues.product_list.qty).length}
+                </span>
               </div>
               <div className="grid grid-cols-2">
                 <span>Total</span>
-                <span>{totalPrice}</span>
+                <span className="font-semibold">{totalPrice}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
@@ -482,7 +484,7 @@ export const PosRegister = ({
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Discount" noStyle></Form.Item>
-                <span>{discount ?? 0}</span>
+                <span className="font-semibold">{discount ?? 0}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
@@ -493,7 +495,7 @@ export const PosRegister = ({
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Coupon" noStyle></Form.Item>
-                <span>{coupon ?? 0}</span>
+                <span className="font-semibold">{coupon ?? 0}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
@@ -504,7 +506,7 @@ export const PosRegister = ({
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Tax" noStyle></Form.Item>
-                <span>{tax ?? 0}</span>
+                <span className="font-semibold">{tax ?? 0}</span>
               </div>
               <div className="grid grid-cols-2">
                 <span
@@ -515,7 +517,7 @@ export const PosRegister = ({
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Shipping" noStyle></Form.Item>
-                <span>{shipping ?? 0}</span>
+                <span className="font-semibold">{shipping ?? 0}</span>
               </div>
             </div>
 

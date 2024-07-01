@@ -62,6 +62,7 @@ const ProductCreate = () => {
       product_expire,
       details,
     } = values ?? {};
+
     const { product_list, qty_list, price_list } = formValues;
 
     const qtyListArray = qty_list?.qty
@@ -118,6 +119,9 @@ const ProductCreate = () => {
       has_promotion: has_promotion ? 1 : 0,
       has_different_price: has_different_price ? 1 : 0,
       has_expired_date: has_expired_date ? 1 : 0,
+      // expired_date:
+      //   has_expired_date &&
+      //   dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
       details,
 
       attachments:

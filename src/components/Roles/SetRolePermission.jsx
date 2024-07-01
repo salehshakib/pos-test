@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllRolePermissionQuery } from "../../redux/services/rolePermission/rolePermissionApi";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
@@ -34,10 +34,6 @@ const columns = [
 
             const checked =
               record.formData?.[record.name.toLowerCase()]?.[label];
-
-            console.log(record.formData);
-
-            console.log(record.name.toLowerCase(), label);
 
             return (
               <div key={action?.id ?? index}>
@@ -85,7 +81,10 @@ function transformToFormData(data) {
 
     // Iterate over actions array and map action names to false
     actions.forEach((action) => {
-      const { id, name } = action;
+      const {
+        // id,
+        name,
+      } = action;
 
       // Split action name by '.' and extract the action name
       const actionName = name.split(".")[1];
@@ -162,16 +161,11 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   };
 
   const onPermissionChange = (name, label) => {
-    // const [name, route, label] = id && id.split("_");
-
     const checked = formData[name][label];
-
-    console.log(formData[name][label]);
 
     setFormData((prev) => {
       return {
         ...prev,
-
         [name]: {
           ...prev[name],
           [label]: !checked,

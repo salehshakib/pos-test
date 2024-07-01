@@ -7,6 +7,7 @@ export const ProductController = ({
   columns,
   dataSource,
   styleProps,
+  qty,
 }) => {
   return (
     <>
@@ -15,6 +16,7 @@ export const ProductController = ({
         columns={columns}
         dataSource={dataSource}
         styleProps={styleProps}
+        qty={qty}
       />
     </>
   );

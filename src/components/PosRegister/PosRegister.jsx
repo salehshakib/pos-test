@@ -1,5 +1,5 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Row, Tooltip } from "antd";
+import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
@@ -20,6 +20,7 @@ import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduc
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
+const { Text } = Typography;
 // import { colLayout } from "../../layout/FormLayout";
 
 // const WarehouseComponent = () => {
@@ -417,6 +418,39 @@ export const PosRegister = ({
     setGrandTotal(grand_total);
   }, [grand_total, setGrandTotal]);
 
+  const tableStyleProps = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={3}>
+              <Text className="font-bold" type="">
+                Total
+              </Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Text type="" className="font-bold">
+                {totalQuantity}
+              </Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={3} align="center">
+              <Text type="" className="font-bold">
+                {totalPrice}
+              </Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+    sticky: {
+      // offsetHeader: 440,
+      offsetScroll: 400,
+    },
+  };
+
+  const item = Object.values(formValues.product_list.qty).length;
+
   return (
     <>
       <Form
@@ -442,8 +476,7 @@ export const PosRegister = ({
               setFormValues={setFormValues}
               productUnits={productUnits}
               setProductUnits={setProductUnits}
-              qty={totalQuantity}
-              subTotal={totalPrice}
+              tableStyleProps={item && tableStyleProps}
             />
           </div>
 

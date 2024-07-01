@@ -6,8 +6,8 @@ export const ProductTable = ({ columns, dataSource, styleProps }) => {
   const tableStyleProps = {
     // bordered: true,
     scroll: {
-      y: 500,
       x: 1000,
+      y: 350,
     },
   };
 

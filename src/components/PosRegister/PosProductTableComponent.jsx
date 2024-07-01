@@ -363,8 +363,7 @@ const ProductTableComponent = ({
   setFormValues,
   productUnits,
   setProductUnits,
-  qty,
-  subTotal,
+  tableStyleProps,
 }) => {
   const form = Form.useFormInstance();
 
@@ -435,8 +434,7 @@ const ProductTableComponent = ({
           columns={columns}
           dataSource={dataSource}
           showPaging={false}
-          qty={qty}
-          subTotal={subTotal}
+          tableStyleProps={tableStyleProps}
         />
       </div>
 

@@ -39,6 +39,8 @@ export const ProviderConfig = ({ children }) => {
 
   const customTheme = theme({ primaryColor, secondaryColor, textColor });
 
+  // useEffect(()=> {})
+
   return (
     <React.StrictMode>
       <ConfigProvider

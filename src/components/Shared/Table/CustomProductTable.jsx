@@ -1,11 +1,10 @@
-import { Table, Typography } from "antd";
+import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPagination,
   updatePage,
   updatePageSize,
 } from "../../../redux/services/pagination/paginationSlice";
-const { Text } = Typography;
 
 const CustomProductTable = ({
   columns,

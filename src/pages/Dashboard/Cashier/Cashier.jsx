@@ -59,7 +59,7 @@ const Cashier = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Cashier List"
+      pageTitle="Cashier"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

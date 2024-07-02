@@ -32,10 +32,21 @@ body {
 }
 
 html {
-  scrollbar-gutter: stable both-edges;
+  /* scrollbar-gutter: stable both-edges; */
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* @layer components {
+  .bg-wave {
+    background-image: url("/src/assets/images/wave.svg");
+  }
+}
+
+.bg-wave svg {
+  fill: currentColor; 
+  color: var(--firstColor); 
+} */
 
 .ant-input-number-input-wrap {
   font-size: 14px;

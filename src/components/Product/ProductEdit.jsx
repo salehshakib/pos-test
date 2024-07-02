@@ -189,7 +189,7 @@ const ProductListEdit = ({ id }) => {
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item?.name ?? "need backend relation",
+            name: item?.warehouses?.name ?? "need backend relation",
           },
         ]);
       });
@@ -199,7 +199,7 @@ const ProductListEdit = ({ id }) => {
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item?.name ?? "need backend relation",
+            name: item?.warehouses?.name ?? "need backend relation",
           },
         ]);
       });
@@ -209,8 +209,8 @@ const ProductListEdit = ({ id }) => {
           ...prevProducts,
           {
             id: item?.combo_product_id,
-            name: item?.name ?? "need backend relation",
-            sku: item?.sku ?? "need backend relation",
+            name: item?.products?.name ?? "need backend relation",
+            sku: item?.products?.sku ?? "need backend relation",
           },
         ]);
       });

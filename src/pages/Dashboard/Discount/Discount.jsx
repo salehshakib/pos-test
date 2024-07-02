@@ -84,7 +84,7 @@ const Discount = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Discount List"
+      pageTitle="Discount"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

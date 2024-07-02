@@ -56,7 +56,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value", "operator"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
@@ -67,6 +67,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
       value: unit.id.toString(),
       label: unit.name,
       operationValue: unit?.operation_value,
+      operator: unit?.operator,
     }));
 
   const onSelect = (value, option) => {
@@ -318,6 +319,9 @@ function setFormValuesId(
   const sanitizeIntValue = (value) => parseInt(value) || 0;
   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
 
+  console.log(purchase_units);
+  console.log(productUnits);
+
   if (!id) return;
 
   const formProductList = formValues.product_list;
@@ -342,6 +346,7 @@ function setFormValuesId(
 
   // Get or set purchase units value
   const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
+
   const productPurchaseUnitsValue =
     sanitizeIntValue(productUnits.purchase_units?.[id]) ||
     purchaseUnitsOperationValue;

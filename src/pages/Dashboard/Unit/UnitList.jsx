@@ -2,6 +2,7 @@ import { useState } from "react";
 import UnitCreate from "../../../components/Unit/UnitCreate";
 import UnitTable from "../../../components/Unit/UnitTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { UNIT } from "../../../utilities/apiEndpoints/helper.api";
 
 const columns = [
   {
@@ -83,6 +84,7 @@ const UnitList = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={UNIT}
     >
       <UnitCreate />
 

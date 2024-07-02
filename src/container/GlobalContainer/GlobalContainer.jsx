@@ -340,8 +340,8 @@ import { useLocation } from "react-router-dom";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
 import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { base_url } from "../../utilities/configs/base_url";
-import { GlobalUtilityStyle } from "../Styled";
 import { usePermission } from "../../utilities/lib/getPermission";
+import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
   pageTitle,
@@ -351,6 +351,7 @@ const GlobalContainer = ({
   setNewColumns,
   searchFilterContent,
   api,
+  debounce,
 }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -520,7 +521,6 @@ const GlobalContainer = ({
       icon: <FaPrint size={16} />,
     },
   ];
-  console.log(api);
   const header = {
     title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
     subTitle: usePermission(api, "store") &&
@@ -537,6 +537,14 @@ const GlobalContainer = ({
         </div>
       ),
   };
+
+  // const [keyword, setKeyword] = useState(null);
+
+  // const debounce = useDebouncedCallback(async (value) => {
+  //   if (value.trim() !== "") {
+  //     setKeyword(value);
+  //   }
+  // }, 1000);
 
   return (
     <GlobalUtilityStyle>
@@ -558,6 +566,7 @@ const GlobalContainer = ({
                       className="primary-text hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
                     />
                   }
+                  onChange={(e) => debounce(e.target.value)}
                   allowClear={true}
                 />
                 <Popover

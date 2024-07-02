@@ -47,7 +47,7 @@ const CurrencyList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Currency List"
+      pageTitle="Currency"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

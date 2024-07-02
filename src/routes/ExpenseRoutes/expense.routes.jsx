@@ -11,8 +11,8 @@ export const expensePaths = [
     element: <ExpenseCategory />,
   },
   {
-    name: "Expense List",
-    path: "expense-list",
+    name: "Expense",
+    path: "expense",
     icon: SlWallet,
     element: <Expense />,
   },

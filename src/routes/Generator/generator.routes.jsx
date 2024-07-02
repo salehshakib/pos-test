@@ -6,13 +6,13 @@ import Quotation from "../../pages/Dashboard/Quotations/Quotation";
 export const generatorPaths = [
   {
     name: "Quotation Generator",
-    path: "quotation-generator",
+    path: "quotation",
     icon: LuClipboardList,
     element: <Quotation />,
   },
   {
     name: "Invoice Generator",
-    path: "invoice-generator",
+    path: "invoice",
     icon: LiaFileInvoiceSolid,
     element: <Invoice />,
   },

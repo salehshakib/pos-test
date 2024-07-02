@@ -84,7 +84,7 @@ const RolePermission = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Role Permission List"
+      pageTitle="Role Permission"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

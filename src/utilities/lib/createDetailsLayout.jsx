@@ -82,10 +82,10 @@ const createDetailsLayout = (data, nostyle) => {
         if (key.includes("date")) {
           return dayjs(value).format("DD-MM-YYYY");
         }
-        if (booleanKeys.includes(key) && value.toString() === "1") {
+        if (booleanKeys.includes(key) && value?.toString() === "1") {
           return "True";
         }
-        if (booleanKeys.includes(key) && value.toString() === "0") {
+        if (booleanKeys.includes(key) && value?.toString() === "0") {
           return "False";
         }
 

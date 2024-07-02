@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import ColorSettingComponent from "../../../components/Settings/GeneralSettings/ColorSetting";
 import CompanySetting from "../../../components/Settings/GeneralSettings/CompanySetting";
 import CurrencySettingComponent from "../../../components/Settings/GeneralSettings/CurrencySetting";
-import DeveloperSettingComponent from "../../../components/Settings/GeneralSettings/DeveloperSetting";
 import StaffSetting from "../../../components/Settings/GeneralSettings/StaffSetting";
 import TimeSetting from "../../../components/Settings/GeneralSettings/TimeSetting";
 import CustomLogoUploader from "../../../components/Shared/Upload/CustomLogoUploader";
@@ -66,7 +65,7 @@ const GeneralSettingForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    //console.log(errorInfo);
+    console.log(errorInfo);
   };
 
   return (
@@ -86,7 +85,7 @@ const GeneralSettingForm = ({ data }) => {
         <TimeSetting />
         <CurrencySettingComponent />
         <StaffSetting />
-        <DeveloperSettingComponent />
+        {/* <DeveloperSettingComponent /> */}
 
         <div className="w-full flex gap-3 justify-end items-center">
           <Button htmlType="submit" type="primary" loading={isLoading}>

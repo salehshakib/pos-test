@@ -38,7 +38,7 @@ const GiftCardTypeTable = ({ newColumns, setSelectedRows }) => {
   const { data, isLoading } = useGetAllGiftCardTypeQuery(
     { params },
     {
-      skip: !useUrlIndexPermission(),
+      skip: !useUrlIndexPermission(""),
     }
   );
 

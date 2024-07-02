@@ -1,7 +1,6 @@
 //components
 import { FiShoppingBag } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
-import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuArchive } from "react-icons/lu";
 import {
   MdOutlineInventory2,
@@ -17,10 +16,7 @@ import {
   TbUsersGroup,
 } from "react-icons/tb";
 import { TfiShoppingCart } from "react-icons/tfi";
-import { VscDiffAdded } from "react-icons/vsc";
-import AddOns from "../pages/Dashboard/AddOns/AddOns";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import Documents from "../pages/Dashboard/Documents/Documents";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
 import TransferList from "../pages/Dashboard/Transfer/TransferList";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
@@ -62,13 +58,13 @@ export const adminPaths = [
   },
   {
     name: "Sales",
-    path: "sale",
+    path: "sales",
     icon: TfiShoppingCart,
     children: salePaths,
   },
   {
-    name: "Expense",
-    path: "expense",
+    name: "Expenses",
+    path: "expenses",
     icon: SlWallet,
     children: expensePaths,
   },
@@ -106,7 +102,7 @@ export const adminPaths = [
   // },
   {
     name: "HRM",
-    path: "human-resources",
+    path: "hrm",
     icon: TbUsersGroup,
     children: hrmPaths,
   },
@@ -128,19 +124,19 @@ export const adminPaths = [
   //   icon: IoPeopleCircle,
   //   element: <Roles />,
   // },
-  {
-    name: "Documents",
-    path: "documents",
-    icon: IoDocumentTextOutline,
-    element: <Documents />,
-  },
+  // {
+  //   name: "Documents",
+  //   path: "documents",
+  //   icon: IoDocumentTextOutline,
+  //   element: <Documents />,
+  // },
 
-  {
-    name: "AddOns",
-    path: "addons",
-    icon: VscDiffAdded,
-    element: <AddOns />,
-  },
+  // {
+  //   name: "AddOns",
+  //   path: "addons",
+  //   icon: VscDiffAdded,
+  //   element: <AddOns />,
+  // },
   {
     name: "Settings",
     path: "settings",

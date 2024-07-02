@@ -9,6 +9,12 @@ import ProductList from "../../pages/Dashboard/ProductList/ProductList";
 
 export const productPaths = [
   {
+    name: "Product",
+    path: "product",
+    icon: MdAddShoppingCart,
+    element: <ProductList />,
+  },
+  {
     name: "Brand",
     path: "brand",
     icon: TbBrandAirtable,
@@ -20,12 +26,7 @@ export const productPaths = [
     icon: BiCategoryAlt,
     element: <Category />,
   },
-  {
-    name: "Product",
-    path: "products",
-    icon: MdAddShoppingCart,
-    element: <ProductList />,
-  },
+
   {
     name: "Print Barcode",
     path: "print-barcode",

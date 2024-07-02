@@ -1,10 +1,9 @@
 import { Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/data/defaultLogo";
-import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { adminPaths } from "../routes/admin.routes";
+import { useMenuItems } from "../utilities/lib/getPermission";
 import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
 const { Sider } = Layout;
 
@@ -26,8 +25,9 @@ const getLevelKeys = (items1) => {
 
 const SideBar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
-  const userData = useSelector(useCurrentUser);
-  const menu = userData?.roles?.menu;
+
+  const menuItems = useMenuItems(adminPaths);
+
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
 
@@ -47,15 +47,36 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     }
   }, [navigate, pathname, setCollapsed]);
 
-  const filteredPaths = adminPaths.filter((item) => {
-    return menu?.some(
-      (menuItem) => menuItem?.name.toLowerCase() === item.name.toLowerCase()
-    );
+  const filteredPaths = [];
+
+  Object.keys(menuItems).forEach((key) => {
+    adminPaths.forEach((item) => {
+      if (key.toLowerCase().includes(item.path)) {
+        if (item.children && menuItems[key].length) {
+          const modifiedMenuItems = menuItems[key].map((subItem) =>
+            subItem.toLowerCase().replace(/\s+/g, "-")
+          );
+
+          const filteredChildren = item.children.filter((child) =>
+            modifiedMenuItems.includes(child.path)
+          );
+
+          if (filteredChildren.length > 0) {
+            filteredPaths.push({
+              ...item,
+              children: filteredChildren,
+            });
+          } else {
+            filteredPaths.push(item);
+          }
+        } else {
+          filteredPaths.push(item);
+        }
+      }
+    });
   });
 
-  const sidebarItems = sidebarItemsGenerator(
-    userData?.is_admin ? filteredPaths : adminPaths
-  );
+  const sidebarItems = sidebarItemsGenerator(filteredPaths);
 
   const levelKeys = getLevelKeys(sidebarItems);
 

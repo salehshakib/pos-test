@@ -1,6 +1,7 @@
 import { Col, Divider, Form, Radio, Row } from "antd";
-import invoiceFormats from "../../../assets/data/invoiceFormats.json";
+import { invoiceFormats } from "../../../assets/data/invoiceFormats";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { staffAcessOptions } from "../../../assets/data/staffAccessOptions";
 
 const rowLayout = {
   gutter: 25,
@@ -15,11 +16,6 @@ const colLayout = {
 };
 
 const StaffSetting = () => {
-  const invoiceFormatOptions = invoiceFormats.invoiceFormats.map(
-    ({ id, name }) => {
-      return { label: name, value: id };
-    }
-  );
   return (
     <div>
       <Divider orientation="left" orientationMargin={0}>
@@ -30,7 +26,7 @@ const StaffSetting = () => {
           <CustomSelect
             name={"invoice_format"}
             label={"Invoice Format"}
-            options={invoiceFormatOptions}
+            options={invoiceFormats}
             required={true}
           />
         </Col>
@@ -38,6 +34,7 @@ const StaffSetting = () => {
           <CustomSelect
             name={"staff_access"}
             label={"Staff Access"}
+            options={staffAcessOptions}
             required={true}
           />
         </Col>

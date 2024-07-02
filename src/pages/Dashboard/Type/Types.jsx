@@ -23,7 +23,7 @@ const Types = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Type List"
+      pageTitle="Type"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

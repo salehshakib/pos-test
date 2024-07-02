@@ -1,30 +1,21 @@
 import dayjs from "dayjs";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import {
-  useDeleteStockCountMutation,
-  useGetStockCountsQuery,
-} from "../../redux/services/stockCount/stockCountApi";
+import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { StockCountDetails } from "./StockCountDetails";
-import StockCountEdit from "./StockCountEdit";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import CustomTable from "../Shared/Table/CustomTable";
 
 const StockCountTable = ({ newColumns, setSelectedRows }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [editId, setEditId] = useState(undefined);
+  // const [editId, setEditId] = useState(undefined);
 
-  const [detailsId, setDetailsId] = useState(undefined);
-  const [detailsModal, setDetailsModal] = useState(false);
+  // const [detailsId, setDetailsId] = useState(undefined);
+  // const [detailsModal, setDetailsModal] = useState(false);
 
-  const [deleteId, setDeleteId] = useState(undefined);
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteId, setDeleteId] = useState(undefined);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
@@ -43,30 +34,30 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   );
   const total = data?.meta?.total;
 
-  const [deleteStockCount, { isLoading: isDeleting }] =
-    useDeleteStockCountMutation();
+  // const [deleteStockCount, { isLoading: isDeleting }] =
+  //   useDeleteStockCountMutation();
 
-  const handleEdit = (id) => {
-    setEditId(id);
-    dispatch(openEditDrawer());
-  };
+  // const handleEdit = (id) => {
+  //   setEditId(id);
+  //   dispatch(openEditDrawer());
+  // };
 
-  const handleDetailsModal = (id) => {
-    setDetailsId(id);
-    setDetailsModal(true);
-  };
+  // const handleDetailsModal = (id) => {
+  //   setDetailsId(id);
+  //   setDetailsModal(true);
+  // };
 
-  const handleDeleteModal = (id) => {
-    setDeleteId(id);
-    setDeleteModal(true);
-  };
+  // const handleDeleteModal = (id) => {
+  //   setDeleteId(id);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDelete = async () => {
-    const { data } = await deleteStockCount(deleteId);
-    if (data?.success) {
-      setDeleteModal(false);
-    }
-  };
+  // const handleDelete = async () => {
+  //   const { data } = await deleteStockCount(deleteId);
+  //   if (data?.success) {
+  //     setDeleteModal(false);
+  //   }
+  // };
 
   const dataSource =
     data?.results?.stockcount?.map((item) => {
@@ -89,16 +80,16 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         warehouse: stock_warehouses?.name,
         category: stock_categories?.name,
         brand: stock_brands?.name,
-        handleEdit,
-        handleDeleteModal,
-        handleDetailsModal,
+        // handleEdit,
+        // handleDeleteModal,
+        // handleDetailsModal,
       };
     }) ?? [];
 
-  const hideModal = () => {
-    setDetailsModal(false);
-    setDeleteModal(false);
-  };
+  // const hideModal = () => {
+  //   setDetailsModal(false);
+  //   setDeleteModal(false);
+  // };
 
   return (
     <GlobalUtilityStyle>
@@ -115,7 +106,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         status={false}
       />
 
-      <StockCountEdit id={editId} setId={setEditId} />
+      {/* <StockCountEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <StockCountDetails
@@ -131,7 +122,7 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
         handleDelete={handleDelete}
         isLoading={isDeleting}
         item={"stock count"}
-      />
+      /> */}
     </GlobalUtilityStyle>
   );
 };

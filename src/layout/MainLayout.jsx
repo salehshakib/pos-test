@@ -8,11 +8,14 @@ import Profile from "../components/AllSection/Header/Profile";
 import { GlobalUtilityStyle } from "../container/Styled";
 import { mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
+import { useSelector } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const { developedBy, hyperLink } = useSelector((state) => state.developer);
 
   return (
     <GlobalUtilityStyle>
@@ -60,8 +63,15 @@ const MainLayout = () => {
                 padding: "16px",
               }}
             >
-              POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
-              Solutions
+              POS Inventory ©{new Date().getFullYear()} Created by{" "}
+              <a
+                href={`http://${hyperLink}`}
+                className="primary-text hover:underline font-semibold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {developedBy ?? "Vitasoft Solutions"}
+              </a>
             </Footer>
           </Layout>
         </div>

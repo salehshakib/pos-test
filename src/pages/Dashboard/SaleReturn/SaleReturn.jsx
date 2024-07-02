@@ -1,9 +1,21 @@
 import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import SaleReturnCreate from "../../../components/SaleReturn/SaleReturnCreate";
 import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
 
 const columns = [
+  {
+    title: "Return Reference",
+    dataIndex: "referenceNo",
+    key: "referenceNo",
+    align: "center",
+    render: (text) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {text}
+      </span>
+    ),
+  },
   {
     title: "Sale Reference",
     dataIndex: "saleReference",
@@ -15,17 +27,7 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Reference No",
-    dataIndex: "referenceNo",
-    key: "referenceNo",
-    align: "center",
-    render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {text}
-      </span>
-    ),
-  },
+
   {
     title: "Warehouse",
     dataIndex: "warehouse",
@@ -82,6 +84,7 @@ const SaleReturn = () => {
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
+      api={SALE_RETURN}
     >
       <SaleReturnCreate />
 

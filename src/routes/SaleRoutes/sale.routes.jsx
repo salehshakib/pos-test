@@ -12,7 +12,7 @@ import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
 export const salePaths = [
   {
     name: "Sale",
-    path: "sale-list",
+    path: "sale",
     icon: FaShoppingBasket,
     element: <SaleList />,
   },
@@ -35,8 +35,8 @@ export const salePaths = [
     element: <GiftCardDesign />,
   },
   {
-    name: "Coupons",
-    path: "coupons",
+    name: "Coupon",
+    path: "coupon",
     icon: RiCoupon3Line,
     element: <Coupons />,
   },

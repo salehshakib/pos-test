@@ -49,7 +49,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     // selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  console.log(params);
+  // console.log(params);
 
   const { data, isLoading } = useGetAllProductsQuery(
     { params },

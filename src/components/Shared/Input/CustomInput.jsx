@@ -133,6 +133,7 @@ const CustomInput = (props) => {
     onChange,
     value,
     addonBefore = "+88",
+    size = "large",
 
     //for mb-0
     customStyle = false,
@@ -140,7 +141,7 @@ const CustomInput = (props) => {
 
   const commonProps = {
     placeholder: `Enter ${placeholder ?? label}`,
-    size: "large",
+    size,
     prefix,
     value,
   };

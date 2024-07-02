@@ -41,7 +41,7 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const { data, isLoading } = useGetAllPurchaseQuery(
     { params },
     {
-      skip: !useUrlIndexPermission(),
+      skip: !useUrlIndexPermission("purchase"),
     }
   );
 

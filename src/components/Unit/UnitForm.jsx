@@ -6,6 +6,7 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomRadio from "../Shared/Radio/CustomRadio";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 const BaseUnit = () => {
   const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
@@ -15,14 +16,17 @@ const BaseUnit = () => {
     <CustomSelect
       label={"Base Unit"}
       name={"base_unit"}
-      required={true}
+      // required={true}
       options={baseUnitOptions}
     />
   );
 };
 
 const TypeUnit = () => {
-  const { data, isFetching } = useGetTypesQuery({});
+  const params = useGlobalParams({
+    selectValue: ["name"],
+  });
+  const { data, isFetching } = useGetTypesQuery({ params });
 
   const options = data?.results?.type?.map((item) => {
     return {
@@ -36,6 +40,7 @@ const TypeUnit = () => {
       <CustomSelect
         label="Type"
         name={"for"}
+        required={true}
         options={options}
         placeholder={"Type"}
         isLoading={isFetching}
@@ -75,7 +80,7 @@ const OperatorComponent = () => {
             options={options}
             name={"operator"}
             label={"Operator"}
-            required={true}
+            // required={true}
           />
         </Col>
 
@@ -84,7 +89,7 @@ const OperatorComponent = () => {
             label={"Operator Value"}
             type={"number"}
             name={"operation_value"}
-            required={true}
+            // required={true}
           />
         </Col>
       </>

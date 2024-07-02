@@ -1,16 +1,38 @@
-import { App, ConfigProvider } from "antd";
-import React, { useEffect } from "react";
+import { App, ConfigProvider, Spin } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "styled-components";
+import { setDeveloper } from "../redux/services/developer/developerSlice";
+import { setMenuItems } from "../redux/services/menu/menuSlice";
 import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
 import {
   setPrimaryColor,
   setSecondaryColor,
 } from "../redux/services/theme/themeSlice";
+import { adminPaths } from "../routes/admin.routes";
 import { router } from "../routes/routes";
 import { theme } from "../utilities/configs/theme";
+import { useMenuItems } from "../utilities/lib/getPermission";
+
+const LoadingComponent = (data) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 10000); // 5 seconds
+    return () => clearTimeout(timer); // Cleanup timer on unmount
+  }, []);
+
+  if (!data || isLoading) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center items-center gap-5">
+        <Spin size="large" />
+        <span>Setting up your environment...</span>
+      </div>
+    );
+  }
+};
 
 export const ProviderConfig = ({ children }) => {
   const dispatch = useDispatch();
@@ -19,7 +41,13 @@ export const ProviderConfig = ({ children }) => {
     (state) => state.theme
   );
 
+  const { developedBy } = useSelector((state) => state.developer);
+
   const { data } = useGetGeneralSettingsQuery();
+
+  const menuItems = useMenuItems(adminPaths);
+
+  // console.log(menuItems);
 
   useEffect(() => {
     if (data) {
@@ -34,12 +62,25 @@ export const ProviderConfig = ({ children }) => {
         "--secondColor",
         data?.secendary_color ? data?.secendary_color : "#B391AC"
       );
+
+      dispatch(
+        setDeveloper({
+          developedBy: data?.developed_by,
+          hyperLink: data?.developed_by_link,
+        })
+      );
     }
   }, [data, dispatch]);
 
+  useEffect(() => {
+    if (menuItems.length) {
+      dispatch(setMenuItems({ menuItems }));
+    }
+  }, [dispatch, menuItems]);
+
   const customTheme = theme({ primaryColor, secondaryColor, textColor });
 
-  // useEffect(()=> {})
+  if (!developedBy && !data) return <LoadingComponent data={data} />;
 
   return (
     <React.StrictMode>
@@ -53,8 +94,8 @@ export const ProviderConfig = ({ children }) => {
         <App>
           <ThemeProvider theme={{ ...customTheme }}>
             <RouterProvider router={router}>{children}</RouterProvider>
-            <Toaster position="top-center" richColors />
           </ThemeProvider>
+          <Toaster position="top-center" richColors />
         </App>
       </ConfigProvider>
     </React.StrictMode>

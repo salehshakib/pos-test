@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
+import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeleteUnitMutation,
   useGetAllUnitQuery,
@@ -8,14 +10,19 @@ import {
 } from "../../redux/services/unit/unitApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { UnitdEdit } from "./UnitEdit";
 
 const UnitTable = ({ newColumns, setSelectedRows }) => {
+  const dispatch = useDispatch();
+
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
+
+  const [editId, setEditId] = useState(undefined);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -38,6 +45,11 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
 
   const [updateStatus, { isLoading: isStatusUpdating }] =
     useUpdateUnitStatusMutation();
+
+  const handleEdit = (id) => {
+    setEditId(id);
+    dispatch(openEditDrawer());
+  };
 
   const handleStatusModal = (id) => {
     setStatusId(id);
@@ -93,12 +105,14 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
         status: is_active,
         baseUnit: base_unit,
         created_at: date,
+        handleEdit,
         handleStatusModal,
         handleDeleteModal,
       };
     }) ?? [];
 
   const hideModal = () => {
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -115,6 +129,8 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
         isLoading={isLoading}
         isRowSelection={true}
       />
+
+      <UnitdEdit id={editId} setId={setEditId} />
 
       <StatusModal
         statusModal={statusModal}

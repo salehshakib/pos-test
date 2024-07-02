@@ -77,7 +77,7 @@ export const Supplier = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   return (
     <GlobalContainer
-      pageTitle="Supplier List"
+      pageTitle="Supplier"
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

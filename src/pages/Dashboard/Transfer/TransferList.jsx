@@ -110,7 +110,7 @@ const TransferList = () => {
 
   return (
     <GlobalContainer
-      pageTitle={"Transfer List"}
+      pageTitle={"Transfer"}
       columns={columns}
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}

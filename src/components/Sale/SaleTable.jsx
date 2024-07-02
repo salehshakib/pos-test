@@ -38,7 +38,7 @@ export const SaleTable = ({ newColumns, setSelectedRows }) => {
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {
-      skip: !useUrlIndexPermission(),
+      skip: !useUrlIndexPermission("sale"),
     }
   );
 

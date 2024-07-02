@@ -4,6 +4,7 @@ import BrandCreate from "../../../components/Brand/BrandCreate";
 import { BrandTable } from "../../../components/Brand/BrandTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -38,6 +39,7 @@ const columns = [
 const Brand = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
@@ -46,10 +48,15 @@ const Brand = () => {
       selectedRows={selectedRows}
       setNewColumns={setNewColumns}
       api={BRAND}
+      debounce={debounce}
     >
       <BrandCreate />
 
-      <BrandTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <BrandTable
+        newColumns={newColumns}
+        setSelectedRows={setSelectedRows}
+        keyword={keyword}
+      />
     </GlobalContainer>
   );
 };

@@ -17,7 +17,7 @@ import { BrandEdit } from "./BrandEdit";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const BrandTable = ({ newColumns, setSelectedRows }) => {
+export const BrandTable = ({ newColumns, setSelectedRows, keyword }) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -34,10 +34,9 @@ export const BrandTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
-    // isRelationalParams: true,
+    params: { ...pagination },
+    keyword,
   });
 
   const { data, isLoading } = useGetBrandsQuery(

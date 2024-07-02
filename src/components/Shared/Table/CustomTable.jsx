@@ -1,7 +1,7 @@
 import { Dropdown, Table } from "antd";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
-import { MdDelete, MdEditSquare } from "react-icons/md";
+import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { usePermission } from "../../../utilities/lib/getPermission";
 
@@ -241,12 +241,23 @@ const CustomTable = ({
               </button>
             )}
 
-            <button
-              onClick={() => record?.handleDeleteModal(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-            >
-              <MdDelete className="text-lg md:text-xl" />
-            </button>
+            {record?.handleDelete && (
+              <button
+                onClick={() => record?.handleDeleteModal(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdDelete className="text-lg md:text-xl" />
+              </button>
+            )}
+
+            {record?.handleFileDownload && (
+              <button
+                onClick={() => record?.handleFileDownload(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdFileDownload className="text-lg md:text-xl" />
+              </button>
+            )}
           </div>
         );
       }
@@ -266,8 +277,6 @@ const CustomTable = ({
   if (action) {
     newColumns.splice(newColumns.length, 0, actionColumn);
   }
-
-  console.log(route);
 
   return (
     <Table

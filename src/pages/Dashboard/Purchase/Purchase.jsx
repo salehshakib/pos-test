@@ -3,6 +3,7 @@ import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer"
 import { PurchaseCreate } from "../../../components/Purchase/PurchaseCreate";
 import { PurchaseTable } from "../../../components/Purchase/PurchaseTable";
 import { PURCHASE } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -98,12 +99,15 @@ const columns = [
 const Purchase = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Purchase"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={PURCHASE}
     >
@@ -111,6 +115,7 @@ const Purchase = () => {
 
       <PurchaseTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

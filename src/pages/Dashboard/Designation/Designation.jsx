@@ -3,6 +3,7 @@ import { DesignationCreate } from "../../../components/Designation/DesignationCr
 import { DesignationTable } from "../../../components/Designation/DesignationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { DESIGNATION } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -30,12 +31,15 @@ const columns = [
 const Designation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Designation"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={DESIGNATION}
     >
@@ -43,6 +47,7 @@ const Designation = () => {
 
       <DesignationTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

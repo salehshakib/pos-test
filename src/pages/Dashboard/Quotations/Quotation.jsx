@@ -3,6 +3,7 @@ import QuotationCreate from "../../../components/Generator/Quotation/QuotationCr
 import QuotationTable from "../../../components/Generator/Quotation/QuotationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { GENERATE_QUOTATION } from "../../../utilities/apiEndpoints/generate.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -82,12 +83,15 @@ const columns = [
 const Quotation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Quotation"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={GENERATE_QUOTATION}
     >
@@ -95,6 +99,7 @@ const Quotation = () => {
 
       <QuotationTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

@@ -4,6 +4,7 @@ import AttendanceCreate from "../../../components/Attendance/AttendanceCreate";
 import { AttendanceTable } from "../../../components/Attendance/AttendanceTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { ATTENDANCE } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -79,12 +80,15 @@ const columns = [
 export const Attendance = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Attendance"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={ATTENDANCE}
     >
@@ -92,6 +96,7 @@ export const Attendance = () => {
 
       <AttendanceTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

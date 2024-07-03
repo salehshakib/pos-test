@@ -13,7 +13,7 @@ const DeleteModal = ({
   hideModal,
   handleDelete,
   isLoading,
-  item,
+  item = "item",
 }) => {
   return (
     <GlobalUtilityStyle>

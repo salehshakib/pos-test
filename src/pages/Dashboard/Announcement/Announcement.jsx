@@ -3,6 +3,7 @@ import { AnnoucementCreate } from "../../../components/Announcement/Announcement
 import { AnnouncementTable } from "../../../components/Announcement/AnnouncementTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { ANNOUNCEMENT } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -62,12 +63,15 @@ const columns = [
 export const Announcement = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Announcement"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={ANNOUNCEMENT}
     >
@@ -75,6 +79,7 @@ export const Announcement = () => {
 
       <AnnouncementTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

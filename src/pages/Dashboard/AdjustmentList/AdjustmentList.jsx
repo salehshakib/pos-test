@@ -3,6 +3,7 @@ import AdjustmentCreate from "../../../components/Adjustment/AdjustmentCreate";
 import AdjustmentTable from "../../../components/Adjustment/AdjustmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { ADJUSTMENT } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -43,12 +44,15 @@ const columns = [
 const AdjustmentList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Adjustment"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={ADJUSTMENT}
     >
@@ -56,6 +60,7 @@ const AdjustmentList = () => {
 
       <AdjustmentTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

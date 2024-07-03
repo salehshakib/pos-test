@@ -3,6 +3,7 @@ import SupplierCreate from "../../../components/Supplier/SupplierCreate";
 import SupplierTable from "../../../components/Supplier/SupplierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { SUPPLIER } from "../../../utilities/apiEndpoints/people.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   // {
@@ -75,11 +76,14 @@ const columns = [
 export const Supplier = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Supplier"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={SUPPLIER}
     >
@@ -87,6 +91,7 @@ export const Supplier = () => {
 
       <SupplierTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

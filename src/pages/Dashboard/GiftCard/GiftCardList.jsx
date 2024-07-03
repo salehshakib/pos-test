@@ -3,6 +3,7 @@ import GiftCardCreate from "../../../components/GiftCard/GiftCardCreate";
 import GiftCardTable from "../../../components/GiftCard/GiftCardTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { GIFT_CARD } from "../../../utilities/apiEndpoints/offer.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -71,54 +72,20 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "Created At",
-  //   dataIndex: "date",
-  //   key: "date",
-  //   align: "center",
-  //   render: (date) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {date}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   title: "Action",
-  //   dataIndex: "action",
-  //   key: "action",
-  //   align: "center",
-  //   width: 70,
-  //   fixed: "right",
-  //   render: (_, record) => {
-  //     return (
-  //       <div className="flex justify-center items-center gap-3 ">
-  //         <button
-  //           onClick={() => record?.handleEdit(record?.id)}
-  //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-  //         >
-  //           <MdEditSquare className="text-lg md:text-xl" />
-  //         </button>
-  //         <button
-  //           onClick={() => record?.handleDeleteModal(record?.id)}
-  //           className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-  //         >
-  //           <MdDelete className="text-lg md:text-xl" />
-  //         </button>
-  //       </div>
-  //     );
-  //   },
-  // },
 ];
 
 const GiftCardList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Gift Card"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={GIFT_CARD}
     >
@@ -126,6 +93,7 @@ const GiftCardList = () => {
 
       <GiftCardTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

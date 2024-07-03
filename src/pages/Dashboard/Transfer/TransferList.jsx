@@ -3,6 +3,7 @@ import TransferCreate from "../../../components/Transfer/TransferCreate";
 import TransferTable from "../../../components/Transfer/TransferTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { TRANSFER } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -107,18 +108,22 @@ const columns = [
 const TransferList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle={"Transfer"}
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={TRANSFER}
     >
       <TransferCreate />
       <TransferTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

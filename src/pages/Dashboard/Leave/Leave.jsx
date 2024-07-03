@@ -3,6 +3,7 @@ import { LeaveCreate } from "../../../components/Leave/LeaveCreate";
 import { LeaveTable } from "../../../components/Leave/LeaveTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { LEAVE } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -57,18 +58,25 @@ const columns = [
 export const Leave = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Leave"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={LEAVE}
     >
       <LeaveCreate />
 
-      <LeaveTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <LeaveTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

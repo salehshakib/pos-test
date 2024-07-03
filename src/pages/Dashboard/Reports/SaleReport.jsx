@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SaleReportTable } from "../../../components/Report/SaleReportTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -48,15 +49,19 @@ const columns = [
 export const SaleReport = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Sale Report"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
     >
       <SaleReportTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

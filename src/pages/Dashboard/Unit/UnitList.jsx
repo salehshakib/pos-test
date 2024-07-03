@@ -3,6 +3,7 @@ import UnitCreate from "../../../components/Unit/UnitCreate";
 import UnitTable from "../../../components/Unit/UnitTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { UNIT } from "../../../utilities/apiEndpoints/helper.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -77,18 +78,25 @@ const columns = [
 const UnitList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Unit"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={UNIT}
     >
       <UnitCreate />
 
-      <UnitTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <UnitTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

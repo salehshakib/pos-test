@@ -3,6 +3,7 @@ import CurrencyCreate from "../../../components/Currency/CurrencyCreate";
 import CurrencyTable from "../../../components/Currency/CurrencyTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CURRENCY } from "../../../utilities/apiEndpoints/helper.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -44,12 +45,15 @@ const columns = [
 const CurrencyList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Currency"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={CURRENCY}
     >
@@ -57,6 +61,7 @@ const CurrencyList = () => {
 
       <CurrencyTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

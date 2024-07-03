@@ -342,11 +342,16 @@ import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { base_url } from "../../utilities/configs/base_url";
 import { usePermission } from "../../utilities/lib/getPermission";
 import { GlobalUtilityStyle } from "../Styled";
+import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
+import { downloadFile } from "../../utilities/lib/downloadFile";
+import DeleteModal from "../../components/Shared/Modal/DeleteModal";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 const GlobalContainer = ({
   pageTitle,
   columns = [],
   selectedRows,
+  setSelectedRows,
   children,
   setNewColumns,
   searchFilterContent,
@@ -354,33 +359,51 @@ const GlobalContainer = ({
   debounce,
 }) => {
   const dispatch = useDispatch();
+  const token = useSelector(useCurrentToken);
   const { pathname } = useLocation();
+
   const [open, setOpen] = useState(false);
   const [checkedMenuOpen, setCheckedMenuOpen] = useState(false);
-  const token = useSelector(useCurrentToken);
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [bulkDelete, { isLoading }] = useBulkDeleteMutation();
 
   const defaultCheckedList = useMemo(
     () => columns.map((item) => item.key),
     [columns]
   );
-  const [checkedList, setCheckedList] = useState(defaultCheckedList);
 
-  useEffect(() => {
-    const newColumns = columns.map((item) => ({
-      ...item,
-      hidden: !checkedList.includes(item.key),
-    }));
-    setNewColumns(newColumns);
-  }, [checkedList, columns, setNewColumns]);
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
 
   const handleDrawerOpen = () => {
     dispatch(openCreateDrawer());
+  };
+
+  const header = {
+    title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
+    subTitle: usePermission(api, "store") &&
+      !["/petty-cash", "/reports"].some((path) => pathname.includes(path)) && (
+        <div className="w-full">
+          <Button
+            key={"create"}
+            type="text"
+            icon={<FaCirclePlus size={28} />}
+            style={{ width: "45px", height: "100%" }}
+            onClick={handleDrawerOpen}
+            className="primary-text flex justify-center items-center"
+          />
+        </div>
+      ),
   };
 
   const handleMenuClick = (e) => {
     if (e.key !== "tableColumns") {
       setCheckedMenuOpen(false);
     }
+  };
+
+  const onChange = (list) => {
+    setCheckedList(list);
   };
 
   const handleOpenChange = (nextOpen, info) => {
@@ -392,66 +415,6 @@ const GlobalContainer = ({
   const handleCheckedOpenChange = (nextOpen, info) => {
     if (info.source === "trigger" || nextOpen) {
       setCheckedMenuOpen(nextOpen);
-    }
-  };
-
-  const onChange = (list) => {
-    setCheckedList(list);
-  };
-
-  const handleExport = useCallback(
-    async (format) => {
-      const fileUrl = new URL(`${base_url}/${api}/export`);
-      const supportedFormats = {
-        xlsx: "xlsx",
-        pdf: "pdf",
-        csv: "csv",
-      };
-
-      if (!supportedFormats[format]) {
-        console.error("Unsupported file format");
-        return;
-      }
-
-      fileUrl.searchParams.append("format", format);
-
-      try {
-        const response = await fetch(fileUrl, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to download file");
-        }
-
-        await downloadFile(response, supportedFormats[format]);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api, token]
-  );
-
-  const downloadFile = async (response, extension) => {
-    try {
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-
-      a.href = blobUrl;
-      a.download = `${pageTitle}.${extension}`;
-      document.body.appendChild(a);
-      a.click();
-
-      window.URL.revokeObjectURL(blobUrl);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("Error during file download:", error);
     }
   };
 
@@ -521,30 +484,85 @@ const GlobalContainer = ({
       icon: <FaPrint size={16} />,
     },
   ];
-  const header = {
-    title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
-    subTitle: usePermission(api, "store") &&
-      !["/petty-cash", "/reports"].some((path) => pathname.includes(path)) && (
-        <div className="w-full">
-          <Button
-            key={"create"}
-            type="text"
-            icon={<FaCirclePlus size={28} />}
-            style={{ width: "45px", height: "100%" }}
-            onClick={handleDrawerOpen}
-            className="primary-text flex justify-center items-center"
-          />
-        </div>
-      ),
+
+  const handleExport = useCallback(
+    async (format) => {
+      const fileUrl = new URL(`${base_url}/${api}/export`);
+      const supportedFormats = {
+        xlsx: "xlsx",
+        pdf: "pdf",
+        csv: "csv",
+      };
+
+      if (!supportedFormats[format]) {
+        console.error("Unsupported file format");
+        return;
+      }
+
+      fileUrl.searchParams.append("format", format);
+
+      try {
+        const response = await fetch(fileUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to download file");
+        }
+
+        await downloadFile(response, supportedFormats[format], pageTitle);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [api, token]
+  );
+
+  const handleDeleteModal = () => {
+    // dispatch(openDeleteDrawer());
+    setDeleteModal(true);
   };
 
-  // const [keyword, setKeyword] = useState(null);
+  const handleBulkDelete = async () => {
+    const formData = new FormData();
+    const delete_ids = selectedRows.map((item) => item.id);
 
-  // const debounce = useDebouncedCallback(async (value) => {
-  //   if (value.trim() !== "") {
-  //     setKeyword(value);
-  //   }
-  // }, 1000);
+    const postData = { delete_ids };
+
+    // formData.append("delete_ids", delete_ids);
+    appendToFormData(postData, formData);
+
+    const { data, error } = await bulkDelete({
+      url: api,
+      data: postData,
+    });
+
+    if (data?.success) {
+      hideModal();
+      setSelectedRows([]);
+    } else {
+      console.log(error);
+    }
+
+    console.log(data, error);
+  };
+
+  const hideModal = () => {
+    setDeleteModal(false);
+  };
+
+  useEffect(() => {
+    const newColumns = columns.map((item) => ({
+      ...item,
+      hidden: !checkedList.includes(item.key),
+    }));
+    setNewColumns(newColumns);
+  }, [checkedList, columns, setNewColumns]);
 
   return (
     <GlobalUtilityStyle>
@@ -608,7 +626,10 @@ const GlobalContainer = ({
             </Dropdown>,
             selectedRows?.length > 0 && (
               <div key={"delete"}>
-                <button className="custom-primary-btn p-2 rounded-xl text-white duration-300">
+                <button
+                  className="custom-primary-btn p-2 rounded-xl text-white duration-300"
+                  onClick={handleDeleteModal}
+                >
                   <FaTrash className="text-xl" />
                 </button>
               </div>
@@ -617,6 +638,14 @@ const GlobalContainer = ({
           content={children}
         />
       </div>
+
+      <DeleteModal
+        deleteModal={deleteModal}
+        hideModal={hideModal}
+        isLoading={isLoading}
+        handleDelete={handleBulkDelete}
+        item={"items"}
+      />
     </GlobalUtilityStyle>
   );
 };

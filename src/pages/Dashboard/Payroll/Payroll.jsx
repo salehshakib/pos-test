@@ -3,6 +3,7 @@ import { PayrollCreate } from "../../../components/Payroll/PayrollCreate";
 import { PayrollTable } from "../../../components/Payroll/PayrollTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { PAYROLL } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -90,18 +91,25 @@ const columns = [
 export const Payroll = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Payroll"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={PAYROLL}
     >
       <PayrollCreate />
 
-      <PayrollTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <PayrollTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

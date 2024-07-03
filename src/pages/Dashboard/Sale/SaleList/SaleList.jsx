@@ -3,6 +3,7 @@ import { SaleCreate } from "../../../../components/Sale/SaleCreate";
 import { SaleTable } from "../../../../components/Sale/SaleTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { SALE } from "../../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -102,18 +103,25 @@ const columns = [
 const SaleList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Sale"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={SALE}
     >
       <SaleCreate />
 
-      <SaleTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <SaleTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

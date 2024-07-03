@@ -3,6 +3,7 @@ import PurchaseReturnCreate from "../../../components/PurchaseReturn/PurchaseRet
 import PurchaseReturnTable from "../../../components/PurchaseReturn/PurchaseReturnTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { PURCHASE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -77,12 +78,15 @@ const columns = [
 const PurchaseReturn = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Purchase Return"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={PURCHASE_RETURN}
     >
@@ -90,6 +94,7 @@ const PurchaseReturn = () => {
 
       <PurchaseReturnTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

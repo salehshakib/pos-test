@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { PettyCashTable } from "../../../components/PettyCash/PettyCashTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { PETTY_CASH } from "../../../utilities/apiEndpoints/account.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -70,16 +72,21 @@ const columns = [
 export const PettyCash = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Petty Cash"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      api={PETTY_CASH}
     >
       <PettyCashTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

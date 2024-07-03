@@ -2,6 +2,7 @@ import { useState } from "react";
 import DiscountPlanCreate from "../../../components/DiscountPlan/DiscountPlanCreate";
 import DiscountPlanTable from "../../../components/DiscountPlan/DiscountPlanTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -33,18 +34,23 @@ const columns = [
 const DiscountPlan = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Discount Plans"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      // api={}
     >
       <DiscountPlanCreate />
 
       <DiscountPlanTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

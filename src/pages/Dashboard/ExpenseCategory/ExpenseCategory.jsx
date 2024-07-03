@@ -3,6 +3,7 @@ import ExpenseCategoryCreate from "../../../components/ExpenseCategory/ExpenseCa
 import ExpenseCategoryTable from "../../../components/ExpenseCategory/ExpenseCategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { EXPENSE_CATEGORY } from "../../../utilities/apiEndpoints/account.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -21,12 +22,15 @@ const columns = [
 const ExpenseCategory = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Expense Category"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={EXPENSE_CATEGORY}
     >
@@ -34,6 +38,7 @@ const ExpenseCategory = () => {
 
       <ExpenseCategoryTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

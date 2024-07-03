@@ -217,6 +217,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
           isRowSelection={true}
           setSelectedRows={setSelectedRows}
           selectedRows={selectedRows}
+          debounce={debounce}
           changeSelectedRows={changeSelectedRows}
           tableStyleProps={{
             scroll: {

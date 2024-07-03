@@ -3,6 +3,7 @@ import CustomerGroupCreate from "../../../components/CustomerGroup/CustomerGroup
 import CustomerGroupTable from "../../../components/CustomerGroup/CustomerGroupTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CUSTOMER_GROUP } from "../../../utilities/apiEndpoints/helper.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -32,11 +33,14 @@ const columns = [
 const CustomerGroup = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Customer Group"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={CUSTOMER_GROUP}
     >
@@ -44,6 +48,7 @@ const CustomerGroup = () => {
 
       <CustomerGroupTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

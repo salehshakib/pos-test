@@ -3,6 +3,7 @@ import DepartmentCreate from "../../../components/Department/DepartmentCreate";
 import DepartmentTable from "../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { DEPARTMENT } from "../../../utilities/apiEndpoints/hrm.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -20,12 +21,15 @@ const columns = [
 const Department = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Department"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={DEPARTMENT}
     >
@@ -33,6 +37,7 @@ const Department = () => {
 
       <DepartmentTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

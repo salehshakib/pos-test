@@ -3,6 +3,7 @@ import TaxCreate from "../../../components/Tax/TaxCreate";
 import TaxTable from "../../../components/Tax/TaxTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { TAX } from "../../../utilities/apiEndpoints/helper.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -32,18 +33,25 @@ const columns = [
 const TaxList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Tax"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={TAX}
     >
       <TaxCreate />
 
-      <TaxTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <TaxTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

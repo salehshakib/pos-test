@@ -3,6 +3,7 @@ import InvoiceCreate from "../../../components/Generator/Invoice/InvoiceCreate";
 import InvoiceTable from "../../../components/Generator/Invoice/InvoiceTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { GENERATE_INVOICE } from "../../../utilities/apiEndpoints/generate.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -82,17 +83,24 @@ const columns = [
 const Invoice = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Invoice"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={GENERATE_INVOICE}
     >
       <InvoiceCreate />
 
-      <InvoiceTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <InvoiceTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

@@ -3,6 +3,7 @@ import { ExpenseCreate } from "../../../components/Expense/ExpenseCreate";
 import ExpenseTable from "../../../components/Expense/ExpenseTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { EXPENSE } from "../../../utilities/apiEndpoints/account.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -65,17 +66,24 @@ const columns = [
 const Expense = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Expense"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={EXPENSE}
     >
       <ExpenseCreate />
 
-      <ExpenseTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <ExpenseTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

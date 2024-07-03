@@ -3,6 +3,7 @@ import CashierCreate from "../../../components/Cashier/CashierCreate";
 import CashierTable from "../../../components/Cashier/CashierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CASHIER } from "../../../utilities/apiEndpoints/people.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -57,17 +58,24 @@ const columns = [
 const Cashier = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
   return (
     <GlobalContainer
       pageTitle="Cashier"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={CASHIER}
     >
       <CashierCreate />
 
-      <CashierTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <CashierTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

@@ -21,12 +21,15 @@ const columns = [
 const GiftCardDesign = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Gift Card Designs"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={GIFT_CARD_DESIGN}
     >
@@ -34,6 +37,7 @@ const GiftCardDesign = () => {
 
       <GiftCardDesginTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

@@ -3,6 +3,7 @@ import { RolesCreate } from "../../../components/Roles/RolesCreate";
 import { RolesTable } from "../../../components/Roles/RolesTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { ROLE } from "../../../utilities/apiEndpoints/auth.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -20,18 +21,25 @@ const columns = [
 export const Roles = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Role Permission"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={ROLE}
     >
       <RolesCreate />
 
-      <RolesTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <RolesTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

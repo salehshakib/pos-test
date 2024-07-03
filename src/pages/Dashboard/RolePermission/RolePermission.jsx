@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { ROLE_PERMISSION } from "../../../utilities/apiEndpoints/auth.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -81,18 +83,23 @@ const columns = [
 const RolePermission = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Role Permission"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      api={ROLE_PERMISSION}
     >
       {/* <WarehouseCreate />
 
       <WarehouseTable
         newColumns={newColumns}
+keyword={keyword}
         setSelectedRows={setSelectedRows}
       /> */}
     </GlobalContainer>

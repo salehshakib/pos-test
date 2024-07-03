@@ -3,6 +3,7 @@ import StockCountCreate from "../../../components/StockCount/StockCountCreate";
 import StockCountTable from "../../../components/StockCount/StockCountTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -125,12 +126,15 @@ const columns = [
 const StockCount = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Stock Count"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={STOCK_COUNT}
     >
@@ -138,6 +142,7 @@ const StockCount = () => {
 
       <StockCountTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

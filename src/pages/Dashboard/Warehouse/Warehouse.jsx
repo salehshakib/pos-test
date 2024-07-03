@@ -3,6 +3,7 @@ import WarehouseCreate from "../../../components/Warehouse/WarehouseCreate";
 import WarehouseTable from "../../../components/Warehouse/WarehouseTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { WAREHOUSE } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -44,12 +45,15 @@ const columns = [
 const Warehouse = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Warehouse"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={WAREHOUSE}
     >
@@ -57,6 +61,7 @@ const Warehouse = () => {
 
       <WarehouseTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

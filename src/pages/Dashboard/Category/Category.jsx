@@ -4,6 +4,7 @@ import CategoryCreate from "../../../components/Category/CategoryCreate";
 import CategoryTable from "../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CATEGORY } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -48,18 +49,23 @@ const columns = [
 const Category = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Category"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={CATEGORY}
     >
       <CategoryCreate />
+
       <CategoryTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

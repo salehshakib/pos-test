@@ -4,6 +4,7 @@ import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -126,18 +127,25 @@ const columns = [
 const ProductList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Product"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={PRODUCT}
     >
       <ProductCreate />
 
-      <ProductTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <ProductTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

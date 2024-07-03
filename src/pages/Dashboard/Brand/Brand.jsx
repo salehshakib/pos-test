@@ -46,16 +46,17 @@ const Brand = () => {
       pageTitle="Brand"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={BRAND}
-      debounce={debounce}
     >
       <BrandCreate />
 
       <BrandTable
         newColumns={newColumns}
-        setSelectedRows={setSelectedRows}
         keyword={keyword}
+        setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>
   );

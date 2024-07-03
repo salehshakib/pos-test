@@ -3,6 +3,7 @@ import SaleReturnCreate from "../../../components/SaleReturn/SaleReturnCreate";
 import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -77,12 +78,15 @@ const columns = [
 const SaleReturn = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Sale Return"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={SALE_RETURN}
     >
@@ -90,6 +94,7 @@ const SaleReturn = () => {
 
       <SaleReturnTable
         newColumns={newColumns}
+        keyword={keyword}
         setSelectedRows={setSelectedRows}
       />
     </GlobalContainer>

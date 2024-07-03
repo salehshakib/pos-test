@@ -3,6 +3,7 @@ import CouponsCreate from "../../../components/Coupons/CouponsCreate";
 import CouponsTable from "../../../components/Coupons/CouponsTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { COUPON } from "../../../utilities/apiEndpoints/offer.api";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
   {
@@ -109,18 +110,25 @@ const columns = [
 const Coupons = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { keyword, debounce } = useCustomDebounce();
 
   return (
     <GlobalContainer
       pageTitle="Coupons"
       columns={columns}
       selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       api={COUPON}
     >
       <CouponsCreate />
 
-      <CouponsTable newColumns={newColumns} setSelectedRows={setSelectedRows} />
+      <CouponsTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+      />
     </GlobalContainer>
   );
 };

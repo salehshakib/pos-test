@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import defaultUser from "../../../assets/data/defaultUserImage";
 import CategoryCreate from "../../../components/Category/CategoryCreate";
 import CategoryTable from "../../../components/Category/CategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { CATEGORY } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -50,6 +52,12 @@ const Category = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

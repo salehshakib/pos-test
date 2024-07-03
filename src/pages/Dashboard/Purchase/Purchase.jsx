@@ -1,7 +1,9 @@
-import { useState } from "react";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { PurchaseCreate } from "../../../components/Purchase/PurchaseCreate";
 import { PurchaseTable } from "../../../components/Purchase/PurchaseTable";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { PURCHASE } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -100,6 +102,12 @@ const Purchase = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

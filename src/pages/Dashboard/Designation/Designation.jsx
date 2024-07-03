@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { DesignationCreate } from "../../../components/Designation/DesignationCreate";
 import { DesignationTable } from "../../../components/Designation/DesignationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -32,6 +34,12 @@ const Designation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

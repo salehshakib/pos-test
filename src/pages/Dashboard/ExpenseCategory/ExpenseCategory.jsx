@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import ExpenseCategoryCreate from "../../../components/ExpenseCategory/ExpenseCategoryCreate";
 import ExpenseCategoryTable from "../../../components/ExpenseCategory/ExpenseCategoryTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -23,6 +25,12 @@ const ExpenseCategory = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

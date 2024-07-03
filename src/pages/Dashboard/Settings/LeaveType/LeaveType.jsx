@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { LeaveTypeCreate } from "../../../../components/LeaveType/LeaveTypeCreate";
 import { LeaveTypeTable } from "../../../../components/LeaveType/LeaveTypeTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { LEAVE_TYPE } from "../../../../utilities/apiEndpoints/hrm.api";
 import { useCustomDebounce } from "../../../../utilities/hooks/useDebounce";
+import { clearParams } from "../../../../redux/services/paramSlice/paramSlice";
 
 const columns = [
   {
@@ -35,6 +37,12 @@ export const LeaveType = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

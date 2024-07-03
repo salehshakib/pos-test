@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import GiftCardCreate from "../../../components/GiftCard/GiftCardCreate";
 import GiftCardTable from "../../../components/GiftCard/GiftCardTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -78,6 +80,12 @@ const GiftCardList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

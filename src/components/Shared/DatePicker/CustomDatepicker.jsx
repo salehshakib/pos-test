@@ -82,8 +82,28 @@
 import { DatePicker, Form, TimePicker } from "antd";
 import { MdDateRange, MdOutlineWatchLater } from "react-icons/md";
 import { GlobalUtilityStyle } from "../../../container/Styled";
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
+
+const rangePresets = [
+  {
+    label: "Last 7 Days",
+    value: [dayjs().add(-7, "d"), dayjs()],
+  },
+  {
+    label: "Last 14 Days",
+    value: [dayjs().add(-14, "d"), dayjs()],
+  },
+  {
+    label: "Last 30 Days",
+    value: [dayjs().add(-30, "d"), dayjs()],
+  },
+  {
+    label: "Last 90 Days",
+    value: [dayjs().add(-90, "d"), dayjs()],
+  },
+];
 
 const CustomDatepicker = ({
   label,
@@ -98,6 +118,7 @@ const CustomDatepicker = ({
 
   //for mb-0
   customStyle = false,
+  presets = false,
 }) => {
   const getFormat = () => {
     switch (picker) {
@@ -145,6 +166,7 @@ const CustomDatepicker = ({
             {...commonProps}
             picker={picker}
             disabledDate={disabledDate}
+            presets={presets && rangePresets}
           />
         );
       case "time":

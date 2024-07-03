@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import defaultUser from "../../../assets/data/defaultUserImage";
 import EmployeeCreate from "../../../components/Employee/EmployeeCreate";
 import EmployeeTable from "../../../components/Employee/EmployeeTable";
@@ -81,6 +83,12 @@ const Employee = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

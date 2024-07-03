@@ -19,7 +19,6 @@ import Categoryedit from "./Categoryedit";
 
 const CategoryTable = ({ newColumns, setSelectedRows }) => {
   const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -41,11 +40,7 @@ const CategoryTable = ({ newColumns, setSelectedRows }) => {
       ...pagination,
       parent: 1,
     },
-    // isRelationalParams: true,
-    // selectValueParams: ["is_active"],
   });
-
-  //console.log(params);
 
   const { data, isLoading } = useGetAllCategoryQuery(
     { params },

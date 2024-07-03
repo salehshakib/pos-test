@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import QuotationCreate from "../../../components/Generator/Quotation/QuotationCreate";
 import QuotationTable from "../../../components/Generator/Quotation/QuotationTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { GENERATE_QUOTATION } from "../../../utilities/apiEndpoints/generate.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -84,6 +86,12 @@ const Quotation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

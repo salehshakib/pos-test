@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import SaleReturnCreate from "../../../components/SaleReturn/SaleReturnCreate";
 import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -79,6 +81,12 @@ const SaleReturn = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { ProductReportTable } from "../../../components/Report/ProductReportTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
 const columns = [
@@ -140,6 +142,12 @@ export const ProductReport = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

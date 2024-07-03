@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import TypeCreate from "../../../components/Type/TypeCreate";
 import TypeTable from "../../../components/Type/TypeTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { TYPE } from "../../../utilities/apiEndpoints/helper.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -22,6 +24,12 @@ const Types = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

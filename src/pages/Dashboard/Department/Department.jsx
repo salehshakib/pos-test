@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import DepartmentCreate from "../../../components/Department/DepartmentCreate";
 import DepartmentTable from "../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -22,6 +24,12 @@ const Department = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

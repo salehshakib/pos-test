@@ -1,7 +1,8 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEditSquare } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { ROLE_PERMISSION } from "../../../utilities/apiEndpoints/auth.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 
@@ -84,6 +85,12 @@ const RolePermission = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

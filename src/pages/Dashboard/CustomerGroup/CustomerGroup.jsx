@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import CustomerGroupCreate from "../../../components/CustomerGroup/CustomerGroupCreate";
 import CustomerGroupTable from "../../../components/CustomerGroup/CustomerGroupTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -34,6 +36,12 @@ const CustomerGroup = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
   return (
     <GlobalContainer
       pageTitle="Customer Group"

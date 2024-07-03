@@ -51,9 +51,9 @@ const CustomForm = (props) => {
     //     //
     //   })
 
-    //   .catch((error) => {
-    //     console.error("Validation error:", error);
-    //   });
+    // .catch((error) => {
+    //   console.error("Validation error:", error);
+    // });
   };
 
   const onFinishFailed = (errorInfo) => {

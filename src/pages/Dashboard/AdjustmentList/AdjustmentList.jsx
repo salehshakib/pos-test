@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import AdjustmentCreate from "../../../components/Adjustment/AdjustmentCreate";
 import AdjustmentTable from "../../../components/Adjustment/AdjustmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { ADJUSTMENT } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-
 const columns = [
   {
     title: "Reference ID",
@@ -45,6 +46,12 @@ const AdjustmentList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
   const { keyword, debounce } = useCustomDebounce();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearParams());
+  }, [dispatch]);
 
   return (
     <GlobalContainer

@@ -20,7 +20,7 @@ const LoadingComponent = (data) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 10000); // 5 seconds
+    const timer = setTimeout(() => setIsLoading(false), 5000); // 5 seconds
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 

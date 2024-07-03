@@ -9,13 +9,19 @@ import {
 } from "../../redux/services/transfer/transferApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const TransferTable = ({ newColumns, setSelectedRows }) => {
+const TransferTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -29,12 +35,13 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllTransferQuery(
@@ -68,6 +75,7 @@ const TransferTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteTransfer(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

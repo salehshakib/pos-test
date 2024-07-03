@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import DiscountCreate from "../../../components/Discount/DiscountCreate";
 import { DiscountTable } from "../../../components/Discount/DiscountTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -84,13 +83,9 @@ const columns = [
 const Discount = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -100,6 +95,8 @@ const Discount = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       // api={DISCOUNT}
     >
       <DiscountCreate />
@@ -108,6 +105,7 @@ const Discount = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

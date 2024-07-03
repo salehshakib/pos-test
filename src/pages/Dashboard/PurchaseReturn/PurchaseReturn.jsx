@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Row } from "antd";
+import { useState } from "react";
 import PurchaseReturnCreate from "../../../components/PurchaseReturn/PurchaseReturnCreate";
 import PurchaseReturnTable from "../../../components/PurchaseReturn/PurchaseReturnTable";
+import {
+  ProductFilter,
+  PurchaseStatusFilter,
+  SupplierFilter,
+  TaxFilter,
+  WarehouseFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { rowLayout } from "../../../layout/FormLayout";
 import { PURCHASE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -77,16 +85,24 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <WarehouseFilter />
+      <SupplierFilter />
+      <ProductFilter />
+      <TaxFilter />
+      <PurchaseStatusFilter />
+    </Row>
+  );
+};
+
 const PurchaseReturn = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -96,6 +112,8 @@ const PurchaseReturn = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={PURCHASE_RETURN}
     >
       <PurchaseReturnCreate />
@@ -104,6 +122,7 @@ const PurchaseReturn = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

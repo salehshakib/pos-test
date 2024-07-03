@@ -13,14 +13,20 @@ import {
 } from "../../redux/services/supplier/supplierApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { SupplierDetails } from "./SupplierDetails";
 import SupplierEdit from "./SupplierEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const SupplierTable = ({ newColumns, setSelectedRows }) => {
+const SupplierTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -37,10 +43,11 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
+
   const { data, isLoading } = useGetAllSupplierQuery(
     { params },
     {
@@ -89,6 +96,7 @@ const SupplierTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteCustomer(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

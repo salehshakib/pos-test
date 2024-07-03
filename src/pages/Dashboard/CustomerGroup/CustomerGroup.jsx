@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { useState } from "react";
 import CustomerGroupCreate from "../../../components/CustomerGroup/CustomerGroupCreate";
 import CustomerGroupTable from "../../../components/CustomerGroup/CustomerGroupTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CUSTOMER_GROUP } from "../../../utilities/apiEndpoints/helper.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -35,13 +34,10 @@ const columns = [
 const CustomerGroup = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
   return (
     <GlobalContainer
       pageTitle="Customer Group"
@@ -50,6 +46,8 @@ const CustomerGroup = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      // searchFilterContent={<SearchComponent />}
       api={CUSTOMER_GROUP}
     >
       <CustomerGroupCreate />
@@ -58,6 +56,7 @@ const CustomerGroup = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

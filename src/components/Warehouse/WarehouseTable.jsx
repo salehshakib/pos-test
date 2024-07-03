@@ -8,16 +8,22 @@ import {
   useGetWarehousesQuery,
   useUpdateWarehouseStatusMutation,
 } from "../../redux/services/warehouse/warehouseApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { WarehouseDetails } from "./WarehouseDetails";
 import WarehouseEdit from "./WarehouseEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const WarehouseTable = ({ newColumns, setSelectedRows }) => {
+const WarehouseTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -34,9 +40,9 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetWarehousesQuery(
@@ -87,6 +93,7 @@ const WarehouseTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteWarehouse(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

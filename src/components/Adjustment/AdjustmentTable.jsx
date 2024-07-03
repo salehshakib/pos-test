@@ -11,14 +11,20 @@ import {
   selectEditId,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentDetails from "./AdjustmentDetails";
 import AdjustmentEdit from "./AdjustmentEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
+const AdjustmentTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const editId = useSelector(selectEditId);
@@ -32,13 +38,13 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
-    // isRelationalParams: true,
+    keyword,
   });
 
   const { data, isLoading } = useGetAllAdjustmentQuery(
@@ -47,8 +53,6 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
       skip: !useUrlIndexPermission(),
     }
   );
-
-  //console.log(data);
 
   const total = data?.meta?.total;
 
@@ -74,6 +78,7 @@ const AdjustmentTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteAdjustment(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

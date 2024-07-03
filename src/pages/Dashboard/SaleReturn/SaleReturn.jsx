@@ -1,11 +1,21 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Row } from "antd";
+import { useState } from "react";
+import {
+  CashierFilter,
+  CustomerFilter,
+  PaymentStatusFilter,
+  ProductFilter,
+  SaleStatusFilter,
+  TaxFilter,
+  WarehouseFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import SaleReturnCreate from "../../../components/SaleReturn/SaleReturnCreate";
 import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { rowLayout } from "../../../layout/FormLayout";
 import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -77,16 +87,26 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <CustomerFilter />
+      <WarehouseFilter />
+      <CashierFilter />
+      <ProductFilter />
+      <TaxFilter />
+      <SaleStatusFilter />
+      <PaymentStatusFilter />
+    </Row>
+  );
+};
+
 const SaleReturn = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -96,6 +116,8 @@ const SaleReturn = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={SALE_RETURN}
     >
       <SaleReturnCreate />
@@ -104,6 +126,7 @@ const SaleReturn = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

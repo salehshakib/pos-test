@@ -8,11 +8,12 @@ import {
 } from "../../redux/services/hrm/leave/leaveApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { LeaveDetails } from "./LeaveDetails";
 import { LeaveEdit } from "./LeaveEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   const startDate = new Date(leaveStartDate);
@@ -29,7 +30,12 @@ function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   return dayDifference + " Days";
 }
 
-export const LeaveTable = ({ newColumns, setSelectedRows }) => {
+export const LeaveTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -43,12 +49,13 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllLeaveQuery(
@@ -81,6 +88,7 @@ export const LeaveTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteLeave(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

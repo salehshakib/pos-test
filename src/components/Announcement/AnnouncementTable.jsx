@@ -9,13 +9,19 @@ import {
 } from "../../redux/services/hrm/announcement/announcementApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { AnnouncementDetails } from "./AnnouncementDetails";
 import { AnnouncementEdit } from "./AnnouncementEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
+export const AnnouncementTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -30,7 +36,9 @@ export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: { ...pagination, parent: 1, child: 1 },
+    isRelationalParams: true,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllAnnouncementQuery(
@@ -64,6 +72,7 @@ export const AnnouncementTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteAnnouncement(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

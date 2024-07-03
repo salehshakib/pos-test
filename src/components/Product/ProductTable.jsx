@@ -11,16 +11,22 @@ import {
   useGetAllProductsQuery,
   useUpdateProductStatusMutation,
 } from "../../redux/services/product/productApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const ProductTable = ({ newColumns, setSelectedRows }) => {
+const ProductTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -37,19 +43,14 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
-    // isDefaultParams: true,
-    // isRelationalParams: true,
-    // selectValueParams: ["is_active"],
-    // selectValue: DEFAULT_SELECT_VALUES,
+    keyword,
   });
-
-  // console.log(params);
 
   const { data, isLoading } = useGetAllProductsQuery(
     { params },
@@ -98,6 +99,7 @@ const ProductTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteProduct(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

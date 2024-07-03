@@ -7,15 +7,21 @@ import {
   useDeleteExpenseMutation,
   useGetAllExpenseQuery,
 } from "../../redux/services/expense/expenseApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const ExpenseTable = ({ newColumns, setSelectedRows }) => {
+const ExpenseTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -29,10 +35,10 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllExpenseQuery(
@@ -65,6 +71,7 @@ const ExpenseTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteExpense(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

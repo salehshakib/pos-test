@@ -7,11 +7,12 @@ import {
 } from "../../redux/services/tax/taxApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const TaxTable = ({ newColumns, setSelectedRows }) => {
+const TaxTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -19,7 +20,8 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllTaxQuery(
@@ -42,6 +44,7 @@ const TaxTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteType(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

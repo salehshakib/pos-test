@@ -13,12 +13,18 @@ import {
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CustomerGroupDetails } from "./CustomerGroupDetails";
 import { CustomerGroupEdit } from "./CustomerGroupEdit";
 
-const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
+const CustomerGroupTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -32,9 +38,9 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllCustomerGroupQuery(
@@ -68,6 +74,7 @@ const CustomerGroupTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteCustomerGroup(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

@@ -1,9 +1,9 @@
 import { App, Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
-import { onDelete } from "../../../utilities/lib/productTable/counters";
 
 const columns = [
   {

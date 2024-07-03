@@ -10,14 +10,20 @@ import {
 } from "../../redux/services/hrm/payroll/payrollApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PayrollDetails } from "./PayrollDetails";
 import { PayrollEdit } from "./PayrollEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const PayrollTable = ({ newColumns, setSelectedRows }) => {
+export const PayrollTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -34,10 +40,10 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllPayrollQuery(
@@ -87,6 +93,7 @@ export const PayrollTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deletePayroll(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

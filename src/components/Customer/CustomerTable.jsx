@@ -13,14 +13,20 @@ import {
 } from "../../redux/services/drawer/drawerSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CustomerDetails } from "./CustomerDetails";
 import CustomerEdit from "./CustomerEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const CustomerTable = ({ newColumns, setSelectedRows }) => {
+const CustomerTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
   // const pagination = useSelector(selectPagination);
 
@@ -38,12 +44,13 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllCustomerQuery(
@@ -94,6 +101,7 @@ const CustomerTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteCustomer(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

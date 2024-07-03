@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { useState } from "react";
 import DepartmentCreate from "../../../components/Department/DepartmentCreate";
 import DepartmentTable from "../../../components/Department/DepartmentTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { DEPARTMENT } from "../../../utilities/apiEndpoints/hrm.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -23,13 +22,9 @@ const columns = [
 const Department = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -39,6 +34,7 @@ const Department = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
       api={DEPARTMENT}
     >
       <DepartmentCreate />
@@ -47,6 +43,7 @@ const Department = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { LeaveTypeCreate } from "../../../../components/LeaveType/LeaveTypeCreate";
 import { LeaveTypeTable } from "../../../../components/LeaveType/LeaveTypeTable";
 import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
 import { LEAVE_TYPE } from "../../../../utilities/apiEndpoints/hrm.api";
 import { useCustomDebounce } from "../../../../utilities/hooks/useDebounce";
-import { clearParams } from "../../../../redux/services/paramSlice/paramSlice";
+import { useFilterParams } from "../../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -36,13 +35,9 @@ const columns = [
 export const LeaveType = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -52,6 +47,8 @@ export const LeaveType = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      // searchFilterContent={<SearchComponent />}
       api={LEAVE_TYPE}
     >
       <LeaveTypeCreate />
@@ -60,6 +57,7 @@ export const LeaveType = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

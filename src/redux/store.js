@@ -17,10 +17,10 @@ import developerSlice from "./services/developer/developerSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
 import menuSlice from "./services/menu/menuSlice";
 import paginationSlice from "./services/pagination/paginationSlice";
+import paramSlice from "./services/paramSlice/paramSlice";
 import pettyCashSlice from "./services/pettycash/pettyCashSlice";
 import productSlice from "./services/product/productSlice";
 import themeSlice from "./services/theme/themeSlice";
-import paramSlice from "./services/paramSlice/paramSlice";
 
 const persistConfig = {
   key: ["auth", "theme", "developer", "menu"],
@@ -34,8 +34,6 @@ const persistedThemeReducer = persistReducer(persistConfig, themeSlice);
 const persistedMenuItems = persistReducer(persistConfig, menuSlice);
 
 const persistedDeveloperReducer = persistReducer(persistConfig, developerSlice);
-
-const persistParmas = persistReducer(persistConfig, paramSlice);
 
 // const persistedPaginationReducer = persistReducer(
 //   persistConfig,
@@ -51,7 +49,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     theme: persistedThemeReducer,
     menu: persistedMenuItems,
-    param: persistParmas,
+    param: paramSlice,
     developer: persistedDeveloperReducer,
     pagination: paginationSlice,
     cashRegister: persistedCashRegister,

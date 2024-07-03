@@ -6,7 +6,12 @@ import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import CustomTable from "../Shared/Table/CustomTable";
 
-const StockCountTable = ({ newColumns, setSelectedRows }) => {
+const StockCountTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   // const dispatch = useDispatch();
 
   // const [editId, setEditId] = useState(undefined);
@@ -20,10 +25,10 @@ const StockCountTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    parms: pagination,
     isRelationalParams: true,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetStockCountsQuery(

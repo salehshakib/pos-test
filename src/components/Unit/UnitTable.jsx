@@ -11,12 +11,13 @@ import {
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { UnitdEdit } from "./UnitEdit";
 
-const UnitTable = ({ newColumns, setSelectedRows }) => {
+const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const dispatch = useDispatch();
 
   const [statusId, setStatusId] = useState(undefined);
@@ -31,7 +32,8 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllUnitQuery(
@@ -76,6 +78,7 @@ const UnitTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteUnit(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

@@ -12,13 +12,19 @@ import {
 } from "../../../redux/services/invoice/invoiceApi";
 import { usePagination } from "../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import InvoiceEdit from "./InvoiceEdit";
 import { InvoiceDetails } from "./overview/InvoiceDetails";
-import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 
-const InvoiceTable = ({ newColumns, setSelectedRows }) => {
+const InvoiceTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -32,10 +38,10 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllInvoiceQuery(
@@ -68,6 +74,7 @@ const InvoiceTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteInvoice(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

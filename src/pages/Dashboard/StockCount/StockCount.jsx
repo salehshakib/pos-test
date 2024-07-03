@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import StockCountCreate from "../../../components/StockCount/StockCountCreate";
 import StockCountTable from "../../../components/StockCount/StockCountTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -68,13 +67,9 @@ const columns = [
 const StockCount = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -84,6 +79,7 @@ const StockCount = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
       api={STOCK_COUNT}
     >
       <StockCountCreate />
@@ -92,6 +88,7 @@ const StockCount = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

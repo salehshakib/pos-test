@@ -10,13 +10,19 @@ import {
 } from "../../redux/services/hrm/designation/designationApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { DesignationEdit } from "./DesignationEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const DesignationTable = ({ newColumns, setSelectedRows }) => {
+export const DesignationTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -33,8 +39,10 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllDesignationQuery(
@@ -80,6 +88,7 @@ export const DesignationTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteDesignation(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

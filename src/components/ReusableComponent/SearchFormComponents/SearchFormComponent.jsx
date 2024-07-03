@@ -1,24 +1,46 @@
 import { Col } from "antd";
-import { mdColLayout } from "../../../layout/FormLayout";
+import { paymentStatusOptions } from "../../../assets/data/paymentStatus";
+import { purchaseStatusOptions } from "../../../assets/data/purchaseStatus";
+import { saleStatusOptions } from "../../../assets/data/saleStatus";
+// import { mdColLayout } from "../../../layout/FormLayout";
+import { barcodeOptions } from "../../../assets/data/barcode";
+import { baseUnit } from "../../../assets/data/baseUnit";
+import { employeeStatusOptions } from "../../../assets/data/employeeStatus";
+import { paymentTypesOptions } from "../../../assets/data/paymentTypes";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
+import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
+import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
+import { useGetAllCustomerQuery } from "../../../redux/services/customer/customerApi";
+import { useGetAllCustomerGroupQuery } from "../../../redux/services/customerGroup/customerGroupApi";
+import { useGetAllExpenseCategoryQuery } from "../../../redux/services/expense/expenseCategoryApi";
+import { useGetAllGiftCardTypeQuery } from "../../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
+import { useGetDepartmentsQuery } from "../../../redux/services/hrm/department/departmentApi";
+import { useGetAllDesignationQuery } from "../../../redux/services/hrm/designation/designationApi";
+import { useGetAllEmployeeQuery } from "../../../redux/services/hrm/employee/employeeApi";
+import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
+import { useGetAllRolesQuery } from "../../../redux/services/roles/rolesApi";
+import { useGetAllLeaveTypeQuery } from "../../../redux/services/settings/leaveType/leaveTypeApi";
+import { useGetAllSupplierQuery } from "../../../redux/services/supplier/supplierApi";
+import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+import { useGetTypesQuery } from "../../../redux/services/types/typesApi";
+import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
 import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
 import CustomSelect from "../../Shared/Select/CustomSelect";
-import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
-import { useGetAllSupplierQuery } from "../../../redux/services/supplier/supplierApi";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
-import { useGetAllCustomerQuery } from "../../../redux/services/customer/customerApi";
-import { useGetAllGiftCardTypeQuery } from "../../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
-import { useGetAllDesignationQuery } from "../../../redux/services/hrm/designation/designationApi";
+
+const mdColLayout = {
+  xs: 12,
+  // md: 12,
+};
 
 const commonProps = {
   showSearch: true,
   mode: "multiple",
+  // customStyle: true,
+  // noStyle: true,
 };
 
 export const WarehouseFilter = () => {
@@ -73,7 +95,10 @@ export const BrandFilter = () => {
   );
 };
 
-export const CategoryFilter = () => {
+export const CategoryFilter = ({
+  label = "Category",
+  name = "category_ids",
+}) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -91,8 +116,8 @@ export const CategoryFilter = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         {...commonProps}
-        label="Category"
-        name={"category_ids"}
+        label={label}
+        name={name}
         options={options}
         isLoading={isLoading}
       />
@@ -143,6 +168,78 @@ export const ProductFilter = () => {
         {...commonProps}
         label="Product"
         name={"product_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const ProductUnitFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
+
+  const options = data?.results?.unit
+    ?.filter((unit) => unit.for === "product-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Product Unit"
+        name={"product_unit__ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const PurchaseUnitFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
+
+  const options = data?.results?.unit
+    ?.filter((unit) => unit.for === "purchase-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Purchase Unit"
+        name={"purchase_unit__ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const SaleUnitFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
+
+  const options = data?.results?.unit
+    ?.filter((unit) => unit.for === "sale-unit")
+    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Sale Unit"
+        name={"sale_unit__ids"}
         options={options}
         isLoading={isLoading}
       />
@@ -256,6 +353,33 @@ export const GiftCardTypeFilter = () => {
   );
 };
 
+export const ExpenseCategoryFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllExpenseCategoryQuery({ params });
+
+  const options = data?.results?.expensecategory?.map((item) => {
+    return {
+      value: item.id.toString(),
+      label: item.name,
+    };
+  });
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Expense Category"
+        name={"expense_category_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
 export const CouponTypeFilter = () => {
   const options = [
     {
@@ -304,55 +428,253 @@ export const DesignationFilter = () => {
     </Col>
   );
 };
-// export const GiftCardTypeFilter = () => {
-//     const params = useGlobalParams({
-//       selectValue: DEFAULT_SELECT_VALUES,
-//     });
 
-//     const { data, isLoading } = useGetAllGiftCardTypeQuery({ params });
+export const DepartmentFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
 
-//     const options = data?.results?.giftcardtype?.map((item) => {
-//       return {
-//         value: item.id.toString(),
-//         label: item.name,
-//       };
-//     });
+  const { data, isLoading } = useGetDepartmentsQuery({ params });
 
-//     return (
-//       <Col {...mdColLayout}>
-//         <CustomSelect
-//           {...commonProps}
-//           label="Card Type"
-//           name={"gift_card_type_ids"}
-//           options={options}
-//           isLoading={isLoading}
-//         />
-//       </Col>
-//     );
-//   };
-// export const GiftCardTypeFilter = () => {
-//     const params = useGlobalParams({
-//       selectValue: DEFAULT_SELECT_VALUES,
-//     });
+  const options = data?.results?.department?.map((item) => {
+    return {
+      value: item.id.toString(),
+      label: item.name,
+    };
+  });
 
-//     const { data, isLoading } = useGetAllGiftCardTypeQuery({ params });
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Department"
+        name={"department_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
 
-//     const options = data?.results?.giftcardtype?.map((item) => {
-//       return {
-//         value: item.id.toString(),
-//         label: item.name,
-//       };
-//     });
+export const RoleFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
 
-//     return (
-//       <Col {...mdColLayout}>
-//         <CustomSelect
-//           {...commonProps}
-//           label="Card Type"
-//           name={"gift_card_type_ids"}
-//           options={options}
-//           isLoading={isLoading}
-//         />
-//       </Col>
-//     );
-//   };
+  const { data, isLoading } = useGetAllRolesQuery({ params });
+
+  const options = data?.results?.role?.map((item) => {
+    return {
+      value: item.id.toString(),
+      label: item.name,
+    };
+  });
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Role"
+        name={"role_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const EmployeeFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllEmployeeQuery({ params });
+
+  const options = data?.results?.employee?.map((item) => {
+    return {
+      value: item.id.toString(),
+      label: item.name,
+    };
+  });
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Employee"
+        name={"employee_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const PurchaseStatusFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Purchase Status"
+        name="purchase_status"
+        options={purchaseStatusOptions}
+      />
+    </Col>
+  );
+};
+
+export const BarcodeFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Barcode"
+        name="barcode"
+        options={barcodeOptions}
+      />
+    </Col>
+  );
+};
+
+export const EmployeeStatusFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Empoloyee Status"
+        name="employee_status"
+        options={employeeStatusOptions}
+      />
+    </Col>
+  );
+};
+
+export const SaleStatusFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Sale Status"
+        name={"sale_status"}
+        options={saleStatusOptions}
+      />
+    </Col>
+  );
+};
+
+export const PaymentStatusFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Payment Status"
+        name="payment_status"
+        options={paymentStatusOptions}
+      />
+    </Col>
+  );
+};
+
+export const LeaveTypeFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+  const { data, isLoading } = useGetAllLeaveTypeQuery({ params });
+
+  const options = data?.results?.leavetype?.map((item) => ({
+    value: item?.id?.toString(),
+    label: item?.name,
+  }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label={"Leave Type"}
+        name={"leave_type_ids"}
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const PaymentTypeFilter = () => {
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Payment Type"
+        name="peyment_types"
+        options={paymentTypesOptions}
+      />
+    </Col>
+  );
+};
+
+export const CustomerGroupFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetAllCustomerGroupQuery({ params });
+
+  const options = data?.results?.customergroup?.map((item) => ({
+    value: item.id?.toString(),
+    label: item.name,
+  }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Customer Group"
+        name="customer_group_ids"
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};
+
+export const BaseUnitFilter = () => {
+  const options = baseUnit.map(({ name, symbol }) => {
+    return { label: `${name} (${symbol})`, value: name };
+  });
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Base Unit"
+        name="base_units"
+        options={options}
+      />
+    </Col>
+  );
+};
+
+export const UnitForFilter = () => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetTypesQuery({ params });
+
+  const options = data?.results?.type?.map((item) => ({
+    value: item.id?.toString(),
+    label: item.name,
+  }));
+
+  return (
+    <Col {...mdColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Unit For"
+        name="type_ids"
+        options={options}
+        isLoading={isLoading}
+      />
+    </Col>
+  );
+};

@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { useState } from "react";
 import CashierCreate from "../../../components/Cashier/CashierCreate";
 import CashierTable from "../../../components/Cashier/CashierTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { CASHIER } from "../../../utilities/apiEndpoints/people.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -60,13 +59,10 @@ const columns = [
 const Cashier = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
   return (
     <GlobalContainer
       pageTitle="Cashier"
@@ -75,6 +71,8 @@ const Cashier = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      // searchFilterContent={<SearchComponent />}
       api={CASHIER}
     >
       <CashierCreate />
@@ -83,6 +81,7 @@ const Cashier = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

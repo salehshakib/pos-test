@@ -7,10 +7,11 @@ import {
 } from "../../redux/services/types/typesApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
-const TypeTable = ({ newColumns, setSelectedRows }) => {
+const TypeTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -18,7 +19,8 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    pparams: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetTypesQuery({ params });
@@ -36,6 +38,7 @@ const TypeTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteType(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

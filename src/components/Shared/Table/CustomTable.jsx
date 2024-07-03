@@ -55,6 +55,8 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, "delete");
   const isStatusPermitted = usePermission(route, "status");
 
+  console.log(isEditPermitted, route, isDeletePermitted);
+
   const getMenuItems = (record) =>
     [
       isEditPermitted && {
@@ -232,7 +234,7 @@ const CustomTable = ({
       } else {
         return (
           <div className="flex justify-center items-center gap-2">
-            {record?.handleEdit && (
+            {record?.handleEdit && isEditPermitted && (
               <button
                 onClick={() => record?.handleEdit(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
@@ -241,7 +243,7 @@ const CustomTable = ({
               </button>
             )}
 
-            {record?.handleDelete && (
+            {record?.handleDeleteModal && isDeletePermitted && (
               <button
                 onClick={() => record?.handleDeleteModal(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"

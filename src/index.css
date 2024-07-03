@@ -86,9 +86,25 @@ html {
   /* scrollbar-: "10px" !important; */
 }
 
-@media screen and (max-width: 730px) {
+/* .ant-page-header-heading {
+  display: flex !important;
+  flex-direction: column !important;
+  /* align-items: center !important; */
+/* justify-content: center !important; 
+  
+} 
+  */
+
+@media screen and (max-width: 749px) {
   .ant-page-header-heading {
     justify-content: center !important;
+    /* flex-direction: column !important; */
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .ant-page-header-heading {
+    justify-content: space-between !important;
   }
 }
 

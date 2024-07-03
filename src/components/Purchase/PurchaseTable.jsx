@@ -7,15 +7,21 @@ import {
   useDeletePurchaseMutation,
   useGetAllPurchaseQuery,
 } from "../../redux/services/purchase/purchaseApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PurchaseDetails } from "./PurchaseDetails";
 import { PurchaseEdit } from "./PurchaseEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
+export const PurchaseTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -29,13 +35,13 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
-    // isRelationalParams: true,
+    keyword,
   });
 
   const { data, isLoading } = useGetAllPurchaseQuery(
@@ -75,7 +81,7 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
   //     setStatusId(undefined);
   //     setStatusModal(false);
   //   }
-  // };
+  // }
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -86,6 +92,7 @@ export const PurchaseTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deletePurchase(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

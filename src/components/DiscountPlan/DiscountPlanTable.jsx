@@ -7,10 +7,14 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import DiscountPlanEdit from "./DiscountPlanEdit";
 
-const DiscountPlanTable = ({ newColumns, setSelectedRows }) => {
+const DiscountPlanTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
-  const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
   const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);

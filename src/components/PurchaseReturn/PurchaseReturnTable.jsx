@@ -7,15 +7,21 @@ import {
   useDeletePurchaseReturnMutation,
   useGetAllPurchaseReturnQuery,
 } from "../../redux/services/return/purchaseReturnApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { PurchaseReturnDetails } from "./PurchaseReturnDetails";
 import PurchaseReturnEdit from "./PurchaseReturnEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
+const PurchaseReturnTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -28,10 +34,10 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllPurchaseReturnQuery(
@@ -65,6 +71,7 @@ const PurchaseReturnTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deletePurchaseReturn(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

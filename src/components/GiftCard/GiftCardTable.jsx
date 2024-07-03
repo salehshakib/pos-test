@@ -10,14 +10,20 @@ import {
 } from "../../redux/services/giftcard/giftcard/giftCardApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardDetails } from "./GiftCardDetails";
 import GiftCardEdit from "./GiftCardEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 
-const GiftCardTable = ({ newColumns, setSelectedRows }) => {
+const GiftCardTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -35,7 +41,8 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllGiftCardQuery(
@@ -86,6 +93,7 @@ const GiftCardTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteGiftCard(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

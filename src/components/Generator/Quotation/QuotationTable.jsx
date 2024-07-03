@@ -10,15 +10,21 @@ import {
   useDeleteQuotationMutation,
   useGetAllQuotationQuery,
 } from "../../../redux/services/quotation/quotationApi";
+import { usePagination } from "../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
 import { QuotationDetails } from "./overview/QuotationDetails";
-import { usePagination } from "../../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 
-const QuotationTable = ({ newColumns, setSelectedRows }) => {
+const QuotationTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -32,10 +38,10 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllQuotationQuery(
@@ -69,6 +75,7 @@ const QuotationTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteQuotation(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

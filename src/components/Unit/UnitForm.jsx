@@ -8,10 +8,11 @@ import CustomRadio from "../Shared/Radio/CustomRadio";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 
+const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
+  return { label: `${name} (${symbol})`, value: name };
+});
+
 const BaseUnit = () => {
-  const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
-    return { label: `${name} (${symbol})`, value: name };
-  });
   return (
     <CustomSelect
       label={"Base Unit"}

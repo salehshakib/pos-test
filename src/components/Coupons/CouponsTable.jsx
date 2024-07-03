@@ -10,16 +10,21 @@ import {
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const CouponsTable = ({ newColumns, setSelectedRows }) => {
+const CouponsTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -35,10 +40,13 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
     isRelationalParams: true,
-    params: pagination,
+    params: {
+      ...pagination,
+      ...searchParams,
+    },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllCouponQuery(
@@ -88,6 +96,7 @@ const CouponsTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteCoupon(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

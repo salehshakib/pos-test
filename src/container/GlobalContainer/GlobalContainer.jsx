@@ -23,19 +23,19 @@ import { IoSearch } from "react-icons/io5";
 import { TbFilterSearch } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useCurrentToken } from "../../redux/services/auth/authSlice";
-import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { base_url } from "../../utilities/configs/base_url";
-import { usePermission } from "../../utilities/lib/getPermission";
-import { GlobalUtilityStyle } from "../Styled";
-import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
-import { downloadFile } from "../../utilities/lib/downloadFile";
-import DeleteModal from "../../components/Shared/Modal/DeleteModal";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { FilterDateRange } from "../../components/ReusableComponent/FilterDateRange";
 import CustomForm from "../../components/Shared/Form/CustomForm";
+import DeleteModal from "../../components/Shared/Modal/DeleteModal";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import { setParams } from "../../redux/services/paramSlice/paramSlice";
+import { useCurrentToken } from "../../redux/services/auth/authSlice";
+import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
+import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { clearParams } from "../../redux/services/paramSlice/paramSlice";
+import { base_url } from "../../utilities/configs/base_url";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { downloadFile } from "../../utilities/lib/downloadFile";
+import { usePermission } from "../../utilities/lib/getPermission";
+import { GlobalUtilityStyle } from "../Styled";
 
 const GlobalContainer = ({
   pageTitle,
@@ -47,6 +47,7 @@ const GlobalContainer = ({
   searchFilterContent,
   api,
   debounce,
+  setParams,
   // handleSeach
 }) => {
   const dispatch = useDispatch();
@@ -221,9 +222,9 @@ const GlobalContainer = ({
 
   const handleBulkDelete = async () => {
     const formData = new FormData();
-    const delete_ids = selectedRows.map((item) => item.id);
+    const deleted_ids = selectedRows.map((item) => item.id);
 
-    const postData = { delete_ids };
+    const postData = { deleted_ids };
 
     // formData.append("delete_ids", delete_ids);
     appendToFormData(postData, formData);
@@ -258,23 +259,6 @@ const GlobalContainer = ({
   const [searchForm] = Form.useForm();
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const handleSubmit = async (values) => {
-    const { searchDate, ...rest } = values;
-
-    const postData = rest;
-
-    if (searchDate) {
-      postData.created_daterange = [
-        searchDate?.[0].format("YYYY-MM-DD"),
-        searchDate?.[1].format("YYYY-MM-DD"),
-      ];
-    }
-
-    dispatch(setParams(postData));
-
-    setPopoverOpen(false);
-  };
-
   const handlePopoverOpen = () => {
     setPopoverOpen(true);
   };
@@ -285,6 +269,35 @@ const GlobalContainer = ({
 
   const handleReset = () => {
     searchForm.resetFields();
+    dispatch(clearParams());
+  };
+
+  const handleSubmit = async (values) => {
+    const { searchDate, ...rest } = values;
+
+    console.log(rest);
+
+    const postData = {};
+
+    Object.keys(rest).forEach((key) => {
+      if (rest[key].length) {
+        postData[key] = rest[key];
+      }
+    });
+
+    // const postData = rest;
+
+    if (searchDate) {
+      postData.created_daterange = [
+        searchDate?.[0].format("YYYY-MM-DD"),
+        searchDate?.[1].format("YYYY-MM-DD"),
+      ];
+    }
+
+    setParams(postData);
+
+    handlePopoverClose();
+    // handleReset();
   };
 
   const FilterContentForm = (
@@ -292,7 +305,7 @@ const GlobalContainer = ({
       form={searchForm}
       handleSubmit={handleSubmit}
       submitBtn={false}
-      layout="horizontal"
+      layout="vertical"
     >
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
@@ -349,9 +362,7 @@ const GlobalContainer = ({
                   title={<div className="text-center">Advance Search</div>}
                   trigger="click"
                   placement="bottomRight"
-                  style={{
-                    width: "auto",
-                  }}
+                  overlayStyle={{ width: 600 }}
                   onOpenChange={handlePopoverClose}
                   open={popoverOpen}
                   arrow={false}
@@ -368,35 +379,52 @@ const GlobalContainer = ({
                       className="text-xs primary-text lg:text-[16px]"
                     />
                   </Button>
+                  {/* <CustomModal
+                  title="Advance Search"
+                  openModal={popoverOpen}
+                  hideModal={handlePopoverClose}
+                  showCloseButton={false}
+                  width={800}
+                >
+                  {FilterContentForm}
+                </CustomModal> */}
                 </Popover>
               </Space.Compact>
             </Space>,
-            <Dropdown
-              key="dropdown"
-              trigger={["click"]}
-              open={open}
-              onOpenChange={handleOpenChange}
-              menu={{
-                items,
-                selectable: true,
-                onSelect: (value) => value.key !== "view" && setOpen(false),
-              }}
-              placement="bottom"
-            >
-              <Button style={{ padding: "0 12px" }} size="large">
-                <FaEllipsis />
-              </Button>
-            </Dropdown>,
-            selectedRows?.length > 0 && (
-              <div key={"delete"}>
-                <button
-                  className="custom-primary-btn p-2 rounded-xl text-white duration-300"
-                  onClick={handleDeleteModal}
+            <Space key="dropdown">
+              <Dropdown
+                trigger={["click"]}
+                open={open}
+                onOpenChange={handleOpenChange}
+                menu={{
+                  items,
+                  selectable: true,
+                  onSelect: (value) => value.key !== "view" && setOpen(false),
+                }}
+                placement="bottom"
+              >
+                <Button
+                  style={{ padding: "0px 12px" }}
+                  size="large"
+                  className="flex justify-center items-center"
                 >
-                  <FaTrash className="text-xl" />
-                </button>
-              </div>
-            ),
+                  <FaEllipsis size={20} />
+                </Button>
+              </Dropdown>
+            </Space>,
+            <Space key={"delete"}>
+              {selectedRows?.length > 0 && (
+                <div>
+                  <button
+                    className="custom-primary-btn p-2 rounded-xl text-white duration-300"
+                    size="large"
+                    onClick={handleDeleteModal}
+                  >
+                    <FaTrash size={20} />
+                  </button>
+                </div>
+              )}
+            </Space>,
           ]}
           content={children}
         />

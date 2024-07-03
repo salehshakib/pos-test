@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { Row } from "antd";
+import { useState } from "react";
 import { ExpenseCreate } from "../../../components/Expense/ExpenseCreate";
 import ExpenseTable from "../../../components/Expense/ExpenseTable";
+import {
+  ExpenseCategoryFilter,
+  WarehouseFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { rowLayout } from "../../../layout/FormLayout";
 import { EXPENSE } from "../../../utilities/apiEndpoints/account.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -65,16 +70,21 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <WarehouseFilter />
+      <ExpenseCategoryFilter />
+    </Row>
+  );
+};
+
 const Expense = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -84,6 +94,8 @@ const Expense = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={EXPENSE}
     >
       <ExpenseCreate />
@@ -92,6 +104,7 @@ const Expense = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

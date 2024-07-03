@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectParams } from "../../redux/services/paramSlice/paramSlice";
 
@@ -56,4 +56,23 @@ export const useGlobalParams = ({
   ]);
 
   return globalParams;
+};
+
+export const useFilterParams = () => {
+  // return useSelector(selectParams);
+  const [searchParams, setSearchParams] = useState({});
+
+  const setParams = (params) => {
+    setSearchParams(params);
+  };
+
+  const clearParams = () => {
+    setSearchParams({});
+  };
+
+  return {
+    searchParams,
+    setParams,
+    clearParams,
+  };
 };

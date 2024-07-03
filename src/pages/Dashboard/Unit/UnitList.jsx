@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import UnitCreate from "../../../components/Unit/UnitCreate";
 import UnitTable from "../../../components/Unit/UnitTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { UNIT } from "../../../utilities/apiEndpoints/helper.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from "antd";
+import { rowLayout } from "../../../layout/FormLayout";
+import {
+  BaseUnitFilter,
+  UnitForFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 
 const columns = [
   {
@@ -77,16 +82,21 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <BaseUnitFilter />
+      <UnitForFilter />
+    </Row>
+  );
+};
+
 const UnitList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -96,6 +106,8 @@ const UnitList = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={UNIT}
     >
       <UnitCreate />
@@ -104,6 +116,7 @@ const UnitList = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

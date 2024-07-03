@@ -10,16 +10,20 @@ import {
 } from "../../redux/services/hrm/employee/employeeApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import EmployeeEdit from "./EmployeeEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const EmployeeTable = ({ newColumns, setSelectedRows }) => {
+const EmployeeTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
-
-  // const pagination = useSelector(selectPagination);
 
   const [editId, setEditId] = useState(undefined);
 
@@ -33,7 +37,8 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllEmployeeQuery(
@@ -79,6 +84,7 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteEmployee(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 
@@ -105,7 +111,6 @@ const EmployeeTable = ({ newColumns, setSelectedRows }) => {
     setDeleteModal(false);
   };
 
-  // //console.log(data?.results?.department);
   return (
     <GlobalUtilityStyle>
       <CustomTable

@@ -7,13 +7,19 @@ import {
 } from "../../redux/services/roles/rolesApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { RoleDetails } from "./RoleDetails";
 import SetRolePermission from "./SetRolePermission";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const RolesTable = ({ newColumns, setSelectedRows }) => {
+export const RolesTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
@@ -23,9 +29,9 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllRolesQuery(
@@ -53,6 +59,7 @@ export const RolesTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteRoles(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

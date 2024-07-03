@@ -9,11 +9,17 @@ import {
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { AttendanceEdit } from "./AttendanceEdit";
 
-export const AttendanceTable = ({ newColumns, setSelectedRows }) => {
+export const AttendanceTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -27,8 +33,10 @@ export const AttendanceTable = ({ newColumns, setSelectedRows }) => {
     isDefaultParams: false,
     params: {
       ...pagination,
+      ...searchParams,
       parent: 1,
     },
+    keyword,
   });
   const { data, isLoading } = useGetAllAttendenceQuery(
     { params },
@@ -56,6 +64,7 @@ export const AttendanceTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteAttendence(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

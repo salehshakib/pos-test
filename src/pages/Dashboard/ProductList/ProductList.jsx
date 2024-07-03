@@ -1,12 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Row } from "antd";
+import { useState } from "react";
 import defaultUser from "../../../assets/data/defaultUserImage";
 import ProductCreate from "../../../components/Product/ProductCreate";
 import ProductTable from "../../../components/Product/ProductTable";
+import {
+  BarcodeFilter,
+  BrandFilter,
+  CategoryFilter,
+  ProductUnitFilter,
+  PurchaseUnitFilter,
+  SaleUnitFilter,
+  TaxFilter,
+  WarehouseFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { rowLayout } from "../../../layout/FormLayout";
 import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -126,16 +137,27 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <WarehouseFilter />
+      <BarcodeFilter />
+      <BrandFilter />
+      <CategoryFilter />
+      <ProductUnitFilter />
+      <PurchaseUnitFilter />
+      <SaleUnitFilter />
+      <TaxFilter />
+    </Row>
+  );
+};
+
 const ProductList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -145,6 +167,8 @@ const ProductList = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={PRODUCT}
     >
       <ProductCreate />
@@ -153,6 +177,7 @@ const ProductList = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

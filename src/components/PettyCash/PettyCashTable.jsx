@@ -7,22 +7,25 @@ import {
 } from "../../redux/services/pettycash/pettyCashApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
-export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
-  // const pagination = useSelector(selectPagination);
-
+export const PettyCashTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: { ...pagination, parent: 1 },
-    // isRelationalParams: true,
+    params: { ...pagination, ...searchParams, parent: 1 },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllPettyCashQuery({
@@ -43,6 +46,7 @@ export const PettyCashTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deletePettyCash(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

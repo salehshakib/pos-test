@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Row } from "antd";
+import { useState } from "react";
 import QuotationCreate from "../../../components/Generator/Quotation/QuotationCreate";
 import QuotationTable from "../../../components/Generator/Quotation/QuotationTable";
+import {
+  CashierFilter,
+  CustomerFilter,
+  ProductFilter,
+  SaleStatusFilter,
+  SupplierFilter,
+  WarehouseFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { rowLayout } from "../../../layout/FormLayout";
 import { GENERATE_QUOTATION } from "../../../utilities/apiEndpoints/generate.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -82,16 +91,25 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <WarehouseFilter />
+      <CashierFilter />
+      <SupplierFilter />
+      <CustomerFilter />
+      <ProductFilter />
+      <SaleStatusFilter />
+    </Row>
+  );
+};
+
 const Quotation = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -101,6 +119,8 @@ const Quotation = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={GENERATE_QUOTATION}
     >
       <QuotationCreate />
@@ -109,6 +129,7 @@ const Quotation = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

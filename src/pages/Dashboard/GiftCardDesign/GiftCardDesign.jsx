@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import GiftCardDesginTable from "../../../components/GiftCardDesign/GiftCardDesginTable";
 import { GiftCardDesignCreate } from "../../../components/GiftCardDesign/GiftCardDesignCreate";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
 import { GIFT_CARD_DESIGN } from "../../../utilities/apiEndpoints/offer.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -24,13 +23,9 @@ const columns = [
 const GiftCardDesign = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -40,6 +35,7 @@ const GiftCardDesign = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
       api={GIFT_CARD_DESIGN}
     >
       <GiftCardDesignCreate />
@@ -48,6 +44,7 @@ const GiftCardDesign = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

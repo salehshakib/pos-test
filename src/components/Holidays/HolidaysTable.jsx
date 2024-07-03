@@ -10,14 +10,20 @@ import {
 } from "../../redux/services/hrm/holiday/holidayApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { HolidayDetails } from "./HolidayDetails";
 import { HolidaysEdit } from "./HolidaysEdit";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-export const HolidaysTable = ({ newColumns, setSelectedRows }) => {
+export const HolidaysTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
@@ -34,9 +40,9 @@ export const HolidaysTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllHolidayQuery(
@@ -86,6 +92,7 @@ export const HolidaysTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteHoliday(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

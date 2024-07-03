@@ -13,14 +13,19 @@ import {
 } from "../../redux/services/hrm/department/departmentApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import DepartmentEdit from "./DepartmentEdit";
 
-const DepartmentTable = ({ newColumns, setSelectedRows }) => {
+const DepartmentTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 
@@ -34,7 +39,8 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
   const { data, isLoading } = useGetDepartmentsQuery({ params });
 
@@ -74,6 +80,7 @@ const DepartmentTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteDepartment(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

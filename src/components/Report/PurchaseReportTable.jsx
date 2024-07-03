@@ -4,7 +4,12 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
 import { usePagination } from "../../utilities/hooks/usePagination";
 
-export const PurchaseReportTable = ({ newColumns, setSelectedRows }) => {
+export const PurchaseReportTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   //   const [editId, setEditId] = useState(undefined);

@@ -11,15 +11,21 @@ import {
   useGetAllExpenseCategoryQuery,
   useUpdateExpenseCategoryStatusMutation,
 } from "../../redux/services/expense/expenseCategoryApi";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 
-const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
+const ExpenseCategoryTable = ({
+  newColumns,
+  setSelectedRows,
+  keyword,
+  searchParams,
+}) => {
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
@@ -33,9 +39,9 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
-    // isPagination: true,
     isDefaultParams: false,
-    params: pagination,
+    params: { ...pagination, ...searchParams },
+    keyword,
   });
 
   const { data, isLoading } = useGetAllExpenseCategoryQuery(
@@ -81,6 +87,7 @@ const ExpenseCategoryTable = ({ newColumns, setSelectedRows }) => {
     const { data } = await deleteExpenseCategory(deleteId);
     if (data?.success) {
       setDeleteModal(false);
+      removeDeleteId(setSelectedRows, deleteId);
     }
   };
 

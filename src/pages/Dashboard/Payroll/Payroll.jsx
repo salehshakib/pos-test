@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Row } from "antd";
+import { useState } from "react";
 import { PayrollCreate } from "../../../components/Payroll/PayrollCreate";
 import { PayrollTable } from "../../../components/Payroll/PayrollTable";
+import {
+  DepartmentFilter,
+  EmployeeFilter,
+  PaymentTypeFilter,
+} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { clearParams } from "../../../redux/services/paramSlice/paramSlice";
+import { rowLayout } from "../../../layout/FormLayout";
 import { PAYROLL } from "../../../utilities/apiEndpoints/hrm.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
@@ -90,16 +96,22 @@ const columns = [
   },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <DepartmentFilter />
+      <EmployeeFilter />
+      <PaymentTypeFilter />
+    </Row>
+  );
+};
+
 export const Payroll = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearParams());
-  }, [dispatch]);
 
   return (
     <GlobalContainer
@@ -109,6 +121,8 @@ export const Payroll = () => {
       debounce={debounce}
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
+      setParams={setParams}
+      searchFilterContent={<SearchComponent />}
       api={PAYROLL}
     >
       <PayrollCreate />
@@ -117,6 +131,7 @@ export const Payroll = () => {
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
       />
     </GlobalContainer>
   );

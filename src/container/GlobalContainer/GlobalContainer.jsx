@@ -288,7 +288,12 @@ const GlobalContainer = ({
   };
 
   const FilterContentForm = (
-    <CustomForm form={searchForm} handleSubmit={handleSubmit} submitBtn={false}>
+    <CustomForm
+      form={searchForm}
+      handleSubmit={handleSubmit}
+      submitBtn={false}
+      layout="horizontal"
+    >
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <FilterDateRange />

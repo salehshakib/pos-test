@@ -39,6 +39,7 @@ const CustomForm = (props) => {
     onClose,
     form,
     onChange,
+    layout = "vertical",
   } = props;
 
   const onFinish = (values) => {
@@ -66,7 +67,7 @@ const CustomForm = (props) => {
         form={form}
         fields={fields}
         onFinish={onFinish}
-        layout="vertical"
+        layout={layout}
         autoComplete="on"
         onFinishFailed={onFinishFailed}
         onChange={onChange}

@@ -2,9 +2,16 @@ import { Col } from "antd";
 import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
 import { mdColLayout } from "../../layout/FormLayout";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 
 export const BrandComponent = () => {
-  const { data, isFetching } = useGetBrandsQuery({});
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+  const { data, isFetching } = useGetBrandsQuery({ params });
 
   const options = data?.results?.brand?.map((item) => {
     return {

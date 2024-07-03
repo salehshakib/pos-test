@@ -12,9 +12,7 @@ export const TaxComponent = () => {
   });
 
   const { data, isFetching } = useGetAllTaxQuery(
-    {
-      params,
-    },
+    { params },
     {
       skip: !useUrlIndexPermission(),
     }

@@ -6,6 +6,7 @@ import {
 } from "../../utilities/hooks/useParams";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 export const CashierComponent = ({
   required = true,
@@ -18,7 +19,12 @@ export const CashierComponent = ({
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllCashierQuery({ params });
+  const { data, isLoading } = useGetAllCashierQuery(
+    { params },
+    {
+      skip: !useUrlIndexPermission(),
+    }
+  );
 
   const options = data?.results?.cashier?.map((cashier) => ({
     value: cashier?.id?.toString(),

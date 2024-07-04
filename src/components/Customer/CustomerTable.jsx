@@ -28,7 +28,6 @@ const CustomerTable = ({
   searchParams,
 }) => {
   const dispatch = useDispatch();
-  // const pagination = useSelector(selectPagination);
 
   const { editId } = useSelector((state) => state.drawer);
 

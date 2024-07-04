@@ -91,11 +91,12 @@ const StockCountTable = ({
           throw new Error("Failed to download file");
         }
 
-        setLoading(false);
-
         await downloadFile(response, supportedFormats[format], pageTitle);
       } catch (error) {
         console.error("Error:", error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

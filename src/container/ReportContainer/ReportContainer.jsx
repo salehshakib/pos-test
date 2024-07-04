@@ -3,6 +3,7 @@ import { Button, Input, Popover, Space } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { TbFilterSearch } from "react-icons/tb";
 import { GlobalUtilityStyle } from "../Styled";
+import { FilterDateRange } from "../../components/ReusableComponent/FilterDateRange";
 
 export const ReportContainer = ({
   pageTitle,
@@ -17,8 +18,8 @@ export const ReportContainer = ({
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
           }}
           extra={[
-            <Space key="search">
-              <Space.Compact>
+            <Space key="search" className="flex items-center">
+              {/* <Space.Compact>
                 <Input
                   type="text"
                   key="search"
@@ -59,7 +60,8 @@ export const ReportContainer = ({
                     />
                   </Button>
                 </Popover>
-              </Space.Compact>
+              </Space.Compact> */}
+              <FilterDateRange customStyle={true} />
             </Space>,
           ]}
           content={children}

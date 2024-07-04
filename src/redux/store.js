@@ -15,6 +15,7 @@ import authSlice from "./services/auth/authSlice";
 import cashRegisterSlice from "./services/cashRegister/cashRegisterSlice";
 import developerSlice from "./services/developer/developerSlice";
 import drawerSlice from "./services/drawer/drawerSlice";
+import loaderSlice from "./services/loader/loaderSlice";
 import menuSlice from "./services/menu/menuSlice";
 import paginationSlice from "./services/pagination/paginationSlice";
 import paramSlice from "./services/paramSlice/paramSlice";
@@ -50,6 +51,7 @@ export const store = configureStore({
     theme: persistedThemeReducer,
     menu: persistedMenuItems,
     param: paramSlice,
+    loader: loaderSlice,
     developer: persistedDeveloperReducer,
     pagination: paginationSlice,
     cashRegister: persistedCashRegister,

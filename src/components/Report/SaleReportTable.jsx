@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectPagination } from "../../redux/services/pagination/paginationSlice";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import CustomTable from "../Shared/Table/CustomTable";
+
 import { usePagination } from "../../utilities/hooks/usePagination";
 
 export const SaleReportTable = ({

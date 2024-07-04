@@ -11,6 +11,7 @@ import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+
 import { RoleDetails } from "./RoleDetails";
 import SetRolePermission from "./SetRolePermission";
 

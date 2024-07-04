@@ -15,7 +15,7 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { CouponsDetails } from "./CouponsDetails";
+
 import CouponsEdit from "./CouponsEdit";
 
 const CouponsTable = ({

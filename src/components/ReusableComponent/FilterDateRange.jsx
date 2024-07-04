@@ -1,6 +1,6 @@
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 
-export const FilterDateRange = () => {
+export const FilterDateRange = ({ customStyle = false }) => {
   // const
   return (
     <CustomDatepicker
@@ -9,6 +9,7 @@ export const FilterDateRange = () => {
       type={"range"}
       placeholder="Choose Date"
       presets={true}
+      customStyle={customStyle}
     />
   );
 };

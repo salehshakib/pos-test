@@ -4,6 +4,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
 import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
+import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
 import { usePermission } from "../../../utilities/lib/getPermission";
 
 const CustomTable = ({
@@ -24,6 +25,7 @@ const CustomTable = ({
   created_at = true,
   action = true,
 }) => {
+  const globalLoading = useGlobalLoader();
   const route = window.location.pathname.substring(1);
 
   const rowSelection = {
@@ -116,7 +118,7 @@ const CustomTable = ({
     ].filter(Boolean);
 
   const tableProps = {
-    loading: isLoading,
+    loading: isLoading || globalLoading,
     size: "small",
     style: {
       width: "100%",

@@ -15,6 +15,7 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
+
 import { HolidayDetails } from "./HolidayDetails";
 import { HolidaysEdit } from "./HolidaysEdit";
 

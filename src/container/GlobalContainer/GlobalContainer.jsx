@@ -30,6 +30,7 @@ import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
 import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
 import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { setLoading } from "../../redux/services/loader/loaderSlice";
 import { base_url } from "../../utilities/configs/base_url";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { downloadFile } from "../../utilities/lib/downloadFile";
@@ -176,8 +177,13 @@ const GlobalContainer = ({
     },
   ];
 
+  // const [loading, setLoading] = useState(false);
+
   const handleExport = useCallback(
     async (format) => {
+      // setLoading(true);
+      dispatch(setLoading(true));
+
       const fileUrl = new URL(`${base_url}/${api}/export`);
       const supportedFormats = {
         xlsx: "xlsx",
@@ -208,6 +214,9 @@ const GlobalContainer = ({
         await downloadFile(response, supportedFormats[format], pageTitle);
       } catch (error) {
         console.error("Error:", error);
+        dispatch(setLoading(false));
+      } finally {
+        dispatch(setLoading(false));
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

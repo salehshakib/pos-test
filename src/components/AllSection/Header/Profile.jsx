@@ -261,8 +261,6 @@ const Profile = () => {
 
   const user = useSelector(useCurrentUser);
 
-  console.log(user);
-
   const content = (
     <div className="">
       <div className="flex gap-2 items-center text-xl">
@@ -272,8 +270,7 @@ const Profile = () => {
         <span className="font-semibold">Email:</span> {user?.employees?.email}
       </div>
       <hr className="my-2" />
-      <div>User Profile</div>
-      <div>Change Password</div>
+      <div className="text-lg">User Profile</div>
       <hr className="my-2" />
       <div className="flex w-full justify-end">
         <Button onClick={handleLogout}>Log Out</Button>

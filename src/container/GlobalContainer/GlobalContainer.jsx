@@ -265,14 +265,17 @@ const GlobalContainer = ({
   const handlePopoverClose = () => {
     setPopoverOpen(false);
   };
+  const [advanceSearch, setAdvanceSearch] = useState(false);
 
   const handleReset = () => {
     searchForm.resetFields();
     setParams({});
+    setAdvanceSearch(false);
   };
 
   const handleSubmit = async (values) => {
     const { searchDate, ...rest } = values;
+    setAdvanceSearch(true);
 
     console.log(rest);
 
@@ -441,7 +444,30 @@ const GlobalContainer = ({
               )}
             </Space>,
           ]}
-          content={children}
+          content={
+            <div>
+              {
+                <Space
+                  key={"extra"}
+                  className="w-full flex justify-center items-center pb-3 gap-2 underline  font-semibold"
+                >
+                  <span>{`Showing ${
+                    advanceSearch ? "Filtered" : "All"
+                  }  Results`}</span>
+
+                  {advanceSearch && (
+                    <span
+                      onClick={handleReset}
+                      className="primary-text hover:cursor-pointer hover:underline"
+                    >
+                      (Reset)
+                    </span>
+                  )}
+                </Space>
+              }
+              {children}
+            </div>
+          }
         />
       </div>
 

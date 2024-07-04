@@ -150,7 +150,7 @@ export const SupplierFilter = () => {
   );
 };
 
-export const ProductFilter = () => {
+export const ProductFilter = ({ name = "product_ids" }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -167,7 +167,7 @@ export const ProductFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Product"
-        name={"product_ids"}
+        name={name}
         options={options}
         isLoading={isLoading}
       />

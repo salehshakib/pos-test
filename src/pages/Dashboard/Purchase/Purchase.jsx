@@ -118,7 +118,7 @@ const SearchComponent = () => {
     <Row {...rowLayout}>
       <WarehouseFilter />
       <SupplierFilter />
-      <ProductFilter />
+      <ProductFilter name="purchase_product_ids" />
       <TaxFilter />
       <PurchaseStatusFilter />
     </Row>

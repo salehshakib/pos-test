@@ -120,7 +120,7 @@ const SearchComponent = () => {
       <CustomerFilter />
       <WarehouseFilter />
       <CashierFilter />
-      <ProductFilter />
+      <ProductFilter name="sale_product_ids" />
       <TaxFilter />
       <SaleStatusFilter />
       <PaymentStatusFilter />

@@ -74,6 +74,7 @@ const columns = [
     title: "Grand Total",
     dataIndex: "grandTotal",
     key: "grandTotal",
+    align: "right",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

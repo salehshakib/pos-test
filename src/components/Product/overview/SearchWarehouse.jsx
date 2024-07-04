@@ -1,11 +1,17 @@
 import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../utilities/hooks/useParams";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
 export const SearchWarehouse = ({ name }) => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
   const { data, isFetching } = useGetWarehousesQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+    params,
   });
 
   const options = data?.results?.warehouse?.map((warehouse) => ({

@@ -6,6 +6,8 @@ import {
 } from "../../utilities/hooks/useParams";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 export const WarehouseComponent = ({
   name = "warehouse_id",
@@ -13,6 +15,9 @@ export const WarehouseComponent = ({
   title = "Warehouse",
 }) => {
   const form = Form.useFormInstance();
+  const user = useSelector(useCurrentUser);
+
+  console.log(user);
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -28,9 +33,9 @@ export const WarehouseComponent = ({
   //get data from redux store
   useEffect(() => {
     if (options?.length && !form.getFieldValue(name)) {
-      form.setFieldValue(name, options[0].value);
+      form.setFieldValue(name, user?.warehouse_id?.toString());
     }
-  }, [form, name, options]);
+  }, [form, name, options, user?.warehouse_id]);
 
   return (
     <CustomSelect

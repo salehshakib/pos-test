@@ -14,6 +14,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+    fixed: "left",
     render: ({ name, email }) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -27,7 +28,6 @@ const columns = [
     title: "Company Name",
     dataIndex: "companyName",
     key: "companyName",
-    align: "left",
     render: (companyName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {companyName}
@@ -50,7 +50,7 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
-    align: "center",
+
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {phone}

@@ -7,6 +7,7 @@ import {
   BarcodeFilter,
   BrandFilter,
   CategoryFilter,
+  ProductTypeFilter,
   ProductUnitFilter,
   PurchaseUnitFilter,
   SaleUnitFilter,
@@ -115,7 +116,7 @@ const columns = [
     title: "Cost",
     dataIndex: "cost",
     key: "cost",
-    align: "center",
+    align: "right",
     render: (cost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {cost}
@@ -126,7 +127,7 @@ const columns = [
     title: "Price",
     dataIndex: "price",
     key: "price",
-    align: "center",
+    align: "right",
     render: (price) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {price}
@@ -138,6 +139,7 @@ const columns = [
 const SearchComponent = () => {
   return (
     <Row {...rowLayout}>
+      <ProductTypeFilter />
       <WarehouseFilter name="product_warehouse_ids" />
       <BarcodeFilter />
       <BrandFilter />

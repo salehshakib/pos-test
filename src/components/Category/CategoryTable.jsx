@@ -104,9 +104,9 @@ const CategoryTable = ({
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, is_active, parent_categories } = item ?? {};
+      const { id, name, created_at, is_active, parents } = item ?? {};
 
-      const { name: parent_name } = parent_categories ?? {};
+      const { name: parent_name } = parents ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {

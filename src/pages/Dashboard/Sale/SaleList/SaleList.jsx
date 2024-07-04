@@ -85,6 +85,7 @@ const columns = [
   {
     title: "Grand Total",
     dataIndex: "grandTotal",
+    align: "right",
     key: "grandTotal",
     render: (grandTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -95,6 +96,7 @@ const columns = [
   {
     title: "Paid",
     dataIndex: "paid",
+    align: "right",
     key: "paid",
     render: (paid) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -105,6 +107,7 @@ const columns = [
   {
     title: "Due",
     dataIndex: "due",
+    align: "right",
     key: "due",
     render: (due) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

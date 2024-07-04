@@ -7,6 +7,7 @@ import { barcodeOptions } from "../../../assets/data/barcode";
 import { baseUnit } from "../../../assets/data/baseUnit";
 import { employeeStatusOptions } from "../../../assets/data/employeeStatus";
 import { paymentTypesOptions } from "../../../assets/data/paymentTypes";
+import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
 import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
 import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
@@ -41,6 +42,26 @@ const commonProps = {
   mode: "multiple",
   // customStyle: true,
   // noStyle: true,
+};
+
+export const ProductTypeFilter = () => {
+  const options = [
+    { value: "Standard", label: "Standard" },
+    { value: "Combo", label: "Combo" },
+    { value: "Digital", label: "Digital" },
+    { value: "Service", label: "Service" },
+  ];
+
+  return (
+    <Col {...fullColLayout}>
+      <CustomSelect
+        {...commonProps}
+        label="Product Type"
+        options={options}
+        name={"product_types"}
+      />
+    </Col>
+  );
 };
 
 export const WarehouseFilter = ({ name = "warehouse_ids" }) => {
@@ -399,7 +420,7 @@ export const CouponTypeFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Coupon Type"
-        name={"types"}
+        name={"coupon_types"}
         options={options}
       />
     </Col>

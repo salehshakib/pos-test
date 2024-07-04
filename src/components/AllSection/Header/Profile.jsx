@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
-import { logout } from "../../../redux/services/auth/authSlice";
+import { logout, useCurrentUser } from "../../../redux/services/auth/authSlice";
 import {
   useCheckPettyCashQuery,
   useCreatePettyCashMutation,
@@ -259,9 +259,25 @@ const Profile = () => {
     toast.success("Logged out successfully!", { duration: 2000 });
   };
 
+  const user = useSelector(useCurrentUser);
+
+  console.log(user);
+
   const content = (
     <div className="">
-      <Button onClick={handleLogout}>Log Out</Button>
+      <div className="flex gap-2 items-center text-xl">
+        <span className="font-semibold">Name:</span> {user?.employees?.name}
+      </div>
+      <div className="flex gap-2 items-center text-[16px]">
+        <span className="font-semibold">Email:</span> {user?.employees?.email}
+      </div>
+      <hr className="my-2" />
+      <div>User Profile</div>
+      <div>Change Password</div>
+      <hr className="my-2" />
+      <div className="flex w-full justify-end">
+        <Button onClick={handleLogout}>Log Out</Button>
+      </div>
     </div>
   );
 
@@ -281,6 +297,7 @@ const Profile = () => {
         content={content}
         className="hover:cursor-pointer"
         trigger={"click"}
+        overlayStyle={{ width: "auto" }}
       >
         <Avatar
           className="avatar-bg shadow-md hover:shadow-lg"

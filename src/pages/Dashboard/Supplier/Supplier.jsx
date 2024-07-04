@@ -7,29 +7,11 @@ import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
-  // {
-  //   title: "Img",
-  //   dataIndex: "image",
-  //   key: "image",
-  //   fixed: "left",
-  //   align: "center",
-  //   width: 70,
-  //   render: (img) => (
-  //     <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
-  //       <img
-  //         src={img ?? defaultUser}
-  //         alt="defaultUser"
-  //         className="w-full h-full object-cover"
-  //       />
-  //     </div>
-  //   ),
-  // },
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
     fixed: "left",
-
     render: ({ name, email }) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -53,19 +35,16 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
-    align: "center",
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {phone}
       </span>
     ),
   },
-
   {
     title: "Vat Number",
     dataIndex: "vatNumber",
     key: "vatNumber",
-    align: "center",
     render: (vatNumber) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {vatNumber}

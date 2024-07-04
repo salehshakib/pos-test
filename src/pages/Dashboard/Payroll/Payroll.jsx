@@ -54,7 +54,7 @@ const columns = [
     title: "Salary",
     dataIndex: "salary",
     key: "salary",
-    align: "center",
+    align: "right",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -65,7 +65,8 @@ const columns = [
     title: "Bonus",
     dataIndex: "bonus",
     key: "bonus",
-    align: "center",
+    align: "right",
+
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -76,7 +77,7 @@ const columns = [
     title: "Loan",
     dataIndex: "loan",
     key: "loan",
-    align: "center",
+    align: "right",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

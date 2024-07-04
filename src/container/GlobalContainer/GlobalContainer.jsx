@@ -445,7 +445,7 @@ const GlobalContainer = ({
               {
                 <Space
                   key={"extra"}
-                  className="w-full flex justify-center items-center pb-3 gap-2 underline  font-semibold"
+                  className="w-full flex justify-end items-center pb-3 gap-2 underline  font-semibold"
                 >
                   <span>{`Showing ${
                     advanceSearch ? "Filtered" : "All"

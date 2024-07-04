@@ -59,8 +59,11 @@ const StockCountTable = ({
     handleExport(id, format);
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleExport = useCallback(
     async (id, format) => {
+      setLoading(true);
       const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
       const supportedFormats = {
         xlsx: "xlsx",
@@ -87,6 +90,8 @@ const StockCountTable = ({
         if (!response.ok) {
           throw new Error("Failed to download file");
         }
+
+        setLoading(false);
 
         await downloadFile(response, supportedFormats[format], pageTitle);
       } catch (error) {
@@ -147,7 +152,7 @@ const StockCountTable = ({
         updatePage={updatePage}
         updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
-        isLoading={isLoading}
+        isLoading={isLoading || loading}
         isRowSelection={true}
         status={false}
         created_at={false}

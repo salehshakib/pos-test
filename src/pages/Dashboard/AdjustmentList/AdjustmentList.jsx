@@ -36,7 +36,6 @@ const columns = [
     title: "Note",
     dataIndex: "note",
     key: "note",
-    align: "center",
     render: (note) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {note ?? "N/A"}

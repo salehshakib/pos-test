@@ -275,19 +275,18 @@ const GlobalContainer = ({
 
   const handleSubmit = async (values) => {
     const { searchDate, ...rest } = values;
-    setAdvanceSearch(true);
 
-    console.log(rest);
+    if (searchDate) {
+      setAdvanceSearch(true);
+    }
 
     const postData = {};
-
     Object.keys(rest).forEach((key) => {
       if (rest?.[key]?.length) {
+        setAdvanceSearch(true);
         postData[key] = rest[key];
       }
     });
-
-    // const postData = rest;
 
     if (searchDate) {
       postData.created_daterange = [
@@ -296,12 +295,9 @@ const GlobalContainer = ({
       ];
     }
 
-    console.log(postData);
-
     setParams(postData);
 
     handlePopoverClose();
-    // handleReset();
   };
 
   const FilterContentForm = (

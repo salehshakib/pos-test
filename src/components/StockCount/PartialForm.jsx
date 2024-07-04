@@ -1,7 +1,7 @@
 import { Col, Form } from "antd";
 import { mdColLayout } from "../../layout/FormLayout";
-import { CategoryComponent } from "../ReusableComponent/CategoryComponent";
 import { BrandComponent } from "../ReusableComponent/BrandComponent";
+import { CategoryComponent } from "../ReusableComponent/CategoryComponent";
 
 const PartialForm = () => {
   const form = Form.useFormInstance();
@@ -11,10 +11,10 @@ const PartialForm = () => {
     return (
       <>
         <Col {...mdColLayout}>
-          <CategoryComponent mode="multiple" name={"stock_category_ids"} />
+          <CategoryComponent mode="multiple" name={"category_ids"} />
         </Col>
         <Col {...mdColLayout}>
-          <BrandComponent name="stock_brand_ids" mode="multiple" />
+          <BrandComponent name="brand_ids" mode="multiple" />
         </Col>
       </>
     );

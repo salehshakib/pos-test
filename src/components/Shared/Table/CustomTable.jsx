@@ -1,4 +1,5 @@
 import { Dropdown, Table } from "antd";
+import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
 import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
@@ -85,6 +86,31 @@ const CustomTable = ({
           <div className="flex justify-start items-center gap-3">Delete</div>
         ),
         onClick: () => record?.handleDeleteModal(record?.id),
+        disabled: !record.handleDeleteModal,
+      },
+    ].filter(Boolean);
+
+  const getDownloadItems = (record) =>
+    [
+      {
+        key: "edit",
+        icon: <FaFilePdf size={20} />,
+        label: <div className="flex justify-start items-center gap-3">PDF</div>,
+        onClick: () => record?.handleFileDownload(record?.id, "pdf"),
+      },
+      {
+        key: "permission",
+        icon: <FaFileExcel size={20} />,
+        label: (
+          <div className="flex justify-start items-center gap-3">Excel</div>
+        ),
+        onClick: () => record?.handleFileDownload(record?.id, "xlsx"),
+      },
+      {
+        key: "delete",
+        icon: <FaFileCsv size={20} />,
+        label: <div className="flex justify-start items-center gap-3">CSV</div>,
+        onClick: () => record?.handleFileDownload(record?.id, "csv"),
         disabled: !record.handleDeleteModal,
       },
     ].filter(Boolean);
@@ -243,37 +269,47 @@ const CustomTable = ({
               </button>
             )}
 
+            {record?.handleFileDownload && (
+              <Dropdown
+                menu={{
+                  items: getDownloadItems(record),
+                }}
+                overlayStyle={{
+                  width: "max-content",
+                }}
+                placement="bottom"
+                trigger={["click"]}
+                autoAdjustOverflow
+                arrow={{ pointAtCenter: true }}
+              >
+                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                  <MdFileDownload className="text-lg md:text-xl" />
+                </button>
+              </Dropdown>
+            )}
+            {/* {record?.handleFileDownload && (
+              <button
+                onClick={() => record?.handleFileDownload(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdFileDownload className="text-lg md:text-xl" />
+              </button>
+            )}
+            {record?.handleFileDownload && (
+              <button
+                onClick={() => record?.handleFileDownload(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdFileDownload className="text-lg md:text-xl" />
+              </button>
+            )} */}
+
             {record?.handleDeleteModal && isDeletePermitted && (
               <button
                 onClick={() => record?.handleDeleteModal(record?.id)}
                 className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
               >
                 <MdDelete className="text-lg md:text-xl" />
-              </button>
-            )}
-
-            {record?.handleFileDownload && (
-              <button
-                onClick={() => record?.handleFileDownload(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdFileDownload className="text-lg md:text-xl" />
-              </button>
-            )}
-            {record?.handleFileDownload && (
-              <button
-                onClick={() => record?.handleFileDownload(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdFileDownload className="text-lg md:text-xl" />
-              </button>
-            )}
-            {record?.handleFileDownload && (
-              <button
-                onClick={() => record?.handleFileDownload(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdFileDownload className="text-lg md:text-xl" />
               </button>
             )}
           </div>

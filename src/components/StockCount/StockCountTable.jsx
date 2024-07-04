@@ -1,11 +1,23 @@
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
+import { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
+import { useCurrentToken } from "../../redux/services/auth/authSlice";
+import {
+  useDeleteStockCountMutation,
+  useGetStockCountsQuery,
+} from "../../redux/services/stockCount/stockCountApi";
+import { STOCK_COUNT } from "../../utilities/apiEndpoints/inventory.api";
+import { base_url } from "../../utilities/configs/base_url";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { downloadFile } from "../../utilities/lib/downloadFile";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
+
+const pageTitle = "Stock Count";
+const api = STOCK_COUNT;
 
 const StockCountTable = ({
   newColumns,
@@ -13,15 +25,10 @@ const StockCountTable = ({
   keyword,
   searchParams,
 }) => {
-  const dispatch = useDispatch();
+  const token = useSelector(useCurrentToken);
 
-  // const [editId, setEditId] = useState(undefined);
-
-  // const [detailsId, setDetailsId] = useState(undefined);
-  // const [detailsModal, setDetailsModal] = useState(false);
-
-  // const [deleteId, setDeleteId] = useState(undefined);
-  // const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
@@ -40,30 +47,62 @@ const StockCountTable = ({
   );
   const total = data?.meta?.total;
 
-  // const [deleteStockCount, { isLoading: isDeleting }] =
-  //   useDeleteStockCountMutation();
+  const [deleteStockCount, { isLoading: isDeleting }] =
+    useDeleteStockCountMutation();
 
-  // const handleEdit = (id) => {
-  //   setEditId(id);
-  //   dispatch(openEditDrawer());
-  // };
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
+    setDeleteModal(true);
+  };
 
-  // const handleDetailsModal = (id) => {
-  //   setDetailsId(id);
-  //   setDetailsModal(true);
-  // };
+  const handleFileDownload = (id, format) => {
+    handleExport(id, format);
+  };
 
-  // const handleDeleteModal = (id) => {
-  //   setDeleteId(id);
-  //   setDeleteModal(true);
-  // };
+  const handleExport = useCallback(
+    async (id, format) => {
+      const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
+      const supportedFormats = {
+        xlsx: "xlsx",
+        pdf: "pdf",
+        csv: "csv",
+      };
 
-  // const handleDelete = async () => {
-  //   const { data } = await deleteStockCount(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
+      if (!supportedFormats[format]) {
+        console.error("Unsupported file format");
+        return;
+      }
+
+      fileUrl.searchParams.append("format", format);
+
+      try {
+        const response = await fetch(fileUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to download file");
+        }
+
+        await downloadFile(response, supportedFormats[format], pageTitle);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [api, token]
+  );
+
+  const handleDelete = async () => {
+    const { data } = await deleteStockCount(deleteId);
+    if (data?.success) {
+      setDeleteModal(false);
+    }
+  };
 
   const dataSource =
     data?.results?.stockcount?.map((item) => {
@@ -72,10 +111,12 @@ const StockCountTable = ({
         reference_id,
         created_at,
         type,
-        stock_warehouses,
-        stock_categories,
-        stock_brands,
+        warehouses,
+        categories,
+        brands,
       } = item ?? {};
+
+      console.log(item);
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
@@ -83,19 +124,18 @@ const StockCountTable = ({
         reference: reference_id,
         type: type,
         created_at: date,
-        warehouse: stock_warehouses?.name,
-        category: stock_categories?.name,
-        brand: stock_brands?.name,
-        // handleEdit,
-        // handleDeleteModal,
-        // handleDetailsModal,
+        warehouse: warehouses?.map((item) => item?.name).join(" "),
+        category: categories?.map((item) => item?.name).join(" "),
+        brand: brands?.map((item) => item?.name).join(" "),
+
+        handleDeleteModal,
+        handleFileDownload,
       };
     }) ?? [];
 
-  // const hideModal = () => {
-  //   setDetailsModal(false);
-  //   setDeleteModal(false);
-  // };
+  const hideModal = () => {
+    setDeleteModal(false);
+  };
 
   return (
     <GlobalUtilityStyle>
@@ -123,13 +163,15 @@ const StockCountTable = ({
         />
       )}
 
+       */}
+
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
         item={"stock count"}
-      /> */}
+      />
     </GlobalUtilityStyle>
   );
 };

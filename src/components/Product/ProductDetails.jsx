@@ -1,10 +1,59 @@
-import { Descriptions, Spin } from "antd";
+import { Descriptions, Spin, Table } from "antd";
 import parse from "html-react-parser";
 import { detailsLayout } from "../../layout/DescriptionLayout";
 import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
+import { tableProps } from "../../layout/TableLayout";
+
+const productQtyColumn = [
+  {
+    //name
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    title: "Quantity",
+    dataIndex: "qty",
+    key: "qty",
+    render: (qty) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {qty}
+      </span>
+    ),
+  },
+];
+
+const priceQtyColumn = [
+  {
+    //name
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    title: "Quantity",
+    dataIndex: "qty",
+    key: "qty",
+    render: (qty) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {qty}
+      </span>
+    ),
+  },
+];
 
 export const ProductDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetProductDetailsQuery(
@@ -12,7 +61,7 @@ export const ProductDetails = ({ id, ...props }) => {
       id,
       params: {
         parent: 1,
-        // child: 1,
+        child: 1,
       },
     },
     { skip: !id }
@@ -45,6 +94,20 @@ export const ProductDetails = ({ id, ...props }) => {
     alert_qty: data?.alert_qty,
     daily_sale_qty: data?.daily_sale_qty,
     qty_list: data?.qty_list,
+  });
+
+  const qtyTitle = () => (
+    <span className="text-black font-semibold text-base -ml-2">
+      Warehouse Inventory List
+    </span>
+  );
+
+  const qtyDataSource = data?.product_qties?.map((item) => {
+    return {
+      id: item?.warehouses?.id,
+      name: item?.warehouses?.name ?? "Unknown Warehouse",
+      qty: item?.warehouses?.qty ?? "Unknown Quantity",
+    };
   });
 
   const featuresInfo = createDetailsLayout({
@@ -80,6 +143,20 @@ export const ProductDetails = ({ id, ...props }) => {
     true
   );
 
+  const priceTitle = () => (
+    <span className="text-black font-semibold text-base -ml-2">
+      Warehouse Price List
+    </span>
+  );
+
+  const priceDataSource = data?.product_prices?.map((item) => {
+    return {
+      id: item?.warehouses?.id,
+      name: item?.warehouses?.name ?? "Unknown Warehouse",
+      qty: item?.warehouses?.qty ?? "Unknown Quantity",
+    };
+  });
+
   return (
     <CustomModal {...props}>
       {isFetching ? (
@@ -88,8 +165,21 @@ export const ProductDetails = ({ id, ...props }) => {
         <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Category & Units" items={categoryInfo} />
-          <CustomDescription title="Pricing Info" items={pricingInfo} />
           <CustomDescription title="Inventory Info" items={inventoryInfo} />
+          <Table
+            {...tableProps}
+            title={qtyTitle}
+            columns={productQtyColumn}
+            dataSource={qtyDataSource}
+          />
+          <CustomDescription title="Pricing Info" items={pricingInfo} />
+          <Table
+            {...tableProps}
+            title={priceTitle}
+            columns={priceQtyColumn}
+            dataSource={priceDataSource}
+          />
+
           <CustomDescription title="Features Info" items={featuresInfo} />
           <CustomDescription title="Variant Info" items={variantsInfo} />
           <CustomDescription title="Tax Info" items={taxInfo} />

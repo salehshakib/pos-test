@@ -40,25 +40,33 @@ const columns = [
     ),
   },
   {
+    title: "Warehouse",
+    dataIndex: "warehouse",
+    key: "warehouse",
+    render: (warehouse) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {warehouse ?? "N/A"}
+      </span>
+    ),
+  },
+  {
     title: "Supplier",
     dataIndex: "supplier",
     key: "supplier",
     render: (supplier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {supplier}
+        {supplier ?? "N/A"}
       </span>
     ),
   },
-
   {
     title: "Purchase Status",
     dataIndex: "purchaseStatus",
     key: "purchaseStatus",
     align: "center",
-
     render: (purchaseStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {purchaseStatus}
+        {purchaseStatus ?? "N/A"}
       </span>
     ),
   },
@@ -67,10 +75,9 @@ const columns = [
     dataIndex: "paymentStatus",
     key: "paymentStatus",
     align: "center",
-
     render: (paymentStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {paymentStatus}
+        {paymentStatus ?? "N/A"}
       </span>
     ),
   },

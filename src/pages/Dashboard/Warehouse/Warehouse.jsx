@@ -12,21 +12,9 @@ const columns = [
     title: "Warehouse",
     dataIndex: "warehouse",
     key: "warehouse",
-    align: "center",
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouse}
-      </span>
-    ),
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-    align: "center",
-    render: (email) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {email ?? "N/A"}
+        {warehouse ?? "N/A"}
       </span>
     ),
   },
@@ -34,10 +22,19 @@ const columns = [
     title: "Phone Number",
     dataIndex: "phone",
     key: "phone",
-    align: "center",
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {phone ?? "N/A"}
+      </span>
+    ),
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    render: (email) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {email ?? "N/A"}
       </span>
     ),
   },

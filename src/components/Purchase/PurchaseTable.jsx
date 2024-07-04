@@ -36,10 +36,10 @@ export const PurchaseTable = ({
 
   const params = useGlobalParams({
     isDefaultParams: false,
+    isRelationalParams: true,
     params: {
       ...pagination,
       ...searchParams,
-      parent: 1,
     },
     keyword,
   });
@@ -103,6 +103,7 @@ export const PurchaseTable = ({
         created_at,
         reference_id,
         suppliers,
+        warehouses,
         purchase_status,
         payment_status,
         grand_total,
@@ -116,6 +117,7 @@ export const PurchaseTable = ({
         id,
         date,
         reference: reference_id,
+        warehouse: warehouses?.name,
         supplier: suppliers?.name,
         purchaseStatus: purchase_status,
         paymentStatus: payment_status,

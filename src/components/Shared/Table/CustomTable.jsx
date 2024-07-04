@@ -260,6 +260,22 @@ const CustomTable = ({
                 <MdFileDownload className="text-lg md:text-xl" />
               </button>
             )}
+            {record?.handleFileDownload && (
+              <button
+                onClick={() => record?.handleFileDownload(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdFileDownload className="text-lg md:text-xl" />
+              </button>
+            )}
+            {record?.handleFileDownload && (
+              <button
+                onClick={() => record?.handleFileDownload(record?.id)}
+                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              >
+                <MdFileDownload className="text-lg md:text-xl" />
+              </button>
+            )}
           </div>
         );
       }

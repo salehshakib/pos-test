@@ -4,6 +4,10 @@ import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseA
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import PartialForm from "./PartialForm";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 
 const options = [
   {
@@ -19,10 +23,12 @@ const options = [
 ];
 
 const StockCountForm = (props) => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
   const { data, isLoading } = useGetWarehousesQuery({
-    params: {
-      selectValue: ["id", "name"],
-    },
+    params,
   });
 
   const warehouseOptions = data?.results?.warehouse?.map((warehouse) => ({
@@ -42,7 +48,7 @@ const StockCountForm = (props) => {
             isLoading={isLoading}
             showSearch={true}
             mode="multiple"
-            name="stock_warehouse_ids"
+            name="warehouse_ids"
           />
         </Col>
         <Col {...mdColLayout}>

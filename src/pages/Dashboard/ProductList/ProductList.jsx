@@ -73,7 +73,6 @@ const columns = [
     title: "Brand",
     dataIndex: "brand",
     key: "brand",
-    align: "center",
     render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {brand ?? "N/A"}
@@ -84,7 +83,6 @@ const columns = [
     title: "Category",
     dataIndex: "category",
     key: "category",
-    align: "center",
     render: (category) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {category ?? "N/A"}

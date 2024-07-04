@@ -46,7 +46,7 @@ const columns = [
     key: "customer",
     render: (customer) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer}
+        {customer ?? "N/A"}
       </span>
     ),
   },

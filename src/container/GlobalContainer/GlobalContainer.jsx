@@ -314,9 +314,18 @@ const GlobalContainer = ({
         </Col>
       </Row>
 
-      {searchFilterContent}
+      <div
+        style={{
+          maxHeight: 300,
+          overflowY: "auto",
+          overflowX: "hidden",
+          padding: "0 10px",
+        }}
+      >
+        {searchFilterContent}
+      </div>
 
-      <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+      <div className={`w-full flex gap-3 justify-end items-center pt-5 pb-3`}>
         <Button type="default" onClick={handlePopoverClose}>
           Cancel
         </Button>
@@ -363,7 +372,12 @@ const GlobalContainer = ({
                   title={<div className="text-center">Advance Search</div>}
                   trigger="click"
                   placement="bottomRight"
+                  // className="border border-slate-500 rounded-md"
+                  overlayClassName="rounded-md shadow-xl"
                   overlayStyle={{ width: 600 }}
+                  overlayInnerStyle={{
+                    backgroundColor: "#F8FAFC",
+                  }}
                   onOpenChange={handlePopoverClose}
                   open={popoverOpen}
                   arrow={false}

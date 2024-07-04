@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
@@ -12,7 +13,7 @@ const StockCountTable = ({
   keyword,
   searchParams,
 }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const [editId, setEditId] = useState(undefined);
 
@@ -109,6 +110,7 @@ const StockCountTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
+        created_at={false}
       />
 
       {/* <StockCountEdit id={editId} setId={setEditId} />

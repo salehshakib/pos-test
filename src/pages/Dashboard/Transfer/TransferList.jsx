@@ -25,10 +25,9 @@ const columns = [
     title: "Warehouse (From)",
     dataIndex: "warehouse_from",
     key: "warehouse_from",
-    align: "center",
     render: (warehouseFrom) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouseFrom}
+        {warehouseFrom ?? "N/A"}
       </span>
     ),
   },
@@ -36,10 +35,9 @@ const columns = [
     title: "Warehouse (To)",
     dataIndex: "warehouse_to",
     key: "warehouse_to",
-    align: "center",
     render: (warehouseTo) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouseTo}
+        {warehouseTo ?? "N/A"}
       </span>
     ),
   },
@@ -58,7 +56,6 @@ const columns = [
     title: "Product Cost",
     dataIndex: "product_cost",
     key: "product_cost",
-    align: "center",
     render: (productCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {productCost}
@@ -69,7 +66,6 @@ const columns = [
     title: "Product Tax",
     dataIndex: "product_tax",
     key: "product_tax",
-    align: "center",
     render: (productTax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {productTax}
@@ -80,7 +76,6 @@ const columns = [
     title: "Grand Total",
     dataIndex: "grand_total",
     key: "grand_total",
-    align: "center",
     render: (grandTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {grandTotal}

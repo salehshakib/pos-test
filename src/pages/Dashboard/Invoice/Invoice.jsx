@@ -21,6 +21,7 @@ const columns = [
     title: "Reference",
     dataIndex: "reference",
     key: "reference",
+    align: "center",
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}
@@ -33,7 +34,7 @@ const columns = [
     key: "warehouse",
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouse}
+        {warehouse ?? "N/A"}
       </span>
     ),
   },
@@ -43,7 +44,7 @@ const columns = [
     key: "cashier",
     render: (cashier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {cashier}
+        {cashier ?? "N/A"}
       </span>
     ),
   },
@@ -53,7 +54,7 @@ const columns = [
     key: "customer",
     render: (customer) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer}
+        {customer ?? "N/A"}
       </span>
     ),
   },
@@ -63,7 +64,7 @@ const columns = [
     key: "supplier",
     render: (supplier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {supplier}
+        {supplier ?? "N/A"}
       </span>
     ),
   },
@@ -71,7 +72,6 @@ const columns = [
     title: "Total",
     dataIndex: "total",
     key: "total",
-    align: "center",
     render: (total) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {total}

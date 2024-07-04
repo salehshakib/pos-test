@@ -43,10 +43,9 @@ const columns = [
     title: "Warehouse",
     dataIndex: "warehouse",
     key: "warehouse",
-    align: "center",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {text}
+        {text ?? "N/A"}
       </span>
     ),
   },
@@ -54,10 +53,9 @@ const columns = [
     title: "Supplier",
     dataIndex: "supplier",
     key: "supplier",
-    align: "center",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {text}
+        {text ?? "N/A"}
       </span>
     ),
   },
@@ -76,7 +74,6 @@ const columns = [
     title: "Grand Total",
     dataIndex: "grandTotal",
     key: "grandTotal",
-    align: "center",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

@@ -52,6 +52,8 @@ const ProductTable = ({
     keyword,
   });
 
+  console.log(params);
+
   const { data, isLoading } = useGetAllProductsQuery(
     { params },
     {

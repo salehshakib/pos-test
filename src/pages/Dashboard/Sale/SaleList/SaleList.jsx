@@ -64,9 +64,10 @@ const columns = [
     title: "Sale Status",
     dataIndex: "saleStatus",
     key: "saleStatus",
+    align: "center",
     render: (saleStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {saleStatus}
+        {saleStatus ?? "N/A"}
       </span>
     ),
   },
@@ -74,9 +75,10 @@ const columns = [
     title: "Payment Status",
     dataIndex: "paymentStatus",
     key: "paymentStatus",
+    align: "center",
     render: (paymentStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {paymentStatus}
+        {paymentStatus ?? "N/A"}
       </span>
     ),
   },

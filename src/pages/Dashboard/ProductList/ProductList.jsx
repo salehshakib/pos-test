@@ -76,7 +76,7 @@ const columns = [
     align: "center",
     render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {brand}
+        {brand ?? "N/A"}
       </span>
     ),
   },
@@ -87,7 +87,7 @@ const columns = [
     align: "center",
     render: (category) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {category}
+        {category ?? "N/A"}
       </span>
     ),
   },
@@ -109,7 +109,7 @@ const columns = [
     align: "center",
     render: (unit) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unit}
+        {unit ?? "N/A"}
       </span>
     ),
   },
@@ -140,7 +140,7 @@ const columns = [
 const SearchComponent = () => {
   return (
     <Row {...rowLayout}>
-      <WarehouseFilter />
+      <WarehouseFilter name="product_warehouse_ids" />
       <BarcodeFilter />
       <BrandFilter />
       <CategoryFilter />

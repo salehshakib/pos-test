@@ -36,7 +36,6 @@ const columns = [
     title: "Amount",
     dataIndex: "amount",
     key: "amount",
-    align: "center",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -47,7 +46,6 @@ const columns = [
     title: "Minimum Amount",
     dataIndex: "minimumAmount",
     key: "minimumAmount",
-    align: "center",
     render: (minimumAmount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {minimumAmount}
@@ -80,7 +78,6 @@ const columns = [
     title: "Created By",
     dataIndex: "createdBy",
     key: "createdBy",
-    align: "center",
     render: (createdBy) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {createdBy}
@@ -88,7 +85,7 @@ const columns = [
     ),
   },
   {
-    title: "Created At",
+    title: "Coupon Issue",
     dataIndex: "createdAt",
     key: "createdAt",
     align: "center",
@@ -99,7 +96,7 @@ const columns = [
     ),
   },
   {
-    title: "Expired At",
+    title: "Coupon Expired",
     dataIndex: "expiredAt",
     key: "expiredAt",
     align: "center",

@@ -30,7 +30,6 @@ import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
 import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
 import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { clearParams } from "../../redux/services/paramSlice/paramSlice";
 import { base_url } from "../../utilities/configs/base_url";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { downloadFile } from "../../utilities/lib/downloadFile";
@@ -269,7 +268,7 @@ const GlobalContainer = ({
 
   const handleReset = () => {
     searchForm.resetFields();
-    dispatch(clearParams());
+    setParams({});
   };
 
   const handleSubmit = async (values) => {
@@ -280,7 +279,7 @@ const GlobalContainer = ({
     const postData = {};
 
     Object.keys(rest).forEach((key) => {
-      if (rest[key].length) {
+      if (rest?.[key]?.length) {
         postData[key] = rest[key];
       }
     });
@@ -293,6 +292,8 @@ const GlobalContainer = ({
         searchDate?.[1].format("YYYY-MM-DD"),
       ];
     }
+
+    console.log(postData);
 
     setParams(postData);
 

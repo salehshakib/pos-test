@@ -11,17 +11,6 @@ import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
-    align: "center",
-    render: (customer) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer}
-      </span>
-    ),
-  },
-  {
     title: "Card No",
     dataIndex: "cardNo",
     key: "cardNo",
@@ -33,10 +22,20 @@ const columns = [
     ),
   },
   {
+    title: "Customer",
+    dataIndex: "customer",
+    key: "customer",
+    render: (customer) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {customer}
+      </span>
+    ),
+  },
+
+  {
     title: "Amount",
     dataIndex: "amount",
     key: "amount",
-    align: "center",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -47,7 +46,6 @@ const columns = [
     title: "Expense",
     dataIndex: "expense",
     key: "expense",
-    align: "center",
     render: (expense) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {expense}
@@ -58,7 +56,6 @@ const columns = [
     title: "Balance",
     dataIndex: "balance",
     key: "balance",
-    align: "center",
     render: (balance) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {balance}
@@ -69,7 +66,6 @@ const columns = [
     title: "Created By",
     dataIndex: "createdBy",
     key: "createdBy",
-    align: "center",
     render: (createdBy) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {createdBy}

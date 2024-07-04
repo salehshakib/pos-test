@@ -43,7 +43,7 @@ const commonProps = {
   // noStyle: true,
 };
 
-export const WarehouseFilter = () => {
+export const WarehouseFilter = ({ name = "warehouse_ids" }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -60,7 +60,7 @@ export const WarehouseFilter = () => {
       <CustomSelect
         {...commonProps}
         label={"Warehouse"}
-        name={"warehouse_ids"}
+        name={name}
         options={options}
         isLoading={isLoading}
       />
@@ -177,7 +177,7 @@ export const ProductFilter = () => {
 
 export const ProductUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
@@ -201,7 +201,7 @@ export const ProductUnitFilter = () => {
 
 export const PurchaseUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
@@ -225,10 +225,12 @@ export const PurchaseUnitFilter = () => {
 
 export const SaleUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
+
+  console.log(data);
 
   const options = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")

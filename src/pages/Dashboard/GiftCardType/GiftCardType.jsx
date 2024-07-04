@@ -8,10 +8,9 @@ import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
-    title: "Type",
+    title: "Gift Card Type",
     dataIndex: "type",
     key: "type",
-    align: "center",
     render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {type}

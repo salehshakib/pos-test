@@ -32,7 +32,7 @@ export const WarehouseComponent = ({
 
   //get data from redux store
   useEffect(() => {
-    if (options?.length && !form.getFieldValue(name)) {
+    if (options?.length && !form?.getFieldValue(name)) {
       form.setFieldValue(name, user?.warehouse_id?.toString());
     }
   }, [form, name, options, user?.warehouse_id]);

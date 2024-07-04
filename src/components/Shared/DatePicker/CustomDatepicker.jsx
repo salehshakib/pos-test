@@ -115,6 +115,7 @@ const CustomDatepicker = ({
   disabledDate = false,
   placeholder = "Choose Date",
   onChange,
+  value,
 
   //for mb-0
   customStyle = false,
@@ -149,6 +150,8 @@ const CustomDatepicker = ({
     onChange,
   };
 
+  console.log(value);
+
   const renderPicker = () => {
     switch (type) {
       case "date":
@@ -164,6 +167,7 @@ const CustomDatepicker = ({
         return (
           <RangePicker
             {...commonProps}
+            value={value}
             picker={picker}
             disabledDate={disabledDate}
             presets={presets && rangePresets}

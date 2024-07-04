@@ -64,7 +64,10 @@ export const ProductTypeFilter = () => {
   );
 };
 
-export const WarehouseFilter = ({ name = "warehouse_ids" }) => {
+export const WarehouseFilter = ({
+  name = "warehouse_ids",
+  fullLayout = false,
+}) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -77,7 +80,7 @@ export const WarehouseFilter = ({ name = "warehouse_ids" }) => {
   }));
 
   return (
-    <Col {...mdColLayout}>
+    <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         {...commonProps}
         label={"Warehouse"}

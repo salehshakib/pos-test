@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,6 +74,10 @@ const ProductCreate = () => {
         })
       : [];
 
+    if (has_stock && qtyListArray.length === 0) {
+      return message.error("Please add stock quantity");
+    }
+
     // Calculate total quantity
     const qty = qtyListArray.reduce((sum, item) => sum + item.qty, 0);
 
@@ -85,6 +89,10 @@ const ProductCreate = () => {
           };
         })
       : [];
+
+    if (has_different_price && priceListArray.length === 0) {
+      return message.error("Please add price");
+    }
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)

@@ -1,13 +1,45 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Input, Popover, Space } from "antd";
-import { IoSearch } from "react-icons/io5";
-import { TbFilterSearch } from "react-icons/tb";
-import { GlobalUtilityStyle } from "../Styled";
+import { Col, Row, Space } from "antd";
 import { FilterDateRange } from "../../components/ReusableComponent/FilterDateRange";
+import CustomForm from "../../components/Shared/Form/CustomForm";
+import CustomSelect from "../../components/Shared/Select/CustomSelect";
+import { rowLayout } from "../../layout/FormLayout";
+import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
+import { GlobalUtilityStyle } from "../Styled";
 
+const WarehouseComponent = ({ onChange }) => {
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data, isLoading } = useGetWarehousesQuery({ params });
+
+  const options = data?.results?.warehouse?.map((warehouse) => ({
+    value: warehouse?.id?.toString(),
+    label: warehouse?.name,
+  }));
+
+  return (
+    <CustomSelect
+      isLoading={isLoading}
+      placeholder={"Warehouse"}
+      options={options}
+      name={"warehouse_id"}
+      customStyle={true}
+      onChange={onChange}
+    />
+  );
+};
 export const ReportContainer = ({
   pageTitle,
+  form,
   searchFilterContent,
+  onDateChange,
+  onWarehouseChange,
   children,
 }) => {
   return (
@@ -19,8 +51,24 @@ export const ReportContainer = ({
           }}
           extra={[
             <Space key="search" className="flex items-center">
-              {/* <Space.Compact>
-                <Input
+              <CustomForm layout="horizontal" submitBtn={false} form={form}>
+                <Row {...rowLayout} gutter={10}>
+                  <Col span={14}>
+                    <FilterDateRange
+                      customStyle={true}
+                      name="daterange"
+                      onChange={onDateChange}
+                    />
+                  </Col>
+
+                  <Col span={10}>
+                    <WarehouseComponent onChange={onWarehouseChange} />
+                  </Col>
+                </Row>
+              </CustomForm>
+
+              {/* <Space.Compact> */}
+              {/* <Input
                   type="text"
                   key="search"
                   size="large"
@@ -37,8 +85,10 @@ export const ReportContainer = ({
                     />
                   }
                   allowClear={true}
-                />
-                <Popover
+                /> */}
+              {/* <WarehouseFilter /> */}
+
+              {/* <Popover
                   content={searchFilterContent}
                   title="Advance Search"
                   trigger="click"
@@ -59,9 +109,8 @@ export const ReportContainer = ({
                       className="text-xs primary-text lg:text-[16px]"
                     />
                   </Button>
-                </Popover>
-              </Space.Compact> */}
-              <FilterDateRange customStyle={true} />
+                </Popover> */}
+              {/* </Space.Compact> */}
             </Space>,
           ]}
           content={children}

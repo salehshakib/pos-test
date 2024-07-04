@@ -48,6 +48,7 @@ const GlobalContainer = ({
   api,
   debounce,
   setParams,
+  popoverWidth = 600,
   // handleSeach
 }) => {
   const dispatch = useDispatch();
@@ -132,7 +133,7 @@ const GlobalContainer = ({
   };
 
   const items = [
-    {
+    setNewColumns && {
       key: "view",
       label: (
         <Dropdown
@@ -257,11 +258,13 @@ const GlobalContainer = ({
   };
 
   useEffect(() => {
-    const newColumns = columns.map((item) => ({
-      ...item,
-      hidden: !checkedList.includes(item.key),
-    }));
-    setNewColumns(newColumns);
+    if (setNewColumns) {
+      const newColumns = columns.map((item) => ({
+        ...item,
+        hidden: !checkedList.includes(item.key),
+      }));
+      setNewColumns(newColumns);
+    }
   }, [checkedList, columns, setNewColumns]);
 
   const [searchForm] = Form.useForm();
@@ -382,7 +385,7 @@ const GlobalContainer = ({
                   placement="bottomRight"
                   // className="border border-slate-500 rounded-md"
                   overlayClassName="rounded-md shadow-xl"
-                  overlayStyle={{ width: 600 }}
+                  overlayStyle={{ width: popoverWidth }}
                   overlayInnerStyle={{
                     backgroundColor: "#F8FAFC",
                   }}

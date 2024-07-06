@@ -116,7 +116,6 @@ const columns = [
     title: "Cost",
     dataIndex: "cost",
     key: "cost",
-    align: "right",
     render: (cost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {cost}
@@ -127,7 +126,6 @@ const columns = [
     title: "Price",
     dataIndex: "price",
     key: "price",
-    align: "right",
     render: (price) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {price}

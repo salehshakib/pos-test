@@ -15,7 +15,7 @@ const PosProducts = ({ setProducts }) => {
 
   const [pagination, setPagination] = useState({
     page: 1,
-    perPage: 13,
+    perPage: 25,
     allData: 1,
   });
 

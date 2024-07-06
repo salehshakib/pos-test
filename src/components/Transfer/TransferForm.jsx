@@ -26,8 +26,8 @@ const options = [
     label: "Pending",
   },
   {
-    value: "Sent",
-    label: "Sent",
+    value: "Send",
+    label: "Send",
   },
 ];
 

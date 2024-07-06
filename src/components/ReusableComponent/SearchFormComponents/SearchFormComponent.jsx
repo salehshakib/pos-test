@@ -67,6 +67,7 @@ export const ProductTypeFilter = () => {
 export const WarehouseFilter = ({
   name = "warehouse_ids",
   fullLayout = false,
+  multiple = true,
 }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -82,7 +83,8 @@ export const WarehouseFilter = ({
   return (
     <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
-        {...commonProps}
+        showSearch={true}
+        mode={multiple && "multiple"}
         label={"Warehouse"}
         name={name}
         options={options}
@@ -149,7 +151,7 @@ export const CategoryFilter = ({
   );
 };
 
-export const SupplierFilter = () => {
+export const SupplierFilter = ({ multiple = true, fullLayout = false }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -162,9 +164,10 @@ export const SupplierFilter = () => {
   }));
 
   return (
-    <Col {...mdColLayout}>
+    <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         {...commonProps}
+        multiple={multiple && "multiple"}
         label="Supplier"
         name={"supplier_ids"}
         options={options}
@@ -325,7 +328,7 @@ export const TaxFilter = () => {
   );
 };
 
-export const CustomerFilter = () => {
+export const CustomerFilter = ({ multiple = true, fullLayout = false }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -340,9 +343,10 @@ export const CustomerFilter = () => {
   });
 
   return (
-    <Col {...mdColLayout}>
+    <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         {...commonProps}
+        multiple={multiple && "multiple"}
         label="Customer"
         name={"customer_ids"}
         options={options}

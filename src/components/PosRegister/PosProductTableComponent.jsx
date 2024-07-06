@@ -19,6 +19,7 @@ import {
   onDelete,
   onQuantityChange,
 } from "../../utilities/lib/productTable/counters";
+import { calculateOriginalPrice } from "../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -386,23 +387,28 @@ const ProductTableComponent = ({
       id,
       name,
       sku,
-      buying_price: unit_cost,
+      selling_price: unit_cost,
       sale_unit_id,
       sale_units,
       tax_id,
       taxes,
+      tax_method,
     } = product ?? {};
 
     setFormValuesId(
       id,
       sale_unit_id,
-      unit_cost ?? 0,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       sale_units,
       formValues,
       productUnits,
       tax_id,
       taxes
     );
+
+    // console.log(product);
+
+    // console.log(pro)
 
     return {
       id,

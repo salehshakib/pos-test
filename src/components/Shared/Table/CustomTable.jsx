@@ -58,7 +58,7 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, "delete");
   const isStatusPermitted = usePermission(route, "status");
 
-  console.log(isEditPermitted, route, isDeletePermitted);
+  // console.log(isEditPermitted, route, isDeletePermitted);
 
   const getMenuItems = (record) =>
     [
@@ -241,22 +241,24 @@ const CustomTable = ({
             >
               <TbListDetails className="text-lg md:text-xl" />
             </button>
-            <Dropdown
-              menu={{
-                items: getMenuItems(record),
-              }}
-              overlayStyle={{
-                width: "max-content",
-              }}
-              placement="bottom"
-              trigger={["click"]}
-              autoAdjustOverflow
-              arrow={{ pointAtCenter: true }}
-            >
-              <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
-                <FiMoreHorizontal className="text-lg md:text-xl" />
-              </button>
-            </Dropdown>
+            {(record?.handleEdit || record?.handleDeleteModal) && (
+              <Dropdown
+                menu={{
+                  items: getMenuItems(record),
+                }}
+                overlayStyle={{
+                  width: "max-content",
+                }}
+                placement="bottom"
+                trigger={["click"]}
+                autoAdjustOverflow
+                arrow={{ pointAtCenter: true }}
+              >
+                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                  <FiMoreHorizontal className="text-lg md:text-xl" />
+                </button>
+              </Dropdown>
+            )}
           </div>
         );
       } else {

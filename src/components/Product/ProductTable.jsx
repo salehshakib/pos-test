@@ -18,9 +18,10 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const ProductTable = ({
   newColumns,
@@ -31,6 +32,10 @@ const ProductTable = ({
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
+
+  const currency = useSelector(useCurrency);
+
+  console.log(currency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -52,8 +57,6 @@ const ProductTable = ({
     },
     keyword,
   });
-
-  console.log(params);
 
   const { data, isLoading } = useGetAllProductsQuery(
     { params },
@@ -135,8 +138,8 @@ const ProductTable = ({
         category: categories?.name,
         quantity: qty,
         unit: units?.for ?? "N/A",
-        cost: cost ?? "N/A",
-        price: price,
+        cost: showCurrency(cost, currency),
+        price: showCurrency(price, currency),
         created_at: date,
         status: is_active,
         handleStatusModal,

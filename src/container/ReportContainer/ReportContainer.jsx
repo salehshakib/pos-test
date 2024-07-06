@@ -10,6 +10,7 @@ import {
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
 import { GlobalUtilityStyle } from "../Styled";
+import { useLocation } from "react-router-dom";
 
 const WarehouseComponent = ({ onChange }) => {
   const params = useGlobalParams({
@@ -42,6 +43,8 @@ export const ReportContainer = ({
   onWarehouseChange,
   children,
 }) => {
+  const { pathname } = useLocation();
+
   return (
     <GlobalUtilityStyle>
       <div className="h-full">
@@ -52,16 +55,18 @@ export const ReportContainer = ({
           extra={[
             <Space key="search" className="flex items-center">
               <CustomForm layout="horizontal" submitBtn={false} form={form}>
-                <Row {...rowLayout} gutter={10}>
-                  <Col span={14}>
-                    <FilterDateRange
-                      customStyle={true}
-                      name="daterange"
-                      onChange={onDateChange}
-                    />
-                  </Col>
+                <Row {...rowLayout} gutter={2}>
+                  {!pathname.includes("calender") && (
+                    <Col span={14}>
+                      <FilterDateRange
+                        customStyle={true}
+                        name="daterange"
+                        onChange={onDateChange}
+                      />
+                    </Col>
+                  )}
 
-                  <Col span={10}>
+                  <Col span={pathname.includes("calender") ? 24 : 10}>
                     <WarehouseComponent onChange={onWarehouseChange} />
                   </Col>
                 </Row>

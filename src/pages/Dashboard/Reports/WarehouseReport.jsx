@@ -1,25 +1,34 @@
 import { Descriptions, Row, Spin, Tabs } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useDebounce } from "use-debounce";
 import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { rowLayout } from "../../../layout/FormLayout";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
 import { useGetWarehouseDetailsQuery } from "../../../redux/services/warehouse/warehouseApi";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { SaleTable } from "./data/components/SaleTable";
+import { ExpenseTable } from "./components/ExpenseTable";
+import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
+import { PurchaseTable } from "./components/PurchaseTable";
+import { QuotationTable } from "./components/QutationTable";
+import { SaleReturnTable } from "./components/SaleReturnTable";
+import { SaleTable } from "./components/SaleTable";
 
 const SearchFilterComponent = () => {
   return (
     <Row {...rowLayout}>
-      <WarehouseFilter fullLayout={true} />
+      <WarehouseFilter fullLayout={true} multiple={false} />
     </Row>
   );
 };
 
 export const WarehouseReport = () => {
   const user = useSelector(useCurrentUser);
+
+  const { searchParams, setParams } = useFilterParams();
+  const { keyword, debounce } = useCustomDebounce();
 
   const { data, isFetching } = useGetWarehouseDetailsQuery(
     {
@@ -30,9 +39,14 @@ export const WarehouseReport = () => {
 
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
-  const { keyword, debounce } = useDebounce();
 
   const summaryDetails = createDetailsLayout(summaryData);
+
+  const summaryType = {
+    warehouse_ids: [
+      searchParams?.warehouse_ids ? searchParams?.warehouse_ids : data?.id,
+    ],
+  };
 
   const warehouseItems = [
     {
@@ -62,23 +76,17 @@ export const WarehouseReport = () => {
   ];
 
   return (
-    // <ReportContainer pageTitle="Warehouse Report">
     <GlobalContainer
       pageTitle="Warehouse Report"
       popoverWidth={400}
       searchFilterContent={<SearchFilterComponent />}
-      //   columns={columns}
-      //   selectedRows={selectedRows}
       debounce={debounce}
-      //   setSelectedRows={setSelectedRows}
-      //   setNewColumns={setNewColumns}
-      //   setParams={setParams}
-      //   api={BRAND}
+      setParams={setParams}
     >
       <div className=" w-full grid grid-cols-2 gap-4 mb-5">
         <div className="border rounded-md p-4 shadow-sm">
           {isFetching ? (
-            <Spin className="w-full h-full flex justify-center items-center " />
+            <Spin className="w-full h-full flex justify-center items-center py-5" />
           ) : (
             <Descriptions
               title="Warehouse Details"
@@ -88,47 +96,94 @@ export const WarehouseReport = () => {
           )}
         </div>
         <div className="border rounded-md p-4 shadow-sm">
-          {isFetching ? (
+          {isFetching || loading ? (
             <Spin className="w-full h-full flex justify-center items-center " />
           ) : (
             <Descriptions title="Summary" items={summaryDetails} />
           )}
         </div>
       </div>
-      <Tabs
-        defaultActiveKey="sale"
-        items={[
-          {
-            label: "Sale",
-            key: "sale",
-            children: (
-              <SaleTable keyword={keyword} warehouse_ids={[data?.id]} />
-            ),
-          },
-          {
-            label: "Purchase",
-            key: "purchase",
-            // children: <PurchaseTable />,
-          },
-          {
-            label: "Quotation",
-            key: "quotation",
-            // children: <QuotationTable />,
-          },
-          {
-            label: "Return",
-            key: "return",
-            // children: <ReturnTable />,
-          },
-          {
-            label: "Expense",
-            key: "expense",
-            children: <p>Content of Tab Pane 3</p>,
-          },
-        ]}
-      />
+      {data ? (
+        <Tabs
+          defaultActiveKey="sale"
+          items={[
+            {
+              label: "Sale",
+              key: "sale",
+              children: (
+                <SaleTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+            {
+              label: "Purchase",
+              key: "purchase",
+              children: (
+                <PurchaseTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+            {
+              label: "Quotation",
+              key: "quotation",
+              children: (
+                <QuotationTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+            {
+              label: "Purchase Return",
+              key: "purchasereturn",
+              children: (
+                <PurchaseReturnTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+            {
+              label: "Sale Return",
+              key: "salereturn",
+              children: (
+                <SaleReturnTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+            {
+              label: "Expense",
+              key: "expense",
+              children: (
+                <ExpenseTable
+                  keyword={keyword}
+                  summaryType={summaryType}
+                  setSummaryData={setSummaryData}
+                  setLoading={setLoading}
+                />
+              ),
+            },
+          ]}
+        />
+      ) : (
+        <Spin className="w-full h-full flex justify-center items-center py-10" />
+      )}
     </GlobalContainer>
-
-    // </ReportContainer>
   );
 };

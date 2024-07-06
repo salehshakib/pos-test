@@ -5,6 +5,7 @@ import {
   closeCreateDrawer,
   closeEditDrawer,
 } from "../../../redux/services/drawer/drawerSlice";
+import { sanitizeObj } from "../../../utilities/lib/sanitizeObj";
 
 const FormButton = ({ loading, children, onClose }) => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const CustomForm = (props) => {
   } = props;
 
   const onFinish = (values) => {
-    handleSubmit(values);
+    handleSubmit(sanitizeObj(values));
     // form
     //   .validateFields({
     //     validateOnly: true,

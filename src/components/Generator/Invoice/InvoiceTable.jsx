@@ -10,8 +10,10 @@ import {
   useDeleteInvoiceMutation,
   useGetAllInvoiceQuery,
 } from "../../../redux/services/invoice/invoiceApi";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { usePagination } from "../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { showCurrency } from "../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
@@ -28,6 +30,7 @@ const InvoiceTable = ({
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -99,7 +102,7 @@ const InvoiceTable = ({
         cashier: cashiers?.name ?? "N/A",
         customer: customers?.name ?? "N/A",
         supplier: suppliers?.name ?? "N/A",
-        total: grand_total,
+        total: showCurrency(grand_total, currency),
         date,
         handleEdit,
         handleDeleteModal,

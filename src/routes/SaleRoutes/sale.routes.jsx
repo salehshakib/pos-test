@@ -1,12 +1,10 @@
 import { CiGift } from "react-icons/ci";
 import { FaShoppingBasket } from "react-icons/fa";
-import { LuClipboardType } from "react-icons/lu";
 import { MdOutlineDesignServices } from "react-icons/md";
 import { RiCoupon3Line } from "react-icons/ri";
 import Coupons from "../../pages/Dashboard/Coupons/Coupons";
 import GiftCardList from "../../pages/Dashboard/GiftCard/GiftCardList";
 import GiftCardDesign from "../../pages/Dashboard/GiftCardDesign/GiftCardDesign";
-import GiftCardType from "../../pages/Dashboard/GiftCardType/GiftCardType";
 import SaleList from "../../pages/Dashboard/Sale/SaleList/SaleList";
 
 export const salePaths = [
@@ -15,12 +13,6 @@ export const salePaths = [
     path: "sale",
     icon: FaShoppingBasket,
     element: <SaleList />,
-  },
-  {
-    name: "Gift Card Type",
-    path: "gift-card-type",
-    icon: LuClipboardType,
-    element: <GiftCardType />,
   },
   {
     name: "Gift Card",

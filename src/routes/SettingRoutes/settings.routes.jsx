@@ -13,6 +13,7 @@ import CurrencyList from "../../pages/Dashboard/Currency/CurrencyList";
 import CustomerGroup from "../../pages/Dashboard/CustomerGroup/CustomerGroup";
 import { EmailConfig } from "../../pages/Dashboard/EmailConfig/EmailConfig";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
+import GiftCardType from "../../pages/Dashboard/GiftCardType/GiftCardType";
 import { HrmSettings } from "../../pages/Dashboard/HrmSetting/HrmSettings";
 import { Roles } from "../../pages/Dashboard/Roles/Roles";
 import { LeaveType } from "../../pages/Dashboard/Settings/LeaveType/LeaveType";
@@ -58,11 +59,17 @@ export const settingPaths = [
     element: <UnitList />,
   },
   {
-    name: "Currency",
-    path: "currency",
-    icon: BsCurrencyPound,
-    element: <CurrencyList />,
+    name: "Gift Card Type",
+    path: "gift-card-type",
+    icon: LuClipboardType,
+    element: <GiftCardType />,
   },
+  // {
+  //   name: "Currency",
+  //   path: "currency",
+  //   icon: BsCurrencyPound,
+  //   element: <CurrencyList />,
+  // },
   {
     name: "Tax",
     path: "tax",

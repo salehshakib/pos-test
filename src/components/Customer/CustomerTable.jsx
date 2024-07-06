@@ -121,7 +121,7 @@ const CustomerTable = ({
       return {
         id,
         name: { name, email },
-        companyName,
+        companyName: companyName ?? "N/A",
         phone,
         customerGroup: customer_groups?.name,
         created_at: date,

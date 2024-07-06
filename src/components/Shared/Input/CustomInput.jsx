@@ -169,7 +169,7 @@ const CustomInput = (props) => {
             min={0}
             max={100}
             controls={false}
-            suffix="%"
+            suffix={suffix ?? "%"}
           />
         );
       case "phone":

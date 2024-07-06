@@ -35,6 +35,19 @@ const createDetailsLayout = (data, nostyle) => {
     "has_variants",
   ];
 
+  const currencyKeys = [
+    "price",
+    "tax",
+    "discount",
+    "total",
+    "grand_total",
+    "paid",
+    "due",
+    "due_date",
+    "return_amount",
+    "expense",
+  ];
+
   const renderValue = (key, value) => {
     if (typeof value === "object" && value !== null && !Array.isArray(value)) {
       return value.name || "N/A";
@@ -78,6 +91,10 @@ const createDetailsLayout = (data, nostyle) => {
           ) : (
             <Badge status="success" text={value} />
           );
+        }
+
+        if (currencyKeys.includes(key)) {
+          return `$${value}`;
         }
         if (key.includes("date")) {
           return dayjs(value).format("DD-MM-YYYY");

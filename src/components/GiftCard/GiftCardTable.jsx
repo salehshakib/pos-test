@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -18,6 +18,8 @@ import CustomTable from "../Shared/Table/CustomTable";
 import { GiftCardDetails } from "./GiftCardDetails";
 import GiftCardEdit from "./GiftCardEdit";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const GiftCardTable = ({
   newColumns,
@@ -28,6 +30,7 @@ const GiftCardTable = ({
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -117,12 +120,12 @@ const GiftCardTable = ({
       return {
         id,
         cardNo: card_no,
-        amount,
-        expense: expense ?? "N/A",
+        amount: showCurrency(amount, currency),
+        expense: showCurrency(expense, currency),
+        balance: showCurrency(amount - expense, currency),
         expiredDate: dayjs(expired_date).format("DD-MM-YYYY"),
         status: is_active,
         customer: customers?.name ?? "N/A",
-        balance: amount - expense,
         createdBy: created_by ?? "N/A",
         created_at: date,
         handleStatusModal,

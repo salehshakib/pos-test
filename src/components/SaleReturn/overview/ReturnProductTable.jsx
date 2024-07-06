@@ -5,6 +5,7 @@ import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
 import { onDelete } from "../../../utilities/lib/productTable/counters";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -212,31 +213,6 @@ export const ReturnProductTable = ({
     }));
   };
 
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-
-  //   setFormValues((prevFormValues) => {
-  //     const { product_list } = prevFormValues;
-
-  //     const updatedProductList = Object.keys(product_list).reduce(
-  //       (acc, key) => {
-  //         // eslint-disable-next-line no-unused-vars
-  //         const { [id]: _, ...rest } = product_list[key];
-  //         acc[key] = rest;
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: updatedProductList,
-  //     };
-  //   });
-  // };
-
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -246,12 +222,13 @@ export const ReturnProductTable = ({
       sale_unit_id,
       sale_units,
       taxes,
+      tax_method,
     } = product ?? {};
 
     setFormValuesId(
       id,
       sale_unit_id,
-      unit_cost ?? 0,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       sale_units,
       formValues,
       productUnits,

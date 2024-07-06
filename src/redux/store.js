@@ -20,6 +20,7 @@ import menuSlice from "./services/menu/menuSlice";
 import paginationSlice from "./services/pagination/paginationSlice";
 import paramSlice from "./services/paramSlice/paramSlice";
 import pettyCashSlice from "./services/pettycash/pettyCashSlice";
+import posSlice from "./services/pos/posSlice";
 import productSlice from "./services/product/productSlice";
 import themeSlice from "./services/theme/themeSlice";
 
@@ -35,6 +36,8 @@ const persistedThemeReducer = persistReducer(persistConfig, themeSlice);
 const persistedMenuItems = persistReducer(persistConfig, menuSlice);
 
 const persistedDeveloperReducer = persistReducer(persistConfig, developerSlice);
+
+const persistedPosReducer = persistReducer(persistConfig, posSlice);
 
 // const persistedPaginationReducer = persistReducer(
 //   persistConfig,
@@ -58,6 +61,7 @@ export const store = configureStore({
     pettyCash: persistePettyCash,
     drawer: drawerSlice,
     product: productSlice,
+    pos: persistedPosReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

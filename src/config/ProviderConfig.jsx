@@ -15,6 +15,7 @@ import { adminPaths } from "../routes/admin.routes";
 import { router } from "../routes/routes";
 import { theme } from "../utilities/configs/theme";
 import { useMenuItems } from "../utilities/lib/getPermission";
+import { setCurrency } from "../redux/services/pos/posSlice";
 
 const LoadingComponent = (data) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,8 @@ export const ProviderConfig = ({ children }) => {
 
   const { data } = useGetGeneralSettingsQuery();
 
+  console.log(data);
+
   const menuItems = useMenuItems(adminPaths);
 
   // console.log(menuItems);
@@ -67,6 +70,13 @@ export const ProviderConfig = ({ children }) => {
         setDeveloper({
           developedBy: data?.developed_by,
           hyperLink: data?.developed_by_link,
+        })
+      );
+
+      dispatch(
+        setCurrency({
+          name: data?.currency,
+          position: data?.currency_position,
         })
       );
     }

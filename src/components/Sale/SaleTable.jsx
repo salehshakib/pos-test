@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -16,6 +16,8 @@ import CustomTable from "../Shared/Table/CustomTable";
 
 import { SaleDetails } from "./SaleDetails";
 import { SaleEdit } from "./SaleEdit";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 export const SaleTable = ({
   newColumns,
@@ -26,6 +28,7 @@ export const SaleTable = ({
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -102,9 +105,9 @@ export const SaleTable = ({
         cashier: cashiers?.name,
         saleStatus: sale_status,
         paymentStatus: payment_status,
-        grandTotal: grand_total,
-        paid: paid_amount,
-        due: due_amount,
+        grandTotal: showCurrency(grand_total, currency),
+        paid: showCurrency(paid_amount ?? "0", currency),
+        due: showCurrency(due_amount ?? "0", currency),
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,

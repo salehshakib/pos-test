@@ -63,17 +63,17 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Available",
-    dataIndex: "available",
-    key: "available",
-    align: "center",
-    render: (available) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {available}
-      </span>
-    ),
-  },
+  // {
+  //   title: "Available",
+  //   dataIndex: "available",
+  //   key: "available",
+  //   align: "center",
+  //   render: (available) => (
+  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //       {available}
+  //     </span>
+  //   ),
+  // },
   {
     title: "Created By",
     dataIndex: "createdBy",

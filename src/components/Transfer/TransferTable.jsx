@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -14,6 +14,8 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
 
@@ -26,6 +28,7 @@ const TransferTable = ({
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -100,9 +103,9 @@ const TransferTable = ({
       warehouse_from: from_warehouses?.name,
       warehouse_to: to_warehouses?.name,
       date: dayjs(date).format("DD-MM-YYYY"),
-      product_cost: total_cost,
-      product_tax: total_tax,
-      grand_total: grand_total,
+      product_cost: showCurrency(total_cost, currency),
+      product_tax: showCurrency(total_tax, currency),
+      grand_total: showCurrency(grand_total, currency),
       status,
       handleEdit,
       handleDeleteModal,

@@ -49,7 +49,6 @@ const columns = [
   {
     title: "Amount",
     dataIndex: "amount",
-    align: "right",
     key: "amount",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

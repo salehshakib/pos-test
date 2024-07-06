@@ -4,6 +4,7 @@ import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -319,12 +320,13 @@ export const ReturnProductTable = ({
       purchase_unit_id,
       purchase_units,
       taxes,
+      tax_method,
     } = product ?? {};
 
     setFormValuesId(
       id,
       purchase_unit_id,
-      unit_cost ?? 0,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       purchase_units,
       formValues,
       productUnits,

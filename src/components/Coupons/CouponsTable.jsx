@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeleteCouponMutation,
@@ -17,6 +17,8 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import CouponsEdit from "./CouponsEdit";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const CouponsTable = ({
   newColumns,
@@ -27,6 +29,7 @@ const CouponsTable = ({
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -117,19 +120,24 @@ const CouponsTable = ({
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
+      console.log(item);
+
       const expiredDate = dayjs(expired_date).format("DD-MM-YYYY");
 
       return {
         id,
         couponCode: code,
         type,
-        amount,
         quantity: qty,
         createdBy: user?.name ?? user ?? "N/A",
-        minimumAmount: minimum_amount ?? 0,
+        amount:
+          type === "Fixed"
+            ? showCurrency(amount ?? 0, currency)
+            : amount + " %",
+        minimumAmount: showCurrency(minimum_amount ?? 0, currency),
         createdAt: date,
         expiredAt: expiredDate,
-        available: available ?? "N/A",
+        // available: available ?? "N/A",
         status: is_active,
         created_at: date,
         handleStatusModal,

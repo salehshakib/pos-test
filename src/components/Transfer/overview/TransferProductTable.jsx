@@ -20,6 +20,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -493,12 +494,15 @@ export const TransferProductTable = ({
         purchase_units,
         tax_id,
         taxes,
+
+        tax_method,
       } = product ?? {};
 
       setFormValuesId(
         id,
         purchase_unit_id,
-        unit_cost ?? 0,
+        calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+
         purchase_units,
         formValues,
         productUnits,

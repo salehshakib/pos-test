@@ -18,7 +18,11 @@ const UnitCreate = () => {
 
   const handleSubmit = async (values) => {
     const { data, error } = await createUnit({
-      data: values,
+      data: {
+        ...values,
+        operator: values.operator ? values.operator : "*",
+        operation_value: values.operation_value ? values.operation_value : 1,
+      },
     });
     if (data?.success) {
       dispatch(closeCreateDrawer());

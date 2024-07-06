@@ -1,34 +1,31 @@
-import { Col, Form, Row, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { useGetAllCurrencyQuery } from "../../../redux/services/currency/currencyApi";
+import { Col, Form, Row, Tooltip } from "antd";
+import { currencies } from "currencies.json";
 import { useEffect } from "react";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import CustomInput from "../../Shared/Input/CustomInput";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const CurrencyComponent = () => {
   const form = Form.useFormInstance();
-  const { data, isLoading } = useGetAllCurrencyQuery({
-    params: {
-      selectValue: ["id", "name", "is_default", "code"],
-    },
+
+  const options = currencies.map(({ name, symbol, code }) => {
+    return { label: `${name} (${symbol})`, value: code };
   });
 
-  const options = data?.results?.currency?.map((currency) => ({
-    value: currency.id?.toString(),
-    label: currency.name + " " + currency?.code,
-  }));
+  const currency = useSelector(useCurrency);
 
   useEffect(() => {
     if (options?.length && !form.getFieldValue("currency")) {
-      form.setFieldValue("currency", options[0].value);
+      form.setFieldValue("currency", currency?.name);
     }
-  }, [form, options]);
+  }, [currency?.name, form, options]);
 
   return (
     <CustomSelect
       placeholder={"currency"}
       showSearch={true}
-      isLoading={isLoading}
       options={options}
       required={true}
       name="currency"

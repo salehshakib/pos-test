@@ -18,6 +18,8 @@ import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
 import { QuotationDetails } from "./overview/QuotationDetails";
+import { showCurrency } from "../../../utilities/lib/currency";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 
 const QuotationTable = ({
   newColumns,
@@ -28,6 +30,7 @@ const QuotationTable = ({
   const dispatch = useDispatch();
 
   const { editId } = useSelector((state) => state.drawer);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -100,7 +103,7 @@ const QuotationTable = ({
         cashier: cashiers?.name ?? "N/A",
         customer: customers?.name ?? "N/A",
         supplier: suppliers?.name ?? "N/A",
-        total: grand_total,
+        total: showCurrency(grand_total, currency),
         date,
         handleEdit,
         handleDeleteModal,

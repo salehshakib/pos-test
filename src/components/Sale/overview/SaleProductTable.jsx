@@ -1,27 +1,28 @@
 import { Button, Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
+import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
-import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { MdDelete } from "react-icons/md";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { calculateTotals } from "../../../utilities/lib/calculateTotals";
 import {
   decrementCounter,
   incrementCounter,
   onDelete,
   onQuantityChange,
 } from "../../../utilities/lib/productTable/counters";
-import { calculateTotals } from "../../../utilities/lib/calculateTotals";
+import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
+import CustomForm from "../../Shared/Form/CustomForm";
+import CustomInput from "../../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const columns = [
   {
@@ -488,17 +489,18 @@ export const SaleProductTable = ({
       id,
       name,
       sku,
-      buying_price: unit_cost,
+      selling_price: unit_cost,
       sale_unit_id,
       sale_units,
       tax_id,
       taxes,
+      tax_method,
     } = product ?? {};
 
     setFormValuesId(
       id,
       sale_unit_id,
-      unit_cost ?? 0,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       sale_units,
       formValues,
       productUnits,

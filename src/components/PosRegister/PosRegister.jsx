@@ -1,13 +1,15 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
+import { currencies } from "currencies.json";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaPlus, FaRegEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { fullColLayout } from "../../layout/FormLayout";
 import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
-import { useGetAllCurrencyQuery } from "../../redux/services/currency/currencyApi";
 import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
 import {
   DEFAULT_SELECT_VALUES,
@@ -146,31 +148,22 @@ const CustomerComponent = () => {
 
 const CurrencyComponent = () => {
   const form = Form.useFormInstance();
+  const currency = useSelector(useCurrency);
 
-  const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+  const options = currencies.map(({ name, symbol, code }) => {
+    return { label: `${name} (${symbol})`, value: code };
   });
-
-  const { data, isLoading } = useGetAllCurrencyQuery({
-    params,
-  });
-
-  const options = data?.results?.currency?.map((currency) => ({
-    value: currency.id?.toString(),
-    label: currency.name,
-  }));
 
   useEffect(() => {
     if (options?.length) {
-      form.setFieldValue("currency", options[0].value);
+      form.setFieldValue("currency", currency?.name);
     }
-  }, [form, options]);
+  }, [currency?.name, form, options]);
 
   return (
     <CustomSelect
       placeholder={"currency"}
       showSearch={true}
-      isLoading={isLoading}
       options={options}
       required={true}
       name="currency"

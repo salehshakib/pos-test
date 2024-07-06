@@ -1,21 +1,4 @@
-import { Row } from "antd";
-import { useState } from "react";
-import { PurchaseCreate } from "../../../components/Purchase/PurchaseCreate";
-import { PurchaseTable } from "../../../components/Purchase/PurchaseTable";
-import {
-  ProductFilter,
-  PurchaseStatusFilter,
-  SupplierFilter,
-  TaxFilter,
-  WarehouseFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { PURCHASE } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
-
-const columns = [
+export const columns = [
   {
     title: "Date",
     dataIndex: "date",
@@ -112,48 +95,3 @@ const columns = [
     ),
   },
 ];
-
-const SearchComponent = () => {
-  return (
-    <Row {...rowLayout}>
-      <WarehouseFilter />
-      <SupplierFilter />
-      <ProductFilter name="purchase_product_ids" />
-      <TaxFilter />
-      <PurchaseStatusFilter />
-    </Row>
-  );
-};
-
-const Purchase = () => {
-  const [newColumns, setNewColumns] = useState(columns);
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  const { searchParams, setParams } = useFilterParams();
-  const { keyword, debounce } = useCustomDebounce();
-
-  return (
-    <GlobalContainer
-      pageTitle="Purchase"
-      columns={columns}
-      selectedRows={selectedRows}
-      debounce={debounce}
-      setSelectedRows={setSelectedRows}
-      setNewColumns={setNewColumns}
-      setParams={setParams}
-      searchFilterContent={<SearchComponent />}
-      api={PURCHASE}
-    >
-      <PurchaseCreate />
-
-      <PurchaseTable
-        newColumns={newColumns}
-        keyword={keyword}
-        setSelectedRows={setSelectedRows}
-        searchParams={searchParams}
-      />
-    </GlobalContainer>
-  );
-};
-
-export default Purchase;

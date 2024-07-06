@@ -1,31 +1,35 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { SaleDetails } from "../../../../../components/Sale/SaleDetails";
-import CustomTable from "../../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../../container/Styled";
-import { useGetAllSaleQuery } from "../../../../../redux/services/sale/saleApi";
-import { usePagination } from "../../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../../../../utilities/lib/getPermission";
-import { saleColumns } from "../saleColumn";
+import { useSelector } from "react-redux";
+import { SaleDetails } from "../../../../components/Sale/SaleDetails";
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import { GlobalUtilityStyle } from "../../../../container/Styled";
+import { useCurrency } from "../../../../redux/services/pos/posSlice";
+import { useGetAllSaleQuery } from "../../../../redux/services/sale/saleApi";
+import { usePagination } from "../../../../utilities/hooks/usePagination";
+import { useGlobalParams } from "../../../../utilities/hooks/useParams";
+import { showCurrency } from "../../../../utilities/lib/currency";
+import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
+import { saleColumns } from "../data/saleColumn";
 
-export const SaleTable = ({ keyword, warehouse_ids }) => {
+export const SaleTable = ({ keyword, summaryType }) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
+  const currency = useSelector(useCurrency);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
-    params: { ...pagination, warehouse_ids: warehouse_ids, summary: "sale" },
+    params: { ...pagination, ...summaryType, summary: "sale" },
     keyword,
   });
 
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {
-      skip: !useUrlIndexPermission("sale") && !warehouse_ids?.length,
+      skip: !useUrlIndexPermission("sale"),
     }
   );
 
@@ -62,9 +66,9 @@ export const SaleTable = ({ keyword, warehouse_ids }) => {
         cashier: cashiers?.name,
         saleStatus: sale_status,
         paymentStatus: payment_status,
-        grandTotal: grand_total,
-        paid: paid_amount,
-        due: due_amount,
+        grandTotal: showCurrency(grand_total ?? "0", currency),
+        paid: showCurrency(paid_amount ?? "0", currency),
+        due: showCurrency(due_amount ?? "0", currency),
 
         handleDetailsModal,
       };

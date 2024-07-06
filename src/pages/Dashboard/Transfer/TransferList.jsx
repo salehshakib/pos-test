@@ -11,6 +11,17 @@ import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+    align: "center",
+    render: (date) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {date}
+      </span>
+    ),
+  },
+  {
     title: "Reference",
     dataIndex: "reference",
     key: "reference",
@@ -41,17 +52,7 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
-    render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {date}
-      </span>
-    ),
-  },
+
   {
     title: "Product Cost",
     dataIndex: "product_cost",

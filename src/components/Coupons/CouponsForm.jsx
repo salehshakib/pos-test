@@ -8,6 +8,8 @@ import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const CouponCodeComponent = () => {
   const form = Form.useFormInstance();
@@ -61,25 +63,27 @@ const TypeComponent = () => {
 };
 
 const MinAmountComponent = () => {
-  const form = Form.useFormInstance();
-
-  const type = Form.useWatch("type", form);
+  // const form = Form.useFormInstance();
+  // const type = Form.useWatch("type", form);
+  const currency = useSelector(useCurrency);
 
   return (
-    type === "Fixed" && (
-      <Col {...mdColLayout} className="">
-        <CustomInput
-          label="Minimum Amount"
-          type={"number"}
-          required={true}
-          name={"minimum_amount"}
-        />
-      </Col>
-    )
+    <Col {...mdColLayout} className="">
+      <CustomInput
+        label="Minimum Amount"
+        type={"number_with_percent"}
+        required={true}
+        name={"minimum_amount"}
+        suffix={currency?.name}
+      />
+    </Col>
   );
 };
 
 const CouponsForm = (props) => {
+  const currency = useSelector(useCurrency);
+  const type = Form.useWatch("type", props.form);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -98,6 +102,7 @@ const CouponsForm = (props) => {
             type={"number_with_percent"}
             required={true}
             name={"amount"}
+            suffix={type === "Percentage" ? "%" : currency?.name}
           />
         </Col>
         <Col {...mdColLayout}>

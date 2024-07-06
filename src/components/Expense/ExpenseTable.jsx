@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
@@ -15,6 +15,8 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
+import { showCurrency } from "../../utilities/lib/currency";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const ExpenseTable = ({
   newColumns,
@@ -25,6 +27,7 @@ const ExpenseTable = ({
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(undefined);
+  const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -94,7 +97,7 @@ const ExpenseTable = ({
         reference: reference_id,
         warehouse: warehouses?.name,
         category: expense_categories?.name,
-        amount,
+        amount: showCurrency(amount, currency),
         note: reason,
         name: name,
         created_at: date,

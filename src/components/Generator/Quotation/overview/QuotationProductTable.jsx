@@ -24,6 +24,7 @@ import {
   onQuantityChange,
 } from "../../../../utilities/lib/productTable/counters";
 import { calculateTotals } from "../../../../utilities/lib/calculateTotals";
+import { calculateOriginalPrice } from "../../../../utilities/lib/calculatePrice";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
@@ -335,12 +336,13 @@ export const QuotationProductTable = ({
       tax_id,
       taxes,
       sale_units,
+      tax_method,
     } = product ?? {};
 
     setFormValuesId(
       id,
       sale_unit_id,
-      unit_cost ?? 0,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       sale_units,
       formValues,
       productUnits,

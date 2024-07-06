@@ -9,7 +9,6 @@ import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CouponsForm from "./CouponsForm";
-import dayjs from "dayjs";
 
 const CouponsEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const CouponsEdit = ({ id, setId }) => {
       id,
       data: {
         ...values,
-        expired_date: dayjs(values.expired_date).format("YYYY-MM-DD"),
+        expired_date: values?.expired_date,
         _method: "PUT",
       },
     });

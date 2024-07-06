@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
 import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveTypeApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import {
   fieldsToUpdate,
@@ -11,8 +12,6 @@ import {
 } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { AnnouncementForm } from "./AnnouncementForm";
-import dayjs from "dayjs";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 export const AnnouncementEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -57,8 +56,9 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      start_date: dayjs(values?.start_Date).format("YYYY-MM-DD"),
-      end_date: dayjs(values?.end_Date)?.format("YYYY-MM-DD"),
+      start_date: values?.start_Date,
+      end_date: values?.end_Date,
+      is_send_email: values?.is_send_email ? 1 : 0,
       department_ids: JSON.stringify(values?.department_ids),
       _method: "PUT",
     };

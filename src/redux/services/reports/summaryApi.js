@@ -6,9 +6,10 @@ import { baseApi } from "../../api/baseApi";
 const summaryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getReportSummary: build.query({
-      query: () => ({
+      query: ({ params }) => ({
         url: `/${SUMMARY}`,
         method: "GET",
+        params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: () => [{ type: SUMMARY }, SUMMARY],

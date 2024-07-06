@@ -22,7 +22,6 @@ export const PayrollCreate = () => {
 
     const postData = {
       ...sanitizeObj(values),
-      // date: dayjs(values?.date).format("YYYY-MM-DD"),
       is_send_email: values?.is_send_email == true ? 1 : 0,
       bonus: Number(values?.bonus).toFixed(2),
       loan: Number(values?.loan).toFixed(2),

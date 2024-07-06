@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { company_code } from "../../assets/data/companyCode";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateEmployeeMutation } from "../../redux/services/hrm/employee/employeeApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import EmployeeForm from "./EmployeeForm";
-import { useCreateEmployeeMutation } from "../../redux/services/hrm/employee/employeeApi";
-import dayjs from "dayjs";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
-import { company_code } from "../../assets/data/companyCode";
 
 const EmployeeCreate = () => {
   const dispatch = useDispatch();
@@ -17,18 +16,14 @@ const EmployeeCreate = () => {
   const [createEmployee, { isLoading }] = useCreateEmployeeMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
-
     const { profile_picture, nid_front, nid_back, joining_doc, cv } =
       values ?? {};
 
     const formData = new FormData();
 
-    //console.log(values);
-
     const postObj = {
       ...values,
-      join_date: dayjs(values?.join_date).format("YYYY-MM-DD"),
+      join_date: values?.join_date,
       have_access: values?.have_access == true ? "1" : "0",
       staff_id: staffIdGenerator(
         company_code,

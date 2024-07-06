@@ -48,12 +48,11 @@ export const HolidaysEdit = ({ id, setId }) => {
     const postObj = {
       ...values,
       department_ids: JSON.stringify(values?.department_ids),
-      start_date: dayjs(values?.start_date).format("YYYY-MM-DD"),
       _method: "PUT",
     };
 
     if (values?.end_date) {
-      postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
+      postObj.end_date = values?.end_date;
     } else {
       postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
     }

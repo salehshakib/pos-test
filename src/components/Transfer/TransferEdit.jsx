@@ -1,5 +1,4 @@
 import { App, Form } from "antd";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -172,7 +171,7 @@ const TransferEdit = ({ id, setId }) => {
 
     const { product_list } = formValues;
 
-    const { date, shipping_cost, attachment } = values ?? {};
+    const { shipping_cost, attachment } = values ?? {};
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
@@ -212,7 +211,6 @@ const TransferEdit = ({ id, setId }) => {
 
     const postObj = {
       ...values,
-      date: dayjs(date).format("YYYY-MM-DD"),
       shipping_cost: decimalConverter(shipping_cost),
       item: productListArray.length,
       total_qty: totalQty,

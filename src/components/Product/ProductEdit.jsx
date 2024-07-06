@@ -385,20 +385,12 @@ const ProductListEdit = ({ id }) => {
       has_variant: has_variant ? 1 : 0,
       has_promotion: has_promotion ? 1 : 0,
       promotion_price: promotion?.promotion_price,
-      starting_date:
-        promotion && dayjs(promotion?.start_date).format("YYYY-MM-DD"),
-      last_date: promotion && dayjs(promotion?.last_date).format("YYYY-MM-DD"),
+      starting_date: promotion && promotion?.starting_date,
+      last_date: promotion && promotion?.last_date,
       has_different_price: has_different_price ? 1 : 0,
       price_list: has_different_price && JSON.stringify(priceListArray),
       product_list: JSON.stringify(productListArray),
       has_expired_date: has_expired_date ? 1 : 0,
-      // expired_date:
-      //   has_expired_date &&
-      //   dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
-
-      // has_featured: has_featured ? 1 : 0,
-      // embedded_barcode: embedded_barcode ? 1 : 0,
-      // ecommerce_sync: ecommerce_sync ? 1 : 0,
       details,
 
       _method: "PUT",
@@ -420,9 +412,7 @@ const ProductListEdit = ({ id }) => {
     }
 
     if (has_expired_date) {
-      postObj.expired_date = dayjs(product_expire?.expired_date).format(
-        "YYYY-MM-DD"
-      );
+      postObj.expired_date = product_expire?.expired_date;
     }
 
     appendToFormData(postObj, formData);

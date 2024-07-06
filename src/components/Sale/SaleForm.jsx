@@ -211,7 +211,7 @@ export const SaleForm = ({
             <PaymentStatusComponent />
           </Col>
 
-          <PaymentTypeComponent />
+          <PaymentTypeComponent grandTotal={grandTotal} />
 
           <Col {...fullColLayout}>
             <CustomUploader label={"Attach Document"} name={"attachment"} />

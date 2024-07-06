@@ -1,5 +1,4 @@
 import { Form } from "antd";
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -22,7 +21,7 @@ const GiftCardCreate = () => {
       data: {
         ...values,
         for_user: values?.for_user ? 1 : 0,
-        expired_date: dayjs(values?.expired_date).format("YYYY-MM-DD"),
+        expired_date: values?.expired_date,
       },
     });
     if (data?.success) {

@@ -16,6 +16,8 @@ export const AnnouncementDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
+  console.log(data);
+
   const details = createDetailsLayout(data);
 
   return (

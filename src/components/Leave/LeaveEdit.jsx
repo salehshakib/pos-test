@@ -1,20 +1,19 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { LeaveForm } from "./LeaveForm";
+import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useGetLeaveDetailsQuery,
   useUpdateLeaveMutation,
 } from "../../redux/services/hrm/leave/leaveApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import {
   fieldsToUpdate,
   updateFieldValues,
 } from "../../utilities/lib/fieldsToUpdate";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import dayjs from "dayjs";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { LeaveForm } from "./LeaveForm";
 
 export const LeaveEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -65,11 +64,10 @@ export const LeaveEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      leave_start_date: dayjs(values?.leave_start_date).format("YYYY-MM-DD"),
       leave_end_date:
         values?.leave_type === "Half Day" || values?.leave_type === "Single Day"
-          ? dayjs(values?.leave_start_date).format("YYYY-MM-DD")
-          : dayjs(values?.leave_end_date).format("YYYY-MM-DD"),
+          ? values?.leave_start_date
+          : values?.leave_end_date,
       is_send_email: values?.is_send_email == true ? 1 : 0,
       _method: "PUT",
     };

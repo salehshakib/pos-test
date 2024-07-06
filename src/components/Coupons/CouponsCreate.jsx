@@ -1,11 +1,10 @@
-import dayjs from "dayjs";
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateCouponMutation } from "../../redux/services/coupon/couponApi";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CouponsForm from "./CouponsForm";
-import { Form } from "antd";
 
 const CouponsCreate = () => {
   const dispatch = useDispatch();
@@ -17,14 +16,10 @@ const CouponsCreate = () => {
   const [createCoupon, { isLoading }] = useCreateCouponMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
-
-    const { expired_date } = values;
-
     const { data, error } = await createCoupon({
       data: {
         ...values,
-        expired_date: expired_date && dayjs(expired_date).format("YYYY-MM-DD"),
+        expired_date: values?.expired_date,
       },
     });
     if (data?.success) {

@@ -12,7 +12,6 @@ import {
 } from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import GiftCardForm from "./GiftCardForm";
-import dayjs from "dayjs";
 
 const GiftCardEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -49,7 +48,7 @@ const GiftCardEdit = ({ id, setId }) => {
       id,
       data: {
         ...values,
-        expired_date: dayjs(values?.expired_date).format("YYYY-MM-DD"),
+        expired_date: values?.expired_date,
         _method: "PUT",
       },
     });

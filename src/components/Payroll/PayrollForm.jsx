@@ -5,7 +5,10 @@ import {
   mdColLayout,
   rowLayout,
 } from "../../layout/FormLayout";
-import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
+import {
+  useGetAllEmployeeQuery,
+  useGetEmployeeDetailsQuery,
+} from "../../redux/services/hrm/employee/employeeApi";
 import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
@@ -18,6 +21,7 @@ import {
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { useEffect } from "react";
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
@@ -43,6 +47,7 @@ const EmployeeComponent = () => {
     value: item?.id?.toString(),
     label: item?.name,
   }));
+
   return (
     <CustomSelect
       label="Employee"
@@ -53,25 +58,6 @@ const EmployeeComponent = () => {
     />
   );
 };
-
-// const DepartmentComponent = () => {
-//   const { data, isFetching } = useGetDepartmentsQuery({});
-
-//   const options = data?.results?.department?.map((item) => ({
-//     value: item?.id?.toString(),
-//     label: item?.name,
-//   }));
-
-//   return (
-//     <CustomSelect
-//       label="Department"
-//       name="department_ids"
-//       options={options}
-//       isLoading={isFetching}
-//       required={true}
-//     />
-//   );
-// };
 
 const PaymentTypeComponent = () => {
   return (
@@ -85,6 +71,22 @@ const PaymentTypeComponent = () => {
 };
 
 export const PayrollForm = (props) => {
+  const employeeId = Form.useWatch("employee_id", props.form);
+  const { data } = useGetEmployeeDetailsQuery(
+    {
+      id: employeeId,
+    },
+    {
+      skip: !employeeId,
+    }
+  );
+
+  useEffect(() => {
+    props.form.setFieldsValue({
+      salary: data?.salary,
+    });
+  }, [data, props.form, employeeId]);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -130,7 +132,6 @@ export const PayrollForm = (props) => {
             label="Description"
             name="description"
             type={"textarea"}
-            required={true}
           />
         </Col>
 

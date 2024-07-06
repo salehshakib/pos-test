@@ -2,11 +2,11 @@ import { Form } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateHolidayMutation } from "../../redux/services/hrm/holiday/holidayApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { HolidaysForm } from "./HolidaysForm";
-import { useCreateHolidayMutation } from "../../redux/services/hrm/holiday/holidayApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 export const HolidaysCreate = () => {
   const dispatch = useDispatch();
@@ -23,11 +23,10 @@ export const HolidaysCreate = () => {
     const postObj = {
       ...values,
       department_ids: JSON.stringify(values?.department_ids),
-      start_date: dayjs(values?.start_date).format("YYYY-MM-DD"),
     };
 
     if (values?.end_date) {
-      postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
+      postObj.end_date = values?.end_date;
     } else {
       postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
     }

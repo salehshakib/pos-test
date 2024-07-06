@@ -147,7 +147,7 @@ const ChequeComponent = () => {
   );
 };
 
-export const PaymentTypeComponent = () => {
+export const PaymentTypeComponent = ({ grandTotal }) => {
   const form = Form.useFormInstance();
   const paymentStatus = Form.useWatch("payment_status", form);
 
@@ -157,10 +157,14 @@ export const PaymentTypeComponent = () => {
   const paymentType = Form.useWatch("payment_type", form);
 
   useEffect(() => {
-    if (paidAmount > receivedAmount || paymentStatus === "Paid") {
-      form.setFieldValue("paid_amount", receivedAmount);
+    if (paymentStatus === "Paid") {
+      form.setFieldValue("paid_amount", grandTotal);
     }
-  }, [paidAmount, receivedAmount, form, paymentStatus]);
+
+    if (paymentStatus === "Paid" && receivedAmount < grandTotal) {
+      form.setFieldValue("recieved_amount", receivedAmount);
+    }
+  }, [paidAmount, form, paymentStatus, grandTotal, receivedAmount]);
 
   const change = Number(
     parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)
@@ -197,8 +201,13 @@ export const PaymentTypeComponent = () => {
           />
         </Col>
 
-        <Col {...fullColLayout}>
+        <Col {...mdColLayout}>
           <div className="py-9 text-lg font-semibold">Change: {change}</div>
+        </Col>
+        <Col {...mdColLayout}>
+          <div className="py-9 text-lg font-semibold">
+            Due: {Number(grandTotal - paidAmount).toFixed(2)}
+          </div>
         </Col>
 
         {paymentType === "Gift Card" && <GiftCardComponent />}

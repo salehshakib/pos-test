@@ -118,7 +118,13 @@ export const AnnouncementForm = (props) => {
         </Col>
 
         <DateComponent />
-
+        <Col {...fullColLayout}>
+          <CustomInput
+            label="Description"
+            type={"textarea"}
+            name={"description"}
+          />
+        </Col>
         <Col {...fullColLayout}>
           <CustomCheckbox label="Send Email" name={"is_send_email"} />
         </Col>

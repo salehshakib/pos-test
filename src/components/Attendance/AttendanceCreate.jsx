@@ -30,7 +30,7 @@ const AttendanceCreate = ({
 
     const postData = {
       ...values,
-      date: values.date.format("YYYY-MM-DD"),
+      date: values.date,
       check_in: values.check_in.format("HH:mm:ss"),
       check_out: values.check_out.format("HH:mm:ss"),
       hours: hours + ":" + minutes,

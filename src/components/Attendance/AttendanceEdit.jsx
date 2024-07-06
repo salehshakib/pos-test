@@ -72,7 +72,6 @@ export const AttendanceEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      date: values.date.format("YYYY-MM-DD"),
       check_in: values.check_in.format("HH:mm:ss"),
       check_out: values.check_out.format("HH:mm:ss"),
       hours: hours,

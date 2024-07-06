@@ -1,5 +1,4 @@
 import { Form, message } from "antd";
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -140,16 +139,12 @@ const ProductCreate = () => {
 
     if (has_promotion) {
       postObj.promotion_price = parseInt(promotion?.promotion_price);
-      postObj.starting_date = dayjs(promotion?.starting_date).format(
-        "YYYY-MM-DD"
-      );
-      postObj.last_date = dayjs(promotion?.last_date).format("YYYY-MM-DD");
+      postObj.starting_date = promotion?.starting_date;
+      postObj.last_date = promotion?.last_date;
     }
 
     if (has_expired_date) {
-      postObj.expired_date = dayjs(product_expire?.expired_date).format(
-        "YYYY-MM-DD"
-      );
+      postObj.expired_date = product_expire?.expired_date;
     }
 
     if (type === "Standard") {

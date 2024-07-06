@@ -1,12 +1,12 @@
+import { Form, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
-import { getLastWeek } from "../../../utilities/lib/getLastWeek";
-import { Form, Table, Typography } from "antd";
-import { useGetReportSummaryQuery } from "../../../redux/services/reports/summaryApi";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { useGetReportSummaryQuery } from "../../../redux/services/reports/summaryApi";
 import { showCurrency } from "../../../utilities/lib/currency";
+import { getLastWeek } from "../../../utilities/lib/getLastWeek";
 const { Text } = Typography;
 
 const styleProps = {
@@ -283,7 +283,6 @@ const SaleReturnSummaryTable = ({ data }) => {
 };
 
 const PaymentReceivedSummaryTable = ({ data }) => {
-  console.log(data);
   const currency = useSelector(useCurrency);
   const columns = [
     {
@@ -593,8 +592,6 @@ export const Summary = () => {
   };
 
   const { data } = useGetReportSummaryQuery({ params });
-
-  console.log(data);
 
   return (
     <ReportContainer

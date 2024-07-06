@@ -4,7 +4,6 @@ import { ReportContainer } from "../../../container/ReportContainer/ReportContai
 const getListData = (value) => {
   let listData;
 
-  console.log(value.date());
   switch (value.date()) {
     case 8:
       listData = [

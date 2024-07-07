@@ -162,7 +162,7 @@ const TaxComponent = () => {
 
 const CouponComponent = ({ setType, setProductUnits }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "code", "type", "amount"],
+    selectValue: ["id", "code", "type", "amount"],
   });
 
   const { data, isFetching } = useGetAllCouponQuery({ params });
@@ -335,9 +335,6 @@ export const PosRegister = ({
       if (type.toLowerCase() === "fixed") {
         setCoupon(productUnits.coupon_rate);
       }
-      if (type.toLowerCase() === "percentage") {
-        setCoupon((totalPrice * productUnits.coupon_rate) / 100);
-      }
     }
 
     hideModal();
@@ -354,7 +351,12 @@ export const PosRegister = ({
 
   useEffect(() => {
     setGrandTotal(grand_total);
-  }, [grand_total, setGrandTotal]);
+
+    // if (type.toLowerCase() === "percentage") {
+    //   setCoupon((totalPrice * productUnits.coupon_rate) / 100);
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grand_total, setGrandTotal, totalPrice, type]);
 
   const tableStyleProps = {
     summary: () => {
@@ -388,6 +390,8 @@ export const PosRegister = ({
   };
 
   const item = Object.values(formValues.product_list.qty).length;
+
+  const currency = useSelector(useCurrency);
 
   return (
     <>
@@ -560,6 +564,7 @@ export const PosRegister = ({
                   type="number"
                   name={modalType}
                   placeholder={modalType}
+                  suffix={currency?.name}
                 />
               )}
             </Col>

@@ -16,9 +16,10 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
-import CouponsEdit from "./CouponsEdit";
 import { useCurrency } from "../../redux/services/pos/posSlice";
 import { showCurrency } from "../../utilities/lib/currency";
+import { CouponsDetails } from "./CouponsDetails";
+import CouponsEdit from "./CouponsEdit";
 
 const CouponsTable = ({
   newColumns,

@@ -7,7 +7,6 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const CashierComponent = ({
@@ -21,12 +20,7 @@ export const CashierComponent = ({
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllCashierQuery(
-    { params },
-    {
-      skip: !useUrlIndexPermission(),
-    }
-  );
+  const { data, isLoading } = useGetAllCashierQuery({ params });
 
   const options = data?.results?.cashier?.map((cashier) => ({
     value: cashier?.id?.toString(),

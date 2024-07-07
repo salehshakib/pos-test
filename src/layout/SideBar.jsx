@@ -76,9 +76,9 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     });
   });
 
-  // const sidebarItems = sidebarItemsGenerator(filteredPaths);
+  const sidebarItems = sidebarItemsGenerator(filteredPaths);
 
-  const sidebarItems = sidebarItemsGenerator(adminPaths);
+  // const sidebarItems = sidebarItemsGenerator(adminPaths);
 
   const levelKeys = getLevelKeys(sidebarItems);
 

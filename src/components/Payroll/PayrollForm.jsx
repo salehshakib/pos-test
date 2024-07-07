@@ -111,20 +111,10 @@ export const PayrollForm = (props) => {
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput
-            label="Bonus"
-            name="bonus"
-            type={"number"}
-            required={true}
-          />
+          <CustomInput label="Bonus" name="bonus" type={"number"} />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput
-            label="Loan"
-            name="loan"
-            type={"number"}
-            required={true}
-          />
+          <CustomInput label="Loan" name="loan" type={"number"} />
         </Col>
 
         <Col {...fullColLayout}>

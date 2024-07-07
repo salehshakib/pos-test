@@ -12,7 +12,7 @@ import { showCurrency } from "../../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { saleColumns } from "../data/saleColumn";
 
-export const SaleTable = ({ keyword, summaryType }) => {
+export const SaleTable = ({ keyword, summaryType, summary }) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
   const currency = useSelector(useCurrency);
@@ -22,7 +22,7 @@ export const SaleTable = ({ keyword, summaryType }) => {
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
-    params: { ...pagination, ...summaryType, summary: "sale" },
+    params: { ...pagination, ...summaryType, summary },
     keyword,
   });
 
@@ -32,6 +32,10 @@ export const SaleTable = ({ keyword, summaryType }) => {
       skip: !useUrlIndexPermission("sale"),
     }
   );
+
+  console.log(params);
+
+  console.log(data);
 
   const total = data?.meta?.total;
 

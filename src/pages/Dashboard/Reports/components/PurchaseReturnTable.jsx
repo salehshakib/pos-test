@@ -12,7 +12,7 @@ import { showCurrency } from "../../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { columns } from "../data/PurchaseReturn";
 
-export const PurchaseReturnTable = ({ keyword, summaryType }) => {
+export const PurchaseReturnTable = ({ keyword, summaryType, summary }) => {
   const currency = useSelector(useCurrency);
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -25,7 +25,7 @@ export const PurchaseReturnTable = ({ keyword, summaryType }) => {
     params: {
       ...pagination,
       ...summaryType,
-      summary: "purchasereturn",
+      summary,
     },
     keyword,
   });

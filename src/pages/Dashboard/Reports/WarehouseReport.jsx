@@ -15,6 +15,7 @@ import { PurchaseTable } from "./components/PurchaseTable";
 import { QuotationTable } from "./components/QutationTable";
 import { SaleReturnTable } from "./components/SaleReturnTable";
 import { SaleTable } from "./components/SaleTable";
+import { getLastWeek } from "../../../utilities/lib/getLastWeek";
 
 const SearchFilterComponent = () => {
   return (
@@ -42,10 +43,19 @@ export const WarehouseReport = () => {
 
   const summaryDetails = createDetailsLayout(summaryData);
 
+  console.log(searchParams);
+
   const summaryType = {
-    warehouse_ids: [
-      searchParams?.warehouse_ids ? searchParams?.warehouse_ids : data?.id,
-    ],
+    warehouse_ids: searchParams?.warehouse_ids
+      ? searchParams?.warehouse_ids
+      : data?.id,
+
+    start_date:
+      searchParams?.created_daterange?.[0] ??
+      getLastWeek()[0].format("YYYY-MM-DD"),
+    end_date:
+      searchParams?.created_daterange?.[1] ??
+      getLastWeek()[1].format("YYYY-MM-DD"),
   };
 
   const warehouseItems = [
@@ -58,22 +68,29 @@ export const WarehouseReport = () => {
     {
       key: "2",
       label: "Email",
-      children: data?.email,
+      children: data?.email ?? "---",
       span: 24,
     },
     {
       key: "3",
       label: "Phone Number",
-      children: data?.phone,
+      children: data?.phone ?? "---",
       span: 24,
     },
     {
       key: "5",
       label: "Address",
-      children: data?.address,
+      children: data?.address ?? "---",
       span: 24,
     },
   ];
+
+  const props = {
+    keyword,
+    summaryType,
+    setSummaryData,
+    setLoading,
+  };
 
   return (
     <GlobalContainer
@@ -110,37 +127,20 @@ export const WarehouseReport = () => {
             {
               label: "Sale",
               key: "sale",
-              children: (
-                <SaleTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
-                />
-              ),
+              children: <SaleTable {...props} summary={"warehouse,sale"} />,
             },
             {
               label: "Purchase",
               key: "purchase",
               children: (
-                <PurchaseTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
-                />
+                <PurchaseTable {...props} summary={"warehouse,purchase"} />
               ),
             },
             {
               label: "Quotation",
               key: "quotation",
               children: (
-                <QuotationTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
-                />
+                <QuotationTable {...props} summary={"warehouse,quotation"} />
               ),
             },
             {
@@ -148,10 +148,8 @@ export const WarehouseReport = () => {
               key: "purchasereturn",
               children: (
                 <PurchaseReturnTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
+                  {...props}
+                  summary={"warehouse,purchasereturn"}
                 />
               ),
             },
@@ -159,24 +157,14 @@ export const WarehouseReport = () => {
               label: "Sale Return",
               key: "salereturn",
               children: (
-                <SaleReturnTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
-                />
+                <SaleReturnTable {...props} summary={"warehouse,salereturn"} />
               ),
             },
             {
               label: "Expense",
               key: "expense",
               children: (
-                <ExpenseTable
-                  keyword={keyword}
-                  summaryType={summaryType}
-                  setSummaryData={setSummaryData}
-                  setLoading={setLoading}
-                />
+                <ExpenseTable {...props} summary={"warehouse,expense"} />
               ),
             },
           ]}

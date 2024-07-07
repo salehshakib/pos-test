@@ -12,7 +12,7 @@ import { showCurrency } from "../../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { columns } from "../data/QuotationColumns";
 
-export const QuotationTable = ({ keyword, summaryType }) => {
+export const QuotationTable = ({ keyword, summaryType, summary }) => {
   const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
@@ -26,7 +26,7 @@ export const QuotationTable = ({ keyword, summaryType }) => {
     params: {
       ...pagination,
       ...summaryType,
-      summary: "quotation",
+      summary,
     },
     keyword,
   });

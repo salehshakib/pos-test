@@ -12,7 +12,7 @@ import { showCurrency } from "../../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { columns } from "../data/SaleReturn";
 
-export const SaleReturnTable = ({ keyword, summaryType }) => {
+export const SaleReturnTable = ({ keyword, summaryType, summary }) => {
   const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
@@ -23,7 +23,7 @@ export const SaleReturnTable = ({ keyword, summaryType }) => {
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
-    params: { ...pagination, ...summaryType, summary: "salereturn" },
+    params: { ...pagination, ...summaryType, summary },
     keyword,
   });
 

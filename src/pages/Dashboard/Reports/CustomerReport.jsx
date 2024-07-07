@@ -157,6 +157,14 @@ export const CustomerReport = () => {
     },
   ];
 
+  const props = {
+    keyword,
+    summaryType,
+    setSummaryData,
+    setLoading,
+    summary: "customer,sale",
+  };
+
   return (
     <GlobalContainer
       pageTitle="Customer Report"
@@ -205,63 +213,23 @@ export const CustomerReport = () => {
                 {
                   label: "Sale",
                   key: "sale",
-                  children: (
-                    <SaleTable
-                      keyword={keyword}
-                      summaryType={summaryType}
-                      setSummaryData={setSummaryData}
-                      setLoading={setLoading}
-                    />
-                  ),
+                  children: <SaleTable {...props} />,
                 },
                 {
                   label: "Quotation",
                   key: "quotation",
-                  children: (
-                    <QuotationTable
-                      keyword={keyword}
-                      summaryType={summaryType}
-                      setSummaryData={setSummaryData}
-                      setLoading={setLoading}
-                    />
-                  ),
+                  children: <QuotationTable {...props} />,
                 },
                 {
                   label: "Purchase Return",
                   key: "purchasereturn",
-                  children: (
-                    <PurchaseReturnTable
-                      keyword={keyword}
-                      summaryType={summaryType}
-                      setSummaryData={setSummaryData}
-                      setLoading={setLoading}
-                    />
-                  ),
+                  children: <PurchaseReturnTable {...props} />,
                 },
                 {
                   label: "Sale Return",
                   key: "salereturn",
-                  children: (
-                    <SaleReturnTable
-                      keyword={keyword}
-                      summaryType={summaryType}
-                      setSummaryData={setSummaryData}
-                      setLoading={setLoading}
-                    />
-                  ),
+                  children: <SaleReturnTable {...props} />,
                 },
-                //   {
-                //     label: "Expense",
-                //     key: "expense",
-                //     children: (
-                //       <ExpenseTable
-                //         keyword={keyword}
-                //         summaryType={summaryType}
-                //         setSummaryData={setSummaryData}
-                //         setLoading={setLoading}
-                //       />
-                //     ),
-                //   },
               ]}
             />
           ) : (

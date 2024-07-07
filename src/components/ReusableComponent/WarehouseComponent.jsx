@@ -30,7 +30,6 @@ export const WarehouseComponent = ({
     label: warehouse?.name,
   }));
 
-  //get data from redux store
   useEffect(() => {
     if (options?.length && !form?.getFieldValue(name)) {
       form.setFieldValue(name, user?.warehouse_id?.toString());

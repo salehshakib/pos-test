@@ -1,4 +1,4 @@
-import { Form, Table, Typography } from "antd";
+import { Form, Table } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
@@ -7,7 +7,7 @@ import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { useGetReportSummaryQuery } from "../../../redux/services/reports/summaryApi";
 import { showCurrency } from "../../../utilities/lib/currency";
 import { getLastWeek } from "../../../utilities/lib/getLastWeek";
-const { Text } = Typography;
+// const { Text } = Typography;
 
 const styleProps = {
   // summary: () => {
@@ -439,7 +439,7 @@ const PaymentSentSummaryTable = ({ data }) => {
   const tableStyleProps = {
     title: () => (
       <div className="font-semibold text-lg pl-0 underline">
-        Sale Return Summary
+        Payment Sent Summary
       </div>
     ),
     ...styleProps,
@@ -603,8 +603,10 @@ export const Summary = () => {
       <div className="space-y-5">
         <PurchaseSummaryTable data={data} />
         <SaleSummaryTable data={data} />
-        <PurchaseReturnSummaryTable data={data} />
-        <SaleReturnSummaryTable data={data} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <PurchaseReturnSummaryTable data={data} />
+          <SaleReturnSummaryTable data={data} />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           <ExpenseSummaryTable data={data} />
           <PayrollSummaryTable data={data} />

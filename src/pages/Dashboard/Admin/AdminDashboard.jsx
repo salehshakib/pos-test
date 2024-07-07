@@ -1,4 +1,4 @@
-import { Col, Form, Row, Segmented, theme } from "antd";
+import { Col, Form, Row, Segmented, Table, theme } from "antd";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { MdAddShoppingCart, MdOutlineNumbers, MdPaid } from "react-icons/md";
@@ -23,6 +23,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import CustomTable from "../../../components/Shared/Table/CustomTable";
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
@@ -180,7 +181,7 @@ const WarehouseStatistic = () => {
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">Warehouse</span>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <DashboardCard
           title={"Warehouse"}
           icon={<PiWarehouse {...iconProps} />}
@@ -220,16 +221,202 @@ const PeopleStatistic = () => {
 };
 
 const EmployeeStatistic = () => {
+  const currency = useSelector(useCurrency);
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">HRM</span>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <DashboardCard title={"Department"} data={"N/A"} />
         <DashboardCard title={"Employee"} data={"N/A"} />
-        <DashboardCard title={"Payroll"} data={"N/A"} />
+        <DashboardCard title={"Payroll"} data={"N/A"} currency={currency} />
         <DashboardCard title={"Leave Granted"} data={"N/A"} />
       </div>
     </div>
+  );
+};
+
+const RecentlyAddedComponent = () => {
+  const columns = [
+    {
+      //sl no
+      title: "SL No",
+      dataIndex: "slNo",
+      key: "slNo",
+      align: "center",
+      render: (slNo) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {slNo}
+        </span>
+      ),
+    },
+    {
+      //name
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (name) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+      ),
+    },
+    {
+      //sku
+      title: "SKU",
+      dataIndex: "sku",
+      key: "sku",
+      align: "center",
+      render: (sku) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {sku}
+        </span>
+      ),
+    },
+    {
+      //sale
+      title: "Sale Price",
+      dataIndex: "salePrice",
+      key: "salePrice",
+      render: (salePrice) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {salePrice}
+        </span>
+      ),
+    },
+  ];
+
+  return (
+    <CustomTable
+      title={"Recently Added Products"}
+      columns={columns}
+      dataSource={[]}
+      created_at={false}
+      action={false}
+    />
+  );
+};
+
+const ExpiredItemsComponent = () => {
+  const columns = [
+    {
+      //sl no
+      title: "SL No",
+      dataIndex: "slNo",
+      key: "slNo",
+      align: "center",
+      render: (slNo) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {slNo}
+        </span>
+      ),
+    },
+    {
+      //name
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (name) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+      ),
+    },
+    {
+      //sku
+      title: "SKU",
+      dataIndex: "sku",
+      key: "sku",
+      align: "center",
+      render: (sku) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {sku}
+        </span>
+      ),
+    },
+    {
+      //expire date
+      title: "Expire Date",
+      dataIndex: "expireDate",
+      key: "expireDate",
+      align: "center",
+      render: (expireDate) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {expireDate}
+        </span>
+      ),
+    },
+  ];
+
+  return (
+    <CustomTable
+      title={"Expired Products"}
+      columns={columns}
+      dataSource={[]}
+      created_at={false}
+      action={false}
+    />
+  );
+};
+
+const StockAlertComponent = () => {
+  const columns = [
+    {
+      //sl no
+      title: "SL No",
+      dataIndex: "slNo",
+      key: "slNo",
+      align: "center",
+      render: (slNo) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {slNo}
+        </span>
+      ),
+    },
+    {
+      //name
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (name) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {name}
+        </span>
+      ),
+    },
+    {
+      //sku
+      title: "SKU",
+      dataIndex: "sku",
+      key: "sku",
+      align: "center",
+      render: (sku) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {sku}
+        </span>
+      ),
+    },
+    {
+      //stock
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
+      align: "center",
+      render: (stock) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {stock}
+        </span>
+      ),
+    },
+  ];
+
+  return (
+    <CustomTable
+      title={"Limited Stock Products"}
+      columns={columns}
+      dataSource={[]}
+      created_at={false}
+      action={false}
+    />
   );
 };
 
@@ -271,13 +458,33 @@ const AdminDashboard = () => {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3"></div>
       </div>
-      <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3">
-        <div className="py-5 w-full h-96">
-          <AreaChartComponent />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 p-5">
+        <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">
+          <div className="text-lg w-full text-center font-semibold pb-4 h-full">
+            Purchase & Sale
+            <SimpleBarChartComponent />
+          </div>
         </div>
+
+        <div className="py-5 w-full h-[26rem] bg-white">
+          <RecentlyAddedComponent />
+        </div>
+        <div className="py-5 w-full h-[26rem] bg-white">
+          <ExpiredItemsComponent />
+        </div>
+        <div className="py-5 w-full h-[26rem] bg-white">
+          <StockAlertComponent />
+        </div>
+
+        {/* 
         <div className="py-5 w-full h-96">
           <BarChartComponent />
         </div>
+
+        <div className="py-5 w-full h-96">
+          <AreaChartComponent />
+        </div>
+
         <div className="py-5 w-full h-96">
           <ComposedChartComponent />
         </div>
@@ -289,11 +496,7 @@ const AdminDashboard = () => {
         </div>
         <div className="py-5 w-full h-96">
           <RadarChartComponent />
-        </div>
-        <div className="py-5 w-full h-96">
-          {/* <BarChartWithTooltip /> */}
-          <SimpleBarChartComponent />
-        </div>
+        </div> */}
       </div>
     </div>
   );

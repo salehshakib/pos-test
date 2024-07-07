@@ -3,15 +3,11 @@ import { useEffect, useState } from "react";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { columns, partialColumns } from "./productColumns";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 import { calculateTotals } from "../../../utilities/lib/calculateTotals";
 import {
   decrementCounter,
@@ -19,7 +15,11 @@ import {
   onDelete,
   onQuantityChange,
 } from "../../../utilities/lib/productTable/counters";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import CustomForm from "../../Shared/Form/CustomForm";
+import CustomInput from "../../Shared/Input/CustomInput";
+import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
+import CustomSelect from "../../Shared/Select/CustomSelect";
+import { columns, partialColumns } from "./productColumns";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
@@ -401,8 +401,6 @@ export const PurchaseProductTable = ({
       taxes,
       tax_method,
     } = product ?? {};
-
-    // console.log(product);
 
     setFormValuesId(
       id,

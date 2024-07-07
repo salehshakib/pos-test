@@ -24,6 +24,7 @@ const CustomTable = ({
   status = true,
   created_at = true,
   action = true,
+  title,
 }) => {
   const globalLoading = useGlobalLoader();
   const route = window.location.pathname.substring(1);
@@ -118,6 +119,9 @@ const CustomTable = ({
     ].filter(Boolean);
 
   const tableProps = {
+    title: () => (
+      <span className="font-semibold text-[14px] underline">{title}</span>
+    ),
     loading: isLoading || globalLoading,
     size: "small",
     style: {

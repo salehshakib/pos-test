@@ -225,7 +225,7 @@ const RegisterForm = ({ products, setProducts }) => {
           <Col {...colLayout}>
             <CustomInput
               type={"text"}
-              required={true}
+              // required={true}
               placeholder={"Reference Number"}
               name={"reference_number"}
               customStyle={true}
@@ -235,7 +235,7 @@ const RegisterForm = ({ products, setProducts }) => {
             <WarehouseComponent label={false} />
           </Col>
           <Col {...colLayout}>
-            <CashierComponent label={false} />
+            <CashierComponent label={false} required={true} />
           </Col>
           <Col {...colLayout}>
             <CustomerComponent />

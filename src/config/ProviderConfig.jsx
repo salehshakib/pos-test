@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "styled-components";
+import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { setDeveloper } from "../redux/services/developer/developerSlice";
 import { setMenuItems } from "../redux/services/menu/menuSlice";
+import { useCheckPettyCashQuery } from "../redux/services/pettycash/pettyCashApi";
+import { setPettyCash } from "../redux/services/pettycash/pettyCashSlice";
+import { setCurrency } from "../redux/services/pos/posSlice";
 import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
 import {
   setPrimaryColor,
@@ -15,7 +19,6 @@ import { adminPaths } from "../routes/admin.routes";
 import { router } from "../routes/routes";
 import { theme } from "../utilities/configs/theme";
 import { useMenuItems } from "../utilities/lib/getPermission";
-import { setCurrency } from "../redux/services/pos/posSlice";
 
 const LoadingComponent = (data) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,11 +49,29 @@ export const ProviderConfig = ({ children }) => {
 
   const { data } = useGetGeneralSettingsQuery();
 
-  console.log(data);
+  const user = useSelector(useCurrentUser);
+  const warehouseId = user?.warehouse_id;
+
+  const { data: pettyCashData } = useCheckPettyCashQuery(
+    {
+      params: {
+        warehouse_id: parseInt(warehouseId),
+      },
+    },
+    {
+      skip: !warehouseId,
+    }
+  );
+
+  useEffect(() => {
+    if (data?.data === "Open") {
+      dispatch(setPettyCash({ data: data?.data }));
+    } else if (data?.data === "Close") {
+      dispatch(setPettyCash({ data: data?.data }));
+    }
+  }, [data?.data, dispatch, pettyCashData]);
 
   const menuItems = useMenuItems(adminPaths);
-
-  // console.log(menuItems);
 
   useEffect(() => {
     if (data) {

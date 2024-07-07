@@ -13,11 +13,10 @@ export const WarehouseComponent = ({
   name = "warehouse_id",
   label = true,
   title = "Warehouse",
+  placeholder = "Warehouse",
 }) => {
   const form = Form.useFormInstance();
   const user = useSelector(useCurrentUser);
-
-  console.log(user);
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -42,6 +41,7 @@ export const WarehouseComponent = ({
       showSearch={true}
       isLoading={isLoading}
       options={options}
+      placeholder={placeholder}
       name={name}
       required={true}
       customStyle={!label}

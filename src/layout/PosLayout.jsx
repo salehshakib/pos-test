@@ -1,5 +1,6 @@
 import { App, Button, Form, Layout, Tag } from "antd";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,31 +11,29 @@ import PosFilterComponent from "../components/PosRegister/PosFilterComponent";
 import { PosRegister } from "../components/PosRegister/PosRegister";
 import { GlobalUtilityStyle } from "../container/Styled";
 import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
+import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
+import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
 import { mode } from "../utilities/configs/base_url";
-import SideBar from "./SideBar";
-import { decimalConverter } from "../utilities/lib/return/decimalComverter";
-import dayjs from "dayjs";
+import { appendToFormData } from "../utilities/lib/appendFormData";
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
 } from "../utilities/lib/generator/generatorUtils";
-import { appendToFormData } from "../utilities/lib/appendFormData";
-import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
-import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
+import { decimalConverter } from "../utilities/lib/return/decimalComverter";
 import { sanitizeObj } from "../utilities/lib/sanitizeObj";
+import SideBar from "./SideBar";
 
 const { Footer } = Layout;
 
 const PosLayout = () => {
-  const navigate = useNavigate();
   const [posForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+  const { pettyCash } = useSelector((state) => state.pettyCash);
 
   const { message } = App.useApp();
   const dispatch = useDispatch();
 
-  const { pettyCash } = useSelector((state) => state.pettyCash);
   const [collapsed, setCollapsed] = useState(false);
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
@@ -64,14 +63,6 @@ const PosLayout = () => {
 
   const [type, setType] = useState("fixed");
 
-  console.log(pettyCash);
-
-  useEffect(() => {
-    if (pettyCash === "Close") {
-      navigate("/dashboard");
-    }
-  }, [navigate, pettyCash]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [grandTotal, setGrandTotal] = useState(0);
@@ -82,7 +73,6 @@ const PosLayout = () => {
     const { discount, shipping_cost, tax_rate, sale_at, paid_amount } =
       values ?? {};
 
-    //console.log(values);
     const { product_list } = formValues;
 
     const productListArray = product_list?.qty
@@ -112,8 +102,8 @@ const PosLayout = () => {
       return;
     }
 
-    if (!values?.reference_number) {
-      message.info("Please add reference number");
+    if (!values?.cashier_id) {
+      message.info("Please Select Cashier");
       return;
     }
 
@@ -216,95 +206,97 @@ const PosLayout = () => {
     }
   };
 
-  console.log(productUnits);
+  const navigate = useNavigate();
 
-  if (pettyCash === "Open") {
-    return (
-      <GlobalUtilityStyle>
-        <div className="flex flex-col relative h-screen">
-          <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
-            <div className="grid grid-cols-2 h-[85vh] ">
-              <div>
-                <PosRegister
-                  formValues={formValues}
-                  setFormValues={setFormValues}
-                  products={products}
-                  setProducts={setProducts}
-                  productUnits={productUnits}
-                  setProductUnits={setProductUnits}
-                  form={posForm}
-                  fields={errorFields}
-                  setGrandTotal={setGrandTotal}
-                  type={type}
-                  setType={setType}
-                />
+  if (pettyCash === "Close") {
+    navigate("/dashboard");
+  }
+  return (
+    <GlobalUtilityStyle>
+      <div className="flex flex-col relative h-screen">
+        <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
+          <div className="grid grid-cols-2 h-[85vh] ">
+            <div>
+              <PosRegister
+                formValues={formValues}
+                setFormValues={setFormValues}
+                products={products}
+                setProducts={setProducts}
+                productUnits={productUnits}
+                setProductUnits={setProductUnits}
+                form={posForm}
+                fields={errorFields}
+                setGrandTotal={setGrandTotal}
+                type={type}
+                setType={setType}
+              />
+            </div>
+
+            <div className="relative flex flex-col h-[90vh] ">
+              <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
+                <div className="flex items-center gap-6 text-2xl">
+                  <Button
+                    className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
+                    type="text"
+                    icon={<GiHamburgerMenu />}
+                    onClick={() => setCollapsed(!collapsed)}
+                  ></Button>
+                  <Logo />
+                </div>
+                {mode === "local" && (
+                  <Tag color="processing" className="font-semibold">
+                    {mode.toUpperCase()} MODE
+                  </Tag>
+                )}
+                <Profile />
               </div>
 
-              <div className="relative flex flex-col h-[90vh] ">
-                <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
-                  <div className="flex items-center gap-6 text-2xl">
-                    <Button
-                      className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
-                      type="text"
-                      icon={<GiHamburgerMenu />}
-                      onClick={() => setCollapsed(!collapsed)}
-                    ></Button>
-                    <Logo />
+              <div className="flex grow ">
+                <div className="flex flex-col w-full ">
+                  <div>
+                    <PosFilterComponent />
                   </div>
-                  {mode === "local" && (
-                    <Tag color="processing" className="font-semibold">
-                      {mode.toUpperCase()} MODE
-                    </Tag>
-                  )}
-                  <Profile />
-                </div>
-
-                <div className="flex grow ">
-                  <div className="flex flex-col w-full ">
-                    <div>
-                      <PosFilterComponent />
-                    </div>
-                    <div
-                      style={{
-                        borderRadius: "8px",
-                      }}
-                      className="shadow-md grow m-4 bg-gray-200 "
-                    >
-                      <PosProducts
-                        products={products}
-                        setProducts={setProducts}
-                      />
-                    </div>
+                  <div
+                    style={{
+                      borderRadius: "8px",
+                    }}
+                    className="shadow-md grow m-4 bg-gray-200 "
+                  >
+                    <PosProducts
+                      products={products}
+                      setProducts={setProducts}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <Footer
-            style={{
-              textAlign: "center",
-            }}
-            className="py-4"
-          >
-            <Payment
-              handleSubmit={handleSubmit}
-              form={posForm}
-              fields={errorFields}
-              isLoading={isLoading}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-              grandTotal={grandTotal}
-            />
-          </Footer>
-
-          <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">
-            <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-          </div>
         </div>
-      </GlobalUtilityStyle>
-    );
-  }
+
+        <Footer
+          style={{
+            textAlign: "center",
+          }}
+          className="py-4"
+        >
+          <Payment
+            handleSubmit={handleSubmit}
+            form={posForm}
+            fields={errorFields}
+            isLoading={isLoading}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            grandTotal={grandTotal}
+          />
+        </Footer>
+
+        <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">
+          <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        </div>
+      </div>
+    </GlobalUtilityStyle>
+  );
+  // }
 };
 
 export default PosLayout;

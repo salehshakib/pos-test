@@ -10,6 +10,7 @@ const columns = [
     title: "Reference Id",
     dataIndex: "reference_id",
     key: "reference_id",
+    align: "center",
     render: (reference_id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference_id}
@@ -86,7 +87,7 @@ export const PettyCash = () => {
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       setParams={setParams}
-      searchFilterContent={<SearchComponent />}
+      // searchFilterContent={<SearchComponent />}
       api={PETTY_CASH}
     >
       <PettyCashTable

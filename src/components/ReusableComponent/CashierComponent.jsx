@@ -1,12 +1,14 @@
 import { Form } from "antd";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import { useEffect } from "react";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const CashierComponent = ({
   required = true,
@@ -31,16 +33,18 @@ export const CashierComponent = ({
     label: cashier?.name,
   }));
 
-  //set redux stored value here
+  const user = useSelector(useCurrentUser);
+
   useEffect(() => {
     if (options?.length && !form.getFieldValue(name)) {
-      form.setFieldValue(name, options[0].value);
+      form.setFieldValue(name, user?.cashier_id?.toString());
     }
-  }, [form, name, options]);
+  }, [form, name, options, user?.cashier_id]);
 
   return (
     <CustomSelect
       label={label && "Cashier"}
+      placeholder={"Cashier"}
       options={options}
       isLoading={isLoading}
       name={name}

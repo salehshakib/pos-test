@@ -50,9 +50,9 @@ const pettyCashApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      // invalidatesTags: (result) => {
-      //   return result ? [PETTY_CASH] : [];
-      // },
+      invalidatesTags: (result) => {
+        return result ? [PETTY_CASH] : [];
+      },
     }),
 
     // updatePettyCash: build.mutation({

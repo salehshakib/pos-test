@@ -26,12 +26,12 @@ const columns = [
     ),
   },
   {
-    title: "Purchased Amount",
-    dataIndex: "purchasedAmount",
-    key: "purchasedAmount",
-    render: (amount) => (
+    title: "Brand",
+    dataIndex: "brand",
+    key: "brand",
+    render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {amount}
+        {brand}
       </span>
     ),
   },
@@ -46,9 +46,9 @@ const columns = [
     ),
   },
   {
-    title: "Sold Amount",
-    dataIndex: "soldAmount",
-    key: "soldAmount",
+    title: "Purchased Amount",
+    dataIndex: "purchasedAmount",
+    key: "purchasedAmount",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -66,9 +66,9 @@ const columns = [
     ),
   },
   {
-    title: "Returned Amount",
-    dataIndex: "returnedAmount",
-    key: "returnedAmount",
+    title: "Sold Amount",
+    dataIndex: "soldAmount",
+    key: "soldAmount",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -76,9 +76,9 @@ const columns = [
     ),
   },
   {
-    title: "Returned Qty",
-    dataIndex: "returnedQty",
-    key: "returnedQty",
+    title: "Sale Returned Qty",
+    dataIndex: "saleReturnedQty",
+    key: "saleReturnedQty",
     render: (qty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {qty}
@@ -86,9 +86,9 @@ const columns = [
     ),
   },
   {
-    title: "Purchase Returned Amount",
-    dataIndex: "purchaseReturnedAmount",
-    key: "purchaseReturnedAmount",
+    title: "Returned Amount",
+    dataIndex: "returnedAmount",
+    key: "returnedAmount",
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -102,6 +102,16 @@ const columns = [
     render: (qty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {qty}
+      </span>
+    ),
+  },
+  {
+    title: "Purchase Returned Amount",
+    dataIndex: "purchaseReturnedAmount",
+    key: "purchaseReturnedAmount",
+    render: (amount) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {amount}
       </span>
     ),
   },

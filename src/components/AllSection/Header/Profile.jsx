@@ -1,31 +1,21 @@
 import { UserOutlined } from "@ant-design/icons";
-import { App, Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
+import { useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout, useCurrentUser } from "../../../redux/services/auth/authSlice";
-import {
-  useCheckPettyCashQuery,
-  useCreatePettyCashMutation,
-} from "../../../redux/services/pettycash/pettyCashApi";
-import {
-  clearPettyCash,
-  setPettyCash,
-} from "../../../redux/services/pettycash/pettyCashSlice";
-import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { CustomDescription } from "../../Shared/Description/CustomDescription";
+import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pettyCashApi";
+import { setPettyCash } from "../../../redux/services/pettycash/pettyCashSlice";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
-import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
-  const { message } = App.useApp();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -33,43 +23,16 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
 
-  const warehouseId = Form.useWatch("warehouse_id", form);
-
-  const { data, isFetching } = useCheckPettyCashQuery(
-    {
-      params: {
-        warehouse_id: parseInt(warehouseId),
-      },
-    },
-    {
-      skip: !warehouseId,
-    }
-  );
-
-  useEffect(() => {
-    if (data?.data === "Open") {
-      dispatch(setPettyCash({ data: data?.data }));
-
-      navigate("/pos");
-    } else if (data?.data === "Close") {
-      dispatch(setPettyCash({ data: data?.data }));
-
-      openNotification(
-        "warning",
-        "No cash register found. Open a new cash register"
-      );
-    }
-  }, [data, dispatch, message, navigate]);
+  const user = useSelector(useCurrentUser);
 
   const handleSubmit = async (values) => {
     const { data, error } = await createPettyCash({
-      data: { ...values, status: "Open" },
+      data: { ...values, warehouse_id: user?.warehouse_id, status: "Open" },
     });
 
     if (data?.success) {
       dispatch(setPettyCash({ data: data?.data.status }));
       hideModal();
-
       form.resetFields();
       navigate("/pos");
     }
@@ -110,29 +73,19 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
       >
         <Row {...rowLayout} className="mt-5">
           <Col {...fullColLayout}>
-            <WarehouseComponent />
+            <CustomInput
+              label="Opening Balance"
+              type="number"
+              name="opening_balance"
+              required={true}
+            />
           </Col>
-
-          {data?.data === "Close" && (
-            <Col {...fullColLayout}>
-              <CustomInput
-                label="Opening Balance"
-                type="number"
-                name="opening_balance"
-                required={true}
-              />
-            </Col>
-          )}
         </Row>
         <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
           <Button type="default" onClick={hideModal}>
             Cancel
           </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={isLoading || isFetching}
-          >
+          <Button htmlType="submit" type="primary" loading={isLoading}>
             Save
           </Button>
         </div>
@@ -145,9 +98,9 @@ const PosComponent = () => {
   const navigate = useNavigate();
   const { pettyCash } = useSelector((state) => state.pettyCash);
 
-  const [open, setOpen] = useState(false);
+  console.log(pettyCash);
 
-  // //console.log(pettyCash);
+  const [open, setOpen] = useState(false);
 
   const posRegister = () => {
     if (pettyCash === "Close") {
@@ -181,9 +134,6 @@ const CashRegisterComponent = () => {
   const location = useLocation();
   const { pathname } = location;
 
-  const { pettyCash } = useSelector((state) => state.pettyCash);
-  // const { register } = useSelector((state) => state.cashRegister);
-
   const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
 
   const [open, setOpen] = useState(false);
@@ -197,13 +147,15 @@ const CashRegisterComponent = () => {
     navigate("/petty-cash");
   };
 
+  const user = useSelector(useCurrentUser);
+
   const closeCashRegister = async () => {
     const { data } = await createPettyCash({
-      data: { warehouse_id: 4, status: "Close" },
+      data: { warehouse_id: user?.warehouse_id, status: "Close" },
     });
 
     if (data?.success) {
-      dispatch(clearPettyCash());
+      dispatch(setPettyCash({ data: data?.data.status })); // dispatch(setPettyCash());
 
       hideModal();
       navigate("/dashboard");
@@ -214,8 +166,6 @@ const CashRegisterComponent = () => {
     setOpen(false);
   };
 
-  const details = createDetailsLayout(pettyCash);
-
   return (
     <>
       <Button
@@ -225,24 +175,39 @@ const CashRegisterComponent = () => {
       />
 
       <Modal
-        width={800}
+        title={
+          <div className="flex items-center gap-3">
+            <RiErrorWarningFill
+              style={{
+                color: "red",
+                fontSize: "20px",
+              }}
+            />
+            <span>Close Cash Register</span>
+          </div>
+        }
+        width={600}
         centered
         open={open}
         onCancel={hideModal}
         footer={null}
       >
-        <CustomDescription title={"Cash Register"} items={details} />
-
-        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
-          <Button
-            htmlType="button"
-            onClick={closeCashRegister}
-            type="primary"
-            loading={isLoading}
-          >
-            Close
-          </Button>
-        </div>
+        <GlobalUtilityStyle>
+          <span className="text-[16px]">
+            {" "}
+            Are you sure you want to close cash register?
+          </span>
+          <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+            <Button
+              htmlType="button"
+              onClick={closeCashRegister}
+              type="primary"
+              loading={isLoading}
+            >
+              Close
+            </Button>
+          </div>
+        </GlobalUtilityStyle>
       </Modal>
     </>
   );

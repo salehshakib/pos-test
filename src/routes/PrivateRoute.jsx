@@ -6,6 +6,12 @@ function PrivateRoute({ children }) {
   const token = useSelector(useCurrentToken);
   const dispatch = useDispatch();
 
+  // console.log(pettyCash);
+
+  // if (pettyCash === "Close") {
+  //   return <Navigate to={"/dashboard"} replace={true} />;
+  // }
+
   if (!token) {
     dispatch(logout());
     return <Navigate to={"/login"} replace={true} />;

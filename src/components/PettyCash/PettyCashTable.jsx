@@ -1,12 +1,15 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
   useDeletePettyCashMutation,
   useGetAllPettyCashQuery,
 } from "../../redux/services/pettycash/pettyCashApi";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
@@ -50,7 +53,7 @@ export const PettyCashTable = ({
     }
   };
 
-  //console.log(data);
+  const currency = useSelector(useCurrency);
 
   const dataSource =
     data?.results?.pettycash?.map((item) => {
@@ -70,7 +73,7 @@ export const PettyCashTable = ({
         open_at: date,
         closes_at: status === "Open" ? "N/A" : date,
         warehouse: warehouses?.name,
-        cash_in_hand: opening_balance,
+        cash_in_hand: showCurrency(opening_balance, currency),
         status: status === "Open" ? 1 : 0,
         handleDeleteModal,
       };

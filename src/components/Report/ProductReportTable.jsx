@@ -3,6 +3,12 @@ import { GlobalUtilityStyle } from "../../container/Styled";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import CustomTable from "../Shared/Table/CustomTable";
 
+function createFilteredColumns(originalColumns, includeTitles) {
+  return originalColumns.filter((column) =>
+    includeTitles.includes(column.title.toLowerCase())
+  );
+}
+
 export const ProductReportTable = ({
   newColumns,
   setSelectedRows,
@@ -88,18 +94,59 @@ export const ProductReportTable = ({
 
   return (
     <GlobalUtilityStyle>
-      <CustomTable
-        columns={newColumns}
-        // dataSource={dataSource}
-        // total={total}
+      <div className="space-y-5">
+        <CustomTable
+          title={"Product Purchase Report"}
+          columns={createFilteredColumns(newColumns, [
+            "product",
+            "category",
+            "brand",
+            "purchased qty",
+            "purchased amount",
+            "purchase returned qty",
+            "purchase returned amount",
+            "in stock",
+            "stock worth (price/cost)",
+            "status",
+            "created at",
+          ])}
+          // dataSource={dataSource}
+          // total={total}
 
-        pagination={pagination}
-        updatePage={updatePage}
-        updatePageSize={updatePageSize}
-        // isLoading={isLoading}
-        setSelectedRows={setSelectedRows}
-        isRowSelection={true}
-      />
+          pagination={pagination}
+          updatePage={updatePage}
+          updatePageSize={updatePageSize}
+          // isLoading={isLoading}
+          setSelectedRows={setSelectedRows}
+          isRowSelection={true}
+        />
+
+        <CustomTable
+          title={"Product Sale Report"}
+          columns={createFilteredColumns(newColumns, [
+            "product",
+            "category",
+            "brand",
+            "sold qty",
+            "sold amount",
+            "sale returned qty",
+            "sale returned amount",
+            "in stock",
+            "stock worth (price/cost)",
+            "status",
+            "created at",
+          ])}
+          // dataSource={dataSource}
+          // total={total}
+
+          pagination={pagination}
+          updatePage={updatePage}
+          updatePageSize={updatePageSize}
+          // isLoading={isLoading}
+          setSelectedRows={setSelectedRows}
+          isRowSelection={true}
+        />
+      </div>
 
       {/* <BrandEdit id={editId} setId={setEditId} />
 

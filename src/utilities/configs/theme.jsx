@@ -29,6 +29,14 @@ export function theme({ primaryColor, secondaryColor }) {
         itemHoverBg: secondaryColor,
         itemHoverColor: primaryColor,
       },
+
+      Segmented: {
+        trackBg: "white",
+        itemSelectedBg: primaryColor,
+        itemHoverBg: primaryColor,
+        itemSelectedColor: "white",
+        itemHoverColor: "white",
+      },
     },
   };
 }

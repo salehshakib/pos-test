@@ -1,12 +1,16 @@
 import { AreaChartComponent } from "../../../components/Charts/AreaChart";
 import { BarChartComponent } from "../../../components/Charts/BarChart";
+import { BarChartWithTooltip } from "../../../components/Charts/BarChartWithTooltip";
 import { ComposedChartComponent } from "../../../components/Charts/ComposedChart";
 import { PeiChartComponent } from "../../../components/Charts/PeiChart";
 import { PieChartWithLabel } from "../../../components/Charts/PieChartWithLabel";
+import { RadarChartComponent } from "../../../components/Charts/RadarChart";
+import { SimpleBarChartComponent } from "../../../components/Charts/SimpleBarChart";
 
 const AdminDashboard = () => {
   return (
     <div className=" h-full">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3"></div>
       <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3">
         <div className="py-5 w-full h-96">
           <AreaChartComponent />
@@ -24,10 +28,11 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="py-5 w-full h-96">
-          <AreaChartComponent />
+          <RadarChartComponent />
         </div>
         <div className="py-5 w-full h-96">
-          <BarChartComponent />
+          {/* <BarChartWithTooltip /> */}
+          <SimpleBarChartComponent />
         </div>
       </div>
     </div>

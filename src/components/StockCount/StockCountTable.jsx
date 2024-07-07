@@ -3,17 +3,13 @@ import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
-import {
-  useDeleteStockCountMutation,
-  useGetStockCountsQuery,
-} from "../../redux/services/stockCount/stockCountApi";
+import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
 import { STOCK_COUNT } from "../../utilities/apiEndpoints/inventory.api";
 import { base_url } from "../../utilities/configs/base_url";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { downloadFile } from "../../utilities/lib/downloadFile";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const pageTitle = "Stock Count";
@@ -27,8 +23,8 @@ const StockCountTable = ({
 }) => {
   const token = useSelector(useCurrentToken);
 
-  const [deleteId, setDeleteId] = useState(undefined);
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteId, setDeleteId] = useState(undefined);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
@@ -47,13 +43,13 @@ const StockCountTable = ({
   );
   const total = data?.meta?.total;
 
-  const [deleteStockCount, { isLoading: isDeleting }] =
-    useDeleteStockCountMutation();
+  // const [deleteStockCount, { isLoading: isDeleting }] =
+  //   useDeleteStockCountMutation();
 
-  const handleDeleteModal = (id) => {
-    setDeleteId(id);
-    setDeleteModal(true);
-  };
+  // const handleDeleteModal = (id) => {
+  //   setDeleteId(id);
+  //   setDeleteModal(true);
+  // };
 
   const handleFileDownload = (id, format) => {
     handleExport(id, format);
@@ -103,12 +99,12 @@ const StockCountTable = ({
     [api, token]
   );
 
-  const handleDelete = async () => {
-    const { data } = await deleteStockCount(deleteId);
-    if (data?.success) {
-      setDeleteModal(false);
-    }
-  };
+  // const handleDelete = async () => {
+  //   const { data } = await deleteStockCount(deleteId);
+  //   if (data?.success) {
+  //     setDeleteModal(false);
+  //   }
+  // };
 
   const dataSource =
     data?.results?.stockcount?.map((item) => {
@@ -134,14 +130,14 @@ const StockCountTable = ({
         category: categories?.map((item) => item?.name).join(" "),
         brand: brands?.map((item) => item?.name).join(" "),
 
-        handleDeleteModal,
+        // handleDeleteModal,
         handleFileDownload,
       };
     }) ?? [];
 
-  const hideModal = () => {
-    setDeleteModal(false);
-  };
+  // const hideModal = () => {
+  //   setDeleteModal(false);
+  // };
 
   return (
     <GlobalUtilityStyle>
@@ -171,13 +167,13 @@ const StockCountTable = ({
 
        */}
 
-      <DeleteModal
+      {/* <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
         item={"stock count"}
-      />
+      /> */}
     </GlobalUtilityStyle>
   );
 };

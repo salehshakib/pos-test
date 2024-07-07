@@ -13,10 +13,13 @@ import {
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PurchaseForm } from "./PurchaseForm";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 export const PurchaseCreate = () => {
   const { message } = App.useApp();
   const dispatch = useDispatch();
+
+  const user = useSelector(useCurrentUser);
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
@@ -138,7 +141,7 @@ export const PurchaseCreate = () => {
       ),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: 8,
+      petty_cash_id: user?.petty_cash_id,
     };
 
     if (attachment?.[0].originFileObj) {

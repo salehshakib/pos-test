@@ -18,10 +18,13 @@ import {
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PurchaseForm } from "./PurchaseForm";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 export const PurchaseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const { message } = App.useApp();
+
+  const user = useSelector(useCurrentUser);
 
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
@@ -264,7 +267,7 @@ export const PurchaseEdit = ({ id, setId }) => {
       ),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: 8,
+      petty_cash_id: user?.petty_cash_id,
       _method: "put",
     };
 

@@ -13,6 +13,7 @@ import {
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 // const decimalConverter = (value) => {
 //   return Number(value).toFixed(2);
@@ -21,6 +22,10 @@ import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 export const SaleCreate = () => {
   const dispatch = useDispatch();
   const { message } = App.useApp();
+
+  const user = useSelector(useCurrentUser);
+
+  console.log(user);
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
@@ -130,7 +135,7 @@ export const SaleCreate = () => {
       ),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: 8,
+      petty_cash_id: user?.petty_cash_id,
     };
 
     if (paid_amount) {

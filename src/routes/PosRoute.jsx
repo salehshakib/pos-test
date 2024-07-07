@@ -33,7 +33,11 @@ function PosRoute({ children }) {
   );
 
   useEffect(() => {
-    if (data?.data === "Close") {
+    if (data?.data === "Open") {
+      dispatch(setPettyCash({ data: data?.data }));
+
+      navigate("/pos");
+    } else if (data?.data === "Close") {
       dispatch(setPettyCash({ data: data?.data }));
 
       openNotification(
@@ -41,7 +45,7 @@ function PosRoute({ children }) {
         "No cash register found. Open a new cash register"
       );
 
-      return <Navigate to={"/dashboard"} replace={true} />;
+      navigate("/dashboard");
     }
   }, [data, dispatch, message, navigate]);
 

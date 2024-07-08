@@ -22,6 +22,8 @@ import {
 } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
@@ -87,6 +89,8 @@ export const PayrollForm = (props) => {
     });
   }, [data, props.form, employeeId]);
 
+  const currency = useSelector(useCurrency);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -106,15 +110,26 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Salary"
             name="salary"
-            type={"number"}
+            type={"number_with_percent"}
+            suffix={currency?.name}
             required={true}
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Bonus" name="bonus" type={"number"} />
+          <CustomInput
+            label="Bonus"
+            name="bonus"
+            type={"number_with_percent"}
+            suffix={currency?.name}
+          />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Loan" name="loan" type={"number"} />
+          <CustomInput
+            label="Loan"
+            name="loan"
+            type={"number_with_percent"}
+            suffix={currency?.name}
+          />
         </Col>
 
         <Col {...fullColLayout}>

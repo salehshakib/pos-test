@@ -1,10 +1,11 @@
-import { Col, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { AdjustmentProductTable } from "./overview/AdjustmentProductTable";
+import { useEffect } from "react";
 
 const AdjustmentForm = ({
   formValues,
@@ -13,8 +14,15 @@ const AdjustmentForm = ({
   setProducts,
   ...props
 }) => {
-  //console.log(formValues);
-  //console.log(products);
+  const warehouseId = Form.useWatch("warehouse_id", props.form);
+
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({ product_list: { qty: {}, action: {} } });
+      setProducts([]);
+    }
+  }, [setFormValues, setProducts, warehouseId]);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -34,7 +42,7 @@ const AdjustmentForm = ({
         </Col>
         <Col {...fullColLayout}>
           <CustomInput
-            label="Sale Note"
+            label="Note"
             multiple={true}
             type={"textarea"}
             name={"note"}

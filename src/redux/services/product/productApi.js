@@ -47,6 +47,12 @@ const productApi = baseApi.injectEndpoints({
         }
       },
       transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
         //console.log(response);
         return response;
       },
@@ -69,6 +75,12 @@ const productApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
         return result ? [PRODUCT] : [];
       },
@@ -87,6 +99,12 @@ const productApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
         return result ? [PRODUCT] : [];
       },
@@ -102,6 +120,12 @@ const productApi = baseApi.injectEndpoints({
       transformResponse: (response) => {
         if (response?.success) {
           openNotification("success", response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
           return response;
         }
       },

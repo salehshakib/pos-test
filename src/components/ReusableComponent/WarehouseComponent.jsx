@@ -42,6 +42,7 @@ export const WarehouseComponent = ({
       isLoading={isLoading}
       options={options}
       placeholder={placeholder}
+      placeholder={"Warehouse"}
       name={name}
       required={true}
       customStyle={!label}

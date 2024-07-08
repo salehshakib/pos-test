@@ -1,15 +1,21 @@
-import { AutoComplete, Col, App, Spin } from "antd";
+import { App, AutoComplete, Col, Form, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 
 export const SearchProduct = ({ setProducts }) => {
   const { message } = App.useApp();
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
+
+  const form = Form.useFormInstance();
+
+  const warehouseId = Form.useWatch("warehouse_id", form);
+  const warehouseIdFrom = Form.useWatch("from_warehouse_id", form);
 
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== "") {
@@ -19,7 +25,9 @@ export const SearchProduct = ({ setProducts }) => {
 
   const params = useGlobalParams({
     // selectValue: ["id", "name"],
-    params: { keyword, parent: 1 },
+    params: { warehouse_id: warehouseId },
+    keyword,
+    isRelationalParams: true,
   });
 
   const { data, isFetching } = useGetAllProductsQuery(
@@ -52,7 +60,22 @@ export const SearchProduct = ({ setProducts }) => {
         product: product,
       })) ?? [];
 
+  // const user = useSelector(useCurrentUser);
+  // const warehouseId = user?.warehouse_id;
+
+  console.log(warehouseId);
+
   const onSelect = (_, option) => {
+    const stock = getWarehouseQuantity(
+      option?.product?.product_qties,
+      warehouseId ?? warehouseIdFrom
+    );
+
+    if (!stock) {
+      message.error("Product is out of stock");
+      return;
+    }
+
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
         return product?.id === option?.product?.id;

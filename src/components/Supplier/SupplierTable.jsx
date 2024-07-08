@@ -133,6 +133,7 @@ const SupplierTable = ({
   const hideModal = () => {
     setStatusModal(false);
     setDeleteModal(false);
+    setDetailsModal(false);
   };
 
   return (

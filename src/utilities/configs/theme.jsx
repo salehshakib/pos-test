@@ -32,10 +32,11 @@ export function theme({ primaryColor, secondaryColor }) {
 
       Segmented: {
         trackBg: "white",
-        itemSelectedBg: primaryColor,
-        itemHoverBg: primaryColor,
-        itemSelectedColor: "white",
-        itemHoverColor: "white",
+        itemSelectedBg: secondaryColor,
+        // itemHoverBg: primaryColor,
+        // itemSelectedColor: "white",
+        // itemHoverColor: "white",
+        // itemActiveBg: primaryColor,
       },
     },
   };

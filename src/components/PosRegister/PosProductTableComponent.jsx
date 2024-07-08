@@ -21,6 +21,9 @@ import {
 } from "../../utilities/lib/productTable/counters";
 import { calculateOriginalPrice } from "../../utilities/lib/calculatePrice";
 import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const columns = [
   {
@@ -410,6 +413,8 @@ const ProductTableComponent = ({
     setProductEditModal(false);
   };
 
+  const currency = useSelector(useCurrency);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -424,6 +429,8 @@ const ProductTableComponent = ({
       product_qties,
     } = product ?? {};
 
+    const stock = getWarehouseQuantity(product_qties, warehouseId);
+
     setFormValuesId(
       id,
       sale_unit_id,
@@ -432,19 +439,23 @@ const ProductTableComponent = ({
       formValues,
       productUnits,
       tax_id,
-      taxes
+      taxes,
+      stock
     );
 
     return {
       id,
       name,
       sku,
-      unitCost: "$" + formValues.product_list.net_unit_price[id],
+      unitCost: showCurrency(
+        formValues.product_list.net_unit_price[id],
+        currency
+      ),
       delete: true,
-      discount: formValues.product_list.discount[id],
-      tax: formValues.product_list.tax[id],
-      subTotal: formValues.product_list.total[id],
-      stock: getWarehouseQuantity(product_qties, warehouseId),
+      discount: showCurrency(formValues.product_list.discount[id], currency),
+      tax: showCurrency(formValues.product_list.tax[id], currency),
+      subTotal: showCurrency(formValues.product_list.total[id], currency),
+      stock,
       incrementCounter,
       decrementCounter,
       onQuantityChange,

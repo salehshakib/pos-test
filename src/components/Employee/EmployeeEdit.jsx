@@ -29,13 +29,16 @@ const EmployeeEdit = ({ id, setId }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
+      console.log(data);
+
       setFields(fieldData);
     }
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateEmployee({
-      data: { id, ...values },
+      id,
+      data: { ...values, _method: "PUT" },
     });
 
     if (data?.success) {

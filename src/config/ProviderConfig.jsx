@@ -49,27 +49,27 @@ export const ProviderConfig = ({ children }) => {
 
   const { data } = useGetGeneralSettingsQuery();
 
-  const user = useSelector(useCurrentUser);
-  const warehouseId = user?.warehouse_id;
+  // const user = useSelector(useCurrentUser);
+  // const warehouseId = user?.warehouse_id;
 
-  const { data: pettyCashData } = useCheckPettyCashQuery(
-    {
-      params: {
-        warehouse_id: parseInt(warehouseId),
-      },
-    },
-    {
-      skip: !warehouseId,
-    }
-  );
+  // const { data: pettyCashData } = useCheckPettyCashQuery(
+  //   {
+  //     params: {
+  //       warehouse_id: parseInt(warehouseId),
+  //     },
+  //   },
+  //   {
+  //     skip: !warehouseId,
+  //   }
+  // );
 
-  useEffect(() => {
-    if (data?.data === "Open") {
-      dispatch(setPettyCash({ data: data?.data }));
-    } else if (data?.data === "Close") {
-      dispatch(setPettyCash({ data: data?.data }));
-    }
-  }, [data?.data, dispatch, pettyCashData]);
+  // // const { pettyCash } = useSelector((state) => state.pettyCash);
+
+  // useEffect(() => {
+  //   if (pettyCashData?.data) {
+  //     dispatch(setPettyCash(pettyCashData?.data));
+  //   }
+  // }, [pettyCashData?.data, dispatch]);
 
   const menuItems = useMenuItems(adminPaths);
 

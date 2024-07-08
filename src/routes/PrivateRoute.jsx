@@ -6,11 +6,9 @@ function PrivateRoute({ children }) {
   const token = useSelector(useCurrentToken);
   const dispatch = useDispatch();
 
-  // console.log(pettyCash);
+  // const { pettyCash } = useSelector((state) => state.pettyCash);
 
-  // if (pettyCash === "Close") {
-  //   return <Navigate to={"/dashboard"} replace={true} />;
-  // }
+  // console.log(pettyCash);
 
   if (!token) {
     dispatch(logout());

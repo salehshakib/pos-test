@@ -135,7 +135,8 @@ export const SaleCreate = () => {
       ),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: user?.petty_cash_id,
+      // petty_cash_id: user?.petty_cash_id,
+      petty_cash_id: 8,
     };
 
     if (paid_amount) {

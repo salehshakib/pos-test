@@ -1,4 +1,4 @@
-import { App, Col, Form, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -7,21 +7,22 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useCheckReferenceMutation } from "../../redux/services/return/purchaseReturnApi";
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+  calculateTotalTax,
+} from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
+import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
+import { TotalRow } from "../ReusableComponent/TotalRow";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
 import { ReturnProductTable } from "./overview/ReturnProductTable";
-import { updateProductList } from "../../utilities/lib/return/updateProductList";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import {
-  calculateGrandTotal,
-  calculateTotalPrice,
-  calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
 
 const options = [
   {
@@ -104,7 +105,7 @@ export const PurchaseReturnForm = ({
   ...props
 }) => {
   const { form } = props;
-  const { message } = App.useApp();
+  // const { message } = App.useApp();
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [purchaseExists, setPurchaseExists] = useState(false);
@@ -238,7 +239,13 @@ export const PurchaseReturnForm = ({
       setPurchaseExists(true);
     }
     if (error) {
-      message.error(
+      // message.error(
+      //   error?.data?.message ??
+      //     "Purchase Reference doesnot exist or Purchase Return is Pending"
+      // );
+
+      openNotification(
+        "error",
         error?.data?.message ??
           "Purchase Reference doesnot exist or Purchase Return is Pending"
       );

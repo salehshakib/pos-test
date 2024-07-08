@@ -24,7 +24,9 @@ const AdjustmentCreate = () => {
   const [products, setProducts] = useState([]);
 
   const handleSubmit = async (values) => {
-    const { warehouse_id, product_list, attachment, note } = values;
+    const { warehouse_id, attachment, note } = values;
+
+    const { product_list } = formValues;
 
     const formData = new FormData();
 

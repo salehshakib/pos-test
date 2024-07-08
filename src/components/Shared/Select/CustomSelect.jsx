@@ -164,7 +164,7 @@ const CustomSelect = ({
         rules={[
           {
             required,
-            message: `Please Select ${label ?? placeholder}!`,
+            message: `Please Select ${placeholder ?? label}!`,
           },
         ]}
         className={customStyle && "mb-0"}

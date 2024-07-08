@@ -7,6 +7,8 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import ApplicableForm from "./overview/ApplicableForm";
 import { SpecificProductComponent } from "./overview/SpecificProductComponent";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const weekDays = [
   {
@@ -40,6 +42,8 @@ const weekDays = [
 ];
 
 const DiscountForm = (props) => {
+  const currency = useSelector(useCurrency);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -85,13 +89,28 @@ const DiscountForm = (props) => {
           />
         </Col>
         <Col {...colLayout}>
-          <CustomInput type={"number"} label="Value" required={true} />
+          <CustomInput
+            type={"number_with_percent"}
+            suffix={currency?.name}
+            label="Value"
+            required={true}
+          />
         </Col>
         <Col {...colLayout}>
-          <CustomInput type={"number"} label="Maximum Qty" required={true} />
+          <CustomInput
+            type={"number_with_percent"}
+            suffix={currency?.name}
+            label="Maximum Qty"
+            required={true}
+          />
         </Col>
         <Col {...colLayout}>
-          <CustomInput type={"number"} label="Minimum Qty" required={true} />
+          <CustomInput
+            type={"number_with_percent"}
+            suffix={currency?.name}
+            label="Minimum Qty"
+            required={true}
+          />
         </Col>
       </Row>
 

@@ -335,7 +335,10 @@ const ProductListEdit = ({ id }) => {
         })
       : [];
 
-    const qty = qtyListArray?.reduce((sum, item) => sum + item.qty, 0);
+    const qty = qtyListArray.reduce(
+      (sum, item) => parseInt(sum) + parseInt(item.qty),
+      0
+    );
 
     //console.log(has_different_price);
 
@@ -360,8 +363,6 @@ const ProductListEdit = ({ id }) => {
 
     const formData = new FormData();
 
-    //console.log(values);
-
     const postObj = {
       name,
       sku,
@@ -375,7 +376,7 @@ const ProductListEdit = ({ id }) => {
       buying_price: parseInt(buying_price),
       selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
-      qty: qty.toString(),
+      qty: qty,
       alert_qty,
       daily_sale_qty,
       tax_method,

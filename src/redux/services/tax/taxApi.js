@@ -30,6 +30,12 @@ const taxApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
         return result ? [TAX] : [];
       },
@@ -44,6 +50,12 @@ const taxApi = baseApi.injectEndpoints({
       transformResponse: (response) => {
         if (response?.success) {
           openNotification("success", response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
           return response;
         }
       },

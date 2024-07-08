@@ -19,7 +19,7 @@ const CountriesForm = () => {
   return (
     <CustomSelect
       label="Country"
-      required={true}
+      // required={true}
       options={options}
       showSearch={true}
       name="country"
@@ -40,7 +40,7 @@ const CitiesForm = () => {
   return (
     <CustomSelect
       label="City"
-      required={true}
+      // required={true}
       options={options}
       showSearch={true}
       name="city"
@@ -65,7 +65,7 @@ const SupplierForm = (props) => {
           <CustomInput
             label="Email"
             type={"email"}
-            required={true}
+            // required={true}
             name={"email"}
           />
         </Col>
@@ -98,7 +98,7 @@ const SupplierForm = (props) => {
           <CustomInput
             label="State"
             type={"text"}
-            required={true}
+            // required={true}
             name={"state"}
           />
         </Col>
@@ -106,7 +106,7 @@ const SupplierForm = (props) => {
           <CustomInput
             label="Postal Code"
             type={"number"}
-            required={true}
+            // required={true}
             name={"postal_code"}
           />
         </Col>

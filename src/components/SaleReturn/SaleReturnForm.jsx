@@ -1,4 +1,4 @@
-import { App, Col, Form, Row } from "antd";
+import { Col, Form, Row } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -12,6 +12,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
@@ -112,7 +113,6 @@ export const SaleReturnForm = ({
   ...props
 }) => {
   const { form } = props;
-  const { message } = App.useApp();
   const [checkSaleReference, { isLoading }] = useCheckSaleReferenceMutation();
 
   const [saleExists, setSaleExists] = useState(false);
@@ -246,7 +246,12 @@ export const SaleReturnForm = ({
     }
 
     if (error) {
-      message.error(
+      // message.error(
+      //   error?.data?.message ??
+      //     "Sale Reference doesnot exist or Sale Return is Pending"
+      // );
+      openNotification(
+        "error",
         error?.data?.message ??
           "Sale Reference doesnot exist or Sale Return is Pending"
       );

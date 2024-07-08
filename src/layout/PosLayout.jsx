@@ -59,9 +59,10 @@ const PosLayout = () => {
     sale_units: {},
     tax_rate: {},
     coupon_rate: {},
+    minimum_amount: {},
   });
 
-  const [type, setType] = useState("fixed");
+  const [type, setType] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -211,6 +212,7 @@ const PosLayout = () => {
   if (pettyCash === "Close") {
     navigate("/dashboard");
   }
+
   return (
     <GlobalUtilityStyle>
       <div className="flex flex-col relative h-screen">
@@ -265,6 +267,9 @@ const PosLayout = () => {
                     <PosProducts
                       products={products}
                       setProducts={setProducts}
+                      setFormValues={setFormValues}
+                      setProductUnits={setProductUnits}
+                      form={posForm}
                     />
                   </div>
                 </div>

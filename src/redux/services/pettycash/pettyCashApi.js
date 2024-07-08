@@ -105,6 +105,12 @@ const pettyCashApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
       invalidatesTags: (result) => {
         return result ? [PETTY_CASH] : [];
       },

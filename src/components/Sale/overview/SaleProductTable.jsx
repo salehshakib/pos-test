@@ -23,6 +23,10 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { showCurrency } from "../../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 
 const columns = [
   {
@@ -484,6 +488,9 @@ export const SaleProductTable = ({
     setProductEditModal(false);
   };
 
+  const currency = useSelector(useCurrency);
+  const warehouseId = Form.useWatch("warehouse_id", form);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -495,7 +502,10 @@ export const SaleProductTable = ({
       tax_id,
       taxes,
       tax_method,
+      product_qties,
     } = product ?? {};
+
+    const stock = getWarehouseQuantity(product_qties, warehouseId);
 
     setFormValuesId(
       id,
@@ -512,11 +522,15 @@ export const SaleProductTable = ({
       id,
       name,
       sku,
-      unitCost: "$" + formValues.product_list.net_unit_price[id],
+      unitCost: showCurrency(
+        formValues.product_list.net_unit_price[id],
+        currency
+      ),
       delete: true,
-      discount: formValues.product_list.discount[id],
-      tax: formValues.product_list.tax[id],
-      subTotal: formValues.product_list.total[id],
+      stock,
+      discount: showCurrency(formValues.product_list.discount[id], currency),
+      tax: showCurrency(formValues.product_list.tax[id], currency),
+      subTotal: showCurrency(formValues.product_list.total[id], currency),
       incrementCounter,
       decrementCounter,
       onQuantityChange,
@@ -550,50 +564,6 @@ export const SaleProductTable = ({
     setTotalDiscount(totalDiscount);
   }, [formValues, products]);
 
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     const sanitizeValue = (value) => {
-  //       const number = parseFloat(value);
-  //       return isNaN(number) ? 0 : number;
-  //     };
-
-  //     const total = Object.values(formValues.product_list.qty).reduce(
-  //       (acc, cur) => acc + parseInt(cur) || 0,
-  //       0
-  //     );
-  //     setTotalQuantity(total);
-
-  //     const totalPrice = Object.values(formValues.product_list.total).reduce(
-  //       (acc, cur) => acc + sanitizeValue(cur),
-  //       0
-  //     );
-  //     setTotalPrice(totalPrice.toFixed(2));
-
-  //     const totalTax = Object.values(formValues.product_list.tax).reduce(
-  //       (acc, cur) => acc + sanitizeValue(cur),
-  //       0
-  //     );
-  //     setTotalTax(totalTax.toFixed(2));
-
-  //     const totalDiscount = Object.values(
-  //       formValues.product_list.discount
-  //     ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
-  //     setTotalDiscount(totalDiscount.toFixed(2));
-  //   }
-  // }, [formValues, products]);
-
-  // products.length > 0 &&
-  //   dataSource.push({
-  //     id: "",
-  //     name: "Total",
-  //     unitCost: "",
-  //     quantity: totalQuantity,
-  //     subTotal: totalPrice,
-  //     tax: totalTax,
-  //     discount: totalDiscount,
-  //     action: false,
-  //   });
-
   form.setFieldsValue(formValues);
 
   const tableStyle = {
@@ -601,7 +571,7 @@ export const SaleProductTable = ({
       return (
         <Table.Summary fixed="bottom">
           <Table.Summary.Row>
-            <Table.Summary.Cell index={1} colSpan={3}>
+            <Table.Summary.Cell index={1} colSpan={4}>
               <Typography.Text className="font-bold" type="">
                 Total
               </Typography.Text>

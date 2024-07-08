@@ -5,6 +5,8 @@ import { fullColLayout, mdColLayout } from "../../../layout/FormLayout";
 import { useGetAllGiftCardQuery } from "../../../redux/services/giftcard/giftcard/giftCardApi";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 
 const PaymentType = ({ paymentType }) => {
   const form = Form.useFormInstance();
@@ -158,26 +160,12 @@ export const PaymentTypeComponent = ({
 }) => {
   const form = Form.useFormInstance();
 
-  //   const paymentStatus = Form.useWatch("payment_status", form);
-
   const receivedAmount = Form.useWatch("recieved_amount", form);
   const paidAmount = Form.useWatch("paid_amount", form);
-
   const paymentType = Form.useWatch("payment_type", form);
-
-  //console.log(grandTotal);
 
   useEffect(() => {
     form.setFieldValue("paid_amount", grandTotal ?? 0);
-    // if (paidAmount > receivedAmount) {
-    //   form.setFieldValue("paid_amount", receivedAmount);
-    // }
-    // if (paidAmount > grandTotal) {
-    //   form.setFieldValue("paid_amount", grandTotal);
-    // }
-    // if (receivedAmount < grandTotal) {
-    //   form.setFieldValue("paid_amount", receivedAmount);
-    // }
   }, [paidAmount, receivedAmount, grandTotal, form]);
 
   const change = Number(
@@ -188,6 +176,8 @@ export const PaymentTypeComponent = ({
     const paidAmount = form.getFieldValue("recieved_amount") ?? 0;
     form.setFieldValue("recieved_amount", paidAmount + value);
   };
+
+  const currency = useSelector(useCurrency);
 
   return (
     <>
@@ -256,7 +246,8 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number"}
+          type={"number_with_percent"}
+          suffix={currency?.name}
           name="recieved_amount"
           label="Recieved Amount"
           required={true}
@@ -264,7 +255,8 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number"}
+          type={"number_with_percent"}
+          suffix={currency?.name}
           name="paid_amount"
           label="Paid Amount"
           required={true}

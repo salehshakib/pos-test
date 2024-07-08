@@ -111,10 +111,11 @@ const AdjustmentEdit = ({ id }) => {
 
       setFields(fieldData);
     }
-  }, [data, setFields]);
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
-    const { product_list, attachment, note, warehouse_id } = values;
+    const { attachment, note, warehouse_id } = values;
+    const { product_list } = formValues;
 
     const formData = new FormData();
 

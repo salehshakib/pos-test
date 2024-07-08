@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -12,6 +12,9 @@ import {
   onDelete,
   onQuantityChange,
 } from "../../../utilities/lib/productTable/counters";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { showCurrency } from "../../../utilities/lib/currency";
 
 const columns = [
   {
@@ -167,74 +170,7 @@ export const AdjustmentProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  // const decrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-  //     const newQty = Math.max(Number(currentQty) - 1, 0);
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const onQuantityChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       qty: {
-  //         ...prevFormValues.product_list.qty,
-  //         [id]: parseInt(value, 10) || 0,
-  //       },
-  //     },
-  //   }));
-  // };
-
-  // const onActionChange = (id, value, setFormValues) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       action: {
-  //         ...prevFormValues.product_list.action,
-  //         [id]: value,
-  //       },
-  //     },
-  //   }));
-  // };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-
-  //   setFormValues((prevFormValues) => {
-  //     const { product_list } = prevFormValues;
-
-  //     const updatedProductList = Object.keys(product_list).reduce(
-  //       (acc, key) => {
-  //         // eslint-disable-next-line no-unused-vars
-  //         const { [id]: _, ...rest } = product_list[key];
-  //         acc[key] = rest;
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: updatedProductList,
-  //     };
-  //   });
-  // };
+  const currency = useSelector(useCurrency);
 
   const dataSource =
     products?.map((product) => {
@@ -249,7 +185,7 @@ export const AdjustmentProductTable = ({
         id,
         name,
         sku,
-        unitCost: `$${unit_cost ?? 0}`,
+        unitCost: showCurrency(unit_cost, currency),
         action: true,
         delete: true,
         incrementCounter,
@@ -274,16 +210,38 @@ export const AdjustmentProductTable = ({
     setTotalQuantity(total);
   }, [formValues, products]);
 
-  products.length > 0 &&
-    dataSource.push({
-      id: "",
-      name: "Total",
-      unitCost: "",
-      quantity: totalQuantity,
-      action: false,
-    });
+  // products.length > 0 &&
+  //   dataSource.push({
+  //     id: "",
+  //     name: "Total",
+  //     unitCost: "",
+  //     quantity: totalQuantity,
+  //     action: false,
+  //   });
 
   form.setFieldsValue(formValues);
+
+  const tableStyle = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={3}>
+              <Typography.Text className="font-bold" type="">
+                Total
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalQuantity}
+              </Typography.Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+  };
 
   return (
     <ProductController
@@ -291,6 +249,7 @@ export const AdjustmentProductTable = ({
       setProducts={setProducts}
       columns={columns}
       dataSource={dataSource}
+      tableStyle={tableStyle}
     />
   );
 };

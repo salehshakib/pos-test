@@ -1,20 +1,23 @@
-import { Col, Form, Row, Segmented, Table, theme } from "antd";
+import { Col, Form, Row, Segmented, theme } from "antd";
 import { BiCategoryAlt } from "react-icons/bi";
-import { FaMoneyBillWave } from "react-icons/fa";
-import { MdAddShoppingCart, MdOutlineNumbers, MdPaid } from "react-icons/md";
-import { PiWarehouse } from "react-icons/pi";
+import { FaBuilding, FaMoneyBillWave } from "react-icons/fa";
+import { FaChalkboardUser, FaPeopleRoof } from "react-icons/fa6";
+import { LiaCashRegisterSolid } from "react-icons/lia";
+import {
+  MdAddShoppingCart,
+  MdOutlineNumbers,
+  MdPaid,
+  MdPayment,
+} from "react-icons/md";
+import { PiUserList, PiWarehouse } from "react-icons/pi";
+import { SlCalender, SlWallet } from "react-icons/sl";
 import { TbBrandAirtable } from "react-icons/tb";
 import { useSelector } from "react-redux";
-import { AreaChartComponent } from "../../../components/Charts/AreaChart";
-import { BarChartComponent } from "../../../components/Charts/BarChart";
-import { ComposedChartComponent } from "../../../components/Charts/ComposedChart";
-import { PeiChartComponent } from "../../../components/Charts/PeiChart";
-import { PieChartWithLabel } from "../../../components/Charts/PieChartWithLabel";
-import { RadarChartComponent } from "../../../components/Charts/RadarChart";
 import { SimpleBarChartComponent } from "../../../components/Charts/SimpleBarChart";
 import CustomForm from "../../../components/Shared/Form/CustomForm";
 import CustomSelect from "../../../components/Shared/Select/CustomSelect";
 import { StatisticComponent } from "../../../components/Shared/Statistic/Statistic";
+import CustomTable from "../../../components/Shared/Table/CustomTable";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
@@ -23,7 +26,6 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
-import CustomTable from "../../../components/Shared/Table/CustomTable";
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
@@ -111,9 +113,9 @@ const CashStatistic = () => {
   };
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">Cash Statistic</span>
+      <span className="font-semibold text-lg">Transactions </span>
       <div className="space-y-3">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           <DashboardCard
             title={"Total Purchase"}
             icon={<MdOutlineNumbers {...iconProps} />}
@@ -161,9 +163,18 @@ const CashStatistic = () => {
           />
         </div>
         <div className="grid grid-cols-3 gap-3">
-          <DashboardCard title={"Today's Payment Received"} />
-          <DashboardCard title={"Today's Payment Sent"} />
-          <DashboardCard title={"Today's Total Expense"} />
+          <DashboardCard
+            title={"Today's Payment Received"}
+            icon={<SlWallet {...iconProps} />}
+          />
+          <DashboardCard
+            title={"Today's Payment Sent"}
+            icon={<SlWallet {...iconProps} />}
+          />
+          <DashboardCard
+            title={"Today's Total Expense"}
+            icon={<SlWallet {...iconProps} />}
+          />
         </div>
       </div>
     </div>
@@ -181,7 +192,7 @@ const WarehouseStatistic = () => {
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">Warehouse</span>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <DashboardCard
           title={"Warehouse"}
           icon={<PiWarehouse {...iconProps} />}
@@ -208,13 +219,31 @@ const WarehouseStatistic = () => {
 };
 
 const PeopleStatistic = () => {
+  const { token } = theme.useToken();
+
+  const iconProps = {
+    size: 40,
+    color: token.colorPrimary,
+  };
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">People</span>
       <div className="grid grid-cols-3 gap-3">
-        <DashboardCard title={"Customer"} data={"N/A"} />
-        <DashboardCard title={"Supplier"} data={"N/A"} />
-        <DashboardCard title={"Cashier"} data={"N/A"} />
+        <DashboardCard
+          title={"Customer"}
+          data={"N/A"}
+          icon={<PiUserList {...iconProps} />}
+        />
+        <DashboardCard
+          title={"Supplier"}
+          data={"N/A"}
+          icon={<FaChalkboardUser {...iconProps} />}
+        />
+        <DashboardCard
+          title={"Cashier"}
+          data={"N/A"}
+          icon={<LiaCashRegisterSolid {...iconProps} />}
+        />
       </div>
     </div>
   );
@@ -222,14 +251,39 @@ const PeopleStatistic = () => {
 
 const EmployeeStatistic = () => {
   const currency = useSelector(useCurrency);
+
+  const { token } = theme.useToken();
+
+  const iconProps = {
+    size: 40,
+    color: token.colorPrimary,
+  };
+
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">HRM</span>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <DashboardCard title={"Department"} data={"N/A"} />
-        <DashboardCard title={"Employee"} data={"N/A"} />
-        <DashboardCard title={"Payroll"} data={"N/A"} currency={currency} />
-        <DashboardCard title={"Leave Granted"} data={"N/A"} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <DashboardCard
+          title={"Department"}
+          data={"N/A"}
+          icon={<FaBuilding {...iconProps} />}
+        />
+        <DashboardCard
+          title={"Employee"}
+          data={"N/A"}
+          icon={<FaPeopleRoof {...iconProps} />}
+        />
+        <DashboardCard
+          title={"Payroll"}
+          data={"N/A"}
+          currency={currency}
+          icon={<MdPayment {...iconProps} />}
+        />
+        <DashboardCard
+          title={"Leave Granted"}
+          data={"N/A"}
+          icon={<SlCalender {...iconProps} />}
+        />
       </div>
     </div>
   );
@@ -456,7 +510,7 @@ const AdminDashboard = () => {
           <EmployeeStatistic />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"></div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 p-5">
         <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">

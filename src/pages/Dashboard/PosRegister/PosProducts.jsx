@@ -1,4 +1,4 @@
-import { App, Badge, Card, Divider, Skeleton, Spin, Tooltip } from "antd";
+import { App, Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
@@ -8,10 +8,12 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 const { Meta } = Card;
 
-const PosProducts = ({ setProducts }) => {
+const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
   const { message } = App.useApp();
+  const warehouseId = Form.useWatch("warehouse_id", form);
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -25,7 +27,7 @@ const PosProducts = ({ setProducts }) => {
     params: {
       ...pagination,
       attachmentable: 1,
-      // parent: 1,
+      warehouse_id: warehouseId,
     },
     selectValue: [
       ...DEFAULT_SELECT_VALUES,
@@ -62,17 +64,43 @@ const PosProducts = ({ setProducts }) => {
     }
   }, [pagination.page, products]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center text-lg mt-4">
-          <Spin />
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   const onSelect = (selectedProduct) => {
+    const stock = getWarehouseQuantity(
+      selectedProduct?.product?.product_qties,
+      warehouseId
+    );
+
+    if (!stock) {
+      message.error("Product is out of stock");
+      return;
+    }
+
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
         return product?.id === selectedProduct?.product?.id;
@@ -87,6 +115,16 @@ const PosProducts = ({ setProducts }) => {
     });
     // setValue(null);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center text-lg mt-4">
+          <Spin />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <GlobalUtilityStyle className="p-3 pb-0 flex flex-col h-full overflow-auto">
@@ -115,62 +153,70 @@ const PosProducts = ({ setProducts }) => {
 
                   //console.log(product);
 
-                  return (
-                    <div key={product.id} className="w-full p-2">
-                      <Badge
-                        count={100}
-                        overflowCount={99}
-                        className=" w-full"
-                        offset={[-15, 0]}
-                      >
-                        <Card
-                          bordered
-                          hoverable
-                          className="border-secondary-hover"
-                          style={{
-                            backgroundColor: "white",
-                          }}
-                          styles={{
-                            body: {
-                              padding: "12px 8px",
-                            },
-                          }}
-                          key={product.id}
-                          cover={
-                            <div className="w-full">
-                              <img
-                                alt="example"
-                                className="h-[3.5rem] mx-auto object-cover "
-                                src={
-                                  // images?.attach_file?.[0]?.url ??
-                                  // images?.attachments?.[0]?.url ??
-                                  productImage
-                                }
-                              />
-                            </div>
-                          }
-                          onClick={() => onSelect({ product })}
-                        >
-                          <Meta
-                            className="text-center"
-                            style={{
-                              fontSize: "12px",
-                            }}
-                            title={
-                              <Tooltip
-                                title={product.name}
-                                showArrow={false}
-                                placement="top"
-                              >
-                                <span className="text-sm">{product.name}</span>
-                              </Tooltip>
-                            }
-                            description={product.sku}
-                          />
-                        </Card>
-                      </Badge>
-                    </div>
+                  const stock = getWarehouseQuantity(
+                    product?.product_qties,
+                    warehouseId
                   );
+
+                  if (stock > 1)
+                    return (
+                      <div key={product.id} className="w-full p-2">
+                        <Badge
+                          count={stock}
+                          overflowCount={99}
+                          className=" w-full"
+                          offset={[-15, 0]}
+                        >
+                          <Card
+                            bordered
+                            hoverable
+                            className="border-secondary-hover"
+                            style={{
+                              backgroundColor: "white",
+                            }}
+                            styles={{
+                              body: {
+                                padding: "12px 8px",
+                              },
+                            }}
+                            key={product.id}
+                            cover={
+                              <div className="w-full">
+                                <img
+                                  alt="example"
+                                  className="h-[3.5rem] mx-auto object-cover "
+                                  src={
+                                    // images?.attach_file?.[0]?.url ??
+                                    // images?.attachments?.[0]?.url ??
+                                    productImage
+                                  }
+                                />
+                              </div>
+                            }
+                            onClick={() => onSelect({ product })}
+                          >
+                            <Meta
+                              className="text-center"
+                              style={{
+                                fontSize: "12px",
+                              }}
+                              title={
+                                <Tooltip
+                                  title={product.name}
+                                  showArrow={false}
+                                  placement="top"
+                                >
+                                  <span className="text-sm">
+                                    {product.name}
+                                  </span>
+                                </Tooltip>
+                              }
+                              description={product.sku}
+                            />
+                          </Card>
+                        </Badge>
+                      </div>
+                    );
                 })}
             </div>
           </InfiniteScroll>

@@ -8,6 +8,7 @@ import CustomForm from "../../components/Shared/Form/CustomForm";
 import CustomInput from "../../components/Shared/Input/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
+import { openNotification } from "../../utilities/lib/openToaster";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (data) => {
-    const toastId = toast.loading("Logging in...");
+    // const toastId = toast.loading("Logging in...");
 
     try {
       const res = await login(data).unwrap();
@@ -28,13 +29,15 @@ const Login = () => {
       console.log(userData);
 
       dispatch(setUser({ user: userData, token }));
-      toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
+      // toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
+      openNotification("success", "Logged in successfully!");
       navigate(`/dashboard`);
     } catch (error) {
-      toast.error("Invalid credentials. Please try again!", {
-        id: toastId,
-        duration: 2000,
-      });
+      // toast.error("Invalid credentials. Please try again!", {
+      //   id: toastId,
+      //   duration: 2000,
+      // });
+      openNotification("success", "Invalid credentials. Please try again!");
     }
   };
 

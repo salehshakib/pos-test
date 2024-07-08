@@ -44,7 +44,7 @@ export const columns = [
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost ?? 0}
+        {unitCost}
       </span>
     ),
   },
@@ -103,7 +103,7 @@ export const columns = [
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${discount}
+        {discount}
       </span>
     ),
   },
@@ -115,7 +115,7 @@ export const columns = [
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -127,7 +127,7 @@ export const columns = [
     width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },

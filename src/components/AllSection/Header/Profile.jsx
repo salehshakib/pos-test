@@ -6,12 +6,12 @@ import { MdPointOfSale } from "react-icons/md";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout, useCurrentUser } from "../../../redux/services/auth/authSlice";
 import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pettyCashApi";
 import { setPettyCash } from "../../../redux/services/pettycash/pettyCashSlice";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
 
@@ -31,7 +31,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     });
 
     if (data?.success) {
-      dispatch(setPettyCash({ data: data?.data.status }));
+      dispatch(setPettyCash("Open"));
       hideModal();
       form.resetFields();
       navigate("/pos");
@@ -155,7 +155,7 @@ const CashRegisterComponent = () => {
     });
 
     if (data?.success) {
-      dispatch(setPettyCash({ data: data?.data.status })); // dispatch(setPettyCash());
+      dispatch(setPettyCash("Close"));
 
       hideModal();
       navigate("/dashboard");
@@ -220,8 +220,9 @@ const Profile = () => {
   const { pathname } = location;
 
   const handleLogout = () => {
+    openNotification("success", "Logged out successfully!");
     dispatch(logout());
-    toast.success("Logged out successfully!", { duration: 2000 });
+    // toast.success("Logged out successfully!", { duration: 2000 });
   };
 
   const user = useSelector(useCurrentUser);

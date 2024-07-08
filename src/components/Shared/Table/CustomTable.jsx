@@ -96,13 +96,13 @@ const CustomTable = ({
   const getDownloadItems = (record) =>
     [
       {
-        key: "edit",
+        key: "pdf",
         icon: <FaFilePdf size={20} />,
         label: <div className="flex justify-start items-center gap-3">PDF</div>,
         onClick: () => record?.handleFileDownload(record?.id, "pdf"),
       },
       {
-        key: "permission",
+        key: "xlsx",
         icon: <FaFileExcel size={20} />,
         label: (
           <div className="flex justify-start items-center gap-3">Excel</div>
@@ -110,11 +110,11 @@ const CustomTable = ({
         onClick: () => record?.handleFileDownload(record?.id, "xlsx"),
       },
       {
-        key: "delete",
+        key: "csv",
         icon: <FaFileCsv size={20} />,
         label: <div className="flex justify-start items-center gap-3">CSV</div>,
         onClick: () => record?.handleFileDownload(record?.id, "csv"),
-        disabled: !record.handleDeleteModal,
+        // disabled: !record.handleDeleteModal,
       },
     ].filter(Boolean);
 

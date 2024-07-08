@@ -25,7 +25,7 @@ import productSlice from "./services/product/productSlice";
 import themeSlice from "./services/theme/themeSlice";
 
 const persistConfig = {
-  key: ["auth", "theme", "developer", "menu"],
+  key: ["auth", "theme", "developer", "menu", "pettycash"],
   storage,
 };
 
@@ -45,6 +45,7 @@ const persistedPosReducer = persistReducer(persistConfig, posSlice);
 // );
 
 const persistedCashRegister = persistReducer(persistConfig, cashRegisterSlice);
+
 const persistePettyCash = persistReducer(persistConfig, pettyCashSlice);
 
 export const store = configureStore({

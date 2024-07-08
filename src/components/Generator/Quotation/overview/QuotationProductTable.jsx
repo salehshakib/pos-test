@@ -1,4 +1,4 @@
-import { Col, Form, Modal, Row } from "antd";
+import { Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import {
   colLayout,
@@ -25,6 +25,9 @@ import {
 } from "../../../../utilities/lib/productTable/counters";
 import { calculateTotals } from "../../../../utilities/lib/calculateTotals";
 import { calculateOriginalPrice } from "../../../../utilities/lib/calculatePrice";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../../redux/services/pos/posSlice";
+import { showCurrency } from "../../../../utilities/lib/currency";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
@@ -237,80 +240,7 @@ export const QuotationProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-
-  // const incrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-  //     const newQty = Number(currentQty) + 1;
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const decrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-  //     const newQty = Math.max(Number(currentQty) - 1, 0);
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const onQuantityChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       qty: {
-  //         ...prevFormValues.product_list.qty,
-  //         [id]: parseInt(value, 10) || 0,
-  //       },
-  //     },
-  //   }));
-  // };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-
-  //   setFormValues((prevFormValues) => {
-  //     const { product_list } = prevFormValues;
-
-  //     const updatedProductList = Object.keys(product_list).reduce(
-  //       (acc, key) => {
-  //         // eslint-disable-next-line no-unused-vars
-  //         const { [id]: _, ...rest } = product_list[key];
-  //         acc[key] = rest;
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: updatedProductList,
-  //     };
-  //   });
-  // };
+  const currency = useSelector(useCurrency);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -354,11 +284,14 @@ export const QuotationProductTable = ({
       id,
       name,
       sku,
-      unitCost: "$" + formValues.product_list.net_unit_price[id],
+      unitCost: showCurrency(
+        formValues.product_list.net_unit_price[id],
+        currency
+      ),
       delete: true,
-      discount: formValues.product_list.discount[id],
-      tax: formValues.product_list.tax[id],
-      subTotal: formValues.product_list.total[id],
+      discount: showCurrency(formValues.product_list.discount[id], currency),
+      tax: showCurrency(formValues.product_list.tax[id], currency),
+      subTotal: showCurrency(formValues.product_list.total[id], currency),
       incrementCounter,
       decrementCounter,
       onQuantityChange,
@@ -376,38 +309,6 @@ export const QuotationProductTable = ({
   const [totalTax, setTotalTax] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
 
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     const sanitizeValue = (value) => {
-  //       const number = parseFloat(value);
-  //       return isNaN(number) ? 0 : number;
-  //     };
-
-  //     const total = Object.values(formValues.product_list.qty).reduce(
-  //       (acc, cur) => acc + sanitizeValue(cur),
-  //       0
-  //     );
-  //     setTotalQuantity(total);
-
-  //     const totalPrice = Object.values(formValues.product_list.total).reduce(
-  //       (acc, cur) => acc + sanitizeValue(cur),
-  //       0
-  //     );
-  //     setTotalPrice(totalPrice.toFixed(2));
-
-  //     const totalTax = Object.values(formValues.product_list.tax).reduce(
-  //       (acc, cur) => acc + sanitizeValue(cur),
-  //       0
-  //     );
-  //     setTotalTax(totalTax.toFixed(2));
-
-  //     const totalDiscount = Object.values(
-  //       formValues.product_list.discount
-  //     ).reduce((acc, cur) => acc + sanitizeValue(cur), 0);
-  //     setTotalDiscount(totalDiscount.toFixed(2));
-  //   }
-  // }, [formValues, products]);
-
   useEffect(() => {
     const { totalQuantity, totalPrice, totalTax, totalDiscount } =
       calculateTotals(formValues);
@@ -418,19 +319,57 @@ export const QuotationProductTable = ({
     setTotalDiscount(totalDiscount);
   }, [formValues, products]);
 
-  products?.length > 0 &&
-    dataSource.push({
-      id: "",
-      name: "Total",
-      unitCost: "",
-      quantity: totalQuantity,
-      subTotal: totalPrice,
-      tax: totalTax,
-      discount: totalDiscount,
-      action: false,
-    });
+  // products?.length > 0 &&
+  //   dataSource.push({
+  //     id: "",
+  //     name: "Total",
+  //     unitCost: "",
+  //     quantity: totalQuantity,
+  //     subTotal: totalPrice,
+  //     tax: totalTax,
+  //     discount: totalDiscount,
+  //     action: false,
+  //   });
 
   form.setFieldsValue(formValues);
+
+  const tableStyle = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={3}>
+              <Typography.Text className="font-bold" type="">
+                Total
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalQuantity}
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={4} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalDiscount, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={5} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalTax, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={6} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalPrice, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+  };
 
   return (
     <>
@@ -439,6 +378,7 @@ export const QuotationProductTable = ({
         setProducts={setProducts}
         columns={columns}
         dataSource={dataSource}
+        tableStyle={tableStyle}
       />
 
       <ProductFormComponent

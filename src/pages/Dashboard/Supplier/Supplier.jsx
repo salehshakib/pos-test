@@ -47,7 +47,7 @@ const columns = [
     key: "vatNumber",
     render: (vatNumber) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {vatNumber}
+        {vatNumber ?? "N/A"}
       </span>
     ),
   },

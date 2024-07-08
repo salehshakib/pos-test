@@ -29,10 +29,22 @@ const baseColumns = [
     dataIndex: "sku",
     key: "sku",
     align: "center",
-    width: 100,
+    width: 80,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
+      </span>
+    ),
+  },
+  {
+    title: "Stock",
+    dataIndex: "stock",
+    key: "stock",
+    align: "center",
+    width: 60,
+    render: (stock) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {stock}
       </span>
     ),
   },
@@ -41,7 +53,7 @@ const baseColumns = [
     dataIndex: "unitCost",
     key: "unitCost",
     align: "center",
-    width: 100,
+    width: 120,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost ?? 0}
@@ -68,14 +80,23 @@ const baseColumns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(record?.id, record.setFormValues)
+                record.decrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock
+                )
               }
             />
           </div>
           <CustomQuantityInput
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(record.id, value, record.setFormValues)
+              record.onQuantityChange(
+                record.id,
+                value,
+                record.setFormValues,
+                record.stock
+              )
             }
             value={record?.formValues.product_list.qty?.[record?.id] ?? 0}
           />
@@ -85,7 +106,11 @@ const baseColumns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record.setFormValues)
+                record.incrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock
+                )
               }
               className=""
             />
@@ -103,10 +128,10 @@ export const columns = [
     dataIndex: "discount",
     key: "discount",
     align: "center",
-    width: 100,
+    width: 120,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${discount}
+        {discount}
       </span>
     ),
   },
@@ -115,10 +140,10 @@ export const columns = [
     dataIndex: "tax",
     key: "tax",
     align: "center",
-    width: 100,
+    width: 120,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -127,10 +152,10 @@ export const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
-    width: 100,
+    width: 120,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },

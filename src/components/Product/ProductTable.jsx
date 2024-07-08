@@ -50,6 +50,7 @@ const ProductTable = ({
 
   const params = useGlobalParams({
     isDefaultParams: false,
+    isRelationalParams: true,
     params: {
       ...pagination,
       ...searchParams,

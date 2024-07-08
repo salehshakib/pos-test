@@ -55,7 +55,7 @@ const CountriesForm = () => {
   return (
     <CustomSelect
       label="Country"
-      required={true}
+      // required={true}
       options={options}
       showSearch={true}
       name="country"
@@ -76,7 +76,7 @@ const CitiesForm = () => {
   return (
     <CustomSelect
       label="City"
-      required={true}
+      // required={true}
       options={options}
       showSearch={true}
       name="city"

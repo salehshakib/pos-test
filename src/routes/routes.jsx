@@ -6,6 +6,7 @@ import Pos from "../Pos";
 import { routeGenerator } from "../utilities/lib/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import PrivateRoute from "./PrivateRoute";
+import PosRoute from "./PosRoute";
 
 export const router = createBrowserRouter([
   {
@@ -26,9 +27,9 @@ export const router = createBrowserRouter([
   {
     path: "/pos",
     element: (
-      <PrivateRoute>
+      <PosRoute>
         <Pos />
-      </PrivateRoute>
+      </PosRoute>
     ),
   },
 

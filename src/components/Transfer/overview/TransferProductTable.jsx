@@ -1,4 +1,4 @@
-import { Button, Col, Form, Modal, Row } from "antd";
+import { Button, Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -21,6 +21,9 @@ import {
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { showCurrency } from "../../../utilities/lib/currency";
 
 const columns = [
   {
@@ -56,6 +59,18 @@ const columns = [
     ),
   },
   {
+    title: "Stock",
+    dataIndex: "stock",
+    key: "stock",
+    align: "center",
+    width: 100,
+    render: (stock) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {stock}
+      </span>
+    ),
+  },
+  {
     title: "Unit Cost",
     dataIndex: "unitCost",
     key: "unitCost",
@@ -63,7 +78,7 @@ const columns = [
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost ?? 0}
+        {unitCost}
       </span>
     ),
   },
@@ -121,7 +136,7 @@ const columns = [
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -133,7 +148,7 @@ const columns = [
     width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },
@@ -322,72 +337,6 @@ const ProductFormComponent = ({
   );
 };
 
-// function setFormValuesId(
-//   id,
-//   purchase_unit_id,
-//   unit_cost,
-//   purchase_units,
-//   formValues,
-//   productUnits,
-//   tax_id,
-//   taxes
-// ) {
-//   const sanitizeIntValue = (value) => {
-//     const number = parseInt(value);
-//     return isNaN(number) ? 0 : number;
-//   };
-
-//   const sanitizeFloatValue = (value) => {
-//     const number = parseFloat(value);
-//     return isNaN(number) ? 0 : number;
-//   };
-
-//   if (id) {
-//     formValues.product_list.qty[id] = sanitizeIntValue(
-//       formValues.product_list.qty?.[id] || 1
-//     );
-
-//     formValues.product_list.net_unit_cost[id] =
-//       sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
-//       sanitizeFloatValue(unit_cost) ||
-//       "0";
-
-//     formValues.product_list.tax_rate[id] = sanitizeIntValue(
-//       formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
-//     );
-
-//     formValues.product_list.tax[id] = sanitizeFloatValue(
-//       (
-//         (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-//           sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
-//           sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
-//           sanitizeIntValue(formValues.product_list.qty?.[id])) /
-//         100
-//       ).toFixed(2)
-//     );
-
-//     const saleUnitsOperationValue = purchase_units?.operation_value ?? 1;
-
-//     productUnits.purchase_units[id] =
-//       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
-//       saleUnitsOperationValue;
-
-//     formValues.product_list.total[id] =
-//       sanitizeIntValue(productUnits.purchase_units?.[id]) *
-//         sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-//         sanitizeIntValue(formValues.product_list.qty?.[id]) +
-//       sanitizeFloatValue(formValues.product_list.tax?.[id]);
-
-//     formValues.product_list.purchase_unit_id[id] =
-//       formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
-
-//     if (formValues?.product_list?.tax_id) {
-//       formValues.product_list.tax_id[id] =
-//         formValues.product_list?.tax_id?.[id] ?? tax_id;
-//     }
-//   }
-// }
-
 function setFormValuesId(
   id,
   purchase_unit_id,
@@ -483,6 +432,8 @@ export const TransferProductTable = ({
     setProductEditModal(false);
   };
 
+  const currency = useSelector(useCurrency);
+
   const dataSource =
     products?.map((product) => {
       const {
@@ -514,10 +465,13 @@ export const TransferProductTable = ({
         id,
         name,
         sku,
-        unitCost: "$" + formValues.product_list.net_unit_cost[id],
+        unitCost: showCurrency(
+          formValues.product_list.net_unit_cost[id],
+          currency
+        ),
         delete: true,
-        tax: formValues.product_list.tax[id],
-        subTotal: formValues.product_list.total[id],
+        tax: showCurrency(formValues.product_list.tax[id], currency),
+        subTotal: showCurrency(formValues.product_list.total[id], currency),
         onDelete,
         handleProductEdit,
         incrementCounter,
@@ -550,48 +504,49 @@ export const TransferProductTable = ({
     // setTotalDiscount(totalDiscount);
   }, [formValues, products]);
 
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     const sanitizeIntValue = (value) => {
-  //       const number = parseInt(value);
-  //       return isNaN(number) ? 0 : number;
-  //     };
-
-  //     const sanitizeFloatValue = (value) => {
-  //       const number = parseFloat(value);
-  //       return isNaN(number) ? 0 : number;
-  //     };
-
-  //     const total = Object.values(formValues.product_list.qty).reduce(
-  //       (acc, cur) => acc + sanitizeIntValue(cur),
-  //       0
-  //     );
-  //     setTotalQuantity(total);
-
-  //     const totalPrice = Object.values(formValues.product_list.total).reduce(
-  //       (acc, cur) => acc + sanitizeFloatValue(cur),
-  //       0
-  //     );
-  //     setTotalPrice(totalPrice.toFixed(2));
-
-  //     const totalTax = Object.values(formValues.product_list.tax).reduce(
-  //       (acc, cur) => acc + sanitizeFloatValue(cur),
-  //       0
-  //     );
-  //     setTotalTax(totalTax.toFixed(2));
-  //   }
-  // }, [formValues, products]);
-
-  products?.length > 0 &&
-    dataSource.push({
-      id: "",
-      name: "Total",
-      quantity: totalQuantity,
-      subTotal: totalPrice,
-      tax: totalTax,
-    });
+  // products?.length > 0 &&
+  //   dataSource.push({
+  //     id: "",
+  //     name: "Total",
+  //     quantity: totalQuantity,
+  //     subTotal: totalPrice,
+  //     tax: totalTax,
+  //   });
 
   form.setFieldsValue(formValues);
+
+  const tableStyle = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={3}>
+              <Typography.Text className="font-bold" type="">
+                Total
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalQuantity}
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={5} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalTax, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={6} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalPrice, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+  };
 
   return (
     <>
@@ -600,6 +555,7 @@ export const TransferProductTable = ({
         setProducts={setProducts}
         columns={columns}
         dataSource={dataSource}
+        tableStyle={tableStyle}
       />
       <ProductFormComponent
         productEditModal={productEditModal}

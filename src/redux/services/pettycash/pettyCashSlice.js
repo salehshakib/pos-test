@@ -9,9 +9,7 @@ const pettyCashSlice = createSlice({
   initialState,
   reducers: {
     setPettyCash: (state, action) => {
-      const { data } = action.payload;
-
-      state.pettyCash = data;
+      state.pettyCash = action.payload;
     },
     clearPettyCash: (state) => {
       state.pettyCash = "Close";

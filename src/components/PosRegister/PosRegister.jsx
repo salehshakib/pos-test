@@ -1,5 +1,14 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  message,
+  Row,
+  Table,
+  Tooltip,
+  Typography,
+} from "antd";
 import { currencies } from "currencies.json";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -161,9 +170,7 @@ const TaxComponent = () => {
 };
 
 const CouponComponent = ({ setType, setProductUnits }) => {
-  const params = useGlobalParams({
-    selectValue: ["id", "code", "type", "amount"],
-  });
+  const params = useGlobalParams({});
 
   const { data, isFetching } = useGetAllCouponQuery({ params });
 
@@ -173,6 +180,7 @@ const CouponComponent = ({ setType, setProductUnits }) => {
       label: item.code,
       type: item.type,
       rate: item.amount,
+      minimum_amount: item.minimum_amount,
     };
   });
 
@@ -182,9 +190,11 @@ const CouponComponent = ({ setType, setProductUnits }) => {
       return {
         ...prevValues,
         coupon_rate: option.rate,
+        minimum_amount: option.minimum_amount,
       };
     });
   };
+
   return (
     <CustomSelect
       options={options}
@@ -196,11 +206,11 @@ const CouponComponent = ({ setType, setProductUnits }) => {
   );
 };
 
-const colLayout = {
-  xs: 24,
-  lg: 12,
-  xxl: 8,
-};
+// const colLayout = {
+//   xs: 24,
+//   lg: 12,
+//   xxl: 8,
+// };
 
 const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();
@@ -214,7 +224,7 @@ const RegisterForm = ({ products, setProducts }) => {
     <GlobalUtilityStyle className="pb-5 ">
       <div className="flex flex-col">
         <Row gutter={5}>
-          <Col {...colLayout}>
+          <Col span={4}>
             <CustomDatepicker
               name={"sale_at"}
               required={true}
@@ -222,7 +232,8 @@ const RegisterForm = ({ products, setProducts }) => {
               customStyle={true}
             />
           </Col>
-          <Col {...colLayout}>
+
+          <Col span={6}>
             <CustomInput
               type={"text"}
               // required={true}
@@ -231,21 +242,24 @@ const RegisterForm = ({ products, setProducts }) => {
               customStyle={true}
             />
           </Col>
-          <Col {...colLayout}>
+
+          <Col span={7}>
             <WarehouseComponent label={false} />
           </Col>
-          <Col {...colLayout}>
+          <Col span={7}>
             <CashierComponent label={false} required={true} />
           </Col>
-          <Col {...colLayout}>
+
+          <Col span={12}>
             <CustomerComponent />
           </Col>
-          <Col {...colLayout}>
+
+          <Col span={12}>
             <Row gutter={5}>
-              <Col xs={16}>
+              <Col xs={16} lg={20}>
                 <CurrencyComponent />
               </Col>
-              <Col xs={8}>
+              <Col xs={8} lg={4}>
                 <CurrencyExchangeComponent />
               </Col>
             </Row>
@@ -332,7 +346,16 @@ export const PosRegister = ({
     }
 
     if (modalType === "Coupon") {
-      if (type.toLowerCase() === "fixed") {
+      if (totalPrice < productUnits.minimum_amount) {
+        message.error(
+          "Coupon can be applied only if total price is greater than " +
+            productUnits.minimum_amount
+        );
+        // hideModal();
+        return;
+      }
+
+      if (type?.toLowerCase() === "fixed") {
         setCoupon(productUnits.coupon_rate);
       }
     }
@@ -356,14 +379,14 @@ export const PosRegister = ({
     //   setCoupon((totalPrice * productUnits.coupon_rate) / 100);
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grand_total, setGrandTotal, totalPrice, type]);
+  }, [grand_total, setGrandTotal, totalPrice]);
 
   const tableStyleProps = {
     summary: () => {
       return (
         <Table.Summary fixed="bottom">
           <Table.Summary.Row>
-            <Table.Summary.Cell index={1} colSpan={3}>
+            <Table.Summary.Cell index={1} colSpan={4}>
               <Text className="font-bold" type="">
                 Total
               </Text>
@@ -387,11 +410,26 @@ export const PosRegister = ({
       // offsetHeader: 440,
       offsetScroll: 400,
     },
+    scroll: {
+      x: "min-content",
+    },
   };
 
   const item = Object.values(formValues.product_list.qty).length;
 
   const currency = useSelector(useCurrency);
+
+  console.log(type);
+
+  console.log(totalPrice);
+
+  console.log(productUnits.minimum_amount);
+
+  useEffect(() => {
+    if (type?.toLowerCase() === "fixed") {
+      setCoupon(productUnits.coupon_rate);
+    }
+  }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
 
   return (
     <>
@@ -410,7 +448,6 @@ export const PosRegister = ({
           </div>
 
           <div className="flex-grow overflow-y-auto bg-white">
-            {/* <div className=" bg-white"> */}
             <ProductTableComponent
               products={products}
               setProducts={setProducts}
@@ -423,22 +460,6 @@ export const PosRegister = ({
           </div>
 
           <div className="flex-none bg-white pb-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
-            {/* <hr />
-
-            <div className=" grid grid-cols-12 px-2">
-              <span className="text-md font-semibold col-span-6">Total</span>
-
-              <span className="col-span-5 flex flex-col lg:flex-row justify-around">
-                <span className="text-md font-semibold ">
-                  Qty: ({totalQuantity})
-                </span>
-                <span className="text-md font-semibold ">
-                  SubTotal: ({totalPrice})
-                </span>
-              </span>
-            </div> */}
-
-            {/* <hr /> */}
             <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2 px-2">
               <div className="grid grid-cols-2">
                 <span>Items</span>
@@ -561,7 +582,7 @@ export const PosRegister = ({
                 />
               ) : (
                 <CustomInput
-                  type="number"
+                  type="number_with_percent"
                   name={modalType}
                   placeholder={modalType}
                   suffix={currency?.name}

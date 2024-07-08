@@ -1,10 +1,14 @@
 import { Col, Row } from "antd";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetAllExpenseCategoryQuery } from "../../redux/services/expense/expenseCategoryApi";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { getCurrentDate } from "../../utilities/lib/currentDate";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -29,36 +33,18 @@ const ExpenseCategoryComponent = () => {
       name={"expense_category_id"}
       options={options}
       isLoading={isLoading}
+      required={true}
     />
   );
 };
 
-// const WarehouseComponent = () => {
-
-//   const { data, isLoading } = useGetWarehousesQuery({
-//     params: {
-//       selectValue: DEFAULT_SELECT_VALUES,
-//     },
-//   });
-
-//   const options = data?.results?.warehouse?.map((warehouse) => ({
-//     value: warehouse.id?.toString(),
-//     label: warehouse.name,
-//   }));
-
-//   return (
-//     <CustomSelect
-//       label="Warehouse "
-//       showSearch={true}
-//       isLoading={isLoading}
-//       options={options}
-//       name="warehouse_id"
-//       required={true}
-//     />
-//   );
-// };
-
 export const ExpenseForm = (props) => {
+  const currency = useSelector(useCurrency);
+
+  useEffect(() => {
+    props.form.setFieldValue("date", getCurrentDate);
+  }, [props]);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -69,18 +55,32 @@ export const ExpenseForm = (props) => {
           <ExpenseCategoryComponent />
         </Col>
         <Col {...mdColLayout}>
+          <CustomInput label="Expense By" name={"expense_by"} />
+        </Col>
+        <Col {...mdColLayout}>
           <CustomInput
             label="Amount"
-            type={"number"}
+            type={"number_with_percent"}
             required={true}
             name={"amount"}
+            suffix={currency?.name}
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomDatepicker label="Date" type={"date"} name={"date"} />
+          <CustomDatepicker
+            label="Date"
+            type={"date"}
+            name={"date"}
+            required={true}
+          />
         </Col>
         <Col {...fullColLayout}>
-          <CustomInput label="Note" type={"textarea"} name={"note"} />
+          <CustomInput
+            label="Reason"
+            type={"textarea"}
+            name={"reason"}
+            required={true}
+          />
         </Col>
       </Row>
     </CustomForm>

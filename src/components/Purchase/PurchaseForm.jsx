@@ -49,31 +49,6 @@ const PaymentStatusComponent = () => {
   );
 };
 
-// const TaxComponent = () => {
-//   const params = useGlobalParams({
-//     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
-//   });
-
-//   const { data, isFetching } = useGetAllTaxQuery({ params });
-
-//   const options = data?.results?.tax?.map((item) => {
-//     return {
-//       value: item.rate,
-//       label: item.name,
-//       tax_rate: item?.rate,
-//     };
-//   });
-
-//   return (
-//     <CustomSelect
-//       label="Order Tax"
-//       options={options}
-//       name={"tax_rate"}
-//       isLoading={isFetching}
-//     />
-//   );
-// };
-
 export const PurchaseForm = ({
   formValues,
   setFormValues,
@@ -135,6 +110,36 @@ export const PurchaseForm = ({
       }
     }
   }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
+
+  // reset state
+  const warehouseId = Form.useWatch("warehouse_id", props.form);
+
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          recieved: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        purchase_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   return (
     <>

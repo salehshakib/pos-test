@@ -121,22 +121,20 @@ const SoftwareAccessComponent = () => {
   const form = Form.useFormInstance();
   const softwareAccess = Form.useWatch("have_access", form);
 
-  return (
-    softwareAccess && (
-      <Row {...rowLayout} className="mt-2">
-        <Col {...mdColLayout}>
-          <CustomInput
-            label="Password"
-            name="password"
-            required={true}
-            type="password"
-          />
-        </Col>
+  return softwareAccess ? (
+    <Row {...rowLayout} className="mt-2">
+      <Col {...mdColLayout}>
+        <CustomInput
+          label="Password"
+          name="password"
+          required={true}
+          type="password"
+        />
+      </Col>
 
-        <RoleComponent />
-      </Row>
-    )
-  );
+      <RoleComponent />
+    </Row>
+  ) : null;
 };
 
 const EmployeeForm = (props) => {

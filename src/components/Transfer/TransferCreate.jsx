@@ -1,5 +1,5 @@
 import { App, Form } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateTransferMutation } from "../../redux/services/transfer/transferApi";
@@ -41,6 +41,32 @@ const TransferCreate = () => {
     purchase_units: {},
     tax_rate: {},
   });
+
+  const warehouseId = Form.useWatch("from_warehouse_id", form);
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        purchase_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [warehouseId]);
 
   const [createTransfer, { isLoading }] = useCreateTransferMutation();
 

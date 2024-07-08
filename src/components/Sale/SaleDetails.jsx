@@ -4,6 +4,9 @@ import { useGetSaleDetailsQuery } from "../../redux/services/sale/saleApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const columns = [
   {
@@ -57,6 +60,8 @@ export const SaleDetails = ({ id, ...props }) => {
 
   //   const details = createDetailsLayout(data);
 
+  const currency = useSelector(useCurrency);
+
   const basicInfo = createDetailsLayout({
     reference_id: data?.reference_id,
     cashier: data?.cashiers?.name,
@@ -66,7 +71,7 @@ export const SaleDetails = ({ id, ...props }) => {
 
   const paymentInfo = createDetailsLayout({
     order_tax: data?.tax,
-    order_discount: data?.discount,
+    order_discount: showCurrency(data?.discount, currency),
     coupon_discount: data?.coupon_discount,
     shipping_cost: data?.shipping_cost,
     grand_total: data?.grand_total,

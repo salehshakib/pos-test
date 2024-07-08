@@ -10,7 +10,9 @@ export const incrementCounter = (id, setFormValues, stock, alertQty) => {
       return prevFormValues;
     }
 
-    const newQty = Math.min(Number(currentQty) + 1, stock);
+    const newQty = stock
+      ? Math.min(Number(currentQty) + 1, stock)
+      : Number(currentQty) + 1;
 
     return {
       ...prevFormValues,
@@ -46,7 +48,7 @@ export const decrementCounter = (id, setFormValues) => {
 export const onQuantityChange = (id, value, setFormValues, stock) => {
   const numericValue = Number(value);
 
-  if (numericValue > stock) {
+  if (numericValue > stock && stock) {
     message.error(
       "Cannot add more than stock quantity. Maximum stock is selected"
     );
@@ -65,7 +67,9 @@ export const onQuantityChange = (id, value, setFormValues, stock) => {
     return;
   }
 
-  const newQty = Math.min(Math.max(parseInt(value, 10) || 0, 0), stock);
+  const newQty = stock
+    ? Math.min(Math.max(parseInt(value, 10) || 0, 0), stock)
+    : Math.max(parseInt(value, 10) || 0, 0);
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,

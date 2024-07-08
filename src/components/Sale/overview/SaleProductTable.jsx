@@ -128,7 +128,7 @@ const columns = [
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${discount}
+        {discount}
       </span>
     ),
   },
@@ -140,7 +140,7 @@ const columns = [
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -152,7 +152,7 @@ const columns = [
     width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },

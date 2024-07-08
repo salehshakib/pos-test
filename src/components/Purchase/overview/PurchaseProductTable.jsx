@@ -417,7 +417,7 @@ export const PurchaseProductTable = ({
 
     console.log(tax_method);
 
-    // if (tax_method === "Inclusive") {
+    // tax_method === "inclusive" &&
     //   setProductUnits((prevProductUnits) => ({
     //     ...prevProductUnits,
     //     inclusive_tax_rate: {
@@ -425,7 +425,6 @@ export const PurchaseProductTable = ({
     //       [id]: taxes?.rate,
     //     },
     //   }));
-    // }
 
     setFormValuesId(
       id,

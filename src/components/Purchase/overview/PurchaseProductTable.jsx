@@ -240,7 +240,8 @@ function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-  taxes
+  taxes,
+  tax_method
 ) {
   const sanitizeIntValue = (value) => parseInt(value) || 0;
   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
@@ -396,6 +397,8 @@ export const PurchaseProductTable = ({
 
   const currency = useSelector(useCurrency);
 
+  console.log(productUnits);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -412,15 +415,29 @@ export const PurchaseProductTable = ({
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 
+    console.log(tax_method);
+
+    // if (tax_method === "Inclusive") {
+    //   setProductUnits((prevProductUnits) => ({
+    //     ...prevProductUnits,
+    //     inclusive_tax_rate: {
+    //       ...prevProductUnits.inclusive_tax_rate,
+    //       [id]: taxes?.rate,
+    //     },
+    //   }));
+    // }
+
     setFormValuesId(
       id,
       purchase_unit_id,
-      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+      // calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+      unit_cost,
       purchase_units,
       formValues,
       productUnits,
       tax_id,
-      taxes
+      taxes,
+      tax_method
     );
 
     return {

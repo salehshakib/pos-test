@@ -47,6 +47,7 @@ export const PurchaseCreate = () => {
   const [productUnits, setProductUnits] = useState({
     purchase_units: {},
     tax_rate: {},
+    inclusive_tax_rate: {},
   });
 
   const handleSubmit = async (values) => {
@@ -180,6 +181,7 @@ export const PurchaseCreate = () => {
       setProductUnits({
         purchase_units: {},
         tax_rate: {},
+        inclusive_tax_rate: {},
       });
     }
     if (error) {

@@ -66,6 +66,11 @@ export const SearchProduct = ({ setProducts }) => {
   console.log(warehouseId);
 
   const onSelect = (_, option) => {
+    if (!warehouseId) {
+      message.error("Please select warehouse");
+      return;
+    }
+
     const stock = getWarehouseQuantity(
       option?.product?.product_qties,
       warehouseId ?? warehouseIdFrom

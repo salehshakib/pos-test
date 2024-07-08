@@ -10,24 +10,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    {/* <ConfigProvider
-      theme={customTheme}
-      button={{
-        className: "hover:bg-[#5b3196]",
-      }}
-      locale={{
-        locale: "en-US",
-      }}
-    >
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <RouterProvider router={router}>
-            <App />
-          </RouterProvider>
-        </PersistGate>
-        <Toaster position="top-center" richColors />
-      </Provider>
-    </ConfigProvider> */}
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ProviderConfig>

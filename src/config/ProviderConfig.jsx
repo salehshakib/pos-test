@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "styled-components";
-import { useCurrentUser } from "../redux/services/auth/authSlice";
 import { setDeveloper } from "../redux/services/developer/developerSlice";
 import { setMenuItems } from "../redux/services/menu/menuSlice";
-import { useCheckPettyCashQuery } from "../redux/services/pettycash/pettyCashApi";
-import { setPettyCash } from "../redux/services/pettycash/pettyCashSlice";
 import { setCurrency } from "../redux/services/pos/posSlice";
 import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
 import {

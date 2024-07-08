@@ -468,13 +468,11 @@ const ProductTableComponent = ({
     };
   });
 
-  console.log(formValues, "formValues");
-
   form.setFieldsValue(formValues);
 
   return (
     <GlobalUtilityStyle className="">
-      <div className="flex-grow  px-2">
+      <div className="flex-grow">
         <CustomProductTable
           columns={columns}
           dataSource={dataSource}

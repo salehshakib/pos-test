@@ -20,6 +20,7 @@ import {
   onQuantityChange,
 } from "../../utilities/lib/productTable/counters";
 import { calculateOriginalPrice } from "../../utilities/lib/calculatePrice";
+import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
 
 const columns = [
   {
@@ -56,6 +57,18 @@ const columns = [
     ),
   },
   {
+    title: "Stock",
+    dataIndex: "stock",
+    key: "stock",
+    align: "center",
+    width: 100,
+    render: (stock) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {stock ?? 0}
+      </span>
+    ),
+  },
+  {
     title: "Unit Cost",
     dataIndex: "unitCost",
     key: "unitCost",
@@ -86,7 +99,11 @@ const columns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(record?.id, record.setFormValues)
+                record.decrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock
+                )
               }
             />
           </div>
@@ -94,7 +111,12 @@ const columns = [
             // name={["product_list", "qty", record?.id]}
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(record.id, value, record.setFormValues)
+              record.onQuantityChange(
+                record.id,
+                value,
+                record.setFormValues,
+                record.stock
+              )
             }
             value={record?.formValues?.product_list?.qty[record?.id] || 0}
           />
@@ -104,7 +126,11 @@ const columns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record.setFormValues)
+                record.incrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock
+                )
               }
               className=""
             />
@@ -368,6 +394,8 @@ const ProductTableComponent = ({
 }) => {
   const form = Form.useFormInstance();
 
+  const warehouseId = Form.useWatch("warehouse_id", form);
+
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
@@ -393,6 +421,7 @@ const ProductTableComponent = ({
       tax_id,
       taxes,
       tax_method,
+      product_qties,
     } = product ?? {};
 
     setFormValuesId(
@@ -406,10 +435,6 @@ const ProductTableComponent = ({
       taxes
     );
 
-    // console.log(product);
-
-    // console.log(pro)
-
     return {
       id,
       name,
@@ -419,6 +444,7 @@ const ProductTableComponent = ({
       discount: formValues.product_list.discount[id],
       tax: formValues.product_list.tax[id],
       subTotal: formValues.product_list.total[id],
+      stock: getWarehouseQuantity(product_qties, warehouseId),
       incrementCounter,
       decrementCounter,
       onQuantityChange,
@@ -430,6 +456,8 @@ const ProductTableComponent = ({
       setFormValues,
     };
   });
+
+  console.log(formValues, "formValues");
 
   form.setFieldsValue(formValues);
 

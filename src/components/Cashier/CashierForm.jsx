@@ -89,7 +89,7 @@ const CashierForm = (props) => {
           <CustomInput
             label="Vat Number"
             type={"text"}
-            required={true}
+            // required={true}
             name={"vat_number"}
           />
         </Col>

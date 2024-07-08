@@ -384,9 +384,7 @@ const ProductListEdit = ({ id }) => {
       qty_list: has_stock && JSON.stringify(qtyListArray),
       has_variant: has_variant ? 1 : 0,
       has_promotion: has_promotion ? 1 : 0,
-      promotion_price: promotion?.promotion_price,
-      starting_date: promotion && promotion?.starting_date,
-      last_date: promotion && promotion?.last_date,
+
       has_different_price: has_different_price ? 1 : 0,
       price_list: has_different_price && JSON.stringify(priceListArray),
       product_list: JSON.stringify(productListArray),
@@ -395,8 +393,6 @@ const ProductListEdit = ({ id }) => {
 
       _method: "PUT",
     };
-
-    console.log(values?.attachments);
 
     if (
       values.attachments?.[0]?.originFileObj &&
@@ -411,8 +407,14 @@ const ProductListEdit = ({ id }) => {
       postObj.attach_file = values.attach_file?.[0].originFileObj;
     }
 
-    if (has_expired_date) {
+    if (values?.has_expired_date) {
       postObj.expired_date = product_expire?.expired_date;
+    }
+
+    if (has_promotion) {
+      postObj.promotion_price = promotion?.promotion_price;
+      postObj.starting_date = promotion && promotion?.starting_date;
+      postObj.last_date = promotion && promotion?.last_date;
     }
 
     appendToFormData(postObj, formData);

@@ -215,8 +215,8 @@ const PosLayout = () => {
     <GlobalUtilityStyle>
       <div className="flex flex-col relative h-screen">
         <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
-          <div className="grid grid-cols-2 h-[85vh] ">
-            <div>
+          <div className="grid grid-cols-5 h-[85vh] ">
+            <div className="col-span-3">
               <PosRegister
                 formValues={formValues}
                 setFormValues={setFormValues}
@@ -232,7 +232,7 @@ const PosLayout = () => {
               />
             </div>
 
-            <div className="relative flex flex-col h-[90vh] ">
+            <div className="relative flex flex-col h-[90vh] col-span-2">
               <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
                 <div className="flex items-center gap-6 text-2xl">
                   <Button

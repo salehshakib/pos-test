@@ -21,10 +21,11 @@ const PosProducts = ({ setProducts }) => {
 
   const params = useGlobalParams({
     isDefaultParams: false,
+    isRelationalParams: true,
     params: {
       ...pagination,
       attachmentable: 1,
-      parent: 1,
+      // parent: 1,
     },
     selectValue: [
       ...DEFAULT_SELECT_VALUES,
@@ -38,21 +39,6 @@ const PosProducts = ({ setProducts }) => {
 
   const { data, isLoading } = useGetAllProductsQuery({
     params,
-    // : {
-    //   ...pagination,
-    //   attachmentable: 1,
-    //   selectValue: [
-    //     "id",
-    //     "sku",
-    //     "name",
-    //     "buying_price",
-    //     "tax_id",
-    //     "sale_unit_id",
-    //     "purchase_unit_id",
-    //   ],
-    //   // child: 1,
-    //   parent: 1,
-    // },
   });
 
   const [newData, setNewData] = useState([]);
@@ -122,7 +108,7 @@ const PosProducts = ({ setProducts }) => {
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 p-1 overflow-hidden">
+            <div className="grid grid-cols-2 xl:grid-cols-4 p-1 overflow-hidden">
               {products &&
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);

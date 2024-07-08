@@ -1,7 +1,16 @@
-export const incrementCounter = (id, setFormValues) => {
+import { message } from "antd";
+
+export const incrementCounter = (id, setFormValues, stock, alertQty) => {
   setFormValues((prevFormValues) => {
-    const currentQty = prevFormValues.product_list.qty[id] || 1;
-    const newQty = Number(currentQty) + 1;
+    const currentQty = prevFormValues.product_list.qty[id] ?? 0;
+    // const newQty = Number(currentQty) + 1;
+
+    if (Number(currentQty) + 1 > stock) {
+      message.error("Cannot add more than stock quantity");
+      return prevFormValues;
+    }
+
+    const newQty = Math.min(Number(currentQty) + 1, stock);
 
     return {
       ...prevFormValues,
@@ -34,14 +43,37 @@ export const decrementCounter = (id, setFormValues) => {
   });
 };
 
-export const onQuantityChange = (id, value, setFormValues) => {
+export const onQuantityChange = (id, value, setFormValues, stock) => {
+  const numericValue = Number(value);
+
+  if (numericValue > stock) {
+    message.error(
+      "Cannot add more than stock quantity. Maximum stock is selected"
+    );
+
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      product_list: {
+        ...prevFormValues.product_list,
+        qty: {
+          ...prevFormValues.product_list.qty,
+          [id]: stock,
+        },
+      },
+    }));
+
+    return;
+  }
+
+  const newQty = Math.min(Math.max(parseInt(value, 10) || 0, 0), stock);
+
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
     product_list: {
       ...prevFormValues.product_list,
       qty: {
         ...prevFormValues.product_list.qty,
-        [id]: parseInt(value, 10) || 0,
+        [id]: newQty,
       },
     },
   }));

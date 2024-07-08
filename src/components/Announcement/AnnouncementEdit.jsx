@@ -56,8 +56,6 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      start_date: values?.start_Date,
-      end_date: values?.end_Date,
       is_send_email: values?.is_send_email ? 1 : 0,
       department_ids: JSON.stringify(values?.department_ids),
       _method: "PUT",

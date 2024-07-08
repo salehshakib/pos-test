@@ -6,6 +6,9 @@ import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
 import { tableProps } from "../../layout/TableLayout";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 
 const productQtyColumn = [
   {
@@ -106,7 +109,7 @@ export const ProductDetails = ({ id, ...props }) => {
     return {
       id: item?.warehouses?.id,
       name: item?.warehouses?.name ?? "Unknown Warehouse",
-      qty: item?.warehouses?.qty ?? "Unknown Quantity",
+      qty: item?.qty ?? "Unknown Quantity",
     };
   });
 
@@ -149,11 +152,15 @@ export const ProductDetails = ({ id, ...props }) => {
     </span>
   );
 
+  const currency = useSelector(useCurrency);
+
   const priceDataSource = data?.product_prices?.map((item) => {
+    console.log(item);
+
     return {
       id: item?.warehouses?.id,
       name: item?.warehouses?.name ?? "Unknown Warehouse",
-      qty: item?.warehouses?.qty ?? "Unknown Quantity",
+      qty: showCurrency(item?.price, currency) ?? "Unknown Quantity",
     };
   });
 

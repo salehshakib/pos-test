@@ -120,7 +120,9 @@ const CustomTable = ({
 
   const tableProps = {
     title: () => (
-      <span className="font-semibold text-[14px] underline">{title}</span>
+      <span className="font-semibold text-[14px] underline text-lg">
+        {title}
+      </span>
     ),
     loading: isLoading || globalLoading,
     size: "small",

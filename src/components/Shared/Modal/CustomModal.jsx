@@ -42,7 +42,9 @@ const CustomModal = ({
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          <div className="pt-2">{children}</div>
+          <div className="pt-2 pr-3 max-h-[75vh] overflow-y-auto overflow-x-hidden">
+            {children}
+          </div>
           {showCloseButton && (
             <div className="w-full flex justify-end items-center gap-3 mt-5">
               <Button type="primary" onClick={hideModal}>

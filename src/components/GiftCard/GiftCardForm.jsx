@@ -130,7 +130,11 @@ const GiftCardForm = (props) => {
           <RecieverComponent />
         </Col>
         <Col {...mdColLayout}>
-          <CustomDatepicker label={"Expired Date"} name={"expired_date"} />
+          <CustomDatepicker
+            label={"Expired Date"}
+            name={"expired_date"}
+            required={true}
+          />
         </Col>
       </Row>
     </CustomForm>

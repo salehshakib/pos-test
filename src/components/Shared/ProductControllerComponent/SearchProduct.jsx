@@ -1,4 +1,4 @@
-import { App, AutoComplete, Col, Form, Spin } from "antd";
+import { AutoComplete, Col, Form, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
@@ -6,9 +6,9 @@ import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
+import { openNotification } from "../../../utilities/lib/openToaster";
 
 export const SearchProduct = ({ setProducts }) => {
-  const { message } = App.useApp();
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
@@ -65,9 +65,13 @@ export const SearchProduct = ({ setProducts }) => {
 
   console.log(warehouseId);
 
+  console.log(warehouseIdFrom);
+
   const onSelect = (_, option) => {
-    if (!warehouseId) {
-      message.error("Please select warehouse");
+    if (!warehouseId && !warehouseIdFrom) {
+      // message.error("Please select warehouse");
+      openNotification("warning", "Please select warehouse");
+
       return;
     }
 
@@ -77,7 +81,8 @@ export const SearchProduct = ({ setProducts }) => {
     );
 
     if (!stock) {
-      message.error("Product is out of stock");
+      // message.error("Product is out of stock");
+      openNotification("warning", "Product is out of stock");
       return;
     }
 
@@ -90,7 +95,8 @@ export const SearchProduct = ({ setProducts }) => {
         return [...prevProducts, option.product];
       }
 
-      message.warning("Product already exists in the list");
+      // message.warning("Product already exists in the list");
+      openNotification("warning", "Product already exists in the list");
       return prevProducts;
     });
     setValue(null);

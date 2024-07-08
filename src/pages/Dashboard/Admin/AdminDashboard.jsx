@@ -520,13 +520,13 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="py-5 w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white">
           <RecentlyAddedComponent />
         </div>
-        <div className="py-5 w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white">
           <ExpiredItemsComponent />
         </div>
-        <div className="py-5 w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white">
           <StockAlertComponent />
         </div>
 

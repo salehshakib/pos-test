@@ -157,7 +157,7 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
   const paymentType = Form.useWatch("payment_type", form);
 
   useEffect(() => {
-    if (paymentStatus === "Paid" || paymentStatus === "Partial") {
+    if (paymentStatus === "Paid") {
       form.setFieldValue("paid_amount", grandTotal);
     }
 
@@ -206,14 +206,14 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
           />
         </Col>
 
-        {paymentStatus === "Paid" && (
-          <Col {...fullColLayout}>
+        {(paymentStatus === "Paid" || paymentStatus === "Partial") && (
+          <Col {...mdColLayout}>
             <div className="py-9 text-lg font-semibold">Change: {change}</div>
           </Col>
         )}
 
         {paymentStatus === "Partial" && (
-          <Col {...fullColLayout}>
+          <Col {...(paymentStatus === "Partial" ? mdColLayout : fullColLayout)}>
             <div className="py-9 text-lg font-semibold">
               Due: {Number(grandTotal - receivedAmount || 0).toFixed(2)}
             </div>

@@ -29,6 +29,7 @@ import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
 import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
+import dayjs from "dayjs";
 
 const StatusComponent = () => {
   useSetFieldValue("sale_status", saleStatusOptions[0].value);
@@ -107,6 +108,10 @@ export const SaleForm = ({
   const discount = Form.useWatch("discount", form);
   const shipping_cost = Form.useWatch("shipping_cost", form);
   const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
+
+  useEffect(() => {
+    form.setFieldValue("sale_at", dayjs(new Date()));
+  }, [form]);
 
   // const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
   // const totalQty = Object.values(formValues.product_list?.qty).reduce(

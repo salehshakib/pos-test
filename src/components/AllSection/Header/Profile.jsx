@@ -98,7 +98,7 @@ const PosComponent = () => {
   const navigate = useNavigate();
   const { pettyCash } = useSelector((state) => state.pettyCash);
 
-  console.log(pettyCash);
+  // console.log(pettyCash);
 
   const [open, setOpen] = useState(false);
 

@@ -37,7 +37,7 @@ function PosRoute({ children }) {
     }
   }, [pettyCashData?.data, dispatch]);
 
-  console.log(pettyCash);
+  // console.log(pettyCash);
 
   if (pettyCash === "Close") {
     return <Navigate to={"/dashboard"} replace={true} />;

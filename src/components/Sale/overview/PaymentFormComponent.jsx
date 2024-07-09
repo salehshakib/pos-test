@@ -207,14 +207,15 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
         </Col>
 
         {paymentStatus === "Paid" && (
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">Change: {change}</div>
           </Col>
         )}
+
         {paymentStatus === "Partial" && (
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">
-              Due: {Number(grandTotal - receivedAmount).toFixed(2)}
+              Due: {Number(grandTotal - receivedAmount ?? 0).toFixed(2)}
             </div>
           </Col>
         )}

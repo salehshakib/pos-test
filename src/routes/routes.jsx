@@ -32,7 +32,6 @@ export const router = createBrowserRouter([
       </PosRoute>
     ),
   },
-
   {
     path: "/login",
     element: <Login />,

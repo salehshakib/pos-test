@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { notification } from "antd";
+import { Toaster } from "react-hot-toast";
 import PosLayout from "./layout/PosLayout";
 
 function Pos() {
@@ -8,6 +9,7 @@ function Pos() {
   return (
     <>
       {contextHolder}
+      <Toaster position="top-right" reverseOrder={false} />
       <PosLayout />
     </>
   );

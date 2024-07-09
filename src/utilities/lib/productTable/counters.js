@@ -3,10 +3,8 @@ import { openNotification } from "../openToaster";
 export const incrementCounter = (id, setFormValues, stock, alertQty) => {
   setFormValues((prevFormValues) => {
     const currentQty = prevFormValues.product_list.qty[id] ?? 0;
-    // const newQty = Number(currentQty) + 1;
 
     if (Number(currentQty) + 1 > stock) {
-      // message.error("Cannot add more than stock quantity");
       openNotification("info", `Cannot add more than stock quantity`);
       return prevFormValues;
     }

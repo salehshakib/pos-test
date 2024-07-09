@@ -2,6 +2,7 @@ import { Col, Form } from "antd";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
 import { colLayout } from "../../../layout/FormLayout";
 import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 const ProductUnit = ({ options = [], isLoading }) => {
   return (
@@ -19,6 +20,12 @@ const ProductUnit = ({ options = [], isLoading }) => {
 };
 
 const PurchaseUnit = ({ options = [], isLoading }) => {
+  // const form = Form.useFormInstance();
+
+  // const unit_id = Form.useWatch("unit_id", form);
+
+  // console.log(unit_id);
+
   return (
     <Col {...colLayout}>
       <CustomSelect
@@ -52,10 +59,12 @@ const UnitComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch("type", form);
 
+  const params = useGlobalParams({
+    selectValue: ["name", "id", "for"],
+  });
+
   const { data, isLoading } = useGetAllUnitQuery({
-    params: {
-      selectValue: ["name", "id", "for"],
-    },
+    params,
   });
 
   const productUnits = data?.results?.unit

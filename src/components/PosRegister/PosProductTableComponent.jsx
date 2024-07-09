@@ -30,7 +30,8 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    width: "full",
+    width: 250,
+    align: "left",
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
@@ -102,11 +103,7 @@ const columns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(
-                  record?.id,
-                  record.setFormValues,
-                  record.stock
-                )
+                record.decrementCounter(record?.id, record.setFormValues)
               }
             />
           </div>
@@ -481,16 +478,18 @@ const ProductTableComponent = ({
         />
       </div>
 
-      <ProductFormComponent
-        productEditModal={productEditModal}
-        productId={productId}
-        productName={productName}
-        hideModal={hideModal}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-      />
+      {productEditModal && (
+        <ProductFormComponent
+          productEditModal={productEditModal}
+          productId={productId}
+          productName={productName}
+          hideModal={hideModal}
+          formValues={formValues}
+          setFormValues={setFormValues}
+          productUnits={productUnits}
+          setProductUnits={setProductUnits}
+        />
+      )}
     </GlobalUtilityStyle>
   );
 };

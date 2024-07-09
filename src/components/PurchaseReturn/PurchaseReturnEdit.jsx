@@ -1,4 +1,4 @@
-import { App, Form } from "antd";
+import { Form } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,13 +15,13 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PurchaseReturnForm } from "./PurchaseReturnForm";
 
 const PurchaseReturnEdit = ({ id, setId }) => {
-  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -197,7 +197,8 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
+      // message.info("Please add atleast one product");
+      openNotification("info", "Please add atleast one product");
       return;
     }
 
@@ -246,7 +247,8 @@ const PurchaseReturnEdit = ({ id, setId }) => {
     }
 
     if (productListArray.length === 0) {
-      message.error("Please add at least one product");
+      // message.error("Please add at least one product");
+      openNotification("error", "Please add at least one product");
       return;
     }
 

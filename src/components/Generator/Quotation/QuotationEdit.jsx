@@ -1,4 +1,4 @@
-import { Form, App } from "antd";
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../../redux/services/drawer/drawerSlice";
@@ -14,11 +14,11 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 import { QuotationForm } from "./QuotationForm";
 
 const QuotationEdit = ({ id, setId }) => {
-  const { message } = App.useApp();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
@@ -194,7 +194,8 @@ const QuotationEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
+      // message.info("Please add atleast one product");
+      openNotification("info", "Please add atleast one product");
       return;
     }
 

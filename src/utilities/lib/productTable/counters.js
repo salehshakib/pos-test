@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { openNotification } from "../openToaster";
 
 export const incrementCounter = (id, setFormValues, stock, alertQty) => {
   setFormValues((prevFormValues) => {
@@ -6,7 +6,8 @@ export const incrementCounter = (id, setFormValues, stock, alertQty) => {
     // const newQty = Number(currentQty) + 1;
 
     if (Number(currentQty) + 1 > stock) {
-      message.error("Cannot add more than stock quantity");
+      // message.error("Cannot add more than stock quantity");
+      openNotification("info", `Cannot add more than stock quantity`);
       return prevFormValues;
     }
 
@@ -48,9 +49,16 @@ export const decrementCounter = (id, setFormValues) => {
 export const onQuantityChange = (id, value, setFormValues, stock) => {
   const numericValue = Number(value);
 
+  console.log(stock);
+
   if (numericValue > stock && stock) {
-    message.error(
-      "Cannot add more than stock quantity. Maximum stock is selected"
+    // message.error(
+    //   "Cannot add more than stock quantity. Maximum stock is selected"
+    // );
+
+    openNotification(
+      "info",
+      `Cannot add more than stock quantity. Maximum stock is selected`
     );
 
     setFormValues((prevFormValues) => ({

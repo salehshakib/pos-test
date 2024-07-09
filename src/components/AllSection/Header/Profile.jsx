@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Modal, Popover, Row } from "antd";
+import { Avatar, Button, Col, Form, Modal, Popover, Row, theme } from "antd";
 import { useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
@@ -227,19 +227,37 @@ const Profile = () => {
 
   const user = useSelector(useCurrentUser);
 
+  const { token } = theme.useToken();
+
   const content = (
-    <div className="">
-      <div className="flex gap-2 items-center text-xl">
-        <span className="font-semibold">Name:</span> {user?.employees?.name}
+    <div className="space-y-5 ">
+      <div className="p-3 bg-[#F5F5F5]  rounded-md">
+        <div className="flex gap-3 items-center text-lg">
+          <Avatar
+            className="avatar-bg shadow-md hover:shadow-lg"
+            size={40}
+            icon={<UserOutlined />}
+          />
+          <div className="flex flex-col font-semibold">
+            <span>{user?.employees?.name}</span>
+            <span
+              className={`text-sm `}
+              style={{
+                color: token.colorPrimary,
+              }}
+            >
+              {user?.employees?.email}
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="flex gap-2 items-center text-[16px]">
-        <span className="font-semibold">Email:</span> {user?.employees?.email}
-      </div>
-      <hr className="my-2" />
+      {/* <hr className="my-2" />
       <div className="text-lg">User Profile</div>
-      <hr className="my-2" />
+      <hr className="my-2" /> */}
       <div className="flex w-full justify-end">
-        <Button onClick={handleLogout}>Log Out</Button>
+        <Button onClick={handleLogout} className={`w-full `}>
+          Log Out
+        </Button>
       </div>
     </div>
   );
@@ -261,6 +279,10 @@ const Profile = () => {
         className="hover:cursor-pointer"
         trigger={"click"}
         overlayStyle={{ width: "auto" }}
+        overlayInnerStyle={{
+          width: 280,
+          // backgroundColor: "#F5F5F5",
+        }}
       >
         <Avatar
           className="avatar-bg shadow-md hover:shadow-lg"

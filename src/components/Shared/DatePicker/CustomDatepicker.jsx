@@ -148,9 +148,8 @@ const CustomDatepicker = ({
     format: getFormat(),
     suffixIcon: getSuffixIcon(),
     onChange,
+    placeholder: "Please Input " + placeholder + " Date",
   };
-
-  console.log(value);
 
   const renderPicker = () => {
     switch (type) {
@@ -174,7 +173,13 @@ const CustomDatepicker = ({
           />
         );
       case "time":
-        return <TimePicker {...commonProps} use12Hours />;
+        return (
+          <TimePicker
+            {...commonProps}
+            placeholder={`Please Input ${placeholder} time`}
+            use12Hours
+          />
+        );
       default:
         return null;
     }

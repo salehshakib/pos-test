@@ -1,4 +1,4 @@
-import { App, Form } from "antd";
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -14,6 +14,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import TransferForm from "./TransferForm";
@@ -23,7 +24,6 @@ const TransferEdit = ({ id, setId }) => {
 
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
-  const { message } = App.useApp();
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -190,8 +190,10 @@ const TransferEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
-      return;
+      // message.info("Please add atleast one product");
+      // return;
+
+      return openNotification("info", "Please add atleast one product");
     }
 
     const totalPrice = calculateTotalPrice(product_list);

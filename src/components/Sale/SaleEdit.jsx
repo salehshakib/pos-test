@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,10 +18,11 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { SaleForm } from "./SaleForm";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
+import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { SaleForm } from "./SaleForm";
 
 export const SaleEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -215,8 +216,10 @@ export const SaleEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
-      return;
+      // message.info("Please add atleast one product");
+      // return;
+
+      return openNotification("info", "Please add atleast one product");
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -261,7 +264,7 @@ export const SaleEdit = ({ id, setId }) => {
       ),
 
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: 8,
+      // petty_cash_id: 8,
       _method: "PUT",
     };
 

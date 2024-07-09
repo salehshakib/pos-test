@@ -1,9 +1,10 @@
-import { Form, message } from "antd";
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateProductMutation } from "../../redux/services/product/productApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { openNotification } from "../../utilities/lib/openToaster";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ProductForm from "./ProductForm";
 
@@ -74,7 +75,7 @@ const ProductCreate = () => {
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
-      return message.error("Please add stock quantity");
+      return openNotification("info", "Please add atleast one warehouse");
     }
 
     // Calculate total quantity
@@ -93,7 +94,8 @@ const ProductCreate = () => {
       : [];
 
     if (has_different_price && priceListArray.length === 0) {
-      return message.error("Please add price");
+      // return message.error("Please add price");
+      return openNotification("info", "Please add atleast one warehouse");
     }
 
     const productListArray = product_list?.qty

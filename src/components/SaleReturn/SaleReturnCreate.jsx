@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import { updateProductList } from "../../utilities/lib/return/updateProductList";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
@@ -93,8 +94,10 @@ const SaleReturnCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
-      return;
+      // message.info("Please add atleast one product");
+      // return;
+
+      return openNotification("info", "Please add atleast one product");
     }
 
     const totalPrice = calculateTotalPrice(updatedList);

@@ -1,7 +1,8 @@
-import { App, Form } from "antd";
+import { Form } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../../redux/services/sale/saleApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
@@ -10,18 +11,13 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
+import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { SaleForm } from "./SaleForm";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
-
-// const decimalConverter = (value) => {
-//   return Number(value).toFixed(2);
-// };
 
 export const SaleCreate = () => {
   const dispatch = useDispatch();
-  const { message } = App.useApp();
 
   const user = useSelector(useCurrentUser);
 
@@ -87,8 +83,10 @@ export const SaleCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
-      return;
+      // message.info("Please add atleast one product");
+      // return;
+
+      return openNotification("info", "Please add atleast one product");
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -136,7 +134,7 @@ export const SaleCreate = () => {
 
       product_list: JSON.stringify(productListArray),
       // petty_cash_id: user?.petty_cash_id,
-      petty_cash_id: 8,
+      // petty_cash_id: 8,
     };
 
     if (paid_amount) {

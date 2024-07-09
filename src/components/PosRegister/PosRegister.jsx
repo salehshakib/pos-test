@@ -1,14 +1,5 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Col,
-  Form,
-  message,
-  Row,
-  Table,
-  Tooltip,
-  Typography,
-} from "antd";
+import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
 import { currencies } from "currencies.json";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -24,6 +15,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { openNotification } from "../../utilities/lib/openToaster";
 import CustomerCreate from "../Customer/CustomerCreate";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
 import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
@@ -202,6 +194,7 @@ const CouponComponent = ({ setType, setProductUnits }) => {
       isLoading={isFetching}
       placeholder={"Coupon"}
       onSelect={onSelect}
+      showSearch={true}
     />
   );
 };
@@ -347,10 +340,17 @@ export const PosRegister = ({
 
     if (modalType === "Coupon") {
       if (totalPrice < productUnits.minimum_amount) {
-        message.error(
+        // message.error(
+        //   "Coupon can be applied only if total price is greater than " +
+        //     productUnits.minimum_amount
+        // );
+
+        openNotification(
+          "info",
           "Coupon can be applied only if total price is greater than " +
             productUnits.minimum_amount
         );
+
         // hideModal();
         return;
       }

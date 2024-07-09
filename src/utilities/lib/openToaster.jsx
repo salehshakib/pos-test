@@ -16,6 +16,10 @@ export const openNotification = (type, message) => {
           <div className="ml-3 flex-1">
             {type === "success" ? (
               <span className="text-green-600 ">Success</span>
+            ) : type === "warning" ? (
+              <span className="text-yellow-600 ">Warning</span>
+            ) : type === "info" ? (
+              <span className="text-blue-600 ">Info</span>
             ) : (
               <span className="text-red-600 ">Failed</span>
             )}

@@ -94,6 +94,7 @@ export const SaleTable = ({ keyword, summaryType, summary }) => {
         // setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         // isRowSelection={true}
+        // action={false}
         created_at={false}
         status={false}
       />

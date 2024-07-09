@@ -62,6 +62,18 @@ const columns = [
     ),
   },
   {
+    title: "Stock",
+    dataIndex: "stock",
+    key: "stock",
+    align: "center",
+    width: 100,
+    render: (stock) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {stock}
+      </span>
+    ),
+  },
+  {
     title: "Unit Cost",
     dataIndex: "unitCost",
     key: "unitCost",
@@ -101,7 +113,12 @@ const columns = [
             // name={["product_list", "qty", record?.id]}
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(record.id, value, record.setFormValues)
+              record.onQuantityChange(
+                record.id,
+                value,
+                record.setFormValues,
+                record.stock
+              )
             }
             value={record?.formValues?.product_list?.qty[record?.id] || 0}
           />
@@ -111,7 +128,11 @@ const columns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record.setFormValues)
+                record.incrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock
+                )
               }
               className=""
             />

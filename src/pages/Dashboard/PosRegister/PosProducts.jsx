@@ -1,4 +1,4 @@
-import { App, Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from "antd";
+import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
@@ -9,10 +9,10 @@ import {
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
+import { openNotification } from "../../../utilities/lib/openToaster";
 const { Meta } = Card;
 
 const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
-  const { message } = App.useApp();
   const warehouseId = Form.useWatch("warehouse_id", form);
 
   const [pagination, setPagination] = useState({
@@ -97,7 +97,8 @@ const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
     );
 
     if (!stock) {
-      message.error("Product is out of stock");
+      // message.error("Product is out of stock");
+      openNotification("info", "Product is out of stock");
       return;
     }
 
@@ -110,7 +111,8 @@ const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
         return [...prevProducts, selectedProduct.product];
       }
 
-      message.warning("Product already exists in the list");
+      // message.warning("Product already exists in the list");
+      openNotification("info", "Product already exists in the list");
       return prevProducts;
     });
     // setValue(null);

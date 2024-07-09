@@ -117,6 +117,8 @@ const GiftCardTable = ({
 
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
+      console.log(item);
+
       return {
         id,
         cardNo: card_no,
@@ -153,6 +155,7 @@ const GiftCardTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
       />
 
       <GiftCardEdit id={editId} setId={setEditId} />

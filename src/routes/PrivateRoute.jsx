@@ -6,10 +6,6 @@ function PrivateRoute({ children }) {
   const token = useSelector(useCurrentToken);
   const dispatch = useDispatch();
 
-  // const { pettyCash } = useSelector((state) => state.pettyCash);
-
-  // console.log(pettyCash);
-
   if (!token) {
     dispatch(logout());
     return <Navigate to={"/login"} replace={true} />;

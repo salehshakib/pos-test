@@ -1,10 +1,11 @@
-import { App, Button } from "antd";
+import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { openNotification } from "../../../utilities/lib/openToaster";
 import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -218,14 +219,13 @@ export const ReturnProductTable = ({
   productUnits,
   form,
 }) => {
-  const { message } = App.useApp();
-
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
-        message.error("Maximum quantity reached");
+        // message.error("Maximum quantity reached");
+        return openNotification("info", "Maximum quantity reached");
       }
 
       const newQty = Math.min(

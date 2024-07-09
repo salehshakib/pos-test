@@ -1,11 +1,12 @@
-import { App, Button } from "antd";
+import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { openNotification } from "../../../utilities/lib/openToaster";
+import { onDelete } from "../../../utilities/lib/productTable/counters";
 import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
-import { onDelete } from "../../../utilities/lib/productTable/counters";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 
 const columns = [
   {
@@ -109,7 +110,7 @@ const columns = [
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${discount}
+        {discount}
       </span>
     ),
   },
@@ -121,7 +122,7 @@ const columns = [
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -133,7 +134,7 @@ const columns = [
     width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },
@@ -147,14 +148,14 @@ export const ReturnProductTable = ({
   productUnits,
   form,
 }) => {
-  const { message } = App.useApp();
-
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
-        message.error("Maximum quantity reached");
+        // message.error("Maximum quantity reached");
+
+        return openNotification("info", "Maximum quantity reached");
       }
       const newQty = Math.min(
         Number(currentQty) + 1,

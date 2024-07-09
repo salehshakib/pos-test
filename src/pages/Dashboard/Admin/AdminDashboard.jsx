@@ -71,7 +71,10 @@ const ExtraComponent = () => {
 
   return (
     <CustomForm form={dashboardForm} submitBtn={false}>
-      <Row {...rowLayout} className="grid grid-cols-2 items-center">
+      <Row
+        {...rowLayout}
+        className="grid grid-cols-1 lg:grid-cols-2 items-center gap-2 lg:gap-0"
+      >
         <Col {...fullColLayout} className="">
           {/* <WarehouseComponent label={false} /> */}
           <CustomSelect
@@ -477,11 +480,6 @@ const StockAlertComponent = () => {
 const AdminDashboard = () => {
   const { token } = theme.useToken();
 
-  // const iconProps = {
-  //   size: 40,
-  //   color: token.colorPrimary,
-  // };
-
   const user = useSelector(useCurrentUser);
 
   return (
@@ -529,28 +527,6 @@ const AdminDashboard = () => {
         <div className=" w-full h-[26rem] bg-white">
           <StockAlertComponent />
         </div>
-
-        {/* 
-        <div className="py-5 w-full h-96">
-          <BarChartComponent />
-        </div>
-
-        <div className="py-5 w-full h-96">
-          <AreaChartComponent />
-        </div>
-
-        <div className="py-5 w-full h-96">
-          <ComposedChartComponent />
-        </div>
-        <div className="py-5 w-full h-96">
-          <div className="w-full h-96 grid grid-cols-1 lg:grid-cols-2">
-            <PeiChartComponent />
-            <PieChartWithLabel />
-          </div>
-        </div>
-        <div className="py-5 w-full h-96">
-          <RadarChartComponent />
-        </div> */}
       </div>
     </div>
   );

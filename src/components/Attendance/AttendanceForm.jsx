@@ -91,7 +91,7 @@ const DateComponent = () => {
           picker="time"
           required={true}
           name={"check_in"}
-          placeholder={"Check In Time"}
+          placeholder={"Check In"}
         />
       </Col>
       <Col {...largeLayout}>
@@ -99,9 +99,8 @@ const DateComponent = () => {
           label="Check Out"
           type="time"
           picker="time"
-          required={true}
           name={"check_out"}
-          placeholder={"Check Out Time"}
+          placeholder={"Check Out"}
         />
       </Col>
       <Col {...largeLayout}>

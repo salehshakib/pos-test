@@ -115,7 +115,7 @@ const CardComponent = () => {
       <Col {...mdColLayout}>
         <CustomSelect
           options={options}
-          name="card"
+          name="card_type"
           label="Card Type"
           required={true}
         />
@@ -157,13 +157,17 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
   const paymentType = Form.useWatch("payment_type", form);
 
   useEffect(() => {
-    if (paymentStatus === "Paid") {
+    if (paymentStatus === "Paid" || paymentStatus === "Partial") {
       form.setFieldValue("paid_amount", grandTotal);
     }
 
-    if (paymentStatus === "Paid" && receivedAmount < grandTotal) {
-      form.setFieldValue("recieved_amount", receivedAmount);
-    }
+    // if (paymentStatus === "Partial") {
+    //   form.setFieldValue("paid_amount", receivedAmount);
+    // }
+
+    // if (paymentStatus === "Paid" && receivedAmount < grandTotal) {
+    //   form.setFieldValue("recieved_amount", paidAmount);
+    // }
   }, [paidAmount, form, paymentStatus, grandTotal, receivedAmount]);
 
   const change = Number(
@@ -184,6 +188,7 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
             required={true}
           />
         </Col>
+
         <Col {...colLayout}>
           <CustomInput
             type={"number"}
@@ -201,14 +206,18 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
           />
         </Col>
 
-        <Col {...mdColLayout}>
-          <div className="py-9 text-lg font-semibold">Change: {change}</div>
-        </Col>
-        <Col {...mdColLayout}>
-          <div className="py-9 text-lg font-semibold">
-            Due: {Number(grandTotal - paidAmount).toFixed(2)}
-          </div>
-        </Col>
+        {paymentStatus === "Paid" && (
+          <Col {...mdColLayout}>
+            <div className="py-9 text-lg font-semibold">Change: {change}</div>
+          </Col>
+        )}
+        {paymentStatus === "Partial" && (
+          <Col {...mdColLayout}>
+            <div className="py-9 text-lg font-semibold">
+              Due: {Number(grandTotal - receivedAmount).toFixed(2)}
+            </div>
+          </Col>
+        )}
 
         {paymentType === "Gift Card" && <GiftCardComponent />}
         {paymentType === "Card" && <CardComponent />}

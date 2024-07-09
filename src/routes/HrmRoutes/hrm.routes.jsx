@@ -52,8 +52,8 @@ export const hrmPaths = [
     element: <Payroll />,
   },
   {
-    name: "Holidays",
-    path: "holidays",
+    name: "Holiday",
+    path: "holiday",
     icon: MdTimeToLeave,
     element: <Holidays />,
   },

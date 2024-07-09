@@ -1,6 +1,7 @@
 import { AutoComplete, Col, Form, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { fullColLayout } from "../../../layout/FormLayout";
 import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
@@ -60,15 +61,14 @@ export const SearchProduct = ({ setProducts }) => {
         product: product,
       })) ?? [];
 
-  // const user = useSelector(useCurrentUser);
-  // const warehouseId = user?.warehouse_id;
-
-  console.log(warehouseId);
-
-  console.log(warehouseIdFrom);
+  const { pathname } = useLocation();
 
   const onSelect = (_, option) => {
-    if (!warehouseId && !warehouseIdFrom) {
+    if (
+      !warehouseId &&
+      !warehouseIdFrom &&
+      !pathname.includes("print-barcode")
+    ) {
       // message.error("Please select warehouse");
       openNotification("warning", "Please select warehouse");
 
@@ -80,9 +80,10 @@ export const SearchProduct = ({ setProducts }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    if (!stock) {
+    if (!stock && !pathname.includes("print-barcode")) {
       // message.error("Product is out of stock");
       openNotification("warning", "Product is out of stock");
+      setValue(null);
       return;
     }
 

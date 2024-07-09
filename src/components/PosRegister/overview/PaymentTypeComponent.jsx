@@ -75,6 +75,7 @@ const GiftCardComponent = () => {
         name="gift_card_id"
         label="Gift Card Number"
         required={true}
+        showSearch={true}
       />
     </Col>
   );

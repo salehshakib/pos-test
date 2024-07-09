@@ -1,11 +1,12 @@
+import { Form } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useCreateGiftCardDesignMutation } from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
+import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { openNotification } from "../../utilities/lib/openToaster";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { GiftCardDesignForm } from "./GiftCardDesignForm";
-import { Form, App } from "antd";
-import { useCreateGiftCardDesignMutation } from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
 
 const dataURItoBlob = (dataURI) => {
   const byteString = atob(dataURI?.split(",")[1]);
@@ -19,7 +20,6 @@ const dataURItoBlob = (dataURI) => {
 };
 
 export const GiftCardDesignCreate = () => {
-  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -31,12 +31,15 @@ export const GiftCardDesignCreate = () => {
 
   const handleSubmit = async (values) => {
     if (!form.getFieldValue("frontImage")) {
-      message.error("Please select front image");
+      // message.error("Please select front image");
+      openNotification("info", "Please select front image");
       return;
     }
 
     if (!form.getFieldValue("backImage")) {
-      message.error("Please select back image");
+      // message.error("Please select back image");
+      openNotification("info", "Please select front image");
+
       return;
     }
 

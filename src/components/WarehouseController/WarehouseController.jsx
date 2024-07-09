@@ -1,13 +1,14 @@
-import { AutoComplete, Col, App, Spin } from "antd";
+import { AutoComplete, Col, Spin } from "antd";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 import { fullColLayout } from "../../layout/FormLayout";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { ProductTable } from "../Shared/ProductControllerComponent/ProductTable";
 
 const SearchWarehouse = ({ setWarehouses }) => {
-  const { message } = App.useApp();
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
@@ -17,18 +18,14 @@ const SearchWarehouse = ({ setWarehouses }) => {
     }
   }, 1000);
 
-  const { data, isFetching } = useGetWarehousesQuery(
-    {
-      params: {
-        keyword,
-        child: 1,
-        parent: 1,
-      },
-    },
-    {
-      skip: !keyword,
-    }
-  );
+  const params = useGlobalParams({
+    keyword,
+    isRelationalParams: true,
+  });
+
+  const { data, isFetching } = useGetWarehousesQuery({
+    params,
+  });
 
   //console.log(data);
 
@@ -63,7 +60,9 @@ const SearchWarehouse = ({ setWarehouses }) => {
         return [...prevWarehouse, option.warehouse];
       }
 
-      message.warning("Warehouse already exists in the list");
+      // message.warning("Warehouse already exists in the list");
+
+      openNotification("info", "Warehouse already exists in the list");
       return prevWarehouse;
     });
     setValue(null);

@@ -1,7 +1,8 @@
-import { Form, App } from "antd";
+import { Form } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useGetPurchaseDetailsQuery,
@@ -15,14 +16,13 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../../utilities/lib/openToaster";
 import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { PurchaseForm } from "./PurchaseForm";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 export const PurchaseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
-  const { message } = App.useApp();
 
   const user = useSelector(useCurrentUser);
 
@@ -200,7 +200,9 @@ export const PurchaseEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add atleast one product");
+      // message.info("Please add atleast one product");
+      openNotification("info", "Please add atleast one product");
+
       return;
     }
 

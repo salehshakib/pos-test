@@ -1,4 +1,4 @@
-import { App, Button, Form, Layout, Tag } from "antd";
+import { Button, Form, Layout, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -20,6 +20,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../utilities/lib/generator/generatorUtils";
+import { openNotification } from "../utilities/lib/openToaster";
 import { decimalConverter } from "../utilities/lib/return/decimalComverter";
 import { sanitizeObj } from "../utilities/lib/sanitizeObj";
 import SideBar from "./SideBar";
@@ -31,7 +32,6 @@ const PosLayout = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { pettyCash } = useSelector((state) => state.pettyCash);
 
-  const { message } = App.useApp();
   const dispatch = useDispatch();
 
   const [collapsed, setCollapsed] = useState(false);
@@ -94,17 +94,20 @@ const PosLayout = () => {
       : [];
 
     if (productListArray.length === 0) {
-      message.info("Please add at least one product");
+      // message.info("Please add at least one product");
+      openNotification("info", "Please add at least one product");
       return;
     }
 
     if (!sale_at) {
-      message.info("Please select date");
+      // message.info("Please select date");
+      openNotification("info", "Please select date");
       return;
     }
 
     if (!values?.cashier_id) {
-      message.info("Please Select Cashier");
+      // message.info("Please Select Cashier");
+      openNotification("info", "Please Select Cashier");
       return;
     }
 

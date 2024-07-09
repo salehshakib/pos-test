@@ -3,6 +3,9 @@ import { useState } from "react";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { Categories } from "./Categories/Categories";
 import { Brands } from "./Brand/Brands";
+// import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+// import { Categories } from "./Categories/Categories";
+// import { Brands } from "./Brand/Brands";
 
 const CategoryFilterComponent = () => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
@@ -19,7 +22,7 @@ const CategoryFilterComponent = () => {
     <>
       <Button
         type="primary"
-        size="large"
+        // size="large"
         className="w-full"
         onClick={handleOpenDrawer}
       >
@@ -52,7 +55,7 @@ const BrandFilterComponent = () => {
     <>
       <Button
         type="primary"
-        size="large"
+        // size="large"
         className="w-full"
         onClick={handleOpenDrawer}
       >

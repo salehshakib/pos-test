@@ -13,6 +13,7 @@ export const CashierComponent = ({
   required = true,
   name = "cashier_id",
   label = true,
+  size,
 }) => {
   const form = Form.useFormInstance();
 
@@ -44,6 +45,7 @@ export const CashierComponent = ({
       name={name}
       required={required}
       customStyle={!label}
+      size={size}
     />
   );
 };

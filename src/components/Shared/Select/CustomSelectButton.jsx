@@ -17,7 +17,7 @@ export const CustomSelectButton = (props) => {
     styleProps,
 
     //for mb-0
-
+    size = "large",
     customStyle,
   } = props;
 
@@ -55,7 +55,7 @@ export const CustomSelectButton = (props) => {
                 filterSort={filterSort}
                 placeholder={`Select ${placeholder ?? label}`}
                 className="mt-1 custom-selector"
-                size="large"
+                size={size}
                 loading={isLoading}
                 options={options}
                 mode={mode}
@@ -99,7 +99,7 @@ export const CustomSelectButton = (props) => {
             onClick={onClick}
             icon={icon}
             className="border-2 mt-1"
-            size="large"
+            size={size}
           />
         </Space.Compact>
       </Form.Item>

@@ -7,10 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import Payment from "../components/PosRegister/Payment";
-import PosFilterComponent from "../components/PosRegister/PosFilterComponent";
 import { PosRegister } from "../components/PosRegister/PosRegister";
 import { GlobalUtilityStyle } from "../container/Styled";
-import PosProducts from "../pages/Dashboard/PosRegister/PosProducts";
+import { Filter } from "../pages/Dashboard/PosRegister/Filter";
 import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
 import { mode } from "../utilities/configs/base_url";
@@ -256,7 +255,7 @@ const PosLayout = () => {
                 <Profile />
               </div>
 
-              <div className="flex grow ">
+              {/* <div className="flex grow ">
                 <div className="flex flex-col w-full ">
                   <div>
                     <PosFilterComponent />
@@ -276,7 +275,14 @@ const PosLayout = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <Filter
+                products={products}
+                setProducts={setProducts}
+                setFormValues={setFormValues}
+                setProductUnits={setProductUnits}
+                posForm={posForm}
+              />
             </div>
           </div>
         </div>

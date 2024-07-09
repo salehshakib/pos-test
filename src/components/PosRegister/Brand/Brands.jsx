@@ -1,11 +1,16 @@
-import { Card, Divider, Skeleton, Spin } from "antd";
+import { Card, Divider, Form, Skeleton, Spin } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
+import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
+import CustomForm from "../../Shared/Form/CustomForm";
+
 const { Meta } = Card;
 
 export const Brands = () => {
+  const [brandForm] = Form.useForm();
+
   const [pagination, setPagination] = useState({
     page: 1,
     perPage: 12,
@@ -26,6 +31,22 @@ export const Brands = () => {
       page: prevPagination.page + 1,
     }));
   }, []);
+
+  const handleSubmit = async (values) => {
+    // const params = {
+    //   ...pagination,
+    //   ...values,
+    // };
+    // setPagination(params);
+
+    const brand_ids = Object.keys(values).map((key) => {
+      if (values[key]) {
+        return key;
+      }
+    });
+
+    console.log(brand_ids);
+  };
 
   useEffect(() => {
     if (brands) {
@@ -69,36 +90,38 @@ export const Brands = () => {
         scrollableTarget="scrollableDiv"
       >
         <>
-          <div className="grid grid-cols-4 gap-4">
-            {brands &&
-              newData?.map((brand) => {
-                // const images = organizeAttachments(brand?.attachments);
-                return (
-                  <Card
-                    bordered
-                    hoverable
-                    style={{
-                      backgroundColor: "white",
-                    }}
+          <CustomForm form={brandForm} handleSubmit={handleSubmit}>
+            {/* <CustomCheckbox mode="group"></CustomCheckbox> */}
+            <div className="grid grid-cols-4 gap-4 overflow-x-hidden">
+              {brands &&
+                newData?.map((brand) => (
+                  <CustomCheckbox
+                    name={brand.id}
                     key={brand.id}
-                    cover={
-                      <img
-                        alt="example"
-                        className="h-[6rem] object-cover px-4 pt-4"
-                        src={
-                          // images?.attach_file?.[0]?.url ??
-                          // images?.attachments?.[0]?.url ??
-                          productImage
+                    label={
+                      <Card
+                        bordered
+                        hoverable
+                        style={{
+                          backgroundColor: "white",
+                          width: 165,
+                        }}
+                        className="shadow-md border "
+                        cover={
+                          <img
+                            alt="example"
+                            className="h-[6rem] object-cover px-4 pt-4"
+                            src={productImage}
+                          />
                         }
-                      />
+                      >
+                        <Meta className="text-center" title={brand.name} />
+                      </Card>
                     }
-                  >
-                    <Meta className="text-center" title={brand.name} />
-                  </Card>
-                );
-              })}
-          </div>
-
+                  />
+                ))}
+            </div>
+          </CustomForm>
           {newData?.length < total && (
             <div className="text-center my-4 pb-10">
               Pull down to load more ....

@@ -116,6 +116,7 @@ const CustomDatepicker = ({
   placeholder = "Choose Date",
   onChange,
   value,
+  size = "large",
 
   //for mb-0
   customStyle = false,
@@ -142,7 +143,7 @@ const CustomDatepicker = ({
   };
 
   const commonProps = {
-    size: "large",
+    size,
     className: "border-2 mt-1",
     style: { width: "100%" },
     format: getFormat(),

@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+
 const { Meta } = Card;
 
 export const Categories = () => {
@@ -87,6 +88,7 @@ export const Categories = () => {
                       backgroundColor: "white",
                     }}
                     key={category.id}
+                    className="shadow-md"
                     cover={
                       <img
                         alt="example"

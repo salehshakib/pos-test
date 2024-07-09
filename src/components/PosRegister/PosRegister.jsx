@@ -28,7 +28,7 @@ import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
 import ProductTableComponent from "./PosProductTableComponent";
 const { Text } = Typography;
 
-const CustomerComponent = () => {
+const CustomerComponent = ({ size }) => {
   const form = Form.useFormInstance();
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
@@ -71,6 +71,7 @@ const CustomerComponent = () => {
         required={true}
         name="customer_id"
         customStyle={true}
+        size={size}
       />
 
       <CustomerCreate
@@ -82,7 +83,7 @@ const CustomerComponent = () => {
   );
 };
 
-const CurrencyComponent = () => {
+const CurrencyComponent = ({ size }) => {
   const form = Form.useFormInstance();
   const currency = useSelector(useCurrency);
 
@@ -104,11 +105,12 @@ const CurrencyComponent = () => {
       required={true}
       name="currency"
       customStyle={true}
+      size={size}
     />
   );
 };
 
-const CurrencyExchangeComponent = () => {
+const CurrencyExchangeComponent = (size) => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
@@ -132,6 +134,7 @@ const CurrencyExchangeComponent = () => {
       placeholder={"Exchange Rate"}
       suffix={content}
       customStyle={true}
+      size={size}
     />
   );
 };
@@ -223,37 +226,38 @@ const RegisterForm = ({ products, setProducts }) => {
               required={true}
               placeholder={"Date"}
               customStyle={true}
+              size="default"
             />
           </Col>
 
           <Col span={6}>
+            <WarehouseComponent label={false} size="default" />
+          </Col>
+          <Col span={6}>
+            <CashierComponent label={false} required={true} size="default" />
+          </Col>
+
+          <Col span={8}>
+            <CustomerComponent size="default" />
+          </Col>
+
+          <Col span={12}>
             <CustomInput
               type={"text"}
               // required={true}
               placeholder={"Reference Number"}
               name={"reference_number"}
+              size="default"
               customStyle={true}
             />
           </Col>
-
-          <Col span={7}>
-            <WarehouseComponent label={false} />
-          </Col>
-          <Col span={7}>
-            <CashierComponent label={false} required={true} />
-          </Col>
-
-          <Col span={12}>
-            <CustomerComponent />
-          </Col>
-
           <Col span={12}>
             <Row gutter={5}>
-              <Col xs={16} lg={20}>
-                <CurrencyComponent />
+              <Col span={14}>
+                <CurrencyComponent size="default" />
               </Col>
-              <Col xs={8} lg={4}>
-                <CurrencyExchangeComponent />
+              <Col span={10}>
+                <CurrencyExchangeComponent size="default" />
               </Col>
             </Row>
           </Col>

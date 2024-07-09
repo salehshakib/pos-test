@@ -11,7 +11,7 @@ export const FilterDateRange = ({
       <CustomDatepicker
         name={name}
         type={"range"}
-        placeholder="Choose Date"
+        // placeholder="Choose Date"
         presets={true}
         customStyle={customStyle}
         onChange={onChange}

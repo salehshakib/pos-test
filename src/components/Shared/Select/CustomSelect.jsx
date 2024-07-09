@@ -126,6 +126,8 @@ const CustomSelect = ({
   styleProps,
   onChange,
   onSelect,
+  size = "large",
+
   customStyle = false, // for mb-0
 }) => {
   const filterOption = (input, option) =>
@@ -140,10 +142,10 @@ const CustomSelect = ({
     onChange,
     placeholder: `Select ${placeholder ?? label}`,
     className: "mt-1 custom-selector",
-    size: "large",
     loading: isLoading,
     options,
     mode,
+    size,
     notFoundContent: isLoading ? (
       <Spin size="small" className="w-full flex justify-center items-center" />
     ) : (
@@ -167,7 +169,9 @@ const CustomSelect = ({
             message: `Please Select ${placeholder ?? label}!`,
           },
         ]}
-        className={customStyle && "mb-0"}
+        className={`${customStyle && "mb-0"} ${
+          size === "default" && "select-item-default"
+        } `}
         noStyle={noStyle}
       >
         <Select

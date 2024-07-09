@@ -14,6 +14,7 @@ export const WarehouseComponent = ({
   label = true,
   title = "Warehouse",
   placeholder = "Warehouse",
+  size,
 }) => {
   const form = Form.useFormInstance();
   const user = useSelector(useCurrentUser);
@@ -45,6 +46,7 @@ export const WarehouseComponent = ({
       name={name}
       required={true}
       customStyle={!label}
+      size={size}
     />
   );
 };

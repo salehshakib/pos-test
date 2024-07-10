@@ -2,28 +2,31 @@ import { Button, Col, Form, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { colLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../redux/services/unit/unitApi";
-import { setFormValuesId } from "../../utilities/lib/updateFormValues/updateFormValues";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomProductTable from "../Shared/Table/CustomProductTable";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
+import { calculateOriginalPrice } from "../../utilities/lib/calculatePrice";
+import { showCurrency } from "../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
 import {
   decrementCounter,
   incrementCounter,
   onDelete,
   onQuantityChange,
 } from "../../utilities/lib/productTable/counters";
-import { calculateOriginalPrice } from "../../utilities/lib/calculatePrice";
-import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
+import { setFormValuesId } from "../../utilities/lib/updateFormValues/updateFormValues";
+import CustomForm from "../Shared/Form/CustomForm";
+import CustomInput from "../Shared/Input/CustomInput";
+import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
+import CustomSelect from "../Shared/Select/CustomSelect";
+import CustomProductTable from "../Shared/Table/CustomProductTable";
 
 const columns = [
   {
@@ -220,7 +223,16 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 };
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const { data, isLoading } = useGetAllUnitQuery({});
+  const params = useGlobalParams({
+    selectValue: [
+      ...DEFAULT_SELECT_VALUES,
+      "operation_value",
+      "operator",
+      "for",
+    ],
+  });
+
+  const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")

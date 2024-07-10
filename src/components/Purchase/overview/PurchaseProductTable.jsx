@@ -61,7 +61,12 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value", "operator"],
+    selectValue: [
+      ...DEFAULT_SELECT_VALUES,
+      "operation_value",
+      "operator",
+      "for",
+    ],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });

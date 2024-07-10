@@ -245,10 +245,12 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value", "for"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
+
+  console.log(data);
 
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")
@@ -527,6 +529,8 @@ export const SaleProductTable = ({
     } = product ?? {};
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
+
+    // console.log(sale_unit_id, )
 
     setFormValuesId(
       id,

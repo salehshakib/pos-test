@@ -87,6 +87,36 @@ export const QuotationForm = ({
     setTaxRate(orderTax);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
 
+  const warehouseId = Form.useWatch("warehouse_id", props.form);
+
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          recieved: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        purchase_units: {},
+        tax_rate: {},
+        inclusive_tax_rate: {},
+      });
+    }
+  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+
   return (
     <>
       <CustomForm {...props}>

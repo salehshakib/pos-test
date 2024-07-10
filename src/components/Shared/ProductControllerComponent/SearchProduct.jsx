@@ -26,19 +26,18 @@ export const SearchProduct = ({ setProducts }) => {
 
   const params = useGlobalParams({
     // selectValue: ["id", "name"],
-    params: { warehouse_id: warehouseId },
+
+    params: {
+      warehouse_id: warehouseId,
+      ...(keyword ? {} : { page: 1, pageSize: 10 }),
+    },
     keyword,
     isRelationalParams: true,
   });
 
-  const { data, isFetching } = useGetAllProductsQuery(
-    {
-      params,
-    },
-    {
-      skip: !keyword,
-    }
-  );
+  const { data, isFetching } = useGetAllProductsQuery({
+    params,
+  });
 
   const loadingContent = (
     <div className="flex items-center justify-center ">

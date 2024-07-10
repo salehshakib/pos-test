@@ -57,7 +57,7 @@ const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
                 getValueFromEvent={normFile}
                 noStyle
               >
-                <Upload.Dragger name="files" action="/upload.do">
+                <Upload.Dragger name="files" accept=".csv" multiple={false}>
                   <div className="flex w-full items-center justify-center">
                     <FaUpload
                       size={45}
@@ -71,7 +71,7 @@ const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
                     Click or drag file to this area to upload
                   </p>
                   <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
+                    Upload File in required Format
                   </p>
                 </Upload.Dragger>
               </Form.Item>

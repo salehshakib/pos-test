@@ -1,6 +1,6 @@
 import { useState } from "react";
-import StockCountCreate from "../../../components/StockCount/StockCountCreate";
-import StockCountTable from "../../../components/StockCount/StockCountTable";
+import StockRequestCreate from "../../../components/StockRequest/StockRequestCreate";
+import StockRequestTable from "../../../components/StockRequest/StockRequestTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
 import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
@@ -72,9 +72,9 @@ const StockRequest = () => {
       setParams={setParams}
       api={STOCK_COUNT}
     >
-      <StockCountCreate />
+      <StockRequestCreate />
 
-      <StockCountTable
+      <StockRequestTable
         newColumns={newColumns}
         keyword={keyword}
         setSelectedRows={setSelectedRows}

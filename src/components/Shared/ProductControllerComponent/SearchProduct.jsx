@@ -61,12 +61,14 @@ export const SearchProduct = ({ setProducts }) => {
       })) ?? [];
 
   const { pathname } = useLocation();
+  console.log(pathname);
+  const ignorePaths = ["stock-request", "print-barcode"];
 
   const onSelect = (_, option) => {
     if (
       !warehouseId &&
       !warehouseIdFrom &&
-      !pathname.includes("print-barcode")
+      ignorePaths.filter((item) => pathname.includes(item)).length === 0
     ) {
       // message.error("Please select warehouse");
       openNotification("warning", "Please select warehouse");
@@ -79,7 +81,10 @@ export const SearchProduct = ({ setProducts }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    if (!stock && !pathname.includes("print-barcode")) {
+    if (
+      !stock &&
+      ignorePaths.filter((item) => pathname.includes(item)).length === 0
+    ) {
       // message.error("Product is out of stock");
       openNotification("warning", "Product is out of stock");
       setValue(null);

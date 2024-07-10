@@ -247,7 +247,7 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number_with_percent"}
+          type={"number_with_money"}
           suffix={currency?.name}
           name="recieved_amount"
           label="Recieved Amount"
@@ -256,7 +256,7 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number_with_percent"}
+          type={"number_with_money"}
           suffix={currency?.name}
           name="paid_amount"
           label="Paid Amount"

@@ -71,7 +71,7 @@ const MinAmountComponent = () => {
     <Col {...mdColLayout} className="">
       <CustomInput
         label="Minimum Amount"
-        type={"number_with_percent"}
+        type={"number_with_money"}
         required={true}
         name={"minimum_amount"}
         suffix={currency?.name}
@@ -99,7 +99,11 @@ const CouponsForm = (props) => {
         <Col {...mdColLayout}>
           <CustomInput
             label="Amount"
-            type={"number_with_percent"}
+            type={
+              type === "Percentage"
+                ? "number_with_percent"
+                : "number_with_money"
+            }
             required={true}
             name={"amount"}
             suffix={type === "Percentage" ? "%" : currency?.name}

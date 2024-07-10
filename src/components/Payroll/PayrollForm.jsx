@@ -110,7 +110,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Salary"
             name="salary"
-            type={"number_with_percent"}
+            type={"number_with_money"}
             suffix={currency?.name}
             required={true}
           />
@@ -119,7 +119,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Bonus"
             name="bonus"
-            type={"number_with_percent"}
+            type={"number_with_money"}
             suffix={currency?.name}
           />
         </Col>
@@ -127,7 +127,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Loan"
             name="loan"
-            type={"number_with_percent"}
+            type={"number_with_money"}
             suffix={currency?.name}
           />
         </Col>

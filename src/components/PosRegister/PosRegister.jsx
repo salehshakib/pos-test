@@ -586,7 +586,7 @@ export const PosRegister = ({
                 />
               ) : (
                 <CustomInput
-                  type="number_with_percent"
+                  type="number_with_money"
                   name={modalType}
                   placeholder={modalType}
                   suffix={currency?.name}

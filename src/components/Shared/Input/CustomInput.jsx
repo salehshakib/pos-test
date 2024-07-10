@@ -172,6 +172,17 @@ const CustomInput = (props) => {
             suffix={suffix ?? "%"}
           />
         );
+      case "number_with_money":
+        return (
+          <InputNumber
+            {...commonProps}
+            type="number"
+            className="mt-1 border-2 w-full"
+            min={0}
+            controls={false}
+            suffix={suffix}
+          />
+        );
       case "phone":
         return (
           <InputNumber

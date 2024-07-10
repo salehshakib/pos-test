@@ -132,6 +132,8 @@ const GlobalContainer = ({
     ],
   };
 
+  const handleImport = () => {};
+
   const items = [
     setNewColumns && {
       key: "view",
@@ -151,6 +153,7 @@ const GlobalContainer = ({
     usePermission(api, "import") && {
       label: "Import",
       key: "import",
+      onclick: handleImport,
       icon: <FaUpload size={16} />,
     },
     usePermission(api, "export") && {

@@ -90,7 +90,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number_with_percent"}
+            type={"number_with_money"}
             suffix={currency?.name}
             label="Value"
             required={true}
@@ -98,7 +98,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number_with_percent"}
+            type={"number"}
             suffix={currency?.name}
             label="Maximum Qty"
             required={true}
@@ -106,7 +106,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number_with_percent"}
+            type={"number"}
             suffix={currency?.name}
             label="Minimum Qty"
             required={true}

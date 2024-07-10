@@ -60,7 +60,7 @@ export const ExpenseForm = (props) => {
         <Col {...mdColLayout}>
           <CustomInput
             label="Amount"
-            type={"number_with_percent"}
+            type={"number_with_money"}
             required={true}
             name={"amount"}
             suffix={currency?.name}

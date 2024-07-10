@@ -8,12 +8,12 @@ import CustomForm from "../../Shared/Form/CustomForm";
 
 const { Meta } = Card;
 
-export const Brands = () => {
+export const Brands = ({ handleSubmit, onClose }) => {
   const [brandForm] = Form.useForm();
 
   const [pagination, setPagination] = useState({
     page: 1,
-    perPage: 12,
+    perPage: 20,
     allData: 1,
   });
   const { data, isLoading } = useGetBrandsQuery({
@@ -26,32 +26,23 @@ export const Brands = () => {
   const total = data?.meta?.total;
 
   const loadMoreData = useCallback(() => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      page: prevPagination.page + 1,
-    }));
-  }, []);
-
-  const handleSubmit = async (values) => {
-    // const params = {
-    //   ...pagination,
-    //   ...values,
-    // };
-    // setPagination(params);
-
-    const brand_ids = Object.keys(values).map((key) => {
-      if (values[key]) {
-        return key;
-      }
-    });
-
-    console.log(brand_ids);
-  };
+    if (newData.length < total) {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        page: prevPagination.page + 1,
+      }));
+    }
+  }, [newData.length, total]);
 
   useEffect(() => {
-    if (brands) {
-      setNewData((prevData) => [...prevData, ...brands]);
+    if (brands && brands.length) {
+      // setNewData((prevData) => [...prevData, ...brands]);
+      setNewData((prevData) => {
+        const uniqueData = new Set([...prevData, ...brands]);
+        return Array.from(uniqueData);
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [brands]);
 
   if (isLoading) {
@@ -75,7 +66,7 @@ export const Brands = () => {
     >
       <InfiniteScroll
         dataLength={newData?.length}
-        next={loadMoreData}
+        next={newData?.length < total && loadMoreData}
         hasMore={newData?.length < total}
         loader={
           <Skeleton
@@ -90,21 +81,25 @@ export const Brands = () => {
         scrollableTarget="scrollableDiv"
       >
         <>
-          <CustomForm form={brandForm} handleSubmit={handleSubmit}>
+          <CustomForm
+            form={brandForm}
+            handleSubmit={handleSubmit}
+            onClose={onClose}
+          >
             {/* <CustomCheckbox mode="group"></CustomCheckbox> */}
             <div className="grid grid-cols-4 gap-4 overflow-x-hidden">
               {brands &&
-                newData?.map((brand) => (
+                newData?.map((item) => (
                   <CustomCheckbox
-                    name={brand.id}
-                    key={brand.id}
+                    name={item.id}
+                    key={item.id}
                     label={
                       <Card
                         bordered
                         hoverable
                         style={{
                           backgroundColor: "white",
-                          width: 165,
+                          width: 160,
                         }}
                         className="shadow-md border "
                         cover={
@@ -115,7 +110,7 @@ export const Brands = () => {
                           />
                         }
                       >
-                        <Meta className="text-center" title={brand.name} />
+                        <Meta className="text-center" title={item.name} />
                       </Card>
                     }
                   />

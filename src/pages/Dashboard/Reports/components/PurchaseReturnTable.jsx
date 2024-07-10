@@ -62,7 +62,7 @@ export const PurchaseReturnTable = ({ keyword, summaryType, summary }) => {
         referenceNo: reference_id,
         warehouse: warehouses?.name,
         supplier: suppliers?.name,
-        Date: date,
+        date: date,
         grandTotal: showCurrency(grand_total ?? 0, currency),
         handleDetailsModal,
       };

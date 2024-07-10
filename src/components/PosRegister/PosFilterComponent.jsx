@@ -1,13 +1,13 @@
 import { Button } from "antd";
 import { useState } from "react";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { Categories } from "./Categories/Categories";
 import { Brands } from "./Brand/Brands";
+import { Categories } from "./Categories/Categories";
 // import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 // import { Categories } from "./Categories/Categories";
 // import { Brands } from "./Brand/Brands";
 
-const CategoryFilterComponent = () => {
+const CategoryFilterComponent = ({ setParams }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -16,6 +16,24 @@ const CategoryFilterComponent = () => {
 
   const handleCloseDrawer = () => {
     setIsFilterDrawerOpen(false);
+  };
+
+  const handleSubmit = async (values) => {
+    // const params = {
+    //   ...pagination,
+    //   ...values,
+    // };
+    // setPagination(params);
+
+    const category_ids = Object.keys(values).map((key) => {
+      if (values[key]) {
+        return key;
+      }
+    });
+
+    setParams({ category_ids });
+
+    handleCloseDrawer();
   };
 
   return (
@@ -34,13 +52,13 @@ const CategoryFilterComponent = () => {
         open={isFilterDraweropen}
         onClose={handleCloseDrawer}
       >
-        <Categories />
+        <Categories handleSubmit={handleSubmit} onClose={handleCloseDrawer} />
       </CustomDrawer>
     </>
   );
 };
 
-const BrandFilterComponent = () => {
+const BrandFilterComponent = ({ setParams }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -49,6 +67,18 @@ const BrandFilterComponent = () => {
 
   const handleCloseDrawer = () => {
     setIsFilterDrawerOpen(false);
+  };
+
+  const handleSubmit = async (values) => {
+    const brand_ids = Object.keys(values).map((key) => {
+      if (values[key]) {
+        return key;
+      }
+    });
+
+    setParams({ brand_ids });
+
+    handleCloseDrawer();
   };
 
   return (
@@ -67,21 +97,18 @@ const BrandFilterComponent = () => {
         open={isFilterDraweropen}
         onClose={handleCloseDrawer}
       >
-        <Brands />
+        <Brands handleSubmit={handleSubmit} onClose={handleCloseDrawer} />
       </CustomDrawer>
     </>
   );
 };
 
-const PosFilterComponent = () => {
+const PosFilterComponent = ({ setParams }) => {
   return (
     <div className="grid grid-cols-2 gap-3 px-4 pt-5">
-      <CategoryFilterComponent />
+      <CategoryFilterComponent setParams={setParams} />
 
-      <BrandFilterComponent />
-      {/* <Button type="primary" size="large" className="w-full">
-        Featured
-      </Button> */}
+      <BrandFilterComponent setParams={setParams} />
     </div>
   );
 };

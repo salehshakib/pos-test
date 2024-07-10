@@ -39,9 +39,9 @@ function PosRoute({ children }) {
 
   // console.log(pettyCash);
 
-  if (pettyCash === "Close") {
-    return <Navigate to={"/dashboard"} replace={true} />;
-  }
+  // if (pettyCash === "Close") {
+  //   return <Navigate to={"/dashboard"} replace={true} />;
+  // }
 
   if (!token) {
     dispatch(logout());

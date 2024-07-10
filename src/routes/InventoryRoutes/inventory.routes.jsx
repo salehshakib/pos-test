@@ -1,4 +1,3 @@
-import TransferList from "antd/es/transfer/list";
 import { AiOutlineStock } from "react-icons/ai";
 import { GoChecklist } from "react-icons/go";
 import { PiWarehouse } from "react-icons/pi";
@@ -7,6 +6,7 @@ import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import AdjustmentList from "../../pages/Dashboard/AdjustmentList/AdjustmentList";
 import StockCount from "../../pages/Dashboard/StockCount/StockCount";
 import StockRequest from "../../pages/Dashboard/StockRequest/StockRequest";
+import TransferList from "../../pages/Dashboard/Transfer/TransferList";
 import Warehouse from "../../pages/Dashboard/Warehouse/Warehouse";
 
 export const inventoryPaths = [

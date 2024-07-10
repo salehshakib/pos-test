@@ -33,10 +33,6 @@ export const SaleTable = ({ keyword, summaryType, summary }) => {
     }
   );
 
-  console.log(params);
-
-  console.log(data);
-
   const total = data?.meta?.total;
 
   const handleDetailsModal = (id) => {

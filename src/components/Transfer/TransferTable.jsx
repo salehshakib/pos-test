@@ -7,7 +7,7 @@ import {
   useDeleteTransferMutation,
   useGetAllTransferQuery,
 } from "../../redux/services/transfer/transferApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
+// import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
@@ -15,6 +15,7 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { usePagination } from "../../utilities/hooks/usePagination";
 import { showCurrency } from "../../utilities/lib/currency";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
@@ -94,7 +95,7 @@ const TransferTable = ({
       total_tax,
       grand_total,
       status,
-    } = transfer;
+    } = transfer ?? {};
 
     return {
       key: id,

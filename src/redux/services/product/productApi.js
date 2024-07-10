@@ -52,13 +52,6 @@ const productApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        //console.log(response);
-        return response;
-      },
-      invalidatesTags: (result) => {
-        return result ? [PRODUCT] : [];
-      },
     }),
 
     updateProduct: build.mutation({

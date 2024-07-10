@@ -29,7 +29,7 @@ const { Footer } = Layout;
 const PosLayout = () => {
   const [posForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
-  const { pettyCash } = useSelector((state) => state.pettyCash);
+  // const { pettyCash } = useSelector((state) => state.pettyCash);
 
   const dispatch = useDispatch();
 
@@ -209,11 +209,11 @@ const PosLayout = () => {
     }
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  if (pettyCash === "Close") {
-    navigate("/dashboard");
-  }
+  // if (pettyCash === "Close") {
+  //   navigate("/dashboard");
+  // }
 
   return (
     <GlobalUtilityStyle>

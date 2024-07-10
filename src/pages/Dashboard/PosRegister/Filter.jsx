@@ -15,7 +15,7 @@ export const Filter = ({
     <div className="flex grow ">
       <div className="flex flex-col w-full ">
         <div>
-          <PosFilterComponent />
+          <PosFilterComponent setParams={setParams} />
         </div>
         <div
           style={{
@@ -29,6 +29,7 @@ export const Filter = ({
             setFormValues={setFormValues}
             setProductUnits={setProductUnits}
             form={posForm}
+            searchParams={searchParams}
           />
         </div>
       </div>

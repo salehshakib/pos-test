@@ -13,10 +13,16 @@ import { productImage } from "../../../assets/data/productImage";
 
 const { Meta } = Card;
 
-const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
+const PosProducts = ({
+  setProducts,
+  setFormValues,
+  setProductUnits,
+  form,
+  searchParams,
+}) => {
   const warehouseId = Form.useWatch("warehouse_id", form);
 
-  console.log(warehouseId);
+  console.log(searchParams);
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -31,6 +37,7 @@ const PosProducts = ({ setProducts, setFormValues, setProductUnits, form }) => {
       ...pagination,
       attachmentable: 1,
       warehouse_id: warehouseId,
+      ...searchParams,
     },
     selectValue: [
       ...DEFAULT_SELECT_VALUES,

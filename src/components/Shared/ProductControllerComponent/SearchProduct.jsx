@@ -29,7 +29,7 @@ export const SearchProduct = ({ setProducts }) => {
 
     params: {
       warehouse_id: warehouseId,
-      ...(keyword ? {} : { page: 1, pageSize: 10 }),
+      ...(keyword ? {} : { page: 1, pageSize: 20 }),
     },
     keyword,
     isRelationalParams: true,

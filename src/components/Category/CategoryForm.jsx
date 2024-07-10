@@ -2,10 +2,7 @@ import { Col, Row } from "antd";
 import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
 import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
 import { useCustomDebounce } from "../../utilities/hooks/useDebounce";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import DebounceSelect from "../Shared/Select/DebounceSelect";
@@ -15,16 +12,13 @@ const ParentCategoryComponent = () => {
   const { keyword, debounce } = useCustomDebounce();
 
   const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+    params: {
+      parent: 1,
+    },
     keyword,
   });
 
-  const { data, isFetching } = useGetAllCategoryQuery(
-    { params },
-    {
-      skip: !keyword,
-    }
-  );
+  const { data, isFetching } = useGetAllCategoryQuery({ params });
 
   const options = data?.results?.category?.map((category) => ({
     key: category.id,
@@ -32,19 +26,14 @@ const ParentCategoryComponent = () => {
     label: category.name,
   }));
 
-  console.log(isFetching);
-
   return (
     <DebounceSelect
       label="Parent Category"
       name={"parent_id"}
       placeholder={"Parent Category"}
       onSearch={debounce}
-      // required={true}
       options={options}
-      // mode={"multiple"}
       isLoading={isFetching}
-      // onSelect={onSelect}
     />
   );
 };

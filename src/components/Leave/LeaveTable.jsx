@@ -55,6 +55,7 @@ export const LeaveTable = ({
       ...pagination,
       ...searchParams,
       parent: 1,
+      child: 1,
     },
     keyword,
   });
@@ -66,6 +67,7 @@ export const LeaveTable = ({
     }
   );
 
+  console.log(data);
   const total = data?.meta?.total;
 
   const [deleteLeave, { isLoading: isDeleting }] = useDeleteLeaveMutation();
@@ -104,12 +106,14 @@ export const LeaveTable = ({
         leave_start_date,
         leave_end_date,
         leave_duration,
+        users,
       } = item ?? {};
 
       // const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
+        // name: users?.employees?.name,
         leaveDuration: leave_duration,
         days: calculateLeaveDays(leave_start_date, leave_end_date),
         handleEdit,

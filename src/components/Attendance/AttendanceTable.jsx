@@ -31,10 +31,11 @@ export const AttendanceTable = ({
 
   const params = useGlobalParams({
     isDefaultParams: false,
+    isRelationalParams: true,
     params: {
       ...pagination,
       ...searchParams,
-      parent: 1,
+      // parent: 1,
     },
     keyword,
   });

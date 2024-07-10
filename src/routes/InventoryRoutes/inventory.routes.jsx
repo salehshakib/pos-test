@@ -1,8 +1,12 @@
+import TransferList from "antd/es/transfer/list";
 import { AiOutlineStock } from "react-icons/ai";
 import { GoChecklist } from "react-icons/go";
 import { PiWarehouse } from "react-icons/pi";
+import { TbTransferIn } from "react-icons/tb";
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import AdjustmentList from "../../pages/Dashboard/AdjustmentList/AdjustmentList";
 import StockCount from "../../pages/Dashboard/StockCount/StockCount";
+import StockRequest from "../../pages/Dashboard/StockRequest/StockRequest";
 import Warehouse from "../../pages/Dashboard/Warehouse/Warehouse";
 
 export const inventoryPaths = [
@@ -19,9 +23,21 @@ export const inventoryPaths = [
     element: <AdjustmentList />,
   },
   {
+    name: "Transfer",
+    path: "transfer",
+    icon: TbTransferIn,
+    element: <TransferList />,
+  },
+  {
     name: "Stock Count",
     path: "stock-count",
     icon: AiOutlineStock,
     element: <StockCount />,
+  },
+  {
+    name: "Stock Request",
+    path: "stock-request",
+    icon: VscGitPullRequestGoToChanges,
+    element: <StockRequest />,
   },
 ];

@@ -100,7 +100,7 @@ export const DesignationTable = ({
       return {
         id,
         name: name,
-        departments: departments?.name,
+        department: departments?.name,
         created_at: date,
 
         status: is_active,

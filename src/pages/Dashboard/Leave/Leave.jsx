@@ -15,7 +15,7 @@ import { useFilterParams } from "../../../utilities/hooks/useParams";
 
 const columns = [
   {
-    title: "Name",
+    title: "Employee Name",
     dataIndex: "name",
     key: "name",
     render: (name, record) => (

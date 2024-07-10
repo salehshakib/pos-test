@@ -11,14 +11,12 @@ import { SlWallet } from "react-icons/sl";
 import {
   TbFilePercent,
   TbReport,
-  TbTransferIn,
   TbTruckReturn,
   TbUsersGroup,
 } from "react-icons/tb";
 import { TfiShoppingCart } from "react-icons/tfi";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import TransferList from "../pages/Dashboard/Transfer/TransferList";
 import { expensePaths } from "./ExpenseRoutes/expense.routes";
 import { generatorPaths } from "./Generator/generator.routes";
 import { hrmPaths } from "./HrmRoutes/hrm.routes";
@@ -74,13 +72,13 @@ export const adminPaths = [
     icon: TbFilePercent,
     children: generatorPaths,
   },
-  {
-    name: "Transfer",
-    path: "transfer",
-    icon: TbTransferIn,
-    element: <TransferList />,
-    // children: transferPaths,
-  },
+  // {
+  //   name: "Transfer",
+  //   path: "transfer",
+  //   icon: TbTransferIn,
+  //   element: <TransferList />,
+  //   // children: transferPaths,
+  // },
   {
     name: "Return",
     path: "return",

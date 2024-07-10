@@ -36,6 +36,7 @@ import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { downloadFile } from "../../utilities/lib/downloadFile";
 import { usePermission } from "../../utilities/lib/getPermission";
 import { GlobalUtilityStyle } from "../Styled";
+import ImportModal from "../../components/Shared/Modal/ImportModal";
 
 const GlobalContainer = ({
   pageTitle,
@@ -100,9 +101,12 @@ const GlobalContainer = ({
   };
 
   const handleOpenChange = (nextOpen, info) => {
+    console.log(nextOpen, info);
     if (info.source === "trigger" || nextOpen) {
       setOpen(nextOpen);
     }
+
+    // setOpen(nextOpen);
   };
 
   const handleCheckedOpenChange = (nextOpen, info) => {
@@ -132,7 +136,13 @@ const GlobalContainer = ({
     ],
   };
 
-  const handleImport = () => {};
+  const [importModal, setImportModal] = useState(false);
+
+  const handleImport = () => {
+    setImportModal(true);
+  };
+
+  console.log(importModal);
 
   const items = [
     setNewColumns && {
@@ -153,7 +163,7 @@ const GlobalContainer = ({
     usePermission(api, "import") && {
       label: "Import",
       key: "import",
-      onclick: handleImport,
+      onClick: handleImport,
       icon: <FaUpload size={16} />,
     },
     usePermission(api, "export") && {
@@ -258,6 +268,7 @@ const GlobalContainer = ({
 
   const hideModal = () => {
     setDeleteModal(false);
+    setImportModal(false);
   };
 
   useEffect(() => {
@@ -490,6 +501,8 @@ const GlobalContainer = ({
         handleDelete={handleBulkDelete}
         item={"items"}
       />
+
+      <ImportModal importModal={importModal} hideModal={hideModal} />
     </GlobalUtilityStyle>
   );
 };

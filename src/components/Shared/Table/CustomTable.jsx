@@ -190,7 +190,7 @@ const CustomTable = ({
       return record?.handleStatusModal ? (
         <button
           className={`p-0 ${
-            status == 1
+            status.toString() === "1"
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
@@ -203,7 +203,7 @@ const CustomTable = ({
       ) : (
         <div
           className={`p-0 ${
-            status == 1
+            status.toString === "1"
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}

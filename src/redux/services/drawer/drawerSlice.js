@@ -11,6 +11,8 @@ const initialState = {
   // isBrandDrawerOpen: false,
   // isCategoryDrawerOpen: false,
   // isTaxDrawerOpen: false,
+
+  isNotificationDrawerOpen: false,
 };
 
 const drawerSlice = createSlice({
@@ -58,6 +60,13 @@ const drawerSlice = createSlice({
       state.statusId = undefined;
     },
 
+    openNotificationDrawer: (state) => {
+      state.isNotificationDrawerOpen = true;
+    },
+    closeNotificationDrawer: (state) => {
+      state.isNotificationDrawerOpen = false;
+    },
+
     // openBrandDrawer: (state) => {
     //   state.isBrandDrawerOpen = true;
     // },
@@ -94,6 +103,8 @@ export const {
   closeCreateDrawer,
   openEditDrawer,
   closeEditDrawer,
+  openNotificationDrawer,
+  closeNotificationDrawer,
   // openBrandDrawer,
   // closeBrandDrawer,
   // openCategoryDrawer,

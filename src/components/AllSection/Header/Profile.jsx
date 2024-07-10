@@ -1,5 +1,15 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Modal, Popover, Row, theme } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Col,
+  Form,
+  Modal,
+  Popover,
+  Row,
+  theme,
+} from "antd";
 import { useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
 import { MdPointOfSale } from "react-icons/md";
@@ -14,6 +24,8 @@ import { setPettyCash } from "../../../redux/services/pettycash/pettyCashSlice";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import CustomInput from "../../Shared/Input/CustomInput";
 import CreateComponent from "./CreateComponent";
+import { GoBell } from "react-icons/go";
+import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
@@ -213,6 +225,56 @@ const CashRegisterComponent = () => {
   );
 };
 
+const NotificationComponent = () => {
+  const [show, setShow] = useState(true);
+  const { token } = theme.useToken();
+
+  const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] =
+    useState(false);
+
+  const handleNotification = () => {
+    setShow(false);
+  };
+
+  const handleDrawer = () => {
+    setIsNotificationDrawerOpen(true);
+  };
+
+  const onClose = () => {
+    setIsNotificationDrawerOpen(false);
+    handleNotification();
+  };
+
+  return (
+    <>
+      <Badge dot={show}>
+        <GoBell
+          size={20}
+          style={{
+            color: token.colorPrimary,
+          }}
+          className="hover:cursor-pointer"
+          onClick={handleDrawer}
+        />
+      </Badge>
+
+      <CustomDrawer
+        title={"Notification"}
+        open={isNotificationDrawerOpen}
+        width={400}
+        onClose={onClose}
+      >
+        {/* <DepartmentForm
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        fields={errorFields}
+        form={form}
+      /> */}
+      </CustomDrawer>
+    </>
+  );
+};
+
 const Profile = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -264,7 +326,7 @@ const Profile = () => {
 
   return (
     <div className=" flex justify-center items-center gap-3">
-      <CreateComponent />
+      {/* <CreateComponent /> */}
       {!pathname.includes("/pos") && (
         <>
           <PosComponent />
@@ -273,6 +335,7 @@ const Profile = () => {
 
       <CashRegisterComponent />
 
+      <NotificationComponent />
       <Popover
         placement="bottomLeft"
         content={content}

@@ -6,6 +6,9 @@ import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { useSelector } from "react-redux";
+import { showCurrency } from "../../../utilities/lib/currency";
 
 const columns = [
   {
@@ -311,6 +314,8 @@ export const ReturnProductTable = ({
   //   });
   // };
 
+  const currency = useSelector(useCurrency);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -330,18 +335,22 @@ export const ReturnProductTable = ({
       purchase_units,
       formValues,
       productUnits,
-      taxes
+      taxes,
+      tax_method
     );
 
     return {
       id,
       name,
       sku,
-      unitCost: "$" + formValues.product_list.net_unit_cost[id],
+      unitCost: showCurrency(
+        formValues.product_list.net_unit_cost[id],
+        currency
+      ),
       delete: true,
-      discount: formValues.product_list.discount[id],
-      tax: formValues.product_list.tax[id],
-      subTotal: formValues.product_list.total[id],
+      discount: showCurrency(formValues.product_list.discount[id], currency),
+      tax: showCurrency(formValues.product_list.tax[id], currency),
+      subTotal: showCurrency(formValues.product_list.total[id], currency),
       qty: formValues.product_list.qty[id],
       incrementCounter,
       decrementCounter,

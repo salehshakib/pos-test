@@ -43,7 +43,6 @@ const createDetailsLayout = (data, nostyle) => {
     "grand_total",
     "paid",
     "due",
-    "due_date",
     "return_amount",
     "expense",
   ];
@@ -55,7 +54,7 @@ const createDetailsLayout = (data, nostyle) => {
 
     switch (key) {
       case "is_active":
-        return value.toString() === "1" ? (
+        return value?.toString() === "1" ? (
           <Badge status="success" text="Active" key={"active"} />
         ) : (
           <Badge status="default" text="Inactive" key={"inactive"} />
@@ -67,7 +66,7 @@ const createDetailsLayout = (data, nostyle) => {
       case "attachments":
         return Array.isArray(value) ? (
           <div className="flex items-center gap-3" key={"attachments"}>
-            {value.map(({ label, url }) => (
+            {value?.map(({ label, url }) => (
               <img
                 src={defaultUser}
                 // src={url ?? defaultUser}
@@ -94,7 +93,7 @@ const createDetailsLayout = (data, nostyle) => {
         }
 
         if (currencyKeys.includes(key)) {
-          return `$${value}`;
+          return `{value}`;
         }
         if (key.includes("date")) {
           return dayjs(value).format("DD-MM-YYYY");

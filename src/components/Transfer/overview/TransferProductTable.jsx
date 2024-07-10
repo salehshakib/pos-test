@@ -24,6 +24,7 @@ import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 import { useSelector } from "react-redux";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { showCurrency } from "../../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 
 const columns = [
   {
@@ -109,7 +110,12 @@ const columns = [
             // name={["product_list", "qty", record?.id]}
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(record.id, value, record.setFormValues)
+              record.onQuantityChange(
+                record.id,
+                value,
+                record.setFormValues,
+                record.stock
+              )
             }
             value={record.formValues?.product_list?.qty?.[record?.id] || 0}
           />
@@ -119,7 +125,11 @@ const columns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record?.setFormValues)
+                record.incrementCounter(
+                  record?.id,
+                  record?.setFormValues,
+                  record?.stock
+                )
               }
               className=""
             />
@@ -185,7 +195,7 @@ const columns = [
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value"],
+    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value", "for"],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
@@ -345,7 +355,8 @@ function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-  taxes
+  taxes,
+  tax_method
 ) {
   const sanitizeIntValue = (value) => parseInt(value) || 0;
   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
@@ -384,9 +395,16 @@ function setFormValuesId(
   );
 
   // Calculating total
-  const total = (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(
-    2
-  );
+  // const total = (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(
+  //   2
+  // );
+
+  const total =
+    tax_method === "Inclusive"
+      ? Math.round(
+          (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2)
+        )
+      : (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2);
 
   // Set form values
   const setFormValue = (field, value) => {
@@ -417,6 +435,7 @@ export const TransferProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
+  const warehouseId = Form.useWatch("from_warehouse_id", form);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -445,9 +464,11 @@ export const TransferProductTable = ({
         purchase_units,
         tax_id,
         taxes,
-
+        product_qties,
         tax_method,
       } = product ?? {};
+
+      const stock = getWarehouseQuantity(product_qties, warehouseId);
 
       setFormValuesId(
         id,
@@ -458,7 +479,8 @@ export const TransferProductTable = ({
         formValues,
         productUnits,
         tax_id,
-        taxes
+        taxes,
+        tax_method
       );
 
       return {
@@ -470,6 +492,7 @@ export const TransferProductTable = ({
           currency
         ),
         delete: true,
+        stock,
         tax: showCurrency(formValues.product_list.tax[id], currency),
         subTotal: showCurrency(formValues.product_list.total[id], currency),
         onDelete,

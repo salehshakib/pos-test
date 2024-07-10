@@ -6,7 +6,8 @@ export function setFormValuesId(
   formValues,
   productUnits,
   tax_id,
-  taxes
+  taxes,
+  tax_method
 ) {
   const sanitizeIntValue = (value) => parseInt(value) || 0;
   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
@@ -45,11 +46,22 @@ export function setFormValuesId(
   productUnits.sale_units[id] = productSaleUnitsValue;
 
   // Calculating total
-  const total = (
-    productSaleUnitsValue * netUnitPrice * qty -
-    discount +
-    tax
-  ).toFixed(2);
+  // const total = (
+  //   productSaleUnitsValue * netUnitPrice * qty -
+  //   discount +
+  //   tax
+  // ).toFixed(2);
+
+  const total =
+    tax_method === "Inclusive"
+      ? Math.round(
+          (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+            2
+          )
+        )
+      : (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+          2
+        );
 
   // Set form values
   const setFormValue = (field, value) => {

@@ -42,7 +42,7 @@ const CustomModal = ({
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          <div className="pt-2 pr-3 max-h-[75vh] overflow-y-auto overflow-x-hidden">
+          <div className="pt-2 pr-3 max-h-[76vh] overflow-y-auto overflow-x-hidden">
             {children}
           </div>
           {showCloseButton && (

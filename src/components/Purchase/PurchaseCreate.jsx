@@ -44,6 +44,7 @@ export const PurchaseCreate = () => {
       inclusive_tax_rate: {},
     },
   });
+
   const [products, setProducts] = useState([]);
   const [productUnits, setProductUnits] = useState({
     purchase_units: {},

@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { FaCashRegister } from "react-icons/fa";
+import { GoBell } from "react-icons/go";
 import { MdPointOfSale } from "react-icons/md";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,9 +24,6 @@ import { useCreatePettyCashMutation } from "../../../redux/services/pettycash/pe
 import { setPettyCash } from "../../../redux/services/pettycash/pettyCashSlice";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import CustomInput from "../../Shared/Input/CustomInput";
-import CreateComponent from "./CreateComponent";
-import { GoBell } from "react-icons/go";
-import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
@@ -229,49 +227,46 @@ const NotificationComponent = () => {
   const [show, setShow] = useState(true);
   const { token } = theme.useToken();
 
-  const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] =
-    useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const handleNotification = () => {
-    setShow(false);
-  };
-
-  const handleDrawer = () => {
-    setIsNotificationDrawerOpen(true);
+    setIsPopoverOpen(true);
   };
 
   const onClose = () => {
-    setIsNotificationDrawerOpen(false);
-    handleNotification();
+    setShow(false);
+    setIsPopoverOpen(false);
   };
 
   return (
-    <>
-      <Badge dot={show}>
-        <GoBell
-          size={20}
-          style={{
-            color: token.colorPrimary,
-          }}
-          className="hover:cursor-pointer"
-          onClick={handleDrawer}
-        />
-      </Badge>
-
-      <CustomDrawer
-        title={"Notification"}
-        open={isNotificationDrawerOpen}
-        width={400}
-        onClose={onClose}
-      >
-        {/* <DepartmentForm
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-        fields={errorFields}
-        form={form}
-      /> */}
-      </CustomDrawer>
-    </>
+    <Popover
+      // content={FilterContentForm}
+      title={<div className="text-start text-xl font-bold">Notifications</div>}
+      trigger="click"
+      placement="bottomRight"
+      overlayClassName="rounded-md shadow-xl "
+      overlayStyle={{ width: 300 }}
+      overlayInnerStyle={{
+        backgroundColor: "#F8FAFC",
+        maxHeight: "85vh",
+        overflowY: "auto",
+      }}
+      onOpenChange={onClose}
+      open={isPopoverOpen}
+      arrow={false}
+    >
+      <Button className="rounded-md shadow-md" onClick={handleNotification}>
+        <Badge dot={show}>
+          <GoBell
+            size={20}
+            style={{
+              color: token.colorPrimary,
+            }}
+            className="hover:cursor-pointer"
+          />
+        </Badge>
+      </Button>
+    </Popover>
   );
 };
 
@@ -284,7 +279,6 @@ const Profile = () => {
   const handleLogout = () => {
     openNotification("success", "Logged out successfully!");
     dispatch(logout());
-    // toast.success("Logged out successfully!", { duration: 2000 });
   };
 
   const user = useSelector(useCurrentUser);

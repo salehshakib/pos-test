@@ -130,7 +130,7 @@ export const ProductDetails = ({ id, ...props }) => {
   });
 
   const taxInfo = createDetailsLayout({
-    tax: data?.taxs?.name,
+    tax: data?.taxes?.rate,
     tax_method: data?.tax_method,
   });
 

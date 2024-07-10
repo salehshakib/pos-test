@@ -101,19 +101,9 @@ const columns = [
       </span>
     ),
   },
+
   {
-    title: "Unit",
-    dataIndex: "unit",
-    key: "unit",
-    align: "center",
-    render: (unit) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unit ?? "N/A"}
-      </span>
-    ),
-  },
-  {
-    title: "Cost",
+    title: "Buying Cost",
     dataIndex: "cost",
     key: "cost",
     render: (cost) => (
@@ -123,7 +113,7 @@ const columns = [
     ),
   },
   {
-    title: "Price",
+    title: "Selling Price",
     dataIndex: "price",
     key: "price",
     render: (price) => (

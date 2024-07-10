@@ -277,6 +277,7 @@ const GlobalContainer = ({
   const handlePopoverClose = () => {
     setPopoverOpen(false);
   };
+
   const [advanceSearch, setAdvanceSearch] = useState(false);
 
   const handleReset = () => {
@@ -387,7 +388,7 @@ const GlobalContainer = ({
                   overlayClassName="rounded-md shadow-xl"
                   overlayStyle={{ width: popoverWidth }}
                   overlayInnerStyle={{
-                    backgroundColor: "#F8FAFC",
+                    backgroundColor: "",
                   }}
                   onOpenChange={handlePopoverClose}
                   open={popoverOpen}

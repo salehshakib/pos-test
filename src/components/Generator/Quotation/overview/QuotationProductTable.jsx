@@ -277,7 +277,8 @@ export const QuotationProductTable = ({
       formValues,
       productUnits,
       tax_id,
-      taxes
+      taxes,
+      tax_method
     );
 
     return {

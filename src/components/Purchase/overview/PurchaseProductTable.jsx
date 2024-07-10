@@ -294,11 +294,20 @@ function setFormValuesId(
   );
 
   // Calculating total
-  const total = (
-    productPurchaseUnitsValue * netUnitCost * qty -
-    discount +
-    tax
-  ).toFixed(2);
+  const total =
+    tax_method === "Inclusive"
+      ? Math.round(
+          (
+            productPurchaseUnitsValue * netUnitCost * qty -
+            discount +
+            tax
+          ).toFixed(2)
+        )
+      : (
+          productPurchaseUnitsValue * netUnitCost * qty -
+          discount +
+          tax
+        ).toFixed(2);
 
   // Set form values
   const setFormValue = (field, value) => {
@@ -434,8 +443,8 @@ export const PurchaseProductTable = ({
     setFormValuesId(
       id,
       purchase_unit_id,
-      // calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
-      unit_cost,
+      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+      // unit_cost,
       purchase_units,
       formValues,
       productUnits,

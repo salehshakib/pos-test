@@ -47,7 +47,7 @@ export const columns = [
     align: "center",
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {unitCost ? "$" + unitCost : ""}
+        {unitCost}
       </span>
     ),
   },

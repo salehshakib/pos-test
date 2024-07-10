@@ -540,7 +540,8 @@ export const SaleProductTable = ({
       formValues,
       productUnits,
       tax_id,
-      taxes
+      taxes,
+      tax_method
     );
 
     return {

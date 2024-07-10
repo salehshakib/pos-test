@@ -1,6 +1,9 @@
 import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { showCurrency } from "../../../utilities/lib/currency";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { onDelete } from "../../../utilities/lib/productTable/counters";
 import { setFormValuesId } from "../../../utilities/lib/updateFormValues/updateFormValues";
@@ -214,6 +217,8 @@ export const ReturnProductTable = ({
     }));
   };
 
+  const currency = useSelector(useCurrency);
+
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -233,18 +238,22 @@ export const ReturnProductTable = ({
       sale_units,
       formValues,
       productUnits,
-      taxes
+      taxes,
+      tax_method
     );
 
     return {
       id,
       name,
       sku,
-      unitCost: "$" + formValues.product_list.net_unit_price[id],
+      unitCost: showCurrency(
+        formValues.product_list.net_unit_price[id],
+        currency
+      ),
       delete: true,
-      discount: formValues.product_list.discount[id],
-      tax: formValues.product_list.tax[id],
-      subTotal: formValues.product_list.total[id],
+      discount: showCurrency(formValues.product_list.discount[id], currency),
+      tax: showCurrency(formValues.product_list.tax[id], currency),
+      subTotal: showCurrency(formValues.product_list.total[id], currency),
       qty: formValues.product_list.qty[id],
       incrementCounter,
       decrementCounter,

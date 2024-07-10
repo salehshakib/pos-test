@@ -149,7 +149,7 @@ const CustomDatepicker = ({
     format: getFormat(),
     suffixIcon: getSuffixIcon(),
     onChange,
-    placeholder: "Please Input " + placeholder + " Date",
+    // placeholder: "Please Input " + placeholder + " Date",
   };
 
   const renderPicker = () => {

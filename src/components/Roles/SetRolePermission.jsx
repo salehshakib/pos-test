@@ -1,6 +1,9 @@
 import { Form } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { useGetAllRolePermissionQuery } from "../../redux/services/rolePermission/rolePermissionApi";
+import {
+  useGetAllPermissionQuery,
+  useGetUserRolePermissionQuery,
+} from "../../redux/services/rolePermission/rolePermissionApi";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CustomForm from "../Shared/Form/CustomForm";
@@ -27,12 +30,19 @@ const columns = [
     key: "action",
     align: "left",
     render: (text, record) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 ">
+      <span
+        className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
+        // className="text-xs font-medium md:text-sm text-dark dark:text-white87 flex flex-wrap  justify-start items-center gap-3 "
+      >
         {text?.map((action, index) => {
           const label = action?.name?.split(".")[1];
+          const isLongLabel = label && label.length > 15;
 
           return (
-            <div key={action?.id ?? index}>
+            <div
+              key={action?.id ?? index}
+              className={`${isLongLabel ? "col-span-2" : ""}`}
+            >
               <CustomCheckbox
                 name={["permission", record.name, label]}
                 label={label}
@@ -56,44 +66,89 @@ function filterMissingObject(oldValue, newValue) {
   return filteredObject;
 }
 
-// function filterObjects(obj) {
-//   const filteredObj = {};
+const actionKeys = [
+  "accesstoken.issueToken",
+  "authorization.authorize",
+  "transienttoken.refresh",
+  "approveauthorization.approve",
+  "denyauthorization.deny",
+  "authorizedaccesstoken.forUser",
+  "authorizedaccesstoken.destroy",
+  "client.forUser",
+  "scope.all",
+  "personalaccesstoken.forUser",
+  "personalaccesstoken.store",
+  "personalaccesstoken.destroy",
+  "csrfcookie.show",
+  "handlerequests.handleUpdate",
+  "frontendassets.returnJavaScriptAsFile",
+  "frontendassets.maps",
+  "fileupload.handle",
+  "filepreview.handle",
+];
 
-//   if (!obj) {
-//     return filteredObj;
-//   }
+function filterActions(jsonData) {
+  if (!jsonData) return [];
 
-//   Object.keys(obj).forEach((key) => {
-//     // Check if any value inside the object is not undefined
-//     if (Object.values(obj[key]).some((value) => value !== undefined)) {
-//       // Remove properties where the value is undefined
-//       const filteredValues = {};
-//       Object.entries(obj[key]).forEach(([subKey, subValue]) => {
-//         if (subValue !== undefined && subValue) {
-//           filteredValues[subKey] = subValue;
-//         }
-//       });
+  let copiedData = JSON.parse(JSON.stringify(jsonData));
 
-//       // Add to filteredObj if there are filtered values
-//       if (Object.keys(filteredValues).length > 0) {
-//         filteredObj[key] = filteredValues;
-//       }
-//     }
-//   });
+  let filteredModules = copiedData.filter((module) => {
+    let filteredActions = module.actions.filter((action) => {
+      return !actionKeys.includes(action.name);
+    });
 
-//   return filteredObj;
-// }
+    module.actions = filteredActions;
+
+    return filteredActions.length > 0;
+  });
+
+  return filteredModules;
+}
 
 const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   const [form] = Form.useForm();
+  const formData = Form.useWatch("permission", form);
 
-  const { data, isFetching } = useGetAllRolePermissionQuery({
-    params: {
-      role_id: changePermissionId,
+  const { data: rolePermission, isLoading } = useGetAllPermissionQuery();
+
+  const filteredData = filterActions(rolePermission);
+
+  const { data, isFetching } = useGetUserRolePermissionQuery(
+    {
+      params: {
+        role_id: changePermissionId,
+      },
     },
-  });
+    {
+      skip: !rolePermission,
+    }
+  );
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data && open) {
+      data.map((item) => {
+        item?.actions?.map((action) => {
+          const label = action?.name?.split(".")[1];
+
+          form.setFieldsValue({
+            permission: {
+              [item.name]: {
+                [label]: true,
+              },
+            },
+          });
+        });
+      });
+    }
+  }, [data, form, open]);
+
+  console.log(formData);
 
   const [selectedRows, setSelectedRows] = useState([]);
+
+  console.log(selectedRows);
 
   useEffect(() => {
     if (selectedRows.length) {
@@ -116,6 +171,8 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   }, [form, selectedRows]);
 
   const changeSelectedRows = (newSelectedRows) => {
+    console.log(newSelectedRows);
+
     if (selectedRows?.length > newSelectedRows.length) {
       const deleteRow = filterMissingObject(selectedRows, newSelectedRows);
 
@@ -140,7 +197,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   };
 
   const dataSource =
-    data?.map((item) => {
+    filteredData?.map((item) => {
       const { module, actions } = item ?? {};
 
       return {
@@ -149,8 +206,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
         action: actions,
       };
     }) ?? [];
-
-  const formData = Form.useWatch("permission", form);
 
   function transformData(formData) {
     let transformedData = [];
@@ -204,7 +259,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       width={1400}
       open={open}
       onClose={closeDrawer}
-      isLoading={isFetching}
+      isLoading={isLoading}
     >
       <CustomForm form={form}>
         <CustomTable
@@ -217,13 +272,14 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
           isRowSelection={true}
           setSelectedRows={setSelectedRows}
           selectedRows={selectedRows}
-          debounce={debounce}
+          // debounce={debounce}
           changeSelectedRows={changeSelectedRows}
           tableStyleProps={{
             scroll: {
               y: "73vh",
             },
           }}
+          isLoading={isFetching}
         />
       </CustomForm>
     </CustomDrawer>

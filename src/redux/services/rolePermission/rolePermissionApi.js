@@ -1,12 +1,24 @@
 // Import necessary dependencies
-import { ROLE_PERMISSION } from "../../../utilities/apiEndpoints/auth.api";
+import {
+  PERMISSION,
+  ROLE_PERMISSION,
+} from "../../../utilities/apiEndpoints/auth.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
 const rolePermissionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllRolePermission: build.query({
+    getAllPermission: build.query({
+      query: () => ({
+        url: `/${PERMISSION}`,
+        method: "GET",
+      }),
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: () => [{ type: PERMISSION }, PERMISSION],
+    }),
+
+    getUserRolePermission: build.query({
       query: ({ params }) => ({
         url: `/${ROLE_PERMISSION}`,
         method: "GET",
@@ -132,7 +144,8 @@ const rolePermissionApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllRolePermissionQuery,
+  useGetAllPermissionQuery,
+  useGetUserRolePermissionQuery,
   useGetRolePermissionDetailsQuery,
   useCreateRolePermissionMutation,
   useUpdateRolePermissionMutation,

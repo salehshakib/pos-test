@@ -129,16 +129,19 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   useEffect(() => {
     if (data && open) {
       data.map((item) => {
+        console.log(item);
         item?.actions?.map((action) => {
           const label = action?.name?.split(".")[1];
 
-          form.setFieldsValue({
-            permission: {
-              [item.name]: {
-                [label]: true,
-              },
-            },
-          });
+          // form.setFieldsValue({
+          //   permission: {
+          //     [item.module]: {
+          //       [label]: true,
+          //     },
+          //   },
+          // });
+
+          form.setFieldValue([`permission`, item.module, label], true);
         });
       });
     }

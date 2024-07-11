@@ -1,14 +1,18 @@
-import { Card, Divider, Form, Skeleton, Spin } from "antd";
+import { Card, Divider, Form, Skeleton, Spin, theme } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { productImage } from "../../../assets/data/productImage";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
-import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import CustomForm from "../../Shared/Form/CustomForm";
 
 const { Meta } = Card;
 
-export const Brands = ({ handleSubmit, onClose }) => {
+export const Brands = ({
+  handleSubmit,
+  onClose,
+  isSelected,
+  handleCardSelect,
+}) => {
   const [brandForm] = Form.useForm();
 
   const [pagination, setPagination] = useState({
@@ -55,6 +59,8 @@ export const Brands = ({ handleSubmit, onClose }) => {
     );
   }
 
+  const { token } = theme.useToken();
+
   return (
     <div
       id="scrollableDiv"
@@ -86,34 +92,70 @@ export const Brands = ({ handleSubmit, onClose }) => {
             handleSubmit={handleSubmit}
             onClose={onClose}
           >
-            {/* <CustomCheckbox mode="group"></CustomCheckbox> */}
-            <div className="grid grid-cols-4 gap-4 overflow-x-hidden">
+            <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
               {brands &&
                 newData?.map((item) => (
-                  <CustomCheckbox
-                    name={item.id}
+                  // <CustomCheckbox
+                  //   name={item.id}
+                  //   key={item.id}
+                  //   label={
+                  //     <Card
+                  //       bordered
+                  //       hoverable
+                  //       style={{
+                  //         backgroundColor: "white",
+                  //         width: 160,
+                  //       }}
+                  //       className="shadow-md border "
+                  //       cover={
+                  //         <img
+                  //           alt="example"
+                  //           className="h-[6rem] object-cover px-4 pt-4"
+                  //           src={productImage}
+                  //         />
+                  //       }
+                  //     >
+                  //       <Meta className="text-center" title={item.name} />
+                  //     </Card>
+                  //   }
+                  // />
+                  <Card
+                    bordered
+                    hoverable
+                    style={{
+                      backgroundColor: isSelected?.includes(item.id)
+                        ? token.colorPrimary
+                        : "white",
+
+                      // width: 160,
+                    }}
                     key={item.id}
-                    label={
-                      <Card
-                        bordered
-                        hoverable
-                        style={{
-                          backgroundColor: "white",
-                          width: 160,
-                        }}
-                        className="shadow-md border "
-                        cover={
-                          <img
-                            alt="example"
-                            className="h-[6rem] object-cover px-4 pt-4"
-                            src={productImage}
-                          />
-                        }
-                      >
-                        <Meta className="text-center" title={item.name} />
-                      </Card>
+                    className="shadow-md border "
+                    onClick={() => handleCardSelect(item.id)}
+                    cover={
+                      <img
+                        alt="example"
+                        className="h-[6rem] object-cover px-4 pt-4"
+                        src={productImage}
+                      />
                     }
-                  />
+                  >
+                    <Meta
+                      className="text-center"
+                      title={
+                        <span
+                          style={{
+                            color: isSelected.includes(item.id)
+                              ? "white"
+                              : "black",
+                          }}
+                        >
+                          {item?.name}
+                        </span>
+                      }
+                      style={{}}
+                    />
+                  </Card>
                 ))}
             </div>
           </CustomForm>

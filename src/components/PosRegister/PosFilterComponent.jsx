@@ -3,9 +3,6 @@ import { useState } from "react";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { Brands } from "./Brand/Brands";
 import { Categories } from "./Categories/Categories";
-// import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-// import { Categories } from "./Categories/Categories";
-// import { Brands } from "./Brand/Brands";
 
 const CategoryFilterComponent = ({ setParams }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
@@ -18,23 +15,21 @@ const CategoryFilterComponent = ({ setParams }) => {
     setIsFilterDrawerOpen(false);
   };
 
-  const handleSubmit = async (values) => {
-    // const params = {
-    //   ...pagination,
-    //   ...values,
-    // };
-    // setPagination(params);
+  // const [isSelected, setIsSelected] = useState([]);
 
-    const category_ids = Object.keys(values).map((key) => {
-      if (values[key]) {
-        return key;
-      }
-    });
+  // const handleCardSelect = (id) => {
+  //   if (isSelected.includes(id)) {
+  //     setIsSelected(isSelected.filter((item) => item !== id));
+  //   } else {
+  //     setIsSelected([...isSelected, id]);
+  //   }
+  // };
 
-    setParams({ category_ids });
+  // const handleSubmit = async () => {
+  //   setParams({ category_ids: isSelected });
 
-    handleCloseDrawer();
-  };
+  //   handleCloseDrawer();
+  // };
 
   return (
     <>
@@ -51,8 +46,13 @@ const CategoryFilterComponent = ({ setParams }) => {
         title={"Choose Category"}
         open={isFilterDraweropen}
         onClose={handleCloseDrawer}
+        width={1400}
       >
-        <Categories handleSubmit={handleSubmit} onClose={handleCloseDrawer} />
+        <Categories
+          // handleSubmit={handleSubmit}
+          onClose={handleCloseDrawer}
+          setParams={setParams}
+        />
       </CustomDrawer>
     </>
   );
@@ -69,14 +69,18 @@ const BrandFilterComponent = ({ setParams }) => {
     setIsFilterDrawerOpen(false);
   };
 
-  const handleSubmit = async (values) => {
-    const brand_ids = Object.keys(values).map((key) => {
-      if (values[key]) {
-        return key;
-      }
-    });
+  const [isSelected, setIsSelected] = useState([]);
 
-    setParams({ brand_ids });
+  const handleCardSelect = (id) => {
+    if (isSelected.includes(id)) {
+      setIsSelected(isSelected.filter((item) => item !== id));
+    } else {
+      setIsSelected([...isSelected, id]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setParams({ brand_ids: isSelected });
 
     handleCloseDrawer();
   };
@@ -95,9 +99,15 @@ const BrandFilterComponent = ({ setParams }) => {
       <CustomDrawer
         title={"Choose Brand"}
         open={isFilterDraweropen}
+        width={1400}
         onClose={handleCloseDrawer}
       >
-        <Brands handleSubmit={handleSubmit} onClose={handleCloseDrawer} />
+        <Brands
+          handleSubmit={handleSubmit}
+          onClose={handleCloseDrawer}
+          isSelected={isSelected}
+          handleCardSelect={handleCardSelect}
+        />
       </CustomDrawer>
     </>
   );

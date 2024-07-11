@@ -256,6 +256,10 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
   }, [result]);
 
+  const handleSubmit = async (values) => {
+    console.log(values);
+  };
+
   return (
     <CustomDrawer
       title={"Change Permission"}
@@ -264,7 +268,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       onClose={closeDrawer}
       isLoading={isLoading}
     >
-      <CustomForm form={form}>
+      <CustomForm form={form} handleSubmit={handleSubmit}>
         <CustomTable
           columns={columns}
           dataSource={dataSource}

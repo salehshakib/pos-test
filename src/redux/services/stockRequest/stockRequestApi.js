@@ -1,39 +1,40 @@
 // Import necessary dependencies
-import { COUPON } from "../../../utilities/apiEndpoints/offer.api";
+import { STOCK_REQUEST } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const couponApi = baseApi.injectEndpoints({
+const stockRequestApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllCoupon: build.query({
+    getAllStockRequest: build.query({
       query: ({ params }) => ({
-        url: `/${COUPON}`,
+        url: `/${STOCK_REQUEST}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: COUPON, ...params },
-        COUPON,
+        { type: STOCK_REQUEST, ...params },
+        STOCK_REQUEST,
       ],
     }),
 
-    getCouponDetails: build.query({
-      query: ({ id }) => {
+    getStockRequesDetails: build.query({
+      query: ({ id, params }) => {
         return {
-          url: `${COUPON}/show/${id}`,
+          url: `${STOCK_REQUEST}/show/${id}`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: COUPON, id }],
+      providesTags: (result, error, { id }) => [{ type: STOCK_REQUEST, id }],
     }),
 
-    createCoupon: build.mutation({
+    createStockRequest: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${COUPON}/store`,
+          url: `/${STOCK_REQUEST}/store`,
           method: "POST",
           body: data,
         };
@@ -51,14 +52,14 @@ const couponApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: COUPON }] : [];
+        return result ? [{ type: STOCK_REQUEST }] : [];
       },
     }),
 
-    updateCoupon: build.mutation({
+    updateStockRequest: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${COUPON}/update/${id}`,
+          url: `/${STOCK_REQUEST}/update/${id}`,
           method: "POST",
           body: data,
         };
@@ -69,21 +70,15 @@ const couponApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
-          return response;
-        }
-      },
       invalidatesTags: (result) => {
-        return result ? [{ type: COUPON }] : [];
+        return result ? [{ type: STOCK_REQUEST }] : [];
       },
     }),
 
-    updateCouponStatus: build.mutation({
+    updateStockRequestStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${COUPON}/status/${id}`,
+          url: `/${STOCK_REQUEST}/status/${id}`,
           method: "POST",
         };
       },
@@ -93,21 +88,15 @@ const couponApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
-          return response;
-        }
-      },
       invalidatesTags: (result) => {
-        return result ? [{ type: COUPON }] : [];
+        return result ? [{ type: STOCK_REQUEST }] : [];
       },
     }),
 
-    deleteCoupon: build.mutation({
+    deleteStockRequest: build.mutation({
       query: (id) => {
         return {
-          url: `/${COUPON}/delete/${id}`,
+          url: `/${STOCK_REQUEST}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -117,24 +106,18 @@ const couponApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
-          return response;
-        }
-      },
       invalidatesTags: (result) => {
-        return result ? [{ type: COUPON }] : [];
+        return result ? [{ type: STOCK_REQUEST }] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetAllCouponQuery,
-  useGetCouponDetailsQuery,
-  useCreateCouponMutation,
-  useUpdateCouponMutation,
-  useUpdateCouponStatusMutation,
-  useDeleteCouponMutation,
-} = couponApi;
+  useGetAllStockRequesQuery,
+  useGetStockRequestDetailsQuery,
+  useCreateStockRequesMutation,
+  useUpdateStockRequesMutation,
+  useUpdateStockRequesStatusMutation,
+  useDeleteStockRequesMutation,
+} = stockRequestApi;

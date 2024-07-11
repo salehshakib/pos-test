@@ -11,7 +11,7 @@ import {
   theme,
 } from "antd";
 import { useState } from "react";
-import { FaCashRegister } from "react-icons/fa";
+import { FaBell, FaCashRegister } from "react-icons/fa";
 import { GoBell } from "react-icons/go";
 import { MdPointOfSale } from "react-icons/md";
 import { RiErrorWarningFill } from "react-icons/ri";
@@ -122,7 +122,7 @@ const PosComponent = () => {
     <GlobalUtilityStyle>
       <Button
         icon={<MdPointOfSale size={18} />}
-        className="flex justify-center items-center gap-1 shadow-md"
+        className="flex justify-center items-center gap-1 shadow-sm"
         // size="large"
         onClick={posRegister}
       >
@@ -176,13 +176,28 @@ const CashRegisterComponent = () => {
     setOpen(false);
   };
 
+  const { token } = theme.useToken();
+
   return (
     <>
-      <Button
-        icon={<FaCashRegister size={18} />}
+      {/* <Button
+        icon={}
         className="flex justify-center items-center gap-1 shadow-md"
         onClick={handleCashRegister}
-      />
+      /> */}
+
+      <div
+        onClick={handleCashRegister}
+        className="flex justify-center items-center"
+      >
+        <FaCashRegister
+          size={24}
+          style={{
+            color: token.colorPrimary,
+          }}
+          className="hover:cursor-pointer hover:shadow-lg"
+        />
+      </div>
 
       <Modal
         title={
@@ -247,7 +262,7 @@ const NotificationComponent = () => {
       overlayClassName="rounded-md shadow-xl "
       overlayStyle={{ width: 300 }}
       overlayInnerStyle={{
-        backgroundColor: "#F8FAFC",
+        // backgroundColor: "#F8FAFC",
         maxHeight: "85vh",
         overflowY: "auto",
       }}
@@ -255,17 +270,22 @@ const NotificationComponent = () => {
       open={isPopoverOpen}
       arrow={false}
     >
-      <Button className="rounded-md shadow-md" onClick={handleNotification}>
+      {/* <button className="rounded-md shadow-md" onClick={handleNotification}> */}
+      <div
+        onClick={handleNotification}
+        className="flex justify-center items-center"
+      >
         <Badge dot={show}>
-          <GoBell
-            size={20}
+          <FaBell
+            size={24}
             style={{
               color: token.colorPrimary,
             }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer "
           />
         </Badge>
-      </Button>
+      </div>
+      {/* </button> */}
     </Popover>
   );
 };
@@ -319,7 +339,7 @@ const Profile = () => {
   );
 
   return (
-    <div className=" flex justify-center items-center gap-3">
+    <div className=" flex justify-center items-center gap-5">
       {/* <CreateComponent /> */}
       {!pathname.includes("/pos") && (
         <>

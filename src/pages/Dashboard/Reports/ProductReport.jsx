@@ -182,12 +182,12 @@ export const ProductReport = () => {
     { skip: !product_id }
   );
 
+  console.log(data);
+
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const summaryDetails = createDetailsLayout(summaryData);
-
-  console.log(searchParams);
 
   const summaryType = {
     warehouse_ids: searchParams?.warehouse_ids

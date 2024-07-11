@@ -29,15 +29,23 @@ export const SearchProduct = ({ setProducts }) => {
 
     params: {
       warehouse_id: warehouseId,
-      ...(keyword ? {} : { page: 1, pageSize: 20 }),
+      ...(keyword ? {} : { page: 1, perPage: 20, allData: 1 }),
+      child: 1,
+      need_qty: 1,
+      need_price: 1,
     },
     keyword,
-    isRelationalParams: true,
+    // isRelationalParams: true,
   });
 
-  const { data, isFetching } = useGetAllProductsQuery({
-    params,
-  });
+  const { data, isFetching } = useGetAllProductsQuery(
+    {
+      params,
+    },
+    {
+      skip: !warehouseId && !warehouseIdFrom,
+    }
+  );
 
   const loadingContent = (
     <div className="flex items-center justify-center ">
@@ -65,6 +73,7 @@ export const SearchProduct = ({ setProducts }) => {
   const ignorePaths = ["stock-request", "print-barcode"];
 
   const onSelect = (_, option) => {
+    console.log(option);
     if (
       !warehouseId &&
       !warehouseIdFrom &&

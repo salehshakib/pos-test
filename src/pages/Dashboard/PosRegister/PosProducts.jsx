@@ -22,8 +22,6 @@ const PosProducts = ({
 }) => {
   const warehouseId = Form.useWatch("warehouse_id", form);
 
-  console.log(searchParams);
-
   const [pagination, setPagination] = useState({
     page: 1,
     perPage: 25,
@@ -196,7 +194,7 @@ const PosProducts = ({
                               <div className="w-full">
                                 <img
                                   alt="example"
-                                  className="h-[3.5rem] mx-auto object-cover "
+                                  className="mx-auto object-cover size-20 "
                                   src={
                                     // images?.attach_file?.[0]?.url ??
                                     // images?.attachments?.[0]?.url ??

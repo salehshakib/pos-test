@@ -366,6 +366,7 @@ const ProductForm = ({
             name={"attachments"}
             multiple={true}
             required={true}
+            type="img"
           />
         </Col>
       </Row>

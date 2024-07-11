@@ -14,7 +14,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: ROLE_PERMISSION, params },
+        { type: ROLE_PERMISSION, ...params },
         ROLE_PERMISSION,
       ],
     }),
@@ -52,7 +52,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ROLE_PERMISSION] : [];
+        return result ? [{ type: ROLE_PERMISSION }] : [];
       },
     }),
 
@@ -77,7 +77,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ROLE_PERMISSION] : [];
+        return result ? [{ type: ROLE_PERMISSION }] : [];
       },
     }),
 
@@ -101,7 +101,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ROLE_PERMISSION] : [];
+        return result ? [{ type: ROLE_PERMISSION }] : [];
       },
     }),
 
@@ -125,7 +125,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [ROLE_PERMISSION] : [];
+        return result ? [{ type: ROLE_PERMISSION }] : [];
       },
     }),
   }),

@@ -137,7 +137,6 @@ export const PurchaseForm = ({
       setProductUnits({
         purchase_units: {},
         tax_rate: {},
-        inclusive_tax_rate: {},
       });
     }
   }, [setFormValues, setProductUnits, setProducts, warehouseId]);

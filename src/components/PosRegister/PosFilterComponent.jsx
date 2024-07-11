@@ -1,10 +1,10 @@
-import { Button } from "antd";
+import { Button, theme } from "antd";
 import { useState } from "react";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { Brands } from "./Brand/Brands";
 import { Categories } from "./Categories/Categories";
 
-const CategoryFilterComponent = ({ setParams }) => {
+const CategoryFilterComponent = ({ setParams, color }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -15,30 +15,25 @@ const CategoryFilterComponent = ({ setParams }) => {
     setIsFilterDrawerOpen(false);
   };
 
-  // const [isSelected, setIsSelected] = useState([]);
+  const [isSelected, setIsSelected] = useState([]);
 
-  // const handleCardSelect = (id) => {
-  //   if (isSelected.includes(id)) {
-  //     setIsSelected(isSelected.filter((item) => item !== id));
-  //   } else {
-  //     setIsSelected([...isSelected, id]);
-  //   }
-  // };
+  const handleCardSelect = (id) => {
+    if (isSelected.includes(id)) {
+      setIsSelected(isSelected.filter((item) => item !== id));
+    } else {
+      setIsSelected([...isSelected, id]);
+    }
+  };
 
-  // const handleSubmit = async () => {
-  //   setParams({ category_ids: isSelected });
-
-  //   handleCloseDrawer();
-  // };
+  const handleSubmit = async () => {
+    // console.log(isSelected);
+    setParams({ category_ids: isSelected });
+    handleCloseDrawer();
+  };
 
   return (
     <>
-      <Button
-        type="primary"
-        // size="large"
-        className="w-full"
-        onClick={handleOpenDrawer}
-      >
+      <Button type="primary" className="w-full" onClick={handleOpenDrawer}>
         Category
       </Button>
 
@@ -49,16 +44,18 @@ const CategoryFilterComponent = ({ setParams }) => {
         width={1400}
       >
         <Categories
-          // handleSubmit={handleSubmit}
+          color={color}
+          handleSubmit={handleSubmit}
+          isSelected={isSelected}
+          handleCardSelect={handleCardSelect}
           onClose={handleCloseDrawer}
-          setParams={setParams}
         />
       </CustomDrawer>
     </>
   );
 };
 
-const BrandFilterComponent = ({ setParams }) => {
+const BrandFilterComponent = ({ setParams, color }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -87,12 +84,7 @@ const BrandFilterComponent = ({ setParams }) => {
 
   return (
     <>
-      <Button
-        type="primary"
-        // size="large"
-        className="w-full"
-        onClick={handleOpenDrawer}
-      >
+      <Button type="primary" className="w-full" onClick={handleOpenDrawer}>
         Brand
       </Button>
 
@@ -103,10 +95,11 @@ const BrandFilterComponent = ({ setParams }) => {
         onClose={handleCloseDrawer}
       >
         <Brands
+          color={color}
           handleSubmit={handleSubmit}
-          onClose={handleCloseDrawer}
           isSelected={isSelected}
           handleCardSelect={handleCardSelect}
+          onClose={handleCloseDrawer}
         />
       </CustomDrawer>
     </>
@@ -114,11 +107,14 @@ const BrandFilterComponent = ({ setParams }) => {
 };
 
 const PosFilterComponent = ({ setParams }) => {
+  const { token } = theme.useToken();
+
+  const color = token.colorPrimary;
+
   return (
     <div className="grid grid-cols-2 gap-3 px-4 pt-5">
-      <CategoryFilterComponent setParams={setParams} />
-
-      <BrandFilterComponent setParams={setParams} />
+      <CategoryFilterComponent setParams={setParams} color={color} />
+      <BrandFilterComponent setParams={setParams} color={color} />
     </div>
   );
 };

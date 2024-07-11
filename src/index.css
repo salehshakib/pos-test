@@ -48,6 +48,10 @@ html {
   color: var(--firstColor); 
 } */
 
+.ant-card .ant-card-cover img {
+  /* border-radius: 999px; */
+}
+
 .ant-input-number-input-wrap {
   font-size: 14px;
 }

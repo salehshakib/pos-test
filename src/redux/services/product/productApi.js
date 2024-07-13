@@ -52,6 +52,9 @@ const productApi = baseApi.injectEndpoints({
           return response;
         }
       },
+      invalidatesTags: (result) => {
+        return result ? [{ type: PRODUCT }] : [];
+      },
     }),
 
     updateProduct: build.mutation({

@@ -1,19 +1,11 @@
 import dayjs from "dayjs";
-import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
-import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
-import { STOCK_COUNT } from "../../utilities/apiEndpoints/inventory.api";
-import { base_url } from "../../utilities/configs/base_url";
+import { useGetAllStockRequestQuery } from "../../redux/services/stockRequest/stockRequestApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { downloadFile } from "../../utilities/lib/downloadFile";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import CustomTable from "../Shared/Table/CustomTable";
-
-const pageTitle = "Stock Count";
-const api = STOCK_COUNT;
 
 const StockRequestTable = ({
   newColumns,
@@ -35,10 +27,10 @@ const StockRequestTable = ({
     keyword,
   });
 
-  const { data, isLoading } = useGetStockCountsQuery(
+  const { data, isLoading } = useGetAllStockRequestQuery(
     { params },
     {
-      skip: !useUrlIndexPermission(),
+      // skip: !useUrlIndexPermission(),
     }
   );
   const total = data?.meta?.total;
@@ -51,53 +43,53 @@ const StockRequestTable = ({
   //   setDeleteModal(true);
   // };
 
-  const handleFileDownload = (id, format) => {
-    handleExport(id, format);
-  };
+  // const handleFileDownload = (id, format) => {
+  //   handleExport(id, format);
+  // };
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const handleExport = useCallback(
-    async (id, format) => {
-      setLoading(true);
-      const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
-      const supportedFormats = {
-        xlsx: "xlsx",
-        pdf: "pdf",
-        csv: "csv",
-      };
+  // const handleExport = useCallback(
+  //   async (id, format) => {
+  //     setLoading(true);
+  //     const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
+  //     const supportedFormats = {
+  //       xlsx: "xlsx",
+  //       pdf: "pdf",
+  //       csv: "csv",
+  //     };
 
-      if (!supportedFormats[format]) {
-        console.error("Unsupported file format");
-        return;
-      }
+  //     if (!supportedFormats[format]) {
+  //       console.error("Unsupported file format");
+  //       return;
+  //     }
 
-      fileUrl.searchParams.append("format", format);
+  //     fileUrl.searchParams.append("format", format);
 
-      try {
-        const response = await fetch(fileUrl, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  //     try {
+  //       const response = await fetch(fileUrl, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
 
-        if (!response.ok) {
-          throw new Error("Failed to download file");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to download file");
+  //       }
 
-        await downloadFile(response, supportedFormats[format], pageTitle);
-      } catch (error) {
-        console.error("Error:", error);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api, token]
-  );
+  //       await downloadFile(response, supportedFormats[format], pageTitle);
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //       setLoading(false);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [api, token]
+  // );
 
   // const handleDelete = async () => {
   //   const { data } = await deleteStockCount(deleteId);
@@ -107,31 +99,38 @@ const StockRequestTable = ({
   // };
 
   const dataSource =
-    data?.results?.stockcount?.map((item) => {
+    data?.results?.stockrequest?.map((item) => {
       const {
         id,
         reference_id,
         created_at,
-        type,
-        warehouses,
-        categories,
-        brands,
+        from_warehouses,
+        to_warehouses,
+        // type,
+        // warehouses,
+        // categories,
+        // brands,
+        stock_request_products,
       } = item ?? {};
 
-      console.log(item);
       const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      // const products =
+      //   stock_request_products?.map((item) => {
+      //     return {
+      //       name: item?.products?.name,
+      //       alertQty: item?.alert_qty,
+      //       needQty: item?.need_qty,
+      //     };
+      //   }) ?? [];
 
       return {
         id,
         reference: reference_id,
-        type: type,
+        fromWarehouse: from_warehouses?.name,
+        toWarehouse: to_warehouses?.name,
         created_at: date,
-        warehouse: warehouses?.map((item) => item?.name).join(" "),
-        category: categories?.map((item) => item?.name).join(" "),
-        brand: brands?.map((item) => item?.name).join(" "),
-
-        // handleDeleteModal,
-        handleFileDownload,
+        products: stock_request_products,
       };
     }) ?? [];
 
@@ -149,30 +148,12 @@ const StockRequestTable = ({
         updatePage={updatePage}
         updatePageSize={updatePageSize}
         setSelectedRows={setSelectedRows}
-        isLoading={isLoading || loading}
+        // isLoading={isLoading || loading}
+        isLoading={isLoading}
         isRowSelection={true}
         status={false}
+        action={false}
       />
-
-      {/* <StockCountEdit id={editId} setId={setEditId} />
-
-      {detailsId && (
-        <StockCountDetails
-          id={detailsId}
-          openModal={detailsModal}
-          hideModal={hideModal}
-        />
-      )}
-
-       */}
-
-      {/* <DeleteModal
-        deleteModal={deleteModal}
-        hideModal={hideModal}
-        handleDelete={handleDelete}
-        isLoading={isDeleting}
-        item={"stock count"}
-      /> */}
     </GlobalUtilityStyle>
   );
 };

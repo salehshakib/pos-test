@@ -57,28 +57,6 @@ export const ProviderConfig = ({ children }) => {
 
   const { data } = useGetGeneralSettingsQuery();
 
-  // const user = useSelector(useCurrentUser);
-  // const warehouseId = user?.warehouse_id;
-
-  // const { data: pettyCashData } = useCheckPettyCashQuery(
-  //   {
-  //     params: {
-  //       warehouse_id: parseInt(warehouseId),
-  //     },
-  //   },
-  //   {
-  //     skip: !warehouseId,
-  //   }
-  // );
-
-  // // const { pettyCash } = useSelector((state) => state.pettyCash);
-
-  // useEffect(() => {
-  //   if (pettyCashData?.data) {
-  //     dispatch(setPettyCash(pettyCashData?.data));
-  //   }
-  // }, [pettyCashData?.data, dispatch]);
-
   const menuItems = useMenuItems(adminPaths);
 
   useEffect(() => {
@@ -119,8 +97,8 @@ export const ProviderConfig = ({ children }) => {
 
   const customTheme = theme({ primaryColor, secondaryColor, textColor });
 
-  // if (!developedBy && !data)
-  //   return <LoadingComponent data={data} primaryColor={primaryColor} />;
+  if (!developedBy && !data)
+    return <LoadingComponent data={data} primaryColor={primaryColor} />;
 
   return (
     <React.StrictMode>

@@ -29,19 +29,15 @@ function PosRoute({ children }) {
     }
   );
 
-  // const { pettyCash } = useSelector((state) => state.pettyCash);
-
   useEffect(() => {
     if (pettyCashData?.data) {
       dispatch(setPettyCash(pettyCashData?.data));
     }
   }, [pettyCashData?.data, dispatch]);
 
-  // console.log(pettyCash);
-
-  // if (pettyCash === "Close") {
-  //   return <Navigate to={"/dashboard"} replace={true} />;
-  // }
+  if (pettyCash === "Close") {
+    return <Navigate to={"/dashboard"} replace={true} />;
+  }
 
   if (!token) {
     dispatch(logout());

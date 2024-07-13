@@ -19,7 +19,7 @@ const stockRequestApi = baseApi.injectEndpoints({
       ],
     }),
 
-    getStockRequesDetails: build.query({
+    getStockRequestDetails: build.query({
       query: ({ id, params }) => {
         return {
           url: `${STOCK_REQUEST}/show/${id}`,
@@ -114,10 +114,10 @@ const stockRequestApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllStockRequesQuery,
+  useGetAllStockRequestQuery,
   useGetStockRequestDetailsQuery,
-  useCreateStockRequesMutation,
-  useUpdateStockRequesMutation,
-  useUpdateStockRequesStatusMutation,
-  useDeleteStockRequesMutation,
+  useCreateStockRequestMutation,
+  useUpdateStockRequestMutation,
+  useUpdateStockRequestStatusMutation,
+  useDeleteStockRequestMutation,
 } = stockRequestApi;

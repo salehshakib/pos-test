@@ -93,16 +93,16 @@ const columns = [
   },
 ];
 
-function filterMissingObject(oldValue, newValue) {
-  const newValueIds = {};
-  newValue.forEach((obj) => {
-    newValueIds[obj.id] = true;
-  });
+// function filterMissingObject(oldValue, newValue) {
+//   const newValueIds = {};
+//   newValue.forEach((obj) => {
+//     newValueIds[obj.id] = true;
+//   });
 
-  const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
+//   const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
 
-  return filteredObject;
-}
+//   return filteredObject;
+// }
 
 const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   const [form] = Form.useForm();
@@ -129,15 +129,16 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     const itemName = id.split("_")[1];
     const formData = form.getFieldValue(["permission", itemName]);
 
-    const shouldRemove = Object.keys(formData).some(
-      (key) => formData[key] === false || formData[key] === undefined
-    );
+    const shouldRemove = Object.keys(formData).some((key) => !formData[key]);
+
+    const shouldUpdate = Object.values(formData).every((value) => value);
 
     const item = dataSource.find((item) => item.name === itemName);
 
     if (shouldRemove) {
       removeItem(item);
-    } else {
+    }
+    if (shouldUpdate) {
       addItem(item);
     }
   };
@@ -193,46 +194,90 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  console.log(form.getFieldsValue({}));
+
   const changeSelectedRows = (newSelectedRows) => {
-    if (selectedRows?.length > newSelectedRows.length) {
-      const deleteRow = filterMissingObject(selectedRows, newSelectedRows);
+    // Clear existing permissions if no rows are selected
+    if (!newSelectedRows.length) {
+      dataSource.map((item) => {
+        item.action.map((action) => {
+          const label = action.name.split(".")[1];
+          form.setFieldsValue({
+            permission: {
+              [item.name]: {
+                [label]: false,
+              },
+            },
+          });
+        });
+      });
+      setSelectedRows([]);
+      return;
+    }
 
-      deleteRow?.action?.map((action) => {
-        const label = action?.name?.split(".")[1];
+    // Set all selected items to true
+    if (newSelectedRows.length === dataSource.length) {
+      console.log(newSelectedRows.length, dataSource.length);
 
+      console.log(newSelectedRows);
+
+      newSelectedRows.map((item) => {
+        item.action.map((action) => {
+          const label = action.name.split(".")[1];
+          form.setFieldsValue({
+            permission: {
+              [item.name]: {
+                [label]: true,
+              },
+            },
+          });
+        });
+      });
+
+      console.log(newSelectedRows);
+      setSelectedRows(newSelectedRows);
+      return;
+    }
+
+    // Handle removed rows
+    const deletedRows = selectedRows.filter(
+      (row) => !newSelectedRows.some((newRow) => newRow.id === row.id)
+    );
+
+    console.log(deletedRows);
+    deletedRows.forEach((deletedRow) => {
+      deletedRow.action.forEach((action) => {
+        const label = action.name.split(".")[1];
         form.setFieldsValue({
           permission: {
-            [deleteRow.name]: {
+            [deletedRow.name]: {
               [label]: false,
             },
           },
         });
       });
+    });
 
-      setSelectedRows(newSelectedRows);
-    }
+    // Handle added rows
+    const addedRows = newSelectedRows.filter(
+      (row) => !selectedRows.some((selectedRow) => selectedRow.id === row.id)
+    );
 
-    if (selectedRows?.length < newSelectedRows.length) {
-      const addRow = filterMissingObject(newSelectedRows, selectedRows);
-
-      addRow?.action?.map((action) => {
-        const label = action?.name?.split(".")[1];
-
+    console.log(addedRows);
+    addedRows.forEach((addedRow) => {
+      addedRow.action.forEach((action) => {
+        const label = action.name.split(".")[1];
         form.setFieldsValue({
           permission: {
-            [addRow.name]: {
+            [addedRow.name]: {
               [label]: true,
             },
           },
         });
       });
+    });
 
-      setSelectedRows([...selectedRows, addRow]);
-    }
-
-    if (!newSelectedRows?.length) {
-      form.resetFields();
-    }
+    setSelectedRows(newSelectedRows);
   };
 
   const [updateRolePermission, { isLoading: isRoleUpdating }] =

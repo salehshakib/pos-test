@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useGetAllPermissionQuery,
   useGetUserRolePermissionQuery,
@@ -9,63 +9,6 @@ import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomTable from "../Shared/Table/CustomTable";
-
-const columns = [
-  {
-    title: "Module Name",
-    dataIndex: "name",
-    key: "name",
-    align: "left",
-    fixed: "left",
-    width: 250,
-    render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {name}
-      </span>
-    ),
-  },
-  {
-    //action
-    title: "Actions",
-    dataIndex: "action",
-    key: "action",
-    align: "left",
-    render: (text, record) => (
-      <span
-        className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
-        // className="text-xs font-medium md:text-sm text-dark dark:text-white87 flex flex-wrap  justify-start items-center gap-3 "
-      >
-        {text?.map((action, index) => {
-          const label = action?.name?.split(".")[1];
-          const isLongLabel = label && label.length > 15;
-
-          return (
-            <div
-              key={action?.id ?? index}
-              className={`${isLongLabel ? "col-span-2" : ""}`}
-            >
-              <CustomCheckbox
-                name={["permission", record.name, label]}
-                label={label}
-              />
-            </div>
-          );
-        })}
-      </span>
-    ),
-  },
-];
-
-function filterMissingObject(oldValue, newValue) {
-  const newValueIds = {};
-  newValue.forEach((obj) => {
-    newValueIds[obj.id] = true;
-  });
-
-  const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
-
-  return filteredObject;
-}
 
 const actionKeys = [
   "accesstoken.issueToken",
@@ -106,41 +49,119 @@ function filterActions(jsonData) {
   return filteredModules;
 }
 
+const columns = [
+  {
+    title: "Module Name",
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+    fixed: "left",
+    width: 250,
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    //action
+    title: "Actions",
+    dataIndex: "action",
+    key: "action",
+    align: "left",
+    render: (role, record) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        {role?.map((action, index) => {
+          const label = action?.name?.split(".")[1];
+          const isLongLabel = label && label.length > 15;
+
+          return (
+            <div
+              key={action?.id ?? index}
+              className={`${isLongLabel ? "col-span-2" : ""}`}
+            >
+              <CustomCheckbox
+                name={["permission", record.name, label]}
+                label={label}
+                onChange={record.onChange}
+              />
+            </div>
+          );
+        })}
+      </span>
+    ),
+  },
+];
+
+function filterMissingObject(oldValue, newValue) {
+  const newValueIds = {};
+  newValue.forEach((obj) => {
+    newValueIds[obj.id] = true;
+  });
+
+  const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
+
+  return filteredObject;
+}
+
 const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   const [form] = Form.useForm();
-  const formData = Form.useWatch("permission", form);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const { data: rolePermission, isLoading } = useGetAllPermissionQuery();
-
   const filteredData = filterActions(rolePermission);
 
-  const { data, isFetching } = useGetUserRolePermissionQuery(
-    {
-      params: {
-        role_id: changePermissionId,
-      },
-    },
-    {
-      skip: !rolePermission,
-    }
-  );
+  const removeItem = (item) => {
+    const itemExists = selectedRows.some((rowItem) => rowItem.id === item.id);
 
-  console.log(data);
+    if (itemExists) {
+      const newRows = selectedRows.filter((rowItem) => rowItem.id !== item.id);
+      setSelectedRows(newRows);
+    }
+  };
+
+  const addItem = (item) => {
+    setSelectedRows([...selectedRows, item]);
+  };
+
+  const onChange = (e) => {
+    const { id } = e.target;
+    const itemName = id.split("_")[1];
+    const formData = form.getFieldValue(["permission", itemName]);
+
+    const shouldRemove = Object.keys(formData).some(
+      (key) => formData[key] === false || formData[key] === undefined
+    );
+
+    const item = dataSource.find((item) => item.name === itemName);
+
+    if (shouldRemove) {
+      removeItem(item);
+    } else {
+      addItem(item);
+    }
+  };
+
+  const dataSource = filteredData?.map((item) => {
+    const { module, actions } = item ?? {};
+    return {
+      id: module,
+      name: module,
+      action: actions,
+      onChange,
+    };
+  });
+
+  const { data, isFetching } = useGetUserRolePermissionQuery(
+    { params: { role_id: changePermissionId } },
+    { skip: !rolePermission }
+  );
 
   useEffect(() => {
     if (data && open) {
       data.map((item) => {
-        console.log(item);
         item?.actions?.map((action) => {
           const label = action?.name?.split(".")[1];
-
-          // form.setFieldsValue({
-          //   permission: {
-          //     [item.module]: {
-          //       [label]: true,
-          //     },
-          //   },
-          // });
 
           form.setFieldValue([`permission`, item.module, label], true);
         });
@@ -148,35 +169,31 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
   }, [data, form, open]);
 
-  console.log(formData);
-
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  console.log(selectedRows);
-
   useEffect(() => {
-    if (selectedRows.length) {
-      selectedRows.map((item) => {
-        item?.action?.map((action) => {
-          const label = action?.name?.split(".")[1];
+    if (data) {
+      const newSelectedRows = [];
 
-          form.setFieldsValue({
-            permission: {
-              [item.name]: {
-                [label]: true,
-              },
-            },
-          });
+      dataSource.forEach((firstItem) => {
+        data.some((secondItem) => {
+          if (firstItem.name === secondItem.module) {
+            const areLengthsEqual =
+              firstItem.action.length === secondItem.actions.length;
+
+            if (areLengthsEqual) {
+              newSelectedRows.push(firstItem);
+            }
+            return true;
+          }
+          return false;
         });
       });
-    } else {
-      form.resetFields();
+
+      setSelectedRows(newSelectedRows);
     }
-  }, [form, selectedRows]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const changeSelectedRows = (newSelectedRows) => {
-    console.log(newSelectedRows);
-
     if (selectedRows?.length > newSelectedRows.length) {
       const deleteRow = filterMissingObject(selectedRows, newSelectedRows);
 
@@ -186,74 +203,37 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
         form.setFieldsValue({
           permission: {
             [deleteRow.name]: {
-              [label]: undefined,
+              [label]: false,
             },
           },
         });
       });
+
+      setSelectedRows(newSelectedRows);
     }
 
-    setSelectedRows(newSelectedRows);
+    if (selectedRows?.length < newSelectedRows.length) {
+      const addRow = filterMissingObject(newSelectedRows, selectedRows);
+
+      addRow?.action?.map((action) => {
+        const label = action?.name?.split(".")[1];
+
+        form.setFieldsValue({
+          permission: {
+            [addRow.name]: {
+              [label]: true,
+            },
+          },
+        });
+      });
+
+      setSelectedRows([...selectedRows, addRow]);
+    }
 
     if (!newSelectedRows?.length) {
       form.resetFields();
     }
   };
-
-  const dataSource =
-    filteredData?.map((item) => {
-      const { module, actions } = item ?? {};
-
-      return {
-        id: module,
-        name: module,
-        action: actions,
-      };
-    }) ?? [];
-
-  function transformData(formData) {
-    let transformedData = [];
-
-    for (let key in formData) {
-      let obj = {
-        id: key,
-        name: key,
-        action: [],
-      };
-
-      let includeObject = false;
-
-      if (formData[key]) {
-        for (let actionKey in formData[key]) {
-          if (formData[key][actionKey]) {
-            let actionObj = {
-              id: Math.floor(Math.random() * 100),
-              name: `${key}.${actionKey}`,
-            };
-            obj.action.push(actionObj);
-            includeObject = true;
-          } else {
-            includeObject = false;
-            break;
-          }
-        }
-      }
-
-      if (includeObject) {
-        transformedData.push(obj);
-      }
-    }
-
-    return transformedData;
-  }
-
-  const result = useMemo(() => transformData(formData), [formData]);
-
-  useEffect(() => {
-    if (result.length > 0) {
-      setSelectedRows(result);
-    }
-  }, [result]);
 
   const [updateRolePermission, { isLoading: isRoleUpdating }] =
     useUpdateRolePermissionMutation();
@@ -281,7 +261,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       }
     }
 
-    console.log(transformedObject);
     const formData = new FormData();
 
     const postObj = {
@@ -292,8 +271,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     Object.keys(postObj).forEach((key) => {
       formData.append(key, postObj[key]);
     });
-
-    // appendToFormData(postObj, formData);
 
     const { data, error } = await updateRolePermission({
       data: formData,
@@ -339,7 +316,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
           isRowSelection={true}
           setSelectedRows={setSelectedRows}
           selectedRows={selectedRows}
-          // debounce={debounce}
           changeSelectedRows={changeSelectedRows}
           tableStyleProps={{
             scroll: {

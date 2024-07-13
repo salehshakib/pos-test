@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   useGetAllPermissionQuery,
   useGetUserRolePermissionQuery,
+  useUpdateRolePermissionMutation,
 } from "../../redux/services/rolePermission/rolePermissionApi";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
@@ -246,8 +247,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     return transformedData;
   }
 
-  console.log(formData);
-
   const result = useMemo(() => transformData(formData), [formData]);
 
   useEffect(() => {
@@ -256,8 +255,65 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     }
   }, [result]);
 
+  const [updateRolePermission, { isLoading: isRoleUpdating }] =
+    useUpdateRolePermissionMutation();
+
   const handleSubmit = async (values) => {
     console.log(values);
+
+    const { permission } = values;
+
+    const transformedObject = {};
+
+    for (const [key, value] of Object.entries(permission)) {
+      if (typeof value === "object" && value !== null) {
+        for (const [subKey, subValue] of Object.entries(value)) {
+          if (subValue !== undefined) {
+            // Check if subValue is not undefined
+            transformedObject[`${key.toLowerCase()}.${subKey}`] = subValue;
+          }
+        }
+      } else {
+        if (value !== undefined) {
+          // Check if value is not undefined
+          transformedObject[`${key.toLowerCase()}`] = value;
+        }
+      }
+    }
+
+    console.log(transformedObject);
+    const formData = new FormData();
+
+    const postObj = {
+      role_id: changePermissionId,
+      ...transformedObject,
+    };
+
+    Object.keys(postObj).forEach((key) => {
+      formData.append(key, postObj[key]);
+    });
+
+    // appendToFormData(postObj, formData);
+
+    const { data, error } = await updateRolePermission({
+      data: formData,
+    });
+
+    if (data?.success) {
+      closeDrawer();
+      form.resetFields();
+    }
+
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+
+      // setErrorFields(errorFields);
+
+      console.log(errorFields);
+    }
   };
 
   return (
@@ -268,7 +324,11 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       onClose={closeDrawer}
       isLoading={isLoading}
     >
-      <CustomForm form={form} handleSubmit={handleSubmit}>
+      <CustomForm
+        form={form}
+        handleSubmit={handleSubmit}
+        isLoading={isRoleUpdating}
+      >
         <CustomTable
           columns={columns}
           dataSource={dataSource}

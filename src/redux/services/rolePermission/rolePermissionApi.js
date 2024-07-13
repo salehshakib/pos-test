@@ -69,9 +69,9 @@ const rolePermissionApi = baseApi.injectEndpoints({
     }),
 
     updateRolePermission: build.mutation({
-      query: ({ id, data }) => {
+      query: ({ data }) => {
         return {
-          url: `/${ROLE_PERMISSION}/update/${id}`,
+          url: `/${PERMISSION}`,
           method: "POST",
           body: data,
         };
@@ -89,7 +89,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ROLE_PERMISSION }] : [];
+        return result ? [{ type: PERMISSION }] : [];
       },
     }),
 

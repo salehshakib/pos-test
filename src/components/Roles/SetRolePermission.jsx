@@ -93,17 +93,6 @@ const columns = [
   },
 ];
 
-// function filterMissingObject(oldValue, newValue) {
-//   const newValueIds = {};
-//   newValue.forEach((obj) => {
-//     newValueIds[obj.id] = true;
-//   });
-
-//   const filteredObject = oldValue.find((obj) => !newValueIds[obj.id]);
-
-//   return filteredObject;
-// }
-
 const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
   const [form] = Form.useForm();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -129,9 +118,15 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     const itemName = id.split("_")[1];
     const formData = form.getFieldValue(["permission", itemName]);
 
+    console.log(e.target);
+
+    console.log(formData);
+
     const shouldRemove = Object.keys(formData).some((key) => !formData[key]);
 
     const shouldUpdate = Object.values(formData).every((value) => value);
+
+    console.log(shouldRemove, shouldUpdate);
 
     const item = dataSource.find((item) => item.name === itemName);
 
@@ -284,8 +279,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     useUpdateRolePermissionMutation();
 
   const handleSubmit = async (values) => {
-    console.log(values);
-
     const { permission } = values;
 
     const transformedObject = {};
@@ -294,13 +287,11 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       if (typeof value === "object" && value !== null) {
         for (const [subKey, subValue] of Object.entries(value)) {
           if (subValue !== undefined) {
-            // Check if subValue is not undefined
             transformedObject[`${key.toLowerCase()}.${subKey}`] = subValue;
           }
         }
       } else {
         if (value !== undefined) {
-          // Check if value is not undefined
           transformedObject[`${key.toLowerCase()}`] = value;
         }
       }
@@ -312,6 +303,10 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       role_id: changePermissionId,
       ...transformedObject,
     };
+
+    actionKeys.forEach((key) => {
+      postObj[key] = true;
+    });
 
     Object.keys(postObj).forEach((key) => {
       formData.append(key, postObj[key]);

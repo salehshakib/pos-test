@@ -6,51 +6,7 @@ import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
 
-// const productColumns = [
-//   {
-//     title: "Product",
-//     dataIndex: "name",
-//     key: "name",
-//     render: (name) => (
-//       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-//         {name}
-//       </span>
-//     ),
-//   },
-//   {
-//     title: "Alert Qty",
-//     dataIndex: "alertQty",
-//     key: "alertQty",
-//     render: (alertQty) => (
-//       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-//         {alertQty}
-//       </span>
-//     ),
-//   },
-//   {
-//     title: "Need Qty",
-//     dataIndex: "needQty",
-//     key: "needQty",
-//     render: (needQty) => (
-//       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-//         {needQty}
-//       </span>
-//     ),
-//   },
-// ];
-
 const columns = [
-  // {
-  //   title: "Reference",
-  //   dataIndex: "products",
-  //   key: "reference",
-  //   align: "center",
-  //   render: (reference) => (
-  //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //       {reference}
-  //     </span>
-  //   ),
-  // },
   {
     title: "From Warehouse",
     dataIndex: "fromWarehouse",
@@ -72,76 +28,15 @@ const columns = [
     ),
   },
   {
-    title: "Request Products",
-    dataIndex: "products",
-    key: "products",
+    title: "Request Quantity",
+    dataIndex: "reqQty",
+    key: "reqQty",
     align: "center",
-    render: (products) =>
-      products?.length > 0 &&
-      products?.map((item) => (
-        <div
-          className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2"
-          key={item?.id}
-        >
-          <span className="text-start">{item?.products?.name}</span>
-          <span className="text-start">Request: {item?.need_qty}</span>
-        </div>
-      )),
-    // children: [
-    //   {
-    //     title: "Product",
-    //     dataIndex: "name",
-    //     key: "name",
-    //     render: (name) => (
-    //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-    //         {name}
-    //       </span>
-    //     ),
-    //   },
-    //   {
-    //     title: "Alert Qty",
-    //     dataIndex: "alertQty",
-    //     key: "alertQty",
-    //     render: (alertQty) => (
-    //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-    //         {alertQty}
-    //       </span>
-    //     ),
-    //   },
-    //   {
-    //     title: "Need Qty",
-    //     dataIndex: "needQty",
-    //     key: "needQty",
-    //     render: (needQty) => (
-    //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-    //         {needQty}
-    //       </span>
-    //     ),
-    //   },
-    // ],
-    // render: (products) => {
-    //   return (
-    //     <Table
-    //       columns={productColumns}
-    //       dataSource={products}
-    //       size="small"
-    //       pagination={false}
-    //       className="w-full"
-    //     />
-    //   );
-    // },
-
-    // render: (products) => {
-    //   return (
-    //     products.length  && products?.map((product) => {
-    //       return (
-    //         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-    //           {product?.name}
-    //         </span>
-    //       );
-    //     })
-    //   )
-    // },
+    render: (reqQty) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {reqQty ?? "N/A"}
+      </span>
+    ),
   },
   // {
   //   title: "Status",

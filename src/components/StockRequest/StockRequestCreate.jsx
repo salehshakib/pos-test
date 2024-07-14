@@ -1,8 +1,10 @@
 import { Form } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useGetAllProductsQuery } from "../../redux/services/product/productApi";
 import { useCreateStockRequestMutation } from "../../redux/services/stockRequest/stockRequestApi";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { StockRequestForm } from "./StockRequestForm";
@@ -21,7 +23,30 @@ const StockRequestCreate = () => {
     product_list: { qty: {}, min_qty: {} },
   });
 
+  const warehouseId = Form.useWatch("from_warehouse_id", form);
+
+  const params = useGlobalParams({
+    params: {
+      warehouse_id: warehouseId,
+
+      child: 1,
+      need_qty: 1,
+    },
+  });
+
+  const { data, isFetching } = useGetAllProductsQuery(
+    { params },
+    { skip: !warehouseId }
+  );
+
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      const list = data?.results?.product;
+      setProducts(list);
+    }
+  }, [data]);
 
   const handleSubmit = async (values) => {
     const { from_warehouse_id, to_warehouse_id, note } = values;
@@ -67,6 +92,8 @@ const StockRequestCreate = () => {
       setErrorFields(errorFields);
     }
   };
+
+  console.log(data);
 
   return (
     <CustomDrawer

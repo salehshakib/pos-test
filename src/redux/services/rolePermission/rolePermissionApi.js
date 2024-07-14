@@ -2,6 +2,7 @@
 import {
   PERMISSION,
   ROLE_PERMISSION,
+  SET_PERMISSION,
 } from "../../../utilities/apiEndpoints/auth.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
@@ -71,7 +72,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
     updateRolePermission: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${PERMISSION}`,
+          url: `/${SET_PERMISSION}`,
           method: "POST",
           body: data,
         };
@@ -89,7 +90,7 @@ const rolePermissionApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: PERMISSION }] : [];
+        return result ? [{ type: ROLE_PERMISSION }] : [];
       },
     }),
 

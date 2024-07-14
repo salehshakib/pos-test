@@ -1,52 +1,40 @@
 // Import necessary dependencies
-import { PETTY_CASH } from "../../../utilities/apiEndpoints/account.api";
+import { NOTIFICATION } from "../../../utilities/apiEndpoints/helper.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
-const pettyCashApi = baseApi.injectEndpoints({
+const notificationSlice = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllPettyCash: build.query({
+    getAllNotification: build.query({
       query: ({ params }) => ({
-        url: `/${PETTY_CASH}`,
+        url: `/${NOTIFICATION}`,
         method: "GET",
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: PETTY_CASH, ...params },
-        PETTY_CASH,
+        { type: NOTIFICATION, ...params },
+        NOTIFICATION,
       ],
     }),
 
-    createPettyCash: build.mutation({
-      query: ({ data }) => {
+    getNotificationDetails: build.query({
+      query: ({ id, params }) => {
         return {
-          url: `/${PETTY_CASH}/store`,
-          method: "POST",
-          body: data,
+          url: `${NOTIFICATION}/show/${id}`,
+          method: "GET",
+          params,
         };
       },
-      transformResponse: (response) => {
-        if (response?.success) {
-          return response;
-        }
-      },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
-          return response;
-        }
-      },
-      invalidatesTags: (result) => {
-        return result ? [{ type: PETTY_CASH }] : [];
-      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { id }) => [{ type: NOTIFICATION, id }],
     }),
 
-    updatePettyCash: build.mutation({
-      query: ({ id, data }) => {
+    createNotification: build.mutation({
+      query: ({ data }) => {
         return {
-          url: `/${PETTY_CASH}/update/${id}`,
+          url: `/${NOTIFICATION}/store`,
           method: "POST",
           body: data,
         };
@@ -64,14 +52,51 @@ const pettyCashApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: PETTY_CASH }] : [];
+        return result ? [{ type: NOTIFICATION }] : [];
       },
     }),
 
-    deletePettyCash: build.mutation({
+    updateNotification: build.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/${NOTIFICATION}/update/${id}`,
+          method: "POST",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: NOTIFICATION }] : [];
+      },
+    }),
+
+    updateNotificationStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${PETTY_CASH}/delete/${id}`,
+          url: `/${NOTIFICATION}/status/${id}`,
+          method: "POST",
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: NOTIFICATION }] : [];
+      },
+    }),
+
+    deleteNotification: build.mutation({
+      query: (id) => {
+        return {
+          url: `/${NOTIFICATION}/delete/${id}`,
           method: "DELETE",
         };
       },
@@ -81,42 +106,18 @@ const pettyCashApi = baseApi.injectEndpoints({
           return response;
         }
       },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
-          return response;
-        }
-      },
       invalidatesTags: (result) => {
-        return result ? [{ type: PETTY_CASH }] : [];
+        return result ? [{ type: NOTIFICATION }] : [];
       },
-    }),
-
-    checkPettyCash: build.query({
-      query: ({ params }) => ({
-        url: `/${PETTY_CASH}/check`,
-        method: "GET",
-        params,
-      }),
-      transformResponse: (response) => {
-        if (response?.success) {
-          return response;
-        }
-      },
-      providesTags: (result, error, { params }) => [
-        { type: PETTY_CASH, ...params },
-        PETTY_CASH,
-      ],
     }),
   }),
 });
 
 export const {
-  useGetAllPettyCashQuery,
-  // useGetPettyCashDetailsQuery,
-  useUpdatePettyCashMutation,
-  // useUpdatePettyCashStatusMutation,
-  useDeletePettyCashMutation,
-  useCreatePettyCashMutation,
-  useCheckPettyCashQuery,
-} = pettyCashApi;
+  useGetAllNotificationQuery,
+  useGetNotificationDetailsQuery,
+  useCreateNotificationMutation,
+  useUpdateNotificationMutation,
+  useUpdateNotificationStatusMutation,
+  useDeleteNotificationMutation,
+} = notificationSlice;

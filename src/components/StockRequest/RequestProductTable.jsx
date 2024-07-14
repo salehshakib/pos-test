@@ -58,7 +58,7 @@ const columns = [
     align: "center",
     width: 100,
     render: (stock, record) =>
-      stock > record ? (
+      stock > record.minQty ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {stock}
         </span>

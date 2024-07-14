@@ -17,7 +17,7 @@ import { router } from "../routes/routes";
 import { theme } from "../utilities/configs/theme";
 import { useMenuItems } from "../utilities/lib/getPermission";
 
-const LoadingComponent = ({ data, primaryColor }) => {
+const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const LoadingComponent = ({ data, primaryColor }) => {
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
-  if (isLoading) {
+  if (isLoading || (isDataLoading && !data)) {
     return (
       <div className="w-full h-screen flex flex-col justify-center items-center gap-5">
         <Spin size="large" />
@@ -55,7 +55,7 @@ export const ProviderConfig = ({ children }) => {
 
   const { developedBy } = useSelector((state) => state.developer);
 
-  const { data } = useGetGeneralSettingsQuery();
+  const { data, isLoading } = useGetGeneralSettingsQuery();
 
   const menuItems = useMenuItems(adminPaths);
 
@@ -98,7 +98,13 @@ export const ProviderConfig = ({ children }) => {
   const customTheme = theme({ primaryColor, secondaryColor, textColor });
 
   if (!developedBy && !data)
-    return <LoadingComponent data={data} primaryColor={primaryColor} />;
+    return (
+      <LoadingComponent
+        data={data}
+        primaryColor={primaryColor}
+        isLoading={isLoading}
+      />
+    );
 
   return (
     <React.StrictMode>

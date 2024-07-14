@@ -158,3 +158,8 @@ html {
 .animate-leave {
   animation: leave 0.2s ease-in forwards;
 }
+
+.profile-ul:hover {
+  cursor: pointer;
+  color: var(--firstColor) !important;
+}

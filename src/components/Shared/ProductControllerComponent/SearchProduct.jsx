@@ -9,7 +9,7 @@ import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import { openNotification } from "../../../utilities/lib/openToaster";
 
-const ignorePaths = ["stock-request", "print-barcode", "products"];
+const ignorePaths = ["stock-request", "print-barcode", "products", "transfer"];
 
 export const SearchProduct = ({ setProducts }) => {
   const [keyword, setKeyword] = useState(null);
@@ -21,6 +21,8 @@ export const SearchProduct = ({ setProducts }) => {
   const warehouseId = Form.useWatch("warehouse_id", form);
   const warehouseIdFrom = Form.useWatch("from_warehouse_id", form);
 
+  console.log(warehouseId, warehouseIdFrom);
+
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== "") {
       setKeyword(value);
@@ -31,7 +33,10 @@ export const SearchProduct = ({ setProducts }) => {
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
   const baseParams = {
-    warehouse_id: warehouseId,
+    warehouse_id:
+      pathname.includes("transfer") || pathname.includes("stock-request")
+        ? warehouseIdFrom
+        : warehouseId,
   };
 
   if (!keyword) {

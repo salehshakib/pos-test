@@ -52,6 +52,8 @@ export function setFormValuesId(
   //   tax
   // ).toFixed(2);
 
+  console.log(sale_units);
+
   const total =
     tax_method === "Inclusive"
       ? Math.round(

@@ -293,6 +293,8 @@ function setFormValuesId(
     ((productPurchaseUnitsValue * taxRate * netUnitCost * qty) / 100).toFixed(2)
   );
 
+  console.log(purchase_units);
+
   // Calculating total
   const total =
     tax_method === "Inclusive"

@@ -399,6 +399,8 @@ function setFormValuesId(
   //   2
   // );
 
+  console.log(purchase_units);
+
   const total =
     tax_method === "Inclusive"
       ? Math.round(

@@ -527,15 +527,6 @@ export const TransferProductTable = ({
     // setTotalDiscount(totalDiscount);
   }, [formValues, products]);
 
-  // products?.length > 0 &&
-  //   dataSource.push({
-  //     id: "",
-  //     name: "Total",
-  //     quantity: totalQuantity,
-  //     subTotal: totalPrice,
-  //     tax: totalTax,
-  //   });
-
   form.setFieldsValue(formValues);
 
   const tableStyle = {
@@ -543,7 +534,7 @@ export const TransferProductTable = ({
       return (
         <Table.Summary fixed="bottom">
           <Table.Summary.Row>
-            <Table.Summary.Cell index={1} colSpan={3}>
+            <Table.Summary.Cell index={1} colSpan={4}>
               <Typography.Text className="font-bold" type="">
                 Total
               </Typography.Text>

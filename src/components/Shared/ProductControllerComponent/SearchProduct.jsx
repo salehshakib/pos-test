@@ -9,11 +9,14 @@ import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import { openNotification } from "../../../utilities/lib/openToaster";
 
+const ignorePaths = ["stock-request", "print-barcode", "products"];
+
 export const SearchProduct = ({ setProducts }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
   const form = Form.useFormInstance();
+  const { pathname } = useLocation();
 
   const warehouseId = Form.useWatch("warehouse_id", form);
   const warehouseIdFrom = Form.useWatch("from_warehouse_id", form);
@@ -24,18 +27,29 @@ export const SearchProduct = ({ setProducts }) => {
     }
   }, 1000);
 
-  const params = useGlobalParams({
-    // selectValue: ["id", "name"],
+  const isIgnore =
+    ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
-    params: {
-      warehouse_id: warehouseId,
-      ...(keyword ? {} : { page: 1, perPage: 20, allData: 1 }),
-      child: 1,
-      need_qty: 1,
-      need_price: 1,
-    },
+  const baseParams = {
+    warehouse_id: warehouseId,
+  };
+
+  if (!keyword) {
+    baseParams.page = 1;
+    baseParams.perPage = 20;
+    baseParams.allData = 1;
+  }
+
+  if (isIgnore) {
+    baseParams.child = 1;
+    baseParams.need_qty = 1;
+    baseParams.need_price = 1;
+  }
+
+  const params = useGlobalParams({
+    params: baseParams,
     keyword,
-    // isRelationalParams: true,
+    isRelationalParams: !isIgnore,
   });
 
   const { data, isFetching } = useGetAllProductsQuery(
@@ -43,7 +57,7 @@ export const SearchProduct = ({ setProducts }) => {
       params,
     },
     {
-      skip: !warehouseId && !warehouseIdFrom,
+      skip: !warehouseId && !warehouseIdFrom && isIgnore,
     }
   );
 
@@ -68,17 +82,9 @@ export const SearchProduct = ({ setProducts }) => {
         product: product,
       })) ?? [];
 
-  const { pathname } = useLocation();
-  console.log(pathname);
-  const ignorePaths = ["stock-request", "print-barcode"];
-
   const onSelect = (_, option) => {
     console.log(option);
-    if (
-      !warehouseId &&
-      !warehouseIdFrom &&
-      ignorePaths.filter((item) => pathname.includes(item)).length === 0
-    ) {
+    if (!warehouseId && !warehouseIdFrom && isIgnore) {
       // message.error("Please select warehouse");
       openNotification("warning", "Please select warehouse");
 
@@ -90,10 +96,7 @@ export const SearchProduct = ({ setProducts }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    if (
-      !stock &&
-      ignorePaths.filter((item) => pathname.includes(item)).length === 0
-    ) {
+    if (!stock && isIgnore) {
       // message.error("Product is out of stock");
       openNotification("warning", "Product is out of stock");
       setValue(null);

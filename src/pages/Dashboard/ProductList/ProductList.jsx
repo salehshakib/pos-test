@@ -97,7 +97,7 @@ const columns = [
     align: "center",
     render: (quantity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {quantity}
+        {quantity ?? 0}
       </span>
     ),
   },

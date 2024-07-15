@@ -9,6 +9,7 @@ import {
   Popover,
   Row,
   theme,
+  Tooltip,
 } from "antd";
 import { useEffect, useState } from "react";
 import { FaBell, FaCashRegister } from "react-icons/fa";
@@ -193,13 +194,15 @@ const PosComponent = () => {
 
   return (
     <GlobalUtilityStyle>
-      <Button
-        icon={<MdPointOfSale size={18} />}
-        className="flex justify-center items-center gap-1 shadow-sm"
-        onClick={posRegister}
-      >
-        POS
-      </Button>
+      <Tooltip title="POS">
+        <Button
+          icon={<MdPointOfSale size={18} />}
+          className="flex justify-center items-center gap-1 shadow-sm"
+          onClick={posRegister}
+        >
+          POS
+        </Button>
+      </Tooltip>
 
       <PettyCashOpenComponent
         navigate={navigate}
@@ -263,13 +266,15 @@ const CloseCashRegister = () => {
         onClick={handleCashRegister}
         className="flex justify-center items-center"
       >
-        <FaCashRegister
-          size={24}
-          style={{
-            color: token.colorPrimary,
-          }}
-          className="hover:cursor-pointer hover:shadow-lg"
-        />
+        <Tooltip title="Petty Cash">
+          <FaCashRegister
+            size={24}
+            style={{
+              color: token.colorPrimary,
+            }}
+            className="hover:cursor-pointer hover:shadow-lg"
+          />
+        </Tooltip>
       </div>
 
       <Modal
@@ -357,15 +362,17 @@ const NotificationComponent = () => {
         onClick={handleNotification}
         className="flex justify-center items-center"
       >
-        <Badge dot={show}>
-          <FaBell
-            size={24}
-            style={{
-              color: token.colorPrimary,
-            }}
-            className="hover:cursor-pointer "
-          />
-        </Badge>
+        <Tooltip title="Notifications">
+          <Badge dot={show}>
+            <FaBell
+              size={24}
+              style={{
+                color: token.colorPrimary,
+              }}
+              className="hover:cursor-pointer "
+            />
+          </Badge>
+        </Tooltip>
       </div>
     </Popover>
   );
@@ -435,11 +442,7 @@ const Profile = () => {
   return (
     <div className=" flex justify-center items-center gap-5">
       {/* <CreateComponent /> */}
-      {!pathname.includes("/pos") && (
-        <>
-          <PosComponent />
-        </>
-      )}
+      {!pathname.includes("/pos") && <PosComponent />}
 
       <CloseCashRegister />
 

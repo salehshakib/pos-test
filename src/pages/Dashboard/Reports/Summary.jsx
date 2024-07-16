@@ -576,6 +576,11 @@ export const Summary = () => {
     reportForm.setFieldsValue({
       daterange: lastWeek,
     });
+
+    setDateRange([
+      lastWeek[0].format("DD-MM-YYYY"),
+      lastWeek[1].format("DD-MM-YYYY"),
+    ]);
   }, [reportForm, user?.warehouse_id]);
 
   const onDateChange = (dates, dateStrings) => {
@@ -591,7 +596,9 @@ export const Summary = () => {
     warehouse_id: warehouse,
   };
 
-  const { data } = useGetReportSummaryQuery({ params });
+  console.log(params);
+
+  const { data } = useGetReportSummaryQuery({ params }, { skip: !warehouse });
 
   return (
     <ReportContainer

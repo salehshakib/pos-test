@@ -93,7 +93,7 @@ const createDetailsLayout = (data, nostyle) => {
         }
 
         if (currencyKeys.includes(key)) {
-          return `{value}`;
+          return `${value}`;
         }
         if (key.includes("date")) {
           return dayjs(value).format("DD-MM-YYYY");

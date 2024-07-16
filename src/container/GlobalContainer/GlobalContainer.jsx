@@ -400,7 +400,9 @@ const GlobalContainer = ({
                   placement="bottomRight"
                   // className="border border-slate-500 rounded-md"
                   overlayClassName="rounded-md shadow-xl"
-                  overlayStyle={{ width: popoverWidth }}
+                  overlayStyle={{
+                    width: searchFilterContent ? popoverWidth : 400,
+                  }}
                   overlayInnerStyle={{
                     backgroundColor: "",
                   }}

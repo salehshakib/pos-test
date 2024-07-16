@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { openNotification } from "../../utilities/lib/openToaster";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
@@ -334,6 +335,10 @@ const ProductListEdit = ({ id }) => {
           };
         })
       : [];
+
+    if (has_stock && qtyListArray.length === 0) {
+      return openNotification("info", "Please add atleast one warehouse");
+    }
 
     const qty = qtyListArray.reduce(
       (sum, item) => parseInt(sum) + parseInt(item.qty),

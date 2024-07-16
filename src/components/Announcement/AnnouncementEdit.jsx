@@ -43,6 +43,11 @@ export const AnnouncementEdit = ({ id, setId }) => {
           value: data?.departments?.map((item) => item?.id?.toString()),
           erros: "",
         },
+        {
+          name: "is_send_email",
+          value: data?.is_send_email.toString() === "1" ? true : false,
+          erros: "",
+        },
       ];
 
       const newFieldData = updateFieldValues(fieldData, updateFieldData);

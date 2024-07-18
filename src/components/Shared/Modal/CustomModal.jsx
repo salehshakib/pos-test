@@ -12,6 +12,7 @@ const CustomModal = ({
   modalStyleProps,
   loading,
   onOk,
+  notification = false,
 }) => {
   const modalProps = {
     centered: true,
@@ -45,6 +46,16 @@ const CustomModal = ({
           <div className="pt-2 pr-3 max-h-[76vh] overflow-y-auto overflow-x-hidden">
             {children}
           </div>
+          {notification && (
+            <div className="w-full flex justify-end items-center gap-3 mt-5">
+              <Button type="" onClick={hideModal}>
+                Reject
+              </Button>
+              <Button type="primary" onClick={onOk} loading={loading}>
+                Accept
+              </Button>
+            </div>
+          )}
           {showCloseButton && (
             <div className="w-full flex justify-end items-center gap-3 mt-5">
               <Button type="primary" onClick={hideModal}>

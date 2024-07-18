@@ -21,6 +21,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { logout, useCurrentUser } from "../../../redux/services/auth/authSlice";
+import { useGetAllNotificationQuery } from "../../../redux/services/notification/notificationApi";
 import {
   useCheckPettyCashQuery,
   useCreatePettyCashMutation,
@@ -30,7 +31,9 @@ import {
   clearPettyCash,
   setPettyCash,
 } from "../../../redux/services/pettycash/pettyCashSlice";
+import { categorizeNotifications } from "../../../utilities/lib/notification/notificationData";
 import { openNotification } from "../../../utilities/lib/openToaster";
+import NotificationComponent from "../../Notification/Notification";
 import CustomInput from "../../Shared/Input/CustomInput";
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
@@ -316,43 +319,107 @@ const CloseCashRegister = () => {
   );
 };
 
-const NotificationComponent = () => {
+const Notification = () => {
   const [show, setShow] = useState(true);
   const { token } = theme.useToken();
+  const { pathname } = useLocation();
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  // const user = useSelector(useCurrentUser);
+  const user = useSelector(useCurrentUser);
+  const warehouseId = user?.warehouse_id;
 
-  // const { data } = useGetAllNotificationQuery(
-  //   {
-  //     params: { warehouse_id: user?.warehouse_id },
-  //   },
-  //   { skip: !user?.warehouse_id }
-  // );
+  const { data, refetch } = useGetAllNotificationQuery({
+    id: warehouseId,
+  });
 
-  // console.log(data);
+  useEffect(() => {
+    refetch();
+  }, [pathname, refetch]);
+
+  useEffect(() => {
+    if (data?.length === 0) {
+      setShow(false);
+    }
+  }, [data]);
+
+  // const [readNotification] = useReadNotificationMutation();
+  // const { data } = await readNotification({ id });
+
+  const navigate = useNavigate();
+
+  const { unreadNotifications } = categorizeNotifications(data);
+
+  const onClose = () => {
+    setIsPopoverOpen(false);
+  };
+
+  const handleReadNotification = async (item) => {
+    if (item?.data?.stock_request_id) {
+      navigate("/inventory/stock-request", {
+        state: {
+          id: item?.data?.stock_request_id,
+          status: item?.read_at === null ? "unread" : "read",
+        },
+      });
+      onClose();
+    }
+  };
 
   const handleNotification = () => {
     setIsPopoverOpen(true);
+    handleReadNotification();
   };
 
-  const onClose = () => {
-    setShow(false);
-    setIsPopoverOpen(false);
+  const [selected, setSelected] = useState("All");
+
+  const selectedStyleProps = {
+    color: "#005FC6",
+    backgroundColor: "#DFE9F2",
+  };
+
+  const title = () => {
+    return (
+      <div className="space-y-2">
+        <div className="text-start font-bold text-[1.4rem]">Notifications</div>
+        <div className="flex items-center gap-2 text-sm">
+          <span
+            style={selected === "All" ? selectedStyleProps : {}}
+            className={`${selected === "Unread" ? "cursor-pointer hover:bg-[#f5f5f5]" : "cursor-default"} duration-300 px-4 py-1 rounded-full`}
+            onClick={() => setSelected("All")}
+          >
+            All
+          </span>
+          <span
+            style={selected === "Unread" ? selectedStyleProps : {}}
+            className={`${selected === "All" ? "cursor-pointer hover:bg-[#f5f5f5]" : "cursor-default"} duration-300 px-4 py-1 rounded-full`}
+            onClick={() => setSelected("Unread")}
+          >
+            Unread
+          </span>
+        </div>
+      </div>
+    );
   };
 
   return (
     <Popover
-      // content={FilterContentForm}
-      title={<div className="text-start text-xl font-bold">Notifications</div>}
+      content={
+        <NotificationComponent
+          data={selected === "All" ? data : unreadNotifications}
+          handleReadNotification={handleReadNotification}
+        />
+      }
+      title={title}
       trigger="click"
       placement="bottomRight"
       overlayClassName="rounded-md shadow-xl "
-      overlayStyle={{ width: 300 }}
+      overlayStyle={{ width: 330 }}
       overlayInnerStyle={{
         maxHeight: "85vh",
         overflowY: "auto",
+        padding: "15px",
+        paddingTop: "12px",
       }}
       onOpenChange={onClose}
       open={isPopoverOpen}
@@ -446,7 +513,7 @@ const Profile = () => {
 
       <CloseCashRegister />
 
-      <NotificationComponent />
+      <Notification />
       <Popover
         placement="bottomLeft"
         content={content}

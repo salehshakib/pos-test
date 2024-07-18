@@ -6,6 +6,7 @@ import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import CustomTable from "../Shared/Table/CustomTable";
 import { StockRequestDetails } from "./StockRequestDetails";
+import { AcceptStockRequest } from "./AcceptStockRequest";
 
 const StockRequestTable = ({
   newColumns,
@@ -95,6 +96,8 @@ const StockRequestTable = ({
           hideModal={hideModal}
         />
       )}
+
+      <AcceptStockRequest />
     </GlobalUtilityStyle>
   );
 };

@@ -2,25 +2,25 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
+import { setLoading } from "../../redux/services/loader/loaderSlice";
 import { useGetAllProductsQuery } from "../../redux/services/product/productApi";
 import { useCreateStockRequestMutation } from "../../redux/services/stockRequest/stockRequestApi";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { StockRequestForm } from "./StockRequestForm";
-import { setLoading } from "../../redux/services/loader/loaderSlice";
 
-function filterProductsByWarehouse(products, warehouseId) {
-  // Filter products based on warehouse_id = warehouseId in product_qties
-  return products.filter((product) => {
-    // Check if any product_qty matches the warehouseId
-    return product.product_qties.some(
-      (qty) =>
-        qty.warehouse_id === warehouseId &&
-        parseInt(qty.qty, 10) < parseInt(product?.alert_qty, 10)
-    );
-  });
-}
+// function filterProductsByWarehouse(products, warehouseId) {
+//   // Filter products based on warehouse_id = warehouseId in product_qties
+//   return products.filter((product) => {
+//     // Check if any product_qty matches the warehouseId
+//     return product.product_qties.some(
+//       (qty) =>
+//         qty.warehouse_id === warehouseId &&
+//         parseInt(qty.qty, 10) < parseInt(product?.alert_qty, 10)
+//     );
+//   });
+// }
 
 const StockRequestCreate = () => {
   const dispatch = useDispatch();
@@ -42,8 +42,8 @@ const StockRequestCreate = () => {
     params: {
       warehouse_id: warehouseId,
 
-      child: 1,
-      need_qty: 1,
+      // child: 1,
+      need_alert_qty: 1,
     },
   });
 
@@ -62,10 +62,12 @@ const StockRequestCreate = () => {
     if (data) {
       const list = data?.results?.product;
 
-      const filteredList = filterProductsByWarehouse(list, warehouseId);
+      console.log(list);
 
-      console.log(filteredList);
-      setProducts(filteredList);
+      // const filteredList = filterProductsByWarehouse(list, warehouseId);
+
+      // console.log(filteredList);
+      setProducts(list);
     }
   }, [data, warehouseId]);
 

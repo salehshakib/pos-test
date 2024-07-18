@@ -8,6 +8,19 @@ import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { StockRequestForm } from "./StockRequestForm";
+import { setLoading } from "../../redux/services/loader/loaderSlice";
+
+function filterProductsByWarehouse(products, warehouseId) {
+  // Filter products based on warehouse_id = warehouseId in product_qties
+  return products.filter((product) => {
+    // Check if any product_qty matches the warehouseId
+    return product.product_qties.some(
+      (qty) =>
+        qty.warehouse_id === warehouseId &&
+        parseInt(qty.qty, 10) < parseInt(product?.alert_qty, 10)
+    );
+  });
+}
 
 const StockRequestCreate = () => {
   const dispatch = useDispatch();
@@ -34,19 +47,27 @@ const StockRequestCreate = () => {
     },
   });
 
-  const { data, isFetching } = useGetAllProductsQuery(
+  const { data, isLoading: isLoadingProducts } = useGetAllProductsQuery(
     { params },
     { skip: !warehouseId }
   );
+
+  useEffect(() => {
+    dispatch(setLoading(isLoadingProducts));
+  }, [dispatch, isLoadingProducts]);
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (data) {
       const list = data?.results?.product;
-      setProducts(list);
+
+      const filteredList = filterProductsByWarehouse(list, warehouseId);
+
+      console.log(filteredList);
+      setProducts(filteredList);
     }
-  }, [data]);
+  }, [data, warehouseId]);
 
   const handleSubmit = async (values) => {
     const { from_warehouse_id, to_warehouse_id, note } = values;
@@ -110,6 +131,7 @@ const StockRequestCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
+        isLoadingProducts={isLoadingProducts}
       />
     </CustomDrawer>
   );

@@ -5,6 +5,7 @@ import {
   updatePage,
   updatePageSize,
 } from "../../../redux/services/pagination/paginationSlice";
+import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
 
 const CustomProductTable = ({
   columns,
@@ -17,6 +18,7 @@ const CustomProductTable = ({
   tableStyleProps = {},
 }) => {
   const dispatch = useDispatch();
+  const globalLoading = useGlobalLoader();
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -53,7 +55,7 @@ const CustomProductTable = ({
     onRow: (record) => ({
       onClick: () => console.log(record.id),
     }),
-    loading: isLoading,
+    loading: isLoading || globalLoading,
     scroll: {
       x: "max-content",
       // y: 340,

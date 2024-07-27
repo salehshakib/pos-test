@@ -1,20 +1,28 @@
-import { Button } from "antd";
+import { Button, Form, Tag } from "antd";
+import { useEffect } from "react";
 import { IoMdMail } from "react-icons/io";
 import { MdLockPerson } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import CustomForm from "../../components/Shared/Form/CustomForm";
 import CustomInput from "../../components/Shared/Input/CustomInput";
 import { useLoginMutation } from "../../redux/services/auth/authApi";
 import { setUser } from "../../redux/services/auth/authSlice";
+import { isDev } from "../../utilities/configs/base_url";
 import { openNotification } from "../../utilities/lib/openToaster";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
   const [login, { isLoading }] = useLoginMutation();
+
+  useEffect(() => {
+    if (isDev.toLowerCase() === "true") {
+      form.setFieldsValue({ email: "vitasoft@gmail.com", password: "123456" });
+    }
+  }, [form]);
 
   const handleSubmit = async (data) => {
     // const toastId = toast.loading("Logging in...");
@@ -62,13 +70,22 @@ const Login = () => {
     >
       <div className="flex justify-center items-center h-full">
         <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
-          <div className="text-center font-bold text-xl border-gray-500">
+          <div className="text-center font-bold text-xl border-gray-500 flex flex-col gap-1">
             POS INVENTORY
+            <div>
+              {isDev.toLowerCase() === "true" && (
+                <Tag color="purple" className="font-semibold">
+                  DEV MODE
+                </Tag>
+              )}
+            </div>
           </div>
+
           <CustomForm
             handleSubmit={handleSubmit}
             className="flex flex-col gap-6"
             submitBtn={false}
+            form={form}
           >
             <CustomInput
               label="Email"

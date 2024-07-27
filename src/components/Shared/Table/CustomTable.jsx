@@ -190,26 +190,26 @@ const CustomTable = ({
       return record?.handleStatusModal ? (
         <button
           className={`p-0 ${
-            status.toString() === "1"
+            status?.toString() === "1"
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status.toString() === "1" ? "Active" : "Inactive"}
+            {status?.toString() === "1" ? "Active" : "Inactive"}
           </span>
         </button>
       ) : (
         <div
           className={`p-0 ${
-            status.toString === "1"
+            status?.toString() === "1"
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
           } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status.toString() === "1" ? "Active" : "Inactive"}
+            {status?.toString() === "1" ? "Active" : "Inactive"}
           </span>
         </div>
       );

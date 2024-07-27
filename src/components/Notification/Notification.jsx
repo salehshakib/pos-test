@@ -44,8 +44,12 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
   );
 };
 
-const NotificationComponent = ({ data, handleReadNotification }) => {
-  if (!data) {
+const NotificationComponent = ({ data, handleReadNotification, loading }) => {
+  // if (!data) {
+  //   return <Skeleton paragraph avatar />;
+  // }
+
+  if (loading) {
     return <Skeleton paragraph avatar />;
   }
 
@@ -53,33 +57,41 @@ const NotificationComponent = ({ data, handleReadNotification }) => {
     categorizeNotificationsByDate(data);
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-col gap-1 ">
-        <span className="text-base font-semibold px-1">New</span>
-        {todayNotifications?.length > 0 &&
-          todayNotifications?.map((item) => {
-            return (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-1">
+        {todayNotifications?.length > 0 && (
+          <>
+            <span className="text-base font-semibold px-1">New</span>
+            {todayNotifications.map((item) => (
               <SingleNotificationComponent
                 key={item?.id}
                 item={item}
                 handleReadNotification={handleReadNotification}
               />
-            );
-          })}
+            ))}
+          </>
+        )}
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-base font-semibold px-1">Earlier</span>
-        {olderNotifications?.length > 0 &&
-          olderNotifications?.map((item) => {
-            return (
+        {olderNotifications?.length > 0 && (
+          <>
+            <span className="text-base font-semibold px-1">Earlier</span>
+            {olderNotifications.map((item) => (
               <SingleNotificationComponent
                 key={item?.id}
                 item={item}
                 handleReadNotification={handleReadNotification}
               />
-            );
-          })}
+            ))}
+          </>
+        )}
       </div>
+
+      {!data && (
+        <div className="text-center text-base pb-5">
+          No notifications available
+        </div>
+      )}
     </div>
   );
 };

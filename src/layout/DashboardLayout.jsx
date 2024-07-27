@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import { GlobalUtilityStyle } from "../container/Styled";
-import { mode } from "../utilities/configs/base_url";
+import { mode, isDev } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
 import { useSelector } from "react-redux";
 
@@ -30,11 +30,19 @@ const DashboardLayout = () => {
             ></Button>
             <Logo />
           </div>
-          {mode === "local" && (
-            <Tag color="processing" className="font-semibold">
-              {mode.toUpperCase()} MODE
-            </Tag>
-          )}
+        <div>
+            {mode === "local" && (
+              <Tag color="processing" className="font-semibold">
+                {mode.toUpperCase()} MODE
+              </Tag>
+            )}
+
+            {isDev.toLowerCase() === "true" && (
+              <Tag color="purple" className="font-semibold">
+                DEV MODE
+              </Tag>
+            )}
+          </div>
           <Profile />
         </Header>
 

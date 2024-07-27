@@ -11,7 +11,7 @@ import { GlobalUtilityStyle } from "../container/Styled";
 import { Filter } from "../pages/Dashboard/PosRegister/Filter";
 import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
-import { mode } from "../utilities/configs/base_url";
+import { mode, isDev } from "../utilities/configs/base_url";
 import { appendToFormData } from "../utilities/lib/appendFormData";
 import {
   calculateGrandTotal,
@@ -239,11 +239,19 @@ const PosLayout = () => {
                   ></Button>
                   <Logo />
                 </div>
-                {mode === "local" && (
-                  <Tag color="processing" className="font-semibold">
-                    {mode.toUpperCase()} MODE
-                  </Tag>
-                )}
+               <div>
+            {mode === "local" && (
+              <Tag color="processing" className="font-semibold">
+                {mode.toUpperCase()} MODE
+              </Tag>
+            )}
+
+            {isDev.toLowerCase() === "true" && (
+              <Tag color="purple" className="font-semibold">
+                DEV MODE
+              </Tag>
+            )}
+          </div>
                 <Profile />
               </div>
 

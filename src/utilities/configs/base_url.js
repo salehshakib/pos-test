@@ -1,4 +1,6 @@
 export const mode = import.meta.env.VITE_MODE;
+export const isDev = import.meta.env.VITE_DEV_MODE;
+
 
 const apiEndpoints = {
   local: import.meta.env.VITE_LOCAL_API_URL,

@@ -36,124 +36,6 @@ import { openNotification } from "../../../utilities/lib/openToaster";
 import NotificationComponent from "../../Notification/Notification";
 import CustomInput from "../../Shared/Input/CustomInput";
 
-const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
-  const [form] = Form.useForm();
-
-  const dispatch = useDispatch();
-  const [errorFields, setErrorFields] = useState([]);
-
-  const { pettyCashId } = useSelector((state) => state.pettyCash);
-
-  const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
-
-  const [updatePettyCash, { isLoading: isUpdating }] =
-    useUpdatePettyCashMutation();
-
-  const user = useSelector(useCurrentUser);
-
-  const handleSubmit = async (values) => {
-    if (pettyCashId) {
-      const { data, error } = await updatePettyCash({
-        id: pettyCashId,
-        data: {
-          warehouse_id: user?.warehouse_id,
-          status: "Open",
-          _method: "PUT",
-        },
-      });
-
-      if (data?.success) {
-        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
-        hideModal();
-        form.resetFields();
-        navigate("/pos");
-      }
-
-      if (error) {
-        const errorFields = Object.keys(error?.data?.errors).map(
-          (fieldName) => ({
-            name: fieldName,
-            errors: error?.data?.errors[fieldName],
-          })
-        );
-        setErrorFields(errorFields);
-      }
-    } else {
-      const { data, error } = await createPettyCash({
-        data: { ...values, warehouse_id: user?.warehouse_id, status: "Open" },
-      });
-
-      if (data?.success) {
-        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
-        hideModal();
-        form.resetFields();
-        navigate("/pos");
-      }
-
-      if (error) {
-        const errorFields = Object.keys(error?.data?.errors).map(
-          (fieldName) => ({
-            name: fieldName,
-            errors: error?.data?.errors[fieldName],
-          })
-        );
-        setErrorFields(errorFields);
-      }
-    }
-  };
-
-  const hideModal = () => {
-    setOpen(false);
-    form.resetFields();
-  };
-
-  if (!open) {
-    return null;
-  }
-
-  return (
-    <Modal
-      width={600}
-      centered
-      title={"Cash Register Open"}
-      open={open}
-      onCancel={hideModal}
-      footer={null}
-    >
-      <Form
-        fields={errorFields}
-        layout="vertical"
-        form={form}
-        onFinish={handleSubmit}
-        scrollToFirstError
-      >
-        <Row {...rowLayout} className="mt-5">
-          <Col {...fullColLayout}>
-            <CustomInput
-              label="Opening Balance"
-              type="number"
-              name="opening_balance"
-              required={true}
-            />
-          </Col>
-        </Row>
-        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
-          <Button type="default" onClick={hideModal}>
-            Cancel
-          </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={isLoading || isUpdating}
-          >
-            Save
-          </Button>
-        </div>
-      </Form>
-    </Modal>
-  );
-};
-
 const PosComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -265,20 +147,20 @@ const CloseCashRegister = () => {
 
   return (
     <>
-      <div
+      <Button
         onClick={handleCashRegister}
         className="flex justify-center items-center"
       >
         <Tooltip title="Petty Cash">
           <FaCashRegister
-            size={24}
+            size={16}
             style={{
               color: token.colorPrimary,
             }}
             className="hover:cursor-pointer hover:shadow-lg"
           />
         </Tooltip>
-      </div>
+      </Button>
 
       <Modal
         title={
@@ -425,14 +307,14 @@ const Notification = () => {
       open={isPopoverOpen}
       arrow={false}
     >
-      <div
+      <Button
         onClick={handleNotification}
         className="flex justify-center items-center"
       >
         <Tooltip title="Notifications">
           <Badge dot={show}>
             <FaBell
-              size={24}
+              size={16}
               style={{
                 color: token.colorPrimary,
               }}
@@ -440,7 +322,7 @@ const Notification = () => {
             />
           </Badge>
         </Tooltip>
-      </div>
+      </Button>
     </Popover>
   );
 };
@@ -507,13 +389,14 @@ const Profile = () => {
   );
 
   return (
-    <div className=" flex justify-center items-center gap-5">
+    <div className=" flex justify-center items-center gap-2">
       {/* <CreateComponent /> */}
       {!pathname.includes("/pos") && <PosComponent />}
 
       <CloseCashRegister />
 
       <Notification />
+
       <Popover
         placement="bottomLeft"
         content={content}
@@ -532,6 +415,124 @@ const Profile = () => {
         />
       </Popover>
     </div>
+  );
+};
+
+const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
+  const [form] = Form.useForm();
+
+  const dispatch = useDispatch();
+  const [errorFields, setErrorFields] = useState([]);
+
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
+
+  const [createPettyCash, { isLoading }] = useCreatePettyCashMutation();
+
+  const [updatePettyCash, { isLoading: isUpdating }] =
+    useUpdatePettyCashMutation();
+
+  const user = useSelector(useCurrentUser);
+
+  const handleSubmit = async (values) => {
+    if (pettyCashId) {
+      const { data, error } = await updatePettyCash({
+        id: pettyCashId,
+        data: {
+          warehouse_id: user?.warehouse_id,
+          status: "Open",
+          _method: "PUT",
+        },
+      });
+
+      if (data?.success) {
+        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
+        hideModal();
+        form.resetFields();
+        navigate("/pos");
+      }
+
+      if (error) {
+        const errorFields = Object.keys(error?.data?.errors).map(
+          (fieldName) => ({
+            name: fieldName,
+            errors: error?.data?.errors[fieldName],
+          })
+        );
+        setErrorFields(errorFields);
+      }
+    } else {
+      const { data, error } = await createPettyCash({
+        data: { ...values, warehouse_id: user?.warehouse_id, status: "Open" },
+      });
+
+      if (data?.success) {
+        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
+        hideModal();
+        form.resetFields();
+        navigate("/pos");
+      }
+
+      if (error) {
+        const errorFields = Object.keys(error?.data?.errors).map(
+          (fieldName) => ({
+            name: fieldName,
+            errors: error?.data?.errors[fieldName],
+          })
+        );
+        setErrorFields(errorFields);
+      }
+    }
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+    form.resetFields();
+  };
+
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <Modal
+      width={600}
+      centered
+      title={"Cash Register Open"}
+      open={open}
+      onCancel={hideModal}
+      footer={null}
+    >
+      <Form
+        fields={errorFields}
+        layout="vertical"
+        form={form}
+        onFinish={handleSubmit}
+        scrollToFirstError
+      >
+        <Row {...rowLayout} className="mt-5">
+          <Col {...fullColLayout}>
+            <CustomInput
+              label="Opening Balance"
+              type="number"
+              name="opening_balance"
+              required={true}
+            />
+          </Col>
+        </Row>
+        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+          <Button type="default" onClick={hideModal}>
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            loading={isLoading || isUpdating}
+          >
+            Save
+          </Button>
+        </div>
+      </Form>
+    </Modal>
   );
 };
 

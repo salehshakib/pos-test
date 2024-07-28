@@ -22,7 +22,6 @@ export const AnnoucementCreate = () => {
     const postData = {
       ...values,
       is_send_email: values?.is_send_email ? 1 : 0,
-      department_ids: JSON.stringify(values?.department_ids),
     };
 
     appendToFormData(postData, formData);

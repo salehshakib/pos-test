@@ -20,10 +20,8 @@ export const HolidaysCreate = () => {
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
-    const postObj = {
-      ...values,
-      department_ids: JSON.stringify(values?.department_ids),
-    };
+    const postObj = values
+    
 
     if (values?.end_date) {
       postObj.end_date = values?.end_date;

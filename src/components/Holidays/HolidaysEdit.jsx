@@ -47,7 +47,6 @@ export const HolidaysEdit = ({ id, setId }) => {
 
     const postObj = {
       ...values,
-      department_ids: JSON.stringify(values?.department_ids),
       _method: "PUT",
     };
 

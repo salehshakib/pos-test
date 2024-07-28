@@ -7,9 +7,10 @@ export const appendToFormData = (data, formData) => {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);
       });
-    } else if (Array.isArray(value)) {
+    } else if (Array.isArray(value) || ignoreKeys.includes(key)) {
       value.forEach((item) => {
-        formData.append(key, item);
+        // formData.append(key, item);
+        formData.append(`${key}[]`, item);
       });
     } else if (key.includes("date") && !ignoreKeys.includes(key)) {
       formData.append(key, dayjs(value).format("YYYY-MM-DD"));

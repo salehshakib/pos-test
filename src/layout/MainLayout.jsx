@@ -2,17 +2,23 @@ import { Button, Layout, Tag } from "antd";
 // import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Outlet, useLocation } from "react-router-dom";
 import Logo from "../components/AllSection/Header/Logo";
 import Profile from "../components/AllSection/Header/Profile";
 import { GlobalUtilityStyle } from "../container/Styled";
-import { mode, isDev } from "../utilities/configs/base_url";
+import { isDev, mode } from "../utilities/configs/base_url";
 import SideBar from "./SideBar";
-import { useSelector } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = () => {
+  const { pathname } = useLocation();
+
+  const dashboardStyle = pathname.includes("/dashboard")
+    ? {}
+    : { backgroundColor: "white", borderRadius: "8px" };
+
   const [collapsed, setCollapsed] = useState(false);
 
   const { developedBy, hyperLink } = useSelector((state) => state.developer);
@@ -55,8 +61,9 @@ const MainLayout = () => {
               style={{
                 margin: "16px",
                 marginBottom: 0,
-                backgroundColor: "white",
-                borderRadius: "8px",
+                // backgroundColor: "white",
+                // borderRadius: "8px",
+                ...dashboardStyle,
               }}
               className="shadow-md flex-grow overflow-auto"
             >

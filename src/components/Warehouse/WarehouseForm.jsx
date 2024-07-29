@@ -26,7 +26,6 @@ const WarehouseForm = (props) => {
             type={"text"}
             required={true}
             name={"name"}
-            placeholder={"Brand Name"}
           />
         </Col>
 

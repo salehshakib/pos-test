@@ -1,5 +1,10 @@
 import { Badge, Calendar } from "antd";
 import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
+import { useGetPurchaseCalenderReportQuery } from "../../../redux/services/reports/purchaseReportApi";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../../redux/services/auth/authSlice";
 
 const getListData = (value) => {
   let listData;
@@ -66,44 +71,91 @@ const getListData = (value) => {
   }
   return listData || [];
 };
+
 const getMonthData = (value) => {
   if (value.month() === 8) {
     return 1394;
   }
 };
 
+const monthCellRender = (value) => {
+  const num = getMonthData(value);
+  return num ? (
+    <div className="notes-month">
+      <section>{num}</section>
+      <span>Backlog number</span>
+    </div>
+  ) : null;
+};
+
+const dateCellRender = (value) => {
+  const listData = getListData(value);
+  return (
+    <ul className="events">
+      {listData.map((item) => (
+        <li key={item.content}>
+          <Badge status={item.type} text={item.content} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export const PurchaseCalender = () => {
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
+  const user = useSelector(useCurrentUser);
+
+  const warehouse_id = user?.warehouse_id;
+
+  const [dateRange, setDateRange] = useState([]);
+  const [warehouseId, setWarehouseId] = useState(undefined);
+
+  useEffect(() => {
+    if (warehouse_id) setWarehouseId(warehouse_id);
+  }, [warehouse_id]);
+
+  const onWarehouseChange = (warehouse) => {
+    setWarehouseId(warehouse);
   };
 
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
   const cellRender = (current, info) => {
     if (info.type === "date") return dateCellRender(current);
     if (info.type === "month") return monthCellRender(current);
     return info.originNode;
   };
 
+  useEffect(() => {
+    const currentDate = dayjs();
+    const startOfMonth = currentDate.startOf("month").format("YYYY-MM-DD");
+    const endOfMonth = currentDate.endOf("month").format("YYYY-MM-DD");
+    setDateRange([startOfMonth, endOfMonth]);
+  }, []);
+
+  const onChange = (date) => {
+    const newDate = dayjs(date);
+
+    const startOfMonth = newDate.startOf("month").format("YYYY-MM-DD");
+
+    const endOfMonth = newDate.endOf("month").format("YYYY-MM-DD");
+
+    setDateRange([startOfMonth, endOfMonth]);
+  };
+
+  const { data, isFetching } = useGetPurchaseCalenderReportQuery({
+    params: {
+      start_date: dateRange[0],
+      end_date: dateRange[1],
+      warehouse_id: warehouseId,
+    },
+  });
+
+  console.log(data);
+
   return (
-    <ReportContainer pageTitle="Purchase Calender">
-      <Calendar cellRender={cellRender} />
+    <ReportContainer
+      pageTitle="Purchase Calender"
+      onWarehouseChange={onWarehouseChange}
+    >
+      <Calendar cellRender={cellRender} onChange={onChange} />
     </ReportContainer>
   );
 };

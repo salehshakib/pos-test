@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { StockRequestDetails } from "./StockRequestDetails";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { useReadNotificationMutation } from "../../redux/services/notification/notificationApi";
+import { StockRequestDetails } from "./StockRequestDetails";
 
 export const AcceptStockRequest = () => {
   const { state } = useLocation();
-  const { id, status } = state;
+  const { id, status } = state ?? {};
+
+  const navigate = useNavigate();
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -26,19 +28,17 @@ export const AcceptStockRequest = () => {
   const hideModal = () => {
     setDetailsModal(false);
     setDetailsId(undefined);
+    navigate("/inventory/stock-request", { replace: true });
   };
 
   useEffect(() => {
-    if (id && !detailsModal) {
+    if (id) {
       setDetailsId(id);
-    }
-    if (detailsId) {
       setDetailsModal(true);
+    } else {
+      setDetailsId(undefined);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, detailsModal]);
-
-  console.log(status);
+  }, [detailsId, id]);
 
   return (
     detailsId && (

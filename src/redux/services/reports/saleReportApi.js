@@ -5,7 +5,7 @@ import { baseApi } from "../../api/baseApi";
 
 const saleReportApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getPurchaseCalenderReport: build.query({
+    getSaleCalenderReport: build.query({
       query: ({ params }) => ({
         url: `/${SALE_REPORT}`,
         method: "GET",

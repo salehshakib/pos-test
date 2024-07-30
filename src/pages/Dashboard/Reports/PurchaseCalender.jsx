@@ -1,10 +1,10 @@
 import { Badge, Calendar } from "antd";
-import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
-import { useGetPurchaseCalenderReportQuery } from "../../../redux/services/reports/purchaseReportApi";
-import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
+import { useGetAllPurchaseQuery } from "../../../redux/services/purchase/purchaseApi";
 
 const getListData = (value) => {
   let listData;
@@ -140,11 +140,12 @@ export const PurchaseCalender = () => {
     setDateRange([startOfMonth, endOfMonth]);
   };
 
-  const { data, isFetching } = useGetPurchaseCalenderReportQuery({
+  const { data } = useGetAllPurchaseQuery({
     params: {
       start_date: dateRange[0],
       end_date: dateRange[1],
       warehouse_id: warehouseId,
+      group_by: "created_at",
     },
   });
 

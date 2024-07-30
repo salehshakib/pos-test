@@ -1,5 +1,5 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { Col, Form, Row, Space } from "antd";
+import { Col, Form, Row, Segmented, Space } from "antd";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -50,8 +50,10 @@ const WarehouseComponent = ({ onChange }) => {
 export const ReportContainer = ({
   pageTitle,
   form,
-  searchFilterContent,
+  // searchFilterContent,
   onDateChange,
+  segment = "Weekly",
+  onSegmentChange,
   onWarehouseChange,
   children,
 }) => {
@@ -65,6 +67,21 @@ export const ReportContainer = ({
             title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
           }}
           extra={[
+            !pathname.includes("reports/purchase-calender") &&
+              !pathname.includes("reports/sale-calender") && (
+                <Space key={"segment"}>
+                  <Segmented
+                    size="large"
+                    className="mt-1"
+                    options={["Daily", "Weekly", "Monthly", "Yearly"]}
+                    value={segment}
+                    onChange={onSegmentChange}
+                    style={{
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  />
+                </Space>
+              ),
             <Space key="search" className="flex items-center">
               <CustomForm layout="horizontal" submitBtn={false} form={form}>
                 <Row {...rowLayout} gutter={2}>

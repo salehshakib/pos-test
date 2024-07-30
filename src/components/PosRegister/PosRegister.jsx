@@ -15,6 +15,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
 import { openNotification } from "../../utilities/lib/openToaster";
 import CustomerCreate from "../Customer/CustomerCreate";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
@@ -403,7 +404,7 @@ export const PosRegister = ({
             </Table.Summary.Cell>
             <Table.Summary.Cell index={3} align="center">
               <Text type="" className="font-bold">
-                {totalPrice}
+                {showCurrency(totalPrice, currency)}
               </Text>
             </Table.Summary.Cell>
           </Table.Summary.Row>

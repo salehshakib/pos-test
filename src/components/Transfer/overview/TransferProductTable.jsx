@@ -155,7 +155,7 @@ const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
-    width: 100,
+    width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {subTotal}

@@ -170,7 +170,7 @@ const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
-    width: 100,
+    width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {subTotal}
@@ -423,80 +423,6 @@ export const SaleProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  // const incrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-  //     const newQty = Number(currentQty) + 1;
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const decrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-  //     const newQty = Math.max(Number(currentQty) - 1, 0);
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const onQuantityChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       qty: {
-  //         ...prevFormValues.product_list.qty,
-  //         [id]: parseInt(value, 10) || 0,
-  //       },
-  //     },
-  //   }));
-  // };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-
-  //   setFormValues((prevFormValues) => {
-  //     const { product_list } = prevFormValues;
-
-  //     const updatedProductList = Object.keys(product_list).reduce(
-  //       (acc, key) => {
-  //         // eslint-disable-next-line no-unused-vars
-  //         const { [id]: _, ...rest } = product_list[key];
-  //         acc[key] = rest;
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: updatedProductList,
-  //     };
-  //   });
-  // };
-
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
@@ -529,8 +455,6 @@ export const SaleProductTable = ({
     } = product ?? {};
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
-
-    // console.log(sale_unit_id, )
 
     setFormValuesId(
       id,
@@ -611,17 +535,17 @@ export const SaleProductTable = ({
 
             <Table.Summary.Cell index={4} align="center">
               <Typography.Text type="" className="font-bold">
-                {totalDiscount}
+                {showCurrency(totalDiscount, currency)}
               </Typography.Text>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={5} align="center">
               <Typography.Text type="" className="font-bold">
-                {totalTax}
+                {showCurrency(totalTax, currency)}
               </Typography.Text>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={6} align="center">
               <Typography.Text type="" className="font-bold">
-                {totalPrice}
+                {showCurrency(totalPrice, currency)}
               </Typography.Text>
             </Table.Summary.Cell>
           </Table.Summary.Row>

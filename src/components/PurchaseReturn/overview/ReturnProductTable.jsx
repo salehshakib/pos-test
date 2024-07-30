@@ -133,10 +133,10 @@ const columns = [
     dataIndex: "subTotal",
     key: "subTotal",
     align: "center",
-    width: 100,
+    width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${subTotal}
+        {subTotal}
       </span>
     ),
   },
@@ -290,31 +290,6 @@ export const ReturnProductTable = ({
       },
     }));
   };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-
-  //   setFormValues((prevFormValues) => {
-  //     const { product_list } = prevFormValues;
-
-  //     const updatedProductList = Object.keys(product_list).reduce(
-  //       (acc, key) => {
-  //         // eslint-disable-next-line no-unused-vars
-  //         const { [id]: _, ...rest } = product_list[key];
-  //         acc[key] = rest;
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: updatedProductList,
-  //     };
-  //   });
-  // };
 
   const currency = useSelector(useCurrency);
 

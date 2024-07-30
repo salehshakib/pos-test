@@ -196,6 +196,7 @@ export const PurchaseForm = ({
           </Col>
           <Col {...fullColLayout}>
             <CustomInput
+              required={true}
               type="textarea"
               name="purchase_note"
               label="Purchase Note"

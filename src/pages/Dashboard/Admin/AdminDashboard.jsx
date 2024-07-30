@@ -492,7 +492,7 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome, {user?.employees?.name}
+            Welcome 😃, {user?.employees?.name} 👋
           </div>
 
           <ExtraComponent />

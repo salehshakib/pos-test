@@ -26,6 +26,7 @@ import { useLocation } from "react-router-dom";
 import { FilterDateRange } from "../../components/ReusableComponent/FilterDateRange";
 import CustomForm from "../../components/Shared/Form/CustomForm";
 import DeleteModal from "../../components/Shared/Modal/DeleteModal";
+import ImportModal from "../../components/Shared/Modal/ImportModal";
 import { fullColLayout, rowLayout } from "../../layout/FormLayout";
 import { useCurrentToken } from "../../redux/services/auth/authSlice";
 import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
@@ -36,7 +37,6 @@ import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { downloadFile } from "../../utilities/lib/downloadFile";
 import { usePermission } from "../../utilities/lib/getPermission";
 import { GlobalUtilityStyle } from "../Styled";
-import ImportModal from "../../components/Shared/Modal/ImportModal";
 
 const GlobalContainer = ({
   pageTitle,
@@ -370,12 +370,41 @@ const GlobalContainer = ({
     </CustomForm>
   );
 
+  // const [segment, setSegment] = useState("Weekly");
+
+  // const onSegmentChange = (value) => {
+  //   setSegment(value);
+  // };
+
+  // useEffect(() => {
+  //   if (segment) {
+  //     const dateRange = getDateRange(segment);
+  //     setParams({ start_date: dateRange[0], end_date: dateRange[1] });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [segment]);
+
   return (
     <GlobalUtilityStyle>
       <div className="h-full">
         <PageContainer
           header={header}
           extra={[
+            // (pathname.includes("reports/purchase") ||
+            //   pathname.includes("reports/sale")) && (
+            //   <Space key={"segment"}>
+            //     <Segmented
+            //       size="large"
+            //       className="mt-1"
+            //       options={["Daily", "Weekly", "Monthly", "Yearly"]}
+            //       value={segment}
+            //       onChange={onSegmentChange}
+            //       style={{
+            //         backgroundColor: "#f5f5f5",
+            //       }}
+            //     />
+            //   </Space>
+            // ),
             <Space key="search">
               <Space.Compact>
                 <Input
@@ -493,6 +522,10 @@ const GlobalContainer = ({
               {children}
             </div>
           }
+
+          // style={{
+
+          // }}
         />
       </div>
 

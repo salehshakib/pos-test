@@ -251,13 +251,6 @@ function setFormValuesId(
   const sanitizeIntValue = (value) => parseInt(value) || 0;
   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
 
-  // console.log(purchase_units);
-  // console.log(productUnits);
-
-  // console.log(taxes);
-
-  // console.log(unit_cost);
-
   if (!id) return;
 
   const formProductList = formValues.product_list;
@@ -432,15 +425,6 @@ export const PurchaseProductTable = ({
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 
     console.log(tax_method);
-
-    // tax_method === "inclusive" &&
-    //   setProductUnits((prevProductUnits) => ({
-    //     ...prevProductUnits,
-    //     inclusive_tax_rate: {
-    //       ...prevProductUnits.inclusive_tax_rate,
-    //       [id]: taxes?.rate,
-    //     },
-    //   }));
 
     setFormValuesId(
       id,

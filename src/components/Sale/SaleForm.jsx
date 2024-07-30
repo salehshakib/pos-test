@@ -159,8 +159,6 @@ export const SaleForm = ({
     setTaxRate(orderTax);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
 
-  console.log(totalItems, totalQty, totalPrice, grandTotal);
-
   return (
     <>
       <CustomForm {...props}>

@@ -1,3 +1,4 @@
+import { theme } from "antd";
 import {
   BarChart,
   Bar,
@@ -86,6 +87,7 @@ const data = [
 ];
 
 export const SimpleBarChartComponent = () => {
+  const { token } = theme.useToken();
   return (
     <div className="w-full h-full pb-10">
       <ResponsiveContainer width="100%" height="100%">
@@ -107,13 +109,13 @@ export const SimpleBarChartComponent = () => {
           <Legend />
           <Bar
             dataKey="pv"
-            fill="#8884d8"
-            activeBar={<Rectangle fill="pink" stroke="blue" />}
+            fill={token.colorPrimary}
+            activeBar={<Rectangle fill="pink" stroke={token.colorPrimary} />}
           />
           <Bar
             dataKey="uv"
-            fill="#82ca9d"
-            activeBar={<Rectangle fill="gold" stroke="purple" />}
+            fill={token.secondaryColor}
+            activeBar={<Rectangle fill="gold" stroke={token.secondaryColor} />}
           />
         </BarChart>
       </ResponsiveContainer>

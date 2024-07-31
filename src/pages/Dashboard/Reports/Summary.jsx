@@ -7,6 +7,8 @@ import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { useGetReportSummaryQuery } from "../../../redux/services/reports/summaryApi";
 import { showCurrency } from "../../../utilities/lib/currency";
 import { getLastWeek } from "../../../utilities/lib/getLastWeek";
+import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { getDateRange } from "../../../utilities/lib/getDateRange";
 // const { Text } = Typography;
 
 const styleProps = {
@@ -558,55 +560,54 @@ const PayrollSummaryTable = ({ data }) => {
 
 export const Summary = () => {
   const [reportForm] = Form.useForm();
-  const user = useSelector(useCurrentUser);
 
-  const [dateRange, setDateRange] = useState();
-  const [warehouse, setWarehouse] = useState(undefined);
+  const { searchParams, setParams } = useFilterParams();
+  const [segment, setSegment] = useState("Weekly");
+
+  const { data } = useGetReportSummaryQuery(
+    { params: searchParams },
+    { skip: Object.keys(searchParams).length === 0 }
+  );
+
+  const onSegmentChange = (value) => {
+    setSegment(value);
+  };
+
+  const onDateChange = (_, dateString) => {
+    if (dateString[0] && dateString[1]) {
+      setParams((prev) => ({
+        ...prev,
+        created_daterange: dateString,
+      }));
+    } else {
+      const dateRange = getDateRange(segment);
+      setParams((prev) => ({
+        ...prev,
+        created_daterange: dateRange,
+      }));
+    }
+  };
 
   useEffect(() => {
-    if (user?.warehouse_id) {
-      reportForm.setFieldsValue({
-        warehouse_id: user?.warehouse_id.toString(),
-      });
-      setWarehouse(user?.warehouse_id.toString());
-    }
-
-    const lastWeek = getLastWeek();
-
-    reportForm.setFieldsValue({
-      daterange: lastWeek,
-    });
-
-    setDateRange([
-      lastWeek[0].format("DD-MM-YYYY"),
-      lastWeek[1].format("DD-MM-YYYY"),
-    ]);
-  }, [reportForm, user?.warehouse_id]);
-
-  const onDateChange = (dates, dateStrings) => {
-    setDateRange(dateStrings);
-  };
-
-  const onWarehouseChange = (warehouse) => {
-    setWarehouse(warehouse);
-  };
-
-  const params = {
-    daterange: dateRange,
-    warehouse_id: warehouse,
-  };
-
-  console.log(params);
-
-  const { data } = useGetReportSummaryQuery({ params }, { skip: !warehouse });
+    const dateRange = getDateRange(segment);
+    setParams((prev) => ({
+      ...prev,
+      created_daterange: dateRange,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment]);
 
   return (
     <ReportContainer
       pageTitle="Summary"
       form={reportForm}
       onDateChange={onDateChange}
-      onWarehouseChange={onWarehouseChange}
+      segment={segment}
+      onSegmentChange={onSegmentChange}
     >
+      <div className="text-right w-full underline pb-2 font-semibold">
+        Showing Data From All Warehouse
+      </div>
       <div className="space-y-5">
         <PurchaseSummaryTable data={data} />
         <SaleSummaryTable data={data} />

@@ -7,7 +7,7 @@ export const appendToFormData = (data, formData) => {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);
       });
-    } else if (Array.isArray(value) || ignoreKeys.includes(key)) {
+    } else if (Array.isArray(value)) {
       value.forEach((item) => {
         // formData.append(key, item);
         formData.append(`${key}[]`, item);

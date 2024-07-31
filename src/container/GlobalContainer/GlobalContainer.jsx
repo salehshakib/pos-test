@@ -8,6 +8,7 @@ import {
   Input,
   Popover,
   Row,
+  Segmented,
   Space,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -50,6 +51,9 @@ const GlobalContainer = ({
   debounce,
   setParams,
   popoverWidth = 600,
+
+  segment = "Weekly",
+  onSegmentChange,
   // handleSeach
 }) => {
   const dispatch = useDispatch();
@@ -142,30 +146,30 @@ const GlobalContainer = ({
     setImportModal(true);
   };
 
-  console.log(importModal);
-
   const items = [
-    setNewColumns && {
-      key: "view",
-      label: (
-        <Dropdown
-          open={checkedMenuOpen}
-          onOpenChange={handleCheckedOpenChange}
-          key="dropdown"
-          menu={menu}
-          placement="left"
-        >
-          <div>View</div>
-        </Dropdown>
-      ),
-      icon: <FaEye size={16} />,
-    },
-    usePermission(api, "import") && {
-      label: "Import",
-      key: "import",
-      onClick: handleImport,
-      icon: <FaUpload size={16} />,
-    },
+    setNewColumns &&
+      !pathname.includes("reports") && {
+        key: "view",
+        label: (
+          <Dropdown
+            open={checkedMenuOpen}
+            onOpenChange={handleCheckedOpenChange}
+            key="dropdown"
+            menu={menu}
+            placement="left"
+          >
+            <div>View</div>
+          </Dropdown>
+        ),
+        icon: <FaEye size={16} />,
+      },
+    usePermission(api, "import") &&
+      !pathname.includes("reports") && {
+        label: "Import",
+        key: "import",
+        onClick: handleImport,
+        icon: <FaUpload size={16} />,
+      },
     usePermission(api, "export") && {
       label: "PDF",
       key: "pdf",
@@ -370,41 +374,26 @@ const GlobalContainer = ({
     </CustomForm>
   );
 
-  // const [segment, setSegment] = useState("Weekly");
-
-  // const onSegmentChange = (value) => {
-  //   setSegment(value);
-  // };
-
-  // useEffect(() => {
-  //   if (segment) {
-  //     const dateRange = getDateRange(segment);
-  //     setParams({ start_date: dateRange[0], end_date: dateRange[1] });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [segment]);
-
   return (
     <GlobalUtilityStyle>
       <div className="h-full">
         <PageContainer
           header={header}
           extra={[
-            // (pathname.includes("reports/purchase") ||
-            //   pathname.includes("reports/sale")) && (
-            //   <Space key={"segment"}>
-            //     <Segmented
-            //       size="large"
-            //       className="mt-1"
-            //       options={["Daily", "Weekly", "Monthly", "Yearly"]}
-            //       value={segment}
-            //       onChange={onSegmentChange}
-            //       style={{
-            //         backgroundColor: "#f5f5f5",
-            //       }}
-            //     />
-            //   </Space>
-            // ),
+            pathname.includes("reports") && (
+              <Space key={"segment"}>
+                <Segmented
+                  size="large"
+                  className="mt-1"
+                  options={["Daily", "Weekly", "Monthly", "Yearly"]}
+                  value={segment}
+                  onChange={onSegmentChange}
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                  }}
+                />
+              </Space>
+            ),
             <Space key="search">
               <Space.Compact>
                 <Input

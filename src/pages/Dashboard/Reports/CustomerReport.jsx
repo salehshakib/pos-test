@@ -186,7 +186,7 @@ export const CustomerReport = () => {
         </>
       ) : (
         <>
-          <div className=" w-full grid grid-cols-2 gap-4 mb-5">
+          <div className=" w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
             <div className="border rounded-md p-4 shadow-sm">
               {isFetching ? (
                 <Spin className="w-full h-full flex justify-center items-center py-5" />

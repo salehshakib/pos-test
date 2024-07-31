@@ -1,6 +1,6 @@
 import { Button, Col, Descriptions, Form, Row, Spin, Tabs } from "antd";
 import parse from "html-react-parser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import CustomForm from "../../../components/Shared/Form/CustomForm";
 import CustomModal from "../../../components/Shared/Modal/CustomModal";
@@ -18,7 +18,7 @@ import {
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { getLastWeek } from "../../../utilities/lib/getLastWeek";
+import { getDateRange } from "../../../utilities/lib/getDateRange";
 import { ExpenseTable } from "./components/ExpenseTable";
 import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
 import { PurchaseTable } from "./components/PurchaseTable";
@@ -29,7 +29,7 @@ import { SaleTable } from "./components/SaleTable";
 const SearchFilterComponent = () => {
   return (
     <Row {...rowLayout}>
-      <ProductFilter fullLayout={true} multiple={false} />
+      <ProductFilter fullLayout={true} multiple={false} name="product_id" />
     </Row>
   );
 };
@@ -97,9 +97,6 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
 };
 
 export const ProductReport = () => {
-  // const [newColumns, setNewColumns] = useState(columns);
-  // const [selectedRows, setSelectedRows] = useState([]);
-
   const [open, setOpen] = useState(true);
   const [productId, setProductId] = useState(undefined);
 
@@ -113,24 +110,28 @@ export const ProductReport = () => {
     { skip: !productId }
   );
 
-  console.log(data);
-
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const summaryDetails = createDetailsLayout(summaryData);
 
-  const summaryType = {
-    warehouse_ids: searchParams?.warehouse_ids
-      ? searchParams?.warehouse_ids
-      : data?.id,
+  const [segment, setSegment] = useState("Weekly");
+  const onSegmentChange = (value) => {
+    setSegment(value);
+  };
 
-    start_date:
-      searchParams?.created_daterange?.[0] ??
-      getLastWeek()[0].format("YYYY-MM-DD"),
-    end_date:
-      searchParams?.created_daterange?.[1] ??
-      getLastWeek()[1].format("YYYY-MM-DD"),
+  useEffect(() => {
+    const dateRange = getDateRange(segment);
+    setParams((prev) => ({
+      ...prev,
+      created_daterange: dateRange,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment]);
+
+  const summaryType = {
+    product_id: searchParams?.product_id ? searchParams?.product_id : data?.id,
+    created_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
   const props = {
@@ -143,16 +144,12 @@ export const ProductReport = () => {
   return (
     <GlobalContainer
       pageTitle="Product Report"
-      // columns={columns}
       popoverWidth={400}
-      searchFilterContent={<SearchFilterComponent />}
-      // selectedRows={selectedRows}
       debounce={debounce}
-      // setSelectedRows={setSelectedRows}
-      // setNewColumns={setNewColumns}
       setParams={setParams}
-      // searchFilterContent={<SearchComponent />}
-      // api={PRODUCT}
+      segment={segment}
+      onSegmentChange={onSegmentChange}
+      searchFilterContent={<SearchFilterComponent />}
     >
       {!productId ? (
         <>
@@ -167,7 +164,7 @@ export const ProductReport = () => {
         </>
       ) : (
         <>
-          <div className=" w-full grid grid-cols-2 gap-4 mb-5">
+          <div className=" w-full grid grid-cols-1 gap-4 mb-5 lg:grid-cols-2">
             <div className="border rounded-md p-4 shadow-sm">
               {isFetching ? (
                 <Spin className="w-full h-full flex justify-center items-center py-5" />

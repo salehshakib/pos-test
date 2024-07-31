@@ -1,8 +1,12 @@
+import { Row } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PurchaseReportTable } from "../../../components/Report/PurchaseReportTable";
-import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
+import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
+import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
+import { rowLayout } from "../../../layout/FormLayout";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
+import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
 import { getDateRange } from "../../../utilities/lib/getDateRange";
 
@@ -37,50 +41,47 @@ const columns = [
       </span>
     ),
   },
+  {
+    title: "Warehouse",
+    dataIndex: "warehouse",
+    key: "warehouse",
+    align: "center",
+    render: (warehouse) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {warehouse}
+      </span>
+    ),
+  },
+  {
+    //created_at
+    title: "Purchased At",
+    dataIndex: "purchasedAt",
+    key: "purchasedAt",
+    align: "center",
+    render: (purchasedAt) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {purchasedAt}
+      </span>
+    ),
+  },
 ];
 
+const SearchComponent = () => {
+  return (
+    <Row {...rowLayout}>
+      <WarehouseFilter name="warehouse_ids" multiple={true} fullLayout={true} />
+    </Row>
+  );
+};
+
 export const PurchaseReport = () => {
-  // const [newColumns, setNewColumns] = useState(columns);
-  // const [selectedRows, setSelectedRows] = useState([]);
-  const [segment, setSegment] = useState("Weekly");
-
-  const { searchParams, setParams } = useFilterParams();
   const user = useSelector(useCurrentUser);
-  const warehouse_id = user?.warehouse_id;
+  const warehouseId = user?.warehouse_id;
 
-  useEffect(() => {
-    if (warehouse_id) {
-      setParams((prev) => ({
-        ...prev,
-        warehouseId: warehouse_id,
-      }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [warehouse_id]);
+  const { keyword, debounce } = useCustomDebounce();
+  const { searchParams, setParams } = useFilterParams();
 
-  const onWarehouseChange = (warehouse) => {
-    setParams((prev) => ({
-      ...prev,
-      warehouseId: warehouse,
-    }));
-  };
-
-  const onDateChange = (_, dateString) => {
-    if (dateString[0] && dateString[1]) {
-      setParams((prev) => ({
-        ...prev,
-        start_date: dateString[0],
-        end_date: dateString[1],
-      }));
-    } else {
-      const dateRange = getDateRange(segment);
-      setParams((prev) => ({
-        ...prev,
-        start_date: dateRange[0],
-        end_date: dateRange[1],
-      }));
-    }
-  };
+  const [segment, setSegment] = useState("Weekly");
 
   const onSegmentChange = (value) => {
     setSegment(value);
@@ -90,21 +91,33 @@ export const PurchaseReport = () => {
     const dateRange = getDateRange(segment);
     setParams((prev) => ({
       ...prev,
-      start_date: dateRange[0],
-      end_date: dateRange[1],
+      created_daterange: dateRange,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment]);
 
+  const defaultParams = {
+    warehouse_ids: searchParams?.warehouse_ids ?? [warehouseId],
+    purchase_daterange:
+      searchParams?.created_daterange ?? getDateRange(segment),
+  };
+
   return (
-    <ReportContainer
-      pageTitle={"Purchase Report"}
-      onDateChange={onDateChange}
+    <GlobalContainer
+      pageTitle="Purchase Report"
+      columns={columns}
+      popoverWidth={400}
+      debounce={debounce}
+      setParams={setParams}
       segment={segment}
       onSegmentChange={onSegmentChange}
-      onWarehouseChange={onWarehouseChange}
+      searchFilterContent={<SearchComponent />}
     >
-      <PurchaseReportTable newColumns={columns} searchParams={searchParams} />
-    </ReportContainer>
+      <PurchaseReportTable
+        newColumns={columns}
+        searchParams={defaultParams}
+        keyword={keyword}
+      />
+    </GlobalContainer>
   );
 };

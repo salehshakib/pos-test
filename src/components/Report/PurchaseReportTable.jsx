@@ -5,16 +5,30 @@ import { useGetAllPurchaseQuery } from "../../redux/services/purchase/purchaseAp
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { showCurrency } from "../../utilities/lib/currency";
 import CustomTable from "../Shared/Table/CustomTable";
+import dayjs from "dayjs";
+import { useGlobalParams } from "../../utilities/hooks/useParams";
 
 export const PurchaseReportTable = ({
   newColumns,
   setSelectedRows,
   searchParams,
+  keyword,
 }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
+  const params = useGlobalParams({
+    isDefaultParams: false,
+    params: {
+      ...pagination,
+      ...searchParams,
+      child: 1,
+      parent: 1,
+    },
+    keyword,
+  });
+
   const { data, isFetching } = useGetAllPurchaseQuery({
-    params: { ...pagination, ...searchParams, child: 1 },
+    params,
   });
 
   const total = data?.meta?.total;
@@ -22,22 +36,25 @@ export const PurchaseReportTable = ({
   const currency = useSelector(useCurrency);
 
   const dataSource =
-    data?.results?.purchase?.map((item) => {
+    data?.results?.purchase?.flatMap((item, index) => {
       const {
-        id,
         purchase_products,
         grand_total,
-
+        purchase_at,
         total_qty,
+        warehouses,
       } = item ?? {};
 
-      return {
-        id,
-        product: purchase_products?.map(({ products }) => products?.name),
+      const date = dayjs(purchase_at).format("DD-MM-YYYY");
+
+      return purchase_products?.map(({ products }, i) => ({
+        id: `${index}-${i}`, // Ensure unique IDs for each entry
+        product: products?.name,
+        warehouse: warehouses?.name,
         purchasedQty: total_qty,
+        purchasedAt: date,
         purchaseAmount: showCurrency(grand_total, currency),
-        // inStock: "2",
-      };
+      }));
     }) ?? [];
 
   return (

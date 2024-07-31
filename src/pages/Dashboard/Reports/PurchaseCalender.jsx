@@ -44,7 +44,7 @@ export const PurchaseCalender = () => {
       start_date: dateRange[0],
       end_date: dateRange[1],
       warehouse_id: warehouseId,
-      group_by: "created_at",
+      group_by: "purchase_at",
       child: 1,
     },
   });

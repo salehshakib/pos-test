@@ -86,7 +86,7 @@ export const ReportContainer = ({
               <CustomForm layout="horizontal" submitBtn={false} form={form}>
                 <Row {...rowLayout} gutter={2}>
                   {!pathname.includes("calender") && (
-                    <Col span={14}>
+                    <Col span={pathname.includes("reports/summary") ? 24 : 14}>
                       <FilterDateRange
                         customStyle={true}
                         name="daterange"
@@ -95,56 +95,13 @@ export const ReportContainer = ({
                     </Col>
                   )}
 
-                  <Col span={pathname.includes("calender") ? 24 : 10}>
-                    <WarehouseComponent onChange={onWarehouseChange} />
-                  </Col>
+                  {!pathname.includes("reports/summary") && (
+                    <Col span={pathname.includes("calender") ? 24 : 10}>
+                      <WarehouseComponent onChange={onWarehouseChange} />
+                    </Col>
+                  )}
                 </Row>
               </CustomForm>
-
-              {/* <Space.Compact> */}
-              {/* <Input
-                  type="text"
-                  key="search"
-                  size="large"
-                  className="w-full border rounded-md border-gray-300 focus:outline-none focus:border-primary"
-                  placeholder="Search"
-                  // value={searchUser}
-                  // onChange={handleSearchUser}
-                  prefix={
-                    <IoSearch
-                      style={{
-                        fontSize: "16px",
-                      }}
-                      className="primary-text hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
-                    />
-                  }
-                  allowClear={true}
-                /> */}
-              {/* <WarehouseFilter /> */}
-
-              {/* <Popover
-                  content={searchFilterContent}
-                  title="Advance Search"
-                  trigger="click"
-                  placement="bottomRight"
-                  arrow={false}
-                >
-                  <Button
-                    key="filter"
-                    size="large"
-                    className="border border-gray-300 "
-                    type="text"
-                  >
-                    <TbFilterSearch
-                      style={{
-                        fontSize: "16px",
-                        // color: "#000",
-                      }}
-                      className="text-xs primary-text lg:text-[16px]"
-                    />
-                  </Button>
-                </Popover> */}
-              {/* </Space.Compact> */}
             </Space>,
           ]}
           content={children}

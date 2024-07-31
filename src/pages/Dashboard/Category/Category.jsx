@@ -13,8 +13,8 @@ import { useFilterParams } from "../../../utilities/hooks/useParams";
 const columns = [
   {
     title: "Img",
-    dataIndex: "image",
-    key: "image",
+    dataIndex: "img",
+    key: "img",
     fixed: "left",
     align: "center",
     width: 70,

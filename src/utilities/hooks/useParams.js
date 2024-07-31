@@ -23,7 +23,7 @@ export const useGlobalParams = ({
   const searchParams = useSelector(selectParams);
 
   const globalParams = useMemo(() => {
-    let updatedParams = { ...params };
+    let updatedParams = { ...params, attachmentable: 1 };
 
     if (isDefaultParams) {
       updatedParams = { ...updatedParams, ...DEFAULT_PARAMS };

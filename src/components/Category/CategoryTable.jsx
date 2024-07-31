@@ -104,7 +104,8 @@ const CategoryTable = ({
 
   const dataSource =
     data?.results?.category?.map((item) => {
-      const { id, name, created_at, is_active, parents } = item ?? {};
+      const { id, name, created_at, is_active, parents, attachments } =
+        item ?? {};
 
       const { name: parent_name } = parents ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
@@ -114,7 +115,7 @@ const CategoryTable = ({
         category: name,
         parentCategory: parent_name ?? "N/A",
         created_at: date,
-
+        img: attachments?.[0]?.url,
         status: is_active,
         handleStatusModal,
         handleEdit,

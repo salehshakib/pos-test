@@ -14,6 +14,7 @@ const columns = [
     title: "Reference ID",
     dataIndex: "reference",
     key: "reference",
+    width: 150,
     align: "center",
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

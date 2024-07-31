@@ -23,6 +23,7 @@ const createDetailsLayout = (data, nostyle) => {
     "note",
     "description",
     "reference_id",
+    "parents",
   ];
 
   const booleanKeys = [
@@ -68,11 +69,11 @@ const createDetailsLayout = (data, nostyle) => {
           <div className="flex items-center gap-3" key={"attachments"}>
             {value?.map(({ label, url }) => (
               <img
-                src={defaultUser}
-                // src={url ?? defaultUser}
+                // src={defaultUser}
+                src={url ?? defaultUser}
                 alt={label}
                 key={url}
-                className="w-24"
+                className="size-24 object-cover"
               />
             ))}
           </div>
@@ -131,8 +132,8 @@ const createDetailsLayout = (data, nostyle) => {
           span: nostyle
             ? 2
             : fullRowKeys.includes(key) || key.includes("note")
-            ? 4
-            : 2,
+              ? 4
+              : 2,
         };
         acc.push(item);
       }

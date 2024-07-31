@@ -5,6 +5,7 @@ export const usePagination = () => {
     page: 1,
     perPage: 10,
     allData: 1, // Assuming this is a placeholder value
+    // attachmentable: 1
   });
 
   const updatePage = (newPage) => {

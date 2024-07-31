@@ -35,8 +35,6 @@ const ProductTable = ({
 
   const currency = useSelector(useCurrency);
 
-  console.log(currency);
-
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
@@ -127,6 +125,7 @@ const ProductTable = ({
         categories,
         brands,
         units,
+        attachments,
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
@@ -134,6 +133,7 @@ const ProductTable = ({
         id,
         name: name,
         sku: sku,
+        img: attachments?.[0]?.url,
         type,
         brand: brands?.name,
         category: categories?.name,

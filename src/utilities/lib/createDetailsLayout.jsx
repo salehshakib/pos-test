@@ -36,6 +36,7 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
     "has_expired_date",
     "has_variants",
     "is_send_email",
+    "have_access",
   ];
 
   const currencyKeys = [

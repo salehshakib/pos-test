@@ -19,6 +19,7 @@ import { usePagination } from "../../utilities/hooks/usePagination";
 import { showCurrency } from "../../utilities/lib/currency";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
+import { StockTransfer } from "./StockTransfer";
 
 const TransferTable = ({
   newColumns,
@@ -151,6 +152,8 @@ const TransferTable = ({
         handleDelete={handleDelete}
         isLoading={isDeleting}
       />
+
+      <StockTransfer />
     </GlobalUtilityStyle>
   );
 };

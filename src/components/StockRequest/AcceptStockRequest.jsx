@@ -1,28 +1,45 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalUtilityStyle } from "../../container/Styled";
-import { useReadNotificationMutation } from "../../redux/services/notification/notificationApi";
 import { StockRequestDetails } from "./StockRequestDetails";
 
 export const AcceptStockRequest = () => {
   const { state } = useLocation();
-  const { id, status } = state ?? {};
+  const { id } = state ?? {};
 
   const navigate = useNavigate();
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  const [readNotification, { isLoading }] = useReadNotificationMutation();
+  // const [readNotification, { isLoading }] = useReadNotificationMutation();
 
-  const handleReadNotification = async () => {
-    if (id && status === "unread") {
-      const { data } = await readNotification({ id });
+  // const handleReadNotification = async () => {
+  //   if (id && status === "unread") {
+  //     const { data } = await readNotification({ id });
 
-      if (data?.success) {
-        hideModal();
-      }
-    }
+  //     if (data?.success) {
+  //       hideModal();
+  //     }
+  //   }
+  // };
+
+  const handleAccept = async () => {
+    console.log("accept");
+  };
+
+  const handleAcceptAndTransfer = async () => {
+    console.log("accept and transfer");
+
+    navigate("/inventory/transfer", {
+      state: {
+        id: id,
+      },
+    });
+  };
+
+  const handleReject = () => {
+    console.log("reject");
   };
 
   const hideModal = () => {
@@ -37,8 +54,9 @@ export const AcceptStockRequest = () => {
       setDetailsModal(true);
     } else {
       setDetailsId(undefined);
+      setDetailsModal(false);
     }
-  }, [detailsId, id]);
+  }, [id]);
 
   return (
     detailsId && (
@@ -47,10 +65,13 @@ export const AcceptStockRequest = () => {
           id={detailsId}
           openModal={detailsModal}
           hideModal={hideModal}
-          notification={status === "unread" && true}
-          showCloseButton={status === "read" ? true : false}
-          onOk={handleReadNotification}
-          loading={isLoading}
+          notification={true}
+          showCloseButton={false}
+          onAccept={handleAccept}
+          onAcceptAndTransfer={handleAcceptAndTransfer}
+          onReject={handleReject}
+          acceptLoading={false}
+          acceptAndTransferLoading={false}
         />
       </GlobalUtilityStyle>
     )

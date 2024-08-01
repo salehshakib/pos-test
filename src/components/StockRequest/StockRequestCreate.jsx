@@ -92,6 +92,7 @@ const StockRequestCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+      setFormValues({ product_list: { qty: {}, min_qty: {} } });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({

@@ -4,7 +4,10 @@ import { FaBell } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../../../../redux/services/auth/authSlice";
-import { useGetAllNotificationQuery } from "../../../../redux/services/notification/notificationApi";
+import {
+  useGetAllNotificationQuery,
+  useReadNotificationMutation,
+} from "../../../../redux/services/notification/notificationApi";
 import { categorizeNotifications } from "../../../../utilities/lib/notification/notificationData";
 import NotificationComponent from "../../../Notification/Notification";
 
@@ -34,9 +37,6 @@ export const Notification = () => {
     }
   }, [data]);
 
-  // const [readNotification] = useReadNotificationMutation();
-  // const { data } = await readNotification({ id });
-
   const navigate = useNavigate();
 
   const { unreadNotifications } = categorizeNotifications(data);
@@ -45,21 +45,36 @@ export const Notification = () => {
     setIsPopoverOpen(false);
   };
 
+  const [readNotification] = useReadNotificationMutation();
+
   const handleReadNotification = async (item) => {
-    if (item?.data?.stock_request_id) {
-      navigate("/inventory/stock-request", {
-        state: {
-          id: item?.data?.stock_request_id,
-          status: item?.read_at === null ? "unread" : "read",
-        },
+    if (item?.read_at === null) {
+      const { data } = await readNotification({
+        notification_id: item?.id,
       });
-      onClose();
+
+      if (data?.success && item?.data?.stock_request_id) {
+        navigate("/inventory/stock-request", {
+          state: {
+            id: item?.data?.stock_request_id,
+          },
+        });
+        onClose();
+      }
+    } else {
+      if (item?.data?.stock_request_id) {
+        navigate("/inventory/stock-request", {
+          state: {
+            id: item?.data?.stock_request_id,
+          },
+        });
+        onClose();
+      }
     }
   };
 
   const handleNotification = () => {
     setIsPopoverOpen(true);
-    handleReadNotification();
   };
 
   const [selected, setSelected] = useState("All");

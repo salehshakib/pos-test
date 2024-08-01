@@ -3,7 +3,6 @@ import {
   NOTIFICATION,
   NOTIFICATION_READ,
 } from "../../../utilities/apiEndpoints/helper.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -21,13 +20,14 @@ const notificationSlice = baseApi.injectEndpoints({
       ],
     }),
     readNotification: build.mutation({
-      query: ({ id }) => ({
-        url: `/${NOTIFICATION_READ}/${id}`,
-        method: "GET",
+      query: (data) => ({
+        url: `/${NOTIFICATION_READ}`,
+        method: "POST",
+        body: data,
       }),
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          // openNotification("success", response?.message);
           return response;
         }
       },

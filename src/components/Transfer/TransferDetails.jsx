@@ -97,7 +97,7 @@ export const TransferDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center mt-10" />
+        <Spin className="w-full flex justify-center items-center my-10" />
       ) : (
         <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
           <CustomDescription title="Reference" items={referenceId} />

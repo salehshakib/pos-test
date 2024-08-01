@@ -17,7 +17,7 @@ export const WarehouseDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center mt-10" />
+        <Spin className="w-full flex justify-center items-center my-10" />
       ) : (
         <CustomDescription
           title="Warehouse"

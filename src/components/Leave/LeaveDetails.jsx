@@ -16,7 +16,11 @@ export const LeaveDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  const details = createDetailsLayout(data, false, [
+    "stock_request_products",
+    "employee_accesses",
+    "users",
+  ]);
 
   return (
     <CustomModal {...props}>

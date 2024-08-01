@@ -1,10 +1,11 @@
-import { Badge } from "antd";
+import { Badge, Image } from "antd";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import defaultUser from "../../assets/data/defaultUserImage";
 
-const createDetailsLayout = (data, nostyle) => {
+const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
   const ignoredKeys = [
+    ...ignoreDataKeys,
     "id",
     "created_at",
     "updated_at",
@@ -34,6 +35,7 @@ const createDetailsLayout = (data, nostyle) => {
     "has_different_price",
     "has_expired_date",
     "has_variants",
+    "is_send_email",
   ];
 
   const currencyKeys = [
@@ -68,12 +70,12 @@ const createDetailsLayout = (data, nostyle) => {
         return Array.isArray(value) ? (
           <div className="flex items-center gap-3" key={"attachments"}>
             {value?.map(({ label, url }) => (
-              <img
-                // src={defaultUser}
+              <Image
                 src={url ?? defaultUser}
                 alt={label}
                 key={url}
-                className="size-24 object-cover"
+                width={200}
+                className=" object-cover"
               />
             ))}
           </div>

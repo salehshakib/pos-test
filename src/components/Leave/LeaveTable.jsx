@@ -67,7 +67,6 @@ export const LeaveTable = ({
     }
   );
 
-  console.log(data);
   const total = data?.meta?.total;
 
   const [deleteLeave, { isLoading: isDeleting }] = useDeleteLeaveMutation();
@@ -97,24 +96,20 @@ export const LeaveTable = ({
 
   const dataSource =
     data?.results?.leave?.map((item) => {
-      //console.log(item);
       const {
         id,
-
-        // created_at,
-
+        employees,
+        leave_types,
         leave_start_date,
         leave_end_date,
         leave_duration,
-        users,
       } = item ?? {};
-
-      // const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        // name: users?.employees?.name,
+        name: employees?.name,
         leaveDuration: leave_duration,
+        leaveType: leave_types?.name,
         days: calculateLeaveDays(leave_start_date, leave_end_date),
         handleEdit,
         handleDeleteModal,

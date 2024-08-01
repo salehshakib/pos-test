@@ -7,6 +7,7 @@ import {
 } from "../../utilities/hooks/useParams";
 import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import CustomSelect from "../Shared/Select/CustomSelect";
+import { useEffect } from "react";
 
 export const WarehouseTransferComponent = ({ fullLayout = false }) => {
   const form = Form.useFormInstance();
@@ -31,6 +32,10 @@ export const WarehouseTransferComponent = ({ fullLayout = false }) => {
     label: warehouse.name,
     disabled: warehouse.id.toString() === warehouseFrom,
   }));
+
+  useEffect(() => {
+    form.resetFields(["to_warehouse_id"]);
+  }, [warehouseFrom, form]);
 
   return (
     <>

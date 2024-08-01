@@ -1,5 +1,5 @@
 import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   colLayout,
   fullColLayout,
@@ -23,9 +23,9 @@ import {
 } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
-const LeaveTypeComponent = () => {
+const LeaveTypeComponent = ({ setIsNeedAttachment }) => {
   const params = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
+    selectValue: [...DEFAULT_SELECT_VALUES, "need_attachment"],
   });
   const { data, isFetching } = useGetAllLeaveTypeQuery(
     { params },
@@ -37,6 +37,7 @@ const LeaveTypeComponent = () => {
   const options = data?.results?.leavetype?.map((item) => ({
     value: item?.id?.toString(),
     label: item?.name,
+    need_attachment: item?.need_attachment,
   }));
 
   return (
@@ -46,6 +47,11 @@ const LeaveTypeComponent = () => {
       options={options}
       isLoading={isFetching}
       required={true}
+      onChange={(value, option) => {
+        setIsNeedAttachment(
+          option?.need_attachment.toString() === "1" ? true : false
+        );
+      }}
     />
   );
 };
@@ -184,6 +190,8 @@ const HoursComponent = () => {
               label="Leave Start Time"
               placeholder="Leave Start Time"
               required={true}
+              type="time"
+              picker={"time"}
             />
           </Col>
 
@@ -193,6 +201,8 @@ const HoursComponent = () => {
               label="Leave End Time"
               placeholder="Leave End Time"
               required={true}
+              type="time"
+              picker={"time"}
             />
           </Col>
         </Row>
@@ -202,6 +212,10 @@ const HoursComponent = () => {
 };
 
 export const LeaveForm = (props) => {
+  const [isNeedAttachment, setIsNeedAttachment] = useState(false);
+
+  console.log(isNeedAttachment);
+
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>
@@ -212,7 +226,7 @@ export const LeaveForm = (props) => {
           <EmployeeComponent />
         </Col>
         <Col {...colLayout}>
-          <LeaveTypeComponent />
+          <LeaveTypeComponent setIsNeedAttachment={setIsNeedAttachment} />
         </Col>
         <Col {...fullColLayout}>
           <LeaveDurationComponent />
@@ -226,7 +240,11 @@ export const LeaveForm = (props) => {
         <HoursComponent />
 
         <Col {...fullColLayout}>
-          <CustomUploader name="attachment" label={"Attachment"} />
+          <CustomUploader
+            name="attachment"
+            label={"Attachment"}
+            required={isNeedAttachment}
+          />
         </Col>
 
         <Col {...fullColLayout}>

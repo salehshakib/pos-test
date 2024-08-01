@@ -6,6 +6,7 @@ import { useCreateLeaveMutation } from "../../redux/services/hrm/leave/leaveApi"
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { LeaveForm } from "./LeaveForm";
+import dayjs from "dayjs";
 
 export const LeaveCreate = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,17 @@ export const LeaveCreate = () => {
 
     if (values?.attachment?.length > 0) {
       postData.attachment = values?.attachment?.[0]?.originFileObj;
+    }
+
+    if (values?.leave_start_time) {
+      postData.leave_start_time = dayjs(values?.leave_start_time).format(
+        "hh:mm:ss"
+      );
+    }
+    if (values?.leave_end_time) {
+      postData.leave_end_time = dayjs(values?.leave_end_time).format(
+        "hh:mm:ss"
+      );
     }
 
     appendToFormData(postData, formData);

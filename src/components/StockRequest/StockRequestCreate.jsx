@@ -10,18 +10,6 @@ import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { StockRequestForm } from "./StockRequestForm";
 
-// function filterProductsByWarehouse(products, warehouseId) {
-//   // Filter products based on warehouse_id = warehouseId in product_qties
-//   return products.filter((product) => {
-//     // Check if any product_qty matches the warehouseId
-//     return product.product_qties.some(
-//       (qty) =>
-//         qty.warehouse_id === warehouseId &&
-//         parseInt(qty.qty, 10) < parseInt(product?.alert_qty, 10)
-//     );
-//   });
-// }
-
 const StockRequestCreate = () => {
   const dispatch = useDispatch();
 
@@ -40,10 +28,9 @@ const StockRequestCreate = () => {
 
   const params = useGlobalParams({
     params: {
-      warehouse_id: warehouseId,
-
-      // child: 1,
+      warehouse_ids: [warehouseId],
       need_alert_qty: 1,
+      // child: 1,
     },
   });
 
@@ -116,7 +103,7 @@ const StockRequestCreate = () => {
     }
   };
 
-  console.log(data);
+  console.log(data?.results.product);
 
   return (
     <CustomDrawer

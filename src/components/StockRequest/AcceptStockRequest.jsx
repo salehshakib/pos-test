@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { StockRequestDetails } from "./StockRequestDetails";
+import { useResponseStockRequestMutation } from "../../redux/services/stockRequest/stockRequestApi";
 
 export const AcceptStockRequest = () => {
   const { state } = useLocation();
@@ -12,34 +13,61 @@ export const AcceptStockRequest = () => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
-  // const [readNotification, { isLoading }] = useReadNotificationMutation();
+  const [responseStockRequest, { isLoading }] =
+    useResponseStockRequestMutation();
 
-  // const handleReadNotification = async () => {
-  //   if (id && status === "unread") {
-  //     const { data } = await readNotification({ id });
-
-  //     if (data?.success) {
-  //       hideModal();
-  //     }
-  //   }
-  // };
+  const [acceptLoading, setAcceptLoading] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
+  const [acceptAndTransferLoading, setAcceptAndTransferLoading] =
+    useState(false);
 
   const handleAccept = async () => {
-    console.log("accept");
+    setAcceptLoading(true);
+    const { data } = await responseStockRequest({
+      request_id: id,
+      status: "Accepted",
+    });
+
+    if (data?.success) {
+      hideModal();
+    }
+
+    setAcceptLoading(false);
   };
 
   const handleAcceptAndTransfer = async () => {
-    console.log("accept and transfer");
+    setAcceptAndTransferLoading(true);
 
-    navigate("/inventory/transfer", {
-      state: {
-        id: id,
-      },
+    const { data } = await responseStockRequest({
+      request_id: id,
+      status: "Accepted",
     });
+
+    setAcceptAndTransferLoading(false);
+
+    if (data?.success) {
+      hideModal();
+
+      navigate("/inventory/transfer", {
+        state: {
+          id: id,
+        },
+      });
+    }
   };
 
-  const handleReject = () => {
-    console.log("reject");
+  const handleReject = async () => {
+    setRejectLoading(true);
+    const { data } = await responseStockRequest({
+      request_id: id,
+      status: "Rejected",
+    });
+
+    if (data?.success) {
+      hideModal();
+    }
+
+    setRejectLoading(false);
   };
 
   const hideModal = () => {
@@ -70,8 +98,9 @@ export const AcceptStockRequest = () => {
           onAccept={handleAccept}
           onAcceptAndTransfer={handleAcceptAndTransfer}
           onReject={handleReject}
-          acceptLoading={false}
-          acceptAndTransferLoading={false}
+          acceptLoading={acceptLoading}
+          rejectLoading={rejectLoading}
+          acceptAndTransferLoading={acceptAndTransferLoading}
         />
       </GlobalUtilityStyle>
     )

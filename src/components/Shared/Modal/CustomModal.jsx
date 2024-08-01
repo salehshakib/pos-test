@@ -52,13 +52,27 @@ const CustomModal = (props) => {
           {notification &&
             (status === "Pending" ? (
               <div className="w-full flex justify-end items-center gap-3 mt-5 shadow-sm">
-                <Button type="" onClick={props.onReject}>
+                <Button
+                  type=""
+                  onClick={props.onReject}
+                  loading={props.rejectLoading}
+                  disabled={
+                    props.rejectLoading ||
+                    props.acceptLoading ||
+                    props.acceptAndTransferLoading
+                  }
+                >
                   Reject
                 </Button>
                 <Button
                   type="primary"
                   onClick={props.onAccept}
                   loading={props.acceptLoading}
+                  disabled={
+                    props.rejectLoading ||
+                    props.acceptLoading ||
+                    props.acceptAndTransferLoading
+                  }
                 >
                   Accept
                 </Button>
@@ -66,13 +80,29 @@ const CustomModal = (props) => {
                   type="primary"
                   onClick={props.onAcceptAndTransfer}
                   loading={props.acceptAndTransferLoading}
+                  disabled={
+                    props.rejectLoading ||
+                    props.acceptLoading ||
+                    props.acceptAndTransferLoading
+                  }
                 >
                   Accept & Transfer
                 </Button>
               </div>
             ) : status === "Accepted" ? (
               <div className="w-full flex justify-end items-center gap-3 mt-5">
-                <Button type="primary" onClick={props.onAcceptAndTransfer}>
+                <Button type="primary" onClick={hideModal}>
+                  Close
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={props.onAcceptAndTransfer}
+                  disabled={
+                    props.rejectLoading ||
+                    props.acceptLoading ||
+                    props.acceptAndTransferLoading
+                  }
+                >
                   Transfer
                 </Button>
               </div>

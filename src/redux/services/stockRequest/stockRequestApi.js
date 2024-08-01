@@ -56,6 +56,31 @@ const stockRequestApi = baseApi.injectEndpoints({
       },
     }),
 
+    responseStockRequest: build.mutation({
+      query: (data) => {
+        return {
+          url: `/${STOCK_REQUEST}/response`,
+          method: "POST",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: STOCK_REQUEST }] : [];
+      },
+    }),
+
     updateStockRequest: build.mutation({
       query: ({ id, data }) => {
         return {
@@ -120,4 +145,5 @@ export const {
   useUpdateStockRequestMutation,
   useUpdateStockRequestStatusMutation,
   useDeleteStockRequestMutation,
+  useResponseStockRequestMutation,
 } = stockRequestApi;

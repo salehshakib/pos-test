@@ -2,7 +2,7 @@ import { useState } from "react";
 import StockRequestCreate from "../../../components/StockRequest/StockRequestCreate";
 import StockRequestTable from "../../../components/StockRequest/StockRequestTable";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { STOCK_COUNT } from "../../../utilities/apiEndpoints/inventory.api";
+import { STOCK_REQUEST } from "../../../utilities/apiEndpoints/inventory.api";
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
 
@@ -56,7 +56,7 @@ const StockRequest = () => {
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       setParams={setParams}
-      api={STOCK_COUNT}
+      api={STOCK_REQUEST}
     >
       <StockRequestCreate />
 

@@ -73,10 +73,9 @@ const ExtraComponent = () => {
     <CustomForm form={dashboardForm} submitBtn={false}>
       <Row
         {...rowLayout}
-        className="grid grid-cols-1 lg:grid-cols-2 items-center gap-2 lg:gap-0"
+        className="grid grid-cols-1 xl:grid-cols-2 items-center gap-2 lg:gap-0"
       >
         <Col {...fullColLayout} className="">
-          {/* <WarehouseComponent label={false} /> */}
           <CustomSelect
             showSearch={true}
             isLoading={isLoading}
@@ -93,11 +92,6 @@ const ExtraComponent = () => {
               size="large"
               className="mt-1"
               options={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
-              style={
-                {
-                  // backgroundColor: "white",
-                }
-              }
             />
           </Form.Item>
         </Col>
@@ -118,7 +112,7 @@ const CashStatistic = () => {
     <div className="space-y-3">
       <span className="font-semibold text-lg">Transactions </span>
       <div className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
           <DashboardCard
             title={"Total Purchase"}
             icon={<MdOutlineNumbers {...iconProps} />}
@@ -165,17 +159,17 @@ const CashStatistic = () => {
             currency={currency}
           />
         </div>
-        <div className="grid grid-cols-3 gap-3">
-          <DashboardCard
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+          {/* <DashboardCard
             title={"Today's Payment Received"}
             icon={<SlWallet {...iconProps} />}
-          />
+          /> */}
           <DashboardCard
-            title={"Today's Payment Sent"}
+            title={"Petty Cash"}
             icon={<SlWallet {...iconProps} />}
           />
           <DashboardCard
-            title={"Today's Total Expense"}
+            title={"Total Expense"}
             icon={<SlWallet {...iconProps} />}
           />
         </div>
@@ -194,8 +188,8 @@ const WarehouseStatistic = () => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">Warehouse</span>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <span className="font-semibold text-lg">Inventory</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <DashboardCard
           title={"Warehouse"}
           icon={<PiWarehouse {...iconProps} />}
@@ -231,7 +225,7 @@ const PeopleStatistic = () => {
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">People</span>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
         <DashboardCard
           title={"Customer"}
           data={"N/A"}
@@ -265,7 +259,7 @@ const EmployeeStatistic = () => {
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">HRM</span>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
         <DashboardCard
           title={"Department"}
           data={"N/A"}
@@ -344,7 +338,7 @@ const RecentlyAddedComponent = () => {
 
   return (
     <CustomTable
-      title={"Recently Added Products"}
+      title={"Added Products"}
       columns={columns}
       dataSource={[]}
       created_at={false}
@@ -510,7 +504,7 @@ const AdminDashboard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"></div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 p-5">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 p-5">
         <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">
           <div className="text-lg w-full text-center font-semibold pb-4 h-full">
             Purchase & Sale

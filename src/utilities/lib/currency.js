@@ -1,7 +1,10 @@
 export const showCurrency = (value, currency) => {
-  if (!value || value === "null") return "N/A";
+  if (value === null || value === "null" || value === undefined) return "0.00";
 
-  if (currency.position.toString() === "0")
-    return currency.name + " " + parseFloat(value).toFixed(2) ?? "N/A";
-  else return parseFloat(value).toFixed(2) ?? "N/A" + " " + currency.name;
+  const formattedValue = parseFloat(value).toFixed(2);
+  const isPrefix = currency.position.toString() === "0";
+
+  return isPrefix
+    ? `${currency.name} ${formattedValue}`
+    : `${formattedValue} ${currency.name}`;
 };

@@ -6,6 +6,30 @@ import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
 import { usePermission } from "../../../utilities/lib/getPermission";
+import { useState } from "react";
+
+const getDownloadItems = (record) =>
+  [
+    {
+      key: "pdf",
+      icon: <FaFilePdf size={20} />,
+      label: <div className="flex justify-start items-center gap-3">PDF</div>,
+      onClick: () => record?.handleFileDownload(record?.id, "pdf"),
+    },
+    {
+      key: "xlsx",
+      icon: <FaFileExcel size={20} />,
+      label: <div className="flex justify-start items-center gap-3">Excel</div>,
+      onClick: () => record?.handleFileDownload(record?.id, "xlsx"),
+    },
+    {
+      key: "csv",
+      icon: <FaFileCsv size={20} />,
+      label: <div className="flex justify-start items-center gap-3">CSV</div>,
+      onClick: () => record?.handleFileDownload(record?.id, "csv"),
+      // disabled: !record.handleDeleteModal,
+    },
+  ].filter(Boolean);
 
 const CustomTable = ({
   columns,
@@ -25,6 +49,7 @@ const CustomTable = ({
   created_at = true,
   action = true,
   title,
+  hideOnSinglePage = false,
 }) => {
   const globalLoading = useGlobalLoader();
   const route = window.location.pathname.substring(1);
@@ -42,16 +67,15 @@ const CustomTable = ({
     }),
   };
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const handlePageChange = (newPage) => {
-    console.log(newPage);
-    updatePage(newPage);
-    // dispatch(updatePage({ page: newPage }));
+    updatePage ? updatePage(newPage) : setPage(newPage);
   };
 
   const handlePageSizeChange = (newPageSize) => {
-    console.log(newPageSize);
-    updatePageSize(newPageSize);
-    // dispatch(updatePageSize({ perPage: newPageSize }));
+    updatePageSize ? updatePageSize(newPageSize) : setPageSize(newPageSize);
   };
 
   const isDetailsPermitted = usePermission(route, "show");
@@ -93,31 +117,6 @@ const CustomTable = ({
       },
     ].filter(Boolean);
 
-  const getDownloadItems = (record) =>
-    [
-      {
-        key: "pdf",
-        icon: <FaFilePdf size={20} />,
-        label: <div className="flex justify-start items-center gap-3">PDF</div>,
-        onClick: () => record?.handleFileDownload(record?.id, "pdf"),
-      },
-      {
-        key: "xlsx",
-        icon: <FaFileExcel size={20} />,
-        label: (
-          <div className="flex justify-start items-center gap-3">Excel</div>
-        ),
-        onClick: () => record?.handleFileDownload(record?.id, "xlsx"),
-      },
-      {
-        key: "csv",
-        icon: <FaFileCsv size={20} />,
-        label: <div className="flex justify-start items-center gap-3">CSV</div>,
-        onClick: () => record?.handleFileDownload(record?.id, "csv"),
-        // disabled: !record.handleDeleteModal,
-      },
-    ].filter(Boolean);
-
   const tableProps = {
     title: () => (
       <span className="font-semibold text-[14px] underline text-lg">
@@ -150,13 +149,13 @@ const CustomTable = ({
     size: "default",
     total: total,
     defaultCurrent: 1,
-    current: pagination?.page,
+    current: pagination?.page ?? page,
     onChange: (page) => {
       handlePageChange(page);
     },
     showSizeChanger: true,
-    // hideOnSinglePage: true,
-    defaultPageSize: pagination?.perPage,
+    hideOnSinglePage: hideOnSinglePage,
+    defaultPageSize: pagination?.perPage ?? pageSize,
     onShowSizeChange: (current, size) => {
       handlePageSizeChange(size);
     },

@@ -58,6 +58,7 @@ export const columns = [
   {
     title: "Grand Total",
     dataIndex: "grandTotal",
+    align: "right",
     key: "grandTotal",
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

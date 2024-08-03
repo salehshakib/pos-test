@@ -5,6 +5,7 @@ import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { showCurrency } from "../../../utilities/lib/currency";
 import { useState } from "react";
 import CustomModal from "../Modal/CustomModal";
+import CustomTable from "../Table/CustomTable";
 
 const getMonthData = (value) => {
   if (value.month() === 8) {
@@ -22,7 +23,56 @@ const monthCellRender = (value) => {
   ) : null;
 };
 
-const CustomCalender = ({ onChange, data, onCellClick }) => {
+const columns = [
+  {
+    //name
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    //name
+    title: "Sku",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    //name
+    title: "Quantity",
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+    render: (quantity) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {quantity}
+      </span>
+    ),
+  },
+  {
+    title: "Total",
+    dataIndex: "total",
+    key: "total",
+    align: "right",
+    render: (total, record) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {showCurrency(total, record?.currency)}
+      </span>
+    ),
+  },
+];
+
+const CustomCalender = ({ onChange, data }) => {
   const currency = useSelector(useCurrency);
 
   console.log(data);
@@ -83,29 +133,41 @@ const CustomCalender = ({ onChange, data, onCellClick }) => {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [dataSource, setDataSource] = useState([]);
 
   const handleCellClick = (date) => {
-    console.log(dayjs(date).format("YYYY-MM-DD"));
+    const value = data?.[dayjs(date).format("YYYY-MM-DD")];
 
-    const value = data[dayjs(date).format("YYYY-MM-DD")];
-    console.log(value);
+    const processedData =
+      value?.flatMap((item) => {
+        const { purchase_products, sale_products } = item ?? {};
+        const products = purchase_products || sale_products;
+
+        console.log(item);
+
+        return products?.map((productItem) => ({
+          id: productItem?.products?.id,
+          name: productItem?.products?.name,
+          sku: productItem?.products?.sku,
+          quantity: productItem?.qty,
+          total: productItem?.total,
+          currency,
+          grand_total: item?.grand_total,
+          paid_amount: item?.paid_amount,
+          due_amount: item?.due_amount,
+        }));
+      }) || [];
 
     if (value) {
       setModalOpen(true);
+      setDataSource(processedData);
+    } else {
+      setDataSource([]);
     }
   };
 
-  console.log(modalOpen);
-
   if (!data)
     return (
-      // <Skeleton
-      //   className="my-4"
-      //   paragraph={{
-      //     rows: 6,
-      //   }}
-      //   active
-      // />
       <Spin className="w-full flex justify-center items-center h-[70vh]" />
     );
 
@@ -116,10 +178,37 @@ const CustomCalender = ({ onChange, data, onCellClick }) => {
         onChange={onChange}
         onSelect={handleCellClick}
       />
-      <CustomModal
-        openModal={modalOpen}
-        hideModal={() => setModalOpen(false)}
-      ></CustomModal>
+      <CustomModal openModal={modalOpen} hideModal={() => setModalOpen(false)}>
+        <div className="grid grid-cols-3 p-2 divide-x-2 ">
+          <div className="flex gap-2 justify-center">
+            <span className="text-lg font-medium">Grand Total</span>
+            <span className="text-lg font-medium">
+              {showCurrency(dataSource?.[0]?.grand_total, currency)}
+            </span>
+          </div>
+          <div className="flex gap-2  justify-center">
+            <span className="text-lg font-medium">Paid Amount</span>
+            <span className="text-lg font-medium">
+              {showCurrency(dataSource?.[0]?.paid_amount, currency)}
+            </span>
+          </div>
+          <div className="flex gap-2 justify-center">
+            <span className="text-lg font-medium">Due Amount</span>
+            <span className="text-lg font-medium">
+              {showCurrency(dataSource?.[0]?.due_amount, currency)}
+            </span>
+          </div>
+        </div>
+        <CustomTable
+          columns={columns}
+          dataSource={dataSource}
+          title="Products"
+          status={false}
+          action={false}
+          created_at={false}
+          hideOnSinglePage={true}
+        />
+      </CustomModal>
     </>
   );
 };

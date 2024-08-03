@@ -2,12 +2,10 @@ import { Form, Table } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
-import { useCurrentUser } from "../../../redux/services/auth/authSlice";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { useGetReportSummaryQuery } from "../../../redux/services/reports/summaryApi";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { getLastWeek } from "../../../utilities/lib/getLastWeek";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { showCurrency } from "../../../utilities/lib/currency";
 import { getDateRange } from "../../../utilities/lib/getDateRange";
 // const { Text } = Typography;
 
@@ -63,6 +61,7 @@ const columns = [
     title: "Paid Amount",
     dataIndex: "paidAmount",
     key: "paidAmount",
+    align: "right",
     render: (paidAmount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {paidAmount}
@@ -73,6 +72,7 @@ const columns = [
   {
     title: "Shipping Cost",
     dataIndex: "shippingCost",
+    align: "right",
     key: "shippingCost",
     render: (shippingCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -83,6 +83,7 @@ const columns = [
   {
     title: "Tax",
     dataIndex: "tax",
+    align: "right",
     key: "tax",
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -93,6 +94,7 @@ const columns = [
   {
     title: "Discount",
     dataIndex: "discount",
+    align: "right",
     key: "discount",
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -103,6 +105,7 @@ const columns = [
   {
     title: "Grand Total",
     dataIndex: "grandTotal",
+    align: "right",
     key: "grandTotal",
     render: (grandTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -183,6 +186,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
     {
       title: "Tax",
       dataIndex: "tax",
+      align: "right",
       key: "tax",
       render: (tax) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -194,6 +198,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
     {
       title: "Grand Total",
       dataIndex: "grandTotal",
+      align: "right",
       key: "grandTotal",
       render: (grandTotal) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -242,6 +247,7 @@ const SaleReturnSummaryTable = ({ data }) => {
     {
       title: "Tax",
       dataIndex: "tax",
+      align: "right",
       key: "tax",
       render: (tax) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -253,6 +259,7 @@ const SaleReturnSummaryTable = ({ data }) => {
     {
       title: "Grand Total",
       dataIndex: "grandTotal",
+      align: "right",
       key: "grandTotal",
       render: (grandTotal) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -302,6 +309,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       title: "Card",
       dataIndex: "card",
       key: "card",
+      align: "center",
       render: (card) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {card}
@@ -312,6 +320,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       title: "Cheque",
       dataIndex: "cheque",
       key: "cheque",
+      align: "center",
       render: (cheque) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {cheque}
@@ -322,6 +331,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       title: "Gift Card",
       dataIndex: "giftCard",
       key: "giftCard",
+      align: "center",
       render: (giftCard) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {giftCard}
@@ -332,6 +342,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       title: "Cash",
       dataIndex: "cash",
       key: "cash",
+      align: "center",
       render: (cash) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {cash}
@@ -342,6 +353,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       title: "Total Payment Received",
       dataIndex: "payment_recieved",
       key: "payment_recieved",
+      align: "right",
       render: (payment_recieved) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {payment_recieved}
@@ -366,16 +378,18 @@ const PaymentReceivedSummaryTable = ({ data }) => {
   //   gift_card_payment_sale: 0,
   //   cash_payment_sale: 0
 
-  const dataSource = data?.sale?.map((item) => {
-    return {
+  console.log(data);
+
+  const dataSource = [
+    {
       payment_recieved_number: data?.payment_recieved_number,
       card: data?.card_payment_sale,
       cheque: data?.cheque_payment_sale,
       giftCard: data?.gift_card_payment_sale,
       cash: data?.cash_payment_sale,
-      payment_recieved: showCurrency(item?.payment_recieved, currency),
-    };
-  });
+      payment_recieved: showCurrency(data?.payment_recieved, currency),
+    },
+  ];
 
   return (
     <Table {...tableStyleProps} columns={columns} dataSource={dataSource} />
@@ -400,6 +414,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       title: "Card",
       dataIndex: "card",
       key: "card",
+      align: "center",
       render: (card) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {card}
@@ -410,6 +425,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       title: "Cheque",
       dataIndex: "cheque",
       key: "cheque",
+      align: "center",
       render: (cheque) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {cheque}
@@ -420,6 +436,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       title: "Cash",
       dataIndex: "cash",
       key: "cash",
+      align: "center",
       render: (cash) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {cash}
@@ -430,6 +447,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       title: "Total Payment Sent",
       dataIndex: "payment_sent",
       key: "payment_sent",
+      align: "right",
       render: (payment_sent) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {payment_sent}
@@ -447,15 +465,17 @@ const PaymentSentSummaryTable = ({ data }) => {
     ...styleProps,
   };
 
-  const dataSource = data?.sale?.map((item) => {
-    return {
+  console.log(data);
+
+  const dataSource = [
+    {
       payment_sent_number: data?.payment_sent_number,
       card: data?.card_payment_purchase,
       cheque: data?.cheque_payment_purchase,
       cash: data?.cash_payment_purchase,
-      payment_sale: showCurrency(item?.payment_sale, currency),
-    };
-  });
+      payment_sent: showCurrency(data?.payment_sent, currency),
+    },
+  ];
 
   return (
     <Table {...tableStyleProps} columns={columns} dataSource={dataSource} />
@@ -480,6 +500,7 @@ const ExpenseSummaryTable = ({ data }) => {
     {
       title: "Total Expenses",
       dataIndex: "totalExpenses",
+      align: "right",
       key: "totalExpenses",
       render: (totalExpenses) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -528,6 +549,7 @@ const PayrollSummaryTable = ({ data }) => {
     {
       title: "Total Payroll",
       dataIndex: "totalPayroll",
+      align: "right",
       key: "totalPayroll",
       render: (totalPayroll) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

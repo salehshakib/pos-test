@@ -328,6 +328,7 @@ const RecentlyAddedComponent = () => {
       title: "Sale Price",
       dataIndex: "salePrice",
       key: "salePrice",
+      align: "right",
       render: (salePrice) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {salePrice}

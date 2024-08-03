@@ -1,8 +1,10 @@
-import { Badge, Calendar, Skeleton } from "antd";
+import { Badge, Calendar, Spin } from "antd";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { showCurrency } from "../../../utilities/lib/currency";
+import { useState } from "react";
+import CustomModal from "../Modal/CustomModal";
 
 const getMonthData = (value) => {
   if (value.month() === 8) {
@@ -20,8 +22,10 @@ const monthCellRender = (value) => {
   ) : null;
 };
 
-const CustomCalender = ({ onChange, data }) => {
+const CustomCalender = ({ onChange, data, onCellClick }) => {
   const currency = useSelector(useCurrency);
+
+  console.log(data);
 
   const getListData = (value) => {
     const date = dayjs(value).format("YYYY-MM-DD");
@@ -55,7 +59,7 @@ const CustomCalender = ({ onChange, data }) => {
           return (
             <li key={item.id}>
               <Badge status={item.type} text={item.content} />
-              <div className="flex flex-wrap gap-1">
+              {/* <div className="flex flex-wrap gap-1">
                 <span className="font-semibold">Products:</span>
                 {item.products.map((productItem) => {
                   return (
@@ -64,7 +68,7 @@ const CustomCalender = ({ onChange, data }) => {
                     </span>
                   );
                 })}
-              </div>
+              </div> */}
             </li>
           );
         })}
@@ -78,18 +82,46 @@ const CustomCalender = ({ onChange, data }) => {
     return info.originNode;
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleCellClick = (date) => {
+    console.log(dayjs(date).format("YYYY-MM-DD"));
+
+    const value = data[dayjs(date).format("YYYY-MM-DD")];
+    console.log(value);
+
+    if (value) {
+      setModalOpen(true);
+    }
+  };
+
+  console.log(modalOpen);
+
   if (!data)
     return (
-      <Skeleton
-        className="my-4"
-        paragraph={{
-          rows: 6,
-        }}
-        active
-      />
+      // <Skeleton
+      //   className="my-4"
+      //   paragraph={{
+      //     rows: 6,
+      //   }}
+      //   active
+      // />
+      <Spin className="w-full flex justify-center items-center h-[70vh]" />
     );
 
-  return <Calendar cellRender={cellRender} onChange={onChange} />;
+  return (
+    <>
+      <Calendar
+        cellRender={cellRender}
+        onChange={onChange}
+        onSelect={handleCellClick}
+      />
+      <CustomModal
+        openModal={modalOpen}
+        hideModal={() => setModalOpen(false)}
+      ></CustomModal>
+    </>
+  );
 };
 
 export default CustomCalender;

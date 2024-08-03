@@ -82,12 +82,12 @@ export const StockTransfer = () => {
   const fromWarehouse = Form.useWatch("from_warehouse_id", form);
   const toWarehouse = Form.useWatch("to_warehouse_id", form);
 
-  console.log(fromWarehouse, data);
-
   useEffect(() => {
-    if (data) {
-      form.setFieldValue("from_warehouse_id", data?.from_warehouse_id);
-      form.setFieldValue("to_warehouse_id", data?.to_warehouse_id);
+    if (data && fromWarehouse && toWarehouse) {
+      form.setFieldsValue({
+        from_warehouse_id: data.from_warehouse_id,
+        to_warehouse_id: data.to_warehouse_id,
+      });
     }
   }, [data, form, fromWarehouse, toWarehouse]);
 

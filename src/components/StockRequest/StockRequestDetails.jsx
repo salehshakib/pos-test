@@ -64,8 +64,6 @@ export const StockRequestDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  console.log(data);
-
   const warehouseInfo = createDetailsLayout({
     warehouse_from: data?.from_warehouses?.name,
     request_warehouse: data?.to_warehouses?.name,

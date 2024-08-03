@@ -52,7 +52,6 @@ const ProductTable = ({
     params: {
       ...pagination,
       ...searchParams,
-      parent: 1,
     },
     keyword,
   });

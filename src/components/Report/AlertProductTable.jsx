@@ -49,21 +49,6 @@ export const AlertProductTable = ({
         selling_price: unit_cost,
       } = item ?? {};
 
-      // if (product_qties?.length < 2) {
-      //   return [
-      //     {
-      //       id: index,
-      //       name,
-      //       sku,
-      //       minQty: alert_qty,
-      //       warehouse: product_qties?.[0]?.warehouses?.name ?? "",
-      //       stock: product_qties?.[0]?.qty ?? 0,
-      //       unitCost: product_prices?.length
-      //         ? showCurrency(product_prices?.[0]?.selling_price, currency)
-      //         : showCurrency(unit_cost, currency),
-      //     },
-      //   ];
-      // } else {
       return product_qties.map((qty, i) => ({
         id: `${index}-${i}`, // Ensure unique IDs for each entry
         name,

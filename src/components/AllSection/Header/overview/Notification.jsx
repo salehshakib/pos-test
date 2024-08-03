@@ -48,6 +48,7 @@ export const Notification = () => {
   const [readNotification] = useReadNotificationMutation();
 
   const handleReadNotification = async (item) => {
+    console.log(item);
     if (item?.read_at === null) {
       const { data } = await readNotification({
         notification_id: item?.id,

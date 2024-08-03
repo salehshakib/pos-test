@@ -26,6 +26,10 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
+import { usePagination } from "../../../utilities/hooks/usePagination";
+import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
+import { useGetAlertReportQuery } from "../../../redux/services/reports/summaryApi";
+import { showCurrency } from "../../../utilities/lib/currency";
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
@@ -399,13 +403,53 @@ const ExpiredItemsComponent = () => {
     },
   ];
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const warehouseParams = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data: warehouseData } = useGetWarehousesQuery({
+    params: warehouseParams,
+  });
+
+  const warehouseIds = warehouseData?.results?.warehouse?.map(
+    (warehouse) => warehouse?.id
+  );
+
+  console.log(warehouseIds);
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
+    isRelationalParams: true,
+    params: {
+      ...pagination,
+      is_expired: 1,
+      warehouse_ids: warehouseIds,
+    },
+  });
+
+  const { data, isLoading } = useGetAllProductsQuery(
+    { params },
+    {
+      skip: !warehouseIds?.length,
+      // skip: !useUrlIndexPermission(),
+    }
+  );
+
+  console.log(data);
+
   return (
     <CustomTable
       title={"Expired Products"}
       columns={columns}
       dataSource={[]}
+      isLoading={isLoading}
       created_at={false}
       action={false}
+      pagination={pagination}
+      updatePage={updatePage}
+      updatePageSize={updatePageSize}
     />
   );
 };
@@ -449,25 +493,130 @@ const StockAlertComponent = () => {
     },
     {
       //stock
+      title: "Warehouse",
+      dataIndex: "warehouse",
+      key: "warehouse",
+      align: "center",
+      render: (warehouse) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {warehouse}
+        </span>
+      ),
+    },
+    {
+      //stock
+      title: "Min Qty",
+      dataIndex: "minQty",
+      key: "minQty",
+      align: "center",
+      render: (minQty) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {minQty}
+        </span>
+      ),
+    },
+    {
+      //stock
       title: "Stock",
       dataIndex: "stock",
       key: "stock",
       align: "center",
-      render: (stock) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      render: (stock, record) => (
+        <span
+          className={`"text-xs font-medium md:text-sm text-dark dark:text-white87" ${
+            record?.stock < record?.minQty ? "text-red-500" : ""
+          }`}
+        >
           {stock}
+        </span>
+      ),
+    },
+    {
+      //stock
+      title: "Unit Cost",
+      dataIndex: "unitCost",
+      key: "unitCost",
+      align: "center",
+      render: (unitCost) => (
+        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+          {unitCost}
         </span>
       ),
     },
   ];
 
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const warehouseParams = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data: warehouseData } = useGetWarehousesQuery({
+    params: warehouseParams,
+  });
+
+  const warehouseIds = warehouseData?.results?.warehouse?.map(
+    (warehouse) => warehouse?.id
+  );
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
+    params: {
+      ...pagination,
+      child: 1,
+      need_alert_qty: 1,
+    },
+  });
+
+  const { data, isFetching } = useGetAlertReportQuery(
+    { params },
+    {
+      skip: !warehouseIds?.length,
+    }
+  );
+
+  const total = data?.meta?.total;
+
+  const currency = useSelector(useCurrency);
+
+  const dataSource =
+    data?.results?.product?.flatMap((item, index) => {
+      const {
+        name,
+        alert_qty,
+        sku,
+        product_qties,
+        product_prices,
+        selling_price: unit_cost,
+      } = item ?? {};
+
+      return product_qties.map((qty, i) => ({
+        id: `${index}-${i}`,
+        name,
+        sku,
+        minQty: alert_qty,
+        warehouse: qty.warehouses?.name ?? "",
+        stock: qty.qty ?? 0,
+        unitCost: product_prices?.length
+          ? showCurrency(product_prices?.[i].selling_price, currency)
+          : showCurrency(unit_cost, currency),
+      }));
+      // }
+    }) ?? [];
+
   return (
     <CustomTable
       title={"Limited Stock Products"}
       columns={columns}
-      dataSource={[]}
+      dataSource={dataSource}
+      isLoading={isFetching}
       created_at={false}
       action={false}
+      status={false}
+      total={total}
+      pagination={pagination}
+      updatePage={updatePage}
+      updatePageSize={updatePageSize}
     />
   );
 };

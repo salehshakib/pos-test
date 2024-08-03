@@ -25,7 +25,7 @@ const CustomUploader = ({
   label,
   required = false,
   multiple = false,
-  type,
+  type = "img",
 }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -80,8 +80,6 @@ const CustomUploader = ({
             //console.log(file);
             return false;
           }}
-          // beforeUpload={() => false}
-          // customRequest={}
           multiple={multiple}
           maxCount={multiple ? 20 : 1}
           className={` ${

@@ -42,6 +42,16 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       setSelectedKeys(["Dashboard"]);
     }
 
+    if (pathname.includes("/stock-request")) {
+      setStateOpenKeys(["Inventory"]);
+      setSelectedKeys(["Stock Request"]);
+    }
+
+    if (pathname.includes("/transfer")) {
+      setStateOpenKeys(["Inventory"]);
+      setSelectedKeys(["Transfer"]);
+    }
+
     if (pathname.includes("/pos")) {
       setCollapsed(true);
     }

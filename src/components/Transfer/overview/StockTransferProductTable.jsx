@@ -1,14 +1,12 @@
-import { Button } from "antd";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { showCurrency } from "../../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { useSelector } from "react-redux";
-import { showCurrency } from "../../../utilities/lib/currency";
 
 const columns = [
   {
@@ -19,10 +17,28 @@ const columns = [
     width: 80,
     fixed: "left",
     render: (props, record) => {
+      const onChange = (value) => {
+        const { id, checked } = value.target;
+        const productId = id.split("_")[1];
+
+        if (parseInt(record?.requestedStock) <= parseInt(record?.stock)) {
+          record.updateProductList(productId, checked, record.stock);
+        } else {
+          record.form.setFieldValue(["delete", record?.id], false);
+          return openNotification(
+            "error",
+            "Requested stock is greater than stock"
+          );
+        }
+      };
       return (
         props && (
           <div className="flex justify-center items-center gap-3 pl-9">
-            <CustomCheckbox value={record?.id} name={["delete", record?.id]} />
+            <CustomCheckbox
+              value={record?.id}
+              name={["delete", record?.id]}
+              onChange={onChange}
+            />
           </div>
         )
       );
@@ -32,7 +48,6 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    align: "center",
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -55,7 +70,7 @@ const columns = [
     title: "Unit Cost",
     dataIndex: "unitCost",
     key: "unitCost",
-    align: "center",
+    align: "right",
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -81,60 +96,62 @@ const columns = [
     key: "requestedStock",
     align: "center",
     width: 100,
-    render: (requestedStock) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+    render: (requestedStock, record) => (
+      <span
+        className={`text-xs font-medium md:text-sm text-dark dark:text-white87 ${record?.stock < record?.requestedStock ? "text-red-500" : ""}`}
+      >
         {requestedStock ?? 0}
       </span>
     ),
   },
-  {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
-    width: 140,
-    render: (quantity, record) => {
-      return quantity > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {quantity}
-        </span>
-      ) : (
-        <div className="flex gap-1 justify-center items-center">
-          <div>
-            <Button
-              key={"sub"}
-              icon={<FaMinus />}
-              type="primary"
-              onClick={() => record.decrementCounter(record?.id)}
-            />
-          </div>
-          <CustomQuantityInput
-            value={record.formValues.product_list.qty[record?.id] || 0}
-            noStyle={true}
-            onChange={(value) => record.onQuantityChange(record.id, value)}
-          />
-          <div>
-            <Button
-              key={"add"}
-              icon={<FaPlus />}
-              type="primary"
-              onClick={() => record.incrementCounter(record?.id)}
-              className=""
-            />
-          </div>
-        </div>
-      );
-    },
-  },
+  // {
+  //   title: "Quantity",
+  //   dataIndex: "quantity",
+  //   key: "quantity",
+  //   align: "center",
+  //   width: 140,
+  //   render: (quantity, record) => {
+  //     return quantity > -1 ? (
+  //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+  //         {quantity}
+  //       </span>
+  //     ) : (
+  //       <div className="flex gap-1 justify-center items-center">
+  //         <div>
+  //           <Button
+  //             key={"sub"}
+  //             icon={<FaMinus />}
+  //             type="primary"
+  //             onClick={() => record.decrementCounter(record?.id)}
+  //           />
+  //         </div>
+  //         <CustomQuantityInput
+  //           value={record.formValues.product_list.qty[record?.id] || 0}
+  //           noStyle={true}
+  //           onChange={(value) => record.onQuantityChange(record.id, value)}
+  //         />
+  //         <div>
+  //           <Button
+  //             key={"add"}
+  //             icon={<FaPlus />}
+  //             type="primary"
+  //             onClick={() => record.incrementCounter(record?.id)}
+  //             className=""
+  //           />
+  //         </div>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     title: "Tax",
     dataIndex: "tax",
     key: "tax",
-    align: "center",
+    align: "right",
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },
@@ -142,7 +159,7 @@ const columns = [
     title: "SubTotal",
     dataIndex: "subTotal",
     key: "subTotal",
-    align: "center",
+    align: "right",
     width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -203,8 +220,6 @@ function setFormValuesId(
 
     const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
-    console.log(purchase_units);
-
     productUnits.purchase_units[id] =
       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
       purchaseUnitsOperationValue;
@@ -233,77 +248,143 @@ export const StockTransferProductTable = ({
   setProducts,
   productUnits,
   form,
+  setUpdatedProductList,
 }) => {
-  const incrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
+  const updateProductList = (productId, isChecked, qty) => {
+    setUpdatedProductList((prevList) => {
+      if (isChecked) {
+        return {
+          ...prevList,
+          product_list: {
+            ...prevList.product_list,
 
-      if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
-        // message.error("Maximum quantity reached");
-        return openNotification("info", "Maximum quantity reached");
+            qty: {
+              ...prevList.product_list?.qty,
+              [productId]: qty,
+            },
+            purchase_unit_id: {
+              ...prevList.product_list?.purchase_unit_id,
+              [productId]:
+                formValues.product_list?.purchase_unit_id?.[productId],
+            },
+            net_unit_cost: {
+              ...prevList.product_list?.net_unit_cost,
+              [productId]: formValues.product_list?.net_unit_cost?.[productId],
+            },
+            tax_rate: {
+              ...prevList.product_list?.tax_rate,
+              [productId]: formValues.product_list?.tax_rate?.[productId],
+            },
+            tax: {
+              ...prevList.product_list?.tax,
+              [productId]: formValues.product_list?.tax?.[productId],
+            },
+            total: {
+              ...prevList.product_list?.total,
+              [productId]: formValues.product_list?.total?.[productId],
+            },
+            tax_id: {
+              ...prevList.product_list?.tax_id,
+              [productId]: formValues.product_list?.tax_id?.[productId],
+            },
+          },
+        };
+      } else {
+        if (!prevList.product_list) return prevList;
+
+        const updatedProductList = Object.keys(prevList.product_list).reduce(
+          (acc, key) => {
+            if (prevList.product_list[key]) {
+              const { [productId]: omitted, ...rest } =
+                prevList.product_list[key];
+              acc[key] = rest;
+            }
+            return acc;
+          },
+          {}
+        );
+
+        return {
+          ...prevList,
+          product_list: updatedProductList,
+        };
       }
-
-      const newQty = Math.min(
-        Number(currentQty) + 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
-      );
-
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
     });
   };
 
-  const decrementCounter = (id) => {
-    setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.product_list.qty[id] || 1;
+  // const incrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
 
-      const newQty = Math.min(
-        Number(currentQty) - 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
-      );
+  //     if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
+  //       // message.error("Maximum quantity reached");
+  //       return openNotification("info", "Maximum quantity reached");
+  //     }
 
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [id]: newQty,
-          },
-        },
-      };
-    });
-  };
+  //     const newQty = Math.min(
+  //       Number(currentQty) + 1,
+  //       parseInt(formValues?.product_list?.max_return?.[id])
+  //     );
 
-  const onQuantityChange = (id, value) => {
-    const qty = Math.min(
-      parseInt(value),
-      parseInt(formValues?.product_list?.max_return?.[id])
-    );
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      product_list: {
-        ...prevFormValues.product_list,
-        qty: {
-          ...prevFormValues.product_list.qty,
-          [id]: qty || 0,
-        },
-      },
-    }));
-  };
+  // const decrementCounter = (id) => {
+  //   setFormValues((prevFormValues) => {
+  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
+
+  //     const newQty = Math.min(
+  //       Number(currentQty) - 1,
+  //       parseInt(formValues?.product_list?.max_return?.[id])
+  //     );
+
+  //     return {
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [id]: newQty,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
+
+  // const onQuantityChange = (id, value) => {
+  //   const qty = Math.min(
+  //     parseInt(value),
+  //     parseInt(formValues?.product_list?.max_return?.[id])
+  //   );
+
+  //   setFormValues((prevFormValues) => ({
+  //     ...prevFormValues,
+  //     product_list: {
+  //       ...prevFormValues.product_list,
+  //       qty: {
+  //         ...prevFormValues.product_list.qty,
+  //         [id]: qty || 0,
+  //       },
+  //     },
+  //   }));
+  // };
 
   const currency = useSelector(useCurrency);
 
-  const dataSource = products?.map((product) => {
+  const dataSource = products?.map((item) => {
+    const { products } = item;
+    const warehouseId = form.getFieldValue("from_warehouse_id");
+
     const {
       id,
       name,
@@ -311,9 +392,11 @@ export const StockTransferProductTable = ({
       buying_price: unit_cost,
       purchase_unit_id,
       purchase_units,
+      tax_id,
       taxes,
       tax_method,
-    } = product ?? {};
+      product_qties,
+    } = products ?? {};
 
     setFormValuesId(
       id,
@@ -322,6 +405,7 @@ export const StockTransferProductTable = ({
       purchase_units,
       formValues,
       productUnits,
+      tax_id,
       taxes,
       tax_method
     );
@@ -335,18 +419,21 @@ export const StockTransferProductTable = ({
         currency
       ),
       delete: true,
-      //   discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
-      qty: formValues.product_list.qty[id],
-      incrementCounter,
-      decrementCounter,
-      onQuantityChange,
+      // qty: formValues.product_list.qty[id],
+      // incrementCounter,
+      // decrementCounter,
+      // onQuantityChange,
       onDelete,
       products,
       setProducts,
       formValues,
       setFormValues,
+      updateProductList,
+      stock: getWarehouseQuantity(product_qties, warehouseId),
+      requestedStock: item?.need_qty,
+      form,
     };
   });
 

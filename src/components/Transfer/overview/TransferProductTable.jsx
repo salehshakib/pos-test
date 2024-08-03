@@ -443,6 +443,8 @@ export const TransferProductTable = ({
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
 
+  console.log(formValues);
+
   const handleProductEdit = (id, name) => {
     setProductId(id);
     setProductName(name);

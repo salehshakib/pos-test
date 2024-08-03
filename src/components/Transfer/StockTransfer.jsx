@@ -32,10 +32,6 @@ export const StockTransfer = () => {
     { skip: !stockTransferId }
   );
 
-  console.log(stockTransferId);
-
-  console.log(data);
-
   const hideDrawer = () => {
     setStockTransferDrawer(false);
     setStockTransferId(undefined);
@@ -78,25 +74,27 @@ export const StockTransfer = () => {
     purchase_units: {},
     tax_rate: {},
   });
-
-  const fromWarehouse = Form.useWatch("from_warehouse_id", form);
-  const toWarehouse = Form.useWatch("to_warehouse_id", form);
+  const [updatedProductList, setUpdatedProductList] = useState({});
 
   useEffect(() => {
-    if (data && fromWarehouse && toWarehouse) {
+    if (data) {
       form.setFieldsValue({
         from_warehouse_id: data.from_warehouse_id,
         to_warehouse_id: data.to_warehouse_id,
       });
+
+      const { stock_request_products } = data ?? {};
+
+      setProducts(stock_request_products);
     }
-  }, [data, form, fromWarehouse, toWarehouse]);
+  }, [data, form]);
 
   const [createTransfer, { isLoading }] = useCreateTransferMutation();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
-    const { product_list } = formValues;
+    const { product_list } = updatedProductList;
 
     const { shipping_cost, attachment } = values ?? {};
 
@@ -117,9 +115,6 @@ export const StockTransfer = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
       return openNotification("info", "Please add atleast one product");
     }
 
@@ -153,12 +148,14 @@ export const StockTransfer = () => {
 
       product_list: JSON.stringify(productListArray),
       // petty_cash_id: 8,
-      //stock_request_id
+      stock_request_id: stockTransferId,
     };
 
     if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
     }
+
+    console.log(values);
 
     appendToFormData(postObj, formData);
 
@@ -189,6 +186,8 @@ export const StockTransfer = () => {
         purchase_units: {},
         tax_rate: {},
       });
+
+      setUpdatedProductList({});
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -220,6 +219,9 @@ export const StockTransfer = () => {
         productUnits={productUnits}
         setProductUnits={setProductUnits}
         onClose={hideDrawer}
+        data={data}
+        updatedProductList={updatedProductList}
+        setUpdatedProductList={setUpdatedProductList}
       />
     </CustomDrawer>
   );

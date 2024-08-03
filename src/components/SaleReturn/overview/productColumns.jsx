@@ -109,7 +109,7 @@ export const columns = [
     align: "center",
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        ${tax}
+        {tax}
       </span>
     ),
   },

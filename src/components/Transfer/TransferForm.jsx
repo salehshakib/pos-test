@@ -26,7 +26,7 @@ const options = [
     label: "Pending",
   },
   {
-    value: "Send",
+    value: "Sent",
     label: "Send",
   },
 ];
@@ -146,7 +146,11 @@ const TransferForm = ({
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomInput label="Sale Note" type={"textarea"} name={"note"} />
+            <CustomInput
+              label="Transfer Note"
+              type={"textarea"}
+              name={"note"}
+            />
           </Col>
         </Row>
       </CustomForm>

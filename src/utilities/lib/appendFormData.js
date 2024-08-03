@@ -1,8 +1,13 @@
 import dayjs from "dayjs";
 
 export const appendToFormData = (data, formData) => {
-  const ignoreKeys = ["has_expired_date"];
+  const ignoreKeys = ["has_expired_date", "delete"];
+
   function append(key, value) {
+    if (ignoreKeys.includes(key)) {
+      return;
+    }
+
     if (Array.isArray(value) && key.includes("attachments")) {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);

@@ -1,5 +1,5 @@
 export const calculateTotalPrice = (data) => {
-  const totals = Object.values(data.total).map(
+  const totals = Object.values(data?.total).map(
     (value) => parseFloat(value) || 0
   );
   const totalPrice = totals.reduce((sum, value) => sum + value, 0);

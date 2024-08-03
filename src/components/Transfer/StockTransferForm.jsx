@@ -27,7 +27,7 @@ import { StockTransferProductTable } from "./overview/StockTransferProductTable"
 
 const options = [
   {
-    value: "Send",
+    value: "Sent",
     label: "Send",
   },
 ];
@@ -65,10 +65,8 @@ const TransferDateComponent = () => {
   );
 };
 
-const WarehouseTransferComponent = ({ fullLayout = false }) => {
+const WarehouseTransferComponent = ({ fullLayout = false, warehouseData }) => {
   const form = Form.useFormInstance();
-
-  const warehouseFrom = Form.useWatch("from_warehouse_id", form);
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -84,8 +82,16 @@ const WarehouseTransferComponent = ({ fullLayout = false }) => {
   const warehouseToOptions = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
     label: warehouse.name,
-    disabled: warehouse.id.toString() === warehouseFrom,
+    disabled: warehouse.id.toString() === warehouseData?.from_warehouse_id,
   }));
+
+  const handleFromWarehouseChange = () => {
+    form.setFieldValue("from_warehouse_id", warehouseData?.from_warehouse_id);
+  };
+
+  const handleToWarehouseChange = () => {
+    form.setFieldValue("to_warehouse_id", warehouseData?.to_warehouse_id);
+  };
 
   return (
     <>
@@ -98,6 +104,7 @@ const WarehouseTransferComponent = ({ fullLayout = false }) => {
           options={warehouseFromOptions}
           name="from_warehouse_id"
           required={true}
+          onChange={handleFromWarehouseChange}
         />
       </Col>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
@@ -109,6 +116,7 @@ const WarehouseTransferComponent = ({ fullLayout = false }) => {
           options={warehouseToOptions}
           name="to_warehouse_id"
           required={true}
+          onChange={handleToWarehouseChange}
         />
       </Col>
     </>
@@ -122,6 +130,9 @@ export const StockTransferForm = ({
   setProducts,
   productUnits,
   setProductUnits,
+  data,
+  updatedProductList,
+  setUpdatedProductList,
   ...props
 }) => {
   const form = props.form;
@@ -134,33 +145,37 @@ export const StockTransferForm = ({
   const [grandTotal, setGrandTotal] = useState(0);
 
   useEffect(() => {
+    if (!updatedProductList?.product_list) return;
+
     const calculatedTotalItems =
-      Object.keys(formValues.product_list?.qty).length ?? 0;
+      Object.keys(updatedProductList?.product_list?.qty).length ?? 0;
 
     const calculatedTotalQty = Object.values(
-      formValues.product_list?.qty
+      updatedProductList?.product_list?.qty
     ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
 
-    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+    const calculatedTotalPrice = calculateTotalPrice(
+      updatedProductList?.product_list
+    );
 
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,
       0,
       0,
-      shipping_cost
+      0
     );
 
     setTotalItems(calculatedTotalItems);
     setTotalQty(calculatedTotalQty);
     setTotalPrice(calculatedTotalPrice);
     setGrandTotal(calculatedGrandTotal);
-  }, [formValues, shipping_cost, products]);
+  }, [formValues, products, updatedProductList]);
 
   return (
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <WarehouseTransferComponent />
+          <WarehouseTransferComponent warehouseData={data} />
 
           <Col {...largeLayout}>
             <TransferDateComponent />
@@ -176,6 +191,7 @@ export const StockTransferForm = ({
             setProducts={setProducts}
             productUnits={productUnits}
             setProductUnits={setProductUnits}
+            setUpdatedProductList={setUpdatedProductList}
             form={form}
           />
 
@@ -192,7 +208,11 @@ export const StockTransferForm = ({
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomInput label="Sale Note" type={"textarea"} name={"note"} />
+            <CustomInput
+              label="Transfer Note"
+              type={"textarea"}
+              name={"note"}
+            />
           </Col>
         </Row>
       </CustomForm>

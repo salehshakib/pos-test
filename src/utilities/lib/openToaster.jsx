@@ -6,6 +6,7 @@ const typeToColor = {
   warning: "text-yellow-600",
   info: "text-blue-600",
   failed: "text-red-600",
+  error: "text-red-600",
 };
 
 export const openNotification = (type, message) => {

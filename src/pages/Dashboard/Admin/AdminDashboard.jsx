@@ -565,6 +565,7 @@ const StockAlertComponent = () => {
       ...pagination,
       child: 1,
       need_alert_qty: 1,
+      warehouse_ids: warehouseIds,
     },
   });
 

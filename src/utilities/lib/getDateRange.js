@@ -14,6 +14,9 @@ export const getDateRange = (segment) => {
     case "Monthly":
       dateRange = [today.startOf("month"), today];
       break;
+    case "Quarterly":
+      dateRange = [today.startOf("quarter"), today];
+      break;
     case "Yearly":
       dateRange = [today.startOf("year"), today];
       break;

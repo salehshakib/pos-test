@@ -1,4 +1,5 @@
 import { Col, Form, Row, Segmented, theme } from "antd";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaBuilding, FaMoneyBillWave } from "react-icons/fa";
 import { FaChalkboardUser, FaPeopleRoof } from "react-icons/fa6";
@@ -17,19 +18,19 @@ import { SimpleBarChartComponent } from "../../../components/Charts/SimpleBarCha
 import CustomForm from "../../../components/Shared/Form/CustomForm";
 import CustomSelect from "../../../components/Shared/Select/CustomSelect";
 import { StatisticComponent } from "../../../components/Shared/Statistic/Statistic";
-import CustomTable from "../../../components/Shared/Table/CustomTable";
 import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
 import { useCurrentUser } from "../../../redux/services/auth/authSlice";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { useGetDashboardCounterQuery } from "../../../redux/services/reports/summaryApi";
 import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../../utilities/hooks/useParams";
-import { usePagination } from "../../../utilities/hooks/usePagination";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { useGetAlertReportQuery } from "../../../redux/services/reports/summaryApi";
-import { showCurrency } from "../../../utilities/lib/currency";
+import { getDateRange } from "../../../utilities/lib/getDateRange";
+import { ExpiredItemsComponent } from "./overview/ExpiredItemsComponent";
+import { RecentlyAddedComponent } from "./overview/RecentlyAddedComponent";
+import { StockAlertComponent } from "./overview/StockAlertComponent";
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
@@ -59,7 +60,7 @@ const DashboardCard = ({ title, icon, data, currency }) => {
   );
 };
 
-const ExtraComponent = () => {
+const ExtraComponent = ({ setParams }) => {
   const [dashboardForm] = Form.useForm();
 
   const params = useGlobalParams({
@@ -68,10 +69,54 @@ const ExtraComponent = () => {
 
   const { data, isLoading } = useGetWarehousesQuery({ params });
 
-  const options = data?.results?.warehouse?.map((warehouse) => ({
-    value: warehouse?.id?.toString(),
-    label: warehouse?.name,
-  }));
+  const options = useMemo(
+    () =>
+      data?.results?.warehouse?.map((warehouse) => ({
+        value: warehouse?.id?.toString(),
+        label: warehouse?.name,
+      })) || [],
+    [data]
+  );
+
+  useEffect(() => {
+    dashboardForm.setFieldsValue({
+      date_range: "Weekly",
+    });
+  }, [dashboardForm]);
+
+  useEffect(() => {
+    if (options.length) {
+      const warehouseIds = options.map((option) => option.value);
+      setParams((prevParams) => ({
+        ...prevParams,
+        warehouse_ids: warehouseIds,
+      }));
+    }
+  }, [options, setParams]);
+
+  const onDateRangeChange = useCallback(
+    (value) => {
+      const dateRange = getDateRange(value);
+      setParams((prevParams) => ({ ...prevParams, date_range: dateRange }));
+    },
+    [setParams]
+  );
+
+  const onWarehouseChange = useCallback(
+    (value) => {
+      if (value?.length) {
+        setParams((prevParams) => ({ ...prevParams, warehouse_ids: value }));
+      } else {
+        const warehouseIds = options.map((option) => option.value);
+
+        setParams((prevParams) => ({
+          ...prevParams,
+          warehouse_ids: warehouseIds,
+        }));
+      }
+    },
+    [options, setParams]
+  );
 
   return (
     <CustomForm form={dashboardForm} submitBtn={false}>
@@ -88,6 +133,7 @@ const ExtraComponent = () => {
             name={"warehouse_ids"}
             customStyle={true}
             mode="multiple"
+            onChange={onWarehouseChange}
           />
         </Col>
         <Col {...fullColLayout} className="">
@@ -96,6 +142,7 @@ const ExtraComponent = () => {
               size="large"
               className="mt-1"
               options={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
+              onChange={onDateRangeChange}
             />
           </Form.Item>
         </Col>
@@ -104,7 +151,7 @@ const ExtraComponent = () => {
   );
 };
 
-const CashStatistic = () => {
+const CashStatistic = ({ data }) => {
   const currency = useSelector(useCurrency);
   const { token } = theme.useToken();
 
@@ -112,6 +159,7 @@ const CashStatistic = () => {
     size: 40,
     color: token.colorPrimary,
   };
+
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">Transactions </span>
@@ -120,41 +168,41 @@ const CashStatistic = () => {
           <DashboardCard
             title={"Total Purchase"}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={"N/A"}
+            data={data?.purchase}
           />
           <DashboardCard
             title={"Total Sales"}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={"N/A"}
+            data={data?.sale}
           />
           <DashboardCard
             title={"Total Purchase Returned"}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={"N/A"}
+            data={data?.purchase_return}
           />
           <DashboardCard
             title={"Total Sale Returned"}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={"N/A"}
+            data={data?.sale_return}
           />
           <DashboardCard
             title={"Total Purchase Amount"}
             icon={<FaMoneyBillWave {...iconProps} />}
-            data={500}
             currency={currency}
+            data={data?.total_purchase}
           />
           <DashboardCard
             title={"Total Purchase Due"}
             icon={<MdPaid {...iconProps} />}
-            data={0}
             currency={currency}
+            data={0}
           />
 
           <DashboardCard
             title={"Total Sales Amount"}
             icon={<FaMoneyBillWave {...iconProps} />}
-            data={0}
             currency={currency}
+            data={data?.total_sale}
           />
           <DashboardCard
             title={"Total Sales Due"}
@@ -182,7 +230,7 @@ const CashStatistic = () => {
   );
 };
 
-const WarehouseStatistic = () => {
+const WarehouseStatistic = ({ data }) => {
   const { token } = theme.useToken();
 
   const iconProps = {
@@ -197,60 +245,61 @@ const WarehouseStatistic = () => {
         <DashboardCard
           title={"Warehouse"}
           icon={<PiWarehouse {...iconProps} />}
-          data={"N/A"}
+          data={data?.active_warehouse}
         />{" "}
         <DashboardCard
           title={"Product"}
           icon={<MdAddShoppingCart {...iconProps} />}
-          data={"N/A"}
+          data={data?.active_product}
         />
         <DashboardCard
           title={"Category"}
           icon={<BiCategoryAlt {...iconProps} />}
-          data={"N/A"}
+          data={data?.active_category}
         />
         <DashboardCard
           title={"Brand"}
           icon={<TbBrandAirtable {...iconProps} />}
-          data={"N/A"}
+          data={data?.active_brand}
         />
       </div>
     </div>
   );
 };
 
-const PeopleStatistic = () => {
+const PeopleStatistic = ({ data }) => {
   const { token } = theme.useToken();
 
   const iconProps = {
     size: 40,
     color: token.colorPrimary,
   };
+
   return (
     <div className="space-y-3">
       <span className="font-semibold text-lg">People</span>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
         <DashboardCard
           title={"Customer"}
-          data={"N/A"}
           icon={<PiUserList {...iconProps} />}
+          data={data?.active_customer}
         />
         <DashboardCard
           title={"Supplier"}
-          data={"N/A"}
           icon={<FaChalkboardUser {...iconProps} />}
+          data={data?.active_supplier}
         />
         <DashboardCard
           title={"Cashier"}
-          data={"N/A"}
           icon={<LiaCashRegisterSolid {...iconProps} />}
+          data={data?.active_cashier}
         />
       </div>
     </div>
   );
 };
 
-const EmployeeStatistic = () => {
+const EmployeeStatistic = ({ data }) => {
   const currency = useSelector(useCurrency);
 
   const { token } = theme.useToken();
@@ -266,359 +315,27 @@ const EmployeeStatistic = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
         <DashboardCard
           title={"Department"}
-          data={"N/A"}
           icon={<FaBuilding {...iconProps} />}
+          data={data?.department}
         />
         <DashboardCard
           title={"Employee"}
-          data={"N/A"}
           icon={<FaPeopleRoof {...iconProps} />}
+          data={data?.employee}
         />
         <DashboardCard
           title={"Payroll"}
-          data={"N/A"}
           currency={currency}
           icon={<MdPayment {...iconProps} />}
+          data={data?.payroll}
         />
         <DashboardCard
           title={"Leave Granted"}
-          data={"N/A"}
           icon={<SlCalender {...iconProps} />}
+          data={data?.leave}
         />
       </div>
     </div>
-  );
-};
-
-const RecentlyAddedComponent = () => {
-  const columns = [
-    {
-      //sl no
-      title: "SL No",
-      dataIndex: "slNo",
-      key: "slNo",
-      align: "center",
-      render: (slNo) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {slNo}
-        </span>
-      ),
-    },
-    {
-      //name
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (name) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {name}
-        </span>
-      ),
-    },
-    {
-      //sku
-      title: "SKU",
-      dataIndex: "sku",
-      key: "sku",
-      align: "center",
-      render: (sku) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {sku}
-        </span>
-      ),
-    },
-    {
-      //sale
-      title: "Sale Price",
-      dataIndex: "salePrice",
-      key: "salePrice",
-      align: "right",
-      render: (salePrice) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {salePrice}
-        </span>
-      ),
-    },
-  ];
-
-  return (
-    <CustomTable
-      title={"Added Products"}
-      columns={columns}
-      dataSource={[]}
-      created_at={false}
-      action={false}
-    />
-  );
-};
-
-const ExpiredItemsComponent = () => {
-  const columns = [
-    {
-      //sl no
-      title: "SL No",
-      dataIndex: "slNo",
-      key: "slNo",
-      align: "center",
-      render: (slNo) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {slNo}
-        </span>
-      ),
-    },
-    {
-      //name
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (name) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {name}
-        </span>
-      ),
-    },
-    {
-      //sku
-      title: "SKU",
-      dataIndex: "sku",
-      key: "sku",
-      align: "center",
-      render: (sku) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {sku}
-        </span>
-      ),
-    },
-    {
-      //expire date
-      title: "Expire Date",
-      dataIndex: "expireDate",
-      key: "expireDate",
-      align: "center",
-      render: (expireDate) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {expireDate}
-        </span>
-      ),
-    },
-  ];
-
-  const { pagination, updatePage, updatePageSize } = usePagination();
-
-  const warehouseParams = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
-  });
-
-  const { data: warehouseData } = useGetWarehousesQuery({
-    params: warehouseParams,
-  });
-
-  const warehouseIds = warehouseData?.results?.warehouse?.map(
-    (warehouse) => warehouse?.id
-  );
-
-  console.log(warehouseIds);
-
-  const params = useGlobalParams({
-    isDefaultParams: false,
-    isRelationalParams: true,
-    params: {
-      ...pagination,
-      is_expired: 1,
-      warehouse_ids: warehouseIds,
-    },
-  });
-
-  const { data, isLoading } = useGetAllProductsQuery(
-    { params },
-    {
-      skip: !warehouseIds?.length,
-      // skip: !useUrlIndexPermission(),
-    }
-  );
-
-  console.log(data);
-
-  return (
-    <CustomTable
-      title={"Expired Products"}
-      columns={columns}
-      dataSource={[]}
-      isLoading={isLoading}
-      created_at={false}
-      action={false}
-      pagination={pagination}
-      updatePage={updatePage}
-      updatePageSize={updatePageSize}
-    />
-  );
-};
-
-const StockAlertComponent = () => {
-  const columns = [
-    {
-      //sl no
-      title: "SL No",
-      dataIndex: "slNo",
-      key: "slNo",
-      align: "center",
-      render: (slNo) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {slNo}
-        </span>
-      ),
-    },
-    {
-      //name
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (name) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {name}
-        </span>
-      ),
-    },
-    {
-      //sku
-      title: "SKU",
-      dataIndex: "sku",
-      key: "sku",
-      align: "center",
-      render: (sku) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {sku}
-        </span>
-      ),
-    },
-    {
-      //stock
-      title: "Warehouse",
-      dataIndex: "warehouse",
-      key: "warehouse",
-      align: "center",
-      render: (warehouse) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {warehouse}
-        </span>
-      ),
-    },
-    {
-      //stock
-      title: "Min Qty",
-      dataIndex: "minQty",
-      key: "minQty",
-      align: "center",
-      render: (minQty) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {minQty}
-        </span>
-      ),
-    },
-    {
-      //stock
-      title: "Stock",
-      dataIndex: "stock",
-      key: "stock",
-      align: "center",
-      render: (stock, record) => (
-        <span
-          className={`"text-xs font-medium md:text-sm text-dark dark:text-white87" ${
-            record?.stock < record?.minQty ? "text-red-500" : ""
-          }`}
-        >
-          {stock}
-        </span>
-      ),
-    },
-    {
-      //stock
-      title: "Unit Cost",
-      dataIndex: "unitCost",
-      key: "unitCost",
-      align: "center",
-      render: (unitCost) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {unitCost}
-        </span>
-      ),
-    },
-  ];
-
-  const { pagination, updatePage, updatePageSize } = usePagination();
-
-  const warehouseParams = useGlobalParams({
-    selectValue: DEFAULT_SELECT_VALUES,
-  });
-
-  const { data: warehouseData } = useGetWarehousesQuery({
-    params: warehouseParams,
-  });
-
-  const warehouseIds = warehouseData?.results?.warehouse?.map(
-    (warehouse) => warehouse?.id
-  );
-
-  const params = useGlobalParams({
-    isDefaultParams: false,
-    params: {
-      ...pagination,
-      child: 1,
-      need_alert_qty: 1,
-      warehouse_ids: warehouseIds,
-    },
-  });
-
-  const { data, isFetching } = useGetAlertReportQuery(
-    { params },
-    {
-      skip: !warehouseIds?.length,
-    }
-  );
-
-  const total = data?.meta?.total;
-
-  const currency = useSelector(useCurrency);
-
-  const dataSource =
-    data?.results?.product?.flatMap((item, index) => {
-      const {
-        name,
-        alert_qty,
-        sku,
-        product_qties,
-        product_prices,
-        selling_price: unit_cost,
-      } = item ?? {};
-
-      return product_qties.map((qty, i) => ({
-        id: `${index}-${i}`,
-        name,
-        sku,
-        minQty: alert_qty,
-        warehouse: qty.warehouses?.name ?? "",
-        stock: qty.qty ?? 0,
-        unitCost: product_prices?.length
-          ? showCurrency(product_prices?.[i].selling_price, currency)
-          : showCurrency(unit_cost, currency),
-      }));
-      // }
-    }) ?? [];
-
-  return (
-    <CustomTable
-      title={"Limited Stock Products"}
-      columns={columns}
-      dataSource={dataSource}
-      isLoading={isFetching}
-      created_at={false}
-      action={false}
-      status={false}
-      total={total}
-      pagination={pagination}
-      updatePage={updatePage}
-      updatePageSize={updatePageSize}
-    />
   );
 };
 
@@ -626,6 +343,27 @@ const AdminDashboard = () => {
   const { token } = theme.useToken();
 
   const user = useSelector(useCurrentUser);
+
+  // const [dateRange, setDateRange] = useState(null);
+
+  const [params, setParams] = useState({
+    date_range: getDateRange("Weekly"),
+  });
+
+  const { data } = useGetDashboardCounterQuery(
+    {
+      params: {
+        warehouse_ids: params?.warehouse_ids,
+        start_date: params?.date_range[0],
+        end_date: params?.date_range[1],
+      },
+    },
+    {
+      skip: !params?.warehouse_ids,
+    }
+  );
+
+  console.log(data);
 
   return (
     <div className=" h-full">
@@ -640,17 +378,17 @@ const AdminDashboard = () => {
             Welcome 😃, {user?.employees?.name} 👋
           </div>
 
-          <ExtraComponent />
+          <ExtraComponent setParams={setParams} />
         </div>
         <div className="space-y-6">
-          <CashStatistic />
+          <CashStatistic data={data} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <WarehouseStatistic />
-            <PeopleStatistic />
+            <WarehouseStatistic data={data} />
+            <PeopleStatistic data={data} />
           </div>
 
-          <EmployeeStatistic />
+          <EmployeeStatistic data={data} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"></div>

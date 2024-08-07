@@ -1,0 +1,110 @@
+import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import { useGetAllProductsQuery } from "../../../../redux/services/product/productApi";
+import { useGetWarehousesQuery } from "../../../../redux/services/warehouse/warehouseApi";
+import { usePagination } from "../../../../utilities/hooks/usePagination";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../../../utilities/hooks/useParams";
+
+const columns = [
+  {
+    //sl no
+    title: "SL No",
+    dataIndex: "slNo",
+    key: "slNo",
+    align: "center",
+    render: (slNo) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {slNo}
+      </span>
+    ),
+  },
+  {
+    //name
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {name}
+      </span>
+    ),
+  },
+  {
+    //sku
+    title: "SKU",
+    dataIndex: "sku",
+    key: "sku",
+    align: "center",
+    render: (sku) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    //expire date
+    title: "Expire Date",
+    dataIndex: "expireDate",
+    key: "expireDate",
+    align: "center",
+    render: (expireDate) => (
+      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        {expireDate}
+      </span>
+    ),
+  },
+];
+
+export const ExpiredItemsComponent = () => {
+  const { pagination, updatePage, updatePageSize } = usePagination();
+
+  const warehouseParams = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data: warehouseData } = useGetWarehousesQuery({
+    params: warehouseParams,
+  });
+
+  const warehouseIds = warehouseData?.results?.warehouse?.map(
+    (warehouse) => warehouse?.id
+  );
+
+  console.log(warehouseIds);
+
+  const params = useGlobalParams({
+    isDefaultParams: false,
+    isRelationalParams: true,
+    params: {
+      ...pagination,
+      need_expire: 1,
+      warehouse_ids: warehouseIds,
+    },
+  });
+
+  const { data, isLoading } = useGetAllProductsQuery(
+    { params },
+    {
+      skip: !warehouseIds?.length,
+      // skip: !useUrlIndexPermission(),
+    }
+  );
+
+  console.log(data);
+
+  return (
+    <CustomTable
+      title={"Expired Products"}
+      columns={columns}
+      dataSource={[]}
+      isLoading={isLoading}
+      created_at={false}
+      action={false}
+      pagination={pagination}
+      updatePage={updatePage}
+      updatePageSize={updatePageSize}
+    />
+  );
+};

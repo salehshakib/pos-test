@@ -1,6 +1,6 @@
 // Import necessary dependencies
 import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
-import { SUMMARY } from "../../../utilities/apiEndpoints/report.api";
+import { COUNTER, SUMMARY } from "../../../utilities/apiEndpoints/report.api";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
 
@@ -31,7 +31,24 @@ const summaryApi = baseApi.injectEndpoints({
         PRODUCT,
       ],
     }),
+
+    getDashboardCounter: build.query({
+      query: ({ params }) => ({
+        url: `/${COUNTER}`,
+        method: "GET",
+        params,
+      }),
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, err, { params }) => [
+        { type: COUNTER, ...params },
+        COUNTER,
+      ],
+    }),
   }),
 });
 
-export const { useGetReportSummaryQuery, useGetAlertReportQuery } = summaryApi;
+export const {
+  useGetReportSummaryQuery,
+  useGetAlertReportQuery,
+  useGetDashboardCounterQuery,
+} = summaryApi;

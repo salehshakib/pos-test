@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SaleDetails } from "../../../../components/Sale/SaleDetails";
 import CustomTable from "../../../../components/Shared/Table/CustomTable";
@@ -12,7 +12,12 @@ import { showCurrency } from "../../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { saleColumns } from "../data/saleColumn";
 
-export const SaleTable = ({ keyword, summaryType, summary }) => {
+export const SaleTable = ({
+  keyword,
+  summaryType,
+  summary,
+  setSummaryData,
+}) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
   const currency = useSelector(useCurrency);
@@ -26,12 +31,22 @@ export const SaleTable = ({ keyword, summaryType, summary }) => {
     keyword,
   });
 
+  console.log(params);
+
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {
       skip: !useUrlIndexPermission("sale"),
     }
   );
+
+  useEffect(() => {
+    if (data?.results?.summary) {
+      setSummaryData(data?.results?.summary?.[0]);
+    } else {
+      setSummaryData(null);
+    }
+  }, [data, setSummaryData]);
 
   const total = data?.meta?.total;
 

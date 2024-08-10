@@ -116,6 +116,7 @@ export const ProductReport = () => {
   const summaryDetails = createDetailsLayout(summaryData);
 
   const [segment, setSegment] = useState("Weekly");
+
   const onSegmentChange = (value) => {
     setSegment(value);
   };

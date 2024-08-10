@@ -54,6 +54,7 @@ const GlobalContainer = ({
 
   segment = "Weekly",
   onSegmentChange,
+
   // handleSeach
 }) => {
   const dispatch = useDispatch();
@@ -300,8 +301,9 @@ const GlobalContainer = ({
 
   const handleReset = () => {
     searchForm.resetFields();
-    setParams({});
     setAdvanceSearch(false);
+
+    setParams({});
   };
 
   const handleSubmit = async (values) => {

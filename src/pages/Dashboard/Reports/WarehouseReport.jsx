@@ -1,5 +1,5 @@
 import { Descriptions, Row, Spin, Tabs } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
@@ -9,13 +9,13 @@ import { useGetWarehouseDetailsQuery } from "../../../redux/services/warehouse/w
 import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
 import { useFilterParams } from "../../../utilities/hooks/useParams";
 import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
+import { getDateRange } from "../../../utilities/lib/getDateRange";
 import { ExpenseTable } from "./components/ExpenseTable";
 import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
 import { PurchaseTable } from "./components/PurchaseTable";
 import { QuotationTable } from "./components/QutationTable";
 import { SaleReturnTable } from "./components/SaleReturnTable";
 import { SaleTable } from "./components/SaleTable";
-import { getLastWeek } from "../../../utilities/lib/getLastWeek";
 
 const SearchFilterComponent = () => {
   return (
@@ -28,34 +28,48 @@ const SearchFilterComponent = () => {
 export const WarehouseReport = () => {
   const user = useSelector(useCurrentUser);
 
+  console.log(user);
+
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
+  const warehouseId = searchParams?.warehouse_ids ?? user?.warehouse_id;
+
   const { data, isFetching } = useGetWarehouseDetailsQuery(
     {
-      id: user?.warehouse_id,
+      id: warehouseId,
     },
-    { skip: !user?.warehouse_id }
+    { skip: !warehouseId }
   );
 
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
+  console.log(summaryData);
+
   const summaryDetails = createDetailsLayout(summaryData);
 
-  console.log(searchParams);
+  const [segment, setSegment] = useState("Weekly");
+
+  const onSegmentChange = (value) => {
+    setSegment(value);
+  };
+
+  useEffect(() => {
+    const dateRange = getDateRange(segment);
+    setParams((prev) => ({
+      ...prev,
+      created_daterange: dateRange,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment]);
 
   const summaryType = {
     warehouse_ids: searchParams?.warehouse_ids
       ? searchParams?.warehouse_ids
-      : data?.id,
+      : user?.warehouse_id,
 
-    start_date:
-      searchParams?.created_daterange?.[0] ??
-      getLastWeek()[0].format("YYYY-MM-DD"),
-    end_date:
-      searchParams?.created_daterange?.[1] ??
-      getLastWeek()[1].format("YYYY-MM-DD"),
+    created_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
   const warehouseItems = [
@@ -96,9 +110,11 @@ export const WarehouseReport = () => {
     <GlobalContainer
       pageTitle="Warehouse Report"
       popoverWidth={400}
-      searchFilterContent={<SearchFilterComponent />}
       debounce={debounce}
       setParams={setParams}
+      segment={segment}
+      onSegmentChange={onSegmentChange}
+      searchFilterContent={<SearchFilterComponent />}
     >
       <div className=" w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
         <div className="border rounded-md p-4 shadow-sm">

@@ -13,8 +13,8 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--firstColor) !important;
-
   cursor: -webkit-grab !important;
+  cursor: grab !important;
   border-radius: 80px !important;
 }
 
@@ -47,10 +47,6 @@ html {
   fill: currentColor; 
   color: var(--firstColor); 
 } */
-
-.ant-card .ant-card-cover img {
-  /* border-radius: 999px; */
-}
 
 .ant-input-number-input-wrap {
   font-size: 14px;
@@ -95,10 +91,10 @@ html {
   height: 37px !important;
 }
 
-.ant-table {
-  /* scrollbar-color: initial !important; */
-  /* scrollbar-: "10px" !important; */
-}
+/* .ant-table { */
+/* scrollbar-color: initial !important; */
+/* scrollbar-: "10px" !important; */
+/* } */
 
 /* .ant-page-header-heading {
   display: flex !important;

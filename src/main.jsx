@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import { ProviderConfig } from "./config/ProviderConfig.jsx";
 import "./index.css";
 import { persistor, store } from "./redux/store.js";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

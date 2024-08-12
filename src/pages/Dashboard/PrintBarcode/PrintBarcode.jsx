@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import { Button, Checkbox, Form, Select } from "antd";
-import ProductSelect from "./ProductSelect";
-import Barcode from "react-barcode";
-import CustomModal from "../../../components/Shared/Modal/CustomModal";
-import { toast } from "sonner";
-import { useReactToPrint } from "react-to-print";
 import { PageContainer } from "@ant-design/pro-layout";
+import { Button, Checkbox, Form, Select } from "antd";
+import { useRef, useState } from "react";
+import Barcode from "react-barcode";
+import { useReactToPrint } from "react-to-print";
+import { toast } from "sonner";
+import CustomForm from "../../../components/Shared/Form/CustomForm";
+import CustomModal from "../../../components/Shared/Modal/CustomModal";
+import ProductSelect from "./ProductSelect";
 
 const PrintBarcode = () => {
   const [form] = Form.useForm();
@@ -23,8 +23,6 @@ const PrintBarcode = () => {
   const [showDiscount, setShowDiscount] = useState(false);
   const [labelSize, setLabelSize] = useState({ width: 2, height: 70 });
 
-  const data = Form.useWatch("product_list", form);
-
   const generateBarcode = () => {
     if (products?.length <= 0) {
       toast?.info("Please Select a Product!");
@@ -32,7 +30,7 @@ const PrintBarcode = () => {
     }
 
     const generatedBarcodes = products?.map((product) => {
-      const quantity = data?.qty[product.id] || 0;
+      const quantity = formValues?.product_list?.qty[product?.id] || 0;
       return {
         name: product.name,
         sku: product.sku,
@@ -120,7 +118,7 @@ const PrintBarcode = () => {
               openModal={codeModal}
               hideModal={() => setCodeModal(!codeModal)}
             >
-              <div className="flex flex-col justify-center items-center pt-10">
+              <div className="flex flex-col justify-center items-center py-10">
                 <div className="flex items-center gap-4 py-10">
                   <Button className="px-20 pt-2 pb-8" onClick={handlePrint}>
                     Print
@@ -130,7 +128,7 @@ const PrintBarcode = () => {
                   {barcodes?.map((barcode, index) => (
                     <div key={index}>
                       <div className="grid grid-cols-3 gap-x-10">
-                        {[...Array(barcode.quantity)]?.map((_, i) => (
+                        {[...Array(barcode?.quantity)]?.map((_, i) => (
                           <div
                             key={i}
                             className="mt-10 border border-gray-300 mx-auto rounded-lg p-3"
@@ -139,11 +137,10 @@ const PrintBarcode = () => {
                               {showName && <div>{barcode?.name}</div>}
                               {showPrice && (
                                 <div
-                                  className={`${
-                                    barcode?.promotion_price &&
+                                  className={`${barcode?.promotion_price &&
                                     showDiscount &&
                                     "line-through text-sm"
-                                  }`}
+                                    }`}
                                 >
                                   ${barcode?.selling_price}
                                 </div>

@@ -363,7 +363,6 @@ const AdminDashboard = () => {
     }
   );
 
-  console.log(data);
 
   return (
     <div className=" h-full">
@@ -375,7 +374,7 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome 😃, {user?.employees?.name} 👋
+            Welcome 😃, {user?.employees?.name ?? 'User'} 👋
           </div>
 
           <ExtraComponent setParams={setParams} />

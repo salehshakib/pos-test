@@ -36,7 +36,7 @@ const Profile = () => {
               icon={<UserOutlined />}
             />
             <div className="flex flex-col font-normal">
-              <span className="font-bold">{user?.employees?.name}</span>
+              <span className="font-bold">{user?.employees?.name ?? 'User'}</span>
               <span
                 className={`text-sm `}
                 style={{

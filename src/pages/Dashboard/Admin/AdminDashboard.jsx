@@ -1,4 +1,4 @@
-import { Col, Form, Row, Segmented, theme } from "antd";
+import { Col, Form, Row, Segmented, Tag, theme } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaBuilding, FaMoneyBillWave } from "react-icons/fa";
@@ -60,7 +60,7 @@ const DashboardCard = ({ title, icon, data, currency }) => {
   );
 };
 
-const ExtraComponent = ({ setParams }) => {
+const ExtraComponent = ({ setParams, setWarehouses }) => {
   const [dashboardForm] = Form.useForm();
 
   const params = useGlobalParams({
@@ -91,8 +91,12 @@ const ExtraComponent = ({ setParams }) => {
         ...prevParams,
         warehouse_ids: warehouseIds,
       }));
+
+      const warehouseName = options.map((option) => option.label);
+
+      setWarehouses(warehouseName)
     }
-  }, [options, setParams]);
+  }, [options, setParams, setWarehouses]);
 
   const onDateRangeChange = useCallback(
     (value) => {
@@ -106,6 +110,12 @@ const ExtraComponent = ({ setParams }) => {
     (value) => {
       if (value?.length) {
         setParams((prevParams) => ({ ...prevParams, warehouse_ids: value }));
+
+        const warehouseNames = value.map(id =>
+          options.find(option => option.value === id)?.label
+        ).filter(Boolean);
+
+        setWarehouses(warehouseNames)
       } else {
         const warehouseIds = options.map((option) => option.value);
 
@@ -113,9 +123,13 @@ const ExtraComponent = ({ setParams }) => {
           ...prevParams,
           warehouse_ids: warehouseIds,
         }));
+
+        const warehouseName = options.map((option) => option.label);
+
+        setWarehouses(warehouseName)
       }
     },
-    [options, setParams]
+    [options, setParams, setWarehouses]
   );
 
   return (
@@ -344,7 +358,7 @@ const AdminDashboard = () => {
 
   const user = useSelector(useCurrentUser);
 
-  // const [dateRange, setDateRange] = useState(null);
+  const [warehouses, setWarehouses] = useState([])
 
   const [params, setParams] = useState({
     date_range: getDateRange("Weekly"),
@@ -363,9 +377,13 @@ const AdminDashboard = () => {
     }
   );
 
+  console.log(params)
+
+  console.log(warehouses)
+
 
   return (
-    <div className=" h-full">
+    <div className="h-full">
       <div className="p-5">
         <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-center justify-between pb-5 mt-1">
           <div
@@ -377,7 +395,17 @@ const AdminDashboard = () => {
             Welcome 😃, {user?.employees?.name ?? 'User'} 👋
           </div>
 
-          <ExtraComponent setParams={setParams} />
+          <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />
+        </div>
+
+        <div className="flex flex-wrap gap-2 py-2 w-full justify-end">
+          {
+            warehouses.map((warehouse, index) => {
+              return (
+                <Tag key={index} style={{ backgroundColor: token.colorPrimary, color: 'white' }}>{warehouse}</Tag>
+              )
+            })
+          }
         </div>
         <div className="space-y-6">
           <CashStatistic data={data} />
@@ -390,9 +418,9 @@ const AdminDashboard = () => {
           <EmployeeStatistic data={data} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"></div>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 p-5">
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 gap-y-6 p-5">
         <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">
           <div className="text-lg w-full text-center font-semibold pb-4 h-full">
             Purchase & Sale
@@ -400,13 +428,13 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className=" w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
           <RecentlyAddedComponent />
         </div>
-        <div className=" w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
           <ExpiredItemsComponent />
         </div>
-        <div className=" w-full h-[26rem] bg-white">
+        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
           <StockAlertComponent />
         </div>
       </div>

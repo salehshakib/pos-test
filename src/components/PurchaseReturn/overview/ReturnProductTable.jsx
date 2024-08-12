@@ -1,14 +1,14 @@
 import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
+import { showCurrency } from "../../../utilities/lib/currency";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { onDelete } from "../../../utilities/lib/productTable/counters";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { useSelector } from "react-redux";
-import { showCurrency } from "../../../utilities/lib/currency";
 
 const columns = [
   {
@@ -117,7 +117,7 @@ const columns = [
     ),
   },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     key: "tax",
     align: "center",
@@ -201,8 +201,8 @@ function setFormValuesId(
 
     formValues.product_list.total[id] =
       sanitizeIntValue(productUnits.purchase_units?.[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty?.[id]) -
+      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+      sanitizeIntValue(formValues.product_list.qty?.[id]) -
       sanitizeFloatValue(formValues.product_list.discount?.[id]) +
       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 

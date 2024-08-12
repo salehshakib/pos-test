@@ -10,9 +10,11 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../../utilities/lib/generator/generatorUtils";
+import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
 import { CashierComponent } from "../../ReusableComponent/CashierComponent";
 import { OrderTaxComponent } from "../../ReusableComponent/OrderTaxComponent";
 import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
+import { TotalRow } from "../../ReusableComponent/TotalRow";
 import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
@@ -20,8 +22,6 @@ import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { TotalRow } from "../../ReusableComponent/TotalRow";
-import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
 
 const StatusComponent = () => {
   useSetFieldValue("status", "Pending");
@@ -169,56 +169,7 @@ export const QuotationForm = ({
         </Row>
       </CustomForm>
 
-      {/* <Row className="pb-20">
-        <Col {...fullColLayout}>
-          <Row className="rounded-md overflow-hidden">
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Items</span>
-              <span>
-                {totalItems} ({totalQty})
-              </span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Total</span>
-              <span>{Number(totalPrice).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Tax</span>
-              <span>{Number(tax_rate ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Discount</span>
-              <span>{Number(discount ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Shipping Cost</span>
-              <span>{Number(shipping_cost ?? 0).toFixed(2)}</span>
-            </Col>
-            <Col
-              span={4}
-              className="border flex justify-between items-center px-2 py-5 text-lg"
-            >
-              <span className="font-semibold ">Grand Total</span>
-              <span>{Number(grandTotal).toFixed(2)}</span>
-            </Col>
-          </Row>
-        </Col>
-      </Row> */}
+
       <TotalRow
         totalItems={totalItems}
         totalQty={totalQty}

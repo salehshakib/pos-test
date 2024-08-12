@@ -324,7 +324,7 @@ export const TaxFilter = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         {...commonProps}
-        label="Tax"
+        label="Vat"
         name={"tax_ids"}
         options={options}
         isLoading={isLoading}

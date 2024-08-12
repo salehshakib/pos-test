@@ -82,7 +82,7 @@ const columns = [
     ),
   },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     key: "tax",
     align: "center",

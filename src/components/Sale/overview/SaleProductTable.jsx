@@ -2,7 +2,9 @@ import { Button, Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
 import {
@@ -11,6 +13,8 @@ import {
 } from "../../../utilities/hooks/useParams";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 import { calculateTotals } from "../../../utilities/lib/calculateTotals";
+import { showCurrency } from "../../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import {
   decrementCounter,
   incrementCounter,
@@ -23,10 +27,6 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 
 const columns = [
   {
@@ -35,9 +35,8 @@ const columns = [
     key: "name",
     render: (name, record) => (
       <div
-        className={`flex items-center gap-2 ${
-          name !== "Total" && "hover:underline hover:cursor-pointer"
-        }`}
+        className={`flex items-center gap-2 ${name !== "Total" && "hover:underline hover:cursor-pointer"
+          }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
@@ -154,7 +153,7 @@ const columns = [
     ),
   },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     key: "tax",
     align: "center",
@@ -236,7 +235,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
     <CustomSelect
       name={["tax_id", productId]}
       options={options}
-      label="Product Tax"
+      label="Product Vat"
       isLoading={isLoading}
       onSelect={onSelect}
     />
@@ -346,7 +345,7 @@ const ProductFormComponent = ({
                 parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-                100
+              100
             ).toFixed(2),
           },
           tax_id: {

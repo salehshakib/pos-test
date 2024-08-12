@@ -37,9 +37,8 @@ const columns = [
     align: "left",
     render: (name, record) => (
       <div
-        className={`flex items-center gap-2 ${
-          name !== "Total" && "hover:underline hover:cursor-pointer"
-        }`}
+        className={`flex items-center gap-2 ${name !== "Total" && "hover:underline hover:cursor-pointer"
+          }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
@@ -215,7 +214,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
     <CustomSelect
       name={["tax_id", productId]}
       options={options}
-      label="Product Tax"
+      label="Product Vat"
       isLoading={isLoading}
       onSelect={onSelect}
     />
@@ -328,7 +327,7 @@ const ProductFormComponent = ({
                 parseInt(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-                100
+              100
             ).toFixed(2),
           },
           tax_id: {

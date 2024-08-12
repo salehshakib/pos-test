@@ -1,4 +1,5 @@
 import { Col, Form, Row } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { discountTypeOptions } from "../../assets/data/discountTypes";
 import { paymentStatusOptions } from "../../assets/data/paymentStatus";
@@ -15,6 +16,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../utilities/lib/generator/generatorUtils";
+import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import { CashierComponent } from "../ReusableComponent/CashierComponent";
 import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
 import { TotalRow } from "../ReusableComponent/TotalRow";
@@ -28,8 +30,6 @@ import { CurrencyFormComponent } from "./overview/CurrencyComponent";
 import { CustomerComponent } from "./overview/CustomerComponent";
 import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
 import { SaleProductTable } from "./overview/SaleProductTable";
-import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
-import dayjs from "dayjs";
 
 const StatusComponent = () => {
   useSetFieldValue("sale_status", saleStatusOptions[0].value);
@@ -54,30 +54,6 @@ const PaymentStatusComponent = () => {
   );
 };
 
-// const TaxComponent = () => {
-//   const params = useGlobalParams({
-//     selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
-//   });
-
-//   const { data, isFetching } = useGetAllTaxQuery({ params });
-
-//   const options = data?.results?.tax?.map((item) => {
-//     return {
-//       value: item.rate,
-//       label: item.name,
-//       tax_rate: item?.rate,
-//     };
-//   });
-
-//   return (
-//     <CustomSelect
-//       label="Order Tax"
-//       options={options}
-//       name={"tax_rate"}
-//       isLoading={isFetching}
-//     />
-//   );
-// };
 
 const DiscountTypeComponent = () => {
   const form = Form.useFormInstance();

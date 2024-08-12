@@ -104,47 +104,8 @@ const columns = [
       </span>
     ),
   },
-  // {
-  //   title: "Quantity",
-  //   dataIndex: "quantity",
-  //   key: "quantity",
-  //   align: "center",
-  //   width: 140,
-  //   render: (quantity, record) => {
-  //     return quantity > -1 ? (
-  //       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-  //         {quantity}
-  //       </span>
-  //     ) : (
-  //       <div className="flex gap-1 justify-center items-center">
-  //         <div>
-  //           <Button
-  //             key={"sub"}
-  //             icon={<FaMinus />}
-  //             type="primary"
-  //             onClick={() => record.decrementCounter(record?.id)}
-  //           />
-  //         </div>
-  //         <CustomQuantityInput
-  //           value={record.formValues.product_list.qty[record?.id] || 0}
-  //           noStyle={true}
-  //           onChange={(value) => record.onQuantityChange(record.id, value)}
-  //         />
-  //         <div>
-  //           <Button
-  //             key={"add"}
-  //             icon={<FaPlus />}
-  //             type="primary"
-  //             onClick={() => record.incrementCounter(record?.id)}
-  //             className=""
-  //           />
-  //         </div>
-  //       </div>
-  //     );
-  //   },
-  // },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     key: "tax",
     align: "right",
@@ -226,8 +187,8 @@ function setFormValuesId(
 
     formValues.product_list.total[id] =
       sanitizeIntValue(productUnits.purchase_units?.[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty?.[id]) -
+      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+      sanitizeIntValue(formValues.product_list.qty?.[id]) -
       //   sanitizeFloatValue(formValues.product_list.discount?.[id]) +
       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 

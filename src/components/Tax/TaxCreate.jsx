@@ -42,7 +42,7 @@ const TaxCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
   return (
     <CustomDrawer
-      title={"Add Tax"}
+      title={"Add Vat"}
       open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
       onClose={subDrawer && handleCloseSubDrawer}
     >

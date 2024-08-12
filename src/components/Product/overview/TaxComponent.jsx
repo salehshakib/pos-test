@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
 import TaxCreate from "../../Tax/TaxCreate";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
 
 export const TaxComponent = () => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
@@ -34,7 +34,7 @@ export const TaxComponent = () => {
   return (
     <>
       <CustomSelectButton
-        label="Product Tax"
+        label="Product Vat"
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}

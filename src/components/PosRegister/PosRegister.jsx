@@ -160,7 +160,7 @@ const TaxComponent = () => {
       options={options}
       name={"tax_rate"}
       isLoading={isFetching}
-      placeholder={"Tax"}
+      placeholder={"Vat"}
     />
   );
 };
@@ -292,22 +292,10 @@ export const PosRegister = ({
     );
     setTotalPrice(totalPrice?.toFixed(2));
 
-    // const totalTax = Object.values(formValues.product_list.tax).reduce(
-    //   (acc, cur) => acc + parseFloat(cur),
-    //   0
-    // );
-    // setTotalTax(totalTax.toFixed(2));
 
-    // const totalDiscount = Object.values(
-    //   formValues.product_list.discount
-    // ).reduce((acc, cur) => acc + parseFloat(cur), 0);
-
-    // setTotalDiscount(totalDiscount.toFixed(2));
   }, [formValues, products]);
 
-  // const discount = Form.useWatch("Discount", form);
-  // const tax = Form.useWatch("Tax", form);
-  // const shipping = Form.useWatch("Shipping", form);
+
 
   const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(0);
@@ -346,7 +334,7 @@ export const PosRegister = ({
         openNotification(
           "info",
           "Coupon can be applied only if total price is greater than " +
-            productUnits.minimum_amount
+          productUnits.minimum_amount
         );
 
         // hideModal();
@@ -496,7 +484,7 @@ export const PosRegister = ({
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline "
                   onClick={() => showModal("Tax")}
                 >
-                  Tax
+                  Vat
                   <FaRegEdit className="primary-text" />
                 </span>
                 <Form.Item name="Tax" noStyle></Form.Item>

@@ -62,14 +62,8 @@ export const settingPaths = [
     icon: LuClipboardType,
     element: <GiftCardType />,
   },
-  // {
-  //   name: "Currency",
-  //   path: "currency",
-  //   icon: BsCurrencyPound,
-  //   element: <CurrencyList />,
-  // },
   {
-    name: "Tax",
+    name: "Vat",
     path: "tax",
     icon: TbReceiptTax,
     element: <TaxList />,

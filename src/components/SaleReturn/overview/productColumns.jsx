@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
+import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 
 export const columns = [
   {
@@ -103,7 +103,7 @@ export const columns = [
     ),
   },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     key: "tax",
     align: "center",

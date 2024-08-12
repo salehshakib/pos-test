@@ -16,7 +16,7 @@ export const TotalRow = ({
   ];
 
   if (taxRate?.toString()) {
-    options.push({ label: "Tax", value: taxRate });
+    options.push({ label: "Vat", value: taxRate });
   }
 
   if (discount?.toString()) {

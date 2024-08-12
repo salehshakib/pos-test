@@ -112,13 +112,12 @@ export const usePermission = (route, moduleName) => {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
-  // console.log(rolePermissions);
 
-  // const permissionsWithUnit = rolePermissions
-  //   .filter((permission) => permission.name.includes("unit"))
-  //   .map((permission) => permission.name);
+  const isAdmin = userData?.roles?.[0]?.name === "admin";
 
-  // console.table(permissionsWithUnit);
+  // if (isAdmin) {
+  //   return true
+  // }
 
   const cleanedRoute =
     route?.split("/").length > 1
@@ -127,8 +126,7 @@ export const usePermission = (route, moduleName) => {
 
   const isPermitted = hasPermission(rolePermissions, cleanedRoute, moduleName);
 
-  return true;
-  // return isPermitted;
+  return isPermitted;
 };
 
 export const useUrlIndexPermission = (pathName) => {

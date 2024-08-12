@@ -150,7 +150,7 @@ const AlertComponent = () => {
 const TaxTypeComponent = () => {
   return (
     <CustomSelect
-      label="Tax Method"
+      label="Vat Method"
       options={taxTypeOptions}
       required={true}
       name={"tax_method"}
@@ -336,7 +336,7 @@ const ProductForm = ({
           <CustomCheckbox
             label="Initial Stock"
             name="has_stock"
-            // required={true}
+          // required={true}
           />
         </Col>
 

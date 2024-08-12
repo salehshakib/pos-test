@@ -7,6 +7,7 @@ import { HiOutlineBanknotes } from "react-icons/hi2";
 import { IoRocketOutline } from "react-icons/io5";
 import { MdCardGiftcard } from "react-icons/md";
 import { mdColLayout, rowLayout } from "../../layout/FormLayout";
+import { openNotification } from "../../utilities/lib/openToaster";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomModal from "../Shared/Modal/CustomModal";
 import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
@@ -30,7 +31,13 @@ const Payment = ({
       "customer_id",
       "reference_number",
     ]);
-    console.log(data);
+
+    const hasUndefinedOrNull = Object.values(data).some(value => value === undefined || value === null);
+
+    if (hasUndefinedOrNull) {
+      openNotification("error", "Please fill all the required fields. Some values are missing.");
+      return false;
+    }
 
     setPaymentType(value);
     setIsModalOpen(true);
@@ -89,7 +96,7 @@ const Payment = ({
             type="primary"
             icon={<GoHistory />}
             className=" flex justify-center items-center min-w-fit"
-            //  onClick={() => handleOpenModal("Card")}
+          //  onClick={() => handleOpenModal("Card")}
           >
             Transactions
           </Button>

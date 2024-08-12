@@ -1,4 +1,5 @@
 import { Dropdown, Table } from "antd";
+import { useState } from "react";
 import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
@@ -6,7 +7,6 @@ import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
 import { usePermission } from "../../../utilities/lib/getPermission";
-import { useState } from "react";
 
 const getDownloadItems = (record) =>
   [
@@ -83,6 +83,8 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, "delete");
   const isStatusPermitted = usePermission(route, "status");
 
+
+
   // console.log(isEditPermitted, route, isDeletePermitted);
 
   const getMenuItems = (record) =>
@@ -131,9 +133,9 @@ const CustomTable = ({
     rowKey: (record) => record?.id,
     rowSelection: isRowSelection
       ? {
-          type: "checkbox",
-          ...rowSelection,
-        }
+        type: "checkbox",
+        ...rowSelection,
+      }
       : false,
     onRow: (record) => ({
       onClick: () => console.log(record.id),
@@ -163,19 +165,19 @@ const CustomTable = ({
   };
 
   const baseColumns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      fixed: "left",
-      align: "center",
-      width: 60,
-      render: (id) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-          {id}
-        </span>
-      ),
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   fixed: "left",
+    //   align: "center",
+    //   width: 60,
+    //   render: (id) => (
+    //     <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+    //       {id}
+    //     </span>
+    //   ),
+    // },
     ...columns,
   ];
 
@@ -188,11 +190,10 @@ const CustomTable = ({
     render: (status, record) => {
       return record?.handleStatusModal ? (
         <button
-          className={`p-0 ${
-            status?.toString() === "1"
-              ? "bg-[#DCFCE7] text-[#16A34A]"
-              : "bg-[#FEF2F2] text-[#EF4444]"
-          } rounded shadow-md w-[80px]`}
+          className={`p-0 ${status?.toString() === "1"
+            ? "bg-[#DCFCE7] text-[#16A34A]"
+            : "bg-[#FEF2F2] text-[#EF4444]"
+            } rounded shadow-md w-[80px]`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
@@ -201,11 +202,10 @@ const CustomTable = ({
         </button>
       ) : (
         <div
-          className={`p-0 ${
-            status?.toString() === "1"
-              ? "bg-[#DCFCE7] text-[#16A34A]"
-              : "bg-[#FEF2F2] text-[#EF4444]"
-          } rounded shadow-md w-[80px]`}
+          className={`p-0 ${status?.toString() === "1"
+            ? "bg-[#DCFCE7] text-[#16A34A]"
+            : "bg-[#FEF2F2] text-[#EF4444]"
+            } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">
             {status?.toString() === "1" ? "Active" : "Inactive"}

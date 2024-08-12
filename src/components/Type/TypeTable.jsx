@@ -72,7 +72,6 @@ const TypeTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        action={false}
       />
 
       <DeleteModal

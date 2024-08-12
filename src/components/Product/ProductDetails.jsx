@@ -1,14 +1,14 @@
 import { Descriptions, Spin, Table } from "antd";
 import parse from "html-react-parser";
+import { useSelector } from "react-redux";
 import { detailsLayout } from "../../layout/DescriptionLayout";
+import { tableProps } from "../../layout/TableLayout";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
+import { showCurrency } from "../../utilities/lib/currency";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
-import { tableProps } from "../../layout/TableLayout";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
 
 const productQtyColumn = [
   {
@@ -189,11 +189,8 @@ export const ProductDetails = ({ id, ...props }) => {
 
           <CustomDescription title="Features Info" items={featuresInfo} />
           <CustomDescription title="Variant Info" items={variantsInfo} />
-          <CustomDescription title="Tax Info" items={taxInfo} />
-          {/* <CustomDescription
-            title="Miscellaneous Info"
-            items={miscellaneousInfo}
-          /> */}
+          <CustomDescription title="Vat Info" items={taxInfo} />
+
 
           <CustomDescription
             title="Attachments"

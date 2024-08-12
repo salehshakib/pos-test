@@ -1,6 +1,8 @@
 import { Col, Form, Modal, Row, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
 import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
 import {
@@ -9,6 +11,8 @@ import {
 } from "../../../utilities/hooks/useParams";
 import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
 import { calculateTotals } from "../../../utilities/lib/calculateTotals";
+import { showCurrency } from "../../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import {
   decrementCounter,
   incrementCounter,
@@ -20,10 +24,6 @@ import CustomInput from "../../Shared/Input/CustomInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 import { columns, partialColumns } from "./productColumns";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { showCurrency } from "../../../utilities/lib/currency";
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
@@ -52,7 +52,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
     <CustomSelect
       name={["tax_id", productId]}
       options={options}
-      label="Product Tax"
+      label="Product Vat"
       isLoading={isLoading}
       onSelect={onSelect}
     />
@@ -170,7 +170,7 @@ const ProductFormComponent = ({
                 parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-                100
+              100
             ).toFixed(2),
           },
           tax_id: {
@@ -292,17 +292,17 @@ function setFormValuesId(
   const total =
     tax_method === "Inclusive"
       ? Math.round(
-          (
-            productPurchaseUnitsValue * netUnitCost * qty -
-            discount +
-            tax
-          ).toFixed(2)
-        )
-      : (
+        (
           productPurchaseUnitsValue * netUnitCost * qty -
           discount +
           tax
-        ).toFixed(2);
+        ).toFixed(2)
+      )
+      : (
+        productPurchaseUnitsValue * netUnitCost * qty -
+        discount +
+        tax
+      ).toFixed(2);
 
   // Set form values
   const setFormValue = (field, value) => {

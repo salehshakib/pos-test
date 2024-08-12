@@ -81,7 +81,7 @@ const columns = [
     ),
   },
   {
-    title: "Tax",
+    title: "Vat",
     dataIndex: "tax",
     align: "right",
     key: "tax",
@@ -184,7 +184,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
       ),
     },
     {
-      title: "Tax",
+      title: "Vat",
       dataIndex: "tax",
       align: "right",
       key: "tax",
@@ -245,7 +245,7 @@ const SaleReturnSummaryTable = ({ data }) => {
       ),
     },
     {
-      title: "Tax",
+      title: "Vat",
       dataIndex: "tax",
       align: "right",
       key: "tax",

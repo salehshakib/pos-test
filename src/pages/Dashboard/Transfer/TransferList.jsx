@@ -64,7 +64,7 @@ const columns = [
     ),
   },
   {
-    title: "Product Tax",
+    title: "Product Vat",
     dataIndex: "product_tax",
     key: "product_tax",
     render: (productTax) => (
@@ -92,11 +92,10 @@ const columns = [
     render: (status) => {
       return (
         <div
-          className={`p-0 ${
-            status === "Completed" || status === "Sent" || status === "Send"
+          className={`p-0 ${status === "Completed" || status === "Sent" || status === "Send"
               ? "bg-[#DCFCE7] text-[#16A34A]"
               : "bg-[#FEF2F2] text-[#EF4444]"
-          } rounded shadow-md w-[80px]`}
+            } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">{status}</span>
         </div>

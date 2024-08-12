@@ -27,7 +27,7 @@ export const TaxComponent = () => {
 
   return (
     <CustomSelect
-      label="Order Tax"
+      label="Order Vat"
       options={options}
       name={"tax_id"}
       isLoading={isFetching}

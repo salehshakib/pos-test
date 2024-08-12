@@ -1,4 +1,4 @@
-import { Button, Col, Descriptions, Form, Row, Spin, Tabs } from "antd";
+import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from "antd";
 import parse from "html-react-parser";
 import { useEffect, useState } from "react";
 import { ProductFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
@@ -194,7 +194,9 @@ export const ProductReport = () => {
               )}
             </div>
           </div>
-          {data ? (
+          {isFetching ? (
+            <Spin className="w-full h-full flex justify-center items-center py-10" />
+          ) : data ? (
             <Tabs
               defaultActiveKey="sale"
               items={[
@@ -247,17 +249,10 @@ export const ProductReport = () => {
               ]}
             />
           ) : (
-            <Spin className="w-full h-full flex justify-center items-center py-10" />
+            <Empty />
           )}
         </>
       )}
-
-      {/* <ProductReportTable
-        newColumns={newColumns}
-        keyword={keyword}
-        setSelectedRows={setSelectedRows}
-        searchParams={searchParams}
-      /> */}
     </GlobalContainer>
   );
 };

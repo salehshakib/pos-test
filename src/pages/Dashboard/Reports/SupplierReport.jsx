@@ -1,4 +1,4 @@
-import { Button, Col, Descriptions, Form, Row, Spin, Tabs } from "antd";
+import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from "antd";
 import { useState } from "react";
 import { SupplierFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
 import CustomForm from "../../../components/Shared/Form/CustomForm";
@@ -205,7 +205,9 @@ export const SupplierReport = () => {
               )}
             </div>
           </div>
-          {!isFetching ? (
+          {isFetching ? (
+            <Spin className="w-full h-full flex justify-center items-center py-10" />
+          ) : data ? (
             <Tabs
               defaultActiveKey="purchase"
               items={[
@@ -232,7 +234,7 @@ export const SupplierReport = () => {
               ]}
             />
           ) : (
-            <Spin className="w-full h-full flex justify-center items-center py-10" />
+            <Empty />
           )}
         </>
       )}

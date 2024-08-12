@@ -22,6 +22,16 @@ const Payment = ({
   const [paymentType, setPaymentType] = useState("Card");
 
   const handleOpenModal = (value) => {
+    // sale_at, warehouse_id, cashier_id, customer_id, reference_number
+    const data = form.getFieldsValue([
+      "sale_at",
+      "warehouse_id",
+      "cashier_id",
+      "customer_id",
+      "reference_number",
+    ]);
+    console.log(data);
+
     setPaymentType(value);
     setIsModalOpen(true);
   };
@@ -49,14 +59,6 @@ const Payment = ({
             Card
           </Button>
 
-          {/* <Button
-            type="primary"
-            icon={<RiCoupon3Line />}
-            className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Coupon")}
-          >
-            Coupon
-          </Button> */}
           <Button
             type="primary"
             icon={<HiOutlineBanknotes />}
@@ -73,14 +75,7 @@ const Payment = ({
           >
             Gift Card
           </Button>
-          {/* <Button
-            type="primary"
-            icon={<PiHandDeposit />}
-            className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Deposit")}
-          >
-            Deposit
-          </Button> */}
+
           <Button
             type="primary"
             icon={<IoRocketOutline />}

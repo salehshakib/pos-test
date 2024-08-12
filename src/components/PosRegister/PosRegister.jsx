@@ -203,12 +203,6 @@ const CouponComponent = ({ setType, setProductUnits }) => {
   );
 };
 
-// const colLayout = {
-//   xs: 24,
-//   lg: 12,
-//   xxl: 8,
-// };
-
 const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();
 
@@ -278,7 +272,6 @@ export const PosRegister = ({
   setProductUnits,
   form,
   fields,
-
   setGrandTotal,
   type,
   setType,

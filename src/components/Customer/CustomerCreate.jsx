@@ -5,7 +5,6 @@ import { useCreateCustomerMutation } from "../../redux/services/customer/custome
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { CustomerForm } from "./CustomerForm";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
 
 const CustomerCreate = ({
   subDrawer,
@@ -13,6 +12,7 @@ const CustomerCreate = ({
   handleCloseSubDrawer,
 }) => {
   const dispatch = useDispatch();
+
   const [form] = Form.useForm();
   const [subForm] = Form.useForm();
 
@@ -22,7 +22,7 @@ const CustomerCreate = ({
   const [createCustomer, { isLoading }] = useCreateCustomerMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createCustomer({ data: sanitizeObj(values) });
+    const { data, error } = await createCustomer({ data: values });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());

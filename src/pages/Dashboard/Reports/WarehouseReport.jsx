@@ -1,4 +1,4 @@
-import { Descriptions, Row, Spin, Tabs } from "antd";
+import { Descriptions, Empty, Row, Spin, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
@@ -185,8 +185,10 @@ export const WarehouseReport = () => {
             },
           ]}
         />
-      ) : (
+      ) : isFetching ? (
         <Spin className="w-full h-full flex justify-center items-center py-10" />
+      ) : (
+        <Empty />
       )}
     </GlobalContainer>
   );

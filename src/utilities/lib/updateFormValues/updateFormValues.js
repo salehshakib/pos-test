@@ -43,6 +43,10 @@ export function setFormValuesId(
   const saleUnitsOperationValue = sale_units?.operation_value ?? 1;
   const productSaleUnitsValue =
     sanitizeIntValue(productUnits?.sale_units?.[id]) || saleUnitsOperationValue;
+
+
+  console.log(productUnits)
+
   productUnits.sale_units[id] = productSaleUnitsValue;
 
   // Calculating total
@@ -69,6 +73,8 @@ export function setFormValuesId(
   const setFormValue = (field, value) => {
     formProductList[field][id] = value;
   };
+
+  console.log(netUnitPrice)
 
   setFormValue("qty", qty);
   setFormValue("net_unit_price", netUnitPrice);

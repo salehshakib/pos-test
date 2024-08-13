@@ -10,9 +10,11 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from "../../../utilities/lib/generator/generatorUtils";
+import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
 import { CashierComponent } from "../../ReusableComponent/CashierComponent";
 import { OrderTaxComponent } from "../../ReusableComponent/OrderTaxComponent";
 import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
+import { TotalRow } from "../../ReusableComponent/TotalRow";
 import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
 import CustomForm from "../../Shared/Form/CustomForm";
 import CustomInput from "../../Shared/Input/CustomInput";
@@ -20,8 +22,6 @@ import CustomSelect from "../../Shared/Select/CustomSelect";
 import CustomUploader from "../../Shared/Upload/CustomUploader";
 import { CustomerComponent } from "../overview/CustomerComponent";
 import { QuotationProductTable } from "./overview/QuotationProductTable";
-import { TotalRow } from "../../ReusableComponent/TotalRow";
-import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
 
 const StatusComponent = () => {
   useSetFieldValue("status", "Pending");
@@ -93,11 +93,9 @@ export const InvoiceForm = ({
     if (warehouseId) {
       setFormValues({
         product_list: {
-          product_id: {},
           qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
+          sale_unit_id: {},
+          net_unit_price: {},
           discount: {},
           tax_rate: {},
           tax: {},
@@ -110,7 +108,7 @@ export const InvoiceForm = ({
       setProducts([]);
 
       setProductUnits({
-        purchase_units: {},
+        sale_units: {},
         tax_rate: {},
         inclusive_tax_rate: {},
       });

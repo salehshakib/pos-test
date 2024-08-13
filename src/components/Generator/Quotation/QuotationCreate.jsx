@@ -39,6 +39,7 @@ const QuotationCreate = () => {
   const [productUnits, setProductUnits] = useState({
     sale_units: {},
     tax_rate: {},
+    inclusive_tax_rate: {},
   });
 
   const handleSubmit = async (values) => {
@@ -49,17 +50,17 @@ const QuotationCreate = () => {
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
-          .filter((product_id) => product_list.qty[product_id] !== undefined)
-          .map((product_id) => ({
-            product_id: parseInt(product_id),
-            qty: product_list.qty[product_id],
-            sale_unit_id: product_list.sale_unit_id[product_id],
-            net_unit_price: product_list.net_unit_price[product_id],
-            discount: product_list.discount[product_id],
-            tax_rate: product_list.tax_rate[product_id],
-            tax: product_list.tax[product_id],
-            total: product_list.total[product_id],
-          }))
+        .filter((product_id) => product_list.qty[product_id] !== undefined)
+        .map((product_id) => ({
+          product_id: parseInt(product_id),
+          qty: product_list.qty[product_id],
+          sale_unit_id: product_list.sale_unit_id[product_id],
+          net_unit_price: product_list.net_unit_price[product_id],
+          discount: product_list.discount[product_id],
+          tax_rate: product_list.tax_rate[product_id],
+          tax: product_list.tax[product_id],
+          total: product_list.total[product_id],
+        }))
       : [];
 
     if (productListArray.length === 0) {

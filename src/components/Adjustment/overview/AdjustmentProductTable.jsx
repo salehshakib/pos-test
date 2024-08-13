@@ -2,9 +2,9 @@ import { Button, Form, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+import { useSelector } from "react-redux";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { showCurrency } from "../../../utilities/lib/currency";
 import {
   decrementCounter,
   incrementCounter,
@@ -12,9 +12,9 @@ import {
   onDelete,
   onQuantityChange,
 } from "../../../utilities/lib/productTable/counters";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { showCurrency } from "../../../utilities/lib/currency";
+import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
+import CustomSelect from "../../Shared/Select/CustomSelect";
 
 const columns = [
   {
@@ -174,7 +174,9 @@ export const AdjustmentProductTable = ({
 
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku, buying_price: unit_cost } = product ?? {};
+      const { id, name, sku, buying_price: unit_cost, } = product ?? {};
+
+
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
@@ -204,20 +206,12 @@ export const AdjustmentProductTable = ({
 
   useEffect(() => {
     const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + cur,
+      (acc, cur) => acc + parseInt(cur, 10),
       0
     );
     setTotalQuantity(total);
   }, [formValues, products]);
 
-  // products.length > 0 &&
-  //   dataSource.push({
-  //     id: "",
-  //     name: "Total",
-  //     unitCost: "",
-  //     quantity: totalQuantity,
-  //     action: false,
-  //   });
 
   form.setFieldsValue(formValues);
 

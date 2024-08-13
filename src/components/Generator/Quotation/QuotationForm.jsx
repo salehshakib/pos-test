@@ -93,11 +93,9 @@ export const QuotationForm = ({
     if (warehouseId) {
       setFormValues({
         product_list: {
-          product_id: {},
           qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
+          sale_unit_id: {},
+          net_unit_price: {},
           discount: {},
           tax_rate: {},
           tax: {},
@@ -110,7 +108,7 @@ export const QuotationForm = ({
       setProducts([]);
 
       setProductUnits({
-        purchase_units: {},
+        sale_units: {},
         tax_rate: {},
         inclusive_tax_rate: {},
       });

@@ -9,7 +9,7 @@ import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import { openNotification } from "../../../utilities/lib/openToaster";
 
-const ignorePaths = ["stock-request", "print-barcode", "products", "transfer"];
+const ignorePaths = ["stock-request", "print-barcode", "products", "transfer", 'adjustment'];
 
 export const SearchProduct = ({ setProducts }) => {
   const [keyword, setKeyword] = useState(null);
@@ -76,16 +76,16 @@ export const SearchProduct = ({ setProducts }) => {
 
   const options = isFetching
     ? [
-        {
-          value: "loading",
-          label: loadingContent,
-        },
-      ]
+      {
+        value: "loading",
+        label: loadingContent,
+      },
+    ]
     : data?.results?.product?.map((product) => ({
-        value: product.id.toString(),
-        label: `${product.name} (SKU: ${product.sku})`,
-        product: product,
-      })) ?? [];
+      value: product.id.toString(),
+      label: `${product.name} (SKU: ${product.sku})`,
+      product: product,
+    })) ?? [];
 
   const onSelect = (_, option) => {
     console.log(option);

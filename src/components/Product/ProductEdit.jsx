@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { openNotification } from "../../utilities/lib/openToaster";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
@@ -11,6 +10,7 @@ import {
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import { openNotification } from "../../utilities/lib/openToaster";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import ProductForm from "./ProductForm";
 
@@ -329,11 +329,11 @@ const ProductListEdit = ({ id }) => {
 
     const qtyListArray = has_stock
       ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
-          return {
-            warehouse_id: warehouseId,
-            qty: qty_list?.qty?.[warehouseId],
-          };
-        })
+        return {
+          warehouse_id: warehouseId,
+          qty: qty_list?.qty?.[warehouseId],
+        };
+      })
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
@@ -349,11 +349,11 @@ const ProductListEdit = ({ id }) => {
 
     const priceListArray = has_different_price
       ? Object.keys(price_list?.price || {}).map((warehouseId) => {
-          return {
-            warehouse_id: warehouseId,
-            price: price_list?.price?.[warehouseId],
-          };
-        })
+        return {
+          warehouse_id: warehouseId,
+          price: price_list?.price?.[warehouseId],
+        };
+      })
       : [];
 
     const productListArray = Object.keys(product_list?.qty || {})?.map(
@@ -393,20 +393,27 @@ const ProductListEdit = ({ id }) => {
 
       has_different_price: has_different_price ? 1 : 0,
       price_list: has_different_price && JSON.stringify(priceListArray),
-      product_list: JSON.stringify(productListArray),
       has_expired_date: has_expired_date ? 1 : 0,
       details,
+
+      // attachments:
+      //   values.attachments?.length > 0
+      //     ? values.attachments?.map((file) => file?.url ?? file.originFileObj)
+      //     : [],
 
       _method: "PUT",
     };
 
-    if (
-      values.attachments?.[0]?.originFileObj &&
-      values?.attachments.length > 0
-    ) {
+    if (productListArray.length > 0) {
+      postObj.product_list = JSON.stringify(productListArray);
+    }
+
+    console.log(values?.attachments);
+
+    if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments?.map(
-        (file) => file?.originFileObj
-      );
+        (file) => (file.originFileObj ? file.originFileObj : null)
+      ).filter(Boolean);
     }
 
     if (values?.attach_file?.[0].url) {

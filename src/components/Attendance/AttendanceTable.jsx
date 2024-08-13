@@ -81,18 +81,17 @@ export const AttendanceTable = ({
   const dataSource =
     data?.results?.attendance?.map((item) => {
       console.log(item);
-      const { id, name, email, attachments, date, check_in, check_out } =
+      const { id, attachments, date, check_in, check_out, employees } =
         item ?? {};
-      // const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        name,
-        email,
+        name: employees?.name,
+        email: employees?.email,
         image: attachments?.[0]?.url,
         date: date,
         checkIn: convertToAmPm(check_in),
-        checkOut: convertToAmPm(check_out),
+        checkOut: check_out ? convertToAmPm(check_out) : "--",
 
         // status: is_active,
         // handleStatusModal,

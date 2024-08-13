@@ -286,12 +286,12 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     for (const [key, value] of Object.entries(permission)) {
       if (typeof value === "object" && value !== null) {
         for (const [subKey, subValue] of Object.entries(value)) {
-          if (subValue !== undefined) {
+          if (subValue === true) {
             transformedObject[`${key.toLowerCase()}.${subKey}`] = subValue;
           }
         }
       } else {
-        if (value !== undefined) {
+        if (value === true) {
           transformedObject[`${key.toLowerCase()}`] = value;
         }
       }

@@ -13,43 +13,7 @@ import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 
-// const DepartmentComponent = () => {
-//   const { data, isFetching } = useGetDepartmentsQuery({});
 
-//   const options = data?.results?.department?.map((item) => ({
-//     value: item?.id?.toString(),
-//     label: item?.name,
-//   }));
-
-//   return (
-//     <CustomSelect
-//       label={"Department"}
-//       name={"department_id"}
-//       options={options}
-//       isLoading={isFetching}
-//       required={true}
-//     />
-//   );
-// };
-
-// const EmployeeComponent = () => {
-//   const { data, isFetching } = useGetAllEmployeeQuery({});
-
-//   const options = data?.results?.employee?.map((item) => ({
-//     value: item?.id?.toString(),
-//     label: item?.name,
-//   }));
-
-//   return (
-//     <CustomSelect
-//       label={"Employee"}
-//       name={"employee_id"}
-//       options={options}
-//       isLoading={isFetching}
-//       required={true}
-//     />
-//   );
-// };
 
 const DateComponent = () => {
   const form = Form.useFormInstance();

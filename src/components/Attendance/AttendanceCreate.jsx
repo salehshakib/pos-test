@@ -32,7 +32,7 @@ const AttendanceCreate = ({
       ...values,
       date: values.date,
       check_in: values.check_in.format("HH:mm:ss"),
-      check_out: values.check_out.format("HH:mm:ss"),
+      check_out: values.check_out && values.check_out.format("HH:mm:ss"),
       hours: hours + ":" + minutes,
     };
 

@@ -1,9 +1,10 @@
 import { Form } from "antd";
+import { useEffect } from "react";
+import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
-import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 //dependency department
@@ -27,6 +28,14 @@ export const EmployeeComponent = ({ name = "employee_id" }) => {
     value: item?.id?.toString(),
     label: item?.name,
   }));
+
+
+  useEffect(() => {
+    if (departmentId) {
+      form.resetFields([name])
+    }
+  }, [departmentId, form, name])
+
   return (
     <CustomSelect
       label="Employee"

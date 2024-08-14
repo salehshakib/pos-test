@@ -170,7 +170,7 @@ const ProductFormComponent = ({
                 parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-              100
+                100
             ).toFixed(2),
           },
           tax_id: {
@@ -292,17 +292,17 @@ function setFormValuesId(
   const total =
     tax_method === "Inclusive"
       ? Math.round(
-        (
+          (
+            productPurchaseUnitsValue * netUnitCost * qty -
+            discount +
+            tax
+          ).toFixed(2)
+        )
+      : (
           productPurchaseUnitsValue * netUnitCost * qty -
           discount +
           tax
-        ).toFixed(2)
-      )
-      : (
-        productPurchaseUnitsValue * netUnitCost * qty -
-        discount +
-        tax
-      ).toFixed(2);
+        ).toFixed(2);
 
   // Set form values
   const setFormValue = (field, value) => {
@@ -425,6 +425,8 @@ export const PurchaseProductTable = ({
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 
     console.log(tax_method);
+
+    console.log(calculateOriginalPrice(unit_cost, taxes?.rate, tax_method));
 
     setFormValuesId(
       id,

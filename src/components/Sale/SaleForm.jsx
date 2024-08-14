@@ -54,7 +54,6 @@ const PaymentStatusComponent = () => {
   );
 };
 
-
 const DiscountTypeComponent = () => {
   const form = Form.useFormInstance();
   const discount = Form.useWatch("discount", form);
@@ -139,21 +138,17 @@ export const SaleForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CustomerComponent />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <WarehouseComponent />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <CashierComponent />
           </Col>
 
-          <Col {...mdColLayout}>
-            <CurrencyFormComponent />
-          </Col>
-
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <CustomDatepicker label="Date" required={true} name={"sale_at"} />
           </Col>
 
@@ -182,8 +177,9 @@ export const SaleForm = ({
               name={"shipping_cost"}
             />
           </Col>
+
           <Col {...colLayout}>
-            <StatusComponent />
+            <CurrencyFormComponent />
           </Col>
 
           <Col {...colLayout}>
@@ -191,6 +187,18 @@ export const SaleForm = ({
           </Col>
 
           <PaymentTypeComponent grandTotal={grandTotal} />
+
+          <Col {...colLayout}>
+            <StatusComponent />
+          </Col>
+
+          <Col {...fullColLayout}>
+            <CustomInput
+              type={"textarea"}
+              name="payment_note"
+              label="Payment Note"
+            />
+          </Col>
 
           <Col {...fullColLayout}>
             <CustomUploader label={"Attach Document"} name={"attachment"} />

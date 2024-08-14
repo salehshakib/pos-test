@@ -35,8 +35,9 @@ const columns = [
     key: "name",
     render: (name, record) => (
       <div
-        className={`flex items-center gap-2 ${name !== "Total" && "hover:underline hover:cursor-pointer"
-          }`}
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
@@ -345,7 +346,7 @@ const ProductFormComponent = ({
                 parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-              100
+                100
             ).toFixed(2),
           },
           tax_id: {
@@ -422,6 +423,8 @@ export const SaleProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
+  console.log(formValues);
+
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
@@ -454,6 +457,8 @@ export const SaleProductTable = ({
     } = product ?? {};
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
+
+    console.log(product);
 
     setFormValuesId(
       id,

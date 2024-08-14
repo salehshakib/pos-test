@@ -5,7 +5,7 @@ import { purchaseStatusOptions } from "../../assets/data/purchaseStatus";
 import {
   colLayout,
   fullColLayout,
-  mdColLayout,
+  largeLayout,
   rowLayout,
 } from "../../layout/FormLayout";
 import {
@@ -145,20 +145,17 @@ export const PurchaseForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <WarehouseComponent />
           </Col>
-          <Col {...colLayout}>
+          <Col {...largeLayout}>
             <SupplierComponent />
           </Col>
-          <Col {...colLayout}>
-            <PurchaseStatus />
-          </Col>
-          <Col {...mdColLayout}>
-            <CurrencyFormComponent />
-          </Col>
-          <Col {...mdColLayout}>
+          <Col {...largeLayout}>
             <CustomDatepicker label="Date" required name="purchase_at" />
+          </Col>
+          <Col {...largeLayout}>
+            <PurchaseStatus />
           </Col>
 
           <PurchaseProductTable
@@ -190,6 +187,10 @@ export const PurchaseForm = ({
           {(paymentStatus === "Paid" || paymentStatus === "Partial") && (
             <PaymentTypeComponent />
           )}
+
+          <Col {...colLayout}>
+            <CurrencyFormComponent />
+          </Col>
 
           <Col {...fullColLayout}>
             <CustomUploader label="Attach Document" name="attachment" />

@@ -207,7 +207,7 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
         </Col>
 
         {(paymentStatus === "Paid" || paymentStatus === "Partial") && (
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">Change: {change}</div>
           </Col>
         )}
@@ -223,14 +223,6 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
         {paymentType === "Gift Card" && <GiftCardComponent />}
         {paymentType === "Card" && <CardComponent />}
         {paymentType === "Cheque" && <ChequeComponent />}
-
-        <Col {...fullColLayout}>
-          <CustomInput
-            type={"textarea"}
-            name="payment_note"
-            label="Payment Note"
-          />
-        </Col>
       </>
     )
   );

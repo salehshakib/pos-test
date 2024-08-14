@@ -3,6 +3,7 @@ import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
+import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import CustomSelect from "../Shared/Select/CustomSelect";
 
 export const SupplierComponent = ({ name = "supplier_id" }) => {
@@ -16,6 +17,8 @@ export const SupplierComponent = ({ name = "supplier_id" }) => {
     value: supplier?.id?.toString(),
     label: supplier?.name,
   }));
+
+  useInitialFormField(name, options);
 
   return (
     <CustomSelect

@@ -11,6 +11,10 @@ import {
 import { categorizeNotifications } from "../../../../utilities/lib/notification/notificationData";
 import NotificationComponent from "../../../Notification/Notification";
 
+const hasUnreadNotifications = (notifications) => {
+  return notifications.some((notification) => notification.read_at === null);
+};
+
 export const Notification = () => {
   const [show, setShow] = useState(false);
   const { token } = theme.useToken();
@@ -29,18 +33,20 @@ export const Notification = () => {
     refetch();
   }, [pathname, refetch]);
 
-
-  console.log(data)
-
-  console.log(warehouseId)
-
   useEffect(() => {
-    if (data?.length === 0) {
-      setShow(false);
-    } else if (data?.length > 0) {
-      setShow(true);
+    if (data) {
+      const hasUnread = hasUnreadNotifications(data);
+      setShow(hasUnread);
     }
   }, [data]);
+
+  // useEffect(() => {
+  //   if (data?.length === 0) {
+  //     setShow(false);
+  //   } else if (data?.length > 0) {
+  //     setShow(true);
+  //   }
+  // }, [data]);
 
   const navigate = useNavigate();
 

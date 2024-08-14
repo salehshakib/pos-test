@@ -9,7 +9,13 @@ import { useGlobalParams } from "../../../utilities/hooks/useParams";
 import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
 import { openNotification } from "../../../utilities/lib/openToaster";
 
-const ignorePaths = ["stock-request", "print-barcode", "products", "transfer", 'adjustment'];
+const ignorePaths = [
+  "stock-request",
+  "print-barcode",
+  "products",
+  "transfer",
+  "adjustment",
+];
 
 export const SearchProduct = ({ setProducts }) => {
   const [keyword, setKeyword] = useState(null);
@@ -46,6 +52,7 @@ export const SearchProduct = ({ setProducts }) => {
   }
 
   if (isIgnore) {
+    baseParams.parent = 1;
     baseParams.child = 1;
     baseParams.need_qty = 1;
     baseParams.need_price = 1;
@@ -76,16 +83,16 @@ export const SearchProduct = ({ setProducts }) => {
 
   const options = isFetching
     ? [
-      {
-        value: "loading",
-        label: loadingContent,
-      },
-    ]
-    : data?.results?.product?.map((product) => ({
-      value: product.id.toString(),
-      label: `${product.name} (SKU: ${product.sku})`,
-      product: product,
-    })) ?? [];
+        {
+          value: "loading",
+          label: loadingContent,
+        },
+      ]
+    : (data?.results?.product?.map((product) => ({
+        value: product.id.toString(),
+        label: `${product.name} (SKU: ${product.sku})`,
+        product: product,
+      })) ?? []);
 
   const onSelect = (_, option) => {
     console.log(option);

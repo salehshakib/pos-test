@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/data/defaultLogo";
+import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
 
 const Logo = () => {
   const navigate = useNavigate();
+  const { data, isLoading } = useGetGeneralSettingsQuery({});
+
+  console.log(data);
+
   return (
     <div
       className="font-bold hover:cursor-pointer primary-text flex justify-center items-center "

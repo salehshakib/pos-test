@@ -76,7 +76,7 @@ const CustomLogoUploader = ({ name }) => {
             }}
           >
             <Upload
-              listType="picture-circle"
+              listType="picture-card"
               name={"file"}
               fileList={fileList}
               onChange={handleFileChange}
@@ -86,7 +86,7 @@ const CustomLogoUploader = ({ name }) => {
                 return false;
               }}
               maxCount={1}
-              className="custom-logo-upload"
+              className="custom-logo-upload-avater"
             >
               {fileList?.length === 0 && (
                 <button

@@ -8,6 +8,7 @@ import TimeSetting from "../../../components/Settings/GeneralSettings/TimeSettin
 import CustomLogoUploader from "../../../components/Shared/Upload/CustomLogoUploader";
 import { useUpdateGeneralSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
+import defaultUser from "../../../assets/data/defaultUserImage";
 
 const GeneralSettingForm = ({ data }) => {
   const [form] = Form.useForm();
@@ -19,7 +20,19 @@ const GeneralSettingForm = ({ data }) => {
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
-      setFields(fieldData);
+      const newFieldData = [
+        ...fieldData,
+        {
+          name: "logo",
+          value: [
+            {
+              url: defaultUser,
+            },
+          ],
+          erros: "",
+        },
+      ];
+      setFields(newFieldData);
     }
   }, [data]);
 
@@ -67,6 +80,8 @@ const GeneralSettingForm = ({ data }) => {
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo);
   };
+
+  console.log(data);
 
   return (
     <div className="pt-10">

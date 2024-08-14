@@ -187,6 +187,25 @@ const GlobalUtilityStyle = styled.div`
     }
   }
 
+  .custom-logo-upload-avater {
+    .ant-upload {
+      margin-inline: 0 !important;
+      width: 150px !important;
+      height: 150px !important;
+    }
+
+    .ant-upload-list-item-container {
+      margin-inline: 0 !important;
+      width: 150px !important;
+      height: 150px !important;
+
+      &:hover {
+        border: 1px dashed ${primaryColor} !important;
+        border-radius: 8px !important;
+      }
+    }
+  }
+
   .custom-upload {
     .ant-upload {
       width: 130px !important;

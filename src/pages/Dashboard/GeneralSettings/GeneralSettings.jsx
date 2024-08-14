@@ -6,6 +6,8 @@ import GeneralSettingForm from "./GeneralSettingForm";
 const GeneralSettings = () => {
   const { data, isLoading } = useGetGeneralSettingsQuery();
 
+  console.log(data);
+
   return (
     <GlobalUtilityStyle>
       <PageContainer

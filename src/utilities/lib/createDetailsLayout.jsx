@@ -85,7 +85,7 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
         );
 
       default:
-        if (key.includes("status")) {
+        if (key.includes("status") && !key.includes('_status')) {
           if (!value) return <Badge status="warning" text={"Incomplete"} />;
 
           return value?.toLowerCase() === "pending" ||
@@ -99,7 +99,7 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
         if (currencyKeys.includes(key)) {
           return `${value}`;
         }
-        if (key.includes("date")) {
+        if (key.includes("date") && !key.includes('_update') && !key.includes('_handleUpdate')) {
           return dayjs(value).format("DD-MM-YYYY");
         }
         if (booleanKeys.includes(key) && value?.toString() === "1") {

@@ -39,7 +39,8 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            name={["qty_list", "qty", record?.id]}
+            // name={["qty_list", "qty", record?.id]}
+            value={record?.formValues?.qty_list.qty?.[record?.id] ?? 0}
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -110,6 +111,7 @@ export const InitialStockComponent = ({
     });
   };
 
+
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.qty_list.qty[id] || 1;
@@ -149,19 +151,8 @@ export const InitialStockComponent = ({
     );
 
     setFormValues((prevFormValues) => {
-      const updatedQtyList = Object.keys(prevFormValues.qty_list.qty).reduce(
-        (acc, productId) => {
-          if (prevFormValues.qty_list.qty[productId] !== undefined) {
-            // eslint-disable-next-line no-unused-vars
-            const { [id]: _, ...rest } = prevFormValues.qty_list.qty[productId];
-            if (Object.keys(rest).length > 0) {
-              acc[productId] = rest;
-            }
-          }
-          return acc;
-        },
-        {}
-      );
+      const updatedQtyList = { ...prevFormValues.qty_list.qty };
+      delete updatedQtyList[id];
 
       return {
         ...prevFormValues,
@@ -172,6 +163,7 @@ export const InitialStockComponent = ({
       };
     });
   };
+
 
   const dataSource =
     initialWarehouses?.map((warehouse) => {
@@ -187,6 +179,7 @@ export const InitialStockComponent = ({
         decrementCounter,
         onQuantityChange,
         onDelete,
+        formValues,
       };
     }) ?? [];
 

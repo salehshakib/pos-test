@@ -79,9 +79,7 @@ export const RolesTable = ({
       return {
         id,
         name: name,
-
         created_at: date,
-
         handleDeleteModal,
         handleDetailsModal,
         handleChangePermission,

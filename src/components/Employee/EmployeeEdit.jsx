@@ -7,7 +7,10 @@ import {
   useUpdateEmployeeMutation,
 } from "../../redux/services/hrm/employee/employeeApi";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+import {
+  fieldsToUpdate,
+  updateFieldValues,
+} from "../../utilities/lib/fieldsToUpdate";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import EmployeeForm from "./EmployeeForm";
 
@@ -20,7 +23,13 @@ const EmployeeEdit = ({ id, setId }) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const { data, isFetching } = useGetEmployeeDetailsQuery(
-    { id },
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
     { skip: !id }
   );
   const [updateEmployee, { isLoading }] = useUpdateEmployeeMutation();
@@ -29,9 +38,27 @@ const EmployeeEdit = ({ id, setId }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      console.log(data);
+      const updateFieldValue = [
+        {
+          name: "role_id",
+          value: data?.employee_accesses?.role_id?.toString(),
+          errors: "",
+        },
+        {
+          name: "warehouse_id",
+          value: data?.employee_accesses?.warehouse_id?.toString(),
+          errors: "",
+        },
+        {
+          name: "cashier_id",
+          value: data?.employee_accesses?.cashier_id?.toString(),
+          errors: "",
+        },
+      ];
 
-      setFields(fieldData);
+      const newFieldData = updateFieldValues(fieldData, updateFieldValue);
+
+      setFields(newFieldData);
     }
   }, [data, setFields]);
 

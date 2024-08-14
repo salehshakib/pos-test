@@ -11,8 +11,11 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const actionKeys = [
+
   "accesstoken.issueToken",
   "authorization.authorize",
+  "authentication.entry",
+  "authentication.out",
   "transienttoken.refresh",
   "approveauthorization.approve",
   "denyauthorization.deny",

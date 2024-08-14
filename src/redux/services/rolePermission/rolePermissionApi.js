@@ -33,9 +33,9 @@ const rolePermissionApi = baseApi.injectEndpoints({
     }),
 
     getRolePermissionDetails: build.query({
-      query: ({ id, params }) => {
+      query: ({ params }) => {
         return {
-          url: `${ROLE_PERMISSION}/show/${id}`,
+          url: `${ROLE_PERMISSION}`,
           method: "GET",
           params,
         };

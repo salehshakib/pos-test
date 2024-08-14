@@ -1,5 +1,6 @@
 import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
+import logo from "../../../assets/data/defaultLogo";
 import ColorSettingComponent from "../../../components/Settings/GeneralSettings/ColorSetting";
 import CompanySetting from "../../../components/Settings/GeneralSettings/CompanySetting";
 import CurrencySettingComponent from "../../../components/Settings/GeneralSettings/CurrencySetting";
@@ -8,7 +9,6 @@ import TimeSetting from "../../../components/Settings/GeneralSettings/TimeSettin
 import CustomLogoUploader from "../../../components/Shared/Upload/CustomLogoUploader";
 import { useUpdateGeneralSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
-import defaultUser from "../../../assets/data/defaultUserImage";
 
 const GeneralSettingForm = ({ data }) => {
   const [form] = Form.useForm();
@@ -26,7 +26,7 @@ const GeneralSettingForm = ({ data }) => {
           name: "logo",
           value: [
             {
-              url: defaultUser,
+              url: data?.attachments?.[0]?.url ?? logo,
             },
           ],
           erros: "",
@@ -39,6 +39,8 @@ const GeneralSettingForm = ({ data }) => {
   const handleSubmit = async (values) => {
     const { logo, primary_color, secendary_color, ...rest } = values;
 
+    console.log(values);
+
     const formData = new FormData();
 
     Object.entries(rest).forEach(([key, value]) => {
@@ -46,7 +48,7 @@ const GeneralSettingForm = ({ data }) => {
     });
 
     if (form.isFieldTouched("logo")) {
-      formData.append("logo", logo[0]);
+      formData.append("logo", logo?.[0]?.originFileObj);
     }
 
     if (typeof primary_color === "object") {

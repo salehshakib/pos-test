@@ -46,7 +46,7 @@ const AdjustmentEdit = ({ id }) => {
   }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && isEditDrawerOpen && !isFetching) {
       data?.adjustment_products?.forEach((item) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,

@@ -26,7 +26,7 @@ export const UnitdEdit = ({ id, setId }) => {
   const [updateUnit, { isLoading }] = useUpdateUnitMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data) {
       const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);

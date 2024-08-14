@@ -1,8 +1,7 @@
 import { Form } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
 import { useCreateSaleMutation } from "../../redux/services/sale/saleApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
@@ -18,10 +17,6 @@ import { SaleForm } from "./SaleForm";
 
 export const SaleCreate = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector(useCurrentUser);
-
-  console.log(user);
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
@@ -50,6 +45,35 @@ export const SaleCreate = () => {
     sale_units: {},
     tax_rate: {},
   });
+
+  // reset state
+  const warehouseId = Form.useWatch("warehouse_id", form);
+
+  useEffect(() => {
+    if (warehouseId) {
+      setFormValues({
+        product_list: {
+          product_id: {},
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProducts([]);
+
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+      });
+    }
+  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   const handleSubmit = async (values) => {
     const formData = new FormData();

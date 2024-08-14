@@ -87,7 +87,7 @@ export const PurchaseEdit = ({ id, setId }) => {
   const [updatePurchase, { isLoading }] = useUpdatePurchaseMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && isEditDrawerOpen && !isFetching) {
       //console.log(data);
       data?.purchase_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
@@ -174,6 +174,7 @@ export const PurchaseEdit = ({ id, setId }) => {
       ];
       setFields(newFieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
@@ -327,6 +328,8 @@ export const PurchaseEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
+
+  console.log(products);
 
   return (
     <CustomDrawer

@@ -92,7 +92,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
   }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && isEditDrawerOpen && !isFetching) {
       data?.purchase_return_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,

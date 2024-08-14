@@ -1,5 +1,5 @@
 // Import necessary dependencies
-import { SALE } from "../../../utilities/apiEndpoints/inventory.api";
+import { PRODUCT, SALE } from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
@@ -52,7 +52,7 @@ const saleApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE }] : [];
+        return result ? [{ type: SALE }, { type: PRODUCT }] : [];
       },
     }),
 
@@ -77,7 +77,7 @@ const saleApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE }] : [];
+        return result ? [{ type: SALE }, { type: PRODUCT }] : [];
       },
     }),
 

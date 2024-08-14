@@ -6,6 +6,7 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
@@ -13,15 +14,14 @@ import {
 } from "../../redux/services/product/productApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
-import { useCurrency } from "../../redux/services/pos/posSlice";
 import { ProductDetails } from "./ProductDetails";
 import ProductEdit from "./ProductEdit";
-import { showCurrency } from "../../utilities/lib/currency";
 
 const ProductTable = ({
   newColumns,
@@ -127,6 +127,8 @@ const ProductTable = ({
         attachments,
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      console.log(item);
 
       return {
         id,

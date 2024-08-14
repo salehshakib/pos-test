@@ -17,7 +17,7 @@ const productQtyColumn = [
     dataIndex: "name",
     key: "name",
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {name}
       </span>
     ),
@@ -26,8 +26,9 @@ const productQtyColumn = [
     title: "Quantity",
     dataIndex: "qty",
     key: "qty",
+    align: "center",
     render: (qty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {qty}
       </span>
     ),
@@ -41,18 +42,19 @@ const priceQtyColumn = [
     dataIndex: "name",
     key: "name",
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {name}
       </span>
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    render: (qty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {qty}
+    title: "Price",
+    dataIndex: "price",
+    key: "price",
+    align: "right",
+    render: (price) => (
+      <span className="text-xs  md:text-sm text-dark dark:text-white87">
+        {price}
       </span>
     ),
   },
@@ -160,7 +162,7 @@ export const ProductDetails = ({ id, ...props }) => {
     return {
       id: item?.warehouses?.id,
       name: item?.warehouses?.name ?? "Unknown Warehouse",
-      qty: showCurrency(item?.price, currency) ?? "Unknown Quantity",
+      price: showCurrency(item?.price, currency) ?? "Unknown Quantity",
     };
   });
 
@@ -190,7 +192,6 @@ export const ProductDetails = ({ id, ...props }) => {
           <CustomDescription title="Features Info" items={featuresInfo} />
           <CustomDescription title="Variant Info" items={variantsInfo} />
           <CustomDescription title="Vat Info" items={taxInfo} />
-
 
           <CustomDescription
             title="Attachments"

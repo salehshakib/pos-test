@@ -1,9 +1,12 @@
 import { Spin, Table } from "antd";
+import { useSelector } from "react-redux";
+import { tableProps } from "../../layout/TableLayout";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetPurchaseDetailsQuery } from "../../redux/services/purchase/purchaseApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
+import { showCurrency } from "../../utilities/lib/currency";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
-import { tableProps } from "../../layout/TableLayout";
 
 const columns = [
   {
@@ -32,7 +35,7 @@ const columns = [
     title: "Price",
     dataIndex: "price",
     key: "price",
-    align: "center",
+    align: "right",
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -88,6 +91,8 @@ export const PurchaseDetails = ({ id, ...props }) => {
     </span>
   );
 
+  const currency = useSelector(useCurrency);
+
   const dataSource = data?.purchase_products?.map((item) => {
     return {
       id: item?.id,
@@ -96,7 +101,7 @@ export const PurchaseDetails = ({ id, ...props }) => {
         "Unknown Product" +
           (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
       qty: item.qty ?? "Unknown Quantity",
-      price: item.net_unit_cost ?? "Unknown Price",
+      price: showCurrency(item?.net_unit_cost, currency) ?? "Unknown Price",
     };
   });
 

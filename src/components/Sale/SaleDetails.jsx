@@ -1,12 +1,12 @@
 import { Spin, Table } from "antd";
+import { useSelector } from "react-redux";
 import { tableProps } from "../../layout/TableLayout";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetSaleDetailsQuery } from "../../redux/services/sale/saleApi";
 import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
+import { showCurrency } from "../../utilities/lib/currency";
 import { CustomDescription } from "../Shared/Description/CustomDescription";
 import CustomModal from "../Shared/Modal/CustomModal";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
 
 const columns = [
   {
@@ -35,7 +35,7 @@ const columns = [
     title: "Price",
     dataIndex: "price",
     key: "price",
-    align: "center",
+    align: "right",
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -55,10 +55,6 @@ export const SaleDetails = ({ id, ...props }) => {
     },
     { skip: !id }
   );
-
-  //console.log(data);
-
-  //   const details = createDetailsLayout(data);
 
   const currency = useSelector(useCurrency);
 
@@ -110,7 +106,7 @@ export const SaleDetails = ({ id, ...props }) => {
           (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
 
       qty: item.qty ?? "Unknown Quantity",
-      price: item.net_unit_price ?? "Unknown Price",
+      price: showCurrency(item?.net_unit_price, currency) ?? "Unknown Price",
     };
   });
 

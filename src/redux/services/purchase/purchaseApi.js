@@ -1,5 +1,8 @@
 // Import necessary dependencies
-import { PURCHASE } from "../../../utilities/apiEndpoints/inventory.api";
+import {
+  PRODUCT,
+  PURCHASE,
+} from "../../../utilities/apiEndpoints/inventory.api";
 import { openNotification } from "../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../utilities/lib/verifyToken";
 import { baseApi } from "../../api/baseApi";
@@ -52,7 +55,7 @@ const purchaseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: PURCHASE }] : [];
+        return result ? [{ type: PURCHASE }, { type: PRODUCT }] : [];
       },
     }),
 
@@ -77,7 +80,7 @@ const purchaseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: PURCHASE }] : [];
+        return result ? [{ type: PURCHASE }, { type: PRODUCT }] : [];
       },
     }),
 

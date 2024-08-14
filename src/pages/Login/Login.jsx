@@ -20,7 +20,10 @@ const Login = () => {
 
   useEffect(() => {
     if (isDev.toLowerCase() === "true") {
-      form.setFieldsValue({ email: "vitasoft@gmail.com", password: "123456" });
+      form.setFieldsValue({
+        email: import.meta.env.VITE_DEV_EMAIL,
+        password: import.meta.env.VITE_DEV_PASSWORD,
+      });
     }
   }, [form]);
 

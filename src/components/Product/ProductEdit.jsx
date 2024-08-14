@@ -125,7 +125,7 @@ const ProductListEdit = ({ id }) => {
   };
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && isEditDrawerOpen && !isFetching) {
       const {
         name,
         sku,
@@ -329,11 +329,11 @@ const ProductListEdit = ({ id }) => {
 
     const qtyListArray = has_stock
       ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          qty: qty_list?.qty?.[warehouseId],
-        };
-      })
+          return {
+            warehouse_id: warehouseId,
+            qty: qty_list?.qty?.[warehouseId],
+          };
+        })
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
@@ -349,11 +349,11 @@ const ProductListEdit = ({ id }) => {
 
     const priceListArray = has_different_price
       ? Object.keys(price_list?.price || {}).map((warehouseId) => {
-        return {
-          warehouse_id: warehouseId,
-          price: price_list?.price?.[warehouseId],
-        };
-      })
+          return {
+            warehouse_id: warehouseId,
+            price: price_list?.price?.[warehouseId],
+          };
+        })
       : [];
 
     const productListArray = Object.keys(product_list?.qty || {})?.map(
@@ -411,9 +411,9 @@ const ProductListEdit = ({ id }) => {
     console.log(values?.attachments);
 
     if (values?.attachments.length > 0) {
-      postObj.attachments = values.attachments?.map(
-        (file) => (file.originFileObj ? file.originFileObj : null)
-      ).filter(Boolean);
+      postObj.attachments = values.attachments
+        ?.map((file) => (file.originFileObj ? file.originFileObj : null))
+        .filter(Boolean);
     }
 
     if (values?.attach_file?.[0].url) {

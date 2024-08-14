@@ -112,34 +112,6 @@ export const PurchaseForm = ({
   }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
 
   // reset state
-  const warehouseId = Form.useWatch("warehouse_id", props.form);
-
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   return (
     <>
@@ -197,7 +169,6 @@ export const PurchaseForm = ({
           </Col>
           <Col {...fullColLayout}>
             <CustomInput
-              required={true}
               type="textarea"
               name="purchase_note"
               label="Purchase Note"

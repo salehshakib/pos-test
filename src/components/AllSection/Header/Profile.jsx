@@ -36,14 +36,14 @@ const Profile = () => {
               icon={<UserOutlined />}
             />
             <div className="flex flex-col font-normal">
-              <span className="font-bold">{user?.employees?.name ?? 'User'}</span>
+              <span className="font-bold">{user?.username ?? "User"}</span>
               <span
                 className={`text-sm `}
                 style={{
                   color: token.colorPrimary,
                 }}
               >
-                {user?.employees?.email}
+                {user?.email}
               </span>
             </div>
           </div>

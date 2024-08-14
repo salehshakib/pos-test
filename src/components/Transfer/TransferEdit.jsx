@@ -82,7 +82,7 @@ const TransferEdit = ({ id, setId }) => {
   }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && isEditDrawerOpen && !isFetching) {
       data?.transfer_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,

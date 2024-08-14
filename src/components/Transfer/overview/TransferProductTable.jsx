@@ -33,8 +33,9 @@ const columns = [
     key: "name",
     render: (name, record) => (
       <div
-        className={`flex items-center gap-2 ${name !== "Total" && "hover:underline hover:cursor-pointer"
-          }`}
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
@@ -293,7 +294,7 @@ const ProductFormComponent = ({
                 parseFloat(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-              100
+                100
             ).toFixed(2),
           },
           tax_id: {
@@ -403,8 +404,8 @@ function setFormValuesId(
   const total =
     tax_method === "Inclusive"
       ? Math.round(
-        (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2)
-      )
+          (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2)
+        )
       : (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2);
 
   // Set form values
@@ -441,8 +442,6 @@ export const TransferProductTable = ({
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
-
-  console.log(formValues);
 
   const handleProductEdit = (id, name) => {
     setProductId(id);

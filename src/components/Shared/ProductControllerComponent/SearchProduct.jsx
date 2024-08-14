@@ -15,6 +15,7 @@ const ignorePaths = [
   "products",
   "transfer",
   "adjustment",
+  "purchase",
 ];
 
 export const SearchProduct = ({ setProducts }) => {

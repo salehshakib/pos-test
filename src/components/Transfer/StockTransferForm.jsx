@@ -82,15 +82,33 @@ const WarehouseTransferComponent = ({ fullLayout = false, warehouseData }) => {
   const warehouseToOptions = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
     label: warehouse.name,
-    disabled: warehouse.id.toString() === warehouseData?.from_warehouse_id,
+    disabled:
+      warehouse.id.toString() === warehouseData?.from_warehouse_id.toString(),
   }));
 
+  useEffect(() => {
+    form.setFieldValue(
+      "from_warehouse_id",
+      warehouseData?.from_warehouse_id.toString()
+    );
+    form.setFieldValue(
+      "to_warehouse_id",
+      warehouseData?.to_warehouse_id.toString()
+    );
+  }, [form, warehouseData]);
+
   const handleFromWarehouseChange = () => {
-    form.setFieldValue("from_warehouse_id", warehouseData?.from_warehouse_id);
+    form.setFieldValue(
+      "from_warehouse_id",
+      warehouseData?.from_warehouse_id.toString()
+    );
   };
 
   const handleToWarehouseChange = () => {
-    form.setFieldValue("to_warehouse_id", warehouseData?.to_warehouse_id);
+    form.setFieldValue(
+      "to_warehouse_id",
+      warehouseData?.to_warehouse_id.toString()
+    );
   };
 
   return (

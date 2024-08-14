@@ -94,7 +94,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
 
       const warehouseName = options.map((option) => option.label);
 
-      setWarehouses(warehouseName)
+      setWarehouses(warehouseName);
     }
   }, [options, setParams, setWarehouses]);
 
@@ -111,11 +111,11 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
       if (value?.length) {
         setParams((prevParams) => ({ ...prevParams, warehouse_ids: value }));
 
-        const warehouseNames = value.map(id =>
-          options.find(option => option.value === id)?.label
-        ).filter(Boolean);
+        const warehouseNames = value
+          .map((id) => options.find((option) => option.value === id)?.label)
+          .filter(Boolean);
 
-        setWarehouses(warehouseNames)
+        setWarehouses(warehouseNames);
       } else {
         const warehouseIds = options.map((option) => option.value);
 
@@ -126,7 +126,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
 
         const warehouseName = options.map((option) => option.label);
 
-        setWarehouses(warehouseName)
+        setWarehouses(warehouseName);
       }
     },
     [options, setParams, setWarehouses]
@@ -358,7 +358,7 @@ const AdminDashboard = () => {
 
   const user = useSelector(useCurrentUser);
 
-  const [warehouses, setWarehouses] = useState([])
+  const [warehouses, setWarehouses] = useState([]);
 
   const [params, setParams] = useState({
     date_range: getDateRange("Weekly"),
@@ -377,10 +377,11 @@ const AdminDashboard = () => {
     }
   );
 
-  console.log(params)
+  console.log(params);
 
-  console.log(warehouses)
+  console.log(warehouses);
 
+  console.log(user);
 
   return (
     <div className="h-full">
@@ -392,20 +393,23 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome 😃, {user?.employees?.name ?? 'User'} 👋
+            Welcome 😃, {user?.username ?? "User"} 👋
           </div>
 
           <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />
         </div>
 
         <div className="flex flex-wrap gap-2 py-2 w-full justify-end">
-          {
-            warehouses.map((warehouse, index) => {
-              return (
-                <Tag key={index} style={{ backgroundColor: token.colorPrimary, color: 'white' }}>{warehouse}</Tag>
-              )
-            })
-          }
+          {warehouses.map((warehouse, index) => {
+            return (
+              <Tag
+                key={index}
+                style={{ backgroundColor: token.colorPrimary, color: "white" }}
+              >
+                {warehouse}
+              </Tag>
+            );
+          })}
         </div>
         <div className="space-y-6">
           <CashStatistic data={data} />
@@ -417,7 +421,6 @@ const AdminDashboard = () => {
 
           <EmployeeStatistic data={data} />
         </div>
-
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 gap-y-6 p-5">

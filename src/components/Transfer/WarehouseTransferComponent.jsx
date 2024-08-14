@@ -1,18 +1,21 @@
 import { Col, Form } from "antd";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { largeLayout, mdColLayout } from "../../layout/FormLayout";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
-import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useEffect } from "react";
 
 export const WarehouseTransferComponent = ({ fullLayout = false }) => {
   const form = Form.useFormInstance();
 
   const warehouseFrom = Form.useWatch("from_warehouse_id", form);
+  const user = useSelector(useCurrentUser);
+  const warehouseId = user?.warehouse_id;
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -25,7 +28,11 @@ export const WarehouseTransferComponent = ({ fullLayout = false }) => {
     label: warehouse.name,
   }));
 
-  useInitialFormField("from_warehouse_id", warehouseFromOptions);
+  useEffect(() => {
+    if (warehouseId) {
+      form.setFieldValue("from_warehouse_id", warehouseId.toString());
+    }
+  }, [warehouseId, form]);
 
   const warehouseToOptions = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),

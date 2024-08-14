@@ -29,6 +29,11 @@ export const Notification = () => {
     refetch();
   }, [pathname, refetch]);
 
+
+  console.log(data)
+
+  console.log(warehouseId)
+
   useEffect(() => {
     if (data?.length === 0) {
       setShow(false);

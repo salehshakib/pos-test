@@ -1,13 +1,13 @@
 import { Form } from "antd";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/services/auth/authSlice";
 import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from "../../utilities/hooks/useParams";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
 
 export const WarehouseComponent = ({
   name = "warehouse_id",
@@ -24,6 +24,8 @@ export const WarehouseComponent = ({
   });
 
   const { data, isLoading } = useGetWarehousesQuery({ params });
+
+  console.log(data)
 
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse?.id?.toString(),

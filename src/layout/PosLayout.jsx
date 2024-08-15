@@ -129,8 +129,6 @@ const PosLayout = () => {
         0
       ) ?? 0;
 
-    console.log(values);
-
     const postObj = {
       ...sanitizeObj(values),
       sale_status: "Completed",

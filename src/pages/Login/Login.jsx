@@ -28,26 +28,16 @@ const Login = () => {
   }, [form]);
 
   const handleSubmit = async (data) => {
-    // const toastId = toast.loading("Logging in...");
-
     try {
       const res = await login(data).unwrap();
 
-      // const user = jwtDecode(res.user);
       const userData = res?.data?.user;
       const token = res?.data.token;
 
-      console.log(userData);
-
       dispatch(setUser({ user: userData, token }));
-      // toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
       openNotification("success", "Logged in successfully!");
       navigate(`/dashboard`);
     } catch (error) {
-      // toast.error("Invalid credentials. Please try again!", {
-      //   id: toastId,
-      //   duration: 2000,
-      // });
       openNotification("success", "Invalid credentials. Please try again!");
     }
   };

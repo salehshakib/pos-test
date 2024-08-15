@@ -128,8 +128,6 @@ const ProductTable = ({
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
-      console.log(item);
-
       return {
         id,
         name: name,

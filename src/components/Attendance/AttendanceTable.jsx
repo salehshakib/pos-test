@@ -80,7 +80,6 @@ export const AttendanceTable = ({
 
   const dataSource =
     data?.results?.attendance?.map((item) => {
-      console.log(item);
       const { id, attachments, date, check_in, check_out, employees } =
         item ?? {};
 

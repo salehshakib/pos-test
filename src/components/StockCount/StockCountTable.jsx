@@ -118,7 +118,6 @@ const StockCountTable = ({
         brands,
       } = item ?? {};
 
-      console.log(item);
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {

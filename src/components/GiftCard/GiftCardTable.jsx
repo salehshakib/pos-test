@@ -15,11 +15,11 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
-import { GiftCardDetails } from "./GiftCardDetails";
-import GiftCardEdit from "./GiftCardEdit";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import { useCurrency } from "../../redux/services/pos/posSlice";
 import { showCurrency } from "../../utilities/lib/currency";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
+import { GiftCardDetails } from "./GiftCardDetails";
+import GiftCardEdit from "./GiftCardEdit";
 
 const GiftCardTable = ({
   newColumns,
@@ -116,8 +116,6 @@ const GiftCardTable = ({
       } = item ?? {};
 
       const date = dayjs(created_at).format("DD-MM-YYYY");
-
-      console.log(item);
 
       return {
         id,

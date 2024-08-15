@@ -49,7 +49,6 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
   }));
 
   const handleSubmit = (values) => {
-    console.log(values);
     setSupplierId(values?.supplier_id);
     hideModal();
   };

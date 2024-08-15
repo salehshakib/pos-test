@@ -44,37 +44,23 @@ export function setFormValuesId(
   const productSaleUnitsValue =
     sanitizeIntValue(productUnits?.sale_units?.[id]) || saleUnitsOperationValue;
 
-
-  console.log(productUnits)
-
   productUnits.sale_units[id] = productSaleUnitsValue;
-
-  // Calculating total
-  // const total = (
-  //   productSaleUnitsValue * netUnitPrice * qty -
-  //   discount +
-  //   tax
-  // ).toFixed(2);
-
-  console.log(sale_units);
 
   const total =
     tax_method === "Inclusive"
       ? Math.round(
-        (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
-          2
+          (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+            2
+          )
         )
-      )
       : (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
-        2
-      );
+          2
+        );
 
   // Set form values
   const setFormValue = (field, value) => {
     formProductList[field][id] = value;
   };
-
-  console.log(netUnitPrice)
 
   setFormValue("qty", qty);
   setFormValue("net_unit_price", netUnitPrice);

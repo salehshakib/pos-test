@@ -32,13 +32,7 @@ export const calculateTotals = (formValues) => {
       .reduce((acc, cur) => acc + sanitizeParseValue(cur), 0)
       .toFixed(2);
 
-  console.log(
-    totalQuantity,
-    formValues.product_list,
-    totalPrice,
-    totalTax,
-    totalDiscount
-  );
+
 
   return {
     totalQuantity,

@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useCurrency } from "../../redux/services/pos/posSlice";
 import { showCurrency } from "../../utilities/lib/currency";
+import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
 import {
   decrementCounter,
   incrementCounter,
@@ -13,7 +14,6 @@ import {
 } from "../../utilities/lib/productTable/counters";
 import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../Shared/ProductControllerComponent/ProductController";
-import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
 
 const columns = [
   {
@@ -184,8 +184,6 @@ export const RequestProductTable = ({
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
       formValues.product_list.min_qty[id] =
         formValues.product_list.min_qty[id] ?? alert_qty;
-
-      console.log(product);
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 

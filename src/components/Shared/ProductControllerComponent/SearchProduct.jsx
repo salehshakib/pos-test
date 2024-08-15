@@ -28,8 +28,6 @@ export const SearchProduct = ({ setProducts }) => {
   const warehouseId = Form.useWatch("warehouse_id", form);
   const warehouseIdFrom = Form.useWatch("from_warehouse_id", form);
 
-  console.log(warehouseId, warehouseIdFrom);
-
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== "") {
       setKeyword(value);
@@ -96,7 +94,6 @@ export const SearchProduct = ({ setProducts }) => {
       })) ?? []);
 
   const onSelect = (_, option) => {
-    console.log(option);
     if (!warehouseId && !warehouseIdFrom && isIgnore) {
       // message.error("Please select warehouse");
       openNotification("warning", "Please select warehouse");

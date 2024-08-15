@@ -47,8 +47,6 @@ export const decrementCounter = (id, setFormValues) => {
 export const onQuantityChange = (id, value, setFormValues, stock) => {
   const numericValue = Number(value);
 
-  console.log(stock);
-
   if (numericValue > stock && stock) {
     // message.error(
     //   "Cannot add more than stock quantity. Maximum stock is selected"

@@ -1,9 +1,9 @@
 import { Badge, Calendar, Spin } from "antd";
 import dayjs from "dayjs";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCurrency } from "../../../redux/services/pos/posSlice";
 import { showCurrency } from "../../../utilities/lib/currency";
-import { useState } from "react";
 import CustomModal from "../Modal/CustomModal";
 import CustomTable from "../Table/CustomTable";
 
@@ -75,8 +75,6 @@ const columns = [
 const CustomCalender = ({ onChange, data }) => {
   const currency = useSelector(useCurrency);
 
-  console.log(data);
-
   const getListData = (value) => {
     const date = dayjs(value).format("YYYY-MM-DD");
 
@@ -142,8 +140,6 @@ const CustomCalender = ({ onChange, data }) => {
       value?.flatMap((item) => {
         const { purchase_products, sale_products } = item ?? {};
         const products = purchase_products || sale_products;
-
-        console.log(item);
 
         return products?.map((productItem) => ({
           id: productItem?.products?.id,

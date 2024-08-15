@@ -25,8 +25,6 @@ export const WarehouseComponent = ({
 
   const { data, isLoading } = useGetWarehousesQuery({ params });
 
-  console.log(data)
-
   const options = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse?.id?.toString(),
     label: warehouse?.name,

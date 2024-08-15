@@ -49,7 +49,6 @@ const CustomerModal = ({ setCustomerId, open, setOpen }) => {
   }));
 
   const handleSubmit = (values) => {
-    console.log(values);
     setCustomerId(values?.customer_id);
     hideModal();
   };
@@ -115,8 +114,6 @@ export const CustomerReport = () => {
       searchParams?.customer_ids ? searchParams?.customer_ids : data?.id,
     ],
   };
-
-  console.log(data);
 
   const customerItems = [
     {

@@ -72,8 +72,6 @@ export const ExpiredItemsComponent = () => {
     (warehouse) => warehouse?.id
   );
 
-  console.log(warehouseIds);
-
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
@@ -91,8 +89,6 @@ export const ExpiredItemsComponent = () => {
       // skip: !useUrlIndexPermission(),
     }
   );
-
-  console.log(data);
 
   return (
     <CustomTable

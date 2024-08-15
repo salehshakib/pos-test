@@ -377,12 +377,6 @@ const AdminDashboard = () => {
     }
   );
 
-  console.log(params);
-
-  console.log(warehouses);
-
-  console.log(user);
-
   return (
     <div className="h-full">
       <div className="p-5">

@@ -1,11 +1,10 @@
-import { useDebouncedCallback } from "use-debounce";
 import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 export const useCustomDebounce = () => {
   const [keyword, setKeyword] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {
-    console.log(value);
     if (value.trim() !== "") {
       setKeyword(value);
     } else {

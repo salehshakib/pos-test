@@ -27,8 +27,6 @@ export const WarehouseComponent = ({ mode = "single" }) => {
     label: category.name,
   }));
 
-  console.log(isFetching);
-
   return (
     <DebounceSelect
       label="Warehouse"

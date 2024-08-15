@@ -1,5 +1,4 @@
 import { Button, Layout, Tag } from "antd";
-// import { Footer } from "antd/es/layout/layout";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector } from "react-redux";

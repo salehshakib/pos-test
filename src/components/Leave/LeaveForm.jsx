@@ -7,7 +7,12 @@ import {
   rowLayout,
 } from "../../layout/FormLayout";
 import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType/leaveTypeApi";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
 import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
 import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
@@ -17,11 +22,6 @@ import CustomInput from "../Shared/Input/CustomInput";
 import CustomRadio from "../Shared/Radio/CustomRadio";
 import CustomSelect from "../Shared/Select/CustomSelect";
 import CustomUploader from "../Shared/Upload/CustomUploader";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 
 const LeaveTypeComponent = ({ setIsNeedAttachment }) => {
   const params = useGlobalParams({
@@ -213,8 +213,6 @@ const HoursComponent = () => {
 
 export const LeaveForm = (props) => {
   const [isNeedAttachment, setIsNeedAttachment] = useState(false);
-
-  console.log(isNeedAttachment);
 
   return (
     <CustomForm {...props}>

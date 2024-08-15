@@ -49,11 +49,6 @@ const StockRequestCreate = () => {
     if (data) {
       const list = data?.results?.product;
 
-      console.log(list);
-
-      // const filteredList = filterProductsByWarehouse(list, warehouseId);
-
-      // console.log(filteredList);
       setProducts(list);
     }
   }, [data, warehouseId]);
@@ -83,8 +78,6 @@ const StockRequestCreate = () => {
     };
     appendToFormData(postObj, formData);
 
-    console.log(values);
-
     const { data, error } = await createStockRequest({
       data: formData,
     });
@@ -103,8 +96,6 @@ const StockRequestCreate = () => {
       setErrorFields(errorFields);
     }
   };
-
-  console.log(data?.results.product);
 
   return (
     <CustomDrawer

@@ -11,7 +11,6 @@ import CustomForm from "../Shared/Form/CustomForm";
 import CustomTable from "../Shared/Table/CustomTable";
 
 const actionKeys = [
-
   "accesstoken.issueToken",
   "authorization.authorize",
   "authentication.entry",
@@ -121,15 +120,9 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     const itemName = id.split("_")[1];
     const formData = form.getFieldValue(["permission", itemName]);
 
-    console.log(e.target);
-
-    console.log(formData);
-
     const shouldRemove = Object.keys(formData).some((key) => !formData[key]);
 
     const shouldUpdate = Object.values(formData).every((value) => value);
-
-    console.log(shouldRemove, shouldUpdate);
 
     const item = dataSource.find((item) => item.name === itemName);
 
@@ -192,8 +185,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log(form.getFieldsValue({}));
-
   const changeSelectedRows = (newSelectedRows) => {
     // Clear existing permissions if no rows are selected
     if (!newSelectedRows.length) {
@@ -215,10 +206,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
     // Set all selected items to true
     if (newSelectedRows.length === dataSource.length) {
-      console.log(newSelectedRows.length, dataSource.length);
-
-      console.log(newSelectedRows);
-
       newSelectedRows.map((item) => {
         item.action.map((action) => {
           const label = action.name.split(".")[1];
@@ -232,7 +219,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
         });
       });
 
-      console.log(newSelectedRows);
       setSelectedRows(newSelectedRows);
       return;
     }
@@ -242,7 +228,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       (row) => !newSelectedRows.some((newRow) => newRow.id === row.id)
     );
 
-    console.log(deletedRows);
     deletedRows.forEach((deletedRow) => {
       deletedRow.action.forEach((action) => {
         const label = action.name.split(".")[1];
@@ -261,7 +246,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
       (row) => !selectedRows.some((selectedRow) => selectedRow.id === row.id)
     );
 
-    console.log(addedRows);
     addedRows.forEach((addedRow) => {
       addedRow.action.forEach((action) => {
         const label = action.name.split(".")[1];
@@ -329,10 +313,6 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
         name: fieldName,
         errors: error?.data?.errors[fieldName],
       }));
-
-      // setErrorFields(errorFields);
-
-      console.log(errorFields);
     }
   };
 

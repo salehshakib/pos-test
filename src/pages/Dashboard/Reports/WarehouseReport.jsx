@@ -28,8 +28,6 @@ const SearchFilterComponent = () => {
 export const WarehouseReport = () => {
   const user = useSelector(useCurrentUser);
 
-  console.log(user);
-
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
@@ -44,8 +42,6 @@ export const WarehouseReport = () => {
 
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
-
-  console.log(summaryData);
 
   const summaryDetails = createDetailsLayout(summaryData);
 

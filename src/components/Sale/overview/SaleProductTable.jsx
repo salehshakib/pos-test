@@ -250,8 +250,6 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  console.log(data);
-
   const productUnits = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")
     .map((unit) => ({
@@ -423,8 +421,6 @@ export const SaleProductTable = ({
 }) => {
   const form = Form.useFormInstance();
 
-  console.log(formValues);
-
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
@@ -457,8 +453,6 @@ export const SaleProductTable = ({
     } = product ?? {};
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
-
-    console.log(product);
 
     setFormValuesId(
       id,

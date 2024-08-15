@@ -25,8 +25,6 @@ export const LeaveEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetLeaveDetailsQuery({ id }, { skip: !id });
 
-  // //console.log(isEditDrawerOpen, id);
-
   const [updateLeave, { isLoading }] = useUpdateLeaveMutation();
 
   useEffect(() => {

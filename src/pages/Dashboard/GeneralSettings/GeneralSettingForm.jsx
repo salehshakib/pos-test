@@ -39,8 +39,6 @@ const GeneralSettingForm = ({ data }) => {
   const handleSubmit = async (values) => {
     const { logo, primary_color, secendary_color, ...rest } = values;
 
-    console.log(values);
-
     const formData = new FormData();
 
     Object.entries(rest).forEach(([key, value]) => {
@@ -80,10 +78,8 @@ const GeneralSettingForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    console.error(errorInfo);
   };
-
-  console.log(data);
 
   return (
     <div className="pt-10">

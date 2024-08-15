@@ -193,7 +193,6 @@ function setFormValuesId(
 
     const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
-    console.log(purchase_units);
 
     productUnits.purchase_units[id] =
       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||

@@ -25,17 +25,11 @@ export const SearchProductComponent = () => {
     params: keyword,
   });
 
-  console.log(params);
-
   const isPermitted = usePermission(PRODUCT, "index");
 
   const { data, isFetching } = useGetAllProductsQuery(
     {
       params,
-      // : {
-      //   selectValue: ["id", "name", "sku", "buying_price"],
-      //   keyword,
-      // },
     },
     {
       skip: !keyword && !isPermitted,

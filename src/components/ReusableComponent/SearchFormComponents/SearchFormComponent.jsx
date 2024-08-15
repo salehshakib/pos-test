@@ -262,8 +262,6 @@ export const SaleUnitFilter = () => {
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  console.log(data);
-
   const options = data?.results?.unit
     ?.filter((unit) => unit.for === "sale-unit")
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));

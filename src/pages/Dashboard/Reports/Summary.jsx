@@ -371,15 +371,6 @@ const PaymentReceivedSummaryTable = ({ data }) => {
     ...styleProps,
   };
 
-  // payment_recieved_number: 0,
-  //   payment_recieved: 0,
-  //   card_payment_sale: 0,
-  //   cheque_payment_sale: 0,
-  //   gift_card_payment_sale: 0,
-  //   cash_payment_sale: 0
-
-  console.log(data);
-
   const dataSource = [
     {
       payment_recieved_number: data?.payment_recieved_number,
@@ -464,8 +455,6 @@ const PaymentSentSummaryTable = ({ data }) => {
     ),
     ...styleProps,
   };
-
-  console.log(data);
 
   const dataSource = [
     {

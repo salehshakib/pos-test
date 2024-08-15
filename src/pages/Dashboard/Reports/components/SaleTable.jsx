@@ -31,8 +31,6 @@ export const SaleTable = ({
     keyword,
   });
 
-  console.log(params);
-
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {

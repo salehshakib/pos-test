@@ -91,7 +91,6 @@ const PurchaseReturnTable = ({
         grand_total,
       } = item ?? {};
 
-      console.log(item);
       const date = dayjs(purchase_return_at).format("DD-MM-YYYY");
 
       return {

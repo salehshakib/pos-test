@@ -396,10 +396,6 @@ const ProductListEdit = ({ id }) => {
       has_expired_date: has_expired_date ? 1 : 0,
       details,
 
-      // attachments:
-      //   values.attachments?.length > 0
-      //     ? values.attachments?.map((file) => file?.url ?? file.originFileObj)
-      //     : [],
 
       _method: "PUT",
     };
@@ -408,7 +404,6 @@ const ProductListEdit = ({ id }) => {
       postObj.product_list = JSON.stringify(productListArray);
     }
 
-    console.log(values?.attachments);
 
     if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments

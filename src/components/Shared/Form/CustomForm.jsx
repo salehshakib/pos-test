@@ -45,21 +45,10 @@ const CustomForm = (props) => {
 
   const onFinish = (values) => {
     handleSubmit(sanitizeObj(values));
-    // form
-    //   .validateFields({
-    //     validateOnly: true,
-    //   })
-    //   .then(() => {
-    //     //
-    //   })
-
-    // .catch((error) => {
-    //   console.error("Validation error:", error);
-    // });
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    console.error(errorInfo);
   };
 
   return (

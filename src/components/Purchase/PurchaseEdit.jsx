@@ -329,8 +329,6 @@ export const PurchaseEdit = ({ id, setId }) => {
     }
   };
 
-  console.log(products);
-
   return (
     <CustomDrawer
       title={"Edit Purchase"}

@@ -164,8 +164,6 @@ const ExpireComponent = () => {
   const productType = Form.useWatch("type", form);
   const hasExpiredDate = Form.useWatch("has_expired_date", form);
 
-  console.log(hasExpiredDate);
-
   if (productType === "Standard" && hasExpiredDate) {
     return (
       <Col {...mdColLayout}>
@@ -336,7 +334,7 @@ const ProductForm = ({
           <CustomCheckbox
             label="Initial Stock"
             name="has_stock"
-          // required={true}
+            // required={true}
           />
         </Col>
 

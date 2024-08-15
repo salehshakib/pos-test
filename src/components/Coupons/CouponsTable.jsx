@@ -121,8 +121,6 @@ const CouponsTable = ({
       } = item ?? {};
       const date = dayjs(created_at).format("DD-MM-YYYY");
 
-      console.log(item);
-
       const expiredDate = dayjs(expired_date).format("DD-MM-YYYY");
 
       return {

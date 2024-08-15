@@ -157,8 +157,6 @@ export const ProductDetails = ({ id, ...props }) => {
   const currency = useSelector(useCurrency);
 
   const priceDataSource = data?.product_prices?.map((item) => {
-    console.log(item);
-
     return {
       id: item?.warehouses?.id,
       name: item?.warehouses?.name ?? "Unknown Warehouse",

@@ -263,27 +263,6 @@ const BackImageCroppper = () => {
   );
 };
 
-// const GiftCardTypeComponent = () => {
-//   const { data, isFetching } = useGetAllGiftCardTypeQuery({});
-
-//   const options = data?.results?.giftcardtype?.map((giftCardType) => ({
-//     value: giftCardType.id?.toString(),
-//     label: giftCardType.name,
-//   }));
-
-//   //console.log(data);
-
-//   return (
-//     <CustomSelect
-//       label="Gift Card Type"
-//       name={"gift_card_type_id"}
-//       options={options}
-//       isLoading={isFetching}
-//       required={true}
-//     />
-//   );
-// };
-
 export const GiftCardDesignForm = (props) => {
   return (
     <CustomForm {...props}>

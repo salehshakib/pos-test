@@ -155,8 +155,6 @@ export const StockTransfer = () => {
       postObj.attachment = attachment?.[0].originFileObj;
     }
 
-    console.log(values);
-
     appendToFormData(postObj, formData);
 
     const { data, error } = await createTransfer({

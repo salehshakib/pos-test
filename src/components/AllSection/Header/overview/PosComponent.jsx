@@ -155,7 +155,6 @@ export const PosComponent = () => {
   useEffect(() => {
     if (pettyCashData?.data) {
       if (pettyCashData?.data?.status === "Open") {
-        console.log("first");
         dispatch(setPettyCash({ status: "Open", id: pettyCashData?.data?.id }));
       } else if (
         pettyCashData?.data?.status === "Close" &&

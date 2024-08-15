@@ -135,7 +135,6 @@ const ProductFormComponent = ({
 
   const handleSubmit = () => {
     setFormValues((prevFormValues) => {
-      console.log(productUnits, productId);
       return {
         ...prevFormValues,
         product_list: {
@@ -286,8 +285,6 @@ function setFormValuesId(
     ((productPurchaseUnitsValue * taxRate * netUnitCost * qty) / 100).toFixed(2)
   );
 
-  console.log(purchase_units);
-
   // Calculating total
   const total =
     tax_method === "Inclusive"
@@ -406,8 +403,6 @@ export const PurchaseProductTable = ({
 
   const currency = useSelector(useCurrency);
 
-  console.log(productUnits);
-
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -423,10 +418,6 @@ export const PurchaseProductTable = ({
     } = product ?? {};
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
-
-    console.log(tax_method);
-
-    console.log(calculateOriginalPrice(unit_cost, taxes?.rate, tax_method));
 
     setFormValuesId(
       id,

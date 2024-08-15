@@ -49,8 +49,6 @@ export const SaleCalender = () => {
     },
   });
 
-  console.log(data);
-
   return (
     <ReportContainer
       pageTitle="Sale Calender"

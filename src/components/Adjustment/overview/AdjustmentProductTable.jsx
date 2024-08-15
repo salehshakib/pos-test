@@ -56,7 +56,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -174,9 +174,7 @@ export const AdjustmentProductTable = ({
 
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku, buying_price: unit_cost, } = product ?? {};
-
-
+      const { id, name, sku, buying_price: unit_cost } = product ?? {};
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
@@ -211,7 +209,6 @@ export const AdjustmentProductTable = ({
     );
     setTotalQuantity(total);
   }, [formValues, products]);
-
 
   form.setFieldsValue(formValues);
 

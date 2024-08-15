@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "styled-components";
-import { setDeveloper } from "../redux/services/developer/developerSlice";
+import {
+  setDeveloper,
+  setLogo,
+} from "../redux/services/developer/developerSlice";
 import { setMenuItems } from "../redux/services/menu/menuSlice";
 import { setCurrency } from "../redux/services/pos/posSlice";
 import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
 import {
+  getColor,
   setPrimaryColor,
   setSecondaryColor,
 } from "../redux/services/theme/themeSlice";
@@ -48,37 +52,33 @@ const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
 
 export const ProviderConfig = ({ children }) => {
   const dispatch = useDispatch();
+  const { data, isLoading } = useGetGeneralSettingsQuery();
 
-  const { primaryColor, secondaryColor, textColor } = useSelector(
-    (state) => state.theme
-  );
+  const { primaryColor, secondaryColor, textColor } = useSelector(getColor);
+
+  // "#842577"
+  document.documentElement.style.setProperty("--firstColor", primaryColor);
+
+  // "#B391AC"
+  document.documentElement.style.setProperty("--secondColor", secondaryColor);
 
   const { developedBy } = useSelector((state) => state.developer);
-
-  const { data, isLoading } = useGetGeneralSettingsQuery();
 
   const menuItems = useMenuItems(adminPaths);
 
   useEffect(() => {
     if (data) {
-      dispatch(setPrimaryColor(data.primary_color));
-      dispatch(setSecondaryColor(data.secendary_color));
-
-      document.documentElement.style.setProperty(
-        "--firstColor",
-        data?.primary_color ? data?.primary_color : "#842577"
-      );
-      document.documentElement.style.setProperty(
-        "--secondColor",
-        data?.secendary_color ? data?.secendary_color : "#B391AC"
-      );
-
       dispatch(
         setDeveloper({
           developedBy: data?.developed_by,
           hyperLink: data?.developed_by_link,
         })
       );
+
+      dispatch(setPrimaryColor(data.primary_color));
+      dispatch(setSecondaryColor(data.secendary_color));
+
+      dispatch(setLogo(data?.attachments?.[0]?.url));
 
       dispatch(
         setCurrency({

@@ -381,29 +381,25 @@ const ProductListEdit = ({ id }) => {
       buying_price: parseInt(buying_price),
       selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
-      qty: qty,
+      qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_method,
       tax_id,
-      has_stock: has_stock ? 1 : 0,
+      has_stock: has_stock ? "1" : "0",
       qty_list: has_stock && JSON.stringify(qtyListArray),
-      has_variant: has_variant ? 1 : 0,
-      has_promotion: has_promotion ? 1 : 0,
-
-      has_different_price: has_different_price ? 1 : 0,
+      has_variant: has_variant ? "1" : "0",
+      has_promotion: has_promotion ? "1" : "0",
+      has_different_price: has_different_price ? "1" : "0",
       price_list: has_different_price && JSON.stringify(priceListArray),
-      has_expired_date: has_expired_date ? 1 : 0,
+      has_expired_date: has_expired_date ? "1" : "0",
       details,
-
-
       _method: "PUT",
     };
 
     if (productListArray.length > 0) {
       postObj.product_list = JSON.stringify(productListArray);
     }
-
 
     if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments

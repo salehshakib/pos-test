@@ -1,12 +1,8 @@
 import { PageContainer } from "@ant-design/pro-layout";
-import { GlobalUtilityStyle } from "../../../container/Styled";
 import { RewardForm } from "../../../../components/Settings/RewardSettings/RewardForm";
+import { GlobalUtilityStyle } from "../../../container/Styled";
 
 export const RewardSettings = () => {
-  //   const { data, isLoading } = useGetGeneralSettingsQuery();
-
-  //   //console.log(data);
-
   return (
     <GlobalUtilityStyle>
       <PageContainer

@@ -61,7 +61,7 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      is_send_email: values?.is_send_email ? 1 : 0,
+      is_send_email: values?.is_send_email ? "1" : "0",
       _method: "PUT",
     };
 

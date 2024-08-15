@@ -20,7 +20,7 @@ const GiftCardCreate = () => {
     const { data, error } = await createGiftCard({
       data: {
         ...values,
-        for_user: values?.for_user ? 1 : 0,
+        for_user: values?.for_user ? "1" : "0",
         expired_date: values?.expired_date,
       },
     });

@@ -154,10 +154,9 @@ export const StockAlertComponent = () => {
         warehouse: qty.warehouses?.name ?? "",
         stock: qty.qty ?? 0,
         unitCost: product_prices?.length
-          ? showCurrency(product_prices?.[i].selling_price, currency)
+          ? showCurrency(product_prices?.[i]?.selling_price, currency)
           : showCurrency(unit_cost, currency),
       }));
-      // }
     }) ?? [];
 
   return (

@@ -26,3 +26,5 @@ export default themeSlice.reducer;
 
 export const { setPrimaryColor, setSecondaryColor, setTextColor } =
   themeSlice.actions;
+
+export const getColor = (state) => state.theme;

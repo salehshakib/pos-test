@@ -74,7 +74,7 @@ export const PettyCashTable = ({
         closes_at: status === "Open" ? "N/A" : date,
         warehouse: warehouses?.name,
         cash_in_hand: showCurrency(opening_balance, currency),
-        status: status === "Open" ? 1 : 0,
+        status: status === "Open" ? "1" : "0",
         handleDeleteModal,
       };
     }) ?? [];

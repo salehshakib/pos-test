@@ -91,7 +91,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

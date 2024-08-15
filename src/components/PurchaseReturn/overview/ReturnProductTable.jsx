@@ -69,7 +69,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -193,15 +193,14 @@ function setFormValuesId(
 
     const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
-
     productUnits.purchase_units[id] =
       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
       purchaseUnitsOperationValue;
 
     formValues.product_list.total[id] =
       sanitizeIntValue(productUnits.purchase_units?.[id]) *
-      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-      sanitizeIntValue(formValues.product_list.qty?.[id]) -
+        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+        sanitizeIntValue(formValues.product_list.qty?.[id]) -
       sanitizeFloatValue(formValues.product_list.discount?.[id]) +
       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 

@@ -22,7 +22,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -96,7 +96,7 @@ export const InitialStockComponent = ({
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.qty_list.qty[id] ?? 1;
 
-      const newQty = currentQty + 1;
+      const newQty = Number(currentQty) + 1;
 
       return {
         ...prevFormValues,
@@ -111,11 +111,10 @@ export const InitialStockComponent = ({
     });
   };
 
-
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.qty_list.qty[id] || 1;
-      const newQty = Math.max(currentQty - 1, 0);
+      const newQty = Math.max(Number(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
@@ -163,7 +162,6 @@ export const InitialStockComponent = ({
       };
     });
   };
-
 
   const dataSource =
     initialWarehouses?.map((warehouse) => {

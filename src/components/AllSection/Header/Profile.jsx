@@ -29,14 +29,21 @@ const Profile = () => {
     <div>
       <div className="">
         <div className="py-3 rounded-md px-2">
-          <div className="flex gap-4 items-center text-lg">
+          <div className="flex flex-col gap-4 items-center text-lg">
             <Avatar
               className="avatar-bg shadow-md hover:shadow-lg"
-              size={44}
+              size={50}
               icon={<UserOutlined />}
             />
-            <div className="flex flex-col font-normal">
-              <span className="font-bold">{user?.username ?? "User"}</span>
+            <div className="flex flex-col font-normal text-center">
+              <span className="font-bold">
+                {user?.name ?? user?.username ?? "User"} (
+                <span className="font-medium">
+                  {user?.roles[0]?.name ?? "User"}
+                </span>
+                )
+              </span>
+
               <span
                 className={`text-sm `}
                 style={{

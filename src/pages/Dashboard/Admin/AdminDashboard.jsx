@@ -387,7 +387,7 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome 😃, {user?.username ?? "User"} 👋
+            Welcome 😃, {user?.name ?? user?.roles?.[0]?.name ?? "User"} 👋
           </div>
 
           <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />

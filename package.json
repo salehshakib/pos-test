@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-saleh": "vite --host 192.168.1.6 --port 3000",
+    "dev-saleh": "vite --host 192.168.1.17 --port 3000",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -49,7 +49,8 @@
     "sonner": "^1.4.41",
     "sort-by": "^1.2.0",
     "styled-components": "^6.1.8",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+    "use-scan-detection": "^0.2.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

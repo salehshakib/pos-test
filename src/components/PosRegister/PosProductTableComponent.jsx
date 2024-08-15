@@ -37,8 +37,9 @@ const columns = [
     align: "left",
     render: (name, record) => (
       <div
-        className={`flex items-center gap-2 ${name !== "Total" && "hover:underline hover:cursor-pointer"
-          }`}
+        className={`flex items-center gap-2 ${
+          name !== "Total" && "hover:underline hover:cursor-pointer"
+        }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
@@ -91,7 +92,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -327,7 +328,7 @@ const ProductFormComponent = ({
                 parseInt(productUnits.tax_rate[productId]) *
                 parseInt(productForm.getFieldValue("quantity")) *
                 parseInt(productForm.getFieldValue("unit_price"))) /
-              100
+                100
             ).toFixed(2),
           },
           tax_id: {

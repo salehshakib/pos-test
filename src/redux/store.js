@@ -24,9 +24,18 @@ import pettyCashSlice from "./services/pettycash/pettyCashSlice";
 import posSlice from "./services/pos/posSlice";
 import productSlice from "./services/product/productSlice";
 import themeSlice from "./services/theme/themeSlice";
+import userProfileSlice from "./services/userProfile/userProfileSlice";
 
 const persistConfig = {
-  key: ["auth", "theme", "developer", "menu", "pettycash", "notification"],
+  key: [
+    "auth",
+    "theme",
+    "developer",
+    "menu",
+    "pettycash",
+    "notification",
+    "userProfile",
+  ],
   storage,
 };
 
@@ -36,6 +45,7 @@ const persistedMenuItems = persistReducer(persistConfig, menuSlice);
 const persistedNotification = persistReducer(persistConfig, notificationSlice);
 const persistedPosReducer = persistReducer(persistConfig, posSlice);
 const persistedDeveloperReducer = persistReducer(persistConfig, developerSlice);
+const persistedUserProfile = persistReducer(persistConfig, userProfileSlice);
 
 // const persistedPaginationReducer = persistReducer(
 //   persistConfig,
@@ -62,6 +72,8 @@ export const store = configureStore({
     pettyCash: persistePettyCash,
     drawer: drawerSlice,
     product: productSlice,
+
+    userProfile: persistedUserProfile,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

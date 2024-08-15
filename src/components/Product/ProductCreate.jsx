@@ -38,7 +38,6 @@ const ProductCreate = () => {
       name,
       type,
       sku,
-
       symbology,
       brand_id,
       category_id,
@@ -119,18 +118,18 @@ const ProductCreate = () => {
       buying_price: parseInt(buying_price),
       selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
-      qty: qty,
+      qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_id: parseInt(tax_id),
       tax_method,
-      has_featured: has_featured ? 1 : 0,
-      has_stock: has_stock ? 1 : 0,
-      has_variant: has_variant ? 1 : 0,
-      embedded_barcode: embedded_barcode ? 1 : 0,
-      has_promotion: has_promotion ? 1 : 0,
-      has_different_price: has_different_price ? 1 : 0,
-      has_expired_date: has_expired_date ? 1 : 0,
+      has_featured: has_featured ? "1" : "0",
+      has_stock: has_stock ? "1" : "0",
+      has_variant: has_variant ? "1" : "0",
+      embedded_barcode: embedded_barcode ? "1" : "0",
+      has_promotion: has_promotion ? "1" : "0",
+      has_different_price: has_different_price ? "1" : "0",
+      has_expired_date: has_expired_date ? "1" : "0",
       // expired_date:
       //   has_expired_date &&
       //   dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
@@ -195,7 +194,6 @@ const ProductCreate = () => {
       });
     }
 
-    //console.log(error);
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,

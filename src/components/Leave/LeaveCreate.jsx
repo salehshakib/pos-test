@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
@@ -6,7 +7,6 @@ import { useCreateLeaveMutation } from "../../redux/services/hrm/leave/leaveApi"
 import { appendToFormData } from "../../utilities/lib/appendFormData";
 import CustomDrawer from "../Shared/Drawer/CustomDrawer";
 import { LeaveForm } from "./LeaveForm";
-import dayjs from "dayjs";
 
 export const LeaveCreate = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const LeaveCreate = () => {
         values?.leave_type === "Half Day" || values?.leave_type === "Single Day"
           ? values?.leave_start_date
           : values?.leave_end_date,
-      is_send_email: values?.is_send_email == true ? 1 : 0,
+      is_send_email: values?.is_send_email == true ? "1" : "0",
     };
 
     if (values?.attachment?.length > 0) {

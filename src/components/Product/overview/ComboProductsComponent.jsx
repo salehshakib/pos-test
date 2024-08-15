@@ -2,10 +2,10 @@ import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { onQuantityChange } from "../../../utilities/lib/productTable/counters";
 import CustomInput from "../../Shared/Input/CustomInput";
 import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
 import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import { onQuantityChange } from "../../../utilities/lib/productTable/counters";
 // import { columns } from "./columns/ProductColumns";
 
 const columns = [
@@ -38,7 +38,7 @@ const columns = [
     dataIndex: "quantity",
     key: "quantity",
     align: "center",
-    width: 140,
+    width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">

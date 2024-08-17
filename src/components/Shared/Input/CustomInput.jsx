@@ -132,7 +132,7 @@ const CustomInput = (props) => {
     tooltip,
     onChange,
     value,
-    addonBefore = "+88",
+    addonBefore = "+880",
     size = "large",
 
     //for mb-0
@@ -191,10 +191,16 @@ const CustomInput = (props) => {
             {...commonProps}
             type="number"
             className="mt-1 border-2 w-full ant-group-number"
-            placeholder="01XXXX123XX"
+            placeholder="1XXXX123XX"
             addonBefore={addonBefore}
             controls={false}
             changeOnWheel={false}
+            formatter={(value) => {
+              if (value && value.startsWith("0")) {
+                return `1${value.slice(1)}`;
+              }
+              return value;
+            }}
           />
         );
 

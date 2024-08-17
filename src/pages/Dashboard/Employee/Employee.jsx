@@ -64,10 +64,9 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
-    align: "center",
-    render: (text) => (
+    render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {text}
+        {"0" + phone}
       </span>
     ),
   },

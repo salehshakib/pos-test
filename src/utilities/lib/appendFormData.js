@@ -8,7 +8,10 @@ export const appendToFormData = (data, formData) => {
       return;
     }
 
-    if (Array.isArray(value) && key.includes("attachments")) {
+    if (
+      Array.isArray(value) &&
+      (key.includes("attachments") || key.includes("deleteAttachmentIds"))
+    ) {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);
       });

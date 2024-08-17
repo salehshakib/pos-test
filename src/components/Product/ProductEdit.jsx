@@ -288,8 +288,6 @@ const ProductListEdit = ({ id }) => {
     }
   }, [data, isEditDrawerOpen, setFields]);
 
-  //console.log(formValues);
-
   const handleUpdate = async (values) => {
     const {
       name,
@@ -401,10 +399,36 @@ const ProductListEdit = ({ id }) => {
       postObj.product_list = JSON.stringify(productListArray);
     }
 
+    const attachmentObject = fields.find((item) => item.name === "attachments");
+
+    console.log(attachmentObject);
+
+    attachmentObject?.value?.map((item) => {
+      if (item?.status === "removed") {
+        deleteAttachmentIds.push(item?.uid.toString());
+      }
+    });
+
+    function getMissingUids(attachmentObject, values) {
+      const valueUids = new Set(values.map((item) => item.uid));
+      return attachmentObject
+        .filter((item) => !valueUids.has(item.uid))
+        .map((item) => item?.uid);
+    }
+
+    let deleteAttachmentIds = getMissingUids(
+      attachmentObject?.value,
+      values?.attachments
+    );
+
     if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments
         ?.map((file) => (file.originFileObj ? file.originFileObj : null))
         .filter(Boolean);
+    }
+
+    if (deleteAttachmentIds.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     if (values?.attach_file?.[0].url) {

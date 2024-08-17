@@ -15,6 +15,10 @@ export const sanitizeObj = (values) => {
     if (key?.includes("date") && values[key]) {
       sanitizedValues[key] = dayjs(values[key]).format("YYYY-MM-DD");
     }
+
+    if (key.includes("phone")) {
+      sanitizedValues[key] = `0${values[key]}`;
+    }
   });
 
   return sanitizedValues;

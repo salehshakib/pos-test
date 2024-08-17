@@ -37,6 +37,12 @@ export const fieldsToUpdate = (details) => {
         value = dayjs(value, "YYYY-MM-DD");
       }
 
+      if (key.includes("phone")) {
+        // value =
+        // get value of a string from 2nd index
+        value = value.slice(0);
+      }
+
       return {
         name: key,
         value: value,

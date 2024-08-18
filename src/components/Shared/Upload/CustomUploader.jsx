@@ -45,7 +45,7 @@ const CustomUploader = ({
     setFileList(newFileList);
   };
 
-  // //console.log(defaultValue);
+  //console.log(defaultValue);
 
   return (
     <GlobalUtilityStyle>

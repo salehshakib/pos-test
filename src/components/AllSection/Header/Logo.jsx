@@ -6,7 +6,7 @@ const Logo = () => {
   const navigate = useNavigate();
   const logo = useSelector(getLogo);
 
-  console.log(logo);
+  // console.log(logo);
 
   return (
     <div

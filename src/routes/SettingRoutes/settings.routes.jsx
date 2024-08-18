@@ -4,6 +4,7 @@ import { LuClipboardType } from "react-icons/lu";
 import {
   MdOutlineMailLock,
   MdOutlineSettingsApplications,
+  MdPointOfSale,
   MdTimeToLeave,
 } from "react-icons/md";
 import { RiVerifiedBadgeLine } from "react-icons/ri";
@@ -13,6 +14,7 @@ import { EmailConfig } from "../../pages/Dashboard/EmailConfig/EmailConfig";
 import GeneralSettings from "../../pages/Dashboard/GeneralSettings/GeneralSettings";
 import GiftCardType from "../../pages/Dashboard/GiftCardType/GiftCardType";
 import { HrmSettings } from "../../pages/Dashboard/HrmSetting/HrmSettings";
+import PosSetting from "../../pages/Dashboard/PosSetting/PosSetting";
 import { Roles } from "../../pages/Dashboard/Roles/Roles";
 import { LeaveType } from "../../pages/Dashboard/Settings/LeaveType/LeaveType";
 import TaxList from "../../pages/Dashboard/Tax/TaxList";
@@ -85,6 +87,12 @@ export const settingPaths = [
     path: "email-settings",
     icon: MdOutlineMailLock,
     element: <EmailConfig />,
+  },
+  {
+    name: "Pos Settings",
+    path: "pos-settings",
+    icon: MdPointOfSale,
+    element: <PosSetting />,
   },
   {
     name: "General Settings",

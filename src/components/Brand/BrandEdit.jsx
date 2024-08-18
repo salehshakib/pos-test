@@ -8,6 +8,7 @@ import {
 } from "../../redux/services/brand/brandApi";
 import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { getMissingUids } from "../../utilities/lib/deletedImageIds";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
@@ -61,6 +62,14 @@ export const BrandEdit = ({ id, setId }) => {
       ...sanitizeObj(values),
       _method: "PUT",
     };
+
+    let deleteAttachmentIds = getMissingUids(fields, values, "logo");
+
+    if (deleteAttachmentIds.length > 0) {
+      postData.deleteAttachmentIds = deleteAttachmentIds;
+    }
+
+    console.log(deleteAttachmentIds);
 
     if (values?.logo?.length > 0) {
       postData.logo = values?.logo?.[0]?.originFileObj;

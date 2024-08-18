@@ -6,10 +6,11 @@ import { baseApi } from "../../../api/baseApi";
 const generalSettingsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getGeneralSettings: build.query({
-      query: () => {
+      query: (params) => {
         return {
           url: `/${GENERAL_SETTING}/show/1`,
           method: "GET",
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),

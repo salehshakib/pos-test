@@ -65,7 +65,14 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
         );
 
       case "details":
-        return value ? <div>{parse(value)}</div> : "N/A";
+        return value ? (
+          <div className="max-h-[30rem] overflow-auto">{parse(value)}</div>
+        ) : (
+          "N/A"
+        );
+
+      case "phone" || "phone_number":
+        return value ? `+880${value}` : "N/A";
 
       case "attachments":
         return Array.isArray(value) ? (
@@ -85,7 +92,7 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
         );
 
       default:
-        if (key.includes("status") && !key.includes('_status')) {
+        if (key.includes("status") && !key.includes("_status")) {
           if (!value) return <Badge status="warning" text={"Incomplete"} />;
 
           return value?.toLowerCase() === "pending" ||
@@ -99,7 +106,11 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
         if (currencyKeys.includes(key)) {
           return `${value}`;
         }
-        if (key.includes("date") && !key.includes('_update') && !key.includes('_handleUpdate')) {
+        if (
+          key.includes("date") &&
+          !key.includes("_update") &&
+          !key.includes("_handleUpdate")
+        ) {
           return dayjs(value).format("DD-MM-YYYY");
         }
         if (booleanKeys.includes(key) && value?.toString() === "1") {

@@ -333,6 +333,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
           columns={columns}
           dataSource={dataSource}
           showPaging={false}
+          showId={false}
           status={false}
           created_at={false}
           action={false}

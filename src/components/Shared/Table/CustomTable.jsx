@@ -83,8 +83,6 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, "delete");
   const isStatusPermitted = usePermission(route, "status");
 
-
-
   // console.log(isEditPermitted, route, isDeletePermitted);
 
   const getMenuItems = (record) =>
@@ -133,9 +131,9 @@ const CustomTable = ({
     rowKey: (record) => record?.id,
     rowSelection: isRowSelection
       ? {
-        type: "checkbox",
-        ...rowSelection,
-      }
+          type: "checkbox",
+          ...rowSelection,
+        }
       : false,
     onRow: (record) => ({
       onClick: () => console.log(record.id),
@@ -164,7 +162,7 @@ const CustomTable = ({
     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
   };
 
-  const baseColumns = [
+  const idColumn = [
     {
       title: "ID",
       dataIndex: "id",
@@ -178,8 +176,9 @@ const CustomTable = ({
         </span>
       ),
     },
-    ...columns,
   ];
+
+  const baseColumns = [...idColumn, ...columns];
 
   const statusColumn = {
     title: "Status",
@@ -190,10 +189,11 @@ const CustomTable = ({
     render: (status, record) => {
       return record?.handleStatusModal ? (
         <button
-          className={`p-0 ${status?.toString() === "1"
-            ? "bg-[#DCFCE7] text-[#16A34A]"
-            : "bg-[#FEF2F2] text-[#EF4444]"
-            } rounded shadow-md w-[80px]`}
+          className={`p-0 ${
+            status?.toString() === "1"
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
@@ -202,10 +202,11 @@ const CustomTable = ({
         </button>
       ) : (
         <div
-          className={`p-0 ${status?.toString() === "1"
-            ? "bg-[#DCFCE7] text-[#16A34A]"
-            : "bg-[#FEF2F2] text-[#EF4444]"
-            } rounded shadow-md w-[80px]`}
+          className={`p-0 ${
+            status?.toString() === "1"
+              ? "bg-[#DCFCE7] text-[#16A34A]"
+              : "bg-[#FEF2F2] text-[#EF4444]"
+          } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">
             {status?.toString() === "1" ? "Active" : "Inactive"}

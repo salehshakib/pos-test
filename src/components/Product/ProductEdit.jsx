@@ -8,6 +8,7 @@ import {
   useUpdateProductMutation,
 } from "../../redux/services/product/productApi";
 import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { getMissingUids } from "../../utilities/lib/deletedImageIds";
 import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
 import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
 import { openNotification } from "../../utilities/lib/openToaster";
@@ -399,27 +400,7 @@ const ProductListEdit = ({ id }) => {
       postObj.product_list = JSON.stringify(productListArray);
     }
 
-    const attachmentObject = fields.find((item) => item.name === "attachments");
-
-    console.log(attachmentObject);
-
-    attachmentObject?.value?.map((item) => {
-      if (item?.status === "removed") {
-        deleteAttachmentIds.push(item?.uid.toString());
-      }
-    });
-
-    function getMissingUids(attachmentObject, values) {
-      const valueUids = new Set(values.map((item) => item.uid));
-      return attachmentObject
-        .filter((item) => !valueUids.has(item.uid))
-        .map((item) => item?.uid);
-    }
-
-    let deleteAttachmentIds = getMissingUids(
-      attachmentObject?.value,
-      values?.attachments
-    );
+    let deleteAttachmentIds = getMissingUids(fields, values);
 
     if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments

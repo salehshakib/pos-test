@@ -164,6 +164,8 @@ export const ProductDetails = ({ id, ...props }) => {
     };
   });
 
+  console.log(data?.details);
+
   return (
     <CustomModal {...props}>
       {isFetching ? (
@@ -198,8 +200,22 @@ export const ProductDetails = ({ id, ...props }) => {
           />
 
           <Descriptions {...detailsLayout} title="Additional Info">
-            <Descriptions.Item label="Details">
-              <div>{parse(data?.details)}</div>
+            <Descriptions.Item label="Details" className="overflow-x-auto">
+              <div dangerouslySetInnerHTML={{ __html: data?.details }}></div>
+
+              {/* <iframe
+                title="HTML Output"
+                style={{
+                  width: "100%",
+                  height: "600px",
+                }}
+                className="overflow-auto"
+                srcDoc={
+                  <div
+                    dangerouslySetInnerHTML={{ __html: data?.details }}
+                  ></div>
+                }
+              /> */}
             </Descriptions.Item>
           </Descriptions>
         </div>

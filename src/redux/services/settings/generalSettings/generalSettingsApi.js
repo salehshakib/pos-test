@@ -1,4 +1,7 @@
-import { GENERAL_SETTING } from "../../../../utilities/apiEndpoints/settings.api";
+import {
+  GENERAL_SETTING,
+  POS_SETTING,
+} from "../../../../utilities/apiEndpoints/settings.api";
 import { openNotification } from "../../../../utilities/lib/openToaster";
 import { verifyToken } from "../../../../utilities/lib/verifyToken";
 import { baseApi } from "../../../api/baseApi";
@@ -41,8 +44,36 @@ const generalSettingsApi = baseApi.injectEndpoints({
         return result ? [GENERAL_SETTING] : [];
       },
     }),
+
+    updatePosSettings: build.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/${POS_SETTING}/update/${id}`,
+          method: "POST",
+          body: data,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification("success", response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification("error", response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [GENERAL_SETTING] : [];
+      },
+    }),
   }),
 });
 
-export const { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } =
-  generalSettingsApi;
+export const {
+  useGetGeneralSettingsQuery,
+  useUpdateGeneralSettingsMutation,
+  useUpdatePosSettingsMutation,
+} = generalSettingsApi;

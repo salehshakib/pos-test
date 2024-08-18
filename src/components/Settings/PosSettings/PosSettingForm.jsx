@@ -1,6 +1,6 @@
 import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
-import { useUpdateGeneralSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { useUpdatePosSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
 import PosSettingComponent from "./PosSettingComponent";
 
@@ -8,8 +8,7 @@ export const PosSettingForm = ({ data }) => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
-  const [updateGeneralSettings, { isLoading }] =
-    useUpdateGeneralSettingsMutation();
+  const [updatePosSettings, { isLoading }] = useUpdatePosSettingsMutation();
 
   useEffect(() => {
     if (data) {

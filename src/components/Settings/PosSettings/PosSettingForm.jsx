@@ -54,6 +54,9 @@ export const PosSettingForm = ({ data }) => {
   }, [data]);
 
   const handleSubmit = async (values) => {
+    console.log(values);
+
+    // return;
     const formData = new FormData();
 
     const {

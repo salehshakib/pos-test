@@ -38,6 +38,11 @@ html {
   padding: 0 !important;
 }
 
+.ck.ck-content {
+  max-height: 500px !important;
+  overflow-y: auto !important;
+}
+
 /* @layer components {
   .bg-wave {
     background-image: url("/src/assets/images/wave.svg");

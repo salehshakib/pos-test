@@ -2,14 +2,13 @@ import { PageContainer } from "@ant-design/pro-layout";
 import { PosSettingForm } from "../../../components/Settings/PosSettings/PosSettingForm";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { cleanHtmlData } from "../../../utilities/lib/cleanHtml";
 
 const PosSetting = () => {
   const params = {
     child: 1,
   };
   const { data, isLoading } = useGetGeneralSettingsQuery(params);
-
-  console.log(data?.pos_setting?.a4_invoice);
 
   return (
     <GlobalUtilityStyle>
@@ -27,12 +26,14 @@ const PosSetting = () => {
         loading={isLoading}
       >
         <PosSettingForm data={data?.pos_setting} />
-      </PageContainer>
 
-      <div
-        className="border border-red-600 p-10 overflow-scroll"
-        dangerouslySetInnerHTML={{ __html: data?.pos_setting?.a4_invoice }}
-      ></div>
+        {/* <div
+          className="border border-red-600 p-10 "
+          dangerouslySetInnerHTML={{
+            __html: cleanHtmlData(data?.pos_setting?.a4_invoice),
+          }}
+        ></div> */}
+      </PageContainer>
     </GlobalUtilityStyle>
   );
 };

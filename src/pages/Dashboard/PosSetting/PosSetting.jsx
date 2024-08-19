@@ -9,6 +9,8 @@ const PosSetting = () => {
   };
   const { data, isLoading } = useGetGeneralSettingsQuery(params);
 
+  console.log(data?.pos_setting?.a4_invoice);
+
   return (
     <GlobalUtilityStyle>
       <PageContainer
@@ -26,6 +28,11 @@ const PosSetting = () => {
       >
         <PosSettingForm data={data?.pos_setting} />
       </PageContainer>
+
+      <div
+        className="border border-red-600 p-10 overflow-scroll"
+        dangerouslySetInnerHTML={{ __html: data?.pos_setting?.a4_invoice }}
+      ></div>
     </GlobalUtilityStyle>
   );
 };

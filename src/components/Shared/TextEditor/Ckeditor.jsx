@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Form } from "antd";
 import { useState } from "react";
-import "react-quill/dist/quill.snow.css";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -54,57 +53,56 @@ const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
         rules={[{ required: required, message: `Please input ${label}!` }]}
         getValueFromEvent={(content, editor) => editor.getData()}
       >
-        <CKEditor
-          editor={ClassicEditor}
-          //   data={editor}
-          //   onChange={hangleChange}
-          config={{
-            menuBar: {
-              isVisible: true,
-              removeItems: ["insert"],
-            },
-            toolbar: {
-              items: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "fontSize",
-                "fontFamily",
-                "|",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "blockQuote",
-                "|",
-                "undo",
-                "redo",
+        <div className="max-h-96 overflow-y-auto border rounded-md">
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              initialData,
+              menuBar: {
+                isVisible: true,
+                removeItems: ["insert"],
+              },
+              toolbar: {
+                items: [
+                  "heading",
+                  "|",
+                  "bold",
+                  "italic",
+                  "fontSize",
+                  "fontFamily",
+                  "|",
+                  "link",
+                  "bulletedList",
+                  "numberedList",
+                  "blockQuote",
+                  "|",
+                  "undo",
+                  "redo",
+                ],
+              },
+              plugins: [
+                Heading,
+                Bold,
+                Essentials,
+                Italic,
+                Mention,
+                Paragraph,
+                Undo,
+                Font,
+                FontSizeUI,
+                Link,
+                List,
+                BlockQuote,
+                Highlight,
+                HtmlEmbed,
+                Image,
+                Markdown,
+                SourceEditing,
+                Table,
               ],
-            },
-            plugins: [
-              Heading,
-              Bold,
-              Essentials,
-              Italic,
-              Mention,
-              Paragraph,
-              Undo,
-              Font,
-              FontSizeUI,
-              Link,
-              List,
-              BlockQuote,
-              Highlight,
-              HtmlEmbed,
-              Image,
-              Markdown,
-              SourceEditing,
-              Table,
-            ],
-
-            initialData,
-          }}
-        />
+            }}
+          />
+        </div>
       </Form.Item>
     </GlobalUtilityStyle>
   );

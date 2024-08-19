@@ -60,7 +60,7 @@ const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
             initialData,
             menuBar: {
               isVisible: true,
-              removeItems: ["insert"],
+              // removeItems: ["insert"],
             },
             toolbar: {
               items: [

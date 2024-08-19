@@ -134,6 +134,7 @@ const CustomInput = (props) => {
     value,
     addonBefore = "+880",
     size = "large",
+    maxlength = 6,
 
     //for mb-0
     customStyle = false,
@@ -156,7 +157,7 @@ const CustomInput = (props) => {
             {...commonProps}
             className="mt-1 border-2"
             allowClear={true}
-            autoSize={{ minRows: 2, maxRows: 5 }}
+            autoSize={{ minRows: 2, maxRows: maxlength }}
             showCount
           />
         );

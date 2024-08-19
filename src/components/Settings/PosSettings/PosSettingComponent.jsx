@@ -6,9 +6,36 @@ import {
   rowLayout,
 } from "../../../layout/FormLayout";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
+import CustomInput from "../../Shared/Input/CustomInput";
 import Ckeditor from "../../Shared/TextEditor/Ckeditor";
 
+const CustomInvoiceForm = ({ name, label, initialData, invoiceType }) => {
+  return (
+    <Col {...fullColLayout}>
+      {invoiceType === "rich" ? (
+        <Ckeditor
+          name={name}
+          label={label}
+          // required={true}
+          initialData={initialData}
+        />
+      ) : (
+        <CustomInput
+          name={name}
+          label={label}
+          type={"textarea"}
+          maxlength={10}
+        />
+      )}
+    </Col>
+  );
+};
+
 const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
+  const form = Form.useFormInstance();
+  const arInvoiceType = Form.useWatch("a4_invoice_type", form);
+  const thermalInvoice = Form.useWatch("thermal_invoice_type", form);
+
   return (
     <Row {...rowLayout}>
       <Col {...mdColLayout}>
@@ -32,20 +59,41 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
         </Form.Item>
       </Col>
 
-      <Col {...fullColLayout}>
-        <Ckeditor
-          label="A4 Invoice"
-          name="a4_invoice"
-          initialData={a4_invoice}
-        />
+      <Col {...mdColLayout}>
+        <Form.Item label="A4 Invoice Type" name={"a4_invoice_type"}>
+          <Radio.Group>
+            <Radio value="rich">Rich Text Editor</Radio>
+            <Radio value="raw">Raw Code</Radio>
+          </Radio.Group>
+        </Form.Item>
       </Col>
-      <Col {...fullColLayout}>
-        <Ckeditor
-          label="Thermal Invoice"
-          name="thermal_invoice"
-          initialData={thermal_invoice}
-        />
+
+      <CustomInvoiceForm
+        name="a4_invoice"
+        label="A4 Invoice"
+        invoiceType={arInvoiceType}
+        initialData={a4_invoice}
+      />
+
+      <Col {...mdColLayout}>
+        <Form.Item label="Thermal Invoice Type" name={"thermal_invoice_type"}>
+          <Radio.Group>
+            <Radio value="rich">Rich Text Editor</Radio>
+            <Radio value="raw">Raw Code</Radio>
+          </Radio.Group>
+        </Form.Item>
       </Col>
+
+      <CustomInvoiceForm
+        label="Thermal Invoice"
+        name="thermal_invoice"
+        invoiceType={thermalInvoice}
+        initialData={thermal_invoice}
+      />
+
+      {/* <Col {...fullColLayout}>
+        <Ckeditor />
+      </Col> */}
 
       <Col {...largeLayout}>
         <CustomCheckbox name="cash_payment" label={"Cash Payment"} />

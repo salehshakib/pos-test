@@ -50,8 +50,13 @@ export const PosSettingForm = ({ data }) => {
       ];
 
       setFields(newFieldData);
+
+      form.setFieldsValue({
+        a4_invoice_type: "rich",
+        thermal_invoice_type: "rich",
+      });
     }
-  }, [data]);
+  }, [data, form]);
 
   const handleSubmit = async (values) => {
     console.log(values);
@@ -60,6 +65,10 @@ export const PosSettingForm = ({ data }) => {
     const formData = new FormData();
 
     const {
+      invoice_of_pos,
+      invoice_of_inventory,
+      a4_invoice,
+      thermal_invoice,
       cash_payment,
       card_payment,
       cheque_payment,
@@ -69,7 +78,10 @@ export const PosSettingForm = ({ data }) => {
     } = values;
 
     const postData = {
-      ...values,
+      invoice_of_pos,
+      invoice_of_inventory,
+      a4_invoice,
+      thermal_invoice,
       cash_payment: cash_payment ? "1" : "0",
       card_payment: card_payment ? "1" : "0",
       cheque_payment: cheque_payment ? "1" : "0",

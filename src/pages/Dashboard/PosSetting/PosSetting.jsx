@@ -2,7 +2,6 @@ import { PageContainer } from "@ant-design/pro-layout";
 import { PosSettingForm } from "../../../components/Settings/PosSettings/PosSettingForm";
 import { GlobalUtilityStyle } from "../../../container/Styled";
 import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
-import { cleanHtmlData } from "../../../utilities/lib/cleanHtml";
 
 const PosSetting = () => {
   const params = {
@@ -26,13 +25,6 @@ const PosSetting = () => {
         loading={isLoading}
       >
         <PosSettingForm data={data?.pos_setting} />
-
-        {/* <div
-          className="border border-red-600 p-10 "
-          dangerouslySetInnerHTML={{
-            __html: cleanHtmlData(data?.pos_setting?.a4_invoice),
-          }}
-        ></div> */}
       </PageContainer>
     </GlobalUtilityStyle>
   );

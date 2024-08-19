@@ -1,6 +1,7 @@
 import { Spin, Table } from "antd";
 import { tableProps } from "../../../../layout/TableLayout";
 import { useGetQuotationDetailsQuery } from "../../../../redux/services/quotation/quotationApi";
+import { useInvoice } from "../../../../utilities/hooks/useInvoice";
 import createDetailsLayout from "../../../../utilities/lib/createDetailsLayout";
 import { CustomDescription } from "../../../Shared/Description/CustomDescription";
 import CustomModal from "../../../Shared/Modal/CustomModal";
@@ -53,6 +54,12 @@ export const QuotationDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
+  // const {settingData}
+
+  const { a4_invoice, thermal_invoice } = useInvoice();
+
+  console.log(a4_invoice);
+
   const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
 
   const benDetails = createDetailsLayout({
@@ -98,6 +105,9 @@ export const QuotationDetails = ({ id, ...props }) => {
     };
   });
 
+  console.log(a4_invoice);
+  console.log(thermal_invoice);
+
   return (
     <CustomModal {...props}>
       {isFetching ? (
@@ -116,6 +126,14 @@ export const QuotationDetails = ({ id, ...props }) => {
           />
           <CustomDescription title="Attachemnt " items={attachment} />
           <CustomDescription title="Additional" items={additionalInfo} />
+
+          <div className="w-full flex flex-col gap-5 justify-center items-center ">
+            <span className="text-4xl font-bold">Invoice</span>
+            <div
+              className=" w-3/4 border"
+              dangerouslySetInnerHTML={{ __html: thermal_invoice }}
+            />
+          </div>
         </div>
       )}
     </CustomModal>

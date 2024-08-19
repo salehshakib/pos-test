@@ -287,6 +287,7 @@ const ProductListEdit = ({ id }) => {
 
       setFields(newFieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {

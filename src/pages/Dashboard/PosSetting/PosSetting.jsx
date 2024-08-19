@@ -9,8 +9,6 @@ const PosSetting = () => {
   };
   const { data, isLoading } = useGetGeneralSettingsQuery(params);
 
-  console.log(data);
-
   return (
     <GlobalUtilityStyle>
       <PageContainer
@@ -26,7 +24,7 @@ const PosSetting = () => {
         }}
         loading={isLoading}
       >
-        <PosSettingForm data={data} />
+        <PosSettingForm data={data?.pos_setting} />
       </PageContainer>
     </GlobalUtilityStyle>
   );

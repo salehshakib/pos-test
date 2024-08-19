@@ -6,16 +6,16 @@ import {
   rowLayout,
 } from "../../../layout/FormLayout";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
-import RichTextEditor from "../../Shared/TextEditor/RichTextEditor";
+import Ckeditor from "../../Shared/TextEditor/Ckeditor";
 
-const PosSettingComponent = () => {
+const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
   return (
     <Row {...rowLayout}>
       <Col {...mdColLayout}>
         <Form.Item label="Invoice of Pos" name={"invoice_of_pos"} required>
           <Radio.Group>
-            <Radio value="a4">A4</Radio>
-            <Radio value="thermal">Thermal</Radio>
+            <Radio value="A4">A4</Radio>
+            <Radio value="Thermal">Thermal</Radio>
           </Radio.Group>
         </Form.Item>
       </Col>
@@ -26,17 +26,25 @@ const PosSettingComponent = () => {
           required
         >
           <Radio.Group>
-            <Radio value="a4">A4</Radio>
-            <Radio value="thermal">Thermal</Radio>
+            <Radio value="A4">A4</Radio>
+            <Radio value="Thermal">Thermal</Radio>
           </Radio.Group>
         </Form.Item>
       </Col>
 
       <Col {...fullColLayout}>
-        <RichTextEditor label="A4 Invoice" name="a4_invoice" />
+        <Ckeditor
+          label="A4 Invoice"
+          name="a4_invoice"
+          initialData={a4_invoice}
+        />
       </Col>
       <Col {...fullColLayout}>
-        <RichTextEditor label="Thermal Invoice" name="thermal_invoice" />
+        <Ckeditor
+          label="Thermal Invoice"
+          name="thermal_invoice"
+          initialData={thermal_invoice}
+        />
       </Col>
 
       <Col {...largeLayout}>
@@ -46,7 +54,7 @@ const PosSettingComponent = () => {
         <CustomCheckbox name="card_payment" label={"Card Payment"} />
       </Col>
       <Col {...largeLayout}>
-        <CustomCheckbox name="check_payment" label={"Check Payment"} />
+        <CustomCheckbox name="cheque_payment" label={"Cheque Payment"} />
       </Col>
       <Col {...largeLayout}>
         <CustomCheckbox name="gift_card_payment" label={"Gift Card Payment"} />

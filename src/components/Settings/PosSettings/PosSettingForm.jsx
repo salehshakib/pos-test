@@ -1,6 +1,7 @@
 import { Button, Form } from "antd";
 import { useEffect, useState } from "react";
 import { useUpdatePosSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { appendToFormData } from "../../../utilities/lib/appendFormData";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
 import PosSettingComponent from "./PosSettingComponent";
 
@@ -14,37 +15,79 @@ export const PosSettingForm = ({ data }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const newFieldData = [
+        ...fieldData,
+        {
+          name: "is_send_email",
+          value: data?.is_send_email.toString() === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "need_keyboard",
+          value: data?.need_keyboard.toString() === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "cash_payment",
+          value: data?.cash_payment.toString() === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "card_payment",
+          value: data?.card_payment.toString() === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "cheque_payment",
+          value: data?.cheque_payment.toString() === "1" ? true : false,
+          errors: "",
+        },
+        {
+          name: "gift_card_payment",
+          value: data?.gift_card_payment.toString() === "1" ? true : false,
+          errors: "",
+        },
+      ];
+
+      setFields(newFieldData);
     }
   }, [data]);
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    // const { logo, primary_color, secendary_color, ...rest } = values;
+    const formData = new FormData();
 
-    // const formData = new FormData();
+    const {
+      cash_payment,
+      card_payment,
+      cheque_payment,
+      gift_card_payment,
+      is_send_email,
+      need_keyboard,
+    } = values;
 
-    // Object.entries(rest).forEach(([key, value]) => {
-    //   formData.append(key, value);
-    // });
+    const postData = {
+      ...values,
+      cash_payment: cash_payment ? "1" : "0",
+      card_payment: card_payment ? "1" : "0",
+      cheque_payment: cheque_payment ? "1" : "0",
+      gift_card_payment: gift_card_payment ? "1" : "0",
+      is_send_email: is_send_email ? "1" : "0",
+      need_keyboard: need_keyboard ? "1" : "0",
 
-    // if (form.isFieldTouched("logo")) {
-    //   formData.append("logo", logo?.[0]?.originFileObj);
-    // }
+      _method: "PUT",
+    };
 
-    // if (typeof primary_color === "object") {
-    //   formData.append("primary_color", primary_color.toHexString());
-    // }
+    appendToFormData(postData, formData);
 
-    // if (typeof secendary_color === "object") {
-    //   formData.append("secendary_color", secendary_color.toHexString());
-    // }
+    const { data: updatedData } = await updatePosSettings({
+      id: data?.id,
+      data: formData,
+    });
 
-    // formData.append("_method", "PUT");
-
-    // await updateGeneralSettings({
-    //   data: formData,
-    // });
+    if (updatedData?.success) {
+      // window.location.reload();
+      console.log(updatedData?.data);
+    }
   };
 
   const onFinish = (values) => {
@@ -73,15 +116,12 @@ export const PosSettingForm = ({ data }) => {
         layout="vertical"
         autoComplete="on"
         onFinishFailed={onFinishFailed}
-        // disabled={!data}
+        disabled={!data}
       >
-        {/* <ColorSettingComponent />
-        <CompanySetting />
-        <TimeSetting />
-        <CurrencySettingComponent />
-        <StaffSetting /> */}
-
-        <PosSettingComponent />
+        <PosSettingComponent
+          a4_invoice={data?.a4_invoice}
+          thermal_invoice={data?.thermal_invoice}
+        />
 
         <div className="w-full flex gap-3 justify-end items-center">
           <Button htmlType="submit" type="primary" loading={isLoading}>

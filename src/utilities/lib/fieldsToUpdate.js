@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
 
+// const isBoolean = [
+//   'cash'
+// ]
 export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
     .filter(

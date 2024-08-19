@@ -9,33 +9,32 @@ import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import CustomInput from "../../Shared/Input/CustomInput";
 import Ckeditor from "../../Shared/TextEditor/Ckeditor";
 
-const CustomInvoiceForm = ({ name, label, initialData, invoiceType }) => {
+const CustomInvoiceForm = ({ name, label }) => {
+  const form = Form.useFormInstance();
+  const data = Form.useWatch(name, form);
   return (
-    <Col {...fullColLayout}>
-      {invoiceType === "rich" ? (
-        <Ckeditor
-          name={name}
-          label={label}
-          // required={true}
-          initialData={initialData}
-        />
-      ) : (
+    <>
+      <Col {...mdColLayout}>
         <CustomInput
           name={name}
           label={label}
           type={"textarea"}
-          maxlength={10}
+          maxlength={30}
         />
-      )}
-    </Col>
+      </Col>
+      <Col {...mdColLayout}>
+        <div className="border-2 rounded-md mt-8 h-[42.5rem] overflow-auto flex justify-center items-center">
+          <div
+            dangerouslySetInnerHTML={{ __html: data }}
+            // className="w-[90%] border"
+          />
+        </div>
+      </Col>
+    </>
   );
 };
 
 const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
-  const form = Form.useFormInstance();
-  const arInvoiceType = Form.useWatch("a4_invoice_type", form);
-  const thermalInvoice = Form.useWatch("thermal_invoice_type", form);
-
   return (
     <Row {...rowLayout}>
       <Col {...mdColLayout}>
@@ -59,35 +58,33 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
         </Form.Item>
       </Col>
 
-      <Col {...mdColLayout}>
+      {/* <Col {...mdColLayout}>
         <Form.Item label="A4 Invoice Type" name={"a4_invoice_type"}>
           <Radio.Group>
             <Radio value="rich">Rich Text Editor</Radio>
             <Radio value="raw">Raw Code</Radio>
           </Radio.Group>
         </Form.Item>
-      </Col>
+      </Col> */}
 
       <CustomInvoiceForm
         name="a4_invoice"
         label="A4 Invoice"
-        invoiceType={arInvoiceType}
         initialData={a4_invoice}
       />
 
-      <Col {...mdColLayout}>
+      {/* <Col {...mdColLayout}>
         <Form.Item label="Thermal Invoice Type" name={"thermal_invoice_type"}>
           <Radio.Group>
             <Radio value="rich">Rich Text Editor</Radio>
             <Radio value="raw">Raw Code</Radio>
           </Radio.Group>
         </Form.Item>
-      </Col>
+      </Col> */}
 
       <CustomInvoiceForm
         label="Thermal Invoice"
         name="thermal_invoice"
-        invoiceType={thermalInvoice}
         initialData={thermal_invoice}
       />
 

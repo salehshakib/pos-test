@@ -111,7 +111,11 @@ const PrintBarcode = () => {
                 onChange={handleLabelSizeChange}
               />
             </div>
-            <Button className="mt-6 px-20 pt-2 pb-8" onClick={generateBarcode}>
+            <Button
+              className="mt-6 px-20"
+              size="large"
+              onClick={generateBarcode}
+            >
               Generate Barcode
             </Button>
             <CustomModal
@@ -120,7 +124,7 @@ const PrintBarcode = () => {
             >
               <div className="flex flex-col justify-center items-center py-10">
                 <div className="flex items-center gap-4 py-10">
-                  <Button className="px-20 pt-2 pb-8" onClick={handlePrint}>
+                  <Button className="px-20" size="large" onClick={handlePrint}>
                     Print
                   </Button>
                 </div>
@@ -137,10 +141,11 @@ const PrintBarcode = () => {
                               {showName && <div>{barcode?.name}</div>}
                               {showPrice && (
                                 <div
-                                  className={`${barcode?.promotion_price &&
+                                  className={`${
+                                    barcode?.promotion_price &&
                                     showDiscount &&
                                     "line-through text-sm"
-                                    }`}
+                                  }`}
                                 >
                                   ${barcode?.selling_price}
                                 </div>

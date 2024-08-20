@@ -209,10 +209,10 @@ const Invoice = ({ data, type }) => {
 
       <div className="flex flex-col items-end gap-1 pb-20 pt-10 text-end">
         <span className="font-semibold text-lg w-full">Terms & Conditions</span>
-        <span className="text-wrap w-full ">Payment is due within 15 days</span>
-        <span className="text-wrap w-full">Contact number: XXXXXX123565</span>
+        <span className="">Payment is due within 15 days</span>
+        <span className="">Contact number: XXXXXX123565</span>
       </div>
-      <div className="text-wrap w-full text-xs text-center absolute bottom-0 left-0 pb-5">
+      <div className="w-full text-xs text-center absolute bottom-0 left-0 pb-5">
         Developed By {developedBy}
       </div>
     </div>

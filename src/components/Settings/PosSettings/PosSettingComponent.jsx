@@ -1,13 +1,11 @@
 import { Col, Form, Radio, Row } from "antd";
 import {
-  fullColLayout,
   largeLayout,
   mdColLayout,
   rowLayout,
 } from "../../../layout/FormLayout";
 import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
 import CustomInput from "../../Shared/Input/CustomInput";
-import Ckeditor from "../../Shared/TextEditor/Ckeditor";
 
 const CustomInvoiceForm = ({ name, label }) => {
   const form = Form.useFormInstance();
@@ -23,8 +21,9 @@ const CustomInvoiceForm = ({ name, label }) => {
         />
       </Col>
       <Col {...mdColLayout}>
-        <div className="border-2 rounded-md mt-8 h-[42.5rem] overflow-auto flex justify-center items-center">
+        <div className="border-2 rounded-md mt-8 flex justify-center items-center">
           <div
+            className=" overflow-auto h-[42.5rem]"
             dangerouslySetInnerHTML={{ __html: data }}
             // className="w-[90%] border"
           />

@@ -1,46 +1,70 @@
-import { Spin, Table } from "antd";
-import { tableProps } from "../../../../layout/TableLayout";
+import { Spin } from "antd";
 import { useGetQuotationDetailsQuery } from "../../../../redux/services/quotation/quotationApi";
-import { useInvoice } from "../../../../utilities/hooks/useInvoice";
-import createDetailsLayout from "../../../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../../../Shared/Description/CustomDescription";
 import CustomModal from "../../../Shared/Modal/CustomModal";
+import Invoice from "./Invoice";
 
-const columns = [
-  {
-    title: "Product Name",
-    dataIndex: "product_name",
-    key: "product_name",
-    render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
-        {text}
-      </span>
-    ),
-  },
-  {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
-    render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
-        {text}
-      </span>
-    ),
-  },
-  {
-    // price
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "center",
-    render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
-        {text}
-      </span>
-    ),
-  },
-];
+// const columns = [
+//   {
+//     title: "Product Name",
+//     dataIndex: "product_name",
+//     key: "product_name",
+//     render: (text) => (
+//       <span className="text-xs md:text-sm text-dark dark:text-white87">
+//         {text}
+//       </span>
+//     ),
+//   },
+//   {
+//     title: "Quantity",
+//     dataIndex: "qty",
+//     key: "qty",
+//     align: "center",
+//     render: (text) => (
+//       <span className="text-xs md:text-sm text-dark dark:text-white87">
+//         {text}
+//       </span>
+//     ),
+//   },
+//   {
+//     //   discount
+//     title: "Discount",
+//     dataIndex: "discount",
+//     key: "discount",
+//     align: "right",
+//     render: (text) => (
+//       <span className="text-xs md:text-sm text-dark dark:text-white87">
+//         {text}
+//       </span>
+//     ),
+//   },
+//   {
+//     //   tax
+//     title: "Vat",
+//     dataIndex: "tax",
+//     key: "tax",
+//     align: "right",
+//     render: (text) => (
+//       <span className="text-xs md:text-sm text-dark dark:text-white87">
+//         {text}
+//       </span>
+//     ),
+//   },
+//   {
+//     // price
+//     title: "Price",
+//     dataIndex: "price",
+//     key: "price",
+//     align: "right",
+//     render: (text) => (
+//       <span className="text-xs md:text-sm text-dark dark:text-white87">
+//         {text}
+//       </span>
+//     ),
+//   },
+// ];
+
+import generatePDF from "react-to-pdf";
+import { generatePdfOptions } from "../../../../utilities/lib/generatePdfOptions";
 
 export const QuotationDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetQuotationDetailsQuery(
@@ -56,65 +80,85 @@ export const QuotationDetails = ({ id, ...props }) => {
 
   // const {settingData}
 
-  const { a4_invoice, thermal_invoice } = useInvoice();
+  // const { a4_invoice, thermal_invoice } = useInvoice();
+  // const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
 
-  console.log(a4_invoice);
+  // const benDetails = createDetailsLayout({
+  //   warehouse: data?.warehouses,
+  //   cashier: data?.cashiers,
+  //   customer: data?.customers,
+  //   supplier: data?.suppliers,
+  // });
 
-  const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
+  // const quotationDetails = createDetailsLayout({
+  //   item: data?.item,
+  //   total_qty: data?.total_qty,
+  //   total_discount: data?.total_discount,
+  //   total_tax: data?.total_tax,
+  //   total_price: data?.total_price,
+  //   discount: data?.discount,
+  //   shipping_cost: data?.shipping_cost,
+  //   grand_total: data?.grand_total,
+  //   quotation_status: data?.quotation_status,
+  // });
 
-  const benDetails = createDetailsLayout({
-    warehouse: data?.warehouses,
-    cashier: data?.cashiers,
-    customer: data?.customers,
-    supplier: data?.suppliers,
-  });
+  // const attachment = createDetailsLayout({
+  //   attachments: data?.attachments,
+  // });
 
-  const quotationDetails = createDetailsLayout({
-    item: data?.item,
-    total_qty: data?.total_qty,
-    total_discount: data?.total_discount,
-    total_tax: data?.total_tax,
-    total_price: data?.total_price,
-    discount: data?.discount,
-    shipping_cost: data?.shipping_cost,
-    grand_total: data?.grand_total,
-    quotation_status: data?.quotation_status,
-  });
+  // const additionalInfo = createDetailsLayout({ note: data?.note });
 
-  const attachment = createDetailsLayout({
-    attachments: data?.attachments,
-  });
+  // const title = () => (
+  //   <span className="text-black font-semibold text-base -ml-2">
+  //     Quotation Products
+  //   </span>
+  // );
 
-  const additionalInfo = createDetailsLayout({ note: data?.note });
+  // const currency = useSelector(useCurrency);
 
-  const title = () => (
-    <span className="text-black font-semibold text-base -ml-2">
-      Quotation Products
-    </span>
-  );
+  // const dataSource = data?.quotation_products?.map((item) => {
+  //   return {
+  //     id: item?.id,
+  //     product_name:
+  //       item?.products?.name ??
+  //       "Unknown Product" +
+  //         (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
+  //     qty: item.qty ?? "Unknown Quantity",
+  //     discount: showCurrency(item.discount, currency) ?? "Unknown Discount",
+  //     tax: showCurrency(item.tax, currency) ?? "Unknown VAT",
+  //     price: showCurrency(item.total, currency) ?? "Unknown Price",
+  //   };
+  // });
 
-  const dataSource = data?.quotation_products?.map((item) => {
-    return {
-      id: item?.id,
-      product_name:
-        item?.products?.name ??
-        "Unknown Product" +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
-      qty: item.qty ?? "Unknown Quantity",
-      price: item.net_unit_price ?? "Unknown Price",
-    };
-  });
+  const getTargetElement = () => document.getElementById("invoice-container");
 
-  console.log(a4_invoice);
-  console.log(thermal_invoice);
+  const handlePrintPdf = () => {
+    generatePDF(getTargetElement, {
+      ...generatePdfOptions,
+      filename: `${data?.reference_id}.pdf`,
+    });
+  };
+
+  const handleDownload = () => {
+    generatePDF(getTargetElement, {
+      ...generatePdfOptions,
+      method: "save",
+      filename: `${data?.reference_id}.pdf`,
+    });
+  };
 
   return (
-    <CustomModal {...props}>
+    <CustomModal
+      {...props}
+      handlePrint={handlePrintPdf}
+      handleDownload={handleDownload}
+    >
       {isFetching ? (
         <Spin className="w-full flex justify-center items-center my-10" />
       ) : (
         <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
-          <CustomDescription title="Reference" items={referenceId} />
+          <Invoice data={data} type="QUOTATION" />
+          {/* <CustomDescription title="Reference" items={referenceId} />
           <CustomDescription title="Beneficiary " items={benDetails} />
 
           <CustomDescription title="Quotation" items={quotationDetails} />
@@ -131,9 +175,9 @@ export const QuotationDetails = ({ id, ...props }) => {
             <span className="text-4xl font-bold">Invoice</span>
             <div
               className=" w-3/4 border"
-              dangerouslySetInnerHTML={{ __html: thermal_invoice }}
+              dangerouslySetInnerHTML={{ __html: a4_invoice }}
             />
-          </div>
+          </div> */}
         </div>
       )}
     </CustomModal>

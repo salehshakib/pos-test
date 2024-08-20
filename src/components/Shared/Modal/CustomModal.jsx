@@ -15,6 +15,8 @@ const CustomModal = (props) => {
     onOk,
     notification = false,
     status,
+    handlePrint,
+    handleDownload,
   } = props ?? {};
 
   const modalProps = {
@@ -115,6 +117,16 @@ const CustomModal = (props) => {
             ))}
           {showCloseButton && (
             <div className="w-full flex justify-end items-center gap-3 mt-5">
+              {handlePrint && (
+                <Button type="primary" onClick={handlePrint}>
+                  Print
+                </Button>
+              )}
+              {handleDownload && (
+                <Button type="primary" onClick={handleDownload}>
+                  Donwload
+                </Button>
+              )}
               <Button type="primary" onClick={hideModal}>
                 Close
               </Button>

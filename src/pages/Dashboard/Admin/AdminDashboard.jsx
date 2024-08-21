@@ -136,7 +136,8 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
     <CustomForm form={dashboardForm} submitBtn={false}>
       <Row
         {...rowLayout}
-        className="grid grid-cols-1 xl:grid-cols-2 items-center gap-2 lg:gap-0"
+        gutter={0}
+        className="grid grid-cols-1 xl:grid-cols-2 space-x-2 items-center gap-2 lg:gap-0"
       >
         <Col {...fullColLayout} className="">
           <CustomSelect
@@ -379,7 +380,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="h-full">
-      <div className="p-5">
+      <div className="">
         <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-center justify-between pb-5 mt-1">
           <div
             className="text-2xl font-semibold"
@@ -417,7 +418,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 gap-y-6 p-5">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 gap-y-6">
         <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">
           <div className="text-lg w-full text-center font-semibold pb-4 h-full">
             Purchase & Sale

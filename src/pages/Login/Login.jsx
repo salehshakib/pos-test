@@ -1,5 +1,6 @@
 import { Button, Form, Tag } from "antd";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { IoMdMail } from "react-icons/io";
 import { MdLockPerson } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,65 +51,69 @@ const Login = () => {
   </svg>`;
 
   return (
-    <div
-      className="h-screen"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(
-          svgBackground
-        )}")`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center top -10vh",
-      }}
-    >
-      <div className="flex justify-center items-center h-full">
-        <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
-          <div className="text-center font-bold text-xl border-gray-500 flex flex-col gap-1">
-            POS INVENTORY
-            <div>
-              {isDev.toLowerCase() === "true" && (
-                <Tag color="purple" className="font-semibold">
-                  DEV MODE
-                </Tag>
-              )}
-            </div>
-          </div>
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
 
-          <CustomForm
-            handleSubmit={handleSubmit}
-            className="flex flex-col gap-6"
-            submitBtn={false}
-            form={form}
-          >
-            <CustomInput
-              label="Email"
-              type={"email"}
-              required={true}
-              name={"email"}
-              placeholder={"Email"}
-              prefix={<IoMdMail className="text-lg" />}
-            />
-            <CustomInput
-              label="Password"
-              type={"password"}
-              name={"password"}
-              required={true}
-              placeholder={"Password"}
-              prefix={<MdLockPerson className="text-lg" />}
-            />
-            <Button
-              htmlType="submit"
-              loading={isLoading}
-              className="w-full"
-              type="default"
-              size="large"
+      <div
+        className="h-screen"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(
+            svgBackground
+          )}")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center top -10vh",
+        }}
+      >
+        <div className="flex justify-center items-center h-full">
+          <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
+            <div className="text-center font-bold text-xl border-gray-500 flex flex-col gap-1">
+              POS INVENTORY
+              <div>
+                {isDev.toLowerCase() === "true" && (
+                  <Tag color="purple" className="font-semibold">
+                    DEV MODE
+                  </Tag>
+                )}
+              </div>
+            </div>
+
+            <CustomForm
+              handleSubmit={handleSubmit}
+              className="flex flex-col gap-6"
+              submitBtn={false}
+              form={form}
             >
-              Enter
-            </Button>
-          </CustomForm>
+              <CustomInput
+                label="Email"
+                type={"email"}
+                required={true}
+                name={"email"}
+                placeholder={"Email"}
+                prefix={<IoMdMail className="text-lg" />}
+              />
+              <CustomInput
+                label="Password"
+                type={"password"}
+                name={"password"}
+                required={true}
+                placeholder={"Password"}
+                prefix={<MdLockPerson className="text-lg" />}
+              />
+              <Button
+                htmlType="submit"
+                loading={isLoading}
+                className="w-full"
+                type="default"
+                size="large"
+              >
+                Enter
+              </Button>
+            </CustomForm>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

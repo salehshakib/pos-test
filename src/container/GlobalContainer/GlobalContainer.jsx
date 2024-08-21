@@ -82,11 +82,11 @@ const GlobalContainer = ({
     title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
     subTitle: usePermission(api, "store") &&
       !["/petty-cash", "/reports"].some((path) => pathname.includes(path)) && (
-        <div className="w-full">
+        <div className="">
           <Button
             key={"create"}
             type="text"
-            icon={<FaCirclePlus size={28} />}
+            icon={<FaCirclePlus size={30} />}
             style={{ width: "45px", height: "100%" }}
             onClick={handleDrawerOpen}
             className="primary-text flex justify-center items-center"
@@ -494,7 +494,7 @@ const GlobalContainer = ({
               {
                 <Space
                   key={"extra"}
-                  className="w-full flex justify-end items-center pb-3 gap-2 underline  font-semibold"
+                  className="w-full flex justify-end items-center pb-3 gap-2 underline font-semibold"
                 >
                   <span>{`Showing ${
                     advanceSearch ? "Filtered" : "All"
@@ -513,10 +513,6 @@ const GlobalContainer = ({
               {children}
             </div>
           }
-
-          // style={{
-
-          // }}
         />
       </div>
 

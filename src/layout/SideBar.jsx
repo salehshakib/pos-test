@@ -141,6 +141,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         onOpenChange={onOpenChange}
         selectedKeys={selectedKeys}
         onSelect={({ key }) => setSelectedKeys([key])}
+        openKeys={stateOpenKeys}
       />
     </Sider>
   );

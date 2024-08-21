@@ -55,16 +55,14 @@ const MainLayout = () => {
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 flex flex-col ">
+          <Layout className="w-48 flex flex-col">
             <Content
               style={{
                 margin: "16px",
                 marginBottom: 0,
-                // backgroundColor: "white",
-                // borderRadius: "8px",
                 ...dashboardStyle,
               }}
-              className="shadow-md flex-grow overflow-auto"
+              className={`${pathname.includes("/dashboard") ? "" : "shadow-md"} flex-grow overflow-auto`}
             >
               <GlobalUtilityStyle>
                 <Outlet />

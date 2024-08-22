@@ -7,6 +7,7 @@ import {
   useUpdateQuotationMutation,
 } from '../../../redux/services/quotation/quotationApi';
 import { appendToFormData } from '../../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
 import {
@@ -78,10 +79,13 @@ const QuotationEdit = ({ id, setId }) => {
         tax_rate: {},
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditDrawerOpen]);
 
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
+      form.resetFields();
+
       data?.quotation_products?.forEach((item) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -171,6 +175,7 @@ const QuotationEdit = ({ id, setId }) => {
 
       setFields(newFieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
@@ -243,8 +248,14 @@ const QuotationEdit = ({ id, setId }) => {
       _method: 'PUT',
     };
 
-    if (attachment?.[0].originFileObj) {
+    if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0].originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds?.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     appendToFormData(postObj, formData);

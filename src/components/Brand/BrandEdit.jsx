@@ -11,7 +11,6 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import BrandForm from './BrandForm';
 
@@ -56,10 +55,8 @@ export const BrandEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    //console.log(values);
-
     const postData = {
-      ...sanitizeObj(values),
+      ...values,
       _method: 'PUT',
     };
 

@@ -7,6 +7,7 @@ import {
   useUpdateLeaveMutation,
 } from '../../redux/services/hrm/leave/leaveApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
@@ -72,6 +73,12 @@ export const LeaveEdit = ({ id, setId }) => {
 
     if (values?.attachment?.length > 0) {
       postData.attachment = values?.attachment?.[0]?.originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds?.length > 0) {
+      postData.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     appendToFormData(postData, formData);

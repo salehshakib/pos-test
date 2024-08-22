@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Form } from 'antd';
+import defaultUser from '../../assets/data/defaultUserImage';
 import {
   useGetCategoryDetailsQuery,
   useUpdateCategoryMutation,
 } from '../../redux/services/category/categoryApi';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import CategoryForm from './CategoryForm';
-import { appendToFormData } from '../../utilities/lib/appendFormData';
-import defaultUser from '../../assets/data/defaultUserImage';
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -57,11 +58,14 @@ const Categoryedit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const postObj = { ...values, _method: 'PUT' };
 
-    if (
-      values?.attachment?.length > 0 &&
-      values?.attachment?.[0]?.originFileObj
-    ) {
+    if (values?.attachment.length > 0) {
       postObj.attachment = values?.attachment?.[0]?.originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     const formData = new FormData();

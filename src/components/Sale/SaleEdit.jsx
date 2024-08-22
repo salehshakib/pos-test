@@ -8,6 +8,7 @@ import {
   useUpdateSaleMutation,
 } from '../../redux/services/sale/saleApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
@@ -95,6 +96,7 @@ export const SaleEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
+      form.resetFields();
       data?.sale_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -182,7 +184,7 @@ export const SaleEdit = ({ id, setId }) => {
       const newFieldData = updateFieldValues(fieldData, updatedFieldData);
       setFields(newFieldData);
     }
-  }, [data, isEditDrawerOpen, setFields]);
+  }, [data, form, isEditDrawerOpen, isFetching, setFields]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
@@ -272,8 +274,14 @@ export const SaleEdit = ({ id, setId }) => {
       postObj.paid_amount = Number(paid_amount).toFixed(2);
     }
 
-    if (attachment?.[0].originFileObj) {
+    if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0].originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds?.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     appendToFormData(postObj, formData);

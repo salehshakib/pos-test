@@ -126,7 +126,7 @@ export const InvoiceForm = ({
             <CashierComponent />
           </Col>
           <Col {...largeLayout}>
-            <SupplierComponent />
+            <SupplierComponent required={false} />
           </Col>
           <Col {...largeLayout}>
             <CustomerComponent />

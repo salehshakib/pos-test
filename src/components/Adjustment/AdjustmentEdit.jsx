@@ -7,6 +7,7 @@ import {
 } from '../../redux/services/adjustment/adjustmentApi';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import AdjustmentForm from './AdjustmentForm';
@@ -111,6 +112,7 @@ const AdjustmentEdit = ({ id }) => {
 
       setFields(fieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
@@ -140,6 +142,12 @@ const AdjustmentEdit = ({ id }) => {
 
     if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0]?.originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     appendToFormData(postObj, formData);

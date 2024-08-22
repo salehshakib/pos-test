@@ -9,6 +9,7 @@ import {
   useUpdatePurchaseMutation,
 } from '../../redux/services/purchase/purchaseApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
@@ -88,7 +89,7 @@ export const PurchaseEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
-      //console.log(data);
+      form.resetFields();
       data?.purchase_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -159,7 +160,8 @@ export const PurchaseEdit = ({ id, setId }) => {
       });
 
       const fieldData = fieldsToUpdate(data);
-      const newFieldData = [
+
+      let newFieldData = [
         ...fieldData,
         {
           name: 'warehouse_id',
@@ -171,11 +173,34 @@ export const PurchaseEdit = ({ id, setId }) => {
           value: data?.supplier_id.toString(),
           errors: '',
         },
+        {
+          name: 'supplier_id',
+          value: data?.supplier_id.toString(),
+          errors: '',
+        },
       ];
+
+      if (data?.attachments?.length > 0) {
+        newFieldData = [
+          ...newFieldData,
+          {
+            name: 'attachment',
+            value: [
+              {
+                url: data?.attachments?.[0]?.url,
+              },
+            ],
+            erros: '',
+          },
+        ];
+      }
+
       setFields(newFieldData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
+
+  console.log(data);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
@@ -274,19 +299,16 @@ export const PurchaseEdit = ({ id, setId }) => {
       _method: 'put',
     };
 
-    if (attachment?.[0].originFileObj) {
-      postData.attachment = attachment?.[0].originFileObj;
+    if (attachment?.length > 0) {
+      postData.attachment = attachment?.[0]?.originFileObj;
     }
 
-    appendToFormData(postData, formData);
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
 
-    //console.log(postData);
-
-    // logo: values?.logo?.[0].originFileObj,
-
-    if (values?.logo?.[0].originFileObj) {
-      postData.logo = values?.logo?.[0].originFileObj;
+    if (deleteAttachmentIds?.length > 0) {
+      postData.deleteAttachmentIds = deleteAttachmentIds;
     }
+
     appendToFormData(postData, formData);
 
     const { data, error } = await updatePurchase({

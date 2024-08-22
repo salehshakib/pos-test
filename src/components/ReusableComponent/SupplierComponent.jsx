@@ -6,7 +6,10 @@ import {
 import { useInitialFormField } from '../../utilities/lib/updateFormValues/useInitialFormField';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
-export const SupplierComponent = ({ name = 'supplier_id' }) => {
+export const SupplierComponent = ({
+  name = 'supplier_id',
+  required = true,
+}) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -25,7 +28,7 @@ export const SupplierComponent = ({ name = 'supplier_id' }) => {
       label="Supplier"
       options={options}
       isLoading={isLoading}
-      required={true}
+      required={required}
       name={name}
     />
   );

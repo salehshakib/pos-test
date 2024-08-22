@@ -1,16 +1,20 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { company_code } from '../../assets/data/companyCode';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetEmployeeDetailsQuery,
   useUpdateEmployeeMutation,
 } from '../../redux/services/hrm/employee/employeeApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
 } from '../../utilities/lib/fieldsToUpdate';
+import { staffIdGenerator } from '../../utilities/lib/staffIdGenerator';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import EmployeeForm from './EmployeeForm';
 
@@ -35,8 +39,11 @@ const EmployeeEdit = ({ id, setId }) => {
   const [updateEmployee, { isLoading }] = useUpdateEmployeeMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen && !isFetching) {
+      form.resetFields();
       const fieldData = fieldsToUpdate(data);
+
+      console.log(data);
 
       const updateFieldValue = [
         {
@@ -54,18 +61,65 @@ const EmployeeEdit = ({ id, setId }) => {
           value: data?.employee_accesses?.cashier_id?.toString(),
           errors: '',
         },
+        {
+          name: 'have_access',
+          value: data?.have_access.toString() === '1' ? true : false,
+          errors: '',
+        },
       ];
 
       const newFieldData = updateFieldValues(fieldData, updateFieldValue);
 
       setFields(newFieldData);
-    }
-  }, [data, setFields]);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
+    const { profile_picture, nid_front, nid_back, joining_doc, cv } =
+      values ?? {};
+
+    const formData = new FormData();
+
+    const postObj = {
+      ...values,
+      join_date: values?.join_date,
+      have_access: values?.have_access == true ? '1' : '0',
+      staff_id: staffIdGenerator(
+        company_code,
+        values?.join_date,
+        values?.staff_id
+      ),
+      _method: 'PUT',
+    };
+
+    if (profile_picture?.length > 0) {
+      postObj.profile_picture = profile_picture?.[0]?.originFileObj;
+    }
+
+    if (nid_front?.length > 0) {
+      postObj.nid_front = nid_front?.[0]?.originFileObj;
+    }
+    if (nid_back?.length > 0) {
+      postObj.nid_back = nid_back?.[0]?.originFileObj;
+    }
+    if (joining_doc?.length > 0) {
+      postObj.joining_doc = joining_doc?.[0]?.originFileObj;
+    }
+    if (cv?.length > 0) {
+      postObj.cv = cv?.[0]?.originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds?.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
+    }
+
+    appendToFormData(postObj, formData);
+
     const { data, error } = await updateEmployee({
       id,
-      data: { ...values, _method: 'PUT' },
+      data: formData,
     });
 
     if (data?.success) {

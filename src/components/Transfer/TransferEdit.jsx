@@ -7,6 +7,7 @@ import {
   useUpdateTransferMutation,
 } from '../../redux/services/transfer/transferApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
@@ -164,6 +165,7 @@ const TransferEdit = ({ id, setId }) => {
       ];
       setFields(newFieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
@@ -229,8 +231,14 @@ const TransferEdit = ({ id, setId }) => {
       _method: 'PUT',
     };
 
-    if (attachment?.[0].originFileObj) {
+    if (attachment.length > 0) {
       postObj.attachment = attachment?.[0].originFileObj;
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     appendToFormData(postObj, formData);

@@ -95,6 +95,13 @@ export function useDetailsLayout(data, nostyle, ignoreDataKeys = []) {
             ))}
           </div>
         ) : (
+          // <Image
+          //   src={defaultUser}
+          //   alt={'Attachments'}
+          //   key={'Attachments'}
+          //   width={200}
+          //   className=" object-cover"
+          // />
           'N/A'
         );
 

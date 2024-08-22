@@ -8,6 +8,7 @@ import {
   useUpdatePurchaseReturnMutation,
 } from '../../redux/services/return/purchaseReturnApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
@@ -93,6 +94,8 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
+      form.resetFields();
+
       data?.purchase_return_products?.forEach((product) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -172,6 +175,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       const fieldData = fieldsToUpdate(data);
       setFields(fieldData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
@@ -242,10 +246,15 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
     const { attachment } = values;
 
-    if (attachment?.[0].originFileObj) {
+    if (attachment?.length > 0) {
       postData.attachment = attachment?.[0].originFileObj;
     }
 
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
+
+    if (deleteAttachmentIds?.length > 0) {
+      postData.deleteAttachmentIds = deleteAttachmentIds;
+    }
     if (productListArray.length === 0) {
       // message.error("Please add at least one product");
       openNotification('error', 'Please add at least one product');

@@ -80,7 +80,7 @@ export const PayrollTable = ({
 
   const dataSource =
     data?.results?.payroll?.map((item) => {
-      const { id, created_at, employees, payment_type } = item ?? {};
+      const { id, date, employees, payment_type } = item ?? {};
 
       console.log(item);
 
@@ -94,7 +94,7 @@ export const PayrollTable = ({
         bonus: showCurrency(item?.bonus, currency),
         loan: showCurrency(item?.loan, currency),
 
-        created_at,
+        created_at: date,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -120,7 +120,6 @@ export const PayrollTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        created_at={false}
       />
 
       <PayrollEdit id={editId} setId={setEditId} />

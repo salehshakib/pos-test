@@ -228,7 +228,8 @@ const CustomTable = ({
     title:
       pathname.includes("generator/invoice") ||
       pathname.includes("generator/quotation") ||
-      pathname.includes("purchase-return")
+      pathname.includes("purchase-return") ||
+      pathname.includes("payroll")
         ? "Date"
         : "Created At",
     dataIndex: "created_at",

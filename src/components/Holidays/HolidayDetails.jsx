@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetHolidayDetailsQuery } from '../../redux/services/hrm/holiday/holidayApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -16,7 +16,7 @@ export const HolidayDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   return (
     <CustomModal {...props}>

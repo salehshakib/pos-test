@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetCustomerDetailsQuery } from '../../redux/services/customer/customerApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -11,8 +11,7 @@ export const CustomerDetails = ({ id, ...props }) => {
     },
     { skip: !id }
   );
-
-  const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   return (
     <CustomModal {...props}>

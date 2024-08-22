@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetRolePermissionDetailsQuery } from '../../redux/services/rolePermission/rolePermissionApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -23,7 +23,8 @@ export const RoleDetails = ({ id, ...props }) => {
   );
 
   const transformedPermissions = data ? transformPermissions(data) : {};
-  const details = createDetailsLayout(transformedPermissions);
+
+  const details = useDetailsLayout(transformedPermissions);
 
   return (
     <CustomModal {...props}>

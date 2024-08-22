@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetCashierDetailsQuery } from '../../redux/services/cashier/cashierApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -12,7 +12,7 @@ export const CashierDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   return (
     <CustomModal {...props}>

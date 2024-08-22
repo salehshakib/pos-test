@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetSaleDetailsQuery } from '../../redux/services/sale/saleApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
@@ -58,14 +58,14 @@ export const SaleDetails = ({ id, ...props }) => {
 
   const currency = useSelector(useCurrency);
 
-  const basicInfo = createDetailsLayout({
+  const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,
     cashier: data?.cashiers?.name,
     warehouse: data?.warehouses?.name,
     supplier: data?.suppliers?.name,
   });
 
-  const paymentInfo = createDetailsLayout({
+  const paymentInfo = useDetailsLayout({
     order_tax: data?.tax,
     order_discount: showCurrency(data?.discount, currency),
     coupon_discount: data?.coupon_discount,
@@ -77,17 +77,17 @@ export const SaleDetails = ({ id, ...props }) => {
     payment_status: data?.purchase_status,
   });
 
-  const saleStatus = createDetailsLayout({
+  const saleStatus = useDetailsLayout({
     sale_date: data?.sale_at,
     sale_status: data?.sale_status,
     sale_note: data?.sale_note,
   });
 
-  const additionalInfo = createDetailsLayout({
+  const additionalInfo = useDetailsLayout({
     staff_note: data?.staff_note,
   });
 
-  const attachments = createDetailsLayout({
+  const attachments = useDetailsLayout({
     attachments: data?.attachments,
   });
 

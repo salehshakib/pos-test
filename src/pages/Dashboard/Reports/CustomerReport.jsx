@@ -11,12 +11,12 @@ import {
   useGetCustomerDetailsQuery,
 } from '../../../redux/services/customer/customerApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useDetailsLayout } from '../../../utilities/hooks/useDetailsLayout';
 import {
   DEFAULT_SELECT_VALUES,
   useFilterParams,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
-import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
@@ -107,7 +107,7 @@ export const CustomerReport = () => {
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const summaryDetails = createDetailsLayout(summaryData);
+  const summaryDetails = useDetailsLayout(summaryData);
 
   const summaryType = {
     customer_ids: [

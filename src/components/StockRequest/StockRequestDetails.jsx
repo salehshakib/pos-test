@@ -1,9 +1,9 @@
 import { Spin, Table } from 'antd';
-import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
-import CustomModal from '../Shared/Modal/CustomModal';
-import { CustomDescription } from '../Shared/Description/CustomDescription';
 import { tableProps } from '../../layout/TableLayout';
+import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const productReqTable = [
   {
@@ -64,7 +64,7 @@ export const StockRequestDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const warehouseInfo = createDetailsLayout({
+  const warehouseInfo = useDetailsLayout({
     warehouse_from: data?.from_warehouses?.name,
     request_warehouse: data?.to_warehouses?.name,
   });

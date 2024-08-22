@@ -7,8 +7,8 @@ import { rowLayout } from '../../../layout/FormLayout';
 import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetWarehouseDetailsQuery } from '../../../redux/services/warehouse/warehouseApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useDetailsLayout } from '../../../utilities/hooks/useDetailsLayout';
 import { useFilterParams } from '../../../utilities/hooks/useParams';
-import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
 import { ExpenseTable } from './components/ExpenseTable';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
@@ -43,7 +43,7 @@ export const WarehouseReport = () => {
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const summaryDetails = createDetailsLayout(summaryData);
+  const summaryDetails = useDetailsLayout(summaryData);
 
   const [segment, setSegment] = useState('Weekly');
 

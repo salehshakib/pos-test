@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetPurchaseDetailsQuery } from '../../redux/services/purchase/purchaseApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
@@ -56,17 +57,13 @@ export const PurchaseDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  //console.log(data);
-
-  //   const details = createDetailsLayout(data);
-
-  const basicInfo = createDetailsLayout({
+  const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,
     warehouse: data?.warehouses?.name,
     supplier: data?.suppliers?.name,
   });
 
-  const paymentInfo = createDetailsLayout({
+  const paymentInfo = useDetailsLayout({
     order_tax: data?.tax,
     order_discount: data?.discount,
     shipping_cost: data?.shipping_cost,
@@ -77,13 +74,13 @@ export const PurchaseDetails = ({ id, ...props }) => {
     payment_status: data?.purchase_status,
   });
 
-  const purchaseStatus = createDetailsLayout({
+  const purchaseStatus = useDetailsLayout({
     purchase_date: data?.purchase_at,
     purchase_note: data?.purchase_note,
     purchase_status: data?.purchase_status,
   });
 
-  const attachments = createDetailsLayout({ attachments: data?.attachments });
+  const attachments = useDetailsLayout({ attachments: data?.attachments });
 
   const title = () => (
     <span className="text-black font-semibold text-base -ml-2">

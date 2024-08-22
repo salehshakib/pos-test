@@ -51,7 +51,6 @@ const AdjustmentDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  // const details = createDetailsLayout(data);
   const details = useDetailsLayout(data);
 
   const title = () => (

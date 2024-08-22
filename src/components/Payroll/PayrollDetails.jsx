@@ -1,8 +1,8 @@
 import { Spin } from 'antd';
 import { useGetLeaveDetailsQuery } from '../../redux/services/hrm/leave/leaveApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
-import CustomModal from '../Shared/Modal/CustomModal';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const PayrollDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetLeaveDetailsQuery(
@@ -16,7 +16,7 @@ export const PayrollDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   return (
     <CustomModal {...props}>

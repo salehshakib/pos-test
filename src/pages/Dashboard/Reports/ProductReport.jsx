@@ -12,12 +12,12 @@ import {
   useGetProductDetailsQuery,
 } from '../../../redux/services/product/productApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useDetailsLayout } from '../../../utilities/hooks/useDetailsLayout';
 import {
   DEFAULT_SELECT_VALUES,
   useFilterParams,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
-import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
 import { ExpenseTable } from './components/ExpenseTable';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
@@ -112,7 +112,7 @@ export const ProductReport = () => {
   const [summaryData, setSummaryData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const summaryDetails = createDetailsLayout(summaryData);
+  const summaryDetails = useDetailsLayout(summaryData);
 
   const [segment, setSegment] = useState('Weekly');
 

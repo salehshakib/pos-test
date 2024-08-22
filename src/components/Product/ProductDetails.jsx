@@ -1,11 +1,10 @@
 import { Descriptions, Spin, Table } from 'antd';
-import parse from 'html-react-parser';
 import { useSelector } from 'react-redux';
 import { detailsLayout } from '../../layout/DescriptionLayout';
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetProductDetailsQuery } from '../../redux/services/product/productApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
@@ -72,14 +71,14 @@ export const ProductDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const basicInfo = createDetailsLayout({
+  const basicInfo = useDetailsLayout({
     name: data?.name,
     sku: data?.sku,
     type: data?.type,
     symbology: data?.symbology,
   });
 
-  const categoryInfo = createDetailsLayout({
+  const categoryInfo = useDetailsLayout({
     brand: data?.brands?.name,
     category: data?.categories?.name,
     unit: data?.units?.name,
@@ -87,13 +86,13 @@ export const ProductDetails = ({ id, ...props }) => {
     sale_unit: data?.sale_units?.name,
   });
 
-  const pricingInfo = createDetailsLayout({
+  const pricingInfo = useDetailsLayout({
     buying_price: data?.buying_price,
     selling_price: data?.selling_price,
     profit: data?.profit,
   });
 
-  const inventoryInfo = createDetailsLayout({
+  const inventoryInfo = useDetailsLayout({
     has_stock: data?.has_stock,
     quantity: data?.qty,
     alert_qty: data?.alert_qty,
@@ -115,7 +114,7 @@ export const ProductDetails = ({ id, ...props }) => {
     };
   });
 
-  const featuresInfo = createDetailsLayout({
+  const featuresInfo = useDetailsLayout({
     has_featured: data?.has_featured,
     has_promotion: data?.has_promotion,
     promotion_price: data?.promotion_price,
@@ -126,22 +125,22 @@ export const ProductDetails = ({ id, ...props }) => {
     expired_date: data?.expired_date,
   });
 
-  const variantsInfo = createDetailsLayout({
+  const variantsInfo = useDetailsLayout({
     has_variants: data?.has_variant,
     variant_list: data?.variant_list,
   });
 
-  const taxInfo = createDetailsLayout({
+  const taxInfo = useDetailsLayout({
     tax: data?.taxes?.rate,
     tax_method: data?.tax_method,
   });
 
-  // const miscellaneousInfo = createDetailsLayout({
+  // const miscellaneousInfo = useDetailsLayout({
   //   ecommerce_sync: data?.ecommerce_sync,
   //   embedded_barcode: data?.embedded_barcode,
   // });
 
-  const productAttachments = createDetailsLayout(
+  const productAttachments = useDetailsLayout(
     {
       attachments: data?.attachments,
     },

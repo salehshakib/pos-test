@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetEmployeeDetailsQuery } from '../../redux/services/hrm/employee/employeeApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -16,7 +16,7 @@ export const EmployeeDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data, false, [
+  const details = useDetailsLayout(data, false, [
     'employee_accesses',
     'users',
     'stock_request_products',

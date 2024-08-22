@@ -1,7 +1,7 @@
 import { Spin, Table } from 'antd';
 import { tableProps } from '../../layout/TableLayout';
 import { useGetSaleReturnDetailsQuery } from '../../redux/services/return/saleReturnApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -53,15 +53,15 @@ export const SaleReturnDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
+  const referenceId = useDetailsLayout({ reference_id: data?.reference_id });
 
-  const benDetails = createDetailsLayout({
+  const benDetails = useDetailsLayout({
     warehouse: data?.warehouses,
     cashier: data?.cashiers,
     customer: data?.customers,
   });
 
-  const saleReturnDetails = createDetailsLayout({
+  const saleReturnDetails = useDetailsLayout({
     item: data?.item,
     total_qty: data?.total_qty,
     total_tax: data?.total_tax,
@@ -74,11 +74,11 @@ export const SaleReturnDetails = ({ id, ...props }) => {
     return_payment_type: data?.return_payment_type,
   });
 
-  const attachment = createDetailsLayout({
+  const attachment = useDetailsLayout({
     attachments: data?.attachments,
   });
 
-  const additionalInfo = createDetailsLayout({
+  const additionalInfo = useDetailsLayout({
     return_note: data?.return_note,
     staff_note: data?.staff_note,
   });

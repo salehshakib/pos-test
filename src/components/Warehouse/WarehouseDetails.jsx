@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import { useGetWarehouseDetailsQuery } from '../../redux/services/warehouse/warehouseApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -12,7 +12,7 @@ export const WarehouseDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data, true);
+  const details = useDetailsLayout(data, true);
 
   return (
     <CustomModal {...props}>

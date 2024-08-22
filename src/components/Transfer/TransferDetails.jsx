@@ -1,7 +1,7 @@
 import { Spin, Table } from 'antd';
 import { tableProps } from '../../layout/TableLayout';
 import { useGetTransferDetailsQuery } from '../../redux/services/transfer/transferApi';
-import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
 import CustomModal from '../Shared/Modal/CustomModal';
 
@@ -53,14 +53,14 @@ export const TransferDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const referenceId = createDetailsLayout({ reference_id: data?.reference_id });
+  const referenceId = useDetailsLayout({ reference_id: data?.reference_id });
 
-  const warehouseDetails = createDetailsLayout({
+  const warehouseDetails = useDetailsLayout({
     'warehouse_(from)': data?.from_warehouses,
     'warehouse_(to)': data?.to_warehouses,
   });
 
-  const transferDetails = createDetailsLayout({
+  const transferDetails = useDetailsLayout({
     item: data?.item,
     total_qty: data?.total_qty,
     total_tax: data?.total_tax,
@@ -70,11 +70,11 @@ export const TransferDetails = ({ id, ...props }) => {
     status: data?.status,
   });
 
-  const attachment = createDetailsLayout({
+  const attachment = useDetailsLayout({
     attachments: data?.attachments,
   });
 
-  const additionalInfo = createDetailsLayout({ note: data?.note });
+  const additionalInfo = useDetailsLayout({ note: data?.note });
 
   const title = () => (
     <span className="text-black font-semibold text-base -ml-2 ">

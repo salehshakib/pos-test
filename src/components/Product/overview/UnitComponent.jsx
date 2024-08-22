@@ -1,8 +1,8 @@
-import { Col, Form } from "antd";
-import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
-import { colLayout } from "../../../layout/FormLayout";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { Col, Form } from 'antd';
+import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
+import { colLayout } from '../../../layout/FormLayout';
+import CustomSelect from '../../Shared/Select/CustomSelect';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
 
 const ProductUnit = ({ options = [], isLoading }) => {
   return (
@@ -12,7 +12,7 @@ const ProductUnit = ({ options = [], isLoading }) => {
         options={options}
         isLoading={isLoading}
         required={true}
-        name={"unit_id"}
+        name={'unit_id'}
         showSearch={true}
       />
     </Col>
@@ -33,7 +33,7 @@ const PurchaseUnit = ({ options = [], isLoading }) => {
         options={options}
         isLoading={isLoading}
         required={true}
-        name={"purchase_unit_id"}
+        name={'purchase_unit_id'}
         showSearch={true}
       />
     </Col>
@@ -48,7 +48,7 @@ const SaleUnit = ({ options = [], isLoading }) => {
         options={options}
         isLoading={isLoading}
         required={true}
-        name={"sale_unit_id"}
+        name={'sale_unit_id'}
         showSearch={true}
       />
     </Col>
@@ -57,10 +57,10 @@ const SaleUnit = ({ options = [], isLoading }) => {
 
 const UnitComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
   const params = useGlobalParams({
-    selectValue: ["name", "id", "for"],
+    selectValue: ['name', 'id', 'for'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({
@@ -68,18 +68,18 @@ const UnitComponent = () => {
   });
 
   const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "product-unit")
+    ?.filter((unit) => unit.for === 'product-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   const saleUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "sale-unit")
+    ?.filter((unit) => unit.for === 'sale-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   const purchaseUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "purchase-unit")
+    ?.filter((unit) => unit.for === 'purchase-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
-  if (productType === "Standard") {
+  if (productType === 'Standard') {
     return (
       <>
         <ProductUnit options={productUnits} isLoading={isLoading} />

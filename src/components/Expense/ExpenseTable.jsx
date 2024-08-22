@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteExpenseMutation,
   useGetAllExpenseQuery,
-} from "../../redux/services/expense/expenseApi";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { showCurrency } from "../../utilities/lib/currency";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { ExpenseDetails } from "./ExpenseDetails";
-import { ExpenseEdit } from "./ExpenseEdit";
+} from '../../redux/services/expense/expenseApi';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { showCurrency } from '../../utilities/lib/currency';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { ExpenseDetails } from './ExpenseDetails';
+import { ExpenseEdit } from './ExpenseEdit';
 
 const ExpenseTable = ({
   newColumns,
@@ -140,7 +140,7 @@ const ExpenseTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"expense"}
+        item={'expense'}
       />
     </GlobalUtilityStyle>
   );

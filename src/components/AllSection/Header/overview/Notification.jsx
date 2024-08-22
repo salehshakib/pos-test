@@ -1,15 +1,15 @@
-import { Badge, Button, Popover, theme, Tooltip } from "antd";
-import { useEffect, useState } from "react";
-import { FaBell } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../../../../redux/services/auth/authSlice";
+import { Badge, Button, Popover, theme, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import { FaBell } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
 import {
   useGetAllNotificationQuery,
   useReadNotificationMutation,
-} from "../../../../redux/services/notification/notificationApi";
-import { categorizeNotifications } from "../../../../utilities/lib/notification/notificationData";
-import NotificationComponent from "../../../Notification/Notification";
+} from '../../../../redux/services/notification/notificationApi';
+import { categorizeNotifications } from '../../../../utilities/lib/notification/notificationData';
+import NotificationComponent from '../../../Notification/Notification';
 
 const hasUnreadNotifications = (notifications) => {
   return notifications.some((notification) => notification.read_at === null);
@@ -40,7 +40,6 @@ export const Notification = () => {
     }
   }, [data]);
 
-
   const navigate = useNavigate();
 
   const { unreadNotifications } = categorizeNotifications(data);
@@ -58,7 +57,7 @@ export const Notification = () => {
       });
 
       if (data?.success && item?.data?.stock_request_id) {
-        navigate("/inventory/stock-request", {
+        navigate('/inventory/stock-request', {
           state: {
             id: item?.data?.stock_request_id,
           },
@@ -67,7 +66,7 @@ export const Notification = () => {
       }
     } else {
       if (item?.data?.stock_request_id) {
-        navigate("/inventory/stock-request", {
+        navigate('/inventory/stock-request', {
           state: {
             id: item?.data?.stock_request_id,
           },
@@ -81,11 +80,11 @@ export const Notification = () => {
     setIsPopoverOpen(true);
   };
 
-  const [selected, setSelected] = useState("All");
+  const [selected, setSelected] = useState('All');
 
   const selectedStyleProps = {
-    color: "#005FC6",
-    backgroundColor: "#DFE9F2",
+    color: '#005FC6',
+    backgroundColor: '#DFE9F2',
   };
 
   const title = () => {
@@ -94,16 +93,16 @@ export const Notification = () => {
         <div className="text-start font-bold text-[1.4rem]">Notifications</div>
         <div className="flex items-center gap-2 text-sm">
           <span
-            style={selected === "All" ? selectedStyleProps : {}}
-            className={`${selected === "Unread" ? "cursor-pointer hover:bg-[#f5f5f5]" : "cursor-default"} duration-300 px-4 py-1 rounded-full`}
-            onClick={() => setSelected("All")}
+            style={selected === 'All' ? selectedStyleProps : {}}
+            className={`${selected === 'Unread' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} duration-300 px-4 py-1 rounded-full`}
+            onClick={() => setSelected('All')}
           >
             All
           </span>
           <span
-            style={selected === "Unread" ? selectedStyleProps : {}}
-            className={`${selected === "All" ? "cursor-pointer hover:bg-[#f5f5f5]" : "cursor-default"} duration-300 px-4 py-1 rounded-full`}
-            onClick={() => setSelected("Unread")}
+            style={selected === 'Unread' ? selectedStyleProps : {}}
+            className={`${selected === 'All' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} duration-300 px-4 py-1 rounded-full`}
+            onClick={() => setSelected('Unread')}
           >
             Unread
           </span>
@@ -116,7 +115,7 @@ export const Notification = () => {
     <Popover
       content={
         <NotificationComponent
-          data={selected === "All" ? data : unreadNotifications}
+          data={selected === 'All' ? data : unreadNotifications}
           handleReadNotification={handleReadNotification}
           loading={isLoading}
         />
@@ -127,10 +126,10 @@ export const Notification = () => {
       overlayClassName="rounded-md shadow-xl "
       overlayStyle={{ width: 330 }}
       overlayInnerStyle={{
-        maxHeight: "85vh",
-        overflowY: "auto",
-        padding: "15px",
-        paddingTop: "12px",
+        maxHeight: '85vh',
+        overflowY: 'auto',
+        padding: '15px',
+        paddingTop: '12px',
       }}
       onOpenChange={onClose}
       open={isPopoverOpen}

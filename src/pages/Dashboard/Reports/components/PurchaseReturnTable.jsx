@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { PurchaseReturnDetails } from "../../../../components/PurchaseReturn/PurchaseReturnDetails";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useGetAllPurchaseReturnQuery } from "../../../../redux/services/return/purchaseReturnApi";
-import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { formatDate } from "../../../../utilities/lib/dateFormat";
-import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
-import { columns } from "../data/PurchaseReturn";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { PurchaseReturnDetails } from '../../../../components/PurchaseReturn/PurchaseReturnDetails';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useGetAllPurchaseReturnQuery } from '../../../../redux/services/return/purchaseReturnApi';
+import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { formatDate } from '../../../../utilities/lib/dateFormat';
+import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
+import { columns } from '../data/PurchaseReturn';
 
 export const PurchaseReturnTable = ({
   keyword,

@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { PETTY_CASH } from "../../../utilities/apiEndpoints/account.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { PETTY_CASH } from '../../../utilities/apiEndpoints/account.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const pettyCashApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllPettyCash: build.query({
       query: ({ params }) => ({
         url: `/${PETTY_CASH}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const pettyCashApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${PETTY_CASH}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
@@ -34,7 +34,7 @@ const pettyCashApi = baseApi.injectEndpoints({
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -47,19 +47,19 @@ const pettyCashApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${PETTY_CASH}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -72,18 +72,18 @@ const pettyCashApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${PETTY_CASH}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -95,7 +95,7 @@ const pettyCashApi = baseApi.injectEndpoints({
     checkPettyCash: build.query({
       query: ({ params }) => ({
         url: `/${PETTY_CASH}/check`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => {

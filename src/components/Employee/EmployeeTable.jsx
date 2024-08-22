@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteEmployeeMutation,
   useGetAllEmployeeQuery,
   useUpdateEmployeeStatusMutation,
-} from "../../redux/services/hrm/employee/employeeApi";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { EmployeeDetails } from "./EmployeeDetails";
-import EmployeeEdit from "./EmployeeEdit";
+} from '../../redux/services/hrm/employee/employeeApi';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { EmployeeDetails } from './EmployeeDetails';
+import EmployeeEdit from './EmployeeEdit';
 
 const EmployeeTable = ({
   newColumns,
@@ -164,7 +164,7 @@ const EmployeeTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"employee"}
+        item={'employee'}
       />
     </GlobalUtilityStyle>
   );

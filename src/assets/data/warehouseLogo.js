@@ -1,3 +1,3 @@
-import warehouseLogo from "../images/warehouse.png";
+import warehouseLogo from '../images/warehouse.png';
 
 export default warehouseLogo;

@@ -1,20 +1,20 @@
-import { Row } from "antd";
-import { useEffect, useState } from "react";
-import { AlertProductTable } from "../../../components/Report/AlertProductTable";
-import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
-import { getDateRange } from "../../../utilities/lib/getDateRange";
-import { useCurrentUser } from "../../../redux/services/auth/authSlice";
-import { useSelector } from "react-redux";
+import { Row } from 'antd';
+import { useEffect, useState } from 'react';
+import { AlertProductTable } from '../../../components/Report/AlertProductTable';
+import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -22,10 +22,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -34,10 +34,10 @@ const columns = [
     ),
   },
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
-    align: "center",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    align: 'center',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {warehouse}
@@ -45,10 +45,10 @@ const columns = [
     ),
   },
   {
-    title: "Minimum Qunatity",
-    dataIndex: "minQty",
-    key: "minQty",
-    align: "center",
+    title: 'Minimum Qunatity',
+    dataIndex: 'minQty',
+    key: 'minQty',
+    align: 'center',
     width: 150,
     render: (minQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -57,10 +57,10 @@ const columns = [
     ),
   },
   {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     width: 100,
     render: (stock, record) =>
       stock > record ? (
@@ -74,10 +74,10 @@ const columns = [
       ),
   },
   {
-    title: "Selling Price",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Selling Price',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -102,7 +102,7 @@ export const AlertProductReport = () => {
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
-  const [segment, setSegment] = useState("Weekly");
+  const [segment, setSegment] = useState('Weekly');
 
   const onSegmentChange = (value) => {
     setSegment(value);

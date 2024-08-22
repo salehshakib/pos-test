@@ -1,23 +1,23 @@
-import { Row } from "antd";
-import { useState } from "react";
-import { LeaveCreate } from "../../../components/Leave/LeaveCreate";
-import { LeaveTable } from "../../../components/Leave/LeaveTable";
+import { Row } from 'antd';
+import { useState } from 'react';
+import { LeaveCreate } from '../../../components/Leave/LeaveCreate';
+import { LeaveTable } from '../../../components/Leave/LeaveTable';
 import {
   DepartmentFilter,
   EmployeeFilter,
   LeaveTypeFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { LEAVE } from "../../../utilities/apiEndpoints/hrm.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { LEAVE } from '../../../utilities/apiEndpoints/hrm.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Employee Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Employee Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -30,9 +30,9 @@ const columns = [
     ),
   },
   {
-    title: "Leave Type",
-    dataIndex: "leaveType",
-    key: "leaveType",
+    title: 'Leave Type',
+    dataIndex: 'leaveType',
+    key: 'leaveType',
     render: (leaveType) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {leaveType}
@@ -40,10 +40,10 @@ const columns = [
     ),
   },
   {
-    title: "Leave Duration",
-    dataIndex: "leaveDuration",
-    key: "leaveDuration",
-    align: "center",
+    title: 'Leave Duration',
+    dataIndex: 'leaveDuration',
+    key: 'leaveDuration',
+    align: 'center',
     render: (leaveDuration) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {leaveDuration}
@@ -51,10 +51,10 @@ const columns = [
     ),
   },
   {
-    title: "Days",
-    dataIndex: "days",
-    key: "days",
-    align: "center",
+    title: 'Days',
+    dataIndex: 'days',
+    key: 'days',
+    align: 'center',
     render: (days) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {days}

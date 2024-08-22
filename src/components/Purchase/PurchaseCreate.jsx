@@ -1,20 +1,20 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreatePurchaseMutation } from "../../redux/services/purchase/purchaseApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCurrentUser } from '../../redux/services/auth/authSlice';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreatePurchaseMutation } from '../../redux/services/purchase/purchaseApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PurchaseForm } from "./PurchaseForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PurchaseForm } from './PurchaseForm';
 
 export const PurchaseCreate = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ export const PurchaseCreate = () => {
     tax_rate: {},
   });
 
-  const warehouseId = Form.useWatch("warehouse_id", form);
+  const warehouseId = Form.useWatch('warehouse_id', form);
 
   useEffect(() => {
     if (warehouseId) {
@@ -104,7 +104,7 @@ export const PurchaseCreate = () => {
 
     if (productListArray.length === 0) {
       // message.info("Please add atleast one product");
-      openNotification("info", "Please add atleast one product");
+      openNotification('info', 'Please add atleast one product');
       return;
     }
 
@@ -153,7 +153,7 @@ export const PurchaseCreate = () => {
       payment_type,
       paid_amount: paid_amount && decimalConverter(paid_amount),
       due_amount: paid_amount ? decimalConverter(totalPrice - paid_amount) : 0,
-      purchase_at: dayjs(values?.purchase_at).format("YYYY-MM-DD"),
+      purchase_at: dayjs(values?.purchase_at).format('YYYY-MM-DD'),
       discount: decimalConverter(values?.discount),
       shipping_cost: decimalConverter(values?.shipping_cost),
       tax_rate: decimalConverter(values?.tax_rate),
@@ -225,7 +225,7 @@ export const PurchaseCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Purchase"}
+      title={'Create Purchase'}
       open={isCreateDrawerOpen}
       width={1400}
     >

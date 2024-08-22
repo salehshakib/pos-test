@@ -1,21 +1,21 @@
-import { Descriptions, Spin, Table } from "antd";
-import parse from "html-react-parser";
-import { useSelector } from "react-redux";
-import { detailsLayout } from "../../layout/DescriptionLayout";
-import { tableProps } from "../../layout/TableLayout";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useGetProductDetailsQuery } from "../../redux/services/product/productApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { showCurrency } from "../../utilities/lib/currency";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Descriptions, Spin, Table } from 'antd';
+import parse from 'html-react-parser';
+import { useSelector } from 'react-redux';
+import { detailsLayout } from '../../layout/DescriptionLayout';
+import { tableProps } from '../../layout/TableLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetProductDetailsQuery } from '../../redux/services/product/productApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { showCurrency } from '../../utilities/lib/currency';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const productQtyColumn = [
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {name}
@@ -23,10 +23,10 @@ const productQtyColumn = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (qty) => (
       <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {qty}
@@ -38,9 +38,9 @@ const productQtyColumn = [
 const priceQtyColumn = [
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {name}
@@ -48,10 +48,10 @@ const priceQtyColumn = [
     ),
   },
   {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "right",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'right',
     render: (price) => (
       <span className="text-xs  md:text-sm text-dark dark:text-white87">
         {price}
@@ -110,8 +110,8 @@ export const ProductDetails = ({ id, ...props }) => {
   const qtyDataSource = data?.product_qties?.map((item) => {
     return {
       id: item?.warehouses?.id,
-      name: item?.warehouses?.name ?? "Unknown Warehouse",
-      qty: item?.qty ?? "Unknown Quantity",
+      name: item?.warehouses?.name ?? 'Unknown Warehouse',
+      qty: item?.qty ?? 'Unknown Quantity',
     };
   });
 
@@ -159,8 +159,8 @@ export const ProductDetails = ({ id, ...props }) => {
   const priceDataSource = data?.product_prices?.map((item) => {
     return {
       id: item?.warehouses?.id,
-      name: item?.warehouses?.name ?? "Unknown Warehouse",
-      price: showCurrency(item?.price, currency) ?? "Unknown Quantity",
+      name: item?.warehouses?.name ?? 'Unknown Warehouse',
+      price: showCurrency(item?.price, currency) ?? 'Unknown Quantity',
     };
   });
 

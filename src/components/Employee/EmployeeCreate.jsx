@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { company_code } from "../../assets/data/companyCode";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateEmployeeMutation } from "../../redux/services/hrm/employee/employeeApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { staffIdGenerator } from "../../utilities/lib/staffIdGenerator";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import EmployeeForm from "./EmployeeForm";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { company_code } from '../../assets/data/companyCode';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateEmployeeMutation } from '../../redux/services/hrm/employee/employeeApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { staffIdGenerator } from '../../utilities/lib/staffIdGenerator';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import EmployeeForm from './EmployeeForm';
 
 const EmployeeCreate = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const EmployeeCreate = () => {
     const postObj = {
       ...values,
       join_date: values?.join_date,
-      have_access: values?.have_access == true ? "1" : "0",
+      have_access: values?.have_access == true ? '1' : '0',
       staff_id: staffIdGenerator(
         company_code,
         values?.join_date,
@@ -67,7 +67,7 @@ const EmployeeCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Employee"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Employee'} open={isCreateDrawerOpen}>
       <EmployeeForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

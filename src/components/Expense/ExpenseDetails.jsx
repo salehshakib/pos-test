@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetExpenseDetailsQuery } from "../../redux/services/expense/expenseApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetExpenseDetailsQuery } from '../../redux/services/expense/expenseApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const ExpenseDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetExpenseDetailsQuery(

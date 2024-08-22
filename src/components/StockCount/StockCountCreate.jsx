@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateStockCountMutation } from "../../redux/services/stockCount/stockCountApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import StockCountForm from "./StockCountForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateStockCountMutation } from '../../redux/services/stockCount/stockCountApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import StockCountForm from './StockCountForm';
 
 const StockCountCreate = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const StockCountCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Stock Count"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Stock Count'} open={isCreateDrawerOpen}>
       <StockCountForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

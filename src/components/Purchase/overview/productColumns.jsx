@@ -1,17 +1,17 @@
-import { Button } from "antd";
-import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
+import { Button } from 'antd';
+import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 
 const baseColumns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
-          name !== "Total" && "hover:underline hover:cursor-pointer"
+          name !== 'Total' && 'hover:underline hover:cursor-pointer'
         }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
@@ -20,15 +20,15 @@ const baseColumns = [
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {name}
         </span>
-        {name !== "Total" && <FaEdit className="primary-text" />}
+        {name !== 'Total' && <FaEdit className="primary-text" />}
       </div>
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 80,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -37,10 +37,10 @@ const baseColumns = [
     ),
   },
   {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     width: 60,
     render: (stock) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -49,10 +49,10 @@ const baseColumns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 120,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -62,10 +62,10 @@ const baseColumns = [
   },
 
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -76,7 +76,7 @@ const baseColumns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
@@ -102,7 +102,7 @@ const baseColumns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
@@ -124,10 +124,10 @@ const baseColumns = [
 export const columns = [
   ...baseColumns,
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'center',
     width: 120,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -136,10 +136,10 @@ export const columns = [
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     width: 120,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -148,10 +148,10 @@ export const columns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'center',
     width: 120,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -161,11 +161,11 @@ export const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -193,10 +193,10 @@ export const columns = [
 export const partialColumns = [
   ...baseColumns,
   {
-    title: "Received",
-    dataIndex: "received",
-    key: "received",
-    align: "center",
+    title: 'Received',
+    dataIndex: 'received',
+    key: 'received',
+    align: 'center',
     width: 140,
     render: (received, record) => {
       return received > -1 ? (
@@ -207,20 +207,20 @@ export const partialColumns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() => record.decrementReceivedCounter(record?.id)}
             />
           </div>
           <CustomQuantityInput
-            name={["product_list", "recieved", record?.id]}
+            name={['product_list', 'recieved', record?.id]}
             noStyle={true}
             onChange={(value) => record.onReceivedChange(record.id, value)}
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() => record.incrementReceivedCounter(record?.id)}
@@ -232,10 +232,10 @@ export const partialColumns = [
     },
   },
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'center',
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -244,10 +244,10 @@ export const partialColumns = [
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -256,10 +256,10 @@ export const partialColumns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'center',
     width: 100,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -269,11 +269,11 @@ export const partialColumns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (

@@ -1,10 +1,10 @@
 export const saleStatusOptions = [
   {
-    value: "Completed",
-    label: "Completed",
+    value: 'Completed',
+    label: 'Completed',
   },
   {
-    value: "Pending",
-    label: "Pending",
+    value: 'Pending',
+    label: 'Pending',
   },
 ];

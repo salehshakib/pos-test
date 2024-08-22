@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { useGetAllCustomerQuery } from "../../../redux/services/customer/customerApi";
-import CustomerCreate from "../../Customer/CustomerCreate";
-import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
+import { useEffect, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { useGetAllCustomerQuery } from '../../../redux/services/customer/customerApi';
+import CustomerCreate from '../../Customer/CustomerCreate';
+import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { Form } from "antd";
+} from '../../../utilities/hooks/useParams';
+import { Form } from 'antd';
 
 //CustomerButtonComponent
 export const CustomerComponent = () => {
@@ -35,8 +35,8 @@ export const CustomerComponent = () => {
   };
 
   useEffect(() => {
-    if (options?.length && !form?.getFieldValue("customer_id")) {
-      form.setFieldValue("customer_id", options[0].value);
+    if (options?.length && !form?.getFieldValue('customer_id')) {
+      form.setFieldValue('customer_id', options[0].value);
     }
   }, [form, options]);
 
@@ -48,9 +48,9 @@ export const CustomerComponent = () => {
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}
-        name={"customer_id"}
+        name={'customer_id'}
         isLoading={isLoading}
-        required={"true"}
+        required={'true'}
       />
 
       <CustomerCreate

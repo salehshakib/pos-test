@@ -1,10 +1,10 @@
-import { Button, Form } from "antd";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Form } from 'antd';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/drawer/drawerSlice";
+} from '../../../redux/services/drawer/drawerSlice';
 
 const FormButton = ({ loading, children, onClose }) => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const FromContainer = (props) => {
     fields,
     isLoading,
     submitBtn = true,
-    submitBtnText = "Save",
+    submitBtnText = 'Save',
     onClose,
   } = props;
 
@@ -50,7 +50,7 @@ const FromContainer = (props) => {
         handleSubmit(values);
       })
       .catch((error) => {
-        console.error("Validation error:", error);
+        console.error('Validation error:', error);
       });
   };
 

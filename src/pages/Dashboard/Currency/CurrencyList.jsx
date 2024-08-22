@@ -1,17 +1,17 @@
-import { useState } from "react";
-import CurrencyCreate from "../../../components/Currency/CurrencyCreate";
-import CurrencyTable from "../../../components/Currency/CurrencyTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { CURRENCY } from "../../../utilities/apiEndpoints/helper.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import CurrencyCreate from '../../../components/Currency/CurrencyCreate';
+import CurrencyTable from '../../../components/Currency/CurrencyTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { CURRENCY } from '../../../utilities/apiEndpoints/helper.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -20,10 +20,10 @@ const columns = [
   },
 
   {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
-    align: "center",
+    title: 'Code',
+    dataIndex: 'code',
+    key: 'code',
+    align: 'center',
     render: (code) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {code}
@@ -31,10 +31,10 @@ const columns = [
     ),
   },
   {
-    title: "Exchange Rate",
-    dataIndex: "exchangeRate",
-    key: "exchangeRate",
-    align: "center",
+    title: 'Exchange Rate',
+    dataIndex: 'exchangeRate',
+    key: 'exchangeRate',
+    align: 'center',
     render: (exchangeRate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {exchangeRate}

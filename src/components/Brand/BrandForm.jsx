@@ -1,8 +1,8 @@
-import { Col, Row } from "antd";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomUploader from "../Shared/Upload/CustomUploader";
+import { Col, Row } from 'antd';
+import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomUploader from '../Shared/Upload/CustomUploader';
 
 const BrandForm = (props) => {
   return (
@@ -11,14 +11,14 @@ const BrandForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Brand Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
-            placeholder={"Brand Name"}
+            name={'name'}
+            placeholder={'Brand Name'}
           />
         </Col>
         <Col {...fullColLayout}>
-          <CustomUploader label={"Brand Image"} name={"logo"} />
+          <CustomUploader label={'Brand Image'} name={'logo'} />
         </Col>
       </Row>
     </CustomForm>

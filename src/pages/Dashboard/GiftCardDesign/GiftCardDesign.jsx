@@ -1,16 +1,16 @@
-import { useState } from "react";
-import GiftCardDesginTable from "../../../components/GiftCardDesign/GiftCardDesginTable";
-import { GiftCardDesignCreate } from "../../../components/GiftCardDesign/GiftCardDesignCreate";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { GIFT_CARD_DESIGN } from "../../../utilities/apiEndpoints/offer.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import GiftCardDesginTable from '../../../components/GiftCardDesign/GiftCardDesginTable';
+import { GiftCardDesignCreate } from '../../../components/GiftCardDesign/GiftCardDesignCreate';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { GIFT_CARD_DESIGN } from '../../../utilities/apiEndpoints/offer.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Gift Card Type",
-    dataIndex: "type",
-    key: "type",
+    title: 'Gift Card Type',
+    dataIndex: 'type',
+    key: 'type',
     render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {type}

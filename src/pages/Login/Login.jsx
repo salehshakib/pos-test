@@ -1,16 +1,16 @@
-import { Button, Form, Tag } from "antd";
-import { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { IoMdMail } from "react-icons/io";
-import { MdLockPerson } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import CustomForm from "../../components/Shared/Form/CustomForm";
-import CustomInput from "../../components/Shared/Input/CustomInput";
-import { useLoginMutation } from "../../redux/services/auth/authApi";
-import { setUser } from "../../redux/services/auth/authSlice";
-import { isDev } from "../../utilities/configs/base_url";
-import { openNotification } from "../../utilities/lib/openToaster";
+import { Button, Form, Tag } from 'antd';
+import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { IoMdMail } from 'react-icons/io';
+import { MdLockPerson } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import CustomForm from '../../components/Shared/Form/CustomForm';
+import CustomInput from '../../components/Shared/Input/CustomInput';
+import { useLoginMutation } from '../../redux/services/auth/authApi';
+import { setUser } from '../../redux/services/auth/authSlice';
+import { isDev } from '../../utilities/configs/base_url';
+import { openNotification } from '../../utilities/lib/openToaster';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   useEffect(() => {
-    if (isDev.toLowerCase() === "true") {
+    if (isDev.toLowerCase() === 'true') {
       form.setFieldsValue({
         email: import.meta.env.VITE_DEV_EMAIL,
         password: import.meta.env.VITE_DEV_PASSWORD,
@@ -36,10 +36,10 @@ const Login = () => {
       const token = res?.data.token;
 
       dispatch(setUser({ user: userData, token }));
-      openNotification("success", "Logged in successfully!");
+      openNotification('success', 'Logged in successfully!');
       navigate(`/dashboard`);
     } catch (error) {
-      openNotification("success", "Invalid credentials. Please try again!");
+      openNotification('error', 'Invalid credentials. Please try again!');
     }
   };
 
@@ -60,9 +60,9 @@ const Login = () => {
           backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(
             svgBackground
           )}")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center top -10vh",
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center top -10vh',
         }}
       >
         <div className="flex justify-center items-center h-full">
@@ -70,7 +70,7 @@ const Login = () => {
             <div className="text-center font-bold text-xl border-gray-500 flex flex-col gap-1">
               POS INVENTORY
               <div>
-                {isDev.toLowerCase() === "true" && (
+                {isDev.toLowerCase() === 'true' && (
                   <Tag color="purple" className="font-semibold">
                     DEV MODE
                   </Tag>
@@ -86,18 +86,18 @@ const Login = () => {
             >
               <CustomInput
                 label="Email"
-                type={"email"}
+                type={'email'}
                 required={true}
-                name={"email"}
-                placeholder={"Email"}
+                name={'email'}
+                placeholder={'Email'}
                 prefix={<IoMdMail className="text-lg" />}
               />
               <CustomInput
                 label="Password"
-                type={"password"}
-                name={"password"}
+                type={'password'}
+                name={'password'}
                 required={true}
-                placeholder={"Password"}
+                placeholder={'Password'}
                 prefix={<MdLockPerson className="text-lg" />}
               />
               <Button

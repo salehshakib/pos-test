@@ -79,29 +79,29 @@
 
 // export default CustomDatepicker;
 
-import { DatePicker, Form, TimePicker } from "antd";
-import { MdDateRange, MdOutlineWatchLater } from "react-icons/md";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import dayjs from "dayjs";
+import { DatePicker, Form, TimePicker } from 'antd';
+import { MdDateRange, MdOutlineWatchLater } from 'react-icons/md';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 
 const rangePresets = [
   {
-    label: "Last 7 Days",
-    value: [dayjs().add(-7, "d"), dayjs()],
+    label: 'Last 7 Days',
+    value: [dayjs().add(-7, 'd'), dayjs()],
   },
   {
-    label: "Last 14 Days",
-    value: [dayjs().add(-14, "d"), dayjs()],
+    label: 'Last 14 Days',
+    value: [dayjs().add(-14, 'd'), dayjs()],
   },
   {
-    label: "Last 30 Days",
-    value: [dayjs().add(-30, "d"), dayjs()],
+    label: 'Last 30 Days',
+    value: [dayjs().add(-30, 'd'), dayjs()],
   },
   {
-    label: "Last 90 Days",
-    value: [dayjs().add(-90, "d"), dayjs()],
+    label: 'Last 90 Days',
+    value: [dayjs().add(-90, 'd'), dayjs()],
   },
 ];
 
@@ -110,13 +110,13 @@ const CustomDatepicker = ({
   required,
   picker,
   // range, time, date
-  type = "date",
+  type = 'date',
   name,
   disabledDate = false,
-  placeholder = "Choose Date",
+  placeholder = 'Choose Date',
   onChange,
   value,
-  size = "large",
+  size = 'large',
 
   //for mb-0
   customStyle = false,
@@ -124,18 +124,18 @@ const CustomDatepicker = ({
 }) => {
   const getFormat = () => {
     switch (picker) {
-      case "year":
-        return "YYYY";
-      case "time":
-        return "h:mm:ss A";
+      case 'year':
+        return 'YYYY';
+      case 'time':
+        return 'h:mm:ss A';
       default:
-        return "YYYY-MM-DD";
+        return 'YYYY-MM-DD';
     }
   };
 
   const getSuffixIcon = () => {
     switch (type) {
-      case "time":
+      case 'time':
         return <MdOutlineWatchLater color="black" />;
       default:
         return <MdDateRange color="black" />;
@@ -144,8 +144,8 @@ const CustomDatepicker = ({
 
   const commonProps = {
     size,
-    className: "border-2 mt-1",
-    style: { width: "100%" },
+    className: 'border-2 mt-1',
+    style: { width: '100%' },
     format: getFormat(),
     suffixIcon: getSuffixIcon(),
     onChange,
@@ -154,7 +154,7 @@ const CustomDatepicker = ({
 
   const renderPicker = () => {
     switch (type) {
-      case "date":
+      case 'date':
         return (
           <DatePicker
             {...commonProps}
@@ -163,7 +163,7 @@ const CustomDatepicker = ({
             disabledDate={disabledDate}
           />
         );
-      case "range":
+      case 'range':
         return (
           <RangePicker
             {...commonProps}
@@ -173,7 +173,7 @@ const CustomDatepicker = ({
             presets={presets && rangePresets}
           />
         );
-      case "time":
+      case 'time':
         return (
           <TimePicker
             {...commonProps}
@@ -197,7 +197,7 @@ const CustomDatepicker = ({
             message: `Please input ${label ?? placeholder}!`,
           },
         ]}
-        className={customStyle && "mb-0"}
+        className={customStyle && 'mb-0'}
       >
         {renderPicker()}
       </Form.Item>

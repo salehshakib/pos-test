@@ -1,30 +1,30 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from "antd";
-import parse from "html-react-parser";
-import { useEffect, useState } from "react";
-import { ProductFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import CustomModal from "../../../components/Shared/Modal/CustomModal";
-import CustomSelect from "../../../components/Shared/Select/CustomSelect";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
+import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
+import parse from 'html-react-parser';
+import { useEffect, useState } from 'react';
+import { ProductFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import CustomForm from '../../../components/Shared/Form/CustomForm';
+import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import {
   useGetAllProductsQuery,
   useGetProductDetailsQuery,
-} from "../../../redux/services/product/productApi";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+} from '../../../redux/services/product/productApi';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import {
   DEFAULT_SELECT_VALUES,
   useFilterParams,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { getDateRange } from "../../../utilities/lib/getDateRange";
-import { ExpenseTable } from "./components/ExpenseTable";
-import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
-import { PurchaseTable } from "./components/PurchaseTable";
-import { QuotationTable } from "./components/QutationTable";
-import { SaleReturnTable } from "./components/SaleReturnTable";
-import { SaleTable } from "./components/SaleTable";
+} from '../../../utilities/hooks/useParams';
+import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
+import { ExpenseTable } from './components/ExpenseTable';
+import { PurchaseReturnTable } from './components/PurchaseReturnTable';
+import { PurchaseTable } from './components/PurchaseTable';
+import { QuotationTable } from './components/QutationTable';
+import { SaleReturnTable } from './components/SaleReturnTable';
+import { SaleTable } from './components/SaleTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -74,11 +74,11 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
           <Col {...fullColLayout}>
             <CustomSelect
               // label="Supplier"
-              placeholder={"Product"}
+              placeholder={'Product'}
               options={options}
               isLoading={isLoading}
               required={true}
-              name={"product_id"}
+              name={'product_id'}
             />
           </Col>
 
@@ -114,7 +114,7 @@ export const ProductReport = () => {
 
   const summaryDetails = createDetailsLayout(summaryData);
 
-  const [segment, setSegment] = useState("Weekly");
+  const [segment, setSegment] = useState('Weekly');
 
   const onSegmentChange = (value) => {
     setSegment(value);
@@ -200,49 +200,49 @@ export const ProductReport = () => {
               defaultActiveKey="sale"
               items={[
                 {
-                  label: "Sale",
-                  key: "sale",
-                  children: <SaleTable {...props} summary={"product,sale"} />,
+                  label: 'Sale',
+                  key: 'sale',
+                  children: <SaleTable {...props} summary={'product,sale'} />,
                 },
                 {
-                  label: "Purchase",
-                  key: "purchase",
+                  label: 'Purchase',
+                  key: 'purchase',
                   children: (
-                    <PurchaseTable {...props} summary={"product,purchase"} />
+                    <PurchaseTable {...props} summary={'product,purchase'} />
                   ),
                 },
                 {
-                  label: "Quotation",
-                  key: "quotation",
+                  label: 'Quotation',
+                  key: 'quotation',
                   children: (
-                    <QuotationTable {...props} summary={"product,quotation"} />
+                    <QuotationTable {...props} summary={'product,quotation'} />
                   ),
                 },
                 {
-                  label: "Purchase Return",
-                  key: "purchasereturn",
+                  label: 'Purchase Return',
+                  key: 'purchasereturn',
                   children: (
                     <PurchaseReturnTable
                       {...props}
-                      summary={"product,purchasereturn"}
+                      summary={'product,purchasereturn'}
                     />
                   ),
                 },
                 {
-                  label: "Sale Return",
-                  key: "salereturn",
+                  label: 'Sale Return',
+                  key: 'salereturn',
                   children: (
                     <SaleReturnTable
                       {...props}
-                      summary={"product,salereturn"}
+                      summary={'product,salereturn'}
                     />
                   ),
                 },
                 {
-                  label: "Expense",
-                  key: "expense",
+                  label: 'Expense',
+                  key: 'expense',
                   children: (
-                    <ExpenseTable {...props} summary={"product,expense"} />
+                    <ExpenseTable {...props} summary={'product,expense'} />
                   ),
                 },
               ]}

@@ -1,43 +1,43 @@
-import { Col, Row } from "antd";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import ApplicableForm from "./overview/ApplicableForm";
-import { SpecificProductComponent } from "./overview/SpecificProductComponent";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
+import { Col, Row } from 'antd';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import { colLayout, fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import ApplicableForm from './overview/ApplicableForm';
+import { SpecificProductComponent } from './overview/SpecificProductComponent';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 
 const weekDays = [
   {
-    label: "Monday",
-    value: "monday",
+    label: 'Monday',
+    value: 'monday',
   },
   {
-    label: "Tuesday",
-    value: "tuesday",
+    label: 'Tuesday',
+    value: 'tuesday',
   },
   {
-    label: "Wednesday",
-    value: "wednesday",
+    label: 'Wednesday',
+    value: 'wednesday',
   },
   {
-    label: "Thursday",
-    value: "thursday",
+    label: 'Thursday',
+    value: 'thursday',
   },
   {
-    label: "Friday",
-    value: "friday",
+    label: 'Friday',
+    value: 'friday',
   },
   {
-    label: "Saturday",
-    value: "saturday",
+    label: 'Saturday',
+    value: 'saturday',
   },
   {
-    label: "Sunday",
-    value: "sunday",
+    label: 'Sunday',
+    value: 'sunday',
   },
 ];
 
@@ -50,10 +50,10 @@ const DiscountForm = (props) => {
         <Col {...colLayout}>
           <CustomInput
             label="Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
-            placeholder={"Name"}
+            name={'name'}
+            placeholder={'Name'}
           />
         </Col>
         <Col {...colLayout}>
@@ -67,21 +67,21 @@ const DiscountForm = (props) => {
 
       <Row {...rowLayout}>
         <Col {...colLayout}>
-          <CustomDatepicker type={"date"} label="Valid From" required={true} />
+          <CustomDatepicker type={'date'} label="Valid From" required={true} />
         </Col>
         <Col {...colLayout}>
-          <CustomDatepicker type={"date"} label="Vaild Till" required={true} />
+          <CustomDatepicker type={'date'} label="Vaild Till" required={true} />
         </Col>
         <Col {...colLayout}>
           <CustomSelect
             options={[
               {
-                label: "Percentage",
-                value: "percentage",
+                label: 'Percentage',
+                value: 'percentage',
               },
               {
-                label: "Flat",
-                value: "flat",
+                label: 'Flat',
+                value: 'flat',
               },
             ]}
             label="Discount Type"
@@ -90,7 +90,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number_with_money"}
+            type={'number_with_money'}
             suffix={currency?.name}
             label="Value"
             required={true}
@@ -98,7 +98,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number"}
+            type={'number'}
             suffix={currency?.name}
             label="Maximum Qty"
             required={true}
@@ -106,7 +106,7 @@ const DiscountForm = (props) => {
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number"}
+            type={'number'}
             suffix={currency?.name}
             label="Minimum Qty"
             required={true}

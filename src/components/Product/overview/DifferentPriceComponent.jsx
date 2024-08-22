@@ -1,13 +1,13 @@
-import { Form } from "antd";
-import { MdDelete } from "react-icons/md";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { WarehouseController } from "../../WarehouseController/WarehouseController";
+import { Form } from 'antd';
+import { MdDelete } from 'react-icons/md';
+import CustomInput from '../../Shared/Input/CustomInput';
+import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2 `}>
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -17,10 +17,10 @@ const columns = [
     ),
   },
   {
-    title: "Price",
-    dataIndex: "unitPrice",
-    key: "unitPrice",
-    align: "center",
+    title: 'Price',
+    dataIndex: 'unitPrice',
+    key: 'unitPrice',
+    align: 'center',
     width: 140,
     render: (unitPrice, record) => {
       return unitPrice > -1 ? (
@@ -29,8 +29,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["price_list", "price", record?.id]}
+          type={'number'}
+          name={['price_list', 'price', record?.id]}
           placeholder="quantity"
           noStyle={true}
           onChange={(value) => record.onUnitPriceChange(record.id, value)}
@@ -40,11 +40,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -70,7 +70,7 @@ export const DifferentPriceComponent = ({
   setPriceWarehouses,
 }) => {
   const form = Form.useFormInstance();
-  const hasDifferentPrice = Form.useWatch("has_different_price", form);
+  const hasDifferentPrice = Form.useWatch('has_different_price', form);
 
   const incrementCounter = (id, stock = 5) => {
     setFormValues((prevFormValues) => {

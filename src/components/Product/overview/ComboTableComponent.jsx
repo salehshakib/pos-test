@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Col, Form } from "antd";
-import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import { fullColLayout } from "../../../layout/FormLayout";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomTable from "../../Shared/Table/CustomTable";
+import { Col, Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
+import { fullColLayout } from '../../../layout/FormLayout';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomTable from '../../Shared/Table/CustomTable';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -19,10 +19,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 200,
     render: (quantity, record) => {
       return quantity >= 0 ? (
@@ -31,8 +31,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["product_list", "qty", record?.id]}
+          type={'number'}
+          name={['product_list', 'qty', record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -40,10 +40,10 @@ const columns = [
     },
   },
   {
-    title: "UnitPrice",
-    dataIndex: "unitPrice",
-    key: "unitPrice",
-    align: "center",
+    title: 'UnitPrice',
+    dataIndex: 'unitPrice',
+    key: 'unitPrice',
+    align: 'center',
     width: 200,
     render: (unitPrice, record) => {
       return unitPrice >= 0 ? (
@@ -52,8 +52,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["product_list", "unit_price", record?.id]}
+          type={'number'}
+          name={['product_list', 'unit_price', record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -63,11 +63,11 @@ const columns = [
 
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       const { setRowId } = props ?? {};
       return (
@@ -89,8 +89,8 @@ const columns = [
 
 const ComboTableComponent = () => {
   const form = Form.useFormInstance();
-  const productData = Form.useWatch("product_id", form);
-  const productListData = Form.useWatch("product_list", form);
+  const productData = Form.useWatch('product_id', form);
+  const productListData = Form.useWatch('product_list', form);
 
   //console.log(productData);
 
@@ -123,8 +123,8 @@ const ComboTableComponent = () => {
     if (productData?.length > 0) {
       const setFormValuesIfNotExists = (productIndex) => {
         const selectedProduct = productData[productIndex];
-        const qtyPath = ["product_list", "qty", selectedProduct];
-        const unitPricePath = ["product_list", "unit_price", selectedProduct];
+        const qtyPath = ['product_list', 'qty', selectedProduct];
+        const unitPricePath = ['product_list', 'unit_price', selectedProduct];
 
         // Check if the value already exists
         const existingQty = form.getFieldValue(qtyPath);
@@ -155,7 +155,7 @@ const ComboTableComponent = () => {
     if (rowId !== undefined) {
       const updatedProductData = productData?.filter((item) => item !== rowId);
 
-      form.setFieldValue("product_id", updatedProductData);
+      form.setFieldValue('product_id', updatedProductData);
     }
   }, [rowId]);
 
@@ -183,8 +183,8 @@ const ComboTableComponent = () => {
     }) ?? [];
 
   dataSource.push({
-    id: "total",
-    name: "Total",
+    id: 'total',
+    name: 'Total',
     quantity: productListData
       ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
       : -1,
@@ -198,7 +198,7 @@ const ComboTableComponent = () => {
 
   return (
     productData?.length > 0 && (
-      <Col {...fullColLayout} className={`${productData && "mb-10"}`}>
+      <Col {...fullColLayout} className={`${productData && 'mb-10'}`}>
         <CustomTable
           columns={columns}
           dataSource={dataSource}

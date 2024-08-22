@@ -1,16 +1,16 @@
-import { Col, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
-import { colLayout, fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import CustomForm from '../Shared/Form/CustomForm';
+import { colLayout, fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomInput from '../Shared/Input/CustomInput';
 
 const PhoneNumberComponent = () => {
   return (
     <CustomInput
       label="Phone Number"
-      type={"phone"}
+      type={'phone'}
       required={true}
-      name={"phone"}
-      placeholder={"Phone Number"}
+      name={'phone'}
+      placeholder={'Phone Number'}
       noStyle={false}
     />
   );
@@ -23,18 +23,18 @@ const WarehouseForm = (props) => {
         <Col {...colLayout}>
           <CustomInput
             label="Warehouse Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
 
         <Col {...colLayout}>
           <CustomInput
             label="Email"
-            type={"email"}
-            name={"email"}
-            placeholder={"Email Address"}
+            type={'email'}
+            name={'email'}
+            placeholder={'Email Address'}
           />
         </Col>
         <Col {...colLayout}>
@@ -43,10 +43,10 @@ const WarehouseForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Address"
-            type={"textarea"}
+            type={'textarea'}
             required={true}
-            name={"address"}
-            placeholder={"Address"}
+            name={'address'}
+            placeholder={'Address'}
           />
         </Col>
       </Row>

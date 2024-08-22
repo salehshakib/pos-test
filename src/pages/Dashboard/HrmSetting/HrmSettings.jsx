@@ -1,7 +1,7 @@
-import { PageContainer } from "@ant-design/pro-layout";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
-import { HrmSettingForm } from "./HrmSettingsForm";
+import { PageContainer } from '@ant-design/pro-layout';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { HrmSettingForm } from './HrmSettingsForm';
 
 export const HrmSettings = () => {
   const params = {

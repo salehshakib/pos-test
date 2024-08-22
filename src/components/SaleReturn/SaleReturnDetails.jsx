@@ -1,15 +1,15 @@
-import { Spin, Table } from "antd";
-import { tableProps } from "../../layout/TableLayout";
-import { useGetSaleReturnDetailsQuery } from "../../redux/services/return/saleReturnApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin, Table } from 'antd';
+import { tableProps } from '../../layout/TableLayout';
+import { useGetSaleReturnDetailsQuery } from '../../redux/services/return/saleReturnApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const columns = [
   {
-    title: "Product Name",
-    dataIndex: "product_name",
-    key: "product_name",
+    title: 'Product Name',
+    dataIndex: 'product_name',
+    key: 'product_name',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -17,10 +17,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -29,10 +29,10 @@ const columns = [
   },
   {
     // price
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "center",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'center',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -94,10 +94,10 @@ export const SaleReturnDetails = ({ id, ...props }) => {
       id: item?.id,
       product_name:
         item?.products?.name ??
-        "Unknown Product" +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
-      qty: item.qty ?? "Unknown Quantity",
-      price: item.net_unit_price ?? "Unknown Price",
+        'Unknown Product' +
+          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      qty: item.qty ?? 'Unknown Quantity',
+      price: item.net_unit_price ?? 'Unknown Price',
     };
   });
 

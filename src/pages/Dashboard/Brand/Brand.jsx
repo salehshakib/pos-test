@@ -1,19 +1,19 @@
-import { useState } from "react";
-import defaultUser from "../../../assets/data/defaultUserImage";
-import BrandCreate from "../../../components/Brand/BrandCreate";
-import { BrandTable } from "../../../components/Brand/BrandTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { BRAND } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import defaultUser from '../../../assets/data/defaultUserImage';
+import BrandCreate from '../../../components/Brand/BrandCreate';
+import { BrandTable } from '../../../components/Brand/BrandTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { BRAND } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
-    fixed: "left",
-    align: "center",
+    title: 'Img',
+    dataIndex: 'image',
+    key: 'image',
+    fixed: 'left',
+    align: 'center',
     width: 70,
     render: (img) => (
       <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
@@ -26,9 +26,9 @@ const columns = [
     ),
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
+    title: 'Brand',
+    dataIndex: 'brand',
+    key: 'brand',
     render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {brand}

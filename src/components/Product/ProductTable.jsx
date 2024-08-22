@@ -1,26 +1,26 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { useCurrency } from "../../redux/services/pos/posSlice";
+} from '../../redux/services/drawer/drawerSlice';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
   useUpdateProductStatusMutation,
-} from "../../redux/services/product/productApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { showCurrency } from "../../utilities/lib/currency";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { ProductDetails } from "./ProductDetails";
-import ProductEdit from "./ProductEdit";
+} from '../../redux/services/product/productApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { showCurrency } from '../../utilities/lib/currency';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { ProductDetails } from './ProductDetails';
+import ProductEdit from './ProductEdit';
 
 const ProductTable = ({
   newColumns,
@@ -135,7 +135,7 @@ const ProductTable = ({
         brand: brands?.name,
         category: categories?.name,
         quantity: qty,
-        unit: units?.for ?? "N/A",
+        unit: units?.for ?? 'N/A',
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
         created_at,

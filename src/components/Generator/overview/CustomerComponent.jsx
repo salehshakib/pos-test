@@ -1,10 +1,10 @@
-import { useGetAllCustomerQuery } from "../../../redux/services/customer/customerApi";
+import { useGetAllCustomerQuery } from '../../../redux/services/customer/customerApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 export const CustomerComponent = () => {
   const params = useGlobalParams({

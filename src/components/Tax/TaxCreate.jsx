@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateTaxMutation } from "../../redux/services/tax/taxApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TaxForm from "./TaxForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateTaxMutation } from '../../redux/services/tax/taxApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import TaxForm from './TaxForm';
 
 const TaxCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const TaxCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
   return (
     <CustomDrawer
-      title={"Add Vat"}
+      title={'Add Vat'}
       open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
       onClose={subDrawer && handleCloseSubDrawer}
     >

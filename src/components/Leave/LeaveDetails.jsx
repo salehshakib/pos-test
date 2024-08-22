@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetLeaveDetailsQuery } from "../../redux/services/hrm/leave/leaveApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetLeaveDetailsQuery } from '../../redux/services/hrm/leave/leaveApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const LeaveDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetLeaveDetailsQuery(
@@ -17,9 +17,9 @@ export const LeaveDetails = ({ id, ...props }) => {
   );
 
   const details = createDetailsLayout(data, false, [
-    "stock_request_products",
-    "employee_accesses",
-    "users",
+    'stock_request_products',
+    'employee_accesses',
+    'users',
   ]);
 
   return (

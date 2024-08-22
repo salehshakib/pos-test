@@ -1,28 +1,28 @@
-import { App, ConfigProvider, Spin } from "antd";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RouterProvider } from "react-router-dom";
-import { Toaster } from "sonner";
-import { ThemeProvider } from "styled-components";
+import { App, ConfigProvider, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import { ThemeProvider } from 'styled-components';
 import {
   setCompany,
   setDateFormat,
   setDeveloper,
   setDigits,
   setLogo,
-} from "../redux/services/developer/developerSlice";
-import { setMenuItems } from "../redux/services/menu/menuSlice";
-import { setCurrency } from "../redux/services/pos/posSlice";
-import { useGetGeneralSettingsQuery } from "../redux/services/settings/generalSettings/generalSettingsApi";
+} from '../redux/services/developer/developerSlice';
+import { setMenuItems } from '../redux/services/menu/menuSlice';
+import { setCurrency } from '../redux/services/pos/posSlice';
+import { useGetGeneralSettingsQuery } from '../redux/services/settings/generalSettings/generalSettingsApi';
 import {
   getColor,
   setPrimaryColor,
   setSecondaryColor,
-} from "../redux/services/theme/themeSlice";
-import { adminPaths } from "../routes/admin.routes";
-import { router } from "../routes/routes";
-import { theme } from "../utilities/configs/theme";
-import { useMenuItems } from "../utilities/lib/getPermission";
+} from '../redux/services/theme/themeSlice';
+import { adminPaths } from '../routes/admin.routes';
+import { router } from '../routes/routes';
+import { theme } from '../utilities/configs/theme';
+import { useMenuItems } from '../utilities/lib/getPermission';
 
 const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -62,9 +62,9 @@ export const ProviderConfig = ({ children }) => {
   const { primaryColor, secondaryColor, textColor } = useSelector(getColor);
   const { developedBy } = useSelector((state) => state.developer);
   // "#842577"
-  document.documentElement.style.setProperty("--firstColor", primaryColor);
+  document.documentElement.style.setProperty('--firstColor', primaryColor);
   // "#B391AC"
-  document.documentElement.style.setProperty("--secondColor", secondaryColor);
+  document.documentElement.style.setProperty('--secondColor', secondaryColor);
 
   useEffect(() => {
     if (data) {
@@ -116,7 +116,7 @@ export const ProviderConfig = ({ children }) => {
       <ConfigProvider
         theme={customTheme}
         locale={{
-          locale: "en-US",
+          locale: 'en-US',
         }}
       >
         {/* styled components */}

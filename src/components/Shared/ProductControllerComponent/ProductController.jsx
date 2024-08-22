@@ -1,5 +1,5 @@
-import { ProductTable } from "./ProductTable";
-import { SearchProduct } from "./SearchProduct";
+import { ProductTable } from './ProductTable';
+import { SearchProduct } from './SearchProduct';
 
 export const ProductController = ({
   products,

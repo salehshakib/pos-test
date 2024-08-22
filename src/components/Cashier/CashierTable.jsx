@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCashierMutation,
   useGetAllCashierQuery,
   useUpdateCashierStatusMutation,
-} from "../../redux/services/cashier/cashierApi";
+} from '../../redux/services/cashier/cashierApi';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { CashierDetails } from "./CashierDetails";
-import CashierEdit from "./CashierEdit";
+} from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { CashierDetails } from './CashierDetails';
+import CashierEdit from './CashierEdit';
 
 const CashierTable = ({
   newColumns,
@@ -169,7 +169,7 @@ const CashierTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"cashier"}
+        item={'cashier'}
       />
     </GlobalUtilityStyle>
   );

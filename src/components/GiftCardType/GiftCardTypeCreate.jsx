@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateGiftCardTypeMutation } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { GiftCardTypeForm } from "./GiftCardTypeForm";
-import { Form } from "antd";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateGiftCardTypeMutation } from '../../redux/services/giftcard/giftcardtype/giftCardTypeApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { GiftCardTypeForm } from './GiftCardTypeForm';
+import { Form } from 'antd';
 
 export const GiftCardTypeCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const GiftCardTypeCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Gift Card Type"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Gift Card Type'} open={isCreateDrawerOpen}>
       <GiftCardTypeForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

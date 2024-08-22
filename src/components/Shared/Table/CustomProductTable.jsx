@@ -1,11 +1,11 @@
-import { Table } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { Table } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectPagination,
   updatePage,
   updatePageSize,
-} from "../../../redux/services/pagination/paginationSlice";
-import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
+} from '../../../redux/services/pagination/paginationSlice';
+import { useGlobalLoader } from '../../../utilities/hooks/useGlobalLoader';
 
 const CustomProductTable = ({
   columns,
@@ -25,7 +25,7 @@ const CustomProductTable = ({
       setSelectedRows(selectedRows);
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
+      disabled: record.name === 'Disabled User',
       name: record.name,
     }),
   };
@@ -41,14 +41,14 @@ const CustomProductTable = ({
   };
 
   const tableProps = {
-    size: "small",
+    size: 'small',
     style: {
-      width: "100%",
+      width: '100%',
     },
     rowKey: (record) => record.id,
     rowSelection: isRowSelection
       ? {
-          type: "checkbox",
+          type: 'checkbox',
           ...rowSelection,
         }
       : false,
@@ -57,7 +57,7 @@ const CustomProductTable = ({
     }),
     loading: isLoading || globalLoading,
     scroll: {
-      x: "max-content",
+      x: 'max-content',
       // y: 340,
     },
 
@@ -65,7 +65,7 @@ const CustomProductTable = ({
   };
 
   const paginationProps = {
-    size: "default",
+    size: 'default',
     total: total,
     defaultCurrent: 1,
     current: pagination.page,

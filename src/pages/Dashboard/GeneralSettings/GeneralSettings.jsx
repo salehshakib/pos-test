@@ -1,7 +1,7 @@
-import { PageContainer } from "@ant-design/pro-layout";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
-import GeneralSettingForm from "./GeneralSettingForm";
+import { PageContainer } from '@ant-design/pro-layout';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import GeneralSettingForm from './GeneralSettingForm';
 
 const GeneralSettings = () => {
   const { data, isLoading } = useGetGeneralSettingsQuery();

@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomTable from "../../Shared/Table/CustomTable";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomTable from '../../Shared/Table/CustomTable';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     width: 150,
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -19,10 +19,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (qty, record) => {
       return qty >= 0 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -30,8 +30,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["qty_list", "qty", record?.id]}
+          type={'number'}
+          name={['qty_list', 'qty', record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -40,11 +40,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       const { setRowId } = props ?? {};
       return (
@@ -66,7 +66,7 @@ const columns = [
 
 export const WarehouseStockTableComponent = () => {
   const form = Form.useFormInstance();
-  const warehouse = Form.useWatch("initial_stock_warehouse_id", form);
+  const warehouse = Form.useWatch('initial_stock_warehouse_id', form);
 
   const [rowId, setRowId] = useState(undefined);
 
@@ -94,7 +94,7 @@ export const WarehouseStockTableComponent = () => {
     if (warehouse?.length > 0) {
       const setFormValuesIfNotExists = (productIndex) => {
         const selectedProduct = warehouse[productIndex];
-        const qtyPath = ["qty_list", "qty", selectedProduct];
+        const qtyPath = ['qty_list', 'qty', selectedProduct];
 
         // Check if the value already exists
         const existingQty = form.getFieldValue(qtyPath);
@@ -121,7 +121,7 @@ export const WarehouseStockTableComponent = () => {
     if (rowId !== undefined) {
       const updatedProductData = warehouse?.filter((item) => item !== rowId);
 
-      form.setFieldValue("initial_stock_warehouse_id", updatedProductData);
+      form.setFieldValue('initial_stock_warehouse_id', updatedProductData);
     }
   }, [rowId]);
 

@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetStockCountDetailsQuery,
   useUpdateStockCountMutation,
-} from "../../redux/services/stockCount/stockCountApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import StockCountForm from "./StockCountForm";
+} from '../../redux/services/stockCount/stockCountApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import StockCountForm from './StockCountForm';
 
 const StockCountEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const StockCountEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateStockCount({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -61,7 +61,7 @@ const StockCountEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Stock Count"}
+      title={'Edit Stock Count'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

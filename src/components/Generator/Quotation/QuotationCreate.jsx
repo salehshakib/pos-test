@@ -1,17 +1,17 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../../redux/services/drawer/drawerSlice";
-import { useCreateQuotationMutation } from "../../../redux/services/quotation/quotationApi";
-import { appendToFormData } from "../../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../../redux/services/drawer/drawerSlice';
+import { useCreateQuotationMutation } from '../../../redux/services/quotation/quotationApi';
+import { appendToFormData } from '../../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
-import { QuotationForm } from "./QuotationForm";
+} from '../../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import CustomDrawer from '../../Shared/Drawer/CustomDrawer';
+import { QuotationForm } from './QuotationForm';
 
 const QuotationCreate = () => {
   const dispatch = useDispatch();
@@ -50,22 +50,22 @@ const QuotationCreate = () => {
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
-        .filter((product_id) => product_list.qty[product_id] !== undefined)
-        .map((product_id) => ({
-          product_id: parseInt(product_id),
-          qty: product_list.qty[product_id],
-          sale_unit_id: product_list.sale_unit_id[product_id],
-          net_unit_price: product_list.net_unit_price[product_id],
-          discount: product_list.discount[product_id],
-          tax_rate: product_list.tax_rate[product_id],
-          tax: product_list.tax[product_id],
-          total: product_list.total[product_id],
-        }))
+          .filter((product_id) => product_list.qty[product_id] !== undefined)
+          .map((product_id) => ({
+            product_id: parseInt(product_id),
+            qty: product_list.qty[product_id],
+            sale_unit_id: product_list.sale_unit_id[product_id],
+            net_unit_price: product_list.net_unit_price[product_id],
+            discount: product_list.discount[product_id],
+            tax_rate: product_list.tax_rate[product_id],
+            tax: product_list.tax[product_id],
+            total: product_list.total[product_id],
+          }))
       : [];
 
     if (productListArray.length === 0) {
       // message.info("Please add atleast one product");
-      openNotification("info", "Please add atleast one product");
+      openNotification('info', 'Please add atleast one product');
       return;
     }
 
@@ -137,7 +137,7 @@ const QuotationCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Quotation"}
+      title={'Create Quotation'}
       open={isCreateDrawerOpen}
       width={1400}
     >

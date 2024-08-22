@@ -1,23 +1,23 @@
-import { Row } from "antd";
-import { useState } from "react";
-import { PayrollCreate } from "../../../components/Payroll/PayrollCreate";
-import { PayrollTable } from "../../../components/Payroll/PayrollTable";
+import { Row } from 'antd';
+import { useState } from 'react';
+import { PayrollCreate } from '../../../components/Payroll/PayrollCreate';
+import { PayrollTable } from '../../../components/Payroll/PayrollTable';
 import {
   DepartmentFilter,
   EmployeeFilter,
   PaymentTypeFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { PAYROLL } from "../../../utilities/apiEndpoints/hrm.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { PAYROLL } from '../../../utilities/apiEndpoints/hrm.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -31,9 +31,9 @@ const columns = [
   },
   {
     //department
-    title: "Department",
-    dataIndex: "department",
-    key: "department",
+    title: 'Department',
+    dataIndex: 'department',
+    key: 'department',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -41,9 +41,9 @@ const columns = [
     ),
   },
   {
-    title: "Payment Type",
-    dataIndex: "paymentType",
-    key: "paymentType",
+    title: 'Payment Type',
+    dataIndex: 'paymentType',
+    key: 'paymentType',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -51,10 +51,10 @@ const columns = [
     ),
   },
   {
-    title: "Salary",
-    dataIndex: "salary",
-    key: "salary",
-    align: "right",
+    title: 'Salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    align: 'right',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -62,10 +62,10 @@ const columns = [
     ),
   },
   {
-    title: "Bonus",
-    dataIndex: "bonus",
-    key: "bonus",
-    align: "right",
+    title: 'Bonus',
+    dataIndex: 'bonus',
+    key: 'bonus',
+    align: 'right',
 
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -74,10 +74,10 @@ const columns = [
     ),
   },
   {
-    title: "Loan",
-    dataIndex: "loan",
-    key: "loan",
-    align: "right",
+    title: 'Loan',
+    dataIndex: 'loan',
+    key: 'loan',
+    align: 'right',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

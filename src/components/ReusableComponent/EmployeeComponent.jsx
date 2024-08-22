@@ -1,16 +1,16 @@
-import { Form } from "antd";
-import { useEffect } from "react";
-import { useGetAllEmployeeQuery } from "../../redux/services/hrm/employee/employeeApi";
+import { Form } from 'antd';
+import { useEffect } from 'react';
+import { useGetAllEmployeeQuery } from '../../redux/services/hrm/employee/employeeApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 //dependency department
-export const EmployeeComponent = ({ name = "employee_id" }) => {
+export const EmployeeComponent = ({ name = 'employee_id' }) => {
   const form = Form.useFormInstance();
-  const departmentId = Form.useWatch("department_id", form);
+  const departmentId = Form.useWatch('department_id', form);
 
   const params = useGlobalParams({
     params: {
@@ -29,12 +29,11 @@ export const EmployeeComponent = ({ name = "employee_id" }) => {
     label: item?.name,
   }));
 
-
   useEffect(() => {
     if (departmentId) {
-      form.resetFields([name])
+      form.resetFields([name]);
     }
-  }, [departmentId, form, name])
+  }, [departmentId, form, name]);
 
   return (
     <CustomSelect

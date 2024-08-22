@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const getCurrentDate = dayjs(new Date());
 
@@ -8,8 +8,8 @@ export const getCurrentDate = dayjs(new Date());
 
 export const disabledDate = (current, startDate) => {
   if (startDate) {
-    return current && startDate && current < dayjs(startDate).startOf("day");
+    return current && startDate && current < dayjs(startDate).startOf('day');
   } else {
-    return current < dayjs().startOf("day");
+    return current < dayjs().startOf('day');
   }
 };

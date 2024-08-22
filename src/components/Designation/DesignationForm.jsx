@@ -1,8 +1,8 @@
-import { Col, Row } from "antd";
-import { mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { DepartmentComponent } from '../ReusableComponent/DepartmentComponent';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 
 // const DepartmentComponent = () => {
 //   const { data, isFetching } = useGetDepartmentsQuery({});
@@ -30,9 +30,9 @@ export const DesignationForm = (props) => {
         <Col {...mdColLayout}>
           <CustomInput
             label="Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
         <Col {...mdColLayout}>

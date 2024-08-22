@@ -1,23 +1,23 @@
-import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
-import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { Col, Form, Row } from 'antd';
+import { useEffect } from 'react';
+import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
+import { disabledDate, getCurrentDate } from '../../utilities/lib/currentDate';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 const AllDepartmentsComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("all_departments", true);
+    form.setFieldValue('all_departments', true);
   }, [form]);
 
   return (
-    <CustomCheckbox label="For All Departments" name={"all_departments"} />
+    <CustomCheckbox label="For All Departments" name={'all_departments'} />
   );
 };
 
@@ -25,7 +25,7 @@ const DepartmentComponent = () => {
   const { data, isFetching } = useGetDepartmentsQuery({});
   const form = Form.useFormInstance();
 
-  const isAllSelected = Form.useWatch("all_departments", form);
+  const isAllSelected = Form.useWatch('all_departments', form);
 
   const options = data?.results?.department?.map((item) => ({
     value: item?.id?.toString(),
@@ -35,11 +35,11 @@ const DepartmentComponent = () => {
   useEffect(() => {
     if (isAllSelected && options) {
       form.setFieldValue(
-        "department_ids",
+        'department_ids',
         options?.map((item) => item.value)
       );
     } else {
-      form.setFieldValue("department_ids", []);
+      form.setFieldValue('department_ids', []);
     }
   }, [form, isAllSelected, options]);
 
@@ -49,12 +49,12 @@ const DepartmentComponent = () => {
     </>
   ) : (
     <CustomSelect
-      label={"Departments"}
-      name={"department_ids"}
+      label={'Departments'}
+      name={'department_ids'}
       options={options}
       isLoading={isFetching}
       required={true}
-      mode={"multiple"}
+      mode={'multiple'}
     />
   );
 };
@@ -63,7 +63,7 @@ const HolidayStartComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("start_date", getCurrentDate);
+    form.setFieldValue('start_date', getCurrentDate);
   }, [form]);
 
   return (
@@ -73,14 +73,14 @@ const HolidayStartComponent = () => {
 
 const HolidayEndComponent = () => {
   const form = Form.useFormInstance();
-  const startDate = Form.useWatch("start_date", form);
+  const startDate = Form.useWatch('start_date', form);
 
   const disabledDateStart = (current) => {
     return disabledDate(current, startDate);
   };
 
   useEffect(() => {
-    form.setFieldValue("end_date", getCurrentDate);
+    form.setFieldValue('end_date', getCurrentDate);
   }, [form]);
 
   return (
@@ -100,9 +100,9 @@ export const HolidaysForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Title"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"title"}
+            name={'title'}
           />
         </Col>
 
@@ -124,8 +124,8 @@ export const HolidaysForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Description"
-            type={"textarea"}
-            name={"description"}
+            type={'textarea'}
+            name={'description'}
             required={true}
           />
         </Col>

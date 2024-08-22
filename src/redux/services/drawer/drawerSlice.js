@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   detailsId: undefined,
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const drawerSlice = createSlice({
-  name: "globalDrawer",
+  name: 'globalDrawer',
   initialState,
   reducers: {
     setDetailsId: (state, action) => {

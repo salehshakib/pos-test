@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteAdjustmentMutation,
   useGetAllAdjustmentQuery,
-} from "../../redux/services/adjustment/adjustmentApi";
+} from '../../redux/services/adjustment/adjustmentApi';
 import {
   openEditDrawer,
   selectEditId,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import AdjustmentDetails from "./AdjustmentDetails";
-import AdjustmentEdit from "./AdjustmentEdit";
+} from '../../redux/services/drawer/drawerSlice';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import AdjustmentDetails from './AdjustmentDetails';
+import AdjustmentEdit from './AdjustmentEdit';
 
 const AdjustmentTable = ({
   newColumns,
@@ -93,7 +93,7 @@ const AdjustmentTable = ({
         warehouse: warehouses?.name,
         reference: reference_id,
         created_at,
-        note: note ?? "N/A",
+        note: note ?? 'N/A',
         handleDetailsModal,
         handleEdit,
         handleDeleteModal,
@@ -135,7 +135,7 @@ const AdjustmentTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"adjustment"}
+        item={'adjustment'}
       />
     </GlobalUtilityStyle>
   );

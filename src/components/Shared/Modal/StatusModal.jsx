@@ -1,6 +1,6 @@
-import { Button, Modal } from "antd";
-import { FaInfoCircle } from "react-icons/fa";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Modal } from 'antd';
+import { FaInfoCircle } from 'react-icons/fa';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const props = {
   footer: null,
@@ -21,7 +21,7 @@ const StatusModal = ({
         <div className="flex items-center gap-3">
           <FaInfoCircle
             style={{
-              fontSize: "20px",
+              fontSize: '20px',
             }}
           />
           <span>Status Update</span>
@@ -32,7 +32,7 @@ const StatusModal = ({
       {...props}
     >
       <GlobalUtilityStyle>
-        <span>{text ?? "Do you want to update your status?"}</span>
+        <span>{text ?? 'Do you want to update your status?'}</span>
         <div className="w-full flex justify-end items-center gap-3">
           <Button onClick={hideModal}>No</Button>
           <Button type="primary" onClick={handleStatus} loading={isLoading}>

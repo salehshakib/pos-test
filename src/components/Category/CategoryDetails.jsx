@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetCategoryDetailsQuery } from "../../redux/services/category/categoryApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetCategoryDetailsQuery } from '../../redux/services/category/categoryApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const CategoryDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetCategoryDetailsQuery(

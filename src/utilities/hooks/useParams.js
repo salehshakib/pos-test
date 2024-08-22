@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectParams } from "../../redux/services/paramSlice/paramSlice";
+import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectParams } from '../../redux/services/paramSlice/paramSlice';
 
 const RELATIONAL_PARAMS = {
   parent: 1,
@@ -11,7 +11,7 @@ const DEFAULT_PARAMS = {
   is_active: 1,
 };
 
-export const DEFAULT_SELECT_VALUES = ["id", "name"];
+export const DEFAULT_SELECT_VALUES = ['id', 'name'];
 
 export const useGlobalParams = ({
   isDefaultParams = true,

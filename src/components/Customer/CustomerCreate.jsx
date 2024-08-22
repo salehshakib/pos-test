@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateCustomerMutation } from "../../redux/services/customer/customerApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { CustomerForm } from "./CustomerForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateCustomerMutation } from '../../redux/services/customer/customerApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { CustomerForm } from './CustomerForm';
 
 const CustomerCreate = ({
   subDrawer,
@@ -39,7 +39,7 @@ const CustomerCreate = ({
 
   return (
     <CustomDrawer
-      title={"Create Customer"}
+      title={'Create Customer'}
       open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
       onClose={subDrawer && handleCloseSubDrawer}
     >

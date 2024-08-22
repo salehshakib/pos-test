@@ -1,20 +1,20 @@
-import { Row } from "antd";
-import { useState } from "react";
-import CouponsCreate from "../../../components/Coupons/CouponsCreate";
-import CouponsTable from "../../../components/Coupons/CouponsTable";
-import { CouponTypeFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { COUPON } from "../../../utilities/apiEndpoints/offer.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from 'antd';
+import { useState } from 'react';
+import CouponsCreate from '../../../components/Coupons/CouponsCreate';
+import CouponsTable from '../../../components/Coupons/CouponsTable';
+import { CouponTypeFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { COUPON } from '../../../utilities/apiEndpoints/offer.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Coupon Code",
-    dataIndex: "couponCode",
-    key: "couponCode",
-    align: "center",
+    title: 'Coupon Code',
+    dataIndex: 'couponCode',
+    key: 'couponCode',
+    align: 'center',
     render: (couponCode) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {couponCode}
@@ -22,10 +22,10 @@ const columns = [
     ),
   },
   {
-    title: "Type",
-    dataIndex: "type",
-    key: "type",
-    align: "center",
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
+    align: 'center',
     render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {type}
@@ -33,9 +33,9 @@ const columns = [
     ),
   },
   {
-    title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: 'amount',
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -43,9 +43,9 @@ const columns = [
     ),
   },
   {
-    title: "Minimum Amount",
-    dataIndex: "minimumAmount",
-    key: "minimumAmount",
+    title: 'Minimum Amount',
+    dataIndex: 'minimumAmount',
+    key: 'minimumAmount',
     render: (minimumAmount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {minimumAmount}
@@ -53,10 +53,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     render: (quantity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {quantity}
@@ -75,9 +75,9 @@ const columns = [
   //   ),
   // },
   {
-    title: "Created By",
-    dataIndex: "createdBy",
-    key: "createdBy",
+    title: 'Created By',
+    dataIndex: 'createdBy',
+    key: 'createdBy',
     render: (createdBy) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {createdBy}
@@ -85,10 +85,10 @@ const columns = [
     ),
   },
   {
-    title: "Coupon Issue",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    align: "center",
+    title: 'Coupon Issue',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    align: 'center',
     render: (createdAt) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {createdAt}
@@ -96,10 +96,10 @@ const columns = [
     ),
   },
   {
-    title: "Coupon Expired",
-    dataIndex: "expiredAt",
-    key: "expiredAt",
-    align: "center",
+    title: 'Coupon Expired',
+    dataIndex: 'expiredAt',
+    key: 'expiredAt',
+    align: 'center',
     render: (expiredAt) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {expiredAt}

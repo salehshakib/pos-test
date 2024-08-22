@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TypeForm from "./TypeForm";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import TypeForm from './TypeForm';
 
 const TypeEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const TypeEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Unit"}
+      title={'Edit Unit'}
       open={isEditDrawerOpen}
       // isLoading={isFetching}
     >

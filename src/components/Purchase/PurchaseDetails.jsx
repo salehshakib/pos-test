@@ -1,18 +1,18 @@
-import { Spin, Table } from "antd";
-import { useSelector } from "react-redux";
-import { tableProps } from "../../layout/TableLayout";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useGetPurchaseDetailsQuery } from "../../redux/services/purchase/purchaseApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { showCurrency } from "../../utilities/lib/currency";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin, Table } from 'antd';
+import { useSelector } from 'react-redux';
+import { tableProps } from '../../layout/TableLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetPurchaseDetailsQuery } from '../../redux/services/purchase/purchaseApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { showCurrency } from '../../utilities/lib/currency';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const columns = [
   {
-    title: "Product Name",
-    dataIndex: "product_name",
-    key: "product_name",
+    title: 'Product Name',
+    dataIndex: 'product_name',
+    key: 'product_name',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -20,10 +20,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -32,10 +32,10 @@ const columns = [
   },
   {
     // price
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "right",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'right',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -98,10 +98,10 @@ export const PurchaseDetails = ({ id, ...props }) => {
       id: item?.id,
       product_name:
         item?.products?.name ??
-        "Unknown Product" +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
-      qty: item.qty ?? "Unknown Quantity",
-      price: showCurrency(item?.net_unit_cost, currency) ?? "Unknown Price",
+        'Unknown Product' +
+          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      qty: item.qty ?? 'Unknown Quantity',
+      price: showCurrency(item?.net_unit_cost, currency) ?? 'Unknown Price',
     };
   });
 

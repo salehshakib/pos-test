@@ -23,9 +23,9 @@
 //   return routes;
 // };
 
-export const routeGenerator = (items, parentPath = "") => {
+export const routeGenerator = (items, parentPath = '') => {
   const routes = items.reduce((acc, item) => {
-    const currentPath = `${parentPath}/${item.path}`.replace(/\/+/g, "/");
+    const currentPath = `${parentPath}/${item.path}`.replace(/\/+/g, '/');
 
     // Add the route for the current item
     if (item.element) {

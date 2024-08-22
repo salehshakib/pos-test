@@ -1,17 +1,17 @@
-import { Form } from "antd";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
-import { useGetAllCashierQuery } from "../../redux/services/cashier/cashierApi";
+import { Form } from 'antd';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useCurrentUser } from '../../redux/services/auth/authSlice';
+import { useGetAllCashierQuery } from '../../redux/services/cashier/cashierApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const CashierComponent = ({
   required = true,
-  name = "cashier_id",
+  name = 'cashier_id',
   label = true,
   size,
 }) => {
@@ -38,8 +38,8 @@ export const CashierComponent = ({
 
   return (
     <CustomSelect
-      label={label && "Cashier"}
-      placeholder={"Cashier"}
+      label={label && 'Cashier'}
+      placeholder={'Cashier'}
       options={options}
       isLoading={isLoading}
       name={name}

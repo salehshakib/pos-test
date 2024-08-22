@@ -1,9 +1,9 @@
-import { Button, Form } from "antd";
-import { useEffect, useState } from "react";
-import { useUpdatePosSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
-import { appendToFormData } from "../../../utilities/lib/appendFormData";
-import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
-import PosSettingComponent from "./PosSettingComponent";
+import { Button, Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useUpdatePosSettingsMutation } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { appendToFormData } from '../../../utilities/lib/appendFormData';
+import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
+import PosSettingComponent from './PosSettingComponent';
 
 export const PosSettingForm = ({ data }) => {
   const [form] = Form.useForm();
@@ -18,42 +18,42 @@ export const PosSettingForm = ({ data }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "is_send_email",
-          value: data?.is_send_email.toString() === "1" ? true : false,
-          errors: "",
+          name: 'is_send_email',
+          value: data?.is_send_email.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "need_keyboard",
-          value: data?.need_keyboard.toString() === "1" ? true : false,
-          errors: "",
+          name: 'need_keyboard',
+          value: data?.need_keyboard.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "cash_payment",
-          value: data?.cash_payment.toString() === "1" ? true : false,
-          errors: "",
+          name: 'cash_payment',
+          value: data?.cash_payment.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "card_payment",
-          value: data?.card_payment.toString() === "1" ? true : false,
-          errors: "",
+          name: 'card_payment',
+          value: data?.card_payment.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "cheque_payment",
-          value: data?.cheque_payment.toString() === "1" ? true : false,
-          errors: "",
+          name: 'cheque_payment',
+          value: data?.cheque_payment.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "gift_card_payment",
-          value: data?.gift_card_payment.toString() === "1" ? true : false,
-          errors: "",
+          name: 'gift_card_payment',
+          value: data?.gift_card_payment.toString() === '1' ? true : false,
+          errors: '',
         },
       ];
 
       setFields(newFieldData);
 
       form.setFieldsValue({
-        a4_invoice_type: "rich",
-        thermal_invoice_type: "rich",
+        a4_invoice_type: 'rich',
+        thermal_invoice_type: 'rich',
       });
     }
   }, [data, form]);
@@ -82,14 +82,14 @@ export const PosSettingForm = ({ data }) => {
       invoice_of_inventory,
       a4_invoice,
       thermal_invoice,
-      cash_payment: cash_payment ? "1" : "0",
-      card_payment: card_payment ? "1" : "0",
-      cheque_payment: cheque_payment ? "1" : "0",
-      gift_card_payment: gift_card_payment ? "1" : "0",
-      is_send_email: is_send_email ? "1" : "0",
-      need_keyboard: need_keyboard ? "1" : "0",
+      cash_payment: cash_payment ? '1' : '0',
+      card_payment: card_payment ? '1' : '0',
+      cheque_payment: cheque_payment ? '1' : '0',
+      gift_card_payment: gift_card_payment ? '1' : '0',
+      is_send_email: is_send_email ? '1' : '0',
+      need_keyboard: need_keyboard ? '1' : '0',
 
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     appendToFormData(postData, formData);
@@ -114,7 +114,7 @@ export const PosSettingForm = ({ data }) => {
         handleSubmit(values);
       })
       .catch((error) => {
-        console.error("Validation error:", error);
+        console.error('Validation error:', error);
       });
   };
 

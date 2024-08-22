@@ -1,74 +1,74 @@
 //components
-import { FiShoppingBag } from "react-icons/fi";
-import { GoPeople } from "react-icons/go";
-import { LuArchive } from "react-icons/lu";
+import { FiShoppingBag } from 'react-icons/fi';
+import { GoPeople } from 'react-icons/go';
+import { LuArchive } from 'react-icons/lu';
 import {
   MdOutlineInventory2,
   MdOutlineSettings,
   MdOutlineSpaceDashboard,
-} from "react-icons/md";
-import { SlWallet } from "react-icons/sl";
+} from 'react-icons/md';
+import { SlWallet } from 'react-icons/sl';
 import {
   TbFilePercent,
   TbReport,
   TbTruckReturn,
   TbUsersGroup,
-} from "react-icons/tb";
-import { TfiShoppingCart } from "react-icons/tfi";
-import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import Purchase from "../pages/Dashboard/Purchase/Purchase";
-import { expensePaths } from "./ExpenseRoutes/expense.routes";
-import { generatorPaths } from "./Generator/generator.routes";
-import { hrmPaths } from "./HrmRoutes/hrm.routes";
-import { inventoryPaths } from "./InventoryRoutes/inventory.routes";
-import { peoplePaths } from "./PeopleRoutes/people.routes";
-import { productPaths } from "./ProductRoutes/product.routes";
-import { reportPaths } from "./ReportRoutes/report.routes";
-import { returnPaths } from "./ReturnRoutes/return.routes";
-import { salePaths } from "./SaleRoutes/sale.routes";
-import { settingPaths } from "./SettingRoutes/settings.routes";
+} from 'react-icons/tb';
+import { TfiShoppingCart } from 'react-icons/tfi';
+import AdminDashboard from '../pages/Dashboard/Admin/AdminDashboard';
+import Purchase from '../pages/Dashboard/Purchase/Purchase';
+import { expensePaths } from './ExpenseRoutes/expense.routes';
+import { generatorPaths } from './Generator/generator.routes';
+import { hrmPaths } from './HrmRoutes/hrm.routes';
+import { inventoryPaths } from './InventoryRoutes/inventory.routes';
+import { peoplePaths } from './PeopleRoutes/people.routes';
+import { productPaths } from './ProductRoutes/product.routes';
+import { reportPaths } from './ReportRoutes/report.routes';
+import { returnPaths } from './ReturnRoutes/return.routes';
+import { salePaths } from './SaleRoutes/sale.routes';
+import { settingPaths } from './SettingRoutes/settings.routes';
 
 export const adminPaths = [
   {
-    name: "Dashboard",
-    path: "dashboard",
+    name: 'Dashboard',
+    path: 'dashboard',
     icon: MdOutlineSpaceDashboard,
     element: <AdminDashboard />,
   },
   {
-    name: "Products",
-    path: "products",
+    name: 'Products',
+    path: 'products',
     icon: LuArchive,
     children: productPaths,
   },
   {
-    name: "Inventory",
-    path: "inventory",
+    name: 'Inventory',
+    path: 'inventory',
     icon: MdOutlineInventory2,
     children: inventoryPaths,
   },
   {
-    name: "Purchase",
-    path: "purchase",
+    name: 'Purchase',
+    path: 'purchase',
     icon: FiShoppingBag,
     element: <Purchase />,
     // children: purchasePaths,
   },
   {
-    name: "Sales",
-    path: "sales",
+    name: 'Sales',
+    path: 'sales',
     icon: TfiShoppingCart,
     children: salePaths,
   },
   {
-    name: "Expenses",
-    path: "expenses",
+    name: 'Expenses',
+    path: 'expenses',
     icon: SlWallet,
     children: expensePaths,
   },
   {
-    name: "Generator",
-    path: "generator",
+    name: 'Generator',
+    path: 'generator',
     icon: TbFilePercent,
     children: generatorPaths,
   },
@@ -80,8 +80,8 @@ export const adminPaths = [
   //   // children: transferPaths,
   // },
   {
-    name: "Return",
-    path: "return",
+    name: 'Return',
+    path: 'return',
     icon: TbTruckReturn,
     children: returnPaths,
   },
@@ -99,20 +99,20 @@ export const adminPaths = [
   //   // ],
   // },
   {
-    name: "HRM",
-    path: "hrm",
+    name: 'HRM',
+    path: 'hrm',
     icon: TbUsersGroup,
     children: hrmPaths,
   },
   {
-    name: "People",
-    path: "people",
+    name: 'People',
+    path: 'people',
     icon: GoPeople,
     children: peoplePaths,
   },
   {
-    name: "Reports",
-    path: "reports",
+    name: 'Reports',
+    path: 'reports',
     icon: TbReport,
     children: reportPaths,
   },
@@ -136,8 +136,8 @@ export const adminPaths = [
   //   element: <AddOns />,
   // },
   {
-    name: "Settings",
-    path: "settings",
+    name: 'Settings',
+    path: 'settings',
     icon: MdOutlineSettings,
     children: settingPaths,
   },

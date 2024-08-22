@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   register: false,
 };
 
 const cashRegisterSlice = createSlice({
-  name: "cashRegister",
+  name: 'cashRegister',
   initialState,
   reducers: {
     setCashRegister: (state) => {

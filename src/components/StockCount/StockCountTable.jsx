@@ -1,17 +1,17 @@
-import { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { useCurrentToken } from "../../redux/services/auth/authSlice";
-import { useGetStockCountsQuery } from "../../redux/services/stockCount/stockCountApi";
-import { STOCK_COUNT } from "../../utilities/apiEndpoints/inventory.api";
-import { base_url } from "../../utilities/configs/base_url";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { downloadFile } from "../../utilities/lib/downloadFile";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import CustomTable from "../Shared/Table/CustomTable";
+import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { useCurrentToken } from '../../redux/services/auth/authSlice';
+import { useGetStockCountsQuery } from '../../redux/services/stockCount/stockCountApi';
+import { STOCK_COUNT } from '../../utilities/apiEndpoints/inventory.api';
+import { base_url } from '../../utilities/configs/base_url';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { downloadFile } from '../../utilities/lib/downloadFile';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import CustomTable from '../Shared/Table/CustomTable';
 
-const pageTitle = "Stock Count";
+const pageTitle = 'Stock Count';
 const api = STOCK_COUNT;
 
 const StockCountTable = ({
@@ -61,34 +61,34 @@ const StockCountTable = ({
       setLoading(true);
       const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
       const supportedFormats = {
-        xlsx: "xlsx",
-        pdf: "pdf",
-        csv: "csv",
+        xlsx: 'xlsx',
+        pdf: 'pdf',
+        csv: 'csv',
       };
 
       if (!supportedFormats[format]) {
-        console.error("Unsupported file format");
+        console.error('Unsupported file format');
         return;
       }
 
-      fileUrl.searchParams.append("format", format);
+      fileUrl.searchParams.append('format', format);
 
       try {
         const response = await fetch(fileUrl, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
 
         if (!response.ok) {
-          throw new Error("Failed to download file");
+          throw new Error('Failed to download file');
         }
 
         await downloadFile(response, supportedFormats[format], pageTitle);
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
         setLoading(false);
       } finally {
         setLoading(false);
@@ -115,9 +115,9 @@ const StockCountTable = ({
         reference: reference_id,
         type: type,
         created_at,
-        warehouse: warehouses?.map((item) => item?.name).join(" "),
-        category: categories?.map((item) => item?.name).join(" "),
-        brand: brands?.map((item) => item?.name).join(" "),
+        warehouse: warehouses?.map((item) => item?.name).join(' '),
+        category: categories?.map((item) => item?.name).join(' '),
+        brand: brands?.map((item) => item?.name).join(' '),
 
         handleFileDownload,
       };

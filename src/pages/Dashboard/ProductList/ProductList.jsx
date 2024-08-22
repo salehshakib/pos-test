@@ -1,8 +1,8 @@
-import { Row } from "antd";
-import { useState } from "react";
-import defaultUser from "../../../assets/data/defaultUserImage";
-import ProductCreate from "../../../components/Product/ProductCreate";
-import ProductTable from "../../../components/Product/ProductTable";
+import { Row } from 'antd';
+import { useState } from 'react';
+import defaultUser from '../../../assets/data/defaultUserImage';
+import ProductCreate from '../../../components/Product/ProductCreate';
+import ProductTable from '../../../components/Product/ProductTable';
 import {
   BarcodeFilter,
   BrandFilter,
@@ -13,20 +13,20 @@ import {
   SaleUnitFilter,
   TaxFilter,
   WarehouseFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { PRODUCT } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Img",
-    dataIndex: "img",
-    key: "img",
-    fixed: "left",
-    align: "center",
+    title: 'Img',
+    dataIndex: 'img',
+    key: 'img',
+    fixed: 'left',
+    align: 'center',
     width: 70,
     render: (img) => (
       <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
@@ -39,9 +39,9 @@ const columns = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -49,10 +49,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -60,10 +60,10 @@ const columns = [
     ),
   },
   {
-    title: "Type",
-    dataIndex: "type",
-    key: "type",
-    align: "center",
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
+    align: 'center',
     render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {type}
@@ -71,30 +71,30 @@ const columns = [
     ),
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
+    title: 'Brand',
+    dataIndex: 'brand',
+    key: 'brand',
     render: (brand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {brand ?? "N/A"}
+        {brand ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
+    title: 'Category',
+    dataIndex: 'category',
+    key: 'category',
     render: (category) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {category ?? "N/A"}
+        {category ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     render: (quantity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {quantity ?? 0}
@@ -103,9 +103,9 @@ const columns = [
   },
 
   {
-    title: "Buying Cost",
-    dataIndex: "cost",
-    key: "cost",
+    title: 'Buying Cost',
+    dataIndex: 'cost',
+    key: 'cost',
     render: (cost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {cost}
@@ -113,9 +113,9 @@ const columns = [
     ),
   },
   {
-    title: "Selling Price",
-    dataIndex: "price",
-    key: "price",
+    title: 'Selling Price',
+    dataIndex: 'price',
+    key: 'price',
     render: (price) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {price}

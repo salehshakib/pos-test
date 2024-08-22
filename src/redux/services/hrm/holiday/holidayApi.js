@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { HOLIDAY } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { HOLIDAY } from '../../../../utilities/apiEndpoints/hrm.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const holidayApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllHoliday: build.query({
       query: ({ params }) => ({
         url: `/${HOLIDAY}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const holidayApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${HOLIDAY}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -35,19 +35,19 @@ const holidayApi = baseApi.injectEndpoints({
       query: ({ formData }) => {
         return {
           url: `/${HOLIDAY}/store`,
-          method: "POST",
+          method: 'POST',
           body: formData,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const holidayApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${HOLIDAY}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const holidayApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${HOLIDAY}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const holidayApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${HOLIDAY}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -133,19 +133,19 @@ const holidayApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${HOLIDAY}/export`,
-          method: "GET",
+          method: 'GET',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

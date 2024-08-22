@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Form } from "antd";
-import { useState } from "react";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
   BlockQuote,
   Bold,
@@ -24,12 +24,12 @@ import {
   SourceEditing,
   Table,
   Undo,
-} from "ckeditor5";
+} from 'ckeditor5';
 
-import "ckeditor5/ckeditor5.css";
+import 'ckeditor5/ckeditor5.css';
 
 const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
-  const [editor, setEditor] = useState("");
+  const [editor, setEditor] = useState('');
 
   const hangleChange = (content, editor) => {
     console.log(content);
@@ -64,20 +64,20 @@ const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
             },
             toolbar: {
               items: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "fontSize",
-                "fontFamily",
-                "|",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "blockQuote",
-                "|",
-                "undo",
-                "redo",
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'fontSize',
+                'fontFamily',
+                '|',
+                'link',
+                'bulletedList',
+                'numberedList',
+                'blockQuote',
+                '|',
+                'undo',
+                'redo',
               ],
             },
             plugins: [

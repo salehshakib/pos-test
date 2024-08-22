@@ -1,32 +1,32 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
-import { currencies } from "currencies.json";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { FaPlus, FaRegEdit } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { fullColLayout } from "../../layout/FormLayout";
-import { useGetAllCouponQuery } from "../../redux/services/coupon/couponApi";
-import { useGetAllCustomerQuery } from "../../redux/services/customer/customerApi";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Row, Table, Tooltip, Typography } from 'antd';
+import { currencies } from 'currencies.json';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { FaPlus, FaRegEdit } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { fullColLayout } from '../../layout/FormLayout';
+import { useGetAllCouponQuery } from '../../redux/services/coupon/couponApi';
+import { useGetAllCustomerQuery } from '../../redux/services/customer/customerApi';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetAllTaxQuery } from '../../redux/services/tax/taxApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { showCurrency } from "../../utilities/lib/currency";
-import { openNotification } from "../../utilities/lib/openToaster";
-import CustomerCreate from "../Customer/CustomerCreate";
-import { CashierComponent } from "../ReusableComponent/CashierComponent";
-import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomModal from "../Shared/Modal/CustomModal";
-import { SearchProduct } from "../Shared/ProductControllerComponent/SearchProduct";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import { CustomSelectButton } from "../Shared/Select/CustomSelectButton";
-import ProductTableComponent from "./PosProductTableComponent";
+} from '../../utilities/hooks/useParams';
+import { showCurrency } from '../../utilities/lib/currency';
+import { openNotification } from '../../utilities/lib/openToaster';
+import CustomerCreate from '../Customer/CustomerCreate';
+import { CashierComponent } from '../ReusableComponent/CashierComponent';
+import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomModal from '../Shared/Modal/CustomModal';
+import { SearchProduct } from '../Shared/ProductControllerComponent/SearchProduct';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import { CustomSelectButton } from '../Shared/Select/CustomSelectButton';
+import ProductTableComponent from './PosProductTableComponent';
 const { Text } = Typography;
 
 const CustomerComponent = ({ size }) => {
@@ -47,8 +47,8 @@ const CustomerComponent = ({ size }) => {
   }));
 
   useEffect(() => {
-    if (options?.length && !form.getFieldValue("customer_id")) {
-      form.setFieldValue("customer_id", options[0].value);
+    if (options?.length && !form.getFieldValue('customer_id')) {
+      form.setFieldValue('customer_id', options[0].value);
     }
   }, [form, options]);
 
@@ -63,7 +63,7 @@ const CustomerComponent = ({ size }) => {
   return (
     <>
       <CustomSelectButton
-        placeholder={"customer"}
+        placeholder={'customer'}
         showSearch={true}
         isLoading={isLoading}
         options={options}
@@ -94,13 +94,13 @@ const CurrencyComponent = ({ size }) => {
 
   useEffect(() => {
     if (options?.length) {
-      form.setFieldValue("currency", currency?.name);
+      form.setFieldValue('currency', currency?.name);
     }
   }, [currency?.name, form, options]);
 
   return (
     <CustomSelect
-      placeholder={"currency"}
+      placeholder={'currency'}
       showSearch={true}
       options={options}
       required={true}
@@ -115,14 +115,14 @@ const CurrencyExchangeComponent = (size) => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("exchange_rate", 1);
+    form.setFieldValue('exchange_rate', 1);
   }, [form]);
 
   const content = (
     <Tooltip title="Cuurency Exchange Rate">
       <InfoCircleOutlined
         style={{
-          color: "rgba(0,0,0,.45)",
+          color: 'rgba(0,0,0,.45)',
         }}
       />
     </Tooltip>
@@ -130,9 +130,9 @@ const CurrencyExchangeComponent = (size) => {
 
   return (
     <CustomInput
-      type={"number"}
-      name={"exchange_rate"}
-      placeholder={"Exchange Rate"}
+      type={'number'}
+      name={'exchange_rate'}
+      placeholder={'Exchange Rate'}
       suffix={content}
       customStyle={true}
       size={size}
@@ -142,7 +142,7 @@ const CurrencyExchangeComponent = (size) => {
 
 const TaxComponent = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
   });
 
   const { data, isFetching } = useGetAllTaxQuery({
@@ -158,9 +158,9 @@ const TaxComponent = () => {
   return (
     <CustomSelect
       options={options}
-      name={"tax_rate"}
+      name={'tax_rate'}
       isLoading={isFetching}
-      placeholder={"Vat"}
+      placeholder={'Vat'}
     />
   );
 };
@@ -194,9 +194,9 @@ const CouponComponent = ({ setType, setProductUnits }) => {
   return (
     <CustomSelect
       options={options}
-      name={"coupon_id"}
+      name={'coupon_id'}
       isLoading={isFetching}
-      placeholder={"Coupon"}
+      placeholder={'Coupon'}
       onSelect={onSelect}
       showSearch={true}
     />
@@ -208,7 +208,7 @@ const RegisterForm = ({ products, setProducts }) => {
 
   useEffect(() => {
     const currentDate = dayjs(new Date());
-    form.setFieldValue("sale_at", currentDate);
+    form.setFieldValue('sale_at', currentDate);
   }, [form]);
 
   return (
@@ -217,9 +217,9 @@ const RegisterForm = ({ products, setProducts }) => {
         <Row gutter={5}>
           <Col span={4}>
             <CustomDatepicker
-              name={"sale_at"}
+              name={'sale_at'}
               required={true}
-              placeholder={"Date"}
+              placeholder={'Date'}
               customStyle={true}
               size="default"
             />
@@ -238,10 +238,10 @@ const RegisterForm = ({ products, setProducts }) => {
 
           <Col span={12}>
             <CustomInput
-              type={"text"}
+              type={'text'}
               // required={true}
-              placeholder={"Reference Number"}
-              name={"reference_number"}
+              placeholder={'Reference Number'}
+              name={'reference_number'}
               size="default"
               customStyle={true}
             />
@@ -291,11 +291,7 @@ export const PosRegister = ({
       0
     );
     setTotalPrice(totalPrice?.toFixed(2));
-
-
   }, [formValues, products]);
-
-
 
   const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(0);
@@ -313,18 +309,18 @@ export const PosRegister = ({
     setModalType(null);
   };
 
-  const taxRate = Form.useWatch("tax_rate", form);
+  const taxRate = Form.useWatch('tax_rate', form);
 
   const handleSubmit = async () => {
-    if (modalType === "Discount") {
+    if (modalType === 'Discount') {
       setDiscount(form.getFieldValue(modalType));
     }
 
-    if (modalType === "Shipping Cost") {
+    if (modalType === 'Shipping Cost') {
       setShipping(form.getFieldValue(modalType));
     }
 
-    if (modalType === "Coupon") {
+    if (modalType === 'Coupon') {
       if (totalPrice < productUnits.minimum_amount) {
         // message.error(
         //   "Coupon can be applied only if total price is greater than " +
@@ -332,16 +328,16 @@ export const PosRegister = ({
         // );
 
         openNotification(
-          "info",
-          "Coupon can be applied only if total price is greater than " +
-          productUnits.minimum_amount
+          'info',
+          'Coupon can be applied only if total price is greater than ' +
+            productUnits.minimum_amount
         );
 
         // hideModal();
         return;
       }
 
-      if (type?.toLowerCase() === "fixed") {
+      if (type?.toLowerCase() === 'fixed') {
         setCoupon(productUnits.coupon_rate);
       }
     }
@@ -397,7 +393,7 @@ export const PosRegister = ({
       offsetScroll: 400,
     },
     scroll: {
-      x: "min-content",
+      x: 'min-content',
     },
   };
 
@@ -412,7 +408,7 @@ export const PosRegister = ({
   // console.log(productUnits.minimum_amount);
 
   useEffect(() => {
-    if (type?.toLowerCase() === "fixed") {
+    if (type?.toLowerCase() === 'fixed') {
       setCoupon(productUnits.coupon_rate);
     }
   }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
@@ -460,7 +456,7 @@ export const PosRegister = ({
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("Discount")}
+                  onClick={() => showModal('Discount')}
                 >
                   Discount
                   <FaRegEdit className="primary-text" />
@@ -471,7 +467,7 @@ export const PosRegister = ({
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("Coupon")}
+                  onClick={() => showModal('Coupon')}
                 >
                   Coupon
                   <FaRegEdit className="primary-text" />
@@ -482,7 +478,7 @@ export const PosRegister = ({
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline "
-                  onClick={() => showModal("Tax")}
+                  onClick={() => showModal('Tax')}
                 >
                   Vat
                   <FaRegEdit className="primary-text" />
@@ -493,7 +489,7 @@ export const PosRegister = ({
               <div className="grid grid-cols-2">
                 <span
                   className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal("Shipping Cost")}
+                  onClick={() => showModal('Shipping Cost')}
                 >
                   Shipping
                   <FaRegEdit className="primary-text" />
@@ -559,9 +555,9 @@ export const PosRegister = ({
         >
           <Row>
             <Col {...fullColLayout}>
-              {modalType === "Tax" ? (
+              {modalType === 'Tax' ? (
                 <TaxComponent />
-              ) : modalType === "Coupon" ? (
+              ) : modalType === 'Coupon' ? (
                 <CouponComponent
                   setType={setType}
                   setProductUnits={setProductUnits}

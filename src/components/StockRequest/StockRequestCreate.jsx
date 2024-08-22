@@ -1,14 +1,14 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { setLoading } from "../../redux/services/loader/loaderSlice";
-import { useGetAllProductsQuery } from "../../redux/services/product/productApi";
-import { useCreateStockRequestMutation } from "../../redux/services/stockRequest/stockRequestApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { StockRequestForm } from "./StockRequestForm";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { setLoading } from '../../redux/services/loader/loaderSlice';
+import { useGetAllProductsQuery } from '../../redux/services/product/productApi';
+import { useCreateStockRequestMutation } from '../../redux/services/stockRequest/stockRequestApi';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { StockRequestForm } from './StockRequestForm';
 
 const StockRequestCreate = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const StockRequestCreate = () => {
     product_list: { qty: {}, min_qty: {} },
   });
 
-  const warehouseId = Form.useWatch("from_warehouse_id", form);
+  const warehouseId = Form.useWatch('from_warehouse_id', form);
 
   const params = useGlobalParams({
     params: {
@@ -99,7 +99,7 @@ const StockRequestCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Stock Request"}
+      title={'Create Stock Request'}
       open={isCreateDrawerOpen}
       width={1400}
     >

@@ -1,10 +1,10 @@
-import { Card, Divider, Form, Skeleton, Spin } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { productImage } from "../../../assets/data/productImage";
-import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
-import CustomForm from "../../Shared/Form/CustomForm";
+import { Card, Divider, Form, Skeleton, Spin } from 'antd';
+import { useCallback, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { productImage } from '../../../assets/data/productImage';
+import { useGetAllCategoryQuery } from '../../../redux/services/category/categoryApi';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import CustomForm from '../../Shared/Form/CustomForm';
 
 const { Meta } = Card;
 
@@ -69,9 +69,9 @@ export const Categories = ({
     <div
       id="scrollableDiv"
       style={{
-        height: "90vh",
-        overflow: "auto",
-        padding: "0 16px",
+        height: '90vh',
+        overflow: 'auto',
+        padding: '0 16px',
       }}
     >
       <InfiniteScroll

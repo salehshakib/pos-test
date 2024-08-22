@@ -1,5 +1,5 @@
-import { notification } from "antd";
-import { baseApi } from "../api/baseApi";
+import { notification } from 'antd';
+import { baseApi } from '../api/baseApi';
 
 const mutationApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -7,17 +7,17 @@ const mutationApi = baseApi.injectEndpoints({
       query: ({ url, data }) => {
         return {
           url: `/${url}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
           notification?.success({
-            message: "Success",
+            message: 'Success',
             description:
               response?.message ??
-              "No Message is provided. Task Completed Successfully",
+              'No Message is provided. Task Completed Successfully',
           });
           return response;
         }
@@ -31,17 +31,17 @@ const mutationApi = baseApi.injectEndpoints({
       query: ({ url, data }) => {
         return {
           url: `/${url}/update/${data?.id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
           notification?.success({
-            message: "Success",
+            message: 'Success',
             description:
               response?.message ??
-              "No Message is provided. Task Completed Successfully",
+              'No Message is provided. Task Completed Successfully',
           });
 
           return response;

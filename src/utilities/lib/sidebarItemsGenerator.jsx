@@ -57,12 +57,12 @@
 //   return sidebarItems;
 // };
 
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export const sidebarItemsGenerator = (items, parentPath = "") => {
+export const sidebarItemsGenerator = (items, parentPath = '') => {
   const sidebarItems = items.reduce((acc, item) => {
-    const currentPath = `${parentPath}/${item.path}`.replace(/\/+/g, "/");
+    const currentPath = `${parentPath}/${item.path}`.replace(/\/+/g, '/');
 
     const newItem = {
       key: item.name,
@@ -70,14 +70,14 @@ export const sidebarItemsGenerator = (items, parentPath = "") => {
       icon:
         item?.icon &&
         React.createElement(item?.icon, {
-          className: "size-4 lg:size-5",
+          className: 'size-4 lg:size-5',
         }),
       label: item.children ? (
-        <span className="text-xs lg:text-md">{item.name}</span>
+        <span className="text-xs lg:text-sm">{item.name}</span>
       ) : (
         <NavLink
           className={({ isActive }) =>
-            isActive ? "font-bold text-xs lg:text-md" : "text-xs lg:text-md"
+            isActive ? 'font-bold text-xs lg:text-sm' : 'text-xs lg:text-sm'
           }
           to={currentPath}
         >

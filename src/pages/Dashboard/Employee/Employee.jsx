@@ -1,26 +1,26 @@
-import { Row } from "antd";
-import { useState } from "react";
-import defaultUser from "../../../assets/data/defaultUserImage";
-import EmployeeCreate from "../../../components/Employee/EmployeeCreate";
-import EmployeeTable from "../../../components/Employee/EmployeeTable";
+import { Row } from 'antd';
+import { useState } from 'react';
+import defaultUser from '../../../assets/data/defaultUserImage';
+import EmployeeCreate from '../../../components/Employee/EmployeeCreate';
+import EmployeeTable from '../../../components/Employee/EmployeeTable';
 import {
   DepartmentFilter,
   DesignationFilter,
   EmployeeStatusFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { EMPLOYEE } from "../../../utilities/apiEndpoints/hrm.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { EMPLOYEE } from '../../../utilities/apiEndpoints/hrm.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
-    fixed: "left",
-    align: "center",
+    title: 'Img',
+    dataIndex: 'image',
+    key: 'image',
+    fixed: 'left',
+    align: 'center',
     width: 70,
     render: (img) => (
       <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
@@ -33,9 +33,9 @@ const columns = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -49,9 +49,9 @@ const columns = [
   },
   {
     //adress
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
     width: 300,
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -61,21 +61,21 @@ const columns = [
   },
   {
     //phone
-    title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone',
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {"0" + phone}
+        {'0' + phone}
       </span>
     ),
   },
   {
     //phone
-    title: "Join Date",
-    dataIndex: "join_date",
-    key: "join_date",
-    align: "center",
+    title: 'Join Date',
+    dataIndex: 'join_date',
+    key: 'join_date',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

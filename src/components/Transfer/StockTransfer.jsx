@@ -1,18 +1,18 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useGetStockRequestDetailsQuery } from "../../redux/services/stockRequest/stockRequestApi";
-import { useCreateTransferMutation } from "../../redux/services/transfer/transferApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
+import { useCreateTransferMutation } from '../../redux/services/transfer/transferApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { StockTransferForm } from "./StockTransferForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { StockTransferForm } from './StockTransferForm';
 
 export const StockTransfer = () => {
   const { state } = useLocation();
@@ -36,7 +36,7 @@ export const StockTransfer = () => {
     setStockTransferDrawer(false);
     setStockTransferId(undefined);
     if (stockTransferId) {
-      navigate("/inventory/transfer", { replace: true });
+      navigate('/inventory/transfer', { replace: true });
     }
   };
 
@@ -115,7 +115,7 @@ export const StockTransfer = () => {
       : [];
 
     if (productListArray.length === 0) {
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -199,7 +199,7 @@ export const StockTransfer = () => {
 
   return (
     <CustomDrawer
-      title={"Stock Transfer"}
+      title={'Stock Transfer'}
       open={stockTransferDrawer}
       width={1400}
       onClose={hideDrawer}

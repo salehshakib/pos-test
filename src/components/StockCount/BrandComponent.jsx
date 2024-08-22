@@ -1,11 +1,11 @@
-import { Col } from "antd";
-import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
-import { mdColLayout } from "../../layout/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { Col } from 'antd';
+import { useGetBrandsQuery } from '../../redux/services/brand/brandApi';
+import { mdColLayout } from '../../layout/FormLayout';
+import CustomSelect from '../Shared/Select/CustomSelect';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
+} from '../../utilities/hooks/useParams';
 
 export const BrandComponent = () => {
   const params = useGlobalParams({
@@ -23,7 +23,7 @@ export const BrandComponent = () => {
   return (
     <Col {...mdColLayout}>
       <CustomSelect
-        name={"brand_ids"}
+        name={'brand_ids'}
         label="Brand"
         options={options}
         isLoading={isFetching}

@@ -1,12 +1,12 @@
-import { Col, Row } from "antd";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
-import { useCustomDebounce } from "../../utilities/hooks/useDebounce";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import DebounceSelect from "../Shared/Select/DebounceSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
+import { Col, Row } from 'antd';
+import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useGetAllCategoryQuery } from '../../redux/services/category/categoryApi';
+import { useCustomDebounce } from '../../utilities/hooks/useDebounce';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import DebounceSelect from '../Shared/Select/DebounceSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
 
 const ParentCategoryComponent = () => {
   const { keyword, debounce } = useCustomDebounce();
@@ -29,8 +29,8 @@ const ParentCategoryComponent = () => {
   return (
     <DebounceSelect
       label="Parent Category"
-      name={"parent_id"}
-      placeholder={"Parent Category"}
+      name={'parent_id'}
+      placeholder={'Parent Category'}
       onSearch={debounce}
       options={options}
       isLoading={isFetching}
@@ -45,17 +45,17 @@ const CategoryForm = (props) => {
         <Col {...mdColLayout}>
           <CustomInput
             label="Category Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
-            placeholder={"Category Name"}
+            name={'name'}
+            placeholder={'Category Name'}
           />
         </Col>
         <Col {...mdColLayout}>
           <ParentCategoryComponent />
         </Col>
         <Col {...fullColLayout}>
-          <CustomUploader label={"Category Image"} name={"attachment"} />
+          <CustomUploader label={'Category Image'} name={'attachment'} />
         </Col>
       </Row>
     </CustomForm>

@@ -1,22 +1,22 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../../redux/services/drawer/drawerSlice';
 import {
   useGetInvoiceDetailsQuery,
   useUpdateInvoiceMutation,
-} from "../../../redux/services/invoice/invoiceApi";
-import { appendToFormData } from "../../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
+} from '../../../redux/services/invoice/invoiceApi';
+import { appendToFormData } from '../../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import CustomDrawer from "../../Shared/Drawer/CustomDrawer";
-import { QuotationForm } from "../Quotation/QuotationForm";
+} from '../../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import CustomDrawer from '../../Shared/Drawer/CustomDrawer';
+import { QuotationForm } from '../Quotation/QuotationForm';
 
 const InvoiceEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -149,24 +149,24 @@ const InvoiceEdit = ({ id }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "warehouse_id",
+          name: 'warehouse_id',
           value: data?.warehouse_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "cashier_id",
+          name: 'cashier_id',
           value: data?.cashier_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "supplier_id",
+          name: 'supplier_id',
           value: data?.supplier_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "customer_id",
+          name: 'customer_id',
           value: data?.customer_id?.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -197,7 +197,7 @@ const InvoiceEdit = ({ id }) => {
 
     if (productListArray.length === 0) {
       // message.info("Please add atleast one product");
-      openNotification("info", "Please add atleast one product");
+      openNotification('info', 'Please add atleast one product');
       return;
     }
     const totalPrice = calculateTotalPrice(product_list);
@@ -240,7 +240,7 @@ const InvoiceEdit = ({ id }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (attachment?.[0].originFileObj) {
@@ -285,7 +285,7 @@ const InvoiceEdit = ({ id }) => {
   if (!id) return;
   return (
     <CustomDrawer
-      title={"Edit Invoice"}
+      title={'Edit Invoice'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
       width={1400}

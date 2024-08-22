@@ -1,33 +1,33 @@
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { onDelete } from "../../../utilities/lib/productTable/counters";
-import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
-import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { onDelete } from '../../../utilities/lib/productTable/counters';
+import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
+import { ProductTable } from '../../Shared/ProductControllerComponent/ProductTable';
 
 const columns = [
   {
-    title: "Choose",
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    title: 'Choose',
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 80,
-    fixed: "left",
+    fixed: 'left',
     render: (props, record) => {
       const onChange = (value) => {
         const { id, checked } = value.target;
-        const productId = id.split("_")[1];
+        const productId = id.split('_')[1];
 
         if (parseInt(record?.requestedStock) <= parseInt(record?.stock)) {
           record.updateProductList(productId, checked, record.stock);
         } else {
-          record.form.setFieldValue(["delete", record?.id], false);
+          record.form.setFieldValue(['delete', record?.id], false);
           return openNotification(
-            "error",
-            "Requested stock is greater than stock"
+            'error',
+            'Requested stock is greater than stock'
           );
         }
       };
@@ -36,7 +36,7 @@ const columns = [
           <div className="flex justify-center items-center gap-3 pl-9">
             <CustomCheckbox
               value={record?.id}
-              name={["delete", record?.id]}
+              name={['delete', record?.id]}
               onChange={onChange}
             />
           </div>
@@ -45,9 +45,9 @@ const columns = [
     },
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -55,10 +55,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -67,10 +67,10 @@ const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "right",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'right',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -79,10 +79,10 @@ const columns = [
     ),
   },
   {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     width: 100,
     render: (stock) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -91,24 +91,24 @@ const columns = [
     ),
   },
   {
-    title: "Requested",
-    dataIndex: "requestedStock",
-    key: "requestedStock",
-    align: "center",
+    title: 'Requested',
+    dataIndex: 'requestedStock',
+    key: 'requestedStock',
+    align: 'center',
     width: 100,
     render: (requestedStock, record) => (
       <span
-        className={`text-xs font-medium md:text-sm text-dark dark:text-white87 ${record?.stock < record?.requestedStock ? "text-red-500" : ""}`}
+        className={`text-xs font-medium md:text-sm text-dark dark:text-white87 ${record?.stock < record?.requestedStock ? 'text-red-500' : ''}`}
       >
         {requestedStock ?? 0}
       </span>
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "right",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'right',
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -117,10 +117,10 @@ const columns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "right",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'right',
     width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -159,7 +159,7 @@ function setFormValuesId(
     formValues.product_list.net_unit_cost[id] =
       sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
       sanitizeFloatValue(unit_cost) ||
-      "0";
+      '0';
 
     // formValues.product_list.discount[id] = sanitizeFloatValue(
     //   formValues.product_list.discount?.[id] ?? 0
@@ -187,8 +187,8 @@ function setFormValuesId(
 
     formValues.product_list.total[id] =
       sanitizeIntValue(productUnits.purchase_units?.[id]) *
-      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-      sanitizeIntValue(formValues.product_list.qty?.[id]) -
+        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+        sanitizeIntValue(formValues.product_list.qty?.[id]) -
       //   sanitizeFloatValue(formValues.product_list.discount?.[id]) +
       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 
@@ -344,7 +344,7 @@ export const StockTransferProductTable = ({
 
   const dataSource = products?.map((item) => {
     const { products } = item;
-    const warehouseId = form.getFieldValue("from_warehouse_id");
+    const warehouseId = form.getFieldValue('from_warehouse_id');
 
     const {
       id,

@@ -1,11 +1,11 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateAnnouncementMutation } from "../../redux/services/hrm/announcement/announcementApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { AnnouncementForm } from "./AnnouncementForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateAnnouncementMutation } from '../../redux/services/hrm/announcement/announcementApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { AnnouncementForm } from './AnnouncementForm';
 
 export const AnnoucementCreate = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const AnnoucementCreate = () => {
 
     const postData = {
       ...values,
-      is_send_email: values?.is_send_email ? "1" : "0",
+      is_send_email: values?.is_send_email ? '1' : '0',
     };
 
     appendToFormData(postData, formData);
@@ -42,7 +42,7 @@ export const AnnoucementCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Announcement"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Announcement'} open={isCreateDrawerOpen}>
       <AnnouncementForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

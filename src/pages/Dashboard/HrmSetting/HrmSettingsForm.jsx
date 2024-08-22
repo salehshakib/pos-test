@@ -1,36 +1,36 @@
-import { Button, Col, Form, Row } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import CustomDatepicker from "../../../components/Shared/DatePicker/CustomDatepicker";
-import CustomInput from "../../../components/Shared/Input/CustomInput";
-import { colLayout, rowLayout } from "../../../layout/FormLayout";
-import { useUpdateHrmSettingMutation } from "../../../redux/services/settings/hrmSettings/hrmSettingsApi";
-import { appendToFormData } from "../../../utilities/lib/appendFormData";
+import { Button, Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import CustomDatepicker from '../../../components/Shared/DatePicker/CustomDatepicker';
+import CustomInput from '../../../components/Shared/Input/CustomInput';
+import { colLayout, rowLayout } from '../../../layout/FormLayout';
+import { useUpdateHrmSettingMutation } from '../../../redux/services/settings/hrmSettings/hrmSettingsApi';
+import { appendToFormData } from '../../../utilities/lib/appendFormData';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../../utilities/lib/fieldsToUpdate";
+} from '../../../utilities/lib/fieldsToUpdate';
 
 export const HrmSettingForm = ({ data }) => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
-  const startTime = Form.useWatch("start_time", form);
-  const endTime = Form.useWatch("end_time", form);
+  const startTime = Form.useWatch('start_time', form);
+  const endTime = Form.useWatch('end_time', form);
 
   useEffect(() => {
     if (startTime && endTime) {
-      const timeDiff = endTime.diff(startTime, "second");
+      const timeDiff = endTime.diff(startTime, 'second');
 
       const hours = Math.floor(timeDiff / 3600);
       const minutes = Math.floor((timeDiff % 3600) / 60);
       const seconds = timeDiff % 60;
 
-      const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+      const formattedTime = `${String(hours).padStart(2, '0')}:${String(
         minutes
-      ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      ).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-      form.setFieldValue("office_hours", formattedTime);
+      form.setFieldValue('office_hours', formattedTime);
     }
   }, [form, startTime, endTime]);
 
@@ -41,14 +41,14 @@ export const HrmSettingForm = ({ data }) => {
       const fieldData = fieldsToUpdate(data);
       const updateFieldData = [
         {
-          name: "start_time",
-          value: dayjs(data?.start_time, "HH:mm:ss"),
-          errors: "",
+          name: 'start_time',
+          value: dayjs(data?.start_time, 'HH:mm:ss'),
+          errors: '',
         },
         {
-          name: "end_time",
-          value: dayjs(data?.end_time, "HH:mm:ss"),
-          errors: "",
+          name: 'end_time',
+          value: dayjs(data?.end_time, 'HH:mm:ss'),
+          errors: '',
         },
       ];
 
@@ -70,10 +70,10 @@ export const HrmSettingForm = ({ data }) => {
     // const timeString = values?.office_hours ?? "00:00:00";
     // const [hours] = timeString.split(":").map(Number);
     const postData = {
-      start_time: start_time.format("HH:mm:ss"),
-      end_time: end_time.format("HH:mm:ss"),
+      start_time: start_time.format('HH:mm:ss'),
+      end_time: end_time.format('HH:mm:ss'),
       // office_hours: hours,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     appendToFormData(postData, formData);
@@ -92,7 +92,7 @@ export const HrmSettingForm = ({ data }) => {
         handleSubmit(values);
       })
       .catch((error) => {
-        console.error("Validation error:", error);
+        console.error('Validation error:', error);
       });
   };
 
@@ -118,8 +118,8 @@ export const HrmSettingForm = ({ data }) => {
               type="time"
               picker="time"
               required={true}
-              name={"start_time"}
-              placeholder={"Start Time"}
+              name={'start_time'}
+              placeholder={'Start Time'}
             />
           </Col>
           <Col {...colLayout}>
@@ -128,15 +128,15 @@ export const HrmSettingForm = ({ data }) => {
               type="time"
               picker="time"
               required={true}
-              name={"end_time"}
-              placeholder={"End Time"}
+              name={'end_time'}
+              placeholder={'End Time'}
             />
           </Col>
           <Col {...colLayout}>
             <CustomInput
               label="Office Hours"
               type="text"
-              name={"office_hours"}
+              name={'office_hours'}
             />
           </Col>
         </Row>

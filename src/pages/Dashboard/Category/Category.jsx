@@ -1,22 +1,22 @@
-import { Row } from "antd";
-import { useState } from "react";
-import defaultUser from "../../../assets/data/defaultUserImage";
-import CategoryCreate from "../../../components/Category/CategoryCreate";
-import CategoryTable from "../../../components/Category/CategoryTable";
-import { CategoryFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { CATEGORY } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from 'antd';
+import { useState } from 'react';
+import defaultUser from '../../../assets/data/defaultUserImage';
+import CategoryCreate from '../../../components/Category/CategoryCreate';
+import CategoryTable from '../../../components/Category/CategoryTable';
+import { CategoryFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { CATEGORY } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Img",
-    dataIndex: "img",
-    key: "img",
-    fixed: "left",
-    align: "center",
+    title: 'Img',
+    dataIndex: 'img',
+    key: 'img',
+    fixed: 'left',
+    align: 'center',
     width: 70,
     render: (img) => (
       <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
@@ -29,9 +29,9 @@ const columns = [
     ),
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
+    title: 'Category',
+    dataIndex: 'category',
+    key: 'category',
     render: (category) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {category}
@@ -39,9 +39,9 @@ const columns = [
     ),
   },
   {
-    title: "Parent Category",
-    dataIndex: "parentCategory",
-    key: "parentCategory",
+    title: 'Parent Category',
+    dataIndex: 'parentCategory',
+    key: 'parentCategory',
     render: (parentCategory) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {parentCategory}
@@ -53,7 +53,7 @@ const columns = [
 const SearchComponent = () => {
   return (
     <Row {...rowLayout}>
-      <CategoryFilter label={"Parent Category"} name={"parent_category_ids"} />
+      <CategoryFilter label={'Parent Category'} name={'parent_category_ids'} />
     </Row>
   );
 };

@@ -1,16 +1,16 @@
-import { Button, Col, Form, Row } from "antd";
-import { useState } from "react";
-import { BsCash } from "react-icons/bs";
-import { FaCreditCard } from "react-icons/fa";
-import { GoHistory } from "react-icons/go";
-import { HiOutlineBanknotes } from "react-icons/hi2";
-import { IoRocketOutline } from "react-icons/io5";
-import { MdCardGiftcard } from "react-icons/md";
-import { mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { openNotification } from "../../utilities/lib/openToaster";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomModal from "../Shared/Modal/CustomModal";
-import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
+import { Button, Col, Form, Row } from 'antd';
+import { useState } from 'react';
+import { BsCash } from 'react-icons/bs';
+import { FaCreditCard } from 'react-icons/fa';
+import { GoHistory } from 'react-icons/go';
+import { HiOutlineBanknotes } from 'react-icons/hi2';
+import { IoRocketOutline } from 'react-icons/io5';
+import { MdCardGiftcard } from 'react-icons/md';
+import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { openNotification } from '../../utilities/lib/openToaster';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomModal from '../Shared/Modal/CustomModal';
+import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 
 const Payment = ({
   handleSubmit,
@@ -20,22 +20,27 @@ const Payment = ({
   isLoading,
   grandTotal,
 }) => {
-  const [paymentType, setPaymentType] = useState("Card");
+  const [paymentType, setPaymentType] = useState('Card');
 
   const handleOpenModal = (value) => {
     // sale_at, warehouse_id, cashier_id, customer_id, reference_number
     const data = form.getFieldsValue([
-      "sale_at",
-      "warehouse_id",
-      "cashier_id",
-      "customer_id",
-      "reference_number",
+      'sale_at',
+      'warehouse_id',
+      'cashier_id',
+      'customer_id',
+      'reference_number',
     ]);
 
-    const hasUndefinedOrNull = Object.values(data).some(value => value === undefined || value === null);
+    const hasUndefinedOrNull = Object.values(data).some(
+      (value) => value === undefined || value === null
+    );
 
     if (hasUndefinedOrNull) {
-      openNotification("error", "Please fill all the required fields. Some values are missing.");
+      openNotification(
+        'error',
+        'Please fill all the required fields. Some values are missing.'
+      );
       return false;
     }
 
@@ -53,7 +58,7 @@ const Payment = ({
             type="primary"
             icon={<BsCash />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Cash")}
+            onClick={() => handleOpenModal('Cash')}
           >
             Cash
           </Button>
@@ -61,7 +66,7 @@ const Payment = ({
             type="primary"
             icon={<FaCreditCard />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Card")}
+            onClick={() => handleOpenModal('Card')}
           >
             Card
           </Button>
@@ -70,7 +75,7 @@ const Payment = ({
             type="primary"
             icon={<HiOutlineBanknotes />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Cheque")}
+            onClick={() => handleOpenModal('Cheque')}
           >
             Cheque
           </Button>
@@ -78,7 +83,7 @@ const Payment = ({
             type="primary"
             icon={<MdCardGiftcard />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Gift Card")}
+            onClick={() => handleOpenModal('Gift Card')}
           >
             Gift Card
           </Button>
@@ -87,7 +92,7 @@ const Payment = ({
             type="primary"
             icon={<IoRocketOutline />}
             className=" flex justify-center items-center min-w-fit"
-            onClick={() => handleOpenModal("Points")}
+            onClick={() => handleOpenModal('Points')}
           >
             Points
           </Button>
@@ -96,7 +101,7 @@ const Payment = ({
             type="primary"
             icon={<GoHistory />}
             className=" flex justify-center items-center min-w-fit"
-          //  onClick={() => handleOpenModal("Card")}
+            //  onClick={() => handleOpenModal("Card")}
           >
             Transactions
           </Button>
@@ -104,7 +109,7 @@ const Payment = ({
       </div>
 
       <CustomModal
-        title={"Finalize Sale"}
+        title={'Finalize Sale'}
         openModal={isModalOpen}
         hideModal={hideModal}
         showCloseButton={false}
@@ -123,14 +128,14 @@ const Payment = ({
 
             <Col {...mdColLayout}>
               <CustomInput
-                type={"textarea"}
+                type={'textarea'}
                 name="sale_note"
                 label="Sale Note"
               />
             </Col>
             <Col {...mdColLayout}>
               <CustomInput
-                type={"textarea"}
+                type={'textarea'}
                 name="staff_note"
                 label="Staff Note"
               />

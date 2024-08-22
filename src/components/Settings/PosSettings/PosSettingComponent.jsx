@@ -1,11 +1,11 @@
-import { Col, Form, Radio, Row } from "antd";
+import { Col, Form, Radio, Row } from 'antd';
 import {
   largeLayout,
   mdColLayout,
   rowLayout,
-} from "../../../layout/FormLayout";
-import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
-import CustomInput from "../../Shared/Input/CustomInput";
+} from '../../../layout/FormLayout';
+import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
+import CustomInput from '../../Shared/Input/CustomInput';
 
 const CustomInvoiceForm = ({ name, label }) => {
   const form = Form.useFormInstance();
@@ -16,7 +16,7 @@ const CustomInvoiceForm = ({ name, label }) => {
         <CustomInput
           name={name}
           label={label}
-          type={"textarea"}
+          type={'textarea'}
           maxlength={30}
         />
       </Col>
@@ -37,7 +37,7 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
   return (
     <Row {...rowLayout}>
       <Col {...mdColLayout}>
-        <Form.Item label="Invoice of Pos" name={"invoice_of_pos"} required>
+        <Form.Item label="Invoice of Pos" name={'invoice_of_pos'} required>
           <Radio.Group>
             <Radio value="A4">A4</Radio>
             <Radio value="Thermal">Thermal</Radio>
@@ -47,7 +47,7 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
       <Col {...mdColLayout}>
         <Form.Item
           label="Invoice of Inventory"
-          name={"invoice_of_inventory"}
+          name={'invoice_of_inventory'}
           required
         >
           <Radio.Group>
@@ -92,23 +92,23 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
       </Col> */}
 
       <Col {...largeLayout}>
-        <CustomCheckbox name="cash_payment" label={"Cash Payment"} />
+        <CustomCheckbox name="cash_payment" label={'Cash Payment'} />
       </Col>
       <Col {...largeLayout}>
-        <CustomCheckbox name="card_payment" label={"Card Payment"} />
+        <CustomCheckbox name="card_payment" label={'Card Payment'} />
       </Col>
       <Col {...largeLayout}>
-        <CustomCheckbox name="cheque_payment" label={"Cheque Payment"} />
+        <CustomCheckbox name="cheque_payment" label={'Cheque Payment'} />
       </Col>
       <Col {...largeLayout}>
-        <CustomCheckbox name="gift_card_payment" label={"Gift Card Payment"} />
+        <CustomCheckbox name="gift_card_payment" label={'Gift Card Payment'} />
       </Col>
 
       <Col {...largeLayout}>
-        <CustomCheckbox name="is_send_email" label={"Send Email"} />
+        <CustomCheckbox name="is_send_email" label={'Send Email'} />
       </Col>
       <Col {...largeLayout}>
-        <CustomCheckbox name="need_keyboard" label={"On Screen Keyboard"} />
+        <CustomCheckbox name="need_keyboard" label={'On Screen Keyboard'} />
       </Col>
     </Row>
   );

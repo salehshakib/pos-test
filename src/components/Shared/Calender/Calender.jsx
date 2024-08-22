@@ -1,11 +1,11 @@
-import { Badge, Calendar, Spin } from "antd";
-import dayjs from "dayjs";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { showCurrency } from "../../../utilities/lib/currency";
-import CustomModal from "../Modal/CustomModal";
-import CustomTable from "../Table/CustomTable";
+import { Badge, Calendar, Spin } from 'antd';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { showCurrency } from '../../../utilities/lib/currency';
+import CustomModal from '../Modal/CustomModal';
+import CustomTable from '../Table/CustomTable';
 
 const getMonthData = (value) => {
   if (value.month() === 8) {
@@ -26,9 +26,9 @@ const monthCellRender = (value) => {
 const columns = [
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -37,10 +37,10 @@ const columns = [
   },
   {
     //name
-    title: "Sku",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'Sku',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -49,10 +49,10 @@ const columns = [
   },
   {
     //name
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     render: (quantity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {quantity}
@@ -60,10 +60,10 @@ const columns = [
     ),
   },
   {
-    title: "Total",
-    dataIndex: "total",
-    key: "total",
-    align: "right",
+    title: 'Total',
+    dataIndex: 'total',
+    key: 'total',
+    align: 'right',
     render: (total, record) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {showCurrency(total, record?.currency)}
@@ -76,18 +76,18 @@ const CustomCalender = ({ onChange, data }) => {
   const currency = useSelector(useCurrency);
 
   const getListData = (value) => {
-    const date = dayjs(value).format("YYYY-MM-DD");
+    const date = dayjs(value).format('YYYY-MM-DD');
 
     let listData =
       data &&
       data[date]?.map((item) => {
         return {
           id: item?.id,
-          type: item.payment_status === "Paid" ? "success" : "warning",
+          type: item.payment_status === 'Paid' ? 'success' : 'warning',
           content:
             showCurrency(item?.grand_total, currency) +
-            " " +
-            "Qty: " +
+            ' ' +
+            'Qty: ' +
             item?.total_qty,
           products: item?.purchase_products
             ? item?.purchase_products
@@ -125,8 +125,8 @@ const CustomCalender = ({ onChange, data }) => {
   };
 
   const cellRender = (current, info) => {
-    if (info.type === "date") return dateCellRender(current);
-    if (info.type === "month") return monthCellRender(current);
+    if (info.type === 'date') return dateCellRender(current);
+    if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
 
@@ -134,7 +134,7 @@ const CustomCalender = ({ onChange, data }) => {
   const [dataSource, setDataSource] = useState([]);
 
   const handleCellClick = (date) => {
-    const value = data?.[dayjs(date).format("YYYY-MM-DD")];
+    const value = data?.[dayjs(date).format('YYYY-MM-DD')];
 
     const processedData =
       value?.flatMap((item) => {

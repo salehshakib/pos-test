@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreatePettyCashMutation } from "../../redux/services/pettycash/pettyCashApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PettyCashForm } from "./PettyCashForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreatePettyCashMutation } from '../../redux/services/pettycash/pettyCashApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PettyCashForm } from './PettyCashForm';
 
 export const PettyCashCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const PettyCashCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Petty Cash"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Petty Cash'} open={isCreateDrawerOpen}>
       <PettyCashForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

@@ -1,6 +1,6 @@
-import PosFilterComponent from "../../../components/PosRegister/PosFilterComponent";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
-import PosProducts from "./PosProducts";
+import PosFilterComponent from '../../../components/PosRegister/PosFilterComponent';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
+import PosProducts from './PosProducts';
 
 export const Filter = ({
   products,
@@ -19,7 +19,7 @@ export const Filter = ({
         </div>
         <div
           style={{
-            borderRadius: "8px",
+            borderRadius: '8px',
           }}
           className="shadow-md grow m-4 bg-gray-200 "
         >

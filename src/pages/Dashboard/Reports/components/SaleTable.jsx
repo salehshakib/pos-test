@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { SaleDetails } from "../../../../components/Sale/SaleDetails";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useGetAllSaleQuery } from "../../../../redux/services/sale/saleApi";
-import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { formatDate } from "../../../../utilities/lib/dateFormat";
-import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
-import { saleColumns } from "../data/saleColumn";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SaleDetails } from '../../../../components/Sale/SaleDetails';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useGetAllSaleQuery } from '../../../../redux/services/sale/saleApi';
+import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { formatDate } from '../../../../utilities/lib/dateFormat';
+import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
+import { saleColumns } from '../data/saleColumn';
 
 export const SaleTable = ({
   keyword,
@@ -35,7 +35,7 @@ export const SaleTable = ({
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {
-      skip: !useUrlIndexPermission("sale"),
+      skip: !useUrlIndexPermission('sale'),
     }
   );
 
@@ -80,9 +80,9 @@ export const SaleTable = ({
         cashier: cashiers?.name,
         saleStatus: sale_status,
         paymentStatus: payment_status,
-        grandTotal: showCurrency(grand_total ?? "0", currency),
-        paid: showCurrency(paid_amount ?? "0", currency),
-        due: showCurrency(due_amount ?? "0", currency),
+        grandTotal: showCurrency(grand_total ?? '0', currency),
+        paid: showCurrency(paid_amount ?? '0', currency),
+        due: showCurrency(due_amount ?? '0', currency),
 
         handleDetailsModal,
       };

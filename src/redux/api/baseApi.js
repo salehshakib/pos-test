@@ -1,15 +1,15 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { base_url } from "../../utilities/configs/base_url";
-import { logout } from "../services/auth/authSlice";
-import { openNotification } from "../../utilities/lib/openToaster";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { base_url } from '../../utilities/configs/base_url';
+import { logout } from '../services/auth/authSlice';
+import { openNotification } from '../../utilities/lib/openToaster';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${base_url}`,
-  credentials: "include",
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
   },
@@ -20,7 +20,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   if (result?.error && result?.error?.status === 408) {
     // Dispatch the logout action
-    openNotification("failed", "Status 408 or 500");
+    openNotification('failed', 'Status 408 or 500');
     api.dispatch(logout());
   }
 
@@ -28,8 +28,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 };
 
 export const baseApi = createApi({
-  reducerPath: "baseApi",
+  reducerPath: 'baseApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["department"],
+  tagTypes: ['department'],
   endpoints: () => ({}),
 });

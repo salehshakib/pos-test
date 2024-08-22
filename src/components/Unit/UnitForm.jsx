@@ -1,12 +1,12 @@
-import { Col, Form, Row } from "antd";
-import { baseUnit } from "../../assets/data/baseUnit";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetTypesQuery } from "../../redux/services/types/typesApi";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomRadio from "../Shared/Radio/CustomRadio";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { Col, Form, Row } from 'antd';
+import { baseUnit } from '../../assets/data/baseUnit';
+import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useGetTypesQuery } from '../../redux/services/types/typesApi';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomRadio from '../Shared/Radio/CustomRadio';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
 
 const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
   return { label: `${name} (${symbol})`, value: name };
@@ -15,8 +15,8 @@ const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
 const BaseUnit = () => {
   return (
     <CustomSelect
-      label={"Base Unit"}
-      name={"base_unit"}
+      label={'Base Unit'}
+      name={'base_unit'}
       // required={true}
       options={baseUnitOptions}
     />
@@ -25,7 +25,7 @@ const BaseUnit = () => {
 
 const TypeUnit = () => {
   const params = useGlobalParams({
-    selectValue: ["name"],
+    selectValue: ['name'],
   });
   const { data, isFetching } = useGetTypesQuery({ params });
 
@@ -40,10 +40,10 @@ const TypeUnit = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         label="Type"
-        name={"for"}
+        name={'for'}
         required={true}
         options={options}
-        placeholder={"Type"}
+        placeholder={'Type'}
         isLoading={isFetching}
       />
     </Col>
@@ -52,23 +52,23 @@ const TypeUnit = () => {
 
 const OperatorComponent = () => {
   const form = Form.useFormInstance();
-  const baseUnit = Form.useWatch("base_unit", form);
+  const baseUnit = Form.useWatch('base_unit', form);
 
   const options = [
     {
-      value: "+",
+      value: '+',
       label: <span className="font-semibold">Addition (+)</span>,
     },
     {
-      value: "-",
+      value: '-',
       label: <span className="font-semibold">Subtraction (-)</span>,
     },
     {
-      value: "*",
+      value: '*',
       label: <span className="font-semibold">Multiply (*)</span>,
     },
     {
-      value: "/",
+      value: '/',
       label: <span className="font-semibold">Division (/)</span>,
     },
   ];
@@ -79,17 +79,17 @@ const OperatorComponent = () => {
         <Col {...fullColLayout}>
           <CustomRadio
             options={options}
-            name={"operator"}
-            label={"Operator"}
+            name={'operator'}
+            label={'Operator'}
             // required={true}
           />
         </Col>
 
         <Col {...fullColLayout}>
           <CustomInput
-            label={"Operator Value"}
-            type={"number"}
-            name={"operation_value"}
+            label={'Operator Value'}
+            type={'number'}
+            name={'operation_value'}
             // required={true}
           />
         </Col>
@@ -104,17 +104,17 @@ const UnitForm = (props) => {
       <Row {...rowLayout}>
         <Col {...mdColLayout}>
           <CustomInput
-            label={"Unit Name"}
-            type={"text"}
-            name={"name"}
+            label={'Unit Name'}
+            type={'text'}
+            name={'name'}
             required={true}
           />
         </Col>
         <Col {...mdColLayout}>
           <CustomInput
-            label={"Unit Code"}
-            type={"text"}
-            name={"code"}
+            label={'Unit Code'}
+            type={'text'}
+            name={'code'}
             required={true}
           />
         </Col>

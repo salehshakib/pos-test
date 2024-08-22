@@ -1,19 +1,19 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetLeaveDetailsQuery,
   useUpdateLeaveMutation,
-} from "../../redux/services/hrm/leave/leaveApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/hrm/leave/leaveApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { LeaveForm } from "./LeaveForm";
+} from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { LeaveForm } from './LeaveForm';
 
 export const LeaveEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -33,19 +33,19 @@ export const LeaveEdit = ({ id, setId }) => {
 
       const updateFieldData = [
         {
-          name: "department_id",
+          name: 'department_id',
           value: data?.department_id.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "employee_id",
+          name: 'employee_id',
           value: data?.employee_id.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "leave_type_id",
+          name: 'leave_type_id',
           value: data?.leave_type_id.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -63,11 +63,11 @@ export const LeaveEdit = ({ id, setId }) => {
     const postData = {
       ...values,
       leave_end_date:
-        values?.leave_type === "Half Day" || values?.leave_type === "Single Day"
+        values?.leave_type === 'Half Day' || values?.leave_type === 'Single Day'
           ? values?.leave_start_date
           : values?.leave_end_date,
-      is_send_email: values?.is_send_email == true ? "1" : "0",
-      _method: "PUT",
+      is_send_email: values?.is_send_email == true ? '1' : '0',
+      _method: 'PUT',
     };
 
     if (values?.attachment?.length > 0) {
@@ -95,7 +95,7 @@ export const LeaveEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Leave"}
+      title={'Edit Leave'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

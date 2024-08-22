@@ -1,11 +1,11 @@
-import { Button, Form } from "antd";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Form } from 'antd';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/drawer/drawerSlice";
-import { sanitizeObj } from "../../../utilities/lib/sanitizeObj";
+} from '../../../redux/services/drawer/drawerSlice';
+import { sanitizeObj } from '../../../utilities/lib/sanitizeObj';
 
 const FormButton = ({ loading, children, onClose }) => {
   const dispatch = useDispatch();
@@ -36,11 +36,11 @@ const CustomForm = (props) => {
     fields,
     isLoading,
     submitBtn = true,
-    submitBtnText = "Save",
+    submitBtnText = 'Save',
     onClose,
     form,
     onChange,
-    layout = "vertical",
+    layout = 'vertical',
   } = props;
 
   const onFinish = (values) => {

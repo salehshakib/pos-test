@@ -1,5 +1,5 @@
-import { Statistic } from "antd";
-import CountUp from "react-countup";
+import { Statistic } from 'antd';
+import CountUp from 'react-countup';
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 

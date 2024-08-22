@@ -1,20 +1,20 @@
-import { Row } from "antd";
-import { useState } from "react";
-import CustomerCreate from "../../../components/Customer/CustomerCreate";
-import CustomerTable from "../../../components/Customer/CustomerTable";
-import { CustomerGroupFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { CUSTOMER } from "../../../utilities/apiEndpoints/people.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from 'antd';
+import { useState } from 'react';
+import CustomerCreate from '../../../components/Customer/CustomerCreate';
+import CustomerTable from '../../../components/Customer/CustomerTable';
+import { CustomerGroupFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { CUSTOMER } from '../../../utilities/apiEndpoints/people.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    fixed: "left",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    fixed: 'left',
     render: ({ name, email }) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -25,9 +25,9 @@ const columns = [
     ),
   },
   {
-    title: "Company Name",
-    dataIndex: "companyName",
-    key: "companyName",
+    title: 'Company Name',
+    dataIndex: 'companyName',
+    key: 'companyName',
     render: (companyName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {companyName}
@@ -36,10 +36,10 @@ const columns = [
   },
 
   {
-    title: "Customer Group",
-    dataIndex: "customerGroup",
-    key: "customerGroup",
-    align: "center",
+    title: 'Customer Group',
+    dataIndex: 'customerGroup',
+    key: 'customerGroup',
+    align: 'center',
     render: (customerGroup) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {customerGroup}
@@ -47,12 +47,12 @@ const columns = [
     ),
   },
   {
-    title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone',
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {"0" + phone}
+        {'0' + phone}
       </span>
     ),
   },

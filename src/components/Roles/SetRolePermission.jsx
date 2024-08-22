@@ -1,36 +1,36 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   useGetAllPermissionQuery,
   useGetUserRolePermissionQuery,
   useUpdateRolePermissionMutation,
-} from "../../redux/services/rolePermission/rolePermissionApi";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/rolePermission/rolePermissionApi';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomTable from '../Shared/Table/CustomTable';
 
 const actionKeys = [
-  "accesstoken.issueToken",
-  "authorization.authorize",
-  "authentication.entry",
-  "authentication.out",
-  "transienttoken.refresh",
-  "approveauthorization.approve",
-  "denyauthorization.deny",
-  "authorizedaccesstoken.forUser",
-  "authorizedaccesstoken.destroy",
-  "client.forUser",
-  "scope.all",
-  "personalaccesstoken.forUser",
-  "personalaccesstoken.store",
-  "personalaccesstoken.destroy",
-  "csrfcookie.show",
-  "handlerequests.handleUpdate",
-  "frontendassets.returnJavaScriptAsFile",
-  "frontendassets.maps",
-  "fileupload.handle",
-  "filepreview.handle",
+  'accesstoken.issueToken',
+  'authorization.authorize',
+  'authentication.entry',
+  'authentication.out',
+  'transienttoken.refresh',
+  'approveauthorization.approve',
+  'denyauthorization.deny',
+  'authorizedaccesstoken.forUser',
+  'authorizedaccesstoken.destroy',
+  'client.forUser',
+  'scope.all',
+  'personalaccesstoken.forUser',
+  'personalaccesstoken.store',
+  'personalaccesstoken.destroy',
+  'csrfcookie.show',
+  'handlerequests.handleUpdate',
+  'frontendassets.returnJavaScriptAsFile',
+  'frontendassets.maps',
+  'fileupload.handle',
+  'filepreview.handle',
 ];
 
 function filterActions(jsonData) {
@@ -53,11 +53,11 @@ function filterActions(jsonData) {
 
 const columns = [
   {
-    title: "Module Name",
-    dataIndex: "name",
-    key: "name",
-    align: "left",
-    fixed: "left",
+    title: 'Module Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'left',
+    fixed: 'left',
     width: 250,
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -67,23 +67,23 @@ const columns = [
   },
   {
     //action
-    title: "Actions",
-    dataIndex: "action",
-    key: "action",
-    align: "left",
+    title: 'Actions',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'left',
     render: (role, record) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         {role?.map((action, index) => {
-          const label = action?.name?.split(".")[1];
+          const label = action?.name?.split('.')[1];
           const isLongLabel = label && label.length > 15;
 
           return (
             <div
               key={action?.id ?? index}
-              className={`${isLongLabel ? "col-span-2" : ""}`}
+              className={`${isLongLabel ? 'col-span-2' : ''}`}
             >
               <CustomCheckbox
-                name={["permission", record.name, label]}
+                name={['permission', record.name, label]}
                 label={label}
                 onChange={record.onChange}
               />
@@ -117,8 +117,8 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
   const onChange = (e) => {
     const { id } = e.target;
-    const itemName = id.split("_")[1];
-    const formData = form.getFieldValue(["permission", itemName]);
+    const itemName = id.split('_')[1];
+    const formData = form.getFieldValue(['permission', itemName]);
 
     const shouldRemove = Object.keys(formData).some((key) => !formData[key]);
 
@@ -153,7 +153,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     if (data && open) {
       data.map((item) => {
         item?.actions?.map((action) => {
-          const label = action?.name?.split(".")[1];
+          const label = action?.name?.split('.')[1];
 
           form.setFieldValue([`permission`, item.module, label], true);
         });
@@ -190,7 +190,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     if (!newSelectedRows.length) {
       dataSource.map((item) => {
         item.action.map((action) => {
-          const label = action.name.split(".")[1];
+          const label = action.name.split('.')[1];
           form.setFieldsValue({
             permission: {
               [item.name]: {
@@ -208,7 +208,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     if (newSelectedRows.length === dataSource.length) {
       newSelectedRows.map((item) => {
         item.action.map((action) => {
-          const label = action.name.split(".")[1];
+          const label = action.name.split('.')[1];
           form.setFieldsValue({
             permission: {
               [item.name]: {
@@ -230,7 +230,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
     deletedRows.forEach((deletedRow) => {
       deletedRow.action.forEach((action) => {
-        const label = action.name.split(".")[1];
+        const label = action.name.split('.')[1];
         form.setFieldsValue({
           permission: {
             [deletedRow.name]: {
@@ -248,7 +248,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
     addedRows.forEach((addedRow) => {
       addedRow.action.forEach((action) => {
-        const label = action.name.split(".")[1];
+        const label = action.name.split('.')[1];
         form.setFieldsValue({
           permission: {
             [addedRow.name]: {
@@ -271,7 +271,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
     const transformedObject = {};
 
     for (const [key, value] of Object.entries(permission)) {
-      if (typeof value === "object" && value !== null) {
+      if (typeof value === 'object' && value !== null) {
         for (const [subKey, subValue] of Object.entries(value)) {
           if (subValue === true) {
             transformedObject[`${key.toLowerCase()}.${subKey}`] = subValue;
@@ -318,7 +318,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
 
   return (
     <CustomDrawer
-      title={"Change Permission"}
+      title={'Change Permission'}
       width={1400}
       open={open}
       onClose={closeDrawer}
@@ -343,7 +343,7 @@ const SetRolePermission = ({ changePermissionId, open, closeDrawer }) => {
           changeSelectedRows={changeSelectedRows}
           tableStyleProps={{
             scroll: {
-              y: "73vh",
+              y: '73vh',
             },
           }}
           isLoading={isFetching}

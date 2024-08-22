@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateDesignationMutation } from "../../redux/services/hrm/designation/designationApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { DesignationForm } from "./DesignationForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateDesignationMutation } from '../../redux/services/hrm/designation/designationApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { DesignationForm } from './DesignationForm';
 
 export const DesignationCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const DesignationCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Designation"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Designation'} open={isCreateDrawerOpen}>
       <DesignationForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

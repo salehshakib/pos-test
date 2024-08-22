@@ -1,13 +1,13 @@
-import { Drawer, Spin } from "antd";
-import { useDispatch } from "react-redux";
+import { Drawer, Spin } from 'antd';
+import { useDispatch } from 'react-redux';
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/drawer/drawerSlice";
+} from '../../../redux/services/drawer/drawerSlice';
 
 const CustomDrawer = ({
   title,
-  placement = "right",
+  placement = 'right',
   children,
   open,
   isLoading = false,

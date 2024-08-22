@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { GENERATE_INVOICE } from "../../../utilities/apiEndpoints/generate.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { GENERATE_INVOICE } from '../../../utilities/apiEndpoints/generate.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const invoiceApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllInvoice: build.query({
       query: ({ params }) => ({
         url: `/${GENERATE_INVOICE}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const invoiceApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${GENERATE_INVOICE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -35,19 +35,19 @@ const invoiceApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${GENERATE_INVOICE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const invoiceApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${GENERATE_INVOICE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const invoiceApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${GENERATE_INVOICE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const invoiceApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${GENERATE_INVOICE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

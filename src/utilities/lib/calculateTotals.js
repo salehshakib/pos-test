@@ -32,8 +32,6 @@ export const calculateTotals = (formValues) => {
       .reduce((acc, cur) => acc + sanitizeParseValue(cur), 0)
       .toFixed(2);
 
-
-
   return {
     totalQuantity,
     totalReceived,

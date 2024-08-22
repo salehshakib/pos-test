@@ -21,15 +21,15 @@ export function setFormValuesId(
     sanitizer(formProductList[field]?.[id] ?? defaultValue);
 
   // Extract and sanitize values
-  const qty = getSanitizedValue("qty", 1, sanitizeIntValue);
+  const qty = getSanitizedValue('qty', 1, sanitizeIntValue);
   const netUnitPrice = getSanitizedValue(
-    "net_unit_price",
+    'net_unit_price',
     unit_cost,
     sanitizeFloatValue
   );
-  const discount = getSanitizedValue("discount", 0, sanitizeFloatValue);
+  const discount = getSanitizedValue('discount', 0, sanitizeFloatValue);
   const taxRate = getSanitizedValue(
-    "tax_rate",
+    'tax_rate',
     taxes?.rate ?? 0,
     sanitizeIntValue
   );
@@ -47,7 +47,7 @@ export function setFormValuesId(
   productUnits.sale_units[id] = productSaleUnitsValue;
 
   const total =
-    tax_method === "Inclusive"
+    tax_method === 'Inclusive'
       ? Math.round(
           (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
             2
@@ -62,18 +62,18 @@ export function setFormValuesId(
     formProductList[field][id] = value;
   };
 
-  setFormValue("qty", qty);
-  setFormValue("net_unit_price", netUnitPrice);
-  setFormValue("discount", discount);
-  setFormValue("tax_rate", taxRate);
-  setFormValue("tax", tax);
-  setFormValue("total", total);
+  setFormValue('qty', qty);
+  setFormValue('net_unit_price', netUnitPrice);
+  setFormValue('discount', discount);
+  setFormValue('tax_rate', taxRate);
+  setFormValue('tax', tax);
+  setFormValue('total', total);
   setFormValue(
-    "sale_unit_id",
+    'sale_unit_id',
     formProductList.sale_unit_id?.[id] ?? sale_unit_id
   );
 
   if (formProductList.tax_id) {
-    setFormValue("tax_id", formProductList.tax_id?.[id] ?? tax_id);
+    setFormValue('tax_id', formProductList.tax_id?.[id] ?? tax_id);
   }
 }

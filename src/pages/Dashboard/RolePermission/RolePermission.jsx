@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { MdDelete, MdEditSquare } from "react-icons/md";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { ROLE_PERMISSION } from "../../../utilities/apiEndpoints/auth.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import { MdDelete, MdEditSquare } from 'react-icons/md';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { ROLE_PERMISSION } from '../../../utilities/apiEndpoints/auth.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    fixed: 'left',
+    align: 'center',
     width: 80,
     render: (id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -20,10 +20,10 @@ const columns = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -31,10 +31,10 @@ const columns = [
     ),
   },
   {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
-    align: "center",
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+    align: 'center',
     render: (description) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {description}
@@ -42,10 +42,10 @@ const columns = [
     ),
   },
   {
-    title: "Created At",
-    dataIndex: "created_at",
-    key: "created_at",
-    align: "center",
+    title: 'Created At',
+    dataIndex: 'created_at',
+    key: 'created_at',
+    align: 'center',
     render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {created_at}
@@ -53,12 +53,12 @@ const columns = [
     ),
   },
   {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     width: 70,
-    fixed: "right",
+    fixed: 'right',
     render: ({ handleEdit, handleDeleteModal }, record) => {
       return (
         <div className="flex justify-center items-center gap-3 ">

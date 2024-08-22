@@ -1,20 +1,20 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetPayrollDetailsQuery,
   useUpdatePayrollMutation,
-} from "../../redux/services/hrm/payroll/payrollApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/hrm/payroll/payrollApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PayrollForm } from "./PayrollForm";
+} from '../../utilities/lib/fieldsToUpdate';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PayrollForm } from './PayrollForm';
 
 export const PayrollEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -36,9 +36,9 @@ export const PayrollEdit = ({ id, setId }) => {
 
       const udpateFieldData = [
         {
-          name: "is_send_email",
-          value: data?.is_send_email.toString() === "1" ? true : false,
-          errors: "",
+          name: 'is_send_email',
+          value: data?.is_send_email.toString() === '1' ? true : false,
+          errors: '',
         },
       ];
 
@@ -53,11 +53,11 @@ export const PayrollEdit = ({ id, setId }) => {
 
     const postData = {
       ...sanitizeObj(values),
-      is_send_email: values?.is_send_email == true ? "1" : "0",
+      is_send_email: values?.is_send_email == true ? '1' : '0',
       bonus: Number(values?.bonus).toFixed(2),
       loan: Number(values?.loan).toFixed(2),
       salary: Number(values?.salary).toFixed(2),
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     appendToFormData(postData, formData);
@@ -81,7 +81,7 @@ export const PayrollEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Brand"}
+      title={'Edit Brand'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

@@ -1,7 +1,7 @@
-import { EXPENSE } from "../../../utilities/apiEndpoints/account.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { EXPENSE } from '../../../utilities/apiEndpoints/account.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const expenseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const expenseApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${EXPENSE}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -24,7 +24,7 @@ const expenseApi = baseApi.injectEndpoints({
       query: ({ id }) => {
         return {
           url: `${EXPENSE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response) => verifyToken(response.data),
@@ -35,19 +35,19 @@ const expenseApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${EXPENSE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const expenseApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${EXPENSE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const expenseApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${EXPENSE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const expenseApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${EXPENSE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

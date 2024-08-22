@@ -1,10 +1,10 @@
 import {
   GENERAL_SETTING,
   POS_SETTING,
-} from "../../../../utilities/apiEndpoints/settings.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+} from '../../../../utilities/apiEndpoints/settings.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const generalSettingsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ const generalSettingsApi = baseApi.injectEndpoints({
       query: (params) => {
         return {
           url: `/${GENERAL_SETTING}/show/1`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -24,19 +24,19 @@ const generalSettingsApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${GENERAL_SETTING}/update/1`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -49,19 +49,19 @@ const generalSettingsApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${POS_SETTING}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

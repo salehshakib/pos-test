@@ -1,10 +1,10 @@
-import { TYPE } from "../../../utilities/apiEndpoints/helper.api";
+import { TYPE } from '../../../utilities/apiEndpoints/helper.api';
 import {
   transformErrorResponse,
   transformResponse,
-} from "../../../utilities/lib/handleResponse";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+} from '../../../utilities/lib/handleResponse';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const typesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ const typesApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${TYPE}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -27,7 +27,7 @@ const typesApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${TYPE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
@@ -41,7 +41,7 @@ const typesApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${TYPE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: transformResponse,

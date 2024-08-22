@@ -1,1 +1,1 @@
-export const company_code = "VS";
+export const company_code = 'VS';

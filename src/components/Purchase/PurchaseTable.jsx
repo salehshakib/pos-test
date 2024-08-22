@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeletePurchaseMutation,
   useGetAllPurchaseQuery,
-} from "../../redux/services/purchase/purchaseApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/purchase/purchaseApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { showCurrency } from "../../utilities/lib/currency";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { PurchaseDetails } from "./PurchaseDetails";
-import { PurchaseEdit } from "./PurchaseEdit";
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { showCurrency } from '../../utilities/lib/currency';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { PurchaseDetails } from './PurchaseDetails';
+import { PurchaseEdit } from './PurchaseEdit';
 
 export const PurchaseTable = ({
   newColumns,
@@ -52,7 +52,7 @@ export const PurchaseTable = ({
   const { data, isLoading } = useGetAllPurchaseQuery(
     { params },
     {
-      skip: !useUrlIndexPermission("purchase"),
+      skip: !useUrlIndexPermission('purchase'),
     }
   );
 
@@ -170,7 +170,7 @@ export const PurchaseTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"purchase"}
+        item={'purchase'}
       />
     </GlobalUtilityStyle>
   );

@@ -1,25 +1,25 @@
-import { Button, Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
-import CustomInput from "../../../components/Shared/Input/CustomInput";
-import { mdColLayout, rowLayout } from "../../../layout/FormLayout";
-import { useUpdateEmailSettingsMutation } from "../../../redux/services/settings/emailSettings/emailSettingsApi";
-import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
-import CustomSelect from "../../../components/Shared/Select/CustomSelect";
+import { Button, Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
+import CustomInput from '../../../components/Shared/Input/CustomInput';
+import { mdColLayout, rowLayout } from '../../../layout/FormLayout';
+import { useUpdateEmailSettingsMutation } from '../../../redux/services/settings/emailSettings/emailSettingsApi';
+import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
 
 const ProtocolComponent = () => {
   const options = [
     {
-      label: "SMTP",
-      value: "smtp",
+      label: 'SMTP',
+      value: 'smtp',
     },
     {
-      label: "POP3",
-      value: "pop3",
+      label: 'POP3',
+      value: 'pop3',
       disabled: true,
     },
     {
-      label: "IMAP",
-      value: "imap",
+      label: 'IMAP',
+      value: 'imap',
       disabled: true,
     },
   ];
@@ -37,12 +37,12 @@ const ProtocolComponent = () => {
 const EmailEncryptionComponent = () => {
   const options = [
     {
-      label: "TLS",
-      value: "tls",
+      label: 'TLS',
+      value: 'tls',
     },
     {
-      label: "SSL",
-      value: "ssl",
+      label: 'SSL',
+      value: 'ssl',
     },
   ];
 
@@ -90,7 +90,7 @@ export const EmailConfigForm = ({ data }) => {
     //   formData.append("secendary_color", secendary_color.toHexString());
     // }
 
-    formData.append("_method", "PUT");
+    formData.append('_method', 'PUT');
 
     await updateEmailSettings({
       data: formData,
@@ -106,7 +106,7 @@ export const EmailConfigForm = ({ data }) => {
         handleSubmit(values);
       })
       .catch((error) => {
-        console.error("Validation error:", error);
+        console.error('Validation error:', error);
       });
   };
 

@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteRolesMutation,
   useGetAllRolesQuery,
-} from "../../redux/services/roles/rolesApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/roles/rolesApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { RoleDetails } from "./RoleDetails";
-import SetRolePermission from "./SetRolePermission";
+import { RoleDetails } from './RoleDetails';
+import SetRolePermission from './SetRolePermission';
 
 export const RolesTable = ({
   newColumns,
@@ -130,7 +130,7 @@ export const RolesTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"role"}
+        item={'role'}
       />
     </GlobalUtilityStyle>
   );

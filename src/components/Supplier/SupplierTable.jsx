@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
+} from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteSupplierMutation,
   useGetAllSupplierQuery,
   useUpdateSupplierStatusMutation,
-} from "../../redux/services/supplier/supplierApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/supplier/supplierApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { SupplierDetails } from "./SupplierDetails";
-import SupplierEdit from "./SupplierEdit";
+import { SupplierDetails } from './SupplierDetails';
+import SupplierEdit from './SupplierEdit';
 
 const SupplierTable = ({
   newColumns,
@@ -170,7 +170,7 @@ const SupplierTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"supplier"}
+        item={'supplier'}
       />
     </GlobalUtilityStyle>
   );

@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { QuotationDetails } from "../../../../components/Generator/Quotation/overview/QuotationDetails";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useGetAllQuotationQuery } from "../../../../redux/services/quotation/quotationApi";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
-import { columns } from "../data/QuotationColumns";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { QuotationDetails } from '../../../../components/Generator/Quotation/overview/QuotationDetails';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useGetAllQuotationQuery } from '../../../../redux/services/quotation/quotationApi';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
+import { columns } from '../data/QuotationColumns';
 
 export const QuotationTable = ({
   keyword,
@@ -73,10 +73,10 @@ export const QuotationTable = ({
       return {
         id,
         reference: reference_id,
-        warehouse: warehouses?.name ?? "N/A",
-        cashier: cashiers?.name ?? "N/A",
-        customer: customers?.name ?? "N/A",
-        supplier: suppliers?.name ?? "N/A",
+        warehouse: warehouses?.name ?? 'N/A',
+        cashier: cashiers?.name ?? 'N/A',
+        customer: customers?.name ?? 'N/A',
+        supplier: suppliers?.name ?? 'N/A',
         total: showCurrency(grand_total, currency),
         created_at,
         handleDetailsModal,

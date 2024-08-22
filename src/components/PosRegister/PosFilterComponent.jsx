@@ -1,8 +1,8 @@
-import { Button, theme } from "antd";
-import { useState } from "react";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { Brands } from "./Brand/Brands";
-import { Categories } from "./Categories/Categories";
+import { Button, theme } from 'antd';
+import { useState } from 'react';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { Brands } from './Brand/Brands';
+import { Categories } from './Categories/Categories';
 
 const CategoryFilterComponent = ({ setParams, color }) => {
   const [isFilterDraweropen, setIsFilterDrawerOpen] = useState(false);
@@ -38,7 +38,7 @@ const CategoryFilterComponent = ({ setParams, color }) => {
       </Button>
 
       <CustomDrawer
-        title={"Choose Category"}
+        title={'Choose Category'}
         open={isFilterDraweropen}
         onClose={handleCloseDrawer}
         width={1400}
@@ -89,7 +89,7 @@ const BrandFilterComponent = ({ setParams, color }) => {
       </Button>
 
       <CustomDrawer
-        title={"Choose Brand"}
+        title={'Choose Brand'}
         open={isFilterDraweropen}
         width={1400}
         onClose={handleCloseDrawer}

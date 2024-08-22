@@ -1,16 +1,16 @@
-import { useState } from "react";
-import ExpenseCategoryCreate from "../../../components/ExpenseCategory/ExpenseCategoryCreate";
-import ExpenseCategoryTable from "../../../components/ExpenseCategory/ExpenseCategoryTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { EXPENSE_CATEGORY } from "../../../utilities/apiEndpoints/account.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import ExpenseCategoryCreate from '../../../components/ExpenseCategory/ExpenseCategoryCreate';
+import ExpenseCategoryTable from '../../../components/ExpenseCategory/ExpenseCategoryTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { EXPENSE_CATEGORY } from '../../../utilities/apiEndpoints/account.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}

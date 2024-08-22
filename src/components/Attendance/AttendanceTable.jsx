@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteAttendenceMutation,
   useGetAllAttendenceQuery,
-} from "../../redux/services/hrm/attendence/attendenceApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { AttendanceEdit } from "./AttendanceEdit";
+} from '../../redux/services/hrm/attendence/attendenceApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { AttendanceEdit } from './AttendanceEdit';
 
 export const AttendanceTable = ({
   newColumns,
@@ -70,12 +70,12 @@ export const AttendanceTable = ({
   };
 
   function convertToAmPm(time) {
-    const [hours, minutes, seconds] = time.split(":").map(Number);
-    const period = hours >= 12 ? "PM" : "AM";
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
     const adjustedHours = hours % 12 || 12; // Convert 0 to 12 for midnight
-    return `${adjustedHours}:${minutes.toString().padStart(2, "0")}:${seconds
+    return `${adjustedHours}:${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
-      .padStart(2, "0")} ${period}`;
+      .padStart(2, '0')} ${period}`;
   }
 
   const dataSource =
@@ -90,7 +90,7 @@ export const AttendanceTable = ({
         image: attachments?.[0]?.url,
         date: date,
         checkIn: convertToAmPm(check_in),
-        checkOut: check_out ? convertToAmPm(check_out) : "--",
+        checkOut: check_out ? convertToAmPm(check_out) : '--',
 
         // status: is_active,
         // handleStatusModal,
@@ -126,7 +126,7 @@ export const AttendanceTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"brand"}
+        item={'brand'}
       />
     </GlobalUtilityStyle>
   );

@@ -1,12 +1,12 @@
-import { Col, Divider, Row } from "antd";
-import dateFormats from "../../../assets/data/dateFormats.js";
-import timezones from "../../../assets/data/timezones.json";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+import { Col, Divider, Row } from 'antd';
+import dateFormats from '../../../assets/data/dateFormats.js';
+import timezones from '../../../assets/data/timezones.json';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const rowLayout = {
   gutter: 25,
-  align: "middle",
-  justify: "start",
+  align: 'middle',
+  justify: 'start',
 };
 
 const colLayout = {
@@ -31,16 +31,16 @@ const TimeSetting = () => {
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomSelect
-            name={"time_zone"}
-            label={"Time Zone"}
+            name={'time_zone'}
+            label={'Time Zone'}
             options={timezone}
             required={true}
           />
         </Col>
         <Col {...colLayout}>
           <CustomSelect
-            name={"date_format"}
-            label={"Date Format"}
+            name={'date_format'}
+            label={'Date Format'}
             options={dateFormatOptions}
             required={true}
           />

@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 // const isBoolean = [
 //   'cash'
@@ -7,17 +7,17 @@ export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
     .filter(
       (key) =>
-        !key.includes("updated_at") &&
-        !key.includes("deleted_at") &&
-        !key.includes("created_at") &&
-        !key.includes("is_active") &&
-        !key.includes("expired_at") &&
-        key !== "id"
+        !key.includes('updated_at') &&
+        !key.includes('deleted_at') &&
+        !key.includes('created_at') &&
+        !key.includes('is_active') &&
+        !key.includes('expired_at') &&
+        key !== 'id'
     )
     .map((key) => {
       let value = details[key];
 
-      if (key.includes("attachments")) {
+      if (key.includes('attachments')) {
         // Group attachments by their label
         const groupedAttachments = value.reduce((acc, attachment) => {
           const { label, id, url } = attachment;
@@ -32,15 +32,15 @@ export const fieldsToUpdate = (details) => {
         return Object.keys(groupedAttachments).map((label) => ({
           name: label,
           value: groupedAttachments[label],
-          errors: "",
+          errors: '',
         }));
       }
 
-      if (key.includes("date") || key.includes("_at")) {
-        value = dayjs(value, "YYYY-MM-DD");
+      if (key.includes('date') || key.includes('_at')) {
+        value = dayjs(value, 'YYYY-MM-DD');
       }
 
-      if (key.includes("phone")) {
+      if (key.includes('phone')) {
         // value =
         // get value of a string from 2nd index
         value = value.slice(0);
@@ -49,7 +49,7 @@ export const fieldsToUpdate = (details) => {
       return {
         name: key,
         value: value,
-        errors: "",
+        errors: '',
       };
     })
     .flat(); // Flatten the array to merge nested arrays

@@ -1,5 +1,5 @@
-import { Button, Form, Select, Space, Spin } from "antd";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Form, Select, Space, Spin } from 'antd';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 export const CustomSelectButton = (props) => {
   const {
@@ -11,32 +11,32 @@ export const CustomSelectButton = (props) => {
     onClick,
     showSearch,
     icon,
-    mode = "single",
+    mode = 'single',
     options = [],
     isLoading,
     styleProps,
 
     //for mb-0
-    size = "large",
+    size = 'large',
     customStyle,
   } = props;
 
   const filterOption = (input, option) =>
-    (option?.label ?? "").toLocaleLowerCase().includes(input);
+    (option?.label ?? '').toLocaleLowerCase().includes(input);
 
   const filterSort = (optionA, optionB) =>
-    (optionA?.label ?? "")
+    (optionA?.label ?? '')
       .toLowerCase()
-      .localeCompare((optionB?.label ?? "").toLowerCase());
+      .localeCompare((optionB?.label ?? '').toLowerCase());
 
   return (
     <GlobalUtilityStyle>
       <Form.Item
         label={label}
         required={required}
-        className={customStyle && "mb-0"}
+        className={customStyle && 'mb-0'}
       >
-        <Space.Compact style={{ width: "100%" }}>
+        <Space.Compact style={{ width: '100%' }}>
           <Form.Item
             name={name}
             rules={[

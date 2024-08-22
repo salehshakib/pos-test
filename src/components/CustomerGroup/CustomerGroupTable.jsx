@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCustomerGroupMutation,
   useGetAllCustomerGroupQuery,
-} from "../../redux/services/customerGroup/customerGroupApi";
+} from '../../redux/services/customerGroup/customerGroupApi';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { CustomerGroupDetails } from "./CustomerGroupDetails";
-import { CustomerGroupEdit } from "./CustomerGroupEdit";
+} from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { CustomerGroupDetails } from './CustomerGroupDetails';
+import { CustomerGroupEdit } from './CustomerGroupEdit';
 
 const CustomerGroupTable = ({
   newColumns,
@@ -84,7 +84,7 @@ const CustomerGroupTable = ({
       return {
         id,
         name: name,
-        percentage: percentage + " percent",
+        percentage: percentage + ' percent',
         created_at,
         handleEdit,
         handleDeleteModal,
@@ -127,7 +127,7 @@ const CustomerGroupTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"customer group"}
+        item={'customer group'}
       />
     </GlobalUtilityStyle>
   );

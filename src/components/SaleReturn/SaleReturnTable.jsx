@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteSaleReturnMutation,
   useGetAllSaleReturnQuery,
-} from "../../redux/services/return/saleReturnApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/return/saleReturnApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { showCurrency } from "../../utilities/lib/currency";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { SaleReturnDetails } from "./SaleReturnDetails";
-import SaleReturnEdit from "./SaleReturnEdit";
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { showCurrency } from '../../utilities/lib/currency';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { SaleReturnDetails } from './SaleReturnDetails';
+import SaleReturnEdit from './SaleReturnEdit';
 
 const SaleReturnTable = ({
   newColumns,

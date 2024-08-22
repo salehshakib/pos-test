@@ -1,7 +1,7 @@
-import { Col, Row } from "antd";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 
 export const RolesForm = (props) => {
   return (
@@ -10,9 +10,9 @@ export const RolesForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
       </Row>

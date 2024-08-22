@@ -1,13 +1,13 @@
-import { Button, Modal, theme, Tooltip } from "antd";
-import { useState } from "react";
-import { FaCashRegister } from "react-icons/fa";
-import { RiErrorWarningFill } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useCurrentUser } from "../../../../redux/services/auth/authSlice";
-import { useUpdatePettyCashMutation } from "../../../../redux/services/pettycash/pettyCashApi";
-import { clearPettyCash } from "../../../../redux/services/pettycash/pettyCashSlice";
+import { Button, Modal, theme, Tooltip } from 'antd';
+import { useState } from 'react';
+import { FaCashRegister } from 'react-icons/fa';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
+import { useUpdatePettyCashMutation } from '../../../../redux/services/pettycash/pettyCashApi';
+import { clearPettyCash } from '../../../../redux/services/pettycash/pettyCashSlice';
 
 export const CloseCashRegister = () => {
   const navigate = useNavigate();
@@ -24,12 +24,12 @@ export const CloseCashRegister = () => {
   const { pettyCashId } = useSelector((state) => state.pettyCash);
 
   const handleCashRegister = () => {
-    if (pathname.includes("/pos")) {
+    if (pathname.includes('/pos')) {
       setOpen(true);
       return;
     }
 
-    navigate("/petty-cash");
+    navigate('/petty-cash');
   };
 
   const user = useSelector(useCurrentUser);
@@ -39,8 +39,8 @@ export const CloseCashRegister = () => {
       id: pettyCashId,
       data: {
         warehouse_id: user?.warehouse_id,
-        status: "Close",
-        _method: "PUT",
+        status: 'Close',
+        _method: 'PUT',
       },
     });
 
@@ -48,7 +48,7 @@ export const CloseCashRegister = () => {
       dispatch(clearPettyCash());
 
       hideModal();
-      navigate("/dashboard");
+      navigate('/dashboard');
     }
   };
 
@@ -78,8 +78,8 @@ export const CloseCashRegister = () => {
           <div className="flex items-center gap-3">
             <RiErrorWarningFill
               style={{
-                color: "red",
-                fontSize: "20px",
+                color: 'red',
+                fontSize: '20px',
               }}
             />
             <span>Close Cash Register</span>
@@ -93,7 +93,7 @@ export const CloseCashRegister = () => {
       >
         <GlobalUtilityStyle>
           <span className="text-[16px]">
-            {" "}
+            {' '}
             Are you sure you want to close cash register?
           </span>
           <div className={`w-full flex gap-3 justify-end items-center pt-5`}>

@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateRolesMutation } from "../../redux/services/roles/rolesApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { RolesForm } from "./RolesForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateRolesMutation } from '../../redux/services/roles/rolesApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { RolesForm } from './RolesForm';
 
 export const RolesCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const RolesCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Role"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Role'} open={isCreateDrawerOpen}>
       <RolesForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

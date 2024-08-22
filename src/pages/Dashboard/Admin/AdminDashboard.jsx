@@ -1,36 +1,36 @@
-import { Col, Form, Row, Segmented, Tag, theme } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { BiCategoryAlt } from "react-icons/bi";
-import { FaBuilding, FaMoneyBillWave } from "react-icons/fa";
-import { FaChalkboardUser, FaPeopleRoof } from "react-icons/fa6";
-import { LiaCashRegisterSolid } from "react-icons/lia";
+import { Col, Form, Row, Segmented, Tag, theme } from 'antd';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { BiCategoryAlt } from 'react-icons/bi';
+import { FaBuilding, FaMoneyBillWave } from 'react-icons/fa';
+import { FaChalkboardUser, FaPeopleRoof } from 'react-icons/fa6';
+import { LiaCashRegisterSolid } from 'react-icons/lia';
 import {
   MdAddShoppingCart,
   MdOutlineNumbers,
   MdPaid,
   MdPayment,
-} from "react-icons/md";
-import { PiUserList, PiWarehouse } from "react-icons/pi";
-import { SlCalender, SlWallet } from "react-icons/sl";
-import { TbBrandAirtable } from "react-icons/tb";
-import { useSelector } from "react-redux";
-import { SimpleBarChartComponent } from "../../../components/Charts/SimpleBarChart";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import CustomSelect from "../../../components/Shared/Select/CustomSelect";
-import { StatisticComponent } from "../../../components/Shared/Statistic/Statistic";
-import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
-import { useCurrentUser } from "../../../redux/services/auth/authSlice";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { useGetDashboardCounterQuery } from "../../../redux/services/reports/summaryApi";
-import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
+} from 'react-icons/md';
+import { PiUserList, PiWarehouse } from 'react-icons/pi';
+import { SlCalender, SlWallet } from 'react-icons/sl';
+import { TbBrandAirtable } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
+import { SimpleBarChartComponent } from '../../../components/Charts/SimpleBarChart';
+import CustomForm from '../../../components/Shared/Form/CustomForm';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
+import { StatisticComponent } from '../../../components/Shared/Statistic/Statistic';
+import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetDashboardCounterQuery } from '../../../redux/services/reports/summaryApi';
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { getDateRange } from "../../../utilities/lib/getDateRange";
-import { ExpiredItemsComponent } from "./overview/ExpiredItemsComponent";
-import { RecentlyAddedComponent } from "./overview/RecentlyAddedComponent";
-import { StockAlertComponent } from "./overview/StockAlertComponent";
+} from '../../../utilities/hooks/useParams';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
+import { ExpiredItemsComponent } from './overview/ExpiredItemsComponent';
+import { RecentlyAddedComponent } from './overview/RecentlyAddedComponent';
+import { StockAlertComponent } from './overview/StockAlertComponent';
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
@@ -41,16 +41,16 @@ const DashboardCard = ({ title, icon, data, currency }) => {
           <div className="flex flex-col">
             <div>{title}</div>
             <div className="flex items-center gap-2">
-              {currency?.position.toString() === "0" ? (
+              {currency?.position.toString() === '0' ? (
                 <span className="text-sm">{currency?.name}</span>
               ) : (
-                ""
+                ''
               )}
-              <StatisticComponent value={data} />{" "}
-              {currency?.position.toString() === "1" ? (
+              <StatisticComponent value={data} />{' '}
+              {currency?.position.toString() === '1' ? (
                 <span className="text-sm">{currency?.name}</span>
               ) : (
-                ""
+                ''
               )}
             </div>
           </div>
@@ -80,7 +80,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
 
   useEffect(() => {
     dashboardForm.setFieldsValue({
-      date_range: "Weekly",
+      date_range: 'Weekly',
     });
   }, [dashboardForm]);
 
@@ -144,8 +144,8 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
             showSearch={true}
             isLoading={isLoading}
             options={options}
-            placeholder={"Warehouse"}
-            name={"warehouse_ids"}
+            placeholder={'Warehouse'}
+            name={'warehouse_ids'}
             customStyle={true}
             mode="multiple"
             onChange={onWarehouseChange}
@@ -156,7 +156,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
             <Segmented
               size="large"
               className="mt-1"
-              options={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
+              options={['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']}
               onChange={onDateRangeChange}
             />
           </Form.Item>
@@ -181,46 +181,46 @@ const CashStatistic = ({ data }) => {
       <div className="space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
           <DashboardCard
-            title={"Total Purchase"}
+            title={'Total Purchase'}
             icon={<MdOutlineNumbers {...iconProps} />}
             data={data?.purchase}
           />
           <DashboardCard
-            title={"Total Sales"}
+            title={'Total Sales'}
             icon={<MdOutlineNumbers {...iconProps} />}
             data={data?.sale}
           />
           <DashboardCard
-            title={"Total Purchase Returned"}
+            title={'Total Purchase Returned'}
             icon={<MdOutlineNumbers {...iconProps} />}
             data={data?.purchase_return}
           />
           <DashboardCard
-            title={"Total Sale Returned"}
+            title={'Total Sale Returned'}
             icon={<MdOutlineNumbers {...iconProps} />}
             data={data?.sale_return}
           />
           <DashboardCard
-            title={"Total Purchase Amount"}
+            title={'Total Purchase Amount'}
             icon={<FaMoneyBillWave {...iconProps} />}
             currency={currency}
             data={data?.total_purchase}
           />
           <DashboardCard
-            title={"Total Purchase Due"}
+            title={'Total Purchase Due'}
             icon={<MdPaid {...iconProps} />}
             currency={currency}
             data={0}
           />
 
           <DashboardCard
-            title={"Total Sales Amount"}
+            title={'Total Sales Amount'}
             icon={<FaMoneyBillWave {...iconProps} />}
             currency={currency}
             data={data?.total_sale}
           />
           <DashboardCard
-            title={"Total Sales Due"}
+            title={'Total Sales Due'}
             icon={<MdPaid {...iconProps} />}
             data={0}
             currency={currency}
@@ -232,11 +232,11 @@ const CashStatistic = ({ data }) => {
             icon={<SlWallet {...iconProps} />}
           /> */}
           <DashboardCard
-            title={"Petty Cash"}
+            title={'Petty Cash'}
             icon={<SlWallet {...iconProps} />}
           />
           <DashboardCard
-            title={"Total Expense"}
+            title={'Total Expense'}
             icon={<SlWallet {...iconProps} />}
           />
         </div>
@@ -258,22 +258,22 @@ const WarehouseStatistic = ({ data }) => {
       <span className="font-semibold text-lg">Inventory</span>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <DashboardCard
-          title={"Warehouse"}
+          title={'Warehouse'}
           icon={<PiWarehouse {...iconProps} />}
           data={data?.active_warehouse}
-        />{" "}
+        />{' '}
         <DashboardCard
-          title={"Product"}
+          title={'Product'}
           icon={<MdAddShoppingCart {...iconProps} />}
           data={data?.active_product}
         />
         <DashboardCard
-          title={"Category"}
+          title={'Category'}
           icon={<BiCategoryAlt {...iconProps} />}
           data={data?.active_category}
         />
         <DashboardCard
-          title={"Brand"}
+          title={'Brand'}
           icon={<TbBrandAirtable {...iconProps} />}
           data={data?.active_brand}
         />
@@ -295,17 +295,17 @@ const PeopleStatistic = ({ data }) => {
       <span className="font-semibold text-lg">People</span>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
         <DashboardCard
-          title={"Customer"}
+          title={'Customer'}
           icon={<PiUserList {...iconProps} />}
           data={data?.active_customer}
         />
         <DashboardCard
-          title={"Supplier"}
+          title={'Supplier'}
           icon={<FaChalkboardUser {...iconProps} />}
           data={data?.active_supplier}
         />
         <DashboardCard
-          title={"Cashier"}
+          title={'Cashier'}
           icon={<LiaCashRegisterSolid {...iconProps} />}
           data={data?.active_cashier}
         />
@@ -329,23 +329,23 @@ const EmployeeStatistic = ({ data }) => {
       <span className="font-semibold text-lg">HRM</span>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
         <DashboardCard
-          title={"Department"}
+          title={'Department'}
           icon={<FaBuilding {...iconProps} />}
           data={data?.department}
         />
         <DashboardCard
-          title={"Employee"}
+          title={'Employee'}
           icon={<FaPeopleRoof {...iconProps} />}
           data={data?.employee}
         />
         <DashboardCard
-          title={"Payroll"}
+          title={'Payroll'}
           currency={currency}
           icon={<MdPayment {...iconProps} />}
           data={data?.payroll}
         />
         <DashboardCard
-          title={"Leave Granted"}
+          title={'Leave Granted'}
           icon={<SlCalender {...iconProps} />}
           data={data?.leave}
         />
@@ -362,7 +362,7 @@ const AdminDashboard = () => {
   const [warehouses, setWarehouses] = useState([]);
 
   const [params, setParams] = useState({
-    date_range: getDateRange("Weekly"),
+    date_range: getDateRange('Weekly'),
   });
 
   const { data } = useGetDashboardCounterQuery(
@@ -388,7 +388,7 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome 😃, {user?.name ?? user?.roles?.[0]?.name ?? "User"} 👋
+            Welcome 😃, {user?.name ?? user?.roles?.[0]?.name ?? 'User'} 👋
           </div>
 
           <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />
@@ -399,7 +399,7 @@ const AdminDashboard = () => {
             return (
               <Tag
                 key={index}
-                style={{ backgroundColor: token.colorPrimary, color: "white" }}
+                style={{ backgroundColor: token.colorPrimary, color: 'white' }}
               >
                 {warehouse}
               </Tag>

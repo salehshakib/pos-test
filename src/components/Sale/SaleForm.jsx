@@ -1,50 +1,50 @@
-import { Col, Form, Row } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { discountTypeOptions } from "../../assets/data/discountTypes";
-import { paymentStatusOptions } from "../../assets/data/paymentStatus";
-import { saleStatusOptions } from "../../assets/data/saleStatus";
+import { Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { discountTypeOptions } from '../../assets/data/discountTypes';
+import { paymentStatusOptions } from '../../assets/data/paymentStatus';
+import { saleStatusOptions } from '../../assets/data/saleStatus';
 import {
   colLayout,
   fullColLayout,
   largeLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
+} from '../../layout/FormLayout';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
-import { CashierComponent } from "../ReusableComponent/CashierComponent";
-import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { CurrencyFormComponent } from "./overview/CurrencyComponent";
-import { CustomerComponent } from "./overview/CustomerComponent";
-import { PaymentTypeComponent } from "./overview/PaymentFormComponent";
-import { SaleProductTable } from "./overview/SaleProductTable";
+} from '../../utilities/lib/generator/generatorUtils';
+import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
+import { CashierComponent } from '../ReusableComponent/CashierComponent';
+import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
+import { TotalRow } from '../ReusableComponent/TotalRow';
+import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { CurrencyFormComponent } from './overview/CurrencyComponent';
+import { CustomerComponent } from './overview/CustomerComponent';
+import { PaymentTypeComponent } from './overview/PaymentFormComponent';
+import { SaleProductTable } from './overview/SaleProductTable';
 
 const StatusComponent = () => {
-  useSetFieldValue("sale_status", saleStatusOptions[0].value);
+  useSetFieldValue('sale_status', saleStatusOptions[0].value);
 
   return (
     <CustomSelect
       label="Sale Status"
       options={saleStatusOptions}
-      name={"sale_status"}
+      name={'sale_status'}
     />
   );
 };
 
 const PaymentStatusComponent = () => {
-  useSetFieldValue("payment_status", paymentStatusOptions[0].value);
+  useSetFieldValue('payment_status', paymentStatusOptions[0].value);
   return (
     <CustomSelect
       label="Payment Status"
@@ -56,14 +56,14 @@ const PaymentStatusComponent = () => {
 
 const DiscountTypeComponent = () => {
   const form = Form.useFormInstance();
-  const discount = Form.useWatch("discount", form);
+  const discount = Form.useWatch('discount', form);
   const required = !!discount;
 
   return (
     <CustomSelect
       options={discountTypeOptions}
       label="Discount Type"
-      name={"discount_type"}
+      name={'discount_type'}
       required={required}
     />
   );
@@ -80,12 +80,12 @@ export const SaleForm = ({
 }) => {
   const form = props.form;
 
-  const discount = Form.useWatch("discount", form);
-  const shipping_cost = Form.useWatch("shipping_cost", form);
-  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
+  const discount = Form.useWatch('discount', form);
+  const shipping_cost = Form.useWatch('shipping_cost', form);
+  const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
 
   useEffect(() => {
-    form.setFieldValue("sale_at", dayjs(new Date()));
+    form.setFieldValue('sale_at', dayjs(new Date()));
   }, [form]);
 
   // const totalItems = Object.keys(formValues.product_list?.qty)?.length ?? 0;
@@ -149,7 +149,7 @@ export const SaleForm = ({
           </Col>
 
           <Col {...largeLayout}>
-            <CustomDatepicker label="Date" required={true} name={"sale_at"} />
+            <CustomDatepicker label="Date" required={true} name={'sale_at'} />
           </Col>
 
           <SaleProductTable
@@ -168,13 +168,13 @@ export const SaleForm = ({
             <DiscountTypeComponent />
           </Col>
           <Col {...largeLayout}>
-            <CustomInput label="Discount" type={"number"} name={"discount"} />
+            <CustomInput label="Discount" type={'number'} name={'discount'} />
           </Col>
           <Col {...largeLayout}>
             <CustomInput
               label="Shipping Cost"
-              type={"number"}
-              name={"shipping_cost"}
+              type={'number'}
+              name={'shipping_cost'}
             />
           </Col>
 
@@ -194,22 +194,22 @@ export const SaleForm = ({
 
           <Col {...fullColLayout}>
             <CustomInput
-              type={"textarea"}
+              type={'textarea'}
               name="payment_note"
               label="Payment Note"
             />
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label={"Attach Document"} name={"attachment"} />
+            <CustomUploader label={'Attach Document'} name={'attachment'} />
           </Col>
 
           <Col {...mdColLayout}>
-            <CustomInput type={"textarea"} name="sale_note" label="Sale Note" />
+            <CustomInput type={'textarea'} name="sale_note" label="Sale Note" />
           </Col>
           <Col {...mdColLayout}>
             <CustomInput
-              type={"textarea"}
+              type={'textarea'}
               name="staff_note"
               label="Staff Note"
             />

@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
+} from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteDepartmentMutation,
   useGetDepartmentsQuery,
   useUpdateDepartmentStatusMutation,
-} from "../../redux/services/hrm/department/departmentApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import DepartmentEdit from "./DepartmentEdit";
+} from '../../redux/services/hrm/department/departmentApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import DepartmentEdit from './DepartmentEdit';
 
 const DepartmentTable = ({
   newColumns,
@@ -130,7 +130,7 @@ const DepartmentTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"department"}
+        item={'department'}
       />
     </GlobalUtilityStyle>
   );

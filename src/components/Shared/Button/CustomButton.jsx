@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button } from 'antd';
 
 const CustomButton = ({ isLoading = false, btnContent }) => {
   return (

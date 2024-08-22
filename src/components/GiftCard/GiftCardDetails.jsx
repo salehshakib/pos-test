@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetGiftCardDetailsQuery } from "../../redux/services/giftcard/giftcard/giftCardApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetGiftCardDetailsQuery } from '../../redux/services/giftcard/giftcard/giftCardApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const GiftCardDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetGiftCardDetailsQuery(

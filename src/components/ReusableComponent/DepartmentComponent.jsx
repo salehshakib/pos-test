@@ -1,11 +1,11 @@
-import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
+import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
-export const DepartmentComponent = ({ name = "department_id" }) => {
+export const DepartmentComponent = ({ name = 'department_id' }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -19,7 +19,7 @@ export const DepartmentComponent = ({ name = "department_id" }) => {
 
   return (
     <CustomSelect
-      label={"Department"}
+      label={'Department'}
       name={name}
       options={options}
       isLoading={isFetching}

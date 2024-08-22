@@ -1,12 +1,12 @@
-import { useGetAllGiftCardTypeQuery } from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
+import { useGetAllGiftCardTypeQuery } from '../../redux/services/giftcard/giftcardtype/giftCardTypeApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { useInitialFormField } from "../../utilities/lib/updateFormValues/useInitialFormField";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import { useInitialFormField } from '../../utilities/lib/updateFormValues/useInitialFormField';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
-export const GiftCardTypeComponent = ({ name = "gift_card_type_id" }) => {
+export const GiftCardTypeComponent = ({ name = 'gift_card_type_id' }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });

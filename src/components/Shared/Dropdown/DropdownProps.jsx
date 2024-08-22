@@ -1,4 +1,4 @@
 export const dropdownStyleProps = {
-  placement: "bottom",
-  trigger: ["click"],
+  placement: 'bottom',
+  trigger: ['click'],
 };

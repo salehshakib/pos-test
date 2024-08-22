@@ -1,8 +1,8 @@
-import { Button, Form, Modal, theme, Upload } from "antd";
-import { FaDownload, FaUpload } from "react-icons/fa";
-import { FaFileArrowUp } from "react-icons/fa6";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import CustomForm from "../Form/CustomForm";
+import { Button, Form, Modal, theme, Upload } from 'antd';
+import { FaDownload, FaUpload } from 'react-icons/fa';
+import { FaFileArrowUp } from 'react-icons/fa6';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import CustomForm from '../Form/CustomForm';
 
 const modalProps = {
   footer: null,
@@ -11,7 +11,7 @@ const modalProps = {
 };
 
 const normFile = (e) => {
-  console.log("Upload event:", e);
+  console.log('Upload event:', e);
   if (Array.isArray(e)) {
     return e;
   }
@@ -34,7 +34,7 @@ const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
             <FaFileArrowUp
               style={{
                 // color: "red",
-                fontSize: "18px",
+                fontSize: '18px',
               }}
             />
             <span>Import File</span>

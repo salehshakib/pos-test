@@ -1,5 +1,5 @@
-import { useGetGeneralSettingsQuery } from "../../redux/services/settings/generalSettings/generalSettingsApi";
-import { cleanHtmlData } from "../lib/cleanHtml";
+import { useGetGeneralSettingsQuery } from '../../redux/services/settings/generalSettings/generalSettingsApi';
+import { cleanHtmlData } from '../lib/cleanHtml';
 
 export const useInvoice = () => {
   const params = {

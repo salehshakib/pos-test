@@ -1,17 +1,17 @@
-import { useState } from "react";
-import CashierCreate from "../../../components/Cashier/CashierCreate";
-import CashierTable from "../../../components/Cashier/CashierTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { CASHIER } from "../../../utilities/apiEndpoints/people.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import CashierCreate from '../../../components/Cashier/CashierCreate';
+import CashierTable from '../../../components/Cashier/CashierTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { CASHIER } from '../../../utilities/apiEndpoints/people.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    fixed: "left",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    fixed: 'left',
     render: ({ name, email }) => (
       <div className="flex flex-col cursor-pointer ">
         <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
@@ -22,9 +22,9 @@ const columns = [
     ),
   },
   {
-    title: "Company Name",
-    dataIndex: "companyName",
-    key: "companyName",
+    title: 'Company Name',
+    dataIndex: 'companyName',
+    key: 'companyName',
     render: (companyName) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {companyName}
@@ -32,22 +32,22 @@ const columns = [
     ),
   },
   {
-    title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone',
     render: (phone) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {"0" + phone}
+        {'0' + phone}
       </span>
     ),
   },
   {
-    title: "Vat Number",
-    dataIndex: "vatNumber",
-    key: "vatNumber",
+    title: 'Vat Number',
+    dataIndex: 'vatNumber',
+    key: 'vatNumber',
     render: (vatNumber) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {vatNumber ?? "N/A"}
+        {vatNumber ?? 'N/A'}
       </span>
     ),
   },

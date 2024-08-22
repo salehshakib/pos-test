@@ -1,22 +1,22 @@
-import { useState } from "react";
-import UnitCreate from "../../../components/Unit/UnitCreate";
-import UnitTable from "../../../components/Unit/UnitTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { UNIT } from "../../../utilities/apiEndpoints/helper.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
-import { Row } from "antd";
-import { rowLayout } from "../../../layout/FormLayout";
+import { useState } from 'react';
+import UnitCreate from '../../../components/Unit/UnitCreate';
+import UnitTable from '../../../components/Unit/UnitTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { UNIT } from '../../../utilities/apiEndpoints/helper.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
+import { Row } from 'antd';
+import { rowLayout } from '../../../layout/FormLayout';
 import {
   BaseUnitFilter,
   UnitForFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -24,10 +24,10 @@ const columns = [
     ),
   },
   {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
-    align: "center",
+    title: 'Code',
+    dataIndex: 'code',
+    key: 'code',
+    align: 'center',
     render: (code) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {code}
@@ -36,21 +36,21 @@ const columns = [
   },
 
   {
-    title: "Base Unit",
-    dataIndex: "baseUnit",
-    key: "baseUnit",
-    align: "center",
+    title: 'Base Unit',
+    dataIndex: 'baseUnit',
+    key: 'baseUnit',
+    align: 'center',
     render: (baseUnit) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {baseUnit ?? "N/A"}
+        {baseUnit ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "For",
-    dataIndex: "type",
-    key: "type",
-    align: "center",
+    title: 'For',
+    dataIndex: 'type',
+    key: 'type',
+    align: 'center',
     render: (type) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {type}
@@ -58,24 +58,24 @@ const columns = [
     ),
   },
   {
-    title: "Operator",
-    dataIndex: "operator",
-    key: "operator",
-    align: "center",
+    title: 'Operator',
+    dataIndex: 'operator',
+    key: 'operator',
+    align: 'center',
     render: (operator) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operator ?? "N/A"}
+        {operator ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Operator Value",
-    dataIndex: "operatorValue",
-    key: "operatorValue",
-    align: "center",
+    title: 'Operator Value',
+    dataIndex: 'operatorValue',
+    key: 'operatorValue',
+    align: 'center',
     render: (operatorValue) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {operatorValue ?? "N/A"}
+        {operatorValue ?? 'N/A'}
       </span>
     ),
   },

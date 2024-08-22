@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { PRODUCT, SALE } from "../../../utilities/apiEndpoints/inventory.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { PRODUCT, SALE } from '../../../utilities/apiEndpoints/inventory.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const saleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllSale: build.query({
       query: ({ params }) => ({
         url: `/${SALE}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const saleApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${SALE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -35,19 +35,19 @@ const saleApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${SALE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const saleApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${SALE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const saleApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${SALE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const saleApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${SALE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

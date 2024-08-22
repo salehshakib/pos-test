@@ -2,16 +2,16 @@
 import {
   NOTIFICATION,
   NOTIFICATION_READ,
-} from "../../../utilities/apiEndpoints/helper.api";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+} from '../../../utilities/apiEndpoints/helper.api';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const notificationSlice = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllNotification: build.query({
       query: ({ id }) => ({
         url: `/${NOTIFICATION}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { id }) => [
@@ -22,7 +22,7 @@ const notificationSlice = baseApi.injectEndpoints({
     readNotification: build.mutation({
       query: (data) => ({
         url: `/${NOTIFICATION_READ}`,
-        method: "POST",
+        method: 'POST',
         body: data,
       }),
       transformResponse: (response) => {

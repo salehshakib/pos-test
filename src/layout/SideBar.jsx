@@ -1,10 +1,10 @@
-import { Layout, Menu } from "antd";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../assets/data/defaultLogo";
-import { adminPaths } from "../routes/admin.routes";
-import { useMenuItems } from "../utilities/lib/getPermission";
-import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
+import { Layout, Menu } from 'antd';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import logo from '../assets/data/defaultLogo';
+import { adminPaths } from '../routes/admin.routes';
+import { useMenuItems } from '../utilities/lib/getPermission';
+import { sidebarItemsGenerator } from '../utilities/lib/sidebarItemsGenerator';
 const { Sider } = Layout;
 
 const getLevelKeys = (items1) => {
@@ -34,25 +34,25 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname === "/") {
-      navigate("/dashboard");
+    if (pathname === '/') {
+      navigate('/dashboard');
     }
-    if (pathname === "/dashboard") {
-      setStateOpenKeys(["Dashboard"]);
-      setSelectedKeys(["Dashboard"]);
-    }
-
-    if (pathname.includes("/stock-request")) {
-      setStateOpenKeys(["Inventory"]);
-      setSelectedKeys(["Stock Request"]);
+    if (pathname === '/dashboard') {
+      setStateOpenKeys(['Dashboard']);
+      setSelectedKeys(['Dashboard']);
     }
 
-    if (pathname.includes("/transfer")) {
-      setStateOpenKeys(["Inventory"]);
-      setSelectedKeys(["Transfer"]);
+    if (pathname.includes('/stock-request')) {
+      setStateOpenKeys(['Inventory']);
+      setSelectedKeys(['Stock Request']);
     }
 
-    if (pathname.includes("/pos")) {
+    if (pathname.includes('/transfer')) {
+      setStateOpenKeys(['Inventory']);
+      setSelectedKeys(['Transfer']);
+    }
+
+    if (pathname.includes('/pos')) {
       setCollapsed(true);
     }
   }, [navigate, pathname, setCollapsed]);
@@ -64,7 +64,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       if (key.toLowerCase().includes(item.path)) {
         if (item.children && menuItems[key].length) {
           const modifiedMenuItems = menuItems[key].map((subItem) =>
-            subItem.toLowerCase().replace(/\s+/g, "-")
+            subItem.toLowerCase().replace(/\s+/g, '-')
           );
 
           const filteredChildren = item.children.filter((child) =>
@@ -122,12 +122,12 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       onCollapse={(value) => setCollapsed(value)}
       style={{
         boxShadow:
-          "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
+          '4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)',
       }}
-      breakpoint={`${pathname.includes("/pos") && !pathname.includes("pos-settings") ? "" : "lg"}`}
-      collapsedWidth={`${pathname.includes("/pos") && !pathname.includes("pos-settings") ? 0 : 70}`}
+      breakpoint={`${pathname.includes('/pos') && !pathname.includes('pos-settings') ? '' : 'lg'}`}
+      collapsedWidth={`${pathname.includes('/pos') && !pathname.includes('pos-settings') ? 0 : 70}`}
     >
-      {pathname.includes("/pos") && !pathname.includes("pos-settings") && (
+      {pathname.includes('/pos') && !pathname.includes('pos-settings') && (
         <div className="w-full">
           <img src={logo} alt="" className="w-32 h-16 object-cover mx-auto" />
         </div>
@@ -136,7 +136,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
         theme="light"
         mode="inline"
         className="h-full w-full "
-        defaultSelectedKeys={["Dashboard"]}
+        defaultSelectedKeys={['Dashboard']}
         items={sidebarItems}
         onOpenChange={onOpenChange}
         selectedKeys={selectedKeys}

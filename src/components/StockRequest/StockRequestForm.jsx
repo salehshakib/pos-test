@@ -1,9 +1,9 @@
-import { Col, Row } from "antd";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import { WarehouseTransferComponent } from "../Transfer/WarehouseTransferComponent";
-import { RequestProductTable } from "./RequestProductTable";
+import { Col, Row } from 'antd';
+import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import { WarehouseTransferComponent } from '../Transfer/WarehouseTransferComponent';
+import { RequestProductTable } from './RequestProductTable';
 
 export const StockRequestForm = ({
   formValues,
@@ -37,8 +37,8 @@ export const StockRequestForm = ({
           <CustomInput
             label="Note"
             multiple={true}
-            type={"textarea"}
-            name={"note"}
+            type={'textarea'}
+            name={'note'}
           />
         </Col>
       </Row>

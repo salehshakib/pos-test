@@ -1,10 +1,10 @@
-import { Col, Divider, Row } from "antd";
-import CustomInput from "../../Shared/Input/CustomInput";
+import { Col, Divider, Row } from 'antd';
+import CustomInput from '../../Shared/Input/CustomInput';
 
 const rowLayout = {
   gutter: 25,
-  align: "middle",
-  justify: "start",
+  align: 'middle',
+  justify: 'start',
 };
 
 const colLayout = {
@@ -20,17 +20,17 @@ const DeveloperSettingComponent = () => {
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
-            name={"developed_by"}
-            label={"Developed By"}
-            type={"text"}
+            name={'developed_by'}
+            label={'Developed By'}
+            type={'text'}
             required={true}
           />
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            name={"developed_by_link"}
-            label={"Developed By Link"}
-            type={"text"}
+            name={'developed_by_link'}
+            label={'Developed By Link'}
+            type={'text'}
             required={true}
           />
         </Col>

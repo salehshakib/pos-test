@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import defaultUser from "../../assets/data/defaultUserImage";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import defaultUser from '../../assets/data/defaultUserImage';
 import {
   useGetAdjustmentDetailsQuery,
   useUpdateAdjustmentMutation,
-} from "../../redux/services/adjustment/adjustmentApi";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import AdjustmentForm from "./AdjustmentForm";
+} from '../../redux/services/adjustment/adjustmentApi';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import AdjustmentForm from './AdjustmentForm';
 
 const AdjustmentEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -79,33 +79,33 @@ const AdjustmentEdit = ({ id }) => {
 
       const fieldData = [
         {
-          name: "warehouse_id",
+          name: 'warehouse_id',
           value: data?.warehouse_id,
-          errors: "",
+          errors: '',
         },
         data?.attachments?.length > 0
           ? {
-              name: "attachment",
+              name: 'attachment',
               value: [
                 {
                   url: data?.attachments?.[0]?.url,
                 },
               ],
-              errors: "",
+              errors: '',
             }
           : {
-              name: "attachment",
+              name: 'attachment',
               value: [
                 {
                   url: defaultUser,
                 },
               ],
-              errors: "",
+              errors: '',
             },
         {
-          name: "note",
+          name: 'note',
           value: data?.note,
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -135,7 +135,7 @@ const AdjustmentEdit = ({ id }) => {
       warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (attachment?.length > 0) {
@@ -160,7 +160,7 @@ const AdjustmentEdit = ({ id }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Adjustment"}
+      title={'Edit Adjustment'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
       width={1400}

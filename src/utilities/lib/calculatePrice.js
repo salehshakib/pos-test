@@ -6,7 +6,7 @@ export function calculateOriginalPrice(totalPrice, taxRate, taxMethod) {
   // Convert tax rate to decimal
   const taxRateDecimal = sanitizedTaxRate / 100;
 
-  if (taxMethod === "Inclusive") {
+  if (taxMethod === 'Inclusive') {
     // Calculate original price for inclusive tax
     let originalPrice = sanitizedTotalPrice / (1 + taxRateDecimal);
     // Ensure originalPrice is not negative

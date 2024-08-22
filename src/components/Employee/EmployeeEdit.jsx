@@ -1,18 +1,18 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetEmployeeDetailsQuery,
   useUpdateEmployeeMutation,
-} from "../../redux/services/hrm/employee/employeeApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/hrm/employee/employeeApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import EmployeeForm from "./EmployeeForm";
+} from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import EmployeeForm from './EmployeeForm';
 
 const EmployeeEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -40,19 +40,19 @@ const EmployeeEdit = ({ id, setId }) => {
 
       const updateFieldValue = [
         {
-          name: "role_id",
+          name: 'role_id',
           value: data?.employee_accesses?.role_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "warehouse_id",
+          name: 'warehouse_id',
           value: data?.employee_accesses?.warehouse_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "cashier_id",
+          name: 'cashier_id',
           value: data?.employee_accesses?.cashier_id?.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -65,7 +65,7 @@ const EmployeeEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateEmployee({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -82,7 +82,7 @@ const EmployeeEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Employee"}
+      title={'Edit Employee'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

@@ -1,9 +1,9 @@
 export const columns = [
   {
-    title: "Return Reference",
-    dataIndex: "referenceNo",
-    key: "referenceNo",
-    align: "center",
+    title: 'Return Reference',
+    dataIndex: 'referenceNo',
+    key: 'referenceNo',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -11,10 +11,10 @@ export const columns = [
     ),
   },
   {
-    title: "Sale Reference",
-    dataIndex: "saleReference",
-    key: "saleReference",
-    align: "center",
+    title: 'Sale Reference',
+    dataIndex: 'saleReference',
+    key: 'saleReference',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -23,10 +23,10 @@ export const columns = [
   },
 
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
-    align: "center",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -34,10 +34,10 @@ export const columns = [
     ),
   },
   {
-    title: "Cashier",
-    dataIndex: "cashier",
-    key: "cashier",
-    align: "center",
+    title: 'Cashier',
+    dataIndex: 'cashier',
+    key: 'cashier',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -45,10 +45,10 @@ export const columns = [
     ),
   },
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -56,10 +56,10 @@ export const columns = [
     ),
   },
   {
-    title: "Grand Total",
-    dataIndex: "grandTotal",
-    align: "right",
-    key: "grandTotal",
+    title: 'Grand Total',
+    dataIndex: 'grandTotal',
+    align: 'right',
+    key: 'grandTotal',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

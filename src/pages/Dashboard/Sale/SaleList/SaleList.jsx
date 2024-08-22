@@ -1,5 +1,5 @@
-import { Row } from "antd";
-import { useState } from "react";
+import { Row } from 'antd';
+import { useState } from 'react';
 import {
   CashierFilter,
   CustomerFilter,
@@ -8,21 +8,21 @@ import {
   SaleStatusFilter,
   TaxFilter,
   WarehouseFilter,
-} from "../../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import { SaleCreate } from "../../../../components/Sale/SaleCreate";
-import { SaleTable } from "../../../../components/Sale/SaleTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../../layout/FormLayout";
-import { SALE } from "../../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../../utilities/hooks/useParams";
+} from '../../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import { SaleCreate } from '../../../../components/Sale/SaleCreate';
+import { SaleTable } from '../../../../components/Sale/SaleTable';
+import GlobalContainer from '../../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../../layout/FormLayout';
+import { SALE } from '../../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    align: 'center',
     render: (date) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {date}
@@ -30,10 +30,10 @@ const columns = [
     ),
   },
   {
-    title: "Reference",
-    dataIndex: "reference",
-    key: "reference",
-    align: "center",
+    title: 'Reference',
+    dataIndex: 'reference',
+    key: 'reference',
+    align: 'center',
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}
@@ -41,19 +41,19 @@ const columns = [
     ),
   },
   {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
+    title: 'Customer',
+    dataIndex: 'customer',
+    key: 'customer',
     render: (customer) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer ?? "N/A"}
+        {customer ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Cashier",
-    dataIndex: "cashier",
-    key: "cashier",
+    title: 'Cashier',
+    dataIndex: 'cashier',
+    key: 'cashier',
     render: (biller) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {biller}
@@ -61,32 +61,32 @@ const columns = [
     ),
   },
   {
-    title: "Sale Status",
-    dataIndex: "saleStatus",
-    key: "saleStatus",
-    align: "center",
+    title: 'Sale Status',
+    dataIndex: 'saleStatus',
+    key: 'saleStatus',
+    align: 'center',
     render: (saleStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {saleStatus ?? "N/A"}
+        {saleStatus ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Payment Status",
-    dataIndex: "paymentStatus",
-    key: "paymentStatus",
-    align: "center",
+    title: 'Payment Status',
+    dataIndex: 'paymentStatus',
+    key: 'paymentStatus',
+    align: 'center',
     render: (paymentStatus) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {paymentStatus ?? "N/A"}
+        {paymentStatus ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Grand Total",
-    dataIndex: "grandTotal",
-    align: "right",
-    key: "grandTotal",
+    title: 'Grand Total',
+    dataIndex: 'grandTotal',
+    align: 'right',
+    key: 'grandTotal',
     render: (grandTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {grandTotal}
@@ -94,10 +94,10 @@ const columns = [
     ),
   },
   {
-    title: "Paid",
-    dataIndex: "paid",
-    align: "right",
-    key: "paid",
+    title: 'Paid',
+    dataIndex: 'paid',
+    align: 'right',
+    key: 'paid',
     render: (paid) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {paid}
@@ -105,10 +105,10 @@ const columns = [
     ),
   },
   {
-    title: "Due",
-    dataIndex: "due",
-    align: "right",
-    key: "due",
+    title: 'Due',
+    dataIndex: 'due',
+    align: 'right',
+    key: 'due',
     render: (due) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {due}

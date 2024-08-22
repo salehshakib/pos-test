@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const appendToFormData = (data, formData) => {
-  const ignoreKeys = ["has_expired_date", "delete"];
+  const ignoreKeys = ['has_expired_date', 'delete'];
 
   function append(key, value) {
     if (ignoreKeys.includes(key)) {
@@ -10,7 +10,7 @@ export const appendToFormData = (data, formData) => {
 
     if (
       Array.isArray(value) &&
-      (key.includes("attachments") || key.includes("deleteAttachmentIds"))
+      (key.includes('attachments') || key.includes('deleteAttachmentIds'))
     ) {
       value.forEach((item) => {
         formData.append(`${key}[]`, item);
@@ -20,8 +20,8 @@ export const appendToFormData = (data, formData) => {
         // formData.append(key, item);
         formData.append(`${key}[]`, item);
       });
-    } else if (key.includes("date") && !ignoreKeys.includes(key)) {
-      formData.append(key, dayjs(value).format("YYYY-MM-DD"));
+    } else if (key.includes('date') && !ignoreKeys.includes(key)) {
+      formData.append(key, dayjs(value).format('YYYY-MM-DD'));
     } else if (value) {
       formData.append(key, value);
     }

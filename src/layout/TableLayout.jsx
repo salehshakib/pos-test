@@ -1,11 +1,11 @@
 export const tableProps = {
   rowKey: (record) => record.id,
-  size: "small",
+  size: 'small',
   style: {
-    width: "100%",
+    width: '100%',
   },
   pagination: false,
   scroll: {
-    x: "max-content",
+    x: 'max-content',
   },
 };

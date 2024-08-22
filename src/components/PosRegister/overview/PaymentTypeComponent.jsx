@@ -1,48 +1,48 @@
-import { Button, Col, Form } from "antd";
-import { useEffect } from "react";
-import { BsCash } from "react-icons/bs";
-import { fullColLayout, mdColLayout } from "../../../layout/FormLayout";
-import { useGetAllGiftCardQuery } from "../../../redux/services/giftcard/giftcard/giftCardApi";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
+import { Button, Col, Form } from 'antd';
+import { useEffect } from 'react';
+import { BsCash } from 'react-icons/bs';
+import { fullColLayout, mdColLayout } from '../../../layout/FormLayout';
+import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomSelect from '../../Shared/Select/CustomSelect';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
 
 const PaymentType = ({ paymentType }) => {
   const form = Form.useFormInstance();
-  const payment = Form.useWatch("payment_type", form);
+  const payment = Form.useWatch('payment_type', form);
 
   useEffect(() => {
     if (!payment) {
-      form.setFieldValue("payment_type", "Cash");
+      form.setFieldValue('payment_type', 'Cash');
     }
   }, [form, payment]);
 
   useEffect(() => {
-    form.setFieldValue("payment_type", paymentType);
+    form.setFieldValue('payment_type', paymentType);
   }, [form, paymentType]);
 
   const options = [
     {
-      value: "Cash",
-      label: "Cash",
+      value: 'Cash',
+      label: 'Cash',
     },
     {
-      value: "Card",
-      label: "Card",
+      value: 'Card',
+      label: 'Card',
     },
     {
-      value: "Cheque",
-      label: "Cheque",
+      value: 'Cheque',
+      label: 'Cheque',
     },
     {
-      value: "Gift Card",
-      label: "Gift Card",
+      value: 'Gift Card',
+      label: 'Gift Card',
     },
 
     {
-      value: "Points",
-      label: "Points",
+      value: 'Points',
+      label: 'Points',
     },
   ];
 
@@ -50,7 +50,7 @@ const PaymentType = ({ paymentType }) => {
     <CustomSelect
       label="Payment Type"
       options={options}
-      name={"payment_type"}
+      name={'payment_type'}
     />
   );
 };
@@ -85,28 +85,28 @@ const CardComponent = () => {
   const options = [
     {
       //master credit
-      value: "Master Card (Credit)",
-      label: "Master Card (Credit)",
+      value: 'Master Card (Credit)',
+      label: 'Master Card (Credit)',
     },
     {
       //visa credit
-      value: "Visa Card (Credit)",
-      label: "Visa Card (Credit)",
+      value: 'Visa Card (Credit)',
+      label: 'Visa Card (Credit)',
     },
     {
       //master debit
-      value: "Master Card (Debit)",
-      label: "Master Card (Debit)",
+      value: 'Master Card (Debit)',
+      label: 'Master Card (Debit)',
     },
     {
       //visa debit
-      value: "Visa Card (Debit)",
-      label: "Visa Card (Debit)",
+      value: 'Visa Card (Debit)',
+      label: 'Visa Card (Debit)',
     },
     {
       //american express
-      value: "American Express",
-      label: "American Express",
+      value: 'American Express',
+      label: 'American Express',
     },
   ];
 
@@ -114,7 +114,7 @@ const CardComponent = () => {
     <>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="issuer"
           label="Issuer Name"
           required={true}
@@ -137,7 +137,7 @@ const ChequeComponent = () => {
     <>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="bank"
           label="Bank Name"
           required={true}
@@ -145,7 +145,7 @@ const ChequeComponent = () => {
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="cheque_no"
           label="Cheque Number"
           required={true}
@@ -161,12 +161,12 @@ export const PaymentTypeComponent = ({
 }) => {
   const form = Form.useFormInstance();
 
-  const receivedAmount = Form.useWatch("recieved_amount", form);
-  const paidAmount = Form.useWatch("paid_amount", form);
-  const paymentType = Form.useWatch("payment_type", form);
+  const receivedAmount = Form.useWatch('recieved_amount', form);
+  const paidAmount = Form.useWatch('paid_amount', form);
+  const paymentType = Form.useWatch('payment_type', form);
 
   useEffect(() => {
-    form.setFieldValue("paid_amount", grandTotal ?? 0);
+    form.setFieldValue('paid_amount', grandTotal ?? 0);
   }, [paidAmount, receivedAmount, grandTotal, form]);
 
   const change = Number(
@@ -174,15 +174,15 @@ export const PaymentTypeComponent = ({
   ).toFixed(2);
 
   const handleQuickCash = (value) => {
-    const paidAmount = form.getFieldValue("recieved_amount") ?? 0;
-    form.setFieldValue("recieved_amount", paidAmount + value);
+    const paidAmount = form.getFieldValue('recieved_amount') ?? 0;
+    form.setFieldValue('recieved_amount', paidAmount + value);
   };
 
   const currency = useSelector(useCurrency);
 
   return (
     <>
-      {paymentType === "Cash" && (
+      {paymentType === 'Cash' && (
         <>
           <span className="text-center w-full pb-5 text-lg font-semibold">
             Quick Cash
@@ -247,7 +247,7 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number_with_money"}
+          type={'number_with_money'}
           suffix={currency?.name}
           name="recieved_amount"
           label="Recieved Amount"
@@ -256,7 +256,7 @@ export const PaymentTypeComponent = ({
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"number_with_money"}
+          type={'number_with_money'}
           suffix={currency?.name}
           name="paid_amount"
           label="Paid Amount"
@@ -266,7 +266,7 @@ export const PaymentTypeComponent = ({
 
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="payment_receiver"
           label="Payment Receiver"
         />
@@ -276,13 +276,13 @@ export const PaymentTypeComponent = ({
         <div className="py-2 pb-8 text-lg font-semibold">Change: {change}</div>
       </Col>
 
-      {paymentType === "Gift Card" && <GiftCardComponent />}
-      {paymentType === "Card" && <CardComponent />}
-      {paymentType === "Cheque" && <ChequeComponent />}
+      {paymentType === 'Gift Card' && <GiftCardComponent />}
+      {paymentType === 'Card' && <CardComponent />}
+      {paymentType === 'Cheque' && <ChequeComponent />}
 
       <Col {...fullColLayout}>
         <CustomInput
-          type={"textarea"}
+          type={'textarea'}
           name="payment_note"
           label="Payment Note"
         />

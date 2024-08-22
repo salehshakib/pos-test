@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Col, Form } from "antd";
-import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import { fullColLayout } from "../../../layout/FormLayout";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import CustomTable from "../../Shared/Table/CustomTable";
+import { Col, Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
+import { fullColLayout } from '../../../layout/FormLayout';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomSelect from '../../Shared/Select/CustomSelect';
+import CustomTable from '../../Shared/Table/CustomTable';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -20,10 +20,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -31,10 +31,10 @@ const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost}
@@ -42,10 +42,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 200,
     render: (quantity, record) => {
       return quantity >= 0 ? (
@@ -54,8 +54,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["product_list", "qty", record?.id]}
+          type={'number'}
+          name={['product_list', 'qty', record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -63,29 +63,29 @@ const columns = [
     },
   },
   {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     width: 180,
     render: (action, record) => {
       return (
         action && (
           <div className="flex w-full  justify-center items-center gap-3">
             <CustomSelect
-              name={["product_list", "action", record?.id]}
+              name={['product_list', 'action', record?.id]}
               placeholder="Type"
               options={[
                 {
-                  value: "Addition",
-                  label: "Addition (+)",
+                  value: 'Addition',
+                  label: 'Addition (+)',
                 },
                 {
-                  value: "Subtraction",
-                  label: "Subtraction (-)",
+                  value: 'Subtraction',
+                  label: 'Subtraction (-)',
                 },
               ]}
-              styleProps={{ width: "9rem" }}
+              styleProps={{ width: '9rem' }}
               noStyle={true}
             />
           </div>
@@ -95,11 +95,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       const { setRowId } = props ?? {};
       return (
@@ -121,8 +121,8 @@ const columns = [
 
 export const ProductTableComponent = () => {
   const form = Form.useFormInstance();
-  const productData = Form.useWatch("product_name", form);
-  const productListData = Form.useWatch("product_list", form);
+  const productData = Form.useWatch('product_name', form);
+  const productListData = Form.useWatch('product_list', form);
 
   const [rowId, setRowId] = useState(undefined);
 
@@ -130,8 +130,8 @@ export const ProductTableComponent = () => {
     if (productData?.length > 0) {
       const setFormValuesIfNotExists = (productIndex) => {
         const selectedProduct = productData[productIndex];
-        const qtyPath = ["product_list", "qty", selectedProduct];
-        const actionPath = ["product_list", "action", selectedProduct];
+        const qtyPath = ['product_list', 'qty', selectedProduct];
+        const actionPath = ['product_list', 'action', selectedProduct];
 
         // Check if the value already exists
         const existingQty = form.getFieldValue(qtyPath);
@@ -142,7 +142,7 @@ export const ProductTableComponent = () => {
           form.setFieldValue(qtyPath, 1);
         }
         if (existingAction === undefined) {
-          form.setFieldValue(actionPath, "Addition");
+          form.setFieldValue(actionPath, 'Addition');
         }
       };
 
@@ -162,7 +162,7 @@ export const ProductTableComponent = () => {
     if (rowId !== undefined) {
       const updatedProductData = productData?.filter((item) => item !== rowId);
 
-      form.setFieldValue("product_name", updatedProductData);
+      form.setFieldValue('product_name', updatedProductData);
     }
   }, [rowId]);
 
@@ -183,7 +183,7 @@ export const ProductTableComponent = () => {
     }) ?? [];
 
   dataSource.push({
-    name: "Total",
+    name: 'Total',
     quantity: productListData
       ? Object.values(productListData?.qty)?.reduce((acc, cur) => acc + cur, 0)
       : -1,

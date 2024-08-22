@@ -1,10 +1,10 @@
 // const SingleNotification = ({ data, handleReadNotification }) => {
-import { Skeleton, theme } from "antd";
-import warehouseLogo from "../../assets/data/warehouseLogo";
+import { Skeleton, theme } from 'antd';
+import warehouseLogo from '../../assets/data/warehouseLogo';
 import {
   categorizeNotificationsByDate,
   getHoursAgo,
-} from "../../utilities/lib/notification/notificationData";
+} from '../../utilities/lib/notification/notificationData';
 
 const SingleNotificationComponent = ({ item, handleReadNotification }) => {
   const { token } = theme.useToken();

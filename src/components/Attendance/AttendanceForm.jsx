@@ -1,52 +1,50 @@
-import { Col, Form, Row } from "antd";
-import dayjs from "dayjs";
-import { useEffect } from "react";
+import { Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import {
   fullColLayout,
   largeLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
-import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-
-
+} from '../../layout/FormLayout';
+import { DepartmentComponent } from '../ReusableComponent/DepartmentComponent';
+import { EmployeeComponent } from '../ReusableComponent/EmployeeComponent';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 
 const DateComponent = () => {
   const form = Form.useFormInstance();
   const currentDate = dayjs(new Date());
-  const checkIn = Form.useWatch("check_in", form);
-  const checkOut = Form.useWatch("check_out", form);
+  const checkIn = Form.useWatch('check_in', form);
+  const checkOut = Form.useWatch('check_out', form);
 
-  const hours = Form.useWatch("hours", form);
+  const hours = Form.useWatch('hours', form);
 
   useEffect(() => {
-    form.setFieldValue("date", currentDate);
+    form.setFieldValue('date', currentDate);
   }, [currentDate, form]);
 
   useEffect(() => {
     if (checkIn && checkOut) {
-      const timeDiff = checkOut.diff(checkIn, "second");
+      const timeDiff = checkOut.diff(checkIn, 'second');
 
       const hours = Math.floor(timeDiff / 3600);
       const minutes = Math.floor((timeDiff % 3600) / 60);
       const seconds = timeDiff % 60;
 
-      const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+      const formattedTime = `${String(hours).padStart(2, '0')}:${String(
         minutes
-      ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      ).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-      form.setFieldValue("hours", formattedTime);
+      form.setFieldValue('hours', formattedTime);
     }
   }, [form, checkIn, checkOut, hours]);
 
   return (
     <>
       <Col {...largeLayout}>
-        <CustomDatepicker label="Date" required={true} name={"date"} />
+        <CustomDatepicker label="Date" required={true} name={'date'} />
       </Col>
       <Col {...largeLayout}>
         <CustomDatepicker
@@ -54,8 +52,8 @@ const DateComponent = () => {
           type="time"
           picker="time"
           required={true}
-          name={"check_in"}
-          placeholder={"Check In"}
+          name={'check_in'}
+          placeholder={'Check In'}
         />
       </Col>
       <Col {...largeLayout}>
@@ -63,8 +61,8 @@ const DateComponent = () => {
           label="Check Out"
           type="time"
           picker="time"
-          name={"check_out"}
-          placeholder={"Check Out"}
+          name={'check_out'}
+          placeholder={'Check Out'}
         />
       </Col>
       <Col {...largeLayout}>
@@ -72,7 +70,7 @@ const DateComponent = () => {
           label="Total Hours"
           type="text"
           //   required={true}
-          name={"hours"}
+          name={'hours'}
         />
       </Col>
     </>
@@ -95,8 +93,8 @@ export const AttendanceForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Description"
-            type={"textarea"}
-            name={"description"}
+            type={'textarea'}
+            name={'description'}
           />
         </Col>
       </Row>

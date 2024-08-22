@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetWarehouseDetailsQuery,
   useUpdateWarehouseMutation,
-} from "../../redux/services/warehouse/warehouseApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import WarehouseForm from "./WarehouseForm";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { Form } from "antd";
+} from '../../redux/services/warehouse/warehouseApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import WarehouseForm from './WarehouseForm';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { Form } from 'antd';
 
 const WarehouseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const WarehouseEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateWarehouse({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -61,7 +61,7 @@ const WarehouseEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Warehouse"}
+      title={'Edit Warehouse'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

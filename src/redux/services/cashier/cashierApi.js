@@ -1,7 +1,7 @@
-import { CASHIER } from "../../../utilities/apiEndpoints/people.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { CASHIER } from '../../../utilities/apiEndpoints/people.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const cashierApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const cashierApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${CASHIER}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -24,7 +24,7 @@ const cashierApi = baseApi.injectEndpoints({
       query: ({ id }) => {
         return {
           url: `${CASHIER}/show/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response) => verifyToken(response.data),
@@ -35,19 +35,19 @@ const cashierApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${CASHIER}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const cashierApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${CASHIER}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const cashierApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${CASHIER}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const cashierApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${CASHIER}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

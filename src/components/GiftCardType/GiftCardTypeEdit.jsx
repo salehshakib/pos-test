@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetGiftCardTypeDetailsQuery,
   useUpdateGiftCardTypeMutation,
-} from "../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { GiftCardTypeForm } from "./GiftCardTypeForm";
+} from '../../redux/services/giftcard/giftcardtype/giftCardTypeApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { GiftCardTypeForm } from './GiftCardTypeForm';
 
 export const GiftCardTypeEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const GiftCardTypeEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateGiftCardType({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -54,7 +54,7 @@ export const GiftCardTypeEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Gift Card"}
+      title={'Edit Gift Card'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

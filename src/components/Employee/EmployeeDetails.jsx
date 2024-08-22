@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetEmployeeDetailsQuery } from "../../redux/services/hrm/employee/employeeApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetEmployeeDetailsQuery } from '../../redux/services/hrm/employee/employeeApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const EmployeeDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetEmployeeDetailsQuery(
@@ -17,9 +17,9 @@ export const EmployeeDetails = ({ id, ...props }) => {
   );
 
   const details = createDetailsLayout(data, false, [
-    "employee_accesses",
-    "users",
-    "stock_request_products",
+    'employee_accesses',
+    'users',
+    'stock_request_products',
   ]);
 
   return (

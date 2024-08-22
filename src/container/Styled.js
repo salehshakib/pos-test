@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const primaryColor = ({ theme }) => {
   return theme?.token?.colorPrimary;

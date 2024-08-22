@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useGetAlertReportQuery } from "../../redux/services/reports/summaryApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { showCurrency } from "../../utilities/lib/currency";
-import CustomTable from "../Shared/Table/CustomTable";
+import { useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetAlertReportQuery } from '../../redux/services/reports/summaryApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { showCurrency } from '../../utilities/lib/currency';
+import CustomTable from '../Shared/Table/CustomTable';
 
 export const AlertProductTable = ({
   newColumns,
@@ -54,7 +54,7 @@ export const AlertProductTable = ({
         name,
         sku,
         minQty: alert_qty,
-        warehouse: qty.warehouses?.name ?? "",
+        warehouse: qty.warehouses?.name ?? '',
         stock: qty.qty ?? 0,
         unitCost: product_prices?.length
           ? showCurrency(product_prices?.[i].selling_price, currency)

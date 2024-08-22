@@ -1,25 +1,25 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetSaleReturnDetailsQuery,
   useUpdateSaleReturnMutation,
-} from "../../redux/services/return/saleReturnApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+} from '../../redux/services/return/saleReturnApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import { updateProductList } from "../../utilities/lib/return/updateProductList";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { SaleReturnForm } from "./SaleReturnForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import { updateProductList } from '../../utilities/lib/return/updateProductList';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { SaleReturnForm } from './SaleReturnForm';
 
 const SaleReturnEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -205,7 +205,7 @@ const SaleReturnEdit = ({ id, setId }) => {
       // message.info("Please add atleast one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(updatedList);
@@ -224,7 +224,7 @@ const SaleReturnEdit = ({ id, setId }) => {
       ) ?? 0;
 
     const postData = {
-      sale_return_at: dayjs(values?.sale_return_at).format("YYYY-MM-DD"),
+      sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
       sale_id: saleData?.id,
       petty_cash_id: saleData?.petty_cash_id,
       warehouse_id: saleData?.warehouse_id,
@@ -241,7 +241,7 @@ const SaleReturnEdit = ({ id, setId }) => {
       return_note: values?.return_note,
       staff_note: values?.staff_note,
       product_list: JSON.stringify(productListArray),
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     const { attachment } = values;
@@ -254,7 +254,7 @@ const SaleReturnEdit = ({ id, setId }) => {
       // message.error("Please add at least one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     appendToFormData(postData, formData);
@@ -278,7 +278,7 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Sale Return"}
+      title={'Edit Sale Return'}
       open={isEditDrawerOpen}
       width={1400}
       isLoading={isFetching}

@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetCashierDetailsQuery,
   useUpdateCashierMutation,
-} from "../../redux/services/cashier/cashierApi";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CashierForm from "./CashierForm";
+} from '../../redux/services/cashier/cashierApi';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CashierForm from './CashierForm';
 
 const CashierEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CashierEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateCashier({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -49,7 +49,7 @@ const CashierEdit = ({ id, setId }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Cashier"}
+      title={'Edit Cashier'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { SaleReturnDetails } from "../../../../components/SaleReturn/SaleReturnDetails";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useGetAllSaleReturnQuery } from "../../../../redux/services/return/saleReturnApi";
-import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { formatDate } from "../../../../utilities/lib/dateFormat";
-import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
-import { columns } from "../data/SaleReturn";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SaleReturnDetails } from '../../../../components/SaleReturn/SaleReturnDetails';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useGetAllSaleReturnQuery } from '../../../../redux/services/return/saleReturnApi';
+import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { formatDate } from '../../../../utilities/lib/dateFormat';
+import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
+import { columns } from '../data/SaleReturn';
 
 export const SaleReturnTable = ({
   keyword,

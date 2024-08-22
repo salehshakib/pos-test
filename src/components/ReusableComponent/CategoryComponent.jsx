@@ -1,13 +1,13 @@
-import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
+import { useGetAllCategoryQuery } from '../../redux/services/category/categoryApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const CategoryComponent = ({
-  name = "category_id",
-  mode = "single",
+  name = 'category_id',
+  mode = 'single',
 }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,

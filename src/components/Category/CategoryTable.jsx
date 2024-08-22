@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCategoryMutation,
   useGetAllCategoryQuery,
   useUpdateCategoryStatusMutation,
-} from "../../redux/services/category/categoryApi";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { CategoryDetails } from "./CategoryDetails";
-import Categoryedit from "./Categoryedit";
+} from '../../redux/services/category/categoryApi';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { CategoryDetails } from './CategoryDetails';
+import Categoryedit from './Categoryedit';
 
 const CategoryTable = ({
   newColumns,
@@ -111,7 +111,7 @@ const CategoryTable = ({
       return {
         id,
         category: name,
-        parentCategory: parent_name ?? "N/A",
+        parentCategory: parent_name ?? 'N/A',
         created_at,
         img: attachments?.[0]?.url,
         status: is_active,
@@ -163,7 +163,7 @@ const CategoryTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"category"}
+        item={'category'}
       />
     </GlobalUtilityStyle>
   );

@@ -1,34 +1,34 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   colLayout,
   fullColLayout,
   largeLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+} from '../../layout/FormLayout';
+import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { getCurrentDate } from "../../utilities/lib/currentDate";
+} from '../../utilities/hooks/useParams';
+import { getCurrentDate } from '../../utilities/lib/currentDate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
-} from "../../utilities/lib/generator/generatorUtils";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { StockTransferProductTable } from "./overview/StockTransferProductTable";
+} from '../../utilities/lib/generator/generatorUtils';
+import { TotalRow } from '../ReusableComponent/TotalRow';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { StockTransferProductTable } from './overview/StockTransferProductTable';
 
 const options = [
   {
-    value: "Sent",
-    label: "Send",
+    value: 'Sent',
+    label: 'Send',
   },
 ];
 
@@ -40,27 +40,27 @@ const useSetFieldValue = (field, value) => {
 };
 
 const FileStatusComponent = () => {
-  useSetFieldValue("status", options[0].value);
+  useSetFieldValue('status', options[0].value);
 
   return (
     <CustomSelect
       label="File Status"
-      placeholder={"File Status"}
+      placeholder={'File Status'}
       options={options}
-      name={"status"}
+      name={'status'}
     />
   );
 };
 
 const TransferDateComponent = () => {
-  useSetFieldValue("date", getCurrentDate);
+  useSetFieldValue('date', getCurrentDate);
 
   return (
     <CustomDatepicker
       label="Date"
-      type={"date"}
+      type={'date'}
       required={true}
-      name={"date"}
+      name={'date'}
     />
   );
 };
@@ -88,25 +88,25 @@ const WarehouseTransferComponent = ({ fullLayout = false, warehouseData }) => {
 
   useEffect(() => {
     form.setFieldValue(
-      "from_warehouse_id",
+      'from_warehouse_id',
       warehouseData?.from_warehouse_id.toString()
     );
     form.setFieldValue(
-      "to_warehouse_id",
+      'to_warehouse_id',
       warehouseData?.to_warehouse_id.toString()
     );
   }, [form, warehouseData]);
 
   const handleFromWarehouseChange = () => {
     form.setFieldValue(
-      "from_warehouse_id",
+      'from_warehouse_id',
       warehouseData?.from_warehouse_id.toString()
     );
   };
 
   const handleToWarehouseChange = () => {
     form.setFieldValue(
-      "to_warehouse_id",
+      'to_warehouse_id',
       warehouseData?.to_warehouse_id.toString()
     );
   };
@@ -116,7 +116,7 @@ const WarehouseTransferComponent = ({ fullLayout = false, warehouseData }) => {
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
         <CustomSelect
           label="Warehouse (From)"
-          placeholder={"Warehouse (From)"}
+          placeholder={'Warehouse (From)'}
           showSearch={true}
           isLoading={isLoading}
           options={warehouseFromOptions}
@@ -128,7 +128,7 @@ const WarehouseTransferComponent = ({ fullLayout = false, warehouseData }) => {
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
         <CustomSelect
           label="Warehouse (To)"
-          placeholder={"Warehouse (To)"}
+          placeholder={'Warehouse (To)'}
           showSearch={true}
           isLoading={isLoading}
           options={warehouseToOptions}
@@ -155,7 +155,7 @@ export const StockTransferForm = ({
 }) => {
   const form = props.form;
 
-  const shipping_cost = Form.useWatch("shipping_cost", form);
+  const shipping_cost = Form.useWatch('shipping_cost', form);
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
@@ -216,20 +216,20 @@ export const StockTransferForm = ({
           <Col {...colLayout}>
             <CustomInput
               label="Shipping Cost"
-              type={"number"}
-              name={"shipping_cost"}
+              type={'number'}
+              name={'shipping_cost'}
             />
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label={"Attach Document"} />
+            <CustomUploader label={'Attach Document'} />
           </Col>
 
           <Col {...fullColLayout}>
             <CustomInput
               label="Transfer Note"
-              type={"textarea"}
-              name={"note"}
+              type={'textarea'}
+              name={'note'}
             />
           </Col>
         </Row>

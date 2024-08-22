@@ -1,33 +1,33 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   colLayout,
   fullColLayout,
   largeLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { getCurrentDate } from "../../utilities/lib/currentDate";
+} from '../../layout/FormLayout';
+import { getCurrentDate } from '../../utilities/lib/currentDate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
-} from "../../utilities/lib/generator/generatorUtils";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { TransferProductTable } from "./overview/TransferProductTable";
-import { WarehouseTransferComponent } from "./WarehouseTransferComponent";
+} from '../../utilities/lib/generator/generatorUtils';
+import { TotalRow } from '../ReusableComponent/TotalRow';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { TransferProductTable } from './overview/TransferProductTable';
+import { WarehouseTransferComponent } from './WarehouseTransferComponent';
 
 const options = [
   {
-    value: "Pending",
-    label: "Pending",
+    value: 'Pending',
+    label: 'Pending',
   },
   {
-    value: "Sent",
-    label: "Send",
+    value: 'Sent',
+    label: 'Send',
   },
 ];
 
@@ -39,14 +39,14 @@ const useSetFieldValue = (field, value) => {
 };
 
 const FileStatusComponent = () => {
-  useSetFieldValue("status", options[0].value);
+  useSetFieldValue('status', options[0].value);
 
   return (
     <CustomSelect
       label="File Status"
-      placeholder={"File Status"}
+      placeholder={'File Status'}
       options={options}
-      name={"status"}
+      name={'status'}
     />
   );
 };
@@ -58,14 +58,14 @@ const TransferDateComponent = () => {
   //   form.setFieldValue("date", getCurrentDate);
   // }, [form]);
 
-  useSetFieldValue("date", getCurrentDate);
+  useSetFieldValue('date', getCurrentDate);
 
   return (
     <CustomDatepicker
       label="Date"
-      type={"date"}
+      type={'date'}
       required={true}
-      name={"date"}
+      name={'date'}
     />
   );
 };
@@ -81,7 +81,7 @@ const TransferForm = ({
 }) => {
   const form = props.form;
 
-  const shipping_cost = Form.useWatch("shipping_cost", form);
+  const shipping_cost = Form.useWatch('shipping_cost', form);
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
@@ -136,20 +136,20 @@ const TransferForm = ({
           <Col {...colLayout}>
             <CustomInput
               label="Shipping Cost"
-              type={"number"}
-              name={"shipping_cost"}
+              type={'number'}
+              name={'shipping_cost'}
             />
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label={"Attach Document"} />
+            <CustomUploader label={'Attach Document'} />
           </Col>
 
           <Col {...fullColLayout}>
             <CustomInput
               label="Transfer Note"
-              type={"textarea"}
-              name={"note"}
+              type={'textarea'}
+              name={'note'}
             />
           </Col>
         </Row>

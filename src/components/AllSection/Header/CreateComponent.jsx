@@ -1,21 +1,21 @@
-import { UserOutlined } from "@ant-design/icons";
-import { App, Button, Dropdown } from "antd";
-import { MdFormatListBulletedAdd } from "react-icons/md";
+import { UserOutlined } from '@ant-design/icons';
+import { App, Button, Dropdown } from 'antd';
+import { MdFormatListBulletedAdd } from 'react-icons/md';
 
 const items = [
   {
-    label: "1st menu item",
-    key: "1",
+    label: '1st menu item',
+    key: '1',
     icon: <UserOutlined />,
   },
   {
-    label: "2nd menu item",
-    key: "2",
+    label: '2nd menu item',
+    key: '2',
     icon: <UserOutlined />,
   },
   {
-    label: "3rd menu item",
-    key: "3",
+    label: '3rd menu item',
+    key: '3',
     icon: <UserOutlined />,
     danger: true,
   },
@@ -25,7 +25,7 @@ const CreateComponent = () => {
   const { message } = App.useApp();
 
   const handleMenuClick = (e) => {
-    message.info("Click on menu item.");
+    message.info('Click on menu item.');
   };
 
   const menuProps = {
@@ -34,8 +34,8 @@ const CreateComponent = () => {
   };
 
   const dropDownProps = {
-    trigger: ["click"],
-    placement: "bottom",
+    trigger: ['click'],
+    placement: 'bottom',
     arrow: {
       pointAtCenter: true,
     },

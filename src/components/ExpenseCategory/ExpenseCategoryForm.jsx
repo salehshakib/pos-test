@@ -1,7 +1,7 @@
-import { Col, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import CustomForm from '../Shared/Form/CustomForm';
+import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomInput from '../Shared/Input/CustomInput';
 
 const ExpenseCategoryForm = (props) => {
   return (
@@ -10,9 +10,9 @@ const ExpenseCategoryForm = (props) => {
         <Col {...fullColLayout}>
           <CustomInput
             label="Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
       </Row>

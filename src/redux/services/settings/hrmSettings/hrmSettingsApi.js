@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { HRM_SETTING } from "../../../../utilities/apiEndpoints/settings.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { HRM_SETTING } from '../../../../utilities/apiEndpoints/settings.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const hrmSettingsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllHrmSetting: build.query({
       query: () => ({
         url: `/${HRM_SETTING}/show/1`,
-        method: "GET",
+        method: 'GET',
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: () => [{ type: HRM_SETTING }, HRM_SETTING],
@@ -19,19 +19,19 @@ const hrmSettingsApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${HRM_SETTING}/update/1`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

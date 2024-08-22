@@ -1,12 +1,12 @@
-import { Col, Form, Modal, Row } from "antd";
-import { useRef, useState } from "react";
-import Cropper from "react-easy-crop";
-import { BiImageAdd } from "react-icons/bi";
-import { FaTrash } from "react-icons/fa";
-import { fullColLayout, mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { cropImage } from "../../utilities/lib/cropImage";
-import { GiftCardTypeComponent } from "../ReusableComponent/GiftCardTypeComponent";
-import CustomForm from "../Shared/Form/CustomForm";
+import { Col, Form, Modal, Row } from 'antd';
+import { useRef, useState } from 'react';
+import Cropper from 'react-easy-crop';
+import { BiImageAdd } from 'react-icons/bi';
+import { FaTrash } from 'react-icons/fa';
+import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { cropImage } from '../../utilities/lib/cropImage';
+import { GiftCardTypeComponent } from '../ReusableComponent/GiftCardTypeComponent';
+import CustomForm from '../Shared/Form/CustomForm';
 
 const FileInput = ({
   imageUrl,
@@ -43,7 +43,7 @@ const FileInput = ({
         type="file"
         ref={inputRef}
         onChange={handleChange}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       />
 
       <div
@@ -129,9 +129,9 @@ const ImageCropper = ({ image, onCropDone, onCropCancle }) => {
             onCropComplete={onCropComplete}
             style={{
               containerStyle: {
-                width: "100%",
-                height: "100%",
-                backgroundColor: "white",
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'white',
               },
             }}
           />
@@ -146,7 +146,7 @@ const FrontImageCroppper = () => {
   const [imageAfterCrop, setImageAfterCrop] = useState(null);
   const form = Form.useFormInstance();
 
-  const frontSideUrl = form.getFieldValue("frontImageUrl");
+  const frontSideUrl = form.getFieldValue('frontImageUrl');
 
   const onImageSelected = (image) => {
     setImage(image);
@@ -160,7 +160,7 @@ const FrontImageCroppper = () => {
         setImage(null);
       })
       .catch((error) => {
-        console.error("Error cropping image:", error);
+        console.error('Error cropping image:', error);
       })
       .finally(() => {});
   };
@@ -207,7 +207,7 @@ const BackImageCroppper = () => {
   const [imageAfterCrop, setImageAfterCrop] = useState(null);
   const form = Form.useFormInstance();
 
-  const backSideUrl = form.getFieldValue("backImageUrl");
+  const backSideUrl = form.getFieldValue('backImageUrl');
 
   const onImageSelected = (image) => {
     setImage(image);
@@ -221,7 +221,7 @@ const BackImageCroppper = () => {
         setImage(null);
       })
       .catch((error) => {
-        console.error("Error cropping image:", error);
+        console.error('Error cropping image:', error);
       })
       .finally(() => {});
   };

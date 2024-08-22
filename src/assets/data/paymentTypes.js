@@ -1,26 +1,26 @@
 export const paymentTypesOptions = [
   {
-    value: "Cash",
-    label: "Cash",
+    value: 'Cash',
+    label: 'Cash',
   },
   {
-    value: "Cheque",
-    label: "Cheque",
+    value: 'Cheque',
+    label: 'Cheque',
   },
   {
-    value: "Mobile Transfer",
-    label: "Mobile Transfer",
+    value: 'Mobile Transfer',
+    label: 'Mobile Transfer',
   },
   {
-    value: "Bank",
-    label: "Bank",
+    value: 'Bank',
+    label: 'Bank',
   },
   {
-    value: "Card",
-    label: "Card",
+    value: 'Card',
+    label: 'Card',
   },
   {
-    value: "Others",
-    label: "Others",
+    value: 'Others',
+    label: 'Others',
   },
 ];

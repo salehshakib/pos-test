@@ -1,8 +1,8 @@
-import { GlobalUtilityStyle } from "../../container/Styled";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import DiscountPlanEdit from "./DiscountPlanEdit";
+import { GlobalUtilityStyle } from '../../container/Styled';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import DiscountPlanEdit from './DiscountPlanEdit';
 
 const DiscountPlanTable = ({
   newColumns,

@@ -1,7 +1,7 @@
-import { TAX } from "../../../utilities/apiEndpoints/helper.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { TAX } from '../../../utilities/apiEndpoints/helper.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const taxApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const taxApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${TAX}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -23,19 +23,19 @@ const taxApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${TAX}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -47,18 +47,18 @@ const taxApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${TAX}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

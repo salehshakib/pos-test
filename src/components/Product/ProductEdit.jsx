@@ -1,19 +1,19 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-} from "../../redux/services/product/productApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { getMissingUids } from "../../utilities/lib/deletedImageIds";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { openNotification } from "../../utilities/lib/openToaster";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import ProductForm from "./ProductForm";
+} from '../../redux/services/product/productApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { getMissingUids } from '../../utilities/lib/deletedImageIds';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { openNotification } from '../../utilities/lib/openToaster';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import ProductForm from './ProductForm';
 
 const ProductListEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -191,7 +191,7 @@ const ProductListEdit = ({ id }) => {
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item?.warehouses?.name ?? "need backend relation",
+            name: item?.warehouses?.name ?? 'need backend relation',
           },
         ]);
       });
@@ -201,7 +201,7 @@ const ProductListEdit = ({ id }) => {
           ...prevWarehouses,
           {
             id: item.warehouse_id,
-            name: item?.warehouses?.name ?? "need backend relation",
+            name: item?.warehouses?.name ?? 'need backend relation',
           },
         ]);
       });
@@ -211,8 +211,8 @@ const ProductListEdit = ({ id }) => {
           ...prevProducts,
           {
             id: item?.combo_product_id,
-            name: item?.products?.name ?? "need backend relation",
-            sku: item?.products?.sku ?? "need backend relation",
+            name: item?.products?.name ?? 'need backend relation',
+            sku: item?.products?.sku ?? 'need backend relation',
           },
         ]);
       });
@@ -220,53 +220,53 @@ const ProductListEdit = ({ id }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "has_stock",
-          value: has_stock.toString() === "1" ? true : false,
-          errors: "",
+          name: 'has_stock',
+          value: has_stock.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "has_different_price",
-          value: has_different_price.toString() === "1" ? true : false,
-          errors: "",
+          name: 'has_different_price',
+          value: has_different_price.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: "has_promotion",
-          value: has_promotion.toString() === "1" ? true : false,
-          errors: "",
+          name: 'has_promotion',
+          value: has_promotion.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: ["promotion", "promotion_price"],
+          name: ['promotion', 'promotion_price'],
           value: promotion_price,
-          errors: "",
+          errors: '',
         },
         {
-          name: ["promotion", "starting_date"],
+          name: ['promotion', 'starting_date'],
           value:
-            has_promotion.toString() === "1"
-              ? dayjs(starting_date, "YYYY-MM-DD")
-              : "",
-          errors: "",
+            has_promotion.toString() === '1'
+              ? dayjs(starting_date, 'YYYY-MM-DD')
+              : '',
+          errors: '',
         },
         {
-          name: ["promotion", "last_date"],
+          name: ['promotion', 'last_date'],
           value:
-            has_promotion.toString() === "1"
-              ? dayjs(last_date, "YYYY-MM-DD")
-              : "",
-          errors: "",
+            has_promotion.toString() === '1'
+              ? dayjs(last_date, 'YYYY-MM-DD')
+              : '',
+          errors: '',
         },
         {
-          name: "has_expired_date",
-          value: has_expired_date.toString() === "1" ? true : false,
-          errors: "",
+          name: 'has_expired_date',
+          value: has_expired_date.toString() === '1' ? true : false,
+          errors: '',
         },
         {
-          name: ["product_expire", "expired_date"],
+          name: ['product_expire', 'expired_date'],
           value:
-            has_expired_date.toString() === "1"
-              ? dayjs(expired_date, "YYYY-MM-DD")
-              : "",
-          errors: "",
+            has_expired_date.toString() === '1'
+              ? dayjs(expired_date, 'YYYY-MM-DD')
+              : '',
+          errors: '',
         },
         // {
         //   name: "ecommerce_sync",
@@ -337,7 +337,7 @@ const ProductListEdit = ({ id }) => {
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
-      return openNotification("info", "Please add atleast one warehouse");
+      return openNotification('info', 'Please add atleast one warehouse');
     }
 
     const qty = qtyListArray.reduce(
@@ -386,15 +386,15 @@ const ProductListEdit = ({ id }) => {
       daily_sale_qty,
       tax_method,
       tax_id,
-      has_stock: has_stock ? "1" : "0",
+      has_stock: has_stock ? '1' : '0',
       qty_list: has_stock && JSON.stringify(qtyListArray),
-      has_variant: has_variant ? "1" : "0",
-      has_promotion: has_promotion ? "1" : "0",
-      has_different_price: has_different_price ? "1" : "0",
+      has_variant: has_variant ? '1' : '0',
+      has_promotion: has_promotion ? '1' : '0',
+      has_different_price: has_different_price ? '1' : '0',
       price_list: has_different_price && JSON.stringify(priceListArray),
-      has_expired_date: has_expired_date ? "1" : "0",
+      has_expired_date: has_expired_date ? '1' : '0',
       details,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (productListArray.length > 0) {
@@ -446,7 +446,7 @@ const ProductListEdit = ({ id }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Product"}
+      title={'Edit Product'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
       width={1400}

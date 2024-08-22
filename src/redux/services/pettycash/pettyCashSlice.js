@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pettyCash: "Close",
+  pettyCash: 'Close',
   pettyCashId: undefined,
 };
 
 const pettyCashSlice = createSlice({
-  name: "pettyCash",
+  name: 'pettyCash',
   initialState,
   reducers: {
     setPettyCash: (state, action) => {
@@ -14,7 +14,7 @@ const pettyCashSlice = createSlice({
       state.pettyCashId = action.payload?.id;
     },
     clearPettyCash: (state) => {
-      state.pettyCash = "Close";
+      state.pettyCash = 'Close';
     },
   },
 });

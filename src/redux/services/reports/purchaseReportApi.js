@@ -1,14 +1,14 @@
 // Import necessary dependencies
-import { PURCHASE_REPORT } from "../../../utilities/apiEndpoints/report.api";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { PURCHASE_REPORT } from '../../../utilities/apiEndpoints/report.api';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const purchaseReportApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getPurchaseCalenderReport: build.query({
       query: ({ params }) => ({
         url: `/${PURCHASE_REPORT}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),

@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export function categorizeNotifications(notifications) {
   if (!notifications) return [];
@@ -39,18 +39,18 @@ export function categorizeNotificationsByDate(notifications) {
 export function getHoursAgo(created_at) {
   const now = dayjs();
   const createdAtDate = dayjs(created_at);
-  const diffInSeconds = now.diff(createdAtDate, "second");
+  const diffInSeconds = now.diff(createdAtDate, 'second');
 
   if (diffInSeconds < 60) {
-    return diffInSeconds + " sec ago";
+    return diffInSeconds + ' sec ago';
   } else if (diffInSeconds < 3600) {
     const minutesAgo = Math.floor(diffInSeconds / 60);
-    return minutesAgo + " min ago";
+    return minutesAgo + ' min ago';
   } else if (diffInSeconds < 86400) {
     const hoursAgo = Math.floor(diffInSeconds / 3600);
-    return hoursAgo + " hours ago";
+    return hoursAgo + ' hours ago';
   } else {
     const daysAgo = Math.floor(diffInSeconds / 86400);
-    return daysAgo + " days ago";
+    return daysAgo + ' days ago';
   }
 }

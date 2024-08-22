@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetCustomerGroupDetailsQuery,
   useUpdateCustomerGroupMutation,
-} from "../../redux/services/customerGroup/customerGroupApi";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CustomerGroupForm from "./CustomerGroupForm";
+} from '../../redux/services/customerGroup/customerGroupApi';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CustomerGroupForm from './CustomerGroupForm';
 
 export const CustomerGroupEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export const CustomerGroupEdit = ({ id, setId }) => {
       data: {
         ...values,
         percentage: values.percentage.toString(),
-        _method: "PUT",
+        _method: 'PUT',
       },
     });
 
@@ -56,7 +56,7 @@ export const CustomerGroupEdit = ({ id, setId }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Customer Group"}
+      title={'Edit Customer Group'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

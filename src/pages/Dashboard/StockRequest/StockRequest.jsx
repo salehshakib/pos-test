@@ -1,40 +1,40 @@
-import { useState } from "react";
-import StockRequestCreate from "../../../components/StockRequest/StockRequestCreate";
-import StockRequestTable from "../../../components/StockRequest/StockRequestTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { STOCK_REQUEST } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import StockRequestCreate from '../../../components/StockRequest/StockRequestCreate';
+import StockRequestTable from '../../../components/StockRequest/StockRequestTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { STOCK_REQUEST } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "From Warehouse",
-    dataIndex: "fromWarehouse",
-    key: "fromWarehouse",
+    title: 'From Warehouse',
+    dataIndex: 'fromWarehouse',
+    key: 'fromWarehouse',
     render: (fromWarehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {fromWarehouse ?? "N/A"}
+        {fromWarehouse ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "To Warehouse",
-    dataIndex: "toWarehouse",
-    key: "toWarehouse",
+    title: 'To Warehouse',
+    dataIndex: 'toWarehouse',
+    key: 'toWarehouse',
     render: (toWarehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {toWarehouse ?? "N/A"}
+        {toWarehouse ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Request Quantity",
-    dataIndex: "reqQty",
-    key: "reqQty",
-    align: "center",
+    title: 'Request Quantity',
+    dataIndex: 'reqQty',
+    key: 'reqQty',
+    align: 'center',
     render: (reqQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {reqQty ?? "N/A"}
+        {reqQty ?? 'N/A'}
       </span>
     ),
   },

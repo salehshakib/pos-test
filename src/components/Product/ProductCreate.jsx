@@ -1,12 +1,12 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateProductMutation } from "../../redux/services/product/productApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { openNotification } from "../../utilities/lib/openToaster";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import ProductForm from "./ProductForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateProductMutation } from '../../redux/services/product/productApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { openNotification } from '../../utilities/lib/openToaster';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import ProductForm from './ProductForm';
 
 const ProductCreate = () => {
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ const ProductCreate = () => {
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
-      return openNotification("info", "Please add atleast one warehouse");
+      return openNotification('info', 'Please add atleast one warehouse');
     }
 
     // Calculate total quantity
@@ -94,7 +94,7 @@ const ProductCreate = () => {
 
     if (has_different_price && priceListArray.length === 0) {
       // return message.error("Please add price");
-      return openNotification("info", "Please add atleast one warehouse");
+      return openNotification('info', 'Please add atleast one warehouse');
     }
 
     const productListArray = product_list?.qty
@@ -123,13 +123,13 @@ const ProductCreate = () => {
       daily_sale_qty,
       tax_id: parseInt(tax_id),
       tax_method,
-      has_featured: has_featured ? "1" : "0",
-      has_stock: has_stock ? "1" : "0",
-      has_variant: has_variant ? "1" : "0",
-      embedded_barcode: embedded_barcode ? "1" : "0",
-      has_promotion: has_promotion ? "1" : "0",
-      has_different_price: has_different_price ? "1" : "0",
-      has_expired_date: has_expired_date ? "1" : "0",
+      has_featured: has_featured ? '1' : '0',
+      has_stock: has_stock ? '1' : '0',
+      has_variant: has_variant ? '1' : '0',
+      embedded_barcode: embedded_barcode ? '1' : '0',
+      has_promotion: has_promotion ? '1' : '0',
+      has_different_price: has_different_price ? '1' : '0',
+      has_expired_date: has_expired_date ? '1' : '0',
       // expired_date:
       //   has_expired_date &&
       //   dayjs(product_expire?.expired_date).format("YYYY-MM-DD"),
@@ -151,7 +151,7 @@ const ProductCreate = () => {
       postObj.expired_date = product_expire?.expired_date;
     }
 
-    if (type === "Standard") {
+    if (type === 'Standard') {
       postObj.unit_id = parseInt(unit_id);
       postObj.purchase_unit_id = parseInt(purchase_unit_id);
       postObj.sale_unit_id = parseInt(sale_unit_id);
@@ -212,7 +212,7 @@ const ProductCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Product"}
+      title={'Create Product'}
       open={isCreateDrawerOpen}
       width={1400}
     >

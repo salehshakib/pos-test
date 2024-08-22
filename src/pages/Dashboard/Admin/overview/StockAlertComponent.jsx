@@ -1,22 +1,22 @@
-import { useSelector } from "react-redux";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useGetAlertReportQuery } from "../../../../redux/services/reports/summaryApi";
-import { useGetWarehousesQuery } from "../../../../redux/services/warehouse/warehouseApi";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
+import { useSelector } from 'react-redux';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useGetAlertReportQuery } from '../../../../redux/services/reports/summaryApi';
+import { useGetWarehousesQuery } from '../../../../redux/services/warehouse/warehouseApi';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
+} from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
 
 const columns = [
   {
     //sl no
-    title: "SL No",
-    dataIndex: "slNo",
-    key: "slNo",
-    align: "center",
+    title: 'SL No',
+    dataIndex: 'slNo',
+    key: 'slNo',
+    align: 'center',
     render: (slNo) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {slNo}
@@ -25,9 +25,9 @@ const columns = [
   },
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -36,10 +36,10 @@ const columns = [
   },
   {
     //sku
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -48,10 +48,10 @@ const columns = [
   },
   {
     //stock
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
-    align: "center",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    align: 'center',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {warehouse}
@@ -60,10 +60,10 @@ const columns = [
   },
   {
     //stock
-    title: "Min Qty",
-    dataIndex: "minQty",
-    key: "minQty",
-    align: "center",
+    title: 'Min Qty',
+    dataIndex: 'minQty',
+    key: 'minQty',
+    align: 'center',
     render: (minQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {minQty}
@@ -72,14 +72,14 @@ const columns = [
   },
   {
     //stock
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     render: (stock, record) => (
       <span
         className={`"text-xs font-medium md:text-sm text-dark dark:text-white87" ${
-          record?.stock < record?.minQty ? "text-red-500" : ""
+          record?.stock < record?.minQty ? 'text-red-500' : ''
         }`}
       >
         {stock}
@@ -88,10 +88,10 @@ const columns = [
   },
   {
     //stock
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {unitCost}
@@ -151,7 +151,7 @@ export const StockAlertComponent = () => {
         name,
         sku,
         minQty: alert_qty,
-        warehouse: qty.warehouses?.name ?? "",
+        warehouse: qty.warehouses?.name ?? '',
         stock: qty.qty ?? 0,
         unitCost: product_prices?.length
           ? showCurrency(product_prices?.[i]?.selling_price, currency)
@@ -161,7 +161,7 @@ export const StockAlertComponent = () => {
 
   return (
     <CustomTable
-      title={"Limited Stock Products"}
+      title={'Limited Stock Products'}
       columns={columns}
       dataSource={dataSource}
       isLoading={isFetching}

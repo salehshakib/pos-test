@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import {
   FLUSH,
   PAUSE,
@@ -8,33 +8,33 @@ import {
   PURGE,
   REGISTER,
   REHYDRATE,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { baseApi } from "./api/baseApi";
-import authSlice from "./services/auth/authSlice";
-import cashRegisterSlice from "./services/cashRegister/cashRegisterSlice";
-import developerSlice from "./services/developer/developerSlice";
-import drawerSlice from "./services/drawer/drawerSlice";
-import loaderSlice from "./services/loader/loaderSlice";
-import menuSlice from "./services/menu/menuSlice";
-import notificationSlice from "./services/notification/notificationSlice";
-import paginationSlice from "./services/pagination/paginationSlice";
-import paramSlice from "./services/paramSlice/paramSlice";
-import pettyCashSlice from "./services/pettycash/pettyCashSlice";
-import posSlice from "./services/pos/posSlice";
-import productSlice from "./services/product/productSlice";
-import themeSlice from "./services/theme/themeSlice";
-import userProfileSlice from "./services/userProfile/userProfileSlice";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { baseApi } from './api/baseApi';
+import authSlice from './services/auth/authSlice';
+import cashRegisterSlice from './services/cashRegister/cashRegisterSlice';
+import developerSlice from './services/developer/developerSlice';
+import drawerSlice from './services/drawer/drawerSlice';
+import loaderSlice from './services/loader/loaderSlice';
+import menuSlice from './services/menu/menuSlice';
+import notificationSlice from './services/notification/notificationSlice';
+import paginationSlice from './services/pagination/paginationSlice';
+import paramSlice from './services/paramSlice/paramSlice';
+import pettyCashSlice from './services/pettycash/pettyCashSlice';
+import posSlice from './services/pos/posSlice';
+import productSlice from './services/product/productSlice';
+import themeSlice from './services/theme/themeSlice';
+import userProfileSlice from './services/userProfile/userProfileSlice';
 
 const persistConfig = {
   key: [
-    "auth",
-    "theme",
-    "developer",
-    "menu",
-    "pettycash",
-    "notification",
-    "userProfile",
+    'auth',
+    'theme',
+    'developer',
+    'menu',
+    'pettycash',
+    'notification',
+    'userProfile',
   ],
   storage,
 };

@@ -1,19 +1,19 @@
-import { AutoComplete, Col, Spin } from "antd";
-import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useDebouncedCallback } from "use-debounce";
-import { fullColLayout } from "../../layout/FormLayout";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { ProductTable } from "../Shared/ProductControllerComponent/ProductTable";
+import { AutoComplete, Col, Spin } from 'antd';
+import { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { useDebouncedCallback } from 'use-debounce';
+import { fullColLayout } from '../../layout/FormLayout';
+import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { ProductTable } from '../Shared/ProductControllerComponent/ProductTable';
 
 const SearchWarehouse = ({ setWarehouses }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
   const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
+    if (value.trim() !== '') {
       setKeyword(value);
     }
   }, 1000);
@@ -40,15 +40,15 @@ const SearchWarehouse = ({ setWarehouses }) => {
   const options = isFetching
     ? [
         {
-          value: "loading",
+          value: 'loading',
           label: loadingContent,
         },
       ]
-    : data?.results?.warehouse?.map((warehouse) => ({
+    : (data?.results?.warehouse?.map((warehouse) => ({
         value: warehouse.id.toString(),
         label: `${warehouse.name}`,
         warehouse: warehouse,
-      })) ?? [];
+      })) ?? []);
 
   const onSelect = (_, option) => {
     setWarehouses((prevWarehouse) => {
@@ -62,7 +62,7 @@ const SearchWarehouse = ({ setWarehouses }) => {
 
       // message.warning("Warehouse already exists in the list");
 
-      openNotification("info", "Warehouse already exists in the list");
+      openNotification('info', 'Warehouse already exists in the list');
       return prevWarehouse;
     });
     setValue(null);
@@ -102,10 +102,10 @@ export const WarehouseController = ({
         columns={columns}
         dataSource={dataSource}
         styleProps={{
-          width: "100%",
+          width: '100%',
           scroll: {
             y: 400,
-            x: "min-content",
+            x: 'min-content',
           },
         }}
       />

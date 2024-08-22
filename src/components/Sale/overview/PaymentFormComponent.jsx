@@ -1,37 +1,37 @@
-import { Col, Form } from "antd";
-import { useEffect } from "react";
+import { Col, Form } from 'antd';
+import { useEffect } from 'react';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
-} from "../../../layout/FormLayout";
-import { useGetAllGiftCardQuery } from "../../../redux/services/giftcard/giftcard/giftCardApi";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../layout/FormLayout';
+import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const PaymentType = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("payment_type", "Cash");
+    form.setFieldValue('payment_type', 'Cash');
   }, [form]);
 
   const options = [
     {
-      value: "Cash",
-      label: "Cash",
+      value: 'Cash',
+      label: 'Cash',
     },
     {
-      value: "Gift Card",
-      label: "Gift Card",
+      value: 'Gift Card',
+      label: 'Gift Card',
     },
     {
-      value: "Card",
-      label: "Card",
+      value: 'Card',
+      label: 'Card',
     },
     {
-      value: "Cheque",
-      label: "Cheque",
+      value: 'Cheque',
+      label: 'Cheque',
     },
     // {
     //   value: "Points",
@@ -43,7 +43,7 @@ const PaymentType = () => {
     <CustomSelect
       label="Payment Type"
       options={options}
-      name={"payment_type"}
+      name={'payment_type'}
     />
   );
 };
@@ -77,28 +77,28 @@ const CardComponent = () => {
   const options = [
     {
       //master credit
-      value: "Master Card (Credit)",
-      label: "Master Card (Credit)",
+      value: 'Master Card (Credit)',
+      label: 'Master Card (Credit)',
     },
     {
       //visa credit
-      value: "Visa Card (Credit)",
-      label: "Visa Card (Credit)",
+      value: 'Visa Card (Credit)',
+      label: 'Visa Card (Credit)',
     },
     {
       //master debit
-      value: "Master Card (Debit)",
-      label: "Master Card (Debit)",
+      value: 'Master Card (Debit)',
+      label: 'Master Card (Debit)',
     },
     {
       //visa debit
-      value: "Visa Card (Debit)",
-      label: "Visa Card (Debit)",
+      value: 'Visa Card (Debit)',
+      label: 'Visa Card (Debit)',
     },
     {
       //american express
-      value: "American Express",
-      label: "American Express",
+      value: 'American Express',
+      label: 'American Express',
     },
   ];
 
@@ -106,7 +106,7 @@ const CardComponent = () => {
     <>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="issuer"
           label="Issuer Name"
           required={true}
@@ -129,7 +129,7 @@ const ChequeComponent = () => {
     <>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="bank"
           label="Bank Name"
           required={true}
@@ -137,7 +137,7 @@ const ChequeComponent = () => {
       </Col>
       <Col {...mdColLayout}>
         <CustomInput
-          type={"text"}
+          type={'text'}
           name="cheque_no"
           label="Cheque Number"
           required={true}
@@ -149,16 +149,16 @@ const ChequeComponent = () => {
 
 export const PaymentTypeComponent = ({ grandTotal }) => {
   const form = Form.useFormInstance();
-  const paymentStatus = Form.useWatch("payment_status", form);
+  const paymentStatus = Form.useWatch('payment_status', form);
 
-  const receivedAmount = Form.useWatch("recieved_amount", form);
-  const paidAmount = Form.useWatch("paid_amount", form);
+  const receivedAmount = Form.useWatch('recieved_amount', form);
+  const paidAmount = Form.useWatch('paid_amount', form);
 
-  const paymentType = Form.useWatch("payment_type", form);
+  const paymentType = Form.useWatch('payment_type', form);
 
   useEffect(() => {
-    if (paymentStatus === "Paid") {
-      form.setFieldValue("paid_amount", grandTotal);
+    if (paymentStatus === 'Paid') {
+      form.setFieldValue('paid_amount', grandTotal);
     }
 
     // if (paymentStatus === "Partial") {
@@ -175,14 +175,14 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
   ).toFixed(2);
 
   return (
-    (paymentStatus === "Paid" || paymentStatus === "Partial") && (
+    (paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
       <>
         <Col {...colLayout}>
           <PaymentType />
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            type={"number"}
+            type={'number'}
             name="recieved_amount"
             label="Recieved Amount"
             required={true}
@@ -191,7 +191,7 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
 
         <Col {...colLayout}>
           <CustomInput
-            type={"number"}
+            type={'number'}
             name="paid_amount"
             label="Paid Amount"
             required={true}
@@ -200,29 +200,29 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
 
         <Col {...colLayout}>
           <CustomInput
-            type={"text"}
+            type={'text'}
             name="payment_receiver"
             label="Payment Receiver"
           />
         </Col>
 
-        {(paymentStatus === "Paid" || paymentStatus === "Partial") && (
+        {(paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
           <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">Change: {change}</div>
           </Col>
         )}
 
-        {paymentStatus === "Partial" && (
-          <Col {...(paymentStatus === "Partial" ? mdColLayout : fullColLayout)}>
+        {paymentStatus === 'Partial' && (
+          <Col {...(paymentStatus === 'Partial' ? mdColLayout : fullColLayout)}>
             <div className="py-9 text-lg font-semibold">
               Due: {Number(grandTotal - receivedAmount || 0).toFixed(2)}
             </div>
           </Col>
         )}
 
-        {paymentType === "Gift Card" && <GiftCardComponent />}
-        {paymentType === "Card" && <CardComponent />}
-        {paymentType === "Cheque" && <ChequeComponent />}
+        {paymentType === 'Gift Card' && <GiftCardComponent />}
+        {paymentType === 'Card' && <CardComponent />}
+        {paymentType === 'Cheque' && <ChequeComponent />}
       </>
     )
   );

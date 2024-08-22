@@ -1,35 +1,35 @@
-import { Dropdown, Table } from "antd";
-import { useState } from "react";
-import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
-import { FiMoreHorizontal } from "react-icons/fi";
-import { IoIosLock } from "react-icons/io";
-import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
-import { TbListDetails } from "react-icons/tb";
-import { useLocation } from "react-router-dom";
-import { useFormatDate } from "../../../utilities/hooks/useFormatDate";
-import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
-import { formatDate } from "../../../utilities/lib/dateFormat";
-import { usePermission } from "../../../utilities/lib/getPermission";
+import { Dropdown, Table } from 'antd';
+import { useState } from 'react';
+import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import { IoIosLock } from 'react-icons/io';
+import { MdDelete, MdEditSquare, MdFileDownload } from 'react-icons/md';
+import { TbListDetails } from 'react-icons/tb';
+import { useLocation } from 'react-router-dom';
+import { useFormatDate } from '../../../utilities/hooks/useFormatDate';
+import { useGlobalLoader } from '../../../utilities/hooks/useGlobalLoader';
+import { formatDate } from '../../../utilities/lib/dateFormat';
+import { usePermission } from '../../../utilities/lib/getPermission';
 
 const getDownloadItems = (record) =>
   [
     {
-      key: "pdf",
+      key: 'pdf',
       icon: <FaFilePdf size={20} />,
       label: <div className="flex justify-start items-center gap-3">PDF</div>,
-      onClick: () => record?.handleFileDownload(record?.id, "pdf"),
+      onClick: () => record?.handleFileDownload(record?.id, 'pdf'),
     },
     {
-      key: "xlsx",
+      key: 'xlsx',
       icon: <FaFileExcel size={20} />,
       label: <div className="flex justify-start items-center gap-3">Excel</div>,
-      onClick: () => record?.handleFileDownload(record?.id, "xlsx"),
+      onClick: () => record?.handleFileDownload(record?.id, 'xlsx'),
     },
     {
-      key: "csv",
+      key: 'csv',
       icon: <FaFileCsv size={20} />,
       label: <div className="flex justify-start items-center gap-3">CSV</div>,
-      onClick: () => record?.handleFileDownload(record?.id, "csv"),
+      onClick: () => record?.handleFileDownload(record?.id, 'csv'),
       // disabled: !record.handleDeleteModal,
     },
   ].filter(Boolean);
@@ -65,7 +65,7 @@ const CustomTable = ({
         : setSelectedRows(selectedRows);
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
+      disabled: record.name === 'Disabled User',
       name: record.name,
     }),
   };
@@ -81,17 +81,17 @@ const CustomTable = ({
     updatePageSize ? updatePageSize(newPageSize) : setPageSize(newPageSize);
   };
 
-  const isDetailsPermitted = usePermission(route, "show");
-  const isEditPermitted = usePermission(route, "update");
-  const isDeletePermitted = usePermission(route, "delete");
-  const isStatusPermitted = usePermission(route, "status");
+  const isDetailsPermitted = usePermission(route, 'show');
+  const isEditPermitted = usePermission(route, 'update');
+  const isDeletePermitted = usePermission(route, 'delete');
+  const isStatusPermitted = usePermission(route, 'status');
 
   // console.log(isEditPermitted, route, isDeletePermitted);
 
   const getMenuItems = (record) =>
     [
       isEditPermitted && {
-        key: "edit",
+        key: 'edit',
         icon: <MdEditSquare size={20} />,
         label: (
           <div className="flex justify-start items-center gap-3">Edit</div>
@@ -100,7 +100,7 @@ const CustomTable = ({
         disabled: !record.handleEdit,
       },
       record?.handleChangePermission && {
-        key: "permission",
+        key: 'permission',
         icon: <IoIosLock size={20} />,
         label: (
           <div className="flex justify-start items-center gap-3">
@@ -110,7 +110,7 @@ const CustomTable = ({
         onClick: () => record?.handleChangePermission(record?.id),
       },
       isDeletePermitted && {
-        key: "delete",
+        key: 'delete',
         icon: <MdDelete size={20} />,
         label: (
           <div className="flex justify-start items-center gap-3">Delete</div>
@@ -127,14 +127,14 @@ const CustomTable = ({
       </span>
     ),
     loading: isLoading || globalLoading,
-    size: "small",
+    size: 'small',
     style: {
-      width: "100%",
+      width: '100%',
     },
     rowKey: (record) => record?.id,
     rowSelection: isRowSelection
       ? {
-          type: "checkbox",
+          type: 'checkbox',
           ...rowSelection,
         }
       : false,
@@ -142,14 +142,14 @@ const CustomTable = ({
       onClick: () => console.log(record.id),
     }),
     scroll: {
-      x: "max-content",
+      x: 'max-content',
     },
 
     ...tableStyleProps,
   };
 
   const paginationProps = {
-    size: "default",
+    size: 'default',
     total: total,
     defaultCurrent: 1,
     current: pagination?.page ?? page,
@@ -167,11 +167,11 @@ const CustomTable = ({
 
   const idColumn = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      fixed: "left",
-      align: "center",
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      fixed: 'left',
+      align: 'center',
       width: 60,
       render: (id) => (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -184,35 +184,35 @@ const CustomTable = ({
   const baseColumns = [...idColumn, ...columns];
 
   const statusColumn = {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    width: "100px",
-    align: "center",
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    width: '100px',
+    align: 'center',
     render: (status, record) => {
       return record?.handleStatusModal ? (
         <button
           className={`p-0 ${
-            status?.toString() === "1"
-              ? "bg-[#DCFCE7] text-[#16A34A]"
-              : "bg-[#FEF2F2] text-[#EF4444]"
+            status?.toString() === '1'
+              ? 'bg-[#DCFCE7] text-[#16A34A]'
+              : 'bg-[#FEF2F2] text-[#EF4444]'
           } rounded shadow-md w-[80px]`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status?.toString() === "1" ? "Active" : "Inactive"}
+            {status?.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </button>
       ) : (
         <div
           className={`p-0 ${
-            status?.toString() === "1"
-              ? "bg-[#DCFCE7] text-[#16A34A]"
-              : "bg-[#FEF2F2] text-[#EF4444]"
+            status?.toString() === '1'
+              ? 'bg-[#DCFCE7] text-[#16A34A]'
+              : 'bg-[#FEF2F2] text-[#EF4444]'
           } rounded shadow-md w-[80px]`}
         >
           <span className="font-medium text-xs px-2 w-full">
-            {status?.toString() === "1" ? "Active" : "Inactive"}
+            {status?.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </div>
       );
@@ -226,16 +226,16 @@ const CustomTable = ({
   const timeColumns = {
     //created_at
     title:
-      pathname.includes("generator/invoice") ||
-      pathname.includes("generator/quotation") ||
-      pathname.includes("purchase-return") ||
-      pathname.includes("payroll")
-        ? "Date"
-        : "Created At",
-    dataIndex: "created_at",
-    key: "created_at",
-    align: "center",
-    width: "100px",
+      pathname.includes('generator/invoice') ||
+      pathname.includes('generator/quotation') ||
+      pathname.includes('purchase-return') ||
+      pathname.includes('payroll')
+        ? 'Date'
+        : 'Created At',
+    dataIndex: 'created_at',
+    key: 'created_at',
+    align: 'center',
+    width: '100px',
     render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {formatDate(created_at, format)}
@@ -244,12 +244,12 @@ const CustomTable = ({
   };
 
   const actionColumn = {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
-    width: "80px",
-    fixed: "right",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
+    width: '80px',
+    fixed: 'right',
     render: (props, record) => {
       if (record?.handleDetailsModal && isDetailsPermitted) {
         // if (record?.handleDetailsModal) {
@@ -267,10 +267,10 @@ const CustomTable = ({
                   items: getMenuItems(record),
                 }}
                 overlayStyle={{
-                  width: "max-content",
+                  width: 'max-content',
                 }}
                 placement="bottom"
-                trigger={["click"]}
+                trigger={['click']}
                 autoAdjustOverflow
                 arrow={{ pointAtCenter: true }}
               >
@@ -299,10 +299,10 @@ const CustomTable = ({
                   items: getDownloadItems(record),
                 }}
                 overlayStyle={{
-                  width: "max-content",
+                  width: 'max-content',
                 }}
                 placement="bottom"
-                trigger={["click"]}
+                trigger={['click']}
                 autoAdjustOverflow
                 arrow={{ pointAtCenter: true }}
               >

@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   warehouseId: null,
   cashierId: null,
   employeeId: null,
   currency: {
-    name: "USD",
-    symbol: "$",
-    position: "0",
+    name: 'USD',
+    symbol: '$',
+    position: '0',
   },
 };
 
 const posSlice = createSlice({
-  name: "pos",
+  name: 'pos',
   initialState,
   reducers: {
     setWarehouse: (state, action) => {

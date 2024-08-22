@@ -1,18 +1,18 @@
 // import { PageHeader } from "@ant-design/pro-layout";
 
-import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Table } from "antd";
-import { FaCirclePlus } from "react-icons/fa6";
-import { MdDeleteOutline, MdEditSquare } from "react-icons/md";
-import fakeData from "./fakeData";
+import { PageContainer } from '@ant-design/pro-layout';
+import { Button, Table } from 'antd';
+import { FaCirclePlus } from 'react-icons/fa6';
+import { MdDeleteOutline, MdEditSquare } from 'react-icons/md';
+import fakeData from './fakeData';
 
 const columns = [
   {
-    title: "Staff ID",
-    dataIndex: "id",
-    key: "id",
-    fixed: "left",
-    align: "center",
+    title: 'Staff ID',
+    dataIndex: 'id',
+    key: 'id',
+    fixed: 'left',
+    align: 'center',
     width: 80,
     render: (id) => (
       <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
@@ -21,11 +21,11 @@ const columns = [
     ),
   },
   {
-    title: "Img",
-    dataIndex: "image",
-    key: "image",
-    fixed: "left",
-    align: "center",
+    title: 'Img',
+    dataIndex: 'image',
+    key: 'image',
+    fixed: 'left',
+    align: 'center',
     width: 50,
     render: (img) => (
       <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
@@ -38,10 +38,10 @@ const columns = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    fixed: "left",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    fixed: 'left',
     render: (name) => (
       <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
         {name}
@@ -50,9 +50,9 @@ const columns = [
   },
   {
     //email
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
     render: (email) => (
       <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
         {email}
@@ -61,22 +61,21 @@ const columns = [
   },
   {
     //phone
-    title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    title: 'Phone',
+    dataIndex: 'phone',
+    key: 'phone',
     render: (phone) => (
       <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
-                        {"0" + phone }
-
+        {'0' + phone}
       </span>
     ),
   },
   {
     //department
-    title: "Department",
-    dataIndex: "department",
-    key: "department",
-    align: "center",
+    title: 'Department',
+    dataIndex: 'department',
+    key: 'department',
+    align: 'center',
     render: (department) => (
       <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
         {department}
@@ -85,12 +84,12 @@ const columns = [
   },
   {
     //action
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: () => (
       <div className="flex justify-center items-center gap-3 ">
         <Button className="flex items-center justify-center text-black border-none bg-transparent hover:bg-none hover:text-posPurple p-0">
@@ -109,13 +108,13 @@ const Hrm = () => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       //console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+      //   `selectedRowKeys: ${selectedRowKeys}`,
+      //   "selectedRows: ",
+      //   selectedRows
+      // )yarn;
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
+      disabled: record.name === 'Disabled User',
       // Column configuration not to be checked
       name: record.name,
     }),
@@ -135,7 +134,7 @@ const Hrm = () => {
       >
         <Table
           rowSelection={{
-            type: "checkbox",
+            type: 'checkbox',
             ...rowSelection,
           }}
           size="small"

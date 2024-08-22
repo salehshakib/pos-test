@@ -1,17 +1,17 @@
-import { Button } from "antd";
-import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../../Shared/Input/CustomQuantityInput";
+import { Button } from 'antd';
+import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { CustomQuantityInput } from '../../../Shared/Input/CustomQuantityInput';
 
 export const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
-          name !== "Total" && "hover:underline hover:cursor-pointer"
+          name !== 'Total' && 'hover:underline hover:cursor-pointer'
         }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
@@ -20,15 +20,15 @@ export const columns = [
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {name}
         </span>
-        {name !== "Total" && <FaEdit className="primary-text" />}
+        {name !== 'Total' && <FaEdit className="primary-text" />}
       </div>
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -37,10 +37,10 @@ export const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -50,10 +50,10 @@ export const columns = [
   },
 
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -64,7 +64,7 @@ export const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
@@ -82,7 +82,7 @@ export const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
@@ -96,10 +96,10 @@ export const columns = [
     },
   },
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'center',
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -108,10 +108,10 @@ export const columns = [
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -120,10 +120,10 @@ export const columns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'center',
     width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -133,11 +133,11 @@ export const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (

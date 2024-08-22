@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateTypeMutation } from "../../redux/services/types/typesApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TypeForm from "./TypeForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateTypeMutation } from '../../redux/services/types/typesApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import TypeForm from './TypeForm';
 
 const TypeCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const TypeCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Type"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Type'} open={isCreateDrawerOpen}>
       <TypeForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

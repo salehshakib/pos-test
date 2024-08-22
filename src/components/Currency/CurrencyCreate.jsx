@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateCurrencyMutation } from "../../redux/services/currency/currencyApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CurrencyForm from "./CurrencyForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateCurrencyMutation } from '../../redux/services/currency/currencyApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CurrencyForm from './CurrencyForm';
 
 const CurrencyCreate = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const CurrencyCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Add Currency"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Add Currency'} open={isCreateDrawerOpen}>
       <CurrencyForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

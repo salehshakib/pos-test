@@ -1,40 +1,40 @@
-import { Button, Col, Form, Modal, Row, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { colLayout, rowLayout } from "../../../layout/FormLayout";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
+import { Button, Col, Form, Modal, Row, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { colLayout, rowLayout } from '../../../layout/FormLayout';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
-import { calculateTotals } from "../../../utilities/lib/calculateTotals";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
+} from '../../../utilities/hooks/useParams';
+import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
+import { calculateTotals } from '../../../utilities/lib/calculateTotals';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
 import {
   decrementCounter,
   incrementCounter,
   onDelete,
   onQuantityChange,
-} from "../../../utilities/lib/productTable/counters";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/lib/productTable/counters';
+import CustomForm from '../../Shared/Form/CustomForm';
+import CustomInput from '../../Shared/Input/CustomInput';
+import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
+import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
-          name !== "Total" && "hover:underline hover:cursor-pointer"
+          name !== 'Total' && 'hover:underline hover:cursor-pointer'
         }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
@@ -43,15 +43,15 @@ const columns = [
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
           {name}
         </span>
-        {name !== "Total" && <FaEdit className="primary-text" />}
+        {name !== 'Total' && <FaEdit className="primary-text" />}
       </div>
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -60,10 +60,10 @@ const columns = [
     ),
   },
   {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     width: 100,
     render: (stock) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -72,10 +72,10 @@ const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -84,10 +84,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -98,7 +98,7 @@ const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
@@ -121,7 +121,7 @@ const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
@@ -139,10 +139,10 @@ const columns = [
     },
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -151,10 +151,10 @@ const columns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'center',
     width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -164,11 +164,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -195,13 +195,13 @@ const columns = [
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "operation_value", "for"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'for'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "purchase-unit")
+    ?.filter((unit) => unit.for === 'purchase-unit')
     .map((unit) => ({
       value: unit.id.toString(),
       label: unit.name,
@@ -224,7 +224,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
       label="Purchase Unit"
       options={productUnits}
       isLoading={isLoading}
-      name={["purchase_unit_id", productId]}
+      name={['purchase_unit_id', productId]}
       onSelect={onSelect}
     />
   );
@@ -250,11 +250,11 @@ const ProductFormComponent = ({
         purchase_unit_id: {
           [productId]:
             formValues?.product_list?.purchase_unit_id[productId]?.toString() ??
-            "",
+            '',
         },
         tax_id: {
           [productId]:
-            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+            formValues?.product_list?.tax_id[productId]?.toString() ?? '',
         },
       });
     }
@@ -269,19 +269,19 @@ const ProductFormComponent = ({
           ...prevFormValues.product_list,
           qty: {
             ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue("quantity"),
+            [productId]: productForm.getFieldValue('quantity'),
           },
           purchase_unit_id: {
             ...prevFormValues.product_list.purchase_unit_id,
             [productId]: productForm.getFieldValue([
-              "purchase_unit_id",
+              'purchase_unit_id',
               productId,
             ]),
           },
 
           net_unit_cost: {
             ...prevFormValues.product_list.net_unit_cost,
-            [productId]: productForm.getFieldValue("unit_price"),
+            [productId]: productForm.getFieldValue('unit_price'),
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
@@ -292,14 +292,14 @@ const ProductFormComponent = ({
             [productId]: parseFloat(
               (parseInt(productUnits.purchase_units[productId]) *
                 parseFloat(productUnits.tax_rate[productId]) *
-                parseInt(productForm.getFieldValue("quantity")) *
-                parseInt(productForm.getFieldValue("unit_price"))) /
+                parseInt(productForm.getFieldValue('quantity')) *
+                parseInt(productForm.getFieldValue('unit_price'))) /
                 100
             ).toFixed(2),
           },
           tax_id: {
             ...prevFormValues.product_list.tax_id,
-            [productId]: productForm.getFieldValue(["tax_id", productId]),
+            [productId]: productForm.getFieldValue(['tax_id', productId]),
           },
         },
       };
@@ -323,16 +323,16 @@ const ProductFormComponent = ({
           <Col {...colLayout}>
             <CustomInput
               label="Quantity"
-              type={"number"}
-              name={"quantity"}
-              placeholder={"Enter product name"}
+              type={'number'}
+              name={'quantity'}
+              placeholder={'Enter product name'}
             />
           </Col>
           <Col {...colLayout}>
             <CustomInput
               label="Unit Price"
-              type={"number"}
-              name={"unit_price"}
+              type={'number'}
+              name={'unit_price'}
             />
           </Col>
           <Col {...colLayout}>
@@ -370,14 +370,14 @@ function setFormValuesId(
     sanitizer(formProductList[field]?.[id] ?? defaultValue);
 
   // Extract and sanitize values
-  const qty = getSanitizedValue("qty", 1, sanitizeIntValue);
+  const qty = getSanitizedValue('qty', 1, sanitizeIntValue);
   const netUnitCost = getSanitizedValue(
-    "net_unit_cost",
+    'net_unit_cost',
     unit_cost,
     sanitizeFloatValue
   );
   const taxRate = getSanitizedValue(
-    "tax_rate",
+    'tax_rate',
     taxes?.rate ?? 0,
     sanitizeIntValue
   );
@@ -395,7 +395,7 @@ function setFormValuesId(
   );
 
   const total =
-    tax_method === "Inclusive"
+    tax_method === 'Inclusive'
       ? Math.round(
           (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2)
         )
@@ -406,18 +406,18 @@ function setFormValuesId(
     formProductList[field][id] = value;
   };
 
-  setFormValue("qty", qty);
-  setFormValue("net_unit_cost", netUnitCost);
-  setFormValue("tax_rate", taxRate);
-  setFormValue("tax", tax);
-  setFormValue("total", total);
+  setFormValue('qty', qty);
+  setFormValue('net_unit_cost', netUnitCost);
+  setFormValue('tax_rate', taxRate);
+  setFormValue('tax', tax);
+  setFormValue('total', total);
   setFormValue(
-    "purchase_unit_id",
+    'purchase_unit_id',
     formProductList.purchase_unit_id?.[id] ?? purchase_unit_id
   );
 
   if (formProductList.tax_id) {
-    setFormValue("tax_id", formProductList.tax_id?.[id] ?? tax_id);
+    setFormValue('tax_id', formProductList.tax_id?.[id] ?? tax_id);
   }
 }
 
@@ -430,7 +430,7 @@ export const TransferProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-  const warehouseId = Form.useWatch("from_warehouse_id", form);
+  const warehouseId = Form.useWatch('from_warehouse_id', form);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);

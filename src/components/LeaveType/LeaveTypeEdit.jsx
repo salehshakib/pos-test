@@ -1,14 +1,14 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetLeaveTypeDetailsQuery,
   useUpdateLeaveTypeMutation,
-} from "../../redux/services/settings/leaveType/leaveTypeApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { LeaveTypeForm } from "./LeaveTypeForm";
+} from '../../redux/services/settings/leaveType/leaveTypeApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { LeaveTypeForm } from './LeaveTypeForm';
 
 export const LeaveTypeEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -29,14 +29,14 @@ export const LeaveTypeEdit = ({ id, setId }) => {
     if (data) {
       const fieldData = [
         {
-          name: "name",
+          name: 'name',
           value: data?.name,
-          errors: "",
+          errors: '',
         },
         {
-          name: "need_attachment",
+          name: 'need_attachment',
           value: data?.need_attachment === 1 ? true : false,
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -47,7 +47,7 @@ export const LeaveTypeEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateLeaveType({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -64,7 +64,7 @@ export const LeaveTypeEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Leave Type"}
+      title={'Edit Leave Type'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

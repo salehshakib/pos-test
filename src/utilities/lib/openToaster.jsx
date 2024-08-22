@@ -1,22 +1,22 @@
-import toast from "react-hot-toast";
-import logo from "../../assets/data/defaultLogo";
+import toast from 'react-hot-toast';
+import logo from '../../assets/data/defaultLogo';
 
 const typeToColor = {
-  success: "text-green-600",
-  warning: "text-yellow-600",
-  info: "text-blue-600",
-  failed: "text-red-600",
-  error: "text-red-600",
+  success: 'text-green-600',
+  warning: 'text-yellow-600',
+  info: 'text-blue-600',
+  failed: 'text-red-600',
+  error: 'text-red-600',
 };
 
 export const openNotification = (type, message) => {
-  const colorClass = typeToColor[type] || "text-gray-600";
+  const colorClass = typeToColor[type] || 'text-gray-600';
   const typeText = type.charAt(0).toUpperCase() + type.slice(1);
 
   return toast.custom((t) => (
     <div
       className={`${
-        t.visible ? "animate-enter" : "animate-leave"
+        t.visible ? 'animate-enter' : 'animate-leave'
       } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
       aria-live="assertive"
       role="alert"
@@ -29,7 +29,7 @@ export const openNotification = (type, message) => {
           <div className="ml-3 flex-1">
             <span className={colorClass}>{typeText}</span>
             <p className="mt-1 text-sm text-gray-500">
-              {message ?? "No Message is provided. Task Completed Successfully"}
+              {message ?? 'No Message is provided. Task Completed Successfully'}
             </p>
           </div>
         </div>

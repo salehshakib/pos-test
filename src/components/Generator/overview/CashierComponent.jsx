@@ -1,10 +1,10 @@
-import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
+import { useGetAllCashierQuery } from '../../../redux/services/cashier/cashierApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 export const CashierComponent = ({ required = true }) => {
   const params = useGlobalParams({

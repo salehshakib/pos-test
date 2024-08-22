@@ -1,27 +1,27 @@
-import { Button, Form, Layout, Tag } from "antd";
-import dayjs from "dayjs";
-import { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch } from "react-redux";
-import Logo from "../components/AllSection/Header/Logo";
-import Profile from "../components/AllSection/Header/Profile";
-import Payment from "../components/PosRegister/Payment";
-import { PosRegister } from "../components/PosRegister/PosRegister";
-import { GlobalUtilityStyle } from "../container/Styled";
-import { Filter } from "../pages/Dashboard/PosRegister/Filter";
-import { closeCreateDrawer } from "../redux/services/drawer/drawerSlice";
-import { useCreateSaleMutation } from "../redux/services/sale/saleApi";
-import { isDev, mode } from "../utilities/configs/base_url";
-import { appendToFormData } from "../utilities/lib/appendFormData";
+import { Button, Form, Layout, Tag } from 'antd';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useDispatch } from 'react-redux';
+import Logo from '../components/AllSection/Header/Logo';
+import Profile from '../components/AllSection/Header/Profile';
+import Payment from '../components/PosRegister/Payment';
+import { PosRegister } from '../components/PosRegister/PosRegister';
+import { GlobalUtilityStyle } from '../container/Styled';
+import { Filter } from '../pages/Dashboard/PosRegister/Filter';
+import { closeCreateDrawer } from '../redux/services/drawer/drawerSlice';
+import { useCreateSaleMutation } from '../redux/services/sale/saleApi';
+import { isDev, mode } from '../utilities/configs/base_url';
+import { appendToFormData } from '../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../utilities/lib/openToaster";
-import { decimalConverter } from "../utilities/lib/return/decimalComverter";
-import { sanitizeObj } from "../utilities/lib/sanitizeObj";
-import SideBar from "./SideBar";
+} from '../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../utilities/lib/openToaster';
+import { decimalConverter } from '../utilities/lib/return/decimalComverter';
+import { sanitizeObj } from '../utilities/lib/sanitizeObj';
+import SideBar from './SideBar';
 
 const { Footer } = Layout;
 
@@ -92,19 +92,19 @@ const PosLayout = () => {
 
     if (productListArray.length === 0) {
       // message.info("Please add at least one product");
-      openNotification("info", "Please add at least one product");
+      openNotification('info', 'Please add at least one product');
       return;
     }
 
     if (!sale_at) {
       // message.info("Please select date");
-      openNotification("info", "Please select date");
+      openNotification('info', 'Please select date');
       return;
     }
 
     if (!values?.cashier_id) {
       // message.info("Please Select Cashier");
-      openNotification("info", "Please Select Cashier");
+      openNotification('info', 'Please Select Cashier');
       return;
     }
 
@@ -131,8 +131,8 @@ const PosLayout = () => {
 
     const postObj = {
       ...sanitizeObj(values),
-      sale_status: "Completed",
-      sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
+      sale_status: 'Completed',
+      sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount: decimalConverter(discount),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
@@ -198,7 +198,7 @@ const PosLayout = () => {
         setErrorFields(errorFields);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error('Error submitting form:', error);
     } finally {
       setIsModalOpen(false);
       posForm.resetFields();
@@ -238,13 +238,13 @@ const PosLayout = () => {
                   <Logo />
                 </div>
                 <div>
-                  {mode === "local" && (
+                  {mode === 'local' && (
                     <Tag color="processing" className="font-semibold">
                       {mode.toUpperCase()} MODE
                     </Tag>
                   )}
 
-                  {isDev.toLowerCase() === "true" && (
+                  {isDev.toLowerCase() === 'true' && (
                     <Tag color="purple" className="font-semibold">
                       DEV MODE
                     </Tag>
@@ -287,7 +287,7 @@ const PosLayout = () => {
 
         <Footer
           style={{
-            textAlign: "center",
+            textAlign: 'center',
           }}
           className="py-4"
         >

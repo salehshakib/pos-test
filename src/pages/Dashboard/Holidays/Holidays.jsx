@@ -1,21 +1,21 @@
-import { Row } from "antd";
-import { useState } from "react";
-import { HolidaysCreate } from "../../../components/Holidays/HolidaysCreate";
-import { HolidaysTable } from "../../../components/Holidays/HolidaysTable";
-import { DepartmentFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { HOLIDAY } from "../../../utilities/apiEndpoints/hrm.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from 'antd';
+import { useState } from 'react';
+import { HolidaysCreate } from '../../../components/Holidays/HolidaysCreate';
+import { HolidaysTable } from '../../../components/Holidays/HolidaysTable';
+import { DepartmentFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { HOLIDAY } from '../../../utilities/apiEndpoints/hrm.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 // const columns = [];
 
 const columns = [
   {
-    title: "Title",
-    dataIndex: "name",
-    key: "name",
+    title: 'Title',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -23,9 +23,9 @@ const columns = [
     ),
   },
   {
-    title: "Departments",
-    dataIndex: "departments",
-    key: "departments",
+    title: 'Departments',
+    dataIndex: 'departments',
+    key: 'departments',
     width: 300,
     render: (departments) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -34,9 +34,9 @@ const columns = [
     ),
   },
   {
-    title: "Start Date",
-    dataIndex: "startDate",
-    key: "startDate",
+    title: 'Start Date',
+    dataIndex: 'startDate',
+    key: 'startDate',
     render: (startDate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {startDate}
@@ -44,9 +44,9 @@ const columns = [
     ),
   },
   {
-    title: "End Date",
-    dataIndex: "endDate",
-    key: "endDate",
+    title: 'End Date',
+    dataIndex: 'endDate',
+    key: 'endDate',
     render: (endDate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {endDate}
@@ -54,13 +54,13 @@ const columns = [
     ),
   },
   {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
     width: 300,
     render: (description) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {description ?? "N/A"}
+        {description ?? 'N/A'}
       </span>
     ),
   },

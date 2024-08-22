@@ -1,26 +1,26 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from "antd";
-import { useState } from "react";
-import { SupplierFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import CustomModal from "../../../components/Shared/Modal/CustomModal";
-import CustomSelect from "../../../components/Shared/Select/CustomSelect";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
+import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
+import { useState } from 'react';
+import { SupplierFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import CustomForm from '../../../components/Shared/Form/CustomForm';
+import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import {
   useGetAllSupplierQuery,
   useGetSupplierDetailsQuery,
-} from "../../../redux/services/supplier/supplierApi";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+} from '../../../redux/services/supplier/supplierApi';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import {
   DEFAULT_SELECT_VALUES,
   useFilterParams,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
-import { PurchaseTable } from "./components/PurchaseTable";
-import { QuotationTable } from "./components/QutationTable";
-import { SaleReturnTable } from "./components/SaleReturnTable";
+} from '../../../utilities/hooks/useParams';
+import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
+import { PurchaseReturnTable } from './components/PurchaseReturnTable';
+import { PurchaseTable } from './components/PurchaseTable';
+import { QuotationTable } from './components/QutationTable';
+import { SaleReturnTable } from './components/SaleReturnTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -70,11 +70,11 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
           <Col {...fullColLayout}>
             <CustomSelect
               // label="Supplier"
-              placeholder={"Supplier"}
+              placeholder={'Supplier'}
               options={options}
               isLoading={isLoading}
               required={true}
-              name={"supplier_id"}
+              name={'supplier_id'}
             />
           </Col>
 
@@ -118,39 +118,39 @@ export const SupplierReport = () => {
 
   const supplierItems = [
     {
-      key: "1",
-      label: "Supplier",
+      key: '1',
+      label: 'Supplier',
       children: data?.name,
       span: 24,
     },
     {
-      key: "2",
-      label: "Email",
-      children: data?.email ?? "---",
+      key: '2',
+      label: 'Email',
+      children: data?.email ?? '---',
       span: 24,
     },
     {
-      key: "3",
-      label: "Phone Number",
-      children: data?.phone_number ?? "---",
+      key: '3',
+      label: 'Phone Number',
+      children: data?.phone_number ?? '---',
       span: 24,
     },
     {
-      key: "4",
-      label: "Country",
-      children: data?.country ?? "---",
+      key: '4',
+      label: 'Country',
+      children: data?.country ?? '---',
       span: 12,
     },
     {
-      key: "6",
-      label: "City",
-      children: data?.city ?? "---",
+      key: '6',
+      label: 'City',
+      children: data?.city ?? '---',
       span: 12,
     },
     {
-      key: "5",
-      label: "Address",
-      children: data?.address ?? "---",
+      key: '5',
+      label: 'Address',
+      children: data?.address ?? '---',
       span: 24,
     },
   ];
@@ -160,7 +160,7 @@ export const SupplierReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
-    summary: "supplier,sale",
+    summary: 'supplier,sale',
   };
 
   return (
@@ -211,23 +211,23 @@ export const SupplierReport = () => {
               defaultActiveKey="purchase"
               items={[
                 {
-                  label: "Purchase",
-                  key: "purchase",
+                  label: 'Purchase',
+                  key: 'purchase',
                   children: <PurchaseTable {...props} />,
                 },
                 {
-                  label: "Quotation",
-                  key: "quotation",
+                  label: 'Quotation',
+                  key: 'quotation',
                   children: <QuotationTable {...props} />,
                 },
                 {
-                  label: "Purchase Return",
-                  key: "purchasereturn",
+                  label: 'Purchase Return',
+                  key: 'purchasereturn',
                   children: <PurchaseReturnTable {...props} />,
                 },
                 {
-                  label: "Sale Return",
-                  key: "salereturn",
+                  label: 'Sale Return',
+                  key: 'salereturn',
                   children: <SaleReturnTable {...props} />,
                 },
               ]}

@@ -1,11 +1,11 @@
-import { openNotification } from "../openToaster";
+import { openNotification } from '../openToaster';
 
 export const incrementCounter = (id, setFormValues, stock, alertQty) => {
   setFormValues((prevFormValues) => {
     const currentQty = prevFormValues.product_list.qty[id] ?? 0;
 
     if (Number(currentQty) + 1 > stock) {
-      openNotification("info", `Cannot add more than stock quantity`);
+      openNotification('info', `Cannot add more than stock quantity`);
       return prevFormValues;
     }
 
@@ -53,7 +53,7 @@ export const onQuantityChange = (id, value, setFormValues, stock) => {
     // );
 
     openNotification(
-      "info",
+      'info',
       `Cannot add more than stock quantity. Maximum stock is selected`
     );
 

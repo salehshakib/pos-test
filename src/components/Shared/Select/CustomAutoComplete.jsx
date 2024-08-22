@@ -1,5 +1,5 @@
-import { AutoComplete, Form, Select, Spin } from "antd";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { AutoComplete, Form, Select, Spin } from 'antd';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 export const CustomAutoComplete = (props) => {
   const {
@@ -7,7 +7,7 @@ export const CustomAutoComplete = (props) => {
     label,
     placeholder,
     required = false,
-    mode = "single",
+    mode = 'single',
     options = [],
     isLoading = false,
     noStyle = false,

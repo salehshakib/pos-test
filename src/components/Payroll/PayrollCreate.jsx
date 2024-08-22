@@ -1,12 +1,12 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreatePayrollMutation } from "../../redux/services/hrm/payroll/payrollApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PayrollForm } from "./PayrollForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreatePayrollMutation } from '../../redux/services/hrm/payroll/payrollApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PayrollForm } from './PayrollForm';
 
 export const PayrollCreate = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export const PayrollCreate = () => {
 
     const postData = {
       ...sanitizeObj(values),
-      is_send_email: values?.is_send_email == true ? "1" : "0",
+      is_send_email: values?.is_send_email == true ? '1' : '0',
       bonus: values?.bonus && Number(values?.bonus).toFixed(2),
       loan: values?.loan && Number(values?.loan).toFixed(2),
       salary: Number(values?.salary).toFixed(2),
@@ -48,7 +48,7 @@ export const PayrollCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Payroll"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Payroll'} open={isCreateDrawerOpen}>
       <PayrollForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

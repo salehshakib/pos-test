@@ -1,19 +1,19 @@
-import { Table, Typography } from "antd";
-import { useSelector } from "react-redux";
-import logo from "../../../../assets/data/defaultLogo";
-import { tableProps } from "../../../../layout/TableLayout";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { formatDate } from "../../../../utilities/lib/dateFormat";
+import { Table, Typography } from 'antd';
+import { useSelector } from 'react-redux';
+import logo from '../../../../assets/data/defaultLogo';
+import { tableProps } from '../../../../layout/TableLayout';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { formatDate } from '../../../../utilities/lib/dateFormat';
 
 const columns = [
   //slno
   {
-    title: "Sl No",
-    dataIndex: "sl_no",
-    key: "sl_no",
-    align: "center",
+    title: 'Sl No',
+    dataIndex: 'sl_no',
+    key: 'sl_no',
+    align: 'center',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -21,9 +21,9 @@ const columns = [
     ),
   },
   {
-    title: "Product Name",
-    dataIndex: "product_name",
-    key: "product_name",
+    title: 'Product Name',
+    dataIndex: 'product_name',
+    key: 'product_name',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -31,10 +31,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -43,10 +43,10 @@ const columns = [
   },
   {
     //   discount
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "right",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'right',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -55,10 +55,10 @@ const columns = [
   },
   {
     //   tax
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "right",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'right',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -67,10 +67,10 @@ const columns = [
   },
   {
     // price
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "right",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'right',
     render: (text) => (
       <span className="text-xs md:text-sm text-dark dark:text-white87">
         {text}
@@ -88,12 +88,12 @@ const Invoice = ({ data, type }) => {
       sl_no: index + 1,
       product_name:
         item?.products?.name ??
-        "Unknown Product" +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
-      qty: item.qty ?? "Unknown Quantity",
-      discount: showCurrency(item?.discount, currency) ?? "Unknown Discount",
-      tax: showCurrency(item?.tax, currency) ?? "Unknown VAT",
-      price: showCurrency(item?.total, currency) ?? "Unknown Price",
+        'Unknown Product' +
+          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      qty: item.qty ?? 'Unknown Quantity',
+      discount: showCurrency(item?.discount, currency) ?? 'Unknown Discount',
+      tax: showCurrency(item?.tax, currency) ?? 'Unknown VAT',
+      price: showCurrency(item?.total, currency) ?? 'Unknown Price',
     };
   });
 

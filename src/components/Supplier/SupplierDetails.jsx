@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetSupplierDetailsQuery } from "../../redux/services/supplier/supplierApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetSupplierDetailsQuery } from '../../redux/services/supplier/supplierApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const SupplierDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetSupplierDetailsQuery(

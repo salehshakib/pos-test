@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
+} from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteExpenseCategoryMutation,
   useGetAllExpenseCategoryQuery,
   useUpdateExpenseCategoryStatusMutation,
-} from "../../redux/services/expense/expenseCategoryApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
+} from '../../redux/services/expense/expenseCategoryApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import ExpenseCategoryEdit from './ExpenseCategoryEdit';
 
 const ExpenseCategoryTable = ({
   newColumns,
@@ -138,7 +138,7 @@ const ExpenseCategoryTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"expense category"}
+        item={'expense category'}
       />
     </GlobalUtilityStyle>
   );

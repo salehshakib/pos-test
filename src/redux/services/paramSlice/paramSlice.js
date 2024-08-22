@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   searchParams: {},
 };
 
 const paramSlice = createSlice({
-  name: "param",
+  name: 'param',
   initialState,
   reducers: {
     setParams: (state, action) => {

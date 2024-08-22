@@ -1,17 +1,17 @@
-import { useState } from "react";
-import DiscountCreate from "../../../components/Discount/DiscountCreate";
-import { DiscountTable } from "../../../components/Discount/DiscountTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import DiscountCreate from '../../../components/Discount/DiscountCreate';
+import { DiscountTable } from '../../../components/Discount/DiscountTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
     // name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -20,10 +20,10 @@ const columns = [
   },
   {
     // value
-    title: "Value",
-    dataIndex: "value",
-    key: "value",
-    align: "center",
+    title: 'Value',
+    dataIndex: 'value',
+    key: 'value',
+    align: 'center',
     render: (value) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {value}
@@ -32,10 +32,10 @@ const columns = [
   },
   {
     // discount plan
-    title: "Discount Plan",
-    dataIndex: "discount_plan",
-    key: "discount_plan",
-    align: "center",
+    title: 'Discount Plan',
+    dataIndex: 'discount_plan',
+    key: 'discount_plan',
+    align: 'center',
     render: (discountPlan) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {discountPlan}
@@ -44,10 +44,10 @@ const columns = [
   },
   {
     // validity
-    title: "Validity",
-    dataIndex: "validity",
-    key: "validity",
-    align: "center",
+    title: 'Validity',
+    dataIndex: 'validity',
+    key: 'validity',
+    align: 'center',
     render: (validity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {validity}
@@ -56,10 +56,10 @@ const columns = [
   },
   {
     // days
-    title: "Days",
-    dataIndex: "days",
-    key: "days",
-    align: "center",
+    title: 'Days',
+    dataIndex: 'days',
+    key: 'days',
+    align: 'center',
     render: (days) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {days}
@@ -68,10 +68,10 @@ const columns = [
   },
   {
     // products
-    title: "Products",
-    dataIndex: "products",
-    key: "products",
-    align: "center",
+    title: 'Products',
+    dataIndex: 'products',
+    key: 'products',
+    align: 'center',
     render: (products) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {products}

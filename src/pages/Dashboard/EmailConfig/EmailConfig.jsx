@@ -1,7 +1,7 @@
-import { PageContainer } from "@ant-design/pro-layout";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useGetAllEmailSettingsQuery } from "../../../redux/services/settings/emailSettings/emailSettingsApi";
-import { EmailConfigForm } from "./EmailConfigForm";
+import { PageContainer } from '@ant-design/pro-layout';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetAllEmailSettingsQuery } from '../../../redux/services/settings/emailSettings/emailSettingsApi';
+import { EmailConfigForm } from './EmailConfigForm';
 
 export const EmailConfig = () => {
   const { data, isLoading } = useGetAllEmailSettingsQuery();

@@ -1,14 +1,14 @@
-import { Row } from "antd";
-import { MdDelete } from "react-icons/md";
-import { rowLayout } from "../../layout/FormLayout";
-import CustomTable from "../Shared/Table/CustomTable";
+import { Row } from 'antd';
+import { MdDelete } from 'react-icons/md';
+import { rowLayout } from '../../layout/FormLayout';
+import CustomTable from '../Shared/Table/CustomTable';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -16,10 +16,10 @@ const columns = [
     ),
   },
   {
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
-    align: "center",
+    title: 'Code',
+    dataIndex: 'code',
+    key: 'code',
+    align: 'center',
     render: (code) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {code}
@@ -27,10 +27,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     render: (quantity) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {quantity}
@@ -38,10 +38,10 @@ const columns = [
     ),
   },
   {
-    title: "Batch No",
-    dataIndex: "batch_no",
-    key: "batch_no",
-    align: "center",
+    title: 'Batch No',
+    dataIndex: 'batch_no',
+    key: 'batch_no',
+    align: 'center',
     render: (batch_no) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {batch_no}
@@ -49,10 +49,10 @@ const columns = [
     ),
   },
   {
-    title: "Expired Date",
-    dataIndex: "expireddate",
-    key: "expireddate",
-    align: "center",
+    title: 'Expired Date',
+    dataIndex: 'expireddate',
+    key: 'expireddate',
+    align: 'center',
     render: (expireddate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {expireddate}
@@ -60,10 +60,10 @@ const columns = [
     ),
   },
   {
-    title: "Net Unit Code",
-    dataIndex: "net_unit_code",
-    key: "net_unit_code",
-    align: "center",
+    title: 'Net Unit Code',
+    dataIndex: 'net_unit_code',
+    key: 'net_unit_code',
+    align: 'center',
     render: (net_unit_code) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {net_unit_code}
@@ -71,10 +71,10 @@ const columns = [
     ),
   },
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'center',
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {discount}
@@ -82,10 +82,10 @@ const columns = [
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {tax}
@@ -93,10 +93,10 @@ const columns = [
     ),
   },
   {
-    title: "Sub Total",
-    dataIndex: "sub_total",
-    key: "sub_total",
-    align: "center",
+    title: 'Sub Total',
+    dataIndex: 'sub_total',
+    key: 'sub_total',
+    align: 'center',
     render: (sub_total) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sub_total}
@@ -105,11 +105,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl" />,
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     width: 40,
-    fixed: "right",
+    fixed: 'right',
     //   render: ({ handleDeleteModal }, record) => {
     //     return (
     //       <div className="flex justify-center items-center gap-3">
@@ -128,8 +128,8 @@ const TransferListTable = () => {
   const dataSource = [];
 
   const subTotalRow = {
-    key: "subtotal",
-    name: "Subtotal",
+    key: 'subtotal',
+    name: 'Subtotal',
     // totalOnz: { subtotal },
     // PNLAED: { pnlAEDTotal },
   };

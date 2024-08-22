@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
-import { CustomSelectButton } from "../../Shared/Select/CustomSelectButton";
-import TaxCreate from "../../Tax/TaxCreate";
+import { useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
+import TaxCreate from '../../Tax/TaxCreate';
 
 export const TaxComponent = () => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const params = useGlobalParams({
-    selectValue: ["id", "name"],
+    selectValue: ['id', 'name'],
   });
 
   const { data, isFetching } = useGetAllTaxQuery({
@@ -38,7 +38,7 @@ export const TaxComponent = () => {
         options={options}
         icon={<FaPlus className="text-xl" />}
         onClick={handleOpenSubDrawer}
-        name={"tax_id"}
+        name={'tax_id'}
         isLoading={isFetching}
       />
 

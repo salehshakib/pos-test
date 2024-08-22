@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateCouponMutation } from "../../redux/services/coupon/couponApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CouponsForm from "./CouponsForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateCouponMutation } from '../../redux/services/coupon/couponApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CouponsForm from './CouponsForm';
 
 const CouponsCreate = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const CouponsCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Coupon"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Coupon'} open={isCreateDrawerOpen}>
       <CouponsForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

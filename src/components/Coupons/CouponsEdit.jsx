@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetCouponDetailsQuery,
   useUpdateCouponMutation,
-} from "../../redux/services/coupon/couponApi";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CouponsForm from "./CouponsForm";
+} from '../../redux/services/coupon/couponApi';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CouponsForm from './CouponsForm';
 
 const CouponsEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CouponsEdit = ({ id, setId }) => {
       data: {
         ...values,
         expired_date: values?.expired_date,
-        _method: "PUT",
+        _method: 'PUT',
       },
     });
 
@@ -51,7 +51,7 @@ const CouponsEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Coupons"}
+      title={'Edit Coupons'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

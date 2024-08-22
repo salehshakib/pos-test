@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateCustomerGroupMutation } from "../../redux/services/customerGroup/customerGroupApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CustomerGroupForm from "./CustomerGroupForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateCustomerGroupMutation } from '../../redux/services/customerGroup/customerGroupApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CustomerGroupForm from './CustomerGroupForm';
 
 const CustomerGroupCreate = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const CustomerGroupCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Customer Group"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Customer Group'} open={isCreateDrawerOpen}>
       <CustomerGroupForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

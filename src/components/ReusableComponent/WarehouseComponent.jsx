@@ -1,19 +1,19 @@
-import { Form } from "antd";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
+import { Form } from 'antd';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useCurrentUser } from '../../redux/services/auth/authSlice';
+import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const WarehouseComponent = ({
-  name = "warehouse_id",
+  name = 'warehouse_id',
   label = true,
-  title = "Warehouse",
-  placeholder = "Warehouse",
+  title = 'Warehouse',
+  placeholder = 'Warehouse',
   size,
 }) => {
   const form = Form.useFormInstance();

@@ -1,11 +1,11 @@
-import { Button, Col, Form, Input, Row } from "antd";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { fullColLayout } from "../../layout/FormLayout";
-import { generateRandomCode } from "../../utilities/lib/generateCode";
+import { Button, Col, Form, Input, Row } from 'antd';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { fullColLayout } from '../../layout/FormLayout';
+import { generateRandomCode } from '../../utilities/lib/generateCode';
 
 const rowLayout = {
   gutter: 8,
-  align: "middle",
+  align: 'middle',
 };
 
 const GenerateCode = () => {
@@ -13,11 +13,11 @@ const GenerateCode = () => {
 
   const handleGenerateCode = () => {
     const randomCode = generateRandomCode();
-    form?.setFieldValue("code", randomCode);
+    form?.setFieldValue('code', randomCode);
   };
 
   const onCodeChange = (e) => {
-    form.setFieldValue("code", e.target.value);
+    form.setFieldValue('code', e.target.value);
   };
 
   return (
@@ -42,7 +42,7 @@ const GenerateCode = () => {
                         return Promise.resolve(); // Resolve if the value contains only digits
                       } else {
                         return Promise.reject(
-                          new Error("Only numbers are allowed for this field")
+                          new Error('Only numbers are allowed for this field')
                         ); // Reject if the value contains non-numeric characters
                       }
                     },

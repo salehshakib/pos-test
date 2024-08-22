@@ -1,8 +1,8 @@
-import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import useScanDetection from "use-scan-detection";
-import MainLayout from "./layout/MainLayout";
-import { setBarcode } from "./redux/services/barcode/barcode";
+import { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import useScanDetection from 'use-scan-detection';
+import MainLayout from './layout/MainLayout';
+import { setBarcode } from './redux/services/barcode/barcode';
 
 function App() {
   const dispatch = useDispatch();

@@ -1,8 +1,9 @@
-import { Spin } from "antd";
-import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetAnnouncementDetailsQuery } from '../../redux/services/hrm/announcement/announcementApi';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const AnnouncementDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetAnnouncementDetailsQuery(
@@ -16,7 +17,8 @@ export const AnnouncementDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  // const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   return (
     <CustomModal {...props}>

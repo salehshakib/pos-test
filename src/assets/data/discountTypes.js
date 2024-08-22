@@ -1,10 +1,10 @@
 export const discountTypeOptions = [
   {
-    value: "Fixed",
-    label: "Fixed",
+    value: 'Fixed',
+    label: 'Fixed',
   },
   {
-    value: "Percentage",
-    label: "Percentage",
+    value: 'Percentage',
+    label: 'Percentage',
   },
 ];

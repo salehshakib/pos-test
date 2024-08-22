@@ -1,5 +1,5 @@
-import { Row } from "antd";
-import { useState } from "react";
+import { Row } from 'antd';
+import { useState } from 'react';
 import {
   CashierFilter,
   CustomerFilter,
@@ -8,21 +8,21 @@ import {
   SaleStatusFilter,
   TaxFilter,
   WarehouseFilter,
-} from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import SaleReturnCreate from "../../../components/SaleReturn/SaleReturnCreate";
-import SaleReturnTable from "../../../components/SaleReturn/SaleReturnTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { SALE_RETURN } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+} from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import SaleReturnCreate from '../../../components/SaleReturn/SaleReturnCreate';
+import SaleReturnTable from '../../../components/SaleReturn/SaleReturnTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { SALE_RETURN } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Return Reference",
-    dataIndex: "referenceNo",
-    key: "referenceNo",
-    align: "center",
+    title: 'Return Reference',
+    dataIndex: 'referenceNo',
+    key: 'referenceNo',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -30,10 +30,10 @@ const columns = [
     ),
   },
   {
-    title: "Sale Reference",
-    dataIndex: "saleReference",
-    key: "saleReference",
-    align: "center",
+    title: 'Sale Reference',
+    dataIndex: 'saleReference',
+    key: 'saleReference',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -42,10 +42,10 @@ const columns = [
   },
 
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
-    align: "center",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -53,10 +53,10 @@ const columns = [
     ),
   },
   {
-    title: "Cashier",
-    dataIndex: "cashier",
-    key: "cashier",
-    align: "center",
+    title: 'Cashier',
+    dataIndex: 'cashier',
+    key: 'cashier',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -64,10 +64,10 @@ const columns = [
     ),
   },
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -75,10 +75,10 @@ const columns = [
     ),
   },
   {
-    title: "Grand Total",
-    dataIndex: "grandTotal",
-    key: "grandTotal",
-    align: "right",
+    title: 'Grand Total',
+    dataIndex: 'grandTotal',
+    key: 'grandTotal',
+    align: 'right',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}

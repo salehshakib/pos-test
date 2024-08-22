@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetExpenseCategoryDetailsQuery,
   useUpdateExpenseCategoryMutation,
-} from "../../redux/services/expense/expenseCategoryApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import ExpenseCategoryForm from "./ExpenseCategoryForm";
+} from '../../redux/services/expense/expenseCategoryApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import ExpenseCategoryForm from './ExpenseCategoryForm';
 
 const ExpenseCategoryEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const ExpenseCategoryEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpenseCategory({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -54,7 +54,7 @@ const ExpenseCategoryEdit = ({ id }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Expense Category"}
+      title={'Edit Expense Category'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

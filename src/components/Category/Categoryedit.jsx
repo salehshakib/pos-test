@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Form } from "antd";
+import { Form } from 'antd';
 import {
   useGetCategoryDetailsQuery,
   useUpdateCategoryMutation,
-} from "../../redux/services/category/categoryApi";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CategoryForm from "./CategoryForm";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import defaultUser from "../../assets/data/defaultUserImage";
+} from '../../redux/services/category/categoryApi';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CategoryForm from './CategoryForm';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import defaultUser from '../../assets/data/defaultUserImage';
 
 const Categoryedit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -39,13 +39,13 @@ const Categoryedit = ({ id, setId }) => {
         newFieldData = [
           ...fieldData,
           {
-            name: "attachment",
+            name: 'attachment',
             value: [
               {
                 url: defaultUser,
               },
             ],
-            erros: "",
+            erros: '',
           },
         ];
       }
@@ -55,7 +55,7 @@ const Categoryedit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    const postObj = { ...values, _method: "PUT" };
+    const postObj = { ...values, _method: 'PUT' };
 
     if (
       values?.attachment?.length > 0 &&
@@ -86,7 +86,7 @@ const Categoryedit = ({ id, setId }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Category"}
+      title={'Edit Category'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

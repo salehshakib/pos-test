@@ -9,7 +9,7 @@ export const calculateTotalPrice = (data) => {
 
 export const calculateTotalTax = (totalPrice, taxRate = 0) => {
   const totalTax = (totalPrice * taxRate) / 100;
-  return totalTax ? Number(totalTax).toFixed(2) : "0.00";
+  return totalTax ? Number(totalTax).toFixed(2) : '0.00';
 };
 
 export const calculateGrandTotal = (
@@ -36,7 +36,7 @@ export const calculateGrandTotal = (
     grandTotal = grandTotal + parsedShippingCost;
   }
 
-  return grandTotal ? Number(grandTotal).toFixed(2) : "0.00";
+  return grandTotal ? Number(grandTotal).toFixed(2) : '0.00';
 };
 
 export const transformQuotationProducts = (quotationProducts) => {

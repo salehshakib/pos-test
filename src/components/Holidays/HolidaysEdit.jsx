@@ -1,17 +1,17 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { HolidaysForm } from "./HolidaysForm";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { HolidaysForm } from './HolidaysForm';
 import {
   useGetHolidayDetailsQuery,
   useUpdateHolidayMutation,
-} from "../../redux/services/hrm/holiday/holidayApi";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import dayjs from "dayjs";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/hrm/holiday/holidayApi';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import dayjs from 'dayjs';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 
 export const HolidaysEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -47,13 +47,13 @@ export const HolidaysEdit = ({ id, setId }) => {
 
     const postObj = {
       ...values,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (values?.end_date) {
       postObj.end_date = values?.end_date;
     } else {
-      postObj.end_date = dayjs(values?.end_date).format("YYYY-MM-DD");
+      postObj.end_date = dayjs(values?.end_date).format('YYYY-MM-DD');
     }
 
     appendToFormData(postObj, formData);
@@ -77,7 +77,7 @@ export const HolidaysEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Holiday"}
+      title={'Edit Holiday'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

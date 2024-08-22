@@ -1,25 +1,25 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetPurchaseReturnDetailsQuery,
   useUpdatePurchaseReturnMutation,
-} from "../../redux/services/return/purchaseReturnApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+} from '../../redux/services/return/purchaseReturnApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import { updateProductList } from "../../utilities/lib/return/updateProductList";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PurchaseReturnForm } from "./PurchaseReturnForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import { updateProductList } from '../../utilities/lib/return/updateProductList';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PurchaseReturnForm } from './PurchaseReturnForm';
 
 const PurchaseReturnEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -198,7 +198,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
     if (productListArray.length === 0) {
       // message.info("Please add atleast one product");
-      openNotification("info", "Please add atleast one product");
+      openNotification('info', 'Please add atleast one product');
       return;
     }
 
@@ -219,7 +219,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
     const postData = {
       purchase_return_at: dayjs(values?.purchase_return_at).format(
-        "YYYY-MM-DD"
+        'YYYY-MM-DD'
       ),
       purchase_id: saleData?.id,
       petty_cash_id: saleData?.petty_cash_id,
@@ -237,7 +237,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       return_note: values?.return_note,
       staff_note: values?.staff_note,
       product_list: JSON.stringify(productListArray),
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     const { attachment } = values;
@@ -248,7 +248,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
     if (productListArray.length === 0) {
       // message.error("Please add at least one product");
-      openNotification("error", "Please add at least one product");
+      openNotification('error', 'Please add at least one product');
       return;
     }
 
@@ -272,7 +272,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Purchase Return"}
+      title={'Edit Purchase Return'}
       open={isEditDrawerOpen}
       width={1400}
       isLoading={isFetching}

@@ -1,14 +1,14 @@
 export const paymentStatusOptions = [
   {
-    value: "Paid",
-    label: "Paid",
+    value: 'Paid',
+    label: 'Paid',
   },
   {
-    value: "Due",
-    label: "Due",
+    value: 'Due',
+    label: 'Due',
   },
   {
-    value: "Partial",
-    label: "Partial",
+    value: 'Partial',
+    label: 'Partial',
   },
 ];

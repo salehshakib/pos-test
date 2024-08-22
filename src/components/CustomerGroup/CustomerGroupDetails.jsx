@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetCustomerGroupDetailsQuery } from "../../redux/services/customerGroup/customerGroupApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetCustomerGroupDetailsQuery } from '../../redux/services/customerGroup/customerGroupApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const CustomerGroupDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetCustomerGroupDetailsQuery(

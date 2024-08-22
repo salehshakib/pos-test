@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteLeaveTypeMutation,
   useGetAllLeaveTypeQuery,
-} from "../../redux/services/settings/leaveType/leaveTypeApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/settings/leaveType/leaveTypeApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { LeaveTypeEdit } from "./LeaveTypeEdit";
+import { LeaveTypeEdit } from './LeaveTypeEdit';
 
 export const LeaveTypeTable = ({
   newColumns,
@@ -107,7 +107,7 @@ export const LeaveTypeTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"leave-type"}
+        item={'leave-type'}
       />
     </GlobalUtilityStyle>
   );

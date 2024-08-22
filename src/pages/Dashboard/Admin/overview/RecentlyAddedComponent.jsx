@@ -1,12 +1,12 @@
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
 
 const columns = [
   {
     //sl no
-    title: "SL No",
-    dataIndex: "slNo",
-    key: "slNo",
-    align: "center",
+    title: 'SL No',
+    dataIndex: 'slNo',
+    key: 'slNo',
+    align: 'center',
     render: (slNo) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {slNo}
@@ -15,9 +15,9 @@ const columns = [
   },
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -26,10 +26,10 @@ const columns = [
   },
   {
     //sku
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -38,10 +38,10 @@ const columns = [
   },
   {
     //sale
-    title: "Sale Price",
-    dataIndex: "salePrice",
-    key: "salePrice",
-    align: "right",
+    title: 'Sale Price',
+    dataIndex: 'salePrice',
+    key: 'salePrice',
+    align: 'right',
     render: (salePrice) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {salePrice}
@@ -53,7 +53,7 @@ const columns = [
 export const RecentlyAddedComponent = () => {
   return (
     <CustomTable
-      title={"Added Products"}
+      title={'Added Products'}
       columns={columns}
       dataSource={[]}
       created_at={false}

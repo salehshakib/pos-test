@@ -1,24 +1,24 @@
-import { Col, Row } from "antd";
-import { mdColLayout, rowLayout } from "../../layout/FormLayout";
-import { useGetWarehousesQuery } from "../../redux/services/warehouse/warehouseApi";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import PartialForm from "./PartialForm";
+import { Col, Row } from 'antd';
+import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import PartialForm from './PartialForm';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
+} from '../../utilities/hooks/useParams';
 
 const options = [
   {
     // full
-    value: "Full",
-    label: "Full",
+    value: 'Full',
+    label: 'Full',
   },
   {
     // partial
-    value: "Partial",
-    label: "Partial",
+    value: 'Partial',
+    label: 'Partial',
   },
 ];
 
@@ -42,7 +42,7 @@ const StockCountForm = (props) => {
         <Col {...mdColLayout}>
           <CustomSelect
             label="Warehouse"
-            type={"text"}
+            type={'text'}
             required={true}
             options={warehouseOptions}
             isLoading={isLoading}
@@ -55,7 +55,7 @@ const StockCountForm = (props) => {
           <CustomSelect
             label="Type"
             options={options}
-            name={"type"}
+            name={'type'}
             required={true}
           />
         </Col>

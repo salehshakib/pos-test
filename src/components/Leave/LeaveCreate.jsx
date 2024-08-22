@@ -1,12 +1,12 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateLeaveMutation } from "../../redux/services/hrm/leave/leaveApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { LeaveForm } from "./LeaveForm";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateLeaveMutation } from '../../redux/services/hrm/leave/leaveApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { LeaveForm } from './LeaveForm';
 
 export const LeaveCreate = () => {
   const dispatch = useDispatch();
@@ -22,10 +22,10 @@ export const LeaveCreate = () => {
     const postData = {
       ...values,
       leave_end_date:
-        values?.leave_type === "Half Day" || values?.leave_type === "Single Day"
+        values?.leave_type === 'Half Day' || values?.leave_type === 'Single Day'
           ? values?.leave_start_date
           : values?.leave_end_date,
-      is_send_email: values?.is_send_email == true ? "1" : "0",
+      is_send_email: values?.is_send_email == true ? '1' : '0',
     };
 
     if (values?.attachment?.length > 0) {
@@ -34,12 +34,12 @@ export const LeaveCreate = () => {
 
     if (values?.leave_start_time) {
       postData.leave_start_time = dayjs(values?.leave_start_time).format(
-        "hh:mm:ss"
+        'hh:mm:ss'
       );
     }
     if (values?.leave_end_time) {
       postData.leave_end_time = dayjs(values?.leave_end_time).format(
-        "hh:mm:ss"
+        'hh:mm:ss'
       );
     }
 
@@ -62,7 +62,7 @@ export const LeaveCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Leave"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Leave'} open={isCreateDrawerOpen}>
       <LeaveForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

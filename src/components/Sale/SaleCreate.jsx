@@ -1,19 +1,19 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateSaleMutation } from "../../redux/services/sale/saleApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { SaleForm } from "./SaleForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { SaleForm } from './SaleForm';
 
 export const SaleCreate = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ export const SaleCreate = () => {
   });
 
   // reset state
-  const warehouseId = Form.useWatch("warehouse_id", form);
+  const warehouseId = Form.useWatch('warehouse_id', form);
 
   useEffect(() => {
     if (warehouseId) {
@@ -110,7 +110,7 @@ export const SaleCreate = () => {
       // message.info("Please add atleast one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -136,7 +136,7 @@ export const SaleCreate = () => {
 
     const postObj = {
       ...values,
-      sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
+      sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount: decimalConverter(discount),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
@@ -211,7 +211,7 @@ export const SaleCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Sale"} open={isCreateDrawerOpen} width={1400}>
+    <CustomDrawer title={'Create Sale'} open={isCreateDrawerOpen} width={1400}>
       <SaleForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

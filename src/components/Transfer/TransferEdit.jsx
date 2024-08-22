@@ -1,23 +1,23 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetTransferDetailsQuery,
   useUpdateTransferMutation,
-} from "../../redux/services/transfer/transferApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
+} from '../../redux/services/transfer/transferApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TransferForm from "./TransferForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import TransferForm from './TransferForm';
 
 const TransferEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -152,14 +152,14 @@ const TransferEdit = ({ id, setId }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "from_warehouse_id",
+          name: 'from_warehouse_id',
           value: data?.from_warehouse_id.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "to_warehouse_id",
+          name: 'to_warehouse_id',
           value: data?.to_warehouse_id.toString(),
-          errors: "",
+          errors: '',
         },
       ];
       setFields(newFieldData);
@@ -193,7 +193,7 @@ const TransferEdit = ({ id, setId }) => {
       // message.info("Please add atleast one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -226,7 +226,7 @@ const TransferEdit = ({ id, setId }) => {
 
       product_list: JSON.stringify(productListArray),
       petty_cash_id: 8,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (attachment?.[0].originFileObj) {
@@ -275,7 +275,7 @@ const TransferEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Transfer"}
+      title={'Edit Transfer'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

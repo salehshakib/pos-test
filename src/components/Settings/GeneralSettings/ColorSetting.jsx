@@ -1,10 +1,10 @@
-import { generate, presetPalettes } from "@ant-design/colors";
-import { Col, ColorPicker, Divider, Form, Row, theme } from "antd";
+import { generate, presetPalettes } from '@ant-design/colors';
+import { Col, ColorPicker, Divider, Form, Row, theme } from 'antd';
 
 const rowLayout = {
   gutter: 25,
-  align: "middle",
-  justify: "start",
+  align: 'middle',
+  justify: 'start',
 };
 
 const colLayout = {
@@ -22,8 +22,8 @@ const customPrimaryPanelRender = (_, { components: { Picker, Presets } }) => (
     <div
       style={{
         fontSize: 12,
-        color: "black",
-        lineHeight: "20px",
+        color: 'black',
+        lineHeight: '20px',
         marginBottom: 8,
         fontWeight: 500,
       }}
@@ -39,7 +39,7 @@ const customPrimaryPanelRender = (_, { components: { Picker, Presets } }) => (
       <Divider
         type="vertical"
         style={{
-          height: "auto",
+          height: 'auto',
         }}
       />
       <Col flex="auto">
@@ -54,8 +54,8 @@ const customSecondaryPanelRender = (_, { components: { Picker, Presets } }) => (
     <div
       style={{
         fontSize: 12,
-        color: "black",
-        lineHeight: "20px",
+        color: 'black',
+        lineHeight: '20px',
         marginBottom: 8,
         fontWeight: 500,
       }}
@@ -71,7 +71,7 @@ const customSecondaryPanelRender = (_, { components: { Picker, Presets } }) => (
       <Divider
         type="vertical"
         style={{
-          height: "auto",
+          height: 'auto',
         }}
       />
       <Col flex="auto">
@@ -99,7 +99,7 @@ const ColorSettingComponent = () => {
         <Col {...colLayout}>
           <Form.Item
             label="Primary Color"
-            name={"primary_color"}
+            name={'primary_color'}
             initialValue={token.colorPrimary}
           >
             <ColorPicker
@@ -119,7 +119,7 @@ const ColorSettingComponent = () => {
         <Col {...colLayout}>
           <Form.Item
             label="Secondary Color"
-            name={"secendary_color"}
+            name={'secendary_color'}
             initialValue={token.secondaryColor}
           >
             <ColorPicker

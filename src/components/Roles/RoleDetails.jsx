@@ -1,15 +1,14 @@
-import { Spin } from "antd";
-import { useGetRolePermissionDetailsQuery } from "../../redux/services/rolePermission/rolePermissionApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
-
+import { Spin } from 'antd';
+import { useGetRolePermissionDetailsQuery } from '../../redux/services/rolePermission/rolePermissionApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const transformPermissions = (modules) => {
   return modules.reduce((acc, module) => {
-    module.actions.forEach(action => {
+    module.actions.forEach((action) => {
       const key = `${module.module.toLowerCase()}_${action.name.split('.')[1]}`;
-      acc[key] = "True";
+      acc[key] = 'True';
     });
     return acc;
   }, {});
@@ -18,8 +17,7 @@ const transformPermissions = (modules) => {
 export const RoleDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetRolePermissionDetailsQuery(
     {
-
-      params: { role_id: id }
+      params: { role_id: id },
     },
     { skip: !id }
   );

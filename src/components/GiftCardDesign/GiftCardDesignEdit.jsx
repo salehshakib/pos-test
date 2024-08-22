@@ -1,20 +1,20 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetGiftCardDesignDetailsQuery,
   useUpdateGiftCardDesignMutation,
-} from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { GiftCardDesignForm } from "./GiftCardDesignForm";
+} from '../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { GiftCardDesignForm } from './GiftCardDesignForm';
 
 const dataURItoBlob = (dataURI) => {
-  const byteString = atob(dataURI?.split(",")[1]);
-  const mimeString = dataURI?.split(",")[0].split(":")[1].split(";")[0];
+  const byteString = atob(dataURI?.split(',')[1]);
+  const mimeString = dataURI?.split(',')[0].split(':')[1].split(';')[0];
   const arrayBuffer = new ArrayBuffer(byteString.length);
   const int8Array = new Uint8Array(arrayBuffer);
   for (let i = 0; i < byteString.length; i++) {
@@ -44,15 +44,15 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
       const fieldData = fieldsToUpdate(data);
 
       const frontSideUrl = data?.attachments?.find(
-        (item) => item.label === "front_side"
+        (item) => item.label === 'front_side'
       )?.url;
 
       const backSideUrl = data?.attachments?.find(
-        (item) => item.label === "back_side"
+        (item) => item.label === 'back_side'
       )?.url;
 
-      form.setFieldValue("frontImageUrl", frontSideUrl);
-      form.setFieldValue("backImageUrl", backSideUrl);
+      form.setFieldValue('frontImageUrl', frontSideUrl);
+      form.setFieldValue('backImageUrl', backSideUrl);
 
       setFields(fieldData);
     }
@@ -63,16 +63,16 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
-    if (form.getFieldValue("frontImage")) {
-      const frontImageBlob = dataURItoBlob(form.getFieldValue("frontImage"));
+    if (form.getFieldValue('frontImage')) {
+      const frontImageBlob = dataURItoBlob(form.getFieldValue('frontImage'));
       postData.front_side = frontImageBlob;
     }
 
-    if (form.getFieldValue("backImage")) {
-      const backImageBlob = dataURItoBlob(form.getFieldValue("backImage"));
+    if (form.getFieldValue('backImage')) {
+      const backImageBlob = dataURItoBlob(form.getFieldValue('backImage'));
       postData.back_side = backImageBlob;
     }
 
@@ -94,7 +94,7 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Gift Card Design"}
+      title={'Edit Gift Card Design'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

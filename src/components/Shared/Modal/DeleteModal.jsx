@@ -1,6 +1,6 @@
-import { Button, Modal } from "antd";
-import { RiErrorWarningFill } from "react-icons/ri";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Modal } from 'antd';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const modalProps = {
   footer: null,
@@ -13,7 +13,7 @@ const DeleteModal = ({
   hideModal,
   handleDelete,
   isLoading,
-  item = "item",
+  item = 'item',
 }) => {
   return (
     <GlobalUtilityStyle>
@@ -22,8 +22,8 @@ const DeleteModal = ({
           <div className="flex items-center gap-3">
             <RiErrorWarningFill
               style={{
-                color: "red",
-                fontSize: "20px",
+                color: 'red',
+                fontSize: '20px',
               }}
             />
             <span>Delete {item}</span>

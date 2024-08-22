@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateWarehouseMutation } from "../../redux/services/warehouse/warehouseApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import WarehouseForm from "./WarehouseForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateWarehouseMutation } from '../../redux/services/warehouse/warehouseApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import WarehouseForm from './WarehouseForm';
 
 const WarehouseCreate = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const WarehouseCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Warehouse"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Warehouse'} open={isCreateDrawerOpen}>
       <WarehouseForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

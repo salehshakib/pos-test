@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { Col, Form, Image, Row, Upload } from "antd";
-import { LiaCloudUploadAltSolid } from "react-icons/lia";
+import { useEffect, useState } from 'react';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { Col, Form, Image, Row, Upload } from 'antd';
+import { LiaCloudUploadAltSolid } from 'react-icons/lia';
 
 const rowLayout = {
   gutter: 25,
-  align: "middle",
-  justify: "start",
+  align: 'middle',
+  justify: 'start',
 };
 
 const getBase64 = (file) =>
@@ -28,11 +28,11 @@ const CustomLogoUploader = ({ name }) => {
   const form = Form.useFormInstance();
 
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    handleFileChange({ fileList: [form?.getFieldValue("logo")] });
+    handleFileChange({ fileList: [form?.getFieldValue('logo')] });
   }, [form]);
 
   const handlePreview = async (file) => {
@@ -56,12 +56,12 @@ const CustomLogoUploader = ({ name }) => {
           {previewImage && (
             <Image
               wrapperStyle={{
-                display: "none",
+                display: 'none',
               }}
               preview={{
                 visible: previewOpen,
                 onVisibleChange: (visible) => setPreviewOpen(visible),
-                afterOpenChange: (visible) => !visible && setPreviewImage(""),
+                afterOpenChange: (visible) => !visible && setPreviewImage(''),
               }}
               src={previewImage}
             />
@@ -77,7 +77,7 @@ const CustomLogoUploader = ({ name }) => {
           >
             <Upload
               listType="picture-card"
-              name={"file"}
+              name={'file'}
               fileList={fileList}
               onChange={handleFileChange}
               onPreview={handlePreview}
@@ -92,7 +92,7 @@ const CustomLogoUploader = ({ name }) => {
                 <button
                   style={{
                     // border: 0,
-                    background: "none",
+                    background: 'none',
                   }}
                   type="button"
                   className="w-full flex flex-col items-center justify-center avatar-uploader "

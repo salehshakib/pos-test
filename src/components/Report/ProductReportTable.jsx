@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import CustomTable from "../Shared/Table/CustomTable";
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import CustomTable from '../Shared/Table/CustomTable';
 
 function createFilteredColumns(originalColumns, includeTitles) {
   return originalColumns.filter((column) =>
@@ -96,19 +96,19 @@ export const ProductReportTable = ({
     <GlobalUtilityStyle>
       <div className="space-y-5">
         <CustomTable
-          title={"Product Purchase Report"}
+          title={'Product Purchase Report'}
           columns={createFilteredColumns(newColumns, [
-            "product",
-            "category",
-            "brand",
-            "purchased qty",
-            "purchased amount",
-            "purchase returned qty",
-            "purchase returned amount",
-            "in stock",
-            "stock worth (price/cost)",
-            "status",
-            "created at",
+            'product',
+            'category',
+            'brand',
+            'purchased qty',
+            'purchased amount',
+            'purchase returned qty',
+            'purchase returned amount',
+            'in stock',
+            'stock worth (price/cost)',
+            'status',
+            'created at',
           ])}
           // dataSource={dataSource}
           // total={total}
@@ -122,19 +122,19 @@ export const ProductReportTable = ({
         />
 
         <CustomTable
-          title={"Product Sale Report"}
+          title={'Product Sale Report'}
           columns={createFilteredColumns(newColumns, [
-            "product",
-            "category",
-            "brand",
-            "sold qty",
-            "sold amount",
-            "sale returned qty",
-            "sale returned amount",
-            "in stock",
-            "stock worth (price/cost)",
-            "status",
-            "created at",
+            'product',
+            'category',
+            'brand',
+            'sold qty',
+            'sold amount',
+            'sale returned qty',
+            'sale returned amount',
+            'in stock',
+            'stock worth (price/cost)',
+            'status',
+            'created at',
           ])}
           // dataSource={dataSource}
           // total={total}

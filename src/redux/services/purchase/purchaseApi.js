@@ -2,17 +2,17 @@
 import {
   PRODUCT,
   PURCHASE,
-} from "../../../utilities/apiEndpoints/inventory.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+} from '../../../utilities/apiEndpoints/inventory.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const purchaseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllPurchase: build.query({
       query: ({ params }) => ({
         url: `/${PURCHASE}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -26,7 +26,7 @@ const purchaseApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${PURCHASE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -38,19 +38,19 @@ const purchaseApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${PURCHASE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -63,19 +63,19 @@ const purchaseApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${PURCHASE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -88,18 +88,18 @@ const purchaseApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${PURCHASE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -112,18 +112,18 @@ const purchaseApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${PURCHASE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -136,19 +136,19 @@ const purchaseApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${PURCHASE}/export`,
-          method: "GET",
+          method: 'GET',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

@@ -1,13 +1,13 @@
-import { useGetAllTaxQuery } from "../../redux/services/tax/taxApi";
+import { useGetAllTaxQuery } from '../../redux/services/tax/taxApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const OrderTaxComponent = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
   });
 
   const { data, isFetching } = useGetAllTaxQuery({ params });
@@ -24,7 +24,7 @@ export const OrderTaxComponent = () => {
     <CustomSelect
       label="Order Vat"
       options={options}
-      name={"tax_rate"}
+      name={'tax_rate'}
       isLoading={isFetching}
     />
   );

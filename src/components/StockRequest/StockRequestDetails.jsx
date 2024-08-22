@@ -1,16 +1,16 @@
-import { Spin, Table } from "antd";
-import { useGetStockRequestDetailsQuery } from "../../redux/services/stockRequest/stockRequestApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import CustomModal from "../Shared/Modal/CustomModal";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import { tableProps } from "../../layout/TableLayout";
+import { Spin, Table } from 'antd';
+import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import CustomModal from '../Shared/Modal/CustomModal';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import { tableProps } from '../../layout/TableLayout';
 
 const productReqTable = [
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -19,10 +19,10 @@ const productReqTable = [
   },
   {
     //name
-    title: "Sku",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'Sku',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -31,9 +31,9 @@ const productReqTable = [
   },
   {
     //name
-    title: "Alert Qty",
-    dataIndex: "alertQty",
-    key: "alertQty",
+    title: 'Alert Qty',
+    dataIndex: 'alertQty',
+    key: 'alertQty',
     render: (alertQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {alertQty}
@@ -41,9 +41,9 @@ const productReqTable = [
     ),
   },
   {
-    title: "Request Qty",
-    dataIndex: "reqQty",
-    key: "reqQty",
+    title: 'Request Qty',
+    dataIndex: 'reqQty',
+    key: 'reqQty',
     render: (reqQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reqQty}
@@ -77,10 +77,10 @@ export const StockRequestDetails = ({ id, ...props }) => {
 
   const requestProducts = data?.stock_request_products?.map((item) => {
     return {
-      name: item?.products?.name ?? "Unknown Product",
-      sku: item?.products?.sku ?? "Unknown Quantity",
-      alertQty: item?.alert_qty ?? "Unknown Quantity",
-      reqQty: item?.need_qty ?? "Unknown Quantity",
+      name: item?.products?.name ?? 'Unknown Product',
+      sku: item?.products?.sku ?? 'Unknown Quantity',
+      alertQty: item?.alert_qty ?? 'Unknown Quantity',
+      reqQty: item?.need_qty ?? 'Unknown Quantity',
     };
   });
 

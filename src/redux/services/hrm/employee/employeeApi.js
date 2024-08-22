@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { EMPLOYEE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { EMPLOYEE } from '../../../../utilities/apiEndpoints/hrm.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const employeeApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllEmployee: build.query({
       query: ({ params }) => ({
         url: `/${EMPLOYEE}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const employeeApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${EMPLOYEE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -35,19 +35,19 @@ const employeeApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${EMPLOYEE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -60,19 +60,19 @@ const employeeApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${EMPLOYEE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -85,18 +85,18 @@ const employeeApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${EMPLOYEE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -109,18 +109,18 @@ const employeeApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${EMPLOYEE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -133,19 +133,19 @@ const employeeApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${EMPLOYEE}/export`,
-          method: "GET",
+          method: 'GET',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

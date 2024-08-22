@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateCashierMutation } from "../../redux/services/cashier/cashierApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import CashierForm from "./CashierForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateCashierMutation } from '../../redux/services/cashier/cashierApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import CashierForm from './CashierForm';
 
 const CashierCreate = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CashierCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Cashier"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Cashier'} open={isCreateDrawerOpen}>
       <CashierForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

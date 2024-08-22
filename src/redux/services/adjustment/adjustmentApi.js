@@ -1,7 +1,7 @@
-import { ADJUSTMENT } from "../../../utilities/apiEndpoints/inventory.api";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { ADJUSTMENT } from '../../../utilities/apiEndpoints/inventory.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const adjustmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${ADJUSTMENT}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -24,7 +24,7 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: ({ id, params }) => {
         return {
           url: `${ADJUSTMENT}/show/${id}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -36,19 +36,19 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: ({ formData }) => {
         return {
           url: `/${ADJUSTMENT}/store`,
-          method: "POST",
+          method: 'POST',
           body: formData,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -61,19 +61,19 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: ({ id, formData }) => {
         return {
           url: `/${ADJUSTMENT}/update/${id}`,
-          method: "PUT",
+          method: 'PUT',
           body: formData,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -86,18 +86,18 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${ADJUSTMENT}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -110,18 +110,18 @@ const adjustmentApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${ADJUSTMENT}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

@@ -1,13 +1,13 @@
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetWarehouseDetailsQuery,
   useUpdateWarehouseMutation,
-} from "../../redux/services/warehouse/warehouseApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import DiscountPlanForm from "./DiscountPlanForm";
+} from '../../redux/services/warehouse/warehouseApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import DiscountPlanForm from './DiscountPlanForm';
 
 const DiscountPlanEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const DiscountPlanEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Discount Plan"}
+      title={'Edit Discount Plan'}
       open={isEditDrawerOpen}
       // isLoading={isFetching}
     >

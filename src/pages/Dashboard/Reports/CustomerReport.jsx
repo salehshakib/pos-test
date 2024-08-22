@@ -1,26 +1,26 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from "antd";
-import { useState } from "react";
-import { CustomerFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import CustomModal from "../../../components/Shared/Modal/CustomModal";
-import CustomSelect from "../../../components/Shared/Select/CustomSelect";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { fullColLayout, rowLayout } from "../../../layout/FormLayout";
+import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
+import { useState } from 'react';
+import { CustomerFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import CustomForm from '../../../components/Shared/Form/CustomForm';
+import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import {
   useGetAllCustomerQuery,
   useGetCustomerDetailsQuery,
-} from "../../../redux/services/customer/customerApi";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+} from '../../../redux/services/customer/customerApi';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import {
   DEFAULT_SELECT_VALUES,
   useFilterParams,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import createDetailsLayout from "../../../utilities/lib/createDetailsLayout";
-import { PurchaseReturnTable } from "./components/PurchaseReturnTable";
-import { QuotationTable } from "./components/QutationTable";
-import { SaleReturnTable } from "./components/SaleReturnTable";
-import { SaleTable } from "./components/SaleTable";
+} from '../../../utilities/hooks/useParams';
+import createDetailsLayout from '../../../utilities/lib/createDetailsLayout';
+import { PurchaseReturnTable } from './components/PurchaseReturnTable';
+import { QuotationTable } from './components/QutationTable';
+import { SaleReturnTable } from './components/SaleReturnTable';
+import { SaleTable } from './components/SaleTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -69,11 +69,11 @@ const CustomerModal = ({ setCustomerId, open, setOpen }) => {
         <Row {...rowLayout}>
           <Col {...fullColLayout}>
             <CustomSelect
-              placeholder={"Customer"}
+              placeholder={'Customer'}
               options={options}
               isLoading={isLoading}
               required={true}
-              name={"customer_id"}
+              name={'customer_id'}
             />
           </Col>
 
@@ -117,39 +117,39 @@ export const CustomerReport = () => {
 
   const customerItems = [
     {
-      key: "1",
-      label: "Customer",
+      key: '1',
+      label: 'Customer',
       children: data?.name,
       span: 24,
     },
     {
-      key: "2",
-      label: "Email",
-      children: data?.email ?? "---",
+      key: '2',
+      label: 'Email',
+      children: data?.email ?? '---',
       span: 24,
     },
     {
-      key: "3",
-      label: "Phone Number",
-      children: data?.phone_number ?? "---",
+      key: '3',
+      label: 'Phone Number',
+      children: data?.phone_number ?? '---',
       span: 24,
     },
     {
-      key: "4",
-      label: "Country",
-      children: data?.country ?? "---",
+      key: '4',
+      label: 'Country',
+      children: data?.country ?? '---',
       span: 12,
     },
     {
-      key: "6",
-      label: "City",
-      children: data?.city ?? "---",
+      key: '6',
+      label: 'City',
+      children: data?.city ?? '---',
       span: 12,
     },
     {
-      key: "5",
-      label: "Address",
-      children: data?.address ?? "---",
+      key: '5',
+      label: 'Address',
+      children: data?.address ?? '---',
       span: 24,
     },
   ];
@@ -159,7 +159,7 @@ export const CustomerReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
-    summary: "customer,sale",
+    summary: 'customer,sale',
   };
 
   return (
@@ -211,23 +211,23 @@ export const CustomerReport = () => {
               defaultActiveKey="sale"
               items={[
                 {
-                  label: "Sale",
-                  key: "sale",
+                  label: 'Sale',
+                  key: 'sale',
                   children: <SaleTable {...props} />,
                 },
                 {
-                  label: "Quotation",
-                  key: "quotation",
+                  label: 'Quotation',
+                  key: 'quotation',
                   children: <QuotationTable {...props} />,
                 },
                 {
-                  label: "Purchase Return",
-                  key: "purchasereturn",
+                  label: 'Purchase Return',
+                  key: 'purchasereturn',
                   children: <PurchaseReturnTable {...props} />,
                 },
                 {
-                  label: "Sale Return",
-                  key: "salereturn",
+                  label: 'Sale Return',
+                  key: 'salereturn',
                   children: <SaleReturnTable {...props} />,
                 },
               ]}

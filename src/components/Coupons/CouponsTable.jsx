@@ -1,26 +1,26 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCouponMutation,
   useGetAllCouponQuery,
   useUpdateCouponStatusMutation,
-} from "../../redux/services/coupon/couponApi";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/coupon/couponApi';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { showCurrency } from "../../utilities/lib/currency";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { CouponsDetails } from "./CouponsDetails";
-import CouponsEdit from "./CouponsEdit";
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { showCurrency } from '../../utilities/lib/currency';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { CouponsDetails } from './CouponsDetails';
+import CouponsEdit from './CouponsEdit';
 
 const CouponsTable = ({
   newColumns,
@@ -130,11 +130,11 @@ const CouponsTable = ({
         couponCode: code,
         type,
         quantity: qty,
-        createdBy: user?.name ?? user ?? "N/A",
+        createdBy: user?.name ?? user ?? 'N/A',
         amount:
-          type === "Fixed"
+          type === 'Fixed'
             ? showCurrency(amount ?? 0, currency)
-            : amount + " %",
+            : amount + ' %',
         minimumAmount: showCurrency(minimum_amount ?? 0, currency),
         createdAt: date,
         expiredAt: expiredDate,

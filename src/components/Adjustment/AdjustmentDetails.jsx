@@ -1,16 +1,16 @@
-import { Spin, Table } from "antd";
-import { tableProps } from "../../layout/TableLayout";
-import { useGetAdjustmentDetailsQuery } from "../../redux/services/adjustment/adjustmentApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { Spin, Table } from 'antd';
+import { tableProps } from '../../layout/TableLayout';
+import { useGetAdjustmentDetailsQuery } from '../../redux/services/adjustment/adjustmentApi';
+import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 const columns = [
   {
-    title: "Product Name",
-    dataIndex: "product_name",
-    key: "product_name",
+    title: 'Product Name',
+    dataIndex: 'product_name',
+    key: 'product_name',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -18,10 +18,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "qty",
-    key: "qty",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -29,10 +29,10 @@ const columns = [
     ),
   },
   {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     render: (text) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {text}
@@ -51,7 +51,8 @@ const AdjustmentDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
-  const details = createDetailsLayout(data);
+  // const details = createDetailsLayout(data);
+  const details = useDetailsLayout(data);
 
   const title = () => (
     <span className="text-black font-semibold text-base -ml-2">
@@ -64,10 +65,10 @@ const AdjustmentDetails = ({ id, ...props }) => {
       id: item.id,
       product_name:
         item?.products?.name ??
-        "Unknown Product" +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ""),
-      qty: item.qty ?? "Unknown Quantity",
-      action: item.action ?? "Unknown Action",
+        'Unknown Product' +
+          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      qty: item.qty ?? 'Unknown Quantity',
+      action: item.action ?? 'Unknown Action',
     };
   });
 

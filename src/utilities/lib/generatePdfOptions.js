@@ -1,8 +1,8 @@
-import { Margin } from "react-to-pdf";
+import { Margin } from 'react-to-pdf';
 
 export const generatePdfOptions = {
   // default is `save`
-  method: "open",
+  method: 'open',
   // default is Resolution.MEDIUM = 3, which should be enough, higher values
   // increases the image quality but also the size of the PDF, so be careful
   // using values higher than 10 when having multiple pages generated, it
@@ -18,7 +18,7 @@ export const generatePdfOptions = {
   },
   canvas: {
     // default is 'image/jpeg' for better size performance
-    mimeType: "image/png",
+    mimeType: 'image/png',
     qualityRatio: 1,
   },
   // Customize any value passed to the jsPDF instance and html2canvas

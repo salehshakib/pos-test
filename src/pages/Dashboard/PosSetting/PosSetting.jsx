@@ -1,7 +1,7 @@
-import { PageContainer } from "@ant-design/pro-layout";
-import { PosSettingForm } from "../../../components/Settings/PosSettings/PosSettingForm";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { useGetGeneralSettingsQuery } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { PageContainer } from '@ant-design/pro-layout';
+import { PosSettingForm } from '../../../components/Settings/PosSettings/PosSettingForm';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
 
 const PosSetting = () => {
   const params = {

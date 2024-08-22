@@ -1,60 +1,60 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { useCheckSaleReferenceMutation } from "../../redux/services/return/saleReturnApi";
+} from '../../layout/FormLayout';
+import { useCheckSaleReferenceMutation } from '../../redux/services/return/saleReturnApi';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { updateProductList } from "../../utilities/lib/return/updateProductList";
-import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
-import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { ReturnProductTable } from "./overview/ReturnProductTable";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { updateProductList } from '../../utilities/lib/return/updateProductList';
+import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
+import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
+import { TotalRow } from '../ReusableComponent/TotalRow';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { ReturnProductTable } from './overview/ReturnProductTable';
 
 const options = [
   {
-    value: "Cash",
-    label: "Cash",
+    value: 'Cash',
+    label: 'Cash',
   },
   {
-    value: "Gift Card",
-    label: "Gift Card",
+    value: 'Gift Card',
+    label: 'Gift Card',
   },
   {
-    value: "Card",
-    label: "Card",
+    value: 'Card',
+    label: 'Card',
   },
   {
-    value: "Cheque",
-    label: "Cheque",
+    value: 'Cheque',
+    label: 'Cheque',
   },
   {
-    value: "Points",
-    label: "Points",
+    value: 'Points',
+    label: 'Points',
   },
 ];
 
 const PaymentType = () => {
-  useSetFieldValue("payment_type", options[0].value);
+  useSetFieldValue('payment_type', options[0].value);
 
   return (
     <CustomSelect
       label="Payment Type"
       options={options}
-      name={"payment_type"}
+      name={'payment_type'}
     />
   );
 };
@@ -78,7 +78,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
         <CustomDatepicker
           label="Return Date"
           required={true}
-          name={"sale_return_at"}
+          name={'sale_return_at'}
         />
       </Col>
 
@@ -87,14 +87,14 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       </Col>
 
       <Col {...fullColLayout}>
-        <CustomUploader label={"Attach Document"} name={"attachment"} />
+        <CustomUploader label={'Attach Document'} name={'attachment'} />
       </Col>
 
       <Col {...mdColLayout}>
-        <CustomInput type={"textarea"} name="return_note" label="Return Note" />
+        <CustomInput type={'textarea'} name="return_note" label="Return Note" />
       </Col>
       <Col {...mdColLayout}>
-        <CustomInput type={"textarea"} name="staff_note" label="Staff Note" />
+        <CustomInput type={'textarea'} name="staff_note" label="Staff Note" />
       </Col>
     </Row>
   );
@@ -118,8 +118,8 @@ export const SaleReturnForm = ({
   const [saleExists, setSaleExists] = useState(false);
   const [refId, setRefId] = useState(null);
 
-  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
-  const deleteRows = Form.useWatch("delete", form);
+  const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
+  const deleteRows = Form.useWatch('delete', form);
 
   const updatedProductList = updateProductList(
     {
@@ -251,9 +251,9 @@ export const SaleReturnForm = ({
       //     "Sale Reference doesnot exist or Sale Return is Pending"
       // );
       openNotification(
-        "error",
+        'error',
         error?.data?.message ??
-          "Sale Reference doesnot exist or Sale Return is Pending"
+          'Sale Reference doesnot exist or Sale Return is Pending'
       );
       setSaleExists(false);
       setRefId(null);
@@ -266,14 +266,14 @@ export const SaleReturnForm = ({
         <CustomForm
           handleSubmit={handleSubmit}
           form={props.form}
-          submitBtnText={"Check Reference"}
+          submitBtnText={'Check Reference'}
           isLoading={isLoading}
         >
           <Row {...rowLayout}>
             <Col {...fullColLayout}>
               <CustomInput
                 label="Sale Reference"
-                name={"reference_id"}
+                name={'reference_id'}
                 required={true}
               />
             </Col>

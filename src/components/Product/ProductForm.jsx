@@ -1,46 +1,46 @@
-import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
-import { RiRefreshLine } from "react-icons/ri";
-import { barcodeOptions } from "../../assets/data/barcode";
-import { taxTypeOptions } from "../../assets/data/taxType";
+import { Col, Form, Row } from 'antd';
+import { useEffect } from 'react';
+import { RiRefreshLine } from 'react-icons/ri';
+import { barcodeOptions } from '../../assets/data/barcode';
+import { taxTypeOptions } from '../../assets/data/taxType';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { disabledDate } from "../../utilities/lib/currentDate";
-import { generateRandomCode } from "../../utilities/lib/generateCode";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomInputButton from "../Shared/Input/CustomInputButton";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import RichTextEditor from "../Shared/TextEditor/RichTextEditor";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { BrandComponent } from "./overview/BrandComponent";
-import { CategoryComponent } from "./overview/CategoryComponent";
-import ComboProductsComponent from "./overview/ComboProductsComponent";
-import { DifferentPriceComponent } from "./overview/DifferentPriceComponent";
-import { InitialStockComponent } from "./overview/InitialStockComponent";
-import { TaxComponent } from "./overview/TaxComponent";
-import UnitComponent from "./overview/UnitComponent";
+} from '../../layout/FormLayout';
+import { disabledDate } from '../../utilities/lib/currentDate';
+import { generateRandomCode } from '../../utilities/lib/generateCode';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomInputButton from '../Shared/Input/CustomInputButton';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import RichTextEditor from '../Shared/TextEditor/RichTextEditor';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { BrandComponent } from './overview/BrandComponent';
+import { CategoryComponent } from './overview/CategoryComponent';
+import ComboProductsComponent from './overview/ComboProductsComponent';
+import { DifferentPriceComponent } from './overview/DifferentPriceComponent';
+import { InitialStockComponent } from './overview/InitialStockComponent';
+import { TaxComponent } from './overview/TaxComponent';
+import UnitComponent from './overview/UnitComponent';
 
 const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
   const options = [
-    { value: "Standard", label: "Standard" },
-    { value: "Combo", label: "Combo" },
-    { value: "Digital", label: "Digital" },
-    { value: "Service", label: "Service" },
+    { value: 'Standard', label: 'Standard' },
+    { value: 'Combo', label: 'Combo' },
+    { value: 'Digital', label: 'Digital' },
+    { value: 'Service', label: 'Service' },
   ];
 
   useEffect(() => {
     if (!productType) {
-      form.setFieldValue("type", "Standard");
+      form.setFieldValue('type', 'Standard');
     }
   }, [form, productType]);
 
@@ -49,7 +49,7 @@ const ProductTypeComponent = () => {
       label="Product Type"
       required={true}
       options={options}
-      name={"type"}
+      name={'type'}
     />
   );
 };
@@ -60,16 +60,16 @@ const ProductCodeComponent = () => {
   const generate = () => {
     const randomCode = generateRandomCode(6);
 
-    form?.setFieldValue("sku", randomCode);
+    form?.setFieldValue('sku', randomCode);
   };
 
   return (
     <CustomInputButton
       label="Sku"
-      type={"text"}
+      type={'text'}
       required={true}
-      name={"sku"}
-      placeholder={"Generate Sku"}
+      name={'sku'}
+      placeholder={'Generate Sku'}
       onClick={generate}
       icon={<RiRefreshLine className="text-xl" />}
     />
@@ -78,11 +78,11 @@ const ProductCodeComponent = () => {
 
 const BarCodeComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
   useEffect(() => {
     if (!productType) {
-      form.setFieldValue("symbology", barcodeOptions[0].value);
+      form.setFieldValue('symbology', barcodeOptions[0].value);
     }
   }, [form, productType]);
 
@@ -91,21 +91,21 @@ const BarCodeComponent = () => {
       label="Barcode Symbology"
       options={barcodeOptions}
       required={true}
-      name={"symbology"}
+      name={'symbology'}
     />
   );
 };
 
 const AttachmentComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
-  if (productType === "Digital")
+  if (productType === 'Digital')
     return (
       <Col {...fullColLayout}>
         <CustomUploader
-          label={"Attachment"}
-          name={"attach_file"}
+          label={'Attachment'}
+          name={'attach_file'}
           required={true}
         />
       </Col>
@@ -114,16 +114,16 @@ const AttachmentComponent = () => {
 
 const ProductCostComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
-  if (productType === "Standard")
+  if (productType === 'Standard')
     return (
       <Col {...colLayout}>
         <CustomInput
           label="Product Buying Cost"
-          type={"number"}
+          type={'number'}
           required={true}
-          name={"buying_price"}
+          name={'buying_price'}
         />
       </Col>
     );
@@ -131,16 +131,16 @@ const ProductCostComponent = () => {
 
 const AlertComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
+  const productType = Form.useWatch('type', form);
 
-  if (productType === "Standard") {
+  if (productType === 'Standard') {
     return (
       <Col {...colLayout}>
         <CustomInput
           label="Alert Quantity"
-          type={"number"}
+          type={'number'}
           // required={true}
-          name={"alert_qty"}
+          name={'alert_qty'}
         />
       </Col>
     );
@@ -153,7 +153,7 @@ const TaxTypeComponent = () => {
       label="Vat Method"
       options={taxTypeOptions}
       required={true}
-      name={"tax_method"}
+      name={'tax_method'}
       showSearch={true}
     />
   );
@@ -161,15 +161,15 @@ const TaxTypeComponent = () => {
 
 const ExpireComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch("type", form);
-  const hasExpiredDate = Form.useWatch("has_expired_date", form);
+  const productType = Form.useWatch('type', form);
+  const hasExpiredDate = Form.useWatch('has_expired_date', form);
 
-  if (productType === "Standard" && hasExpiredDate) {
+  if (productType === 'Standard' && hasExpiredDate) {
     return (
       <Col {...mdColLayout}>
         <CustomDatepicker
-          label={"Expired Date"}
-          name={["product_expire", "expired_date"]}
+          label={'Expired Date'}
+          name={['product_expire', 'expired_date']}
           required={true}
         />
       </Col>
@@ -179,13 +179,13 @@ const ExpireComponent = () => {
 
 const PromotionalPriceComponent = () => {
   const form = Form.useFormInstance();
-  const hasPromotionalPrice = Form.useWatch("has_promotion", form);
+  const hasPromotionalPrice = Form.useWatch('has_promotion', form);
 
   // const disabledDate = (current) => {
   //   return current < dayjs().startOf("day");
   // };
 
-  const start_date = Form.useWatch(["promotion", "starting_date"], form);
+  const start_date = Form.useWatch(['promotion', 'starting_date'], form);
 
   const disabledDateStart = (current) => {
     // if (start_date) {
@@ -210,8 +210,8 @@ const PromotionalPriceComponent = () => {
           <Col {...mdColLayout}>
             <CustomInput
               label="Promotional Price"
-              name={["promotion", "promotion_price"]}
-              type={"number"}
+              name={['promotion', 'promotion_price']}
+              type={'number'}
               required={true}
             />
           </Col>
@@ -219,18 +219,18 @@ const PromotionalPriceComponent = () => {
             <Row {...rowLayout}>
               <Col {...mdColLayout}>
                 <CustomDatepicker
-                  type={"date"}
-                  label={"Start Date"}
-                  name={["promotion", "starting_date"]}
+                  type={'date'}
+                  label={'Start Date'}
+                  name={['promotion', 'starting_date']}
                   required={true}
                   disabledDate={disabledDate}
                 />
               </Col>
               <Col {...mdColLayout}>
                 <CustomDatepicker
-                  type={"date"}
-                  label={"End Date"}
-                  name={["promotion", "last_date"]}
+                  type={'date'}
+                  label={'End Date'}
+                  name={['promotion', 'last_date']}
                   required={true}
                   disabledDate={disabledDateStart}
                 />
@@ -254,7 +254,7 @@ const ProductForm = ({
   setPriceWarehouses,
   ...props
 }) => {
-  const productType = Form.useWatch("type", props.form);
+  const productType = Form.useWatch('type', props.form);
 
   return (
     <CustomForm {...props}>
@@ -266,9 +266,9 @@ const ProductForm = ({
         <Col {...colLayout}>
           <CustomInput
             label="Product Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
 
@@ -280,7 +280,7 @@ const ProductForm = ({
           <BarCodeComponent />
         </Col>
 
-        {productType === "Combo" && (
+        {productType === 'Combo' && (
           <ComboProductsComponent
             formValues={formValues}
             setFormValues={setFormValues}
@@ -305,17 +305,17 @@ const ProductForm = ({
         <Col {...colLayout}>
           <CustomInput
             label="Product Selling Price"
-            type={"number"}
+            type={'number'}
             required={true}
-            name={"selling_price"}
+            name={'selling_price'}
           />
         </Col>
         <Col {...colLayout}>
           <CustomInput
             label="Daily Sale Objectives"
-            type={"number"}
+            type={'number'}
             tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
-            name={"daily_sale_qty"}
+            name={'daily_sale_qty'}
           />
         </Col>
 
@@ -357,11 +357,11 @@ const ProductForm = ({
         </Col> */}
       </Row>
 
-      <Row {...rowLayout} justify={"center"} align={"middle"}>
+      <Row {...rowLayout} justify={'center'} align={'middle'}>
         <Col xs={24}>
           <CustomUploader
-            label={"Attachment"}
-            name={"attachments"}
+            label={'Attachment'}
+            name={'attachments'}
             multiple={true}
             required={true}
             type="img"

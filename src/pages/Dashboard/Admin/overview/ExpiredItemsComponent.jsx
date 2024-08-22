@@ -1,19 +1,19 @@
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { useGetAllProductsQuery } from "../../../../redux/services/product/productApi";
-import { useGetWarehousesQuery } from "../../../../redux/services/warehouse/warehouseApi";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { useGetAllProductsQuery } from '../../../../redux/services/product/productApi';
+import { useGetWarehousesQuery } from '../../../../redux/services/warehouse/warehouseApi';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../../utilities/hooks/useParams";
+} from '../../../../utilities/hooks/useParams';
 
 const columns = [
   {
     //sl no
-    title: "SL No",
-    dataIndex: "slNo",
-    key: "slNo",
-    align: "center",
+    title: 'SL No',
+    dataIndex: 'slNo',
+    key: 'slNo',
+    align: 'center',
     render: (slNo) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {slNo}
@@ -22,9 +22,9 @@ const columns = [
   },
   {
     //name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -33,10 +33,10 @@ const columns = [
   },
   {
     //sku
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {sku}
@@ -45,10 +45,10 @@ const columns = [
   },
   {
     //expire date
-    title: "Expire Date",
-    dataIndex: "expireDate",
-    key: "expireDate",
-    align: "center",
+    title: 'Expire Date',
+    dataIndex: 'expireDate',
+    key: 'expireDate',
+    align: 'center',
     render: (expireDate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {expireDate}
@@ -92,7 +92,7 @@ export const ExpiredItemsComponent = () => {
 
   return (
     <CustomTable
-      title={"Expired Products"}
+      title={'Expired Products'}
       columns={columns}
       dataSource={[]}
       isLoading={isLoading}

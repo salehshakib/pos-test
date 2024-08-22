@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteLeaveMutation,
   useGetAllLeaveQuery,
-} from "../../redux/services/hrm/leave/leaveApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/hrm/leave/leaveApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { LeaveDetails } from "./LeaveDetails";
-import { LeaveEdit } from "./LeaveEdit";
+import { LeaveDetails } from './LeaveDetails';
+import { LeaveEdit } from './LeaveEdit';
 
 function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   const startDate = new Date(leaveStartDate);
@@ -25,10 +25,10 @@ function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   const dayDifference = timeDifference / (1000 * 3600 * 24);
 
   if (dayDifference === 0) {
-    return "half day";
+    return 'half day';
   }
 
-  return dayDifference + " Days";
+  return dayDifference + ' Days';
 }
 
 export const LeaveTable = ({
@@ -153,7 +153,7 @@ export const LeaveTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"brand"}
+        item={'brand'}
       />
     </GlobalUtilityStyle>
   );

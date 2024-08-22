@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetDepartmentDetailsQuery,
   useUpdateDepartmentMutation,
-} from "../../redux/services/hrm/department/departmentApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import DepartmentForm from "./DepartmentForm";
-import { Form } from "antd";
+} from '../../redux/services/hrm/department/departmentApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import DepartmentForm from './DepartmentForm';
+import { Form } from 'antd';
 
 const DepartmentEdit = ({ id }) => {
   const dispatch = useDispatch();
@@ -29,9 +29,9 @@ const DepartmentEdit = ({ id }) => {
       // const fieldData = fieldsToUpdate(data);
       const fieldData = [
         {
-          name: "name",
+          name: 'name',
           value: data?.name,
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -42,7 +42,7 @@ const DepartmentEdit = ({ id }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateDepartment({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -58,7 +58,7 @@ const DepartmentEdit = ({ id }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Department"}
+      title={'Edit Department'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

@@ -1,4 +1,4 @@
-import { PageContainer } from "@ant-design/pro-layout";
+import { PageContainer } from '@ant-design/pro-layout';
 import {
   Button,
   Checkbox,
@@ -10,34 +10,34 @@ import {
   Row,
   Segmented,
   Space,
-} from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { FaFileCsv, FaFileExcel, FaFilePdf, FaUpload } from "react-icons/fa";
+} from 'antd';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FaFileCsv, FaFileExcel, FaFilePdf, FaUpload } from 'react-icons/fa';
 import {
   FaCirclePlus,
   FaEllipsis,
   FaEye,
   FaPrint,
   FaTrash,
-} from "react-icons/fa6";
-import { IoSearch } from "react-icons/io5";
-import { TbFilterSearch } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { FilterDateRange } from "../../components/ReusableComponent/FilterDateRange";
-import CustomForm from "../../components/Shared/Form/CustomForm";
-import DeleteModal from "../../components/Shared/Modal/DeleteModal";
-import ImportModal from "../../components/Shared/Modal/ImportModal";
-import { fullColLayout, rowLayout } from "../../layout/FormLayout";
-import { useCurrentToken } from "../../redux/services/auth/authSlice";
-import { useBulkDeleteMutation } from "../../redux/services/deleteApi";
-import { openCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { setLoading } from "../../redux/services/loader/loaderSlice";
-import { base_url } from "../../utilities/configs/base_url";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { downloadFile } from "../../utilities/lib/downloadFile";
-import { usePermission } from "../../utilities/lib/getPermission";
-import { GlobalUtilityStyle } from "../Styled";
+} from 'react-icons/fa6';
+import { IoSearch } from 'react-icons/io5';
+import { TbFilterSearch } from 'react-icons/tb';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { FilterDateRange } from '../../components/ReusableComponent/FilterDateRange';
+import CustomForm from '../../components/Shared/Form/CustomForm';
+import DeleteModal from '../../components/Shared/Modal/DeleteModal';
+import ImportModal from '../../components/Shared/Modal/ImportModal';
+import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import { useCurrentToken } from '../../redux/services/auth/authSlice';
+import { useBulkDeleteMutation } from '../../redux/services/deleteApi';
+import { openCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { setLoading } from '../../redux/services/loader/loaderSlice';
+import { base_url } from '../../utilities/configs/base_url';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { downloadFile } from '../../utilities/lib/downloadFile';
+import { usePermission } from '../../utilities/lib/getPermission';
+import { GlobalUtilityStyle } from '../Styled';
 
 const GlobalContainer = ({
   pageTitle,
@@ -52,7 +52,7 @@ const GlobalContainer = ({
   setParams,
   popoverWidth = 600,
 
-  segment = "Weekly",
+  segment = 'Weekly',
   onSegmentChange,
 
   // handleSeach
@@ -80,14 +80,14 @@ const GlobalContainer = ({
 
   const header = {
     title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
-    subTitle: usePermission(api, "store") &&
-      !["/petty-cash", "/reports"].some((path) => pathname.includes(path)) && (
+    subTitle: usePermission(api, 'store') &&
+      !['/petty-cash', '/reports'].some((path) => pathname.includes(path)) && (
         <div className="">
           <Button
-            key={"create"}
+            key={'create'}
             type="text"
             icon={<FaCirclePlus size={30} />}
-            style={{ width: "45px", height: "100%" }}
+            style={{ width: '45px', height: '100%' }}
             onClick={handleDrawerOpen}
             className="primary-text flex justify-center items-center"
           />
@@ -96,7 +96,7 @@ const GlobalContainer = ({
   };
 
   const handleMenuClick = (e) => {
-    if (e.key !== "tableColumns") {
+    if (e.key !== 'tableColumns') {
       setCheckedMenuOpen(false);
     }
   };
@@ -107,7 +107,7 @@ const GlobalContainer = ({
 
   const handleOpenChange = (nextOpen, info) => {
     console.log(nextOpen, info);
-    if (info.source === "trigger" || nextOpen) {
+    if (info.source === 'trigger' || nextOpen) {
       setOpen(nextOpen);
     }
 
@@ -115,17 +115,17 @@ const GlobalContainer = ({
   };
 
   const handleCheckedOpenChange = (nextOpen, info) => {
-    if (info.source === "trigger" || nextOpen) {
+    if (info.source === 'trigger' || nextOpen) {
       setCheckedMenuOpen(nextOpen);
     }
   };
 
   const menu = {
     onClick: handleMenuClick,
-    className: "-translate-x-[34px] translate-y-1/4",
+    className: '-translate-x-[34px] translate-y-1/4',
     items: [
       {
-        key: "tableColumns",
+        key: 'tableColumns',
         label: (
           <Checkbox.Group
             className="flex flex-col"
@@ -149,8 +149,8 @@ const GlobalContainer = ({
 
   const items = [
     setNewColumns &&
-      !pathname.includes("reports") && {
-        key: "view",
+      !pathname.includes('reports') && {
+        key: 'view',
         label: (
           <Dropdown
             open={checkedMenuOpen}
@@ -164,34 +164,34 @@ const GlobalContainer = ({
         ),
         icon: <FaEye size={16} />,
       },
-    usePermission(api, "import") &&
-      !pathname.includes("reports") && {
-        label: "Import",
-        key: "import",
+    usePermission(api, 'import') &&
+      !pathname.includes('reports') && {
+        label: 'Import',
+        key: 'import',
         onClick: handleImport,
         icon: <FaUpload size={16} />,
       },
-    usePermission(api, "export") && {
-      label: "PDF",
-      key: "pdf",
-      onClick: () => handleExport("pdf"),
+    usePermission(api, 'export') && {
+      label: 'PDF',
+      key: 'pdf',
+      onClick: () => handleExport('pdf'),
       icon: <FaFilePdf size={16} />,
     },
-    usePermission(api, "export") && {
-      label: "Excel",
-      key: "excel",
-      onClick: () => handleExport("xlsx"),
+    usePermission(api, 'export') && {
+      label: 'Excel',
+      key: 'excel',
+      onClick: () => handleExport('xlsx'),
       icon: <FaFileExcel size={16} />,
     },
-    usePermission(api, "export") && {
-      label: "CSV",
-      key: "csv",
-      onClick: () => handleExport("csv"),
+    usePermission(api, 'export') && {
+      label: 'CSV',
+      key: 'csv',
+      onClick: () => handleExport('csv'),
       icon: <FaFileCsv size={16} />,
     },
     {
-      label: "Print",
-      key: "print",
+      label: 'Print',
+      key: 'print',
       icon: <FaPrint size={16} />,
     },
   ];
@@ -205,34 +205,34 @@ const GlobalContainer = ({
 
       const fileUrl = new URL(`${base_url}/${api}/export`);
       const supportedFormats = {
-        xlsx: "xlsx",
-        pdf: "pdf",
-        csv: "csv",
+        xlsx: 'xlsx',
+        pdf: 'pdf',
+        csv: 'csv',
       };
 
       if (!supportedFormats[format]) {
-        console.error("Unsupported file format");
+        console.error('Unsupported file format');
         return;
       }
 
-      fileUrl.searchParams.append("format", format);
+      fileUrl.searchParams.append('format', format);
 
       try {
         const response = await fetch(fileUrl, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
 
         if (!response.ok) {
-          throw new Error("Failed to download file");
+          throw new Error('Failed to download file');
         }
 
         await downloadFile(response, supportedFormats[format], pageTitle);
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
         dispatch(setLoading(false));
       } finally {
         dispatch(setLoading(false));
@@ -323,8 +323,8 @@ const GlobalContainer = ({
 
     if (searchDate) {
       postData.created_daterange = [
-        searchDate?.[0].format("YYYY-MM-DD"),
-        searchDate?.[1].format("YYYY-MM-DD"),
+        searchDate?.[0].format('YYYY-MM-DD'),
+        searchDate?.[1].format('YYYY-MM-DD'),
       ];
     }
 
@@ -349,9 +349,9 @@ const GlobalContainer = ({
       <div
         style={{
           maxHeight: 300,
-          overflowY: "auto",
-          overflowX: "hidden",
-          padding: "0 10px",
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          padding: '0 10px',
         }}
       >
         {searchFilterContent}
@@ -382,16 +382,16 @@ const GlobalContainer = ({
         <PageContainer
           header={header}
           extra={[
-            pathname.includes("reports") && (
-              <Space key={"segment"}>
+            pathname.includes('reports') && (
+              <Space key={'segment'}>
                 <Segmented
                   size="large"
                   className="mt-1"
-                  options={["Daily", "Weekly", "Monthly", "Yearly"]}
+                  options={['Daily', 'Weekly', 'Monthly', 'Yearly']}
                   value={segment}
                   onChange={onSegmentChange}
                   style={{
-                    backgroundColor: "#f5f5f5",
+                    backgroundColor: '#f5f5f5',
                   }}
                 />
               </Space>
@@ -406,7 +406,7 @@ const GlobalContainer = ({
                   placeholder="Search"
                   prefix={
                     <IoSearch
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: '16px' }}
                       className="primary-text hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
                     />
                   }
@@ -424,7 +424,7 @@ const GlobalContainer = ({
                     width: searchFilterContent ? popoverWidth : 400,
                   }}
                   overlayInnerStyle={{
-                    backgroundColor: "",
+                    backgroundColor: '',
                   }}
                   onOpenChange={handlePopoverClose}
                   open={popoverOpen}
@@ -438,7 +438,7 @@ const GlobalContainer = ({
                     onClick={handlePopoverOpen}
                   >
                     <TbFilterSearch
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: '16px' }}
                       className="text-xs primary-text lg:text-[16px]"
                     />
                   </Button>
@@ -456,18 +456,18 @@ const GlobalContainer = ({
             </Space>,
             <Space key="dropdown">
               <Dropdown
-                trigger={["click"]}
+                trigger={['click']}
                 open={open}
                 onOpenChange={handleOpenChange}
                 menu={{
                   items,
                   selectable: true,
-                  onSelect: (value) => value.key !== "view" && setOpen(false),
+                  onSelect: (value) => value.key !== 'view' && setOpen(false),
                 }}
                 placement="bottom"
               >
                 <Button
-                  style={{ padding: "0px 12px" }}
+                  style={{ padding: '0px 12px' }}
                   size="large"
                   className="flex justify-center items-center"
                 >
@@ -475,7 +475,7 @@ const GlobalContainer = ({
                 </Button>
               </Dropdown>
             </Space>,
-            <Space key={"delete"}>
+            <Space key={'delete'}>
               {selectedRows?.length > 0 && (
                 <div>
                   <button
@@ -493,11 +493,11 @@ const GlobalContainer = ({
             <div>
               {
                 <Space
-                  key={"extra"}
+                  key={'extra'}
                   className="w-full flex justify-end items-center pb-3 gap-2 underline font-semibold"
                 >
                   <span>{`Showing ${
-                    advanceSearch ? "Filtered" : "All"
+                    advanceSearch ? 'Filtered' : 'All'
                   }  Results`}</span>
 
                   {advanceSearch && (
@@ -521,7 +521,7 @@ const GlobalContainer = ({
         hideModal={hideModal}
         isLoading={isLoading}
         handleDelete={handleBulkDelete}
-        item={"items"}
+        item={'items'}
       />
 
       <ImportModal importModal={importModal} hideModal={hideModal} />

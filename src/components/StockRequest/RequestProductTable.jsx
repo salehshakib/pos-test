@@ -1,25 +1,25 @@
-import { Button, Form, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
-import { getWarehouseQuantity } from "../../utilities/lib/getWarehouseQty";
+import { Button, Form, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { showCurrency } from '../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../utilities/lib/getWarehouseQty';
 import {
   decrementCounter,
   incrementCounter,
   onDelete,
   onQuantityChange,
-} from "../../utilities/lib/productTable/counters";
-import { CustomQuantityInput } from "../Shared/Input/CustomQuantityInput";
-import { ProductController } from "../Shared/ProductControllerComponent/ProductController";
+} from '../../utilities/lib/productTable/counters';
+import { CustomQuantityInput } from '../Shared/Input/CustomQuantityInput';
+import { ProductController } from '../Shared/ProductControllerComponent/ProductController';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     // width: 400,
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -28,10 +28,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -40,10 +40,10 @@ const columns = [
     ),
   },
   {
-    title: "Minimum Qunatity",
-    dataIndex: "minQty",
-    key: "minQty",
-    align: "center",
+    title: 'Minimum Qunatity',
+    dataIndex: 'minQty',
+    key: 'minQty',
+    align: 'center',
     width: 100,
     render: (minQty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -52,10 +52,10 @@ const columns = [
     ),
   },
   {
-    title: "Stock",
-    dataIndex: "stock",
-    key: "stock",
-    align: "center",
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
     width: 100,
     render: (stock, record) =>
       stock > record.minQty ? (
@@ -69,10 +69,10 @@ const columns = [
       ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -82,10 +82,10 @@ const columns = [
   },
 
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 200,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -96,7 +96,7 @@ const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
@@ -114,7 +114,7 @@ const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
@@ -130,11 +130,11 @@ const columns = [
 
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -166,7 +166,7 @@ export const RequestProductTable = ({
   setProducts,
 }) => {
   const form = Form.useFormInstance();
-  const warehouseId = Form.useWatch("from_warehouse_id", form);
+  const warehouseId = Form.useWatch('from_warehouse_id', form);
 
   const currency = useSelector(useCurrency);
 

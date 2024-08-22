@@ -1,10 +1,10 @@
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
+import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 export const TaxComponent = () => {
   const params = useGlobalParams({
@@ -29,7 +29,7 @@ export const TaxComponent = () => {
     <CustomSelect
       label="Order Vat"
       options={options}
-      name={"tax_id"}
+      name={'tax_id'}
       isLoading={isFetching}
     />
   );

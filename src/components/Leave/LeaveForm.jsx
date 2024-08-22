@@ -1,31 +1,31 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
-import { useGetAllLeaveTypeQuery } from "../../redux/services/settings/leaveType/leaveTypeApi";
+} from '../../layout/FormLayout';
+import { useGetAllLeaveTypeQuery } from '../../redux/services/settings/leaveType/leaveTypeApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { disabledDate, getCurrentDate } from "../../utilities/lib/currentDate";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
-import { EmployeeComponent } from "../ReusableComponent/EmployeeComponent";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomRadio from "../Shared/Radio/CustomRadio";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
+} from '../../utilities/hooks/useParams';
+import { disabledDate, getCurrentDate } from '../../utilities/lib/currentDate';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { DepartmentComponent } from '../ReusableComponent/DepartmentComponent';
+import { EmployeeComponent } from '../ReusableComponent/EmployeeComponent';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomRadio from '../Shared/Radio/CustomRadio';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
 
 const LeaveTypeComponent = ({ setIsNeedAttachment }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "need_attachment"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'need_attachment'],
   });
   const { data, isFetching } = useGetAllLeaveTypeQuery(
     { params },
@@ -42,14 +42,14 @@ const LeaveTypeComponent = ({ setIsNeedAttachment }) => {
 
   return (
     <CustomSelect
-      label={"Leave Type"}
-      name={"leave_type_id"}
+      label={'Leave Type'}
+      name={'leave_type_id'}
       options={options}
       isLoading={isFetching}
       required={true}
       onChange={(value, option) => {
         setIsNeedAttachment(
-          option?.need_attachment.toString() === "1" ? true : false
+          option?.need_attachment.toString() === '1' ? true : false
         );
       }}
     />
@@ -60,31 +60,31 @@ const LeaveDurationComponent = () => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    form.setFieldValue("leave_duration", "single-day");
+    form.setFieldValue('leave_duration', 'single-day');
   }, [form]);
 
   const options = [
     {
-      value: "single-day",
+      value: 'single-day',
       label: <span className="font-semibold">Single Day</span>,
     },
     {
-      value: "multi-day",
+      value: 'multi-day',
       label: <span className="font-semibold">Multiple Days</span>,
     },
     {
-      value: "half-day",
+      value: 'half-day',
       label: <span className="font-semibold">Half Day</span>,
     },
     {
-      value: "hours",
+      value: 'hours',
       label: <span className="font-semibold">Hours</span>,
     },
   ];
   return (
     <CustomRadio
-      label={"Leave Duration"}
-      name={"leave_duration"}
+      label={'Leave Duration'}
+      name={'leave_duration'}
       options={options}
       required={true}
     />
@@ -94,21 +94,21 @@ const LeaveDurationComponent = () => {
 const LeaveStartComponent = () => {
   const form = Form.useFormInstance();
 
-  const LeaveDuration = Form.useWatch("leave_duration", form);
+  const LeaveDuration = Form.useWatch('leave_duration', form);
 
   useEffect(() => {
-    form.setFieldValue("leave_start_date", getCurrentDate);
+    form.setFieldValue('leave_start_date', getCurrentDate);
   }, [form]);
 
-  return LeaveDuration === "single-day" ? (
+  return LeaveDuration === 'single-day' ? (
     <Col {...fullColLayout}>
-      <CustomDatepicker name="leave_start_date" label="Date" required={true} />{" "}
+      <CustomDatepicker name="leave_start_date" label="Date" required={true} />{' '}
     </Col>
   ) : (
     <Col {...mdColLayout}>
       <CustomDatepicker
         name="leave_start_date"
-        label={LeaveDuration === "multi-day" ? "Start Date" : "Date"}
+        label={LeaveDuration === 'multi-day' ? 'Start Date' : 'Date'}
         required={true}
       />
     </Col>
@@ -117,25 +117,25 @@ const LeaveStartComponent = () => {
 
 const HalfDayComponent = () => {
   const form = Form.useFormInstance();
-  const durationType = Form.useWatch("leave_duration", form);
+  const durationType = Form.useWatch('leave_duration', form);
 
   const options = [
     {
-      value: "first-half",
+      value: 'first-half',
       label: <span className="font-semibold">First Half</span>,
     },
     {
-      value: "second-half",
+      value: 'second-half',
       label: <span className="font-semibold">Second Half</span>,
     },
   ];
 
   return (
-    durationType === "half-day" && (
+    durationType === 'half-day' && (
       <Col {...mdColLayout}>
         <CustomRadio
-          label={"Select Half Day"}
-          name={"leave_half"}
+          label={'Select Half Day'}
+          name={'leave_half'}
           options={options}
           required={true}
         />
@@ -146,20 +146,20 @@ const HalfDayComponent = () => {
 
 const LeaveEndComponent = () => {
   const form = Form.useFormInstance();
-  const durationType = Form.useWatch("leave_duration", form);
+  const durationType = Form.useWatch('leave_duration', form);
 
   useEffect(() => {
-    if (durationType === "single-day") {
-      form.setFieldValue("leave_end_date", getCurrentDate);
+    if (durationType === 'single-day') {
+      form.setFieldValue('leave_end_date', getCurrentDate);
     }
   }, [durationType, form]);
 
   const disabledDateStart = (current) => {
-    return disabledDate(current, form.getFieldValue("leave_start_date"));
+    return disabledDate(current, form.getFieldValue('leave_start_date'));
   };
 
   return (
-    durationType === "multi-day" && (
+    durationType === 'multi-day' && (
       <Col {...mdColLayout}>
         <CustomDatepicker
           name="leave_end_date"
@@ -173,15 +173,15 @@ const LeaveEndComponent = () => {
 };
 const HoursComponent = () => {
   const form = Form.useFormInstance();
-  const durationType = Form.useWatch("leave_duration", form);
+  const durationType = Form.useWatch('leave_duration', form);
   useEffect(() => {
-    if (durationType === "hours") {
-      form.setFieldValue("leave_end_date", getCurrentDate);
+    if (durationType === 'hours') {
+      form.setFieldValue('leave_end_date', getCurrentDate);
     }
   }, [durationType, form]);
 
   return (
-    durationType === "hours" && (
+    durationType === 'hours' && (
       <Col {...mdColLayout}>
         <Row {...rowLayout}>
           <Col {...mdColLayout}>
@@ -191,7 +191,7 @@ const HoursComponent = () => {
               placeholder="Leave Start Time"
               required={true}
               type="time"
-              picker={"time"}
+              picker={'time'}
             />
           </Col>
 
@@ -202,7 +202,7 @@ const HoursComponent = () => {
               placeholder="Leave End Time"
               required={true}
               type="time"
-              picker={"time"}
+              picker={'time'}
             />
           </Col>
         </Row>
@@ -240,7 +240,7 @@ export const LeaveForm = (props) => {
         <Col {...fullColLayout}>
           <CustomUploader
             name="attachment"
-            label={"Attachment"}
+            label={'Attachment'}
             required={isNeedAttachment}
           />
         </Col>
@@ -249,7 +249,7 @@ export const LeaveForm = (props) => {
           <CustomInput
             label="Description"
             name="description"
-            type={"textarea"}
+            type={'textarea'}
             required={true}
           />
         </Col>

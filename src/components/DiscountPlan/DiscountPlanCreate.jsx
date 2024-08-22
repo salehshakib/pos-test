@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import DiscountPlanForm from "./DiscountPlanForm";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import DiscountPlanForm from './DiscountPlanForm';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 
 const DiscountPlanCreate = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const DiscountPlanCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Discount Plan"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Discount Plan'} open={isCreateDrawerOpen}>
       <DiscountPlanForm
         handleSubmit={handleSubmit}
         // isLoading={isLoading}

@@ -2,7 +2,7 @@ export const downloadFile = async (response, extension, pageTitle) => {
   try {
     const blob = await response.blob();
     const blobUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
 
     a.href = blobUrl;
     a.download = `${pageTitle}.${extension}`;
@@ -12,6 +12,6 @@ export const downloadFile = async (response, extension, pageTitle) => {
     window.URL.revokeObjectURL(blobUrl);
     document.body.removeChild(a);
   } catch (error) {
-    console.error("Error during file download:", error);
+    console.error('Error during file download:', error);
   }
 };

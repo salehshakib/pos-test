@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import CustomCalender from "../../../components/Shared/Calender/Calender";
-import { ReportContainer } from "../../../container/ReportContainer/ReportContainer";
-import { useCurrentUser } from "../../../redux/services/auth/authSlice";
-import { useGetAllSaleQuery } from "../../../redux/services/sale/saleApi";
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import CustomCalender from '../../../components/Shared/Calender/Calender';
+import { ReportContainer } from '../../../container/ReportContainer/ReportContainer';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useGetAllSaleQuery } from '../../../redux/services/sale/saleApi';
 
 export const SaleCalender = () => {
   const user = useSelector(useCurrentUser);
@@ -24,17 +24,17 @@ export const SaleCalender = () => {
 
   useEffect(() => {
     const currentDate = dayjs();
-    const startOfMonth = currentDate.startOf("month").format("YYYY-MM-DD");
-    const endOfMonth = currentDate.endOf("month").format("YYYY-MM-DD");
+    const startOfMonth = currentDate.startOf('month').format('YYYY-MM-DD');
+    const endOfMonth = currentDate.endOf('month').format('YYYY-MM-DD');
     setDateRange([startOfMonth, endOfMonth]);
   }, []);
 
   const onChange = (date) => {
     const newDate = dayjs(date);
 
-    const startOfMonth = newDate.startOf("month").format("YYYY-MM-DD");
+    const startOfMonth = newDate.startOf('month').format('YYYY-MM-DD');
 
-    const endOfMonth = newDate.endOf("month").format("YYYY-MM-DD");
+    const endOfMonth = newDate.endOf('month').format('YYYY-MM-DD');
 
     setDateRange([startOfMonth, endOfMonth]);
   };
@@ -44,7 +44,7 @@ export const SaleCalender = () => {
       start_date: dateRange[0],
       end_date: dateRange[1],
       warehouse_id: warehouseId,
-      group_by: "sale_at",
+      group_by: 'sale_at',
       child: 1,
     },
   });

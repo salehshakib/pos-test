@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateGiftCardMutation } from "../../redux/services/giftcard/giftcard/giftCardApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import GiftCardForm from "./GiftCardForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateGiftCardMutation } from '../../redux/services/giftcard/giftcard/giftCardApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import GiftCardForm from './GiftCardForm';
 
 const GiftCardCreate = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const GiftCardCreate = () => {
     const { data, error } = await createGiftCard({
       data: {
         ...values,
-        for_user: values?.for_user ? "1" : "0",
+        for_user: values?.for_user ? '1' : '0',
         expired_date: values?.expired_date,
       },
     });
@@ -38,7 +38,7 @@ const GiftCardCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Gift Card"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Gift Card'} open={isCreateDrawerOpen}>
       <GiftCardForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

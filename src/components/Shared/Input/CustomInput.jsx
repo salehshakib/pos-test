@@ -113,8 +113,8 @@
 
 // export default CustomInput;
 
-import { Form, Input, InputNumber } from "antd";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Form, Input, InputNumber } from 'antd';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 const { TextArea, Password } = Input;
 
 const CustomInput = (props) => {
@@ -132,8 +132,8 @@ const CustomInput = (props) => {
     tooltip,
     onChange,
     value,
-    addonBefore = "+880",
-    size = "large",
+    addonBefore = '+880',
+    size = 'large',
     maxlength = 6,
 
     //for mb-0
@@ -149,9 +149,9 @@ const CustomInput = (props) => {
 
   const renderInputComponent = () => {
     switch (type) {
-      case "password":
+      case 'password':
         return <Password {...commonProps} className="mt-1 border-2" />;
-      case "textarea":
+      case 'textarea':
         return (
           <TextArea
             {...commonProps}
@@ -161,7 +161,7 @@ const CustomInput = (props) => {
             showCount
           />
         );
-      case "number_with_percent":
+      case 'number_with_percent':
         return (
           <InputNumber
             {...commonProps}
@@ -171,10 +171,10 @@ const CustomInput = (props) => {
             max={100}
             controls={false}
             changeOnWheel={false}
-            suffix={suffix ?? "%"}
+            suffix={suffix ?? '%'}
           />
         );
-      case "number_with_money":
+      case 'number_with_money':
         return (
           <InputNumber
             {...commonProps}
@@ -188,7 +188,7 @@ const CustomInput = (props) => {
             // addonAfter={suffix}
           />
         );
-      case "phone":
+      case 'phone':
         return (
           <InputNumber
             {...commonProps}
@@ -199,7 +199,7 @@ const CustomInput = (props) => {
             controls={false}
             changeOnWheel={false}
             formatter={(value) => {
-              if (value && value.startsWith("0")) {
+              if (value && value.startsWith('0')) {
                 return `1${value.slice(1)}`;
               }
               return value;
@@ -207,7 +207,7 @@ const CustomInput = (props) => {
           />
         );
 
-      case "staff":
+      case 'staff':
         return (
           <InputNumber
             {...commonProps}
@@ -220,7 +220,7 @@ const CustomInput = (props) => {
             changeOnWheel={false}
           />
         );
-      case "number":
+      case 'number':
         return (
           <InputNumber
             {...commonProps}
@@ -260,7 +260,7 @@ const CustomInput = (props) => {
         tooltip={tooltip}
         // noStyle={noStyle}
         noStyle={noStyle}
-        className={customStyle && "mb-0"}
+        className={customStyle && 'mb-0'}
       >
         {renderInputComponent()}
       </Form.Item>

@@ -1,12 +1,12 @@
-import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import DebounceSelect from "../../Shared/Select/DebounceSelect";
+} from '../../../utilities/hooks/useParams';
+import DebounceSelect from '../../Shared/Select/DebounceSelect';
 
-export const WarehouseComponent = ({ mode = "single" }) => {
+export const WarehouseComponent = ({ mode = 'single' }) => {
   const { keyword, debounce } = useCustomDebounce();
 
   const params = useGlobalParams({
@@ -30,8 +30,8 @@ export const WarehouseComponent = ({ mode = "single" }) => {
   return (
     <DebounceSelect
       label="Warehouse"
-      name={"warehouse_id"}
-      placeholder={"Warehouse"}
+      name={'warehouse_id'}
+      placeholder={'Warehouse'}
       onSearch={debounce}
       required={true}
       options={options}

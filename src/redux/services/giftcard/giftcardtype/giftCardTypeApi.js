@@ -1,15 +1,15 @@
 // Import necessary dependencies
-import { GIFT_CARD_TYPE } from "../../../../utilities/apiEndpoints/offer.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { GIFT_CARD_TYPE } from '../../../../utilities/apiEndpoints/offer.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const giftCardTypeApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllGiftCardType: build.query({
       query: ({ params }) => ({
         url: `/${GIFT_CARD_TYPE}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
@@ -23,7 +23,7 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: ({ id }) => {
         return {
           url: `${GIFT_CARD_TYPE}/show/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response) => verifyToken(response.data),
@@ -34,19 +34,19 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${GIFT_CARD_TYPE}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -59,19 +59,19 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${GIFT_CARD_TYPE}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -84,18 +84,18 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${GIFT_CARD_TYPE}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -108,18 +108,18 @@ const giftCardTypeApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${GIFT_CARD_TYPE}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

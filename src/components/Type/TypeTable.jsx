@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteTypeMutation,
   useGetTypesQuery,
-} from "../../redux/services/types/typesApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/types/typesApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
 const TypeTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const [deleteId, setDeleteId] = useState(undefined);

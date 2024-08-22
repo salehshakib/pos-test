@@ -1,7 +1,7 @@
-import { Spin } from "antd";
-import { useGetQuotationDetailsQuery } from "../../../../redux/services/quotation/quotationApi";
-import CustomModal from "../../../Shared/Modal/CustomModal";
-import Invoice from "./Invoice";
+import { Spin } from 'antd';
+import { useGetQuotationDetailsQuery } from '../../../../redux/services/quotation/quotationApi';
+import CustomModal from '../../../Shared/Modal/CustomModal';
+import Invoice from './Invoice';
 
 // const columns = [
 //   {
@@ -63,8 +63,8 @@ import Invoice from "./Invoice";
 //   },
 // ];
 
-import generatePDF from "react-to-pdf";
-import { generatePdfOptions } from "../../../../utilities/lib/generatePdfOptions";
+import generatePDF from 'react-to-pdf';
+import { generatePdfOptions } from '../../../../utilities/lib/generatePdfOptions';
 
 export const QuotationDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetQuotationDetailsQuery(
@@ -130,7 +130,7 @@ export const QuotationDetails = ({ id, ...props }) => {
   //   };
   // });
 
-  const getTargetElement = () => document.getElementById("invoice-container");
+  const getTargetElement = () => document.getElementById('invoice-container');
 
   const handlePrintPdf = () => {
     generatePDF(getTargetElement, {
@@ -142,7 +142,7 @@ export const QuotationDetails = ({ id, ...props }) => {
   const handleDownload = () => {
     generatePDF(getTargetElement, {
       ...generatePdfOptions,
-      method: "save",
+      method: 'save',
       filename: `${data?.reference_id}.pdf`,
     });
   };

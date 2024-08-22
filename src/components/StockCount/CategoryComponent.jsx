@@ -1,7 +1,7 @@
-import { Col } from "antd";
-import { useGetAllCategoryQuery } from "../../redux/services/category/categoryApi";
-import { mdColLayout } from "../../layout/FormLayout";
-import CustomSelect from "../Shared/Select/CustomSelect";
+import { Col } from 'antd';
+import { useGetAllCategoryQuery } from '../../redux/services/category/categoryApi';
+import { mdColLayout } from '../../layout/FormLayout';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const CategoryComponent = () => {
   const { data, isFetching } = useGetAllCategoryQuery({});
@@ -16,7 +16,7 @@ export const CategoryComponent = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         label="Category"
-        name={"category_ids"}
+        name={'category_ids'}
         options={options}
         isLoading={isFetching}
         mode="multiple"

@@ -1,7 +1,7 @@
-import { Col, Row } from "antd";
-import { colLayout, rowLayout } from "../../layout/FormLayout";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import { colLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 
 const CurrencyForm = (props) => {
   return (
@@ -9,26 +9,26 @@ const CurrencyForm = (props) => {
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
-            label={"Currency Name"}
-            type={"text"}
+            label={'Currency Name'}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            label={"Currency Code"}
-            type={"text"}
+            label={'Currency Code'}
+            type={'text'}
             required={true}
-            name={"code"}
+            name={'code'}
           />
         </Col>
         <Col {...colLayout}>
           <CustomInput
-            label={"Exchange Rate"}
-            type={"number"}
+            label={'Exchange Rate'}
+            type={'number'}
             required={true}
-            name={"exchange_rate"}
+            name={'exchange_rate'}
           />
         </Col>
       </Row>

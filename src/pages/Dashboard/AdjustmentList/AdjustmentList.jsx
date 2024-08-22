@@ -1,21 +1,21 @@
-import { Row } from "antd";
-import { useState } from "react";
-import AdjustmentCreate from "../../../components/Adjustment/AdjustmentCreate";
-import AdjustmentTable from "../../../components/Adjustment/AdjustmentTable";
-import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { ADJUSTMENT } from "../../../utilities/apiEndpoints/inventory.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { Row } from 'antd';
+import { useState } from 'react';
+import AdjustmentCreate from '../../../components/Adjustment/AdjustmentCreate';
+import AdjustmentTable from '../../../components/Adjustment/AdjustmentTable';
+import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { ADJUSTMENT } from '../../../utilities/apiEndpoints/inventory.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Reference ID",
-    dataIndex: "reference",
-    key: "reference",
+    title: 'Reference ID',
+    dataIndex: 'reference',
+    key: 'reference',
     width: 150,
-    align: "center",
+    align: 'center',
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}
@@ -23,22 +23,22 @@ const columns = [
     ),
   },
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouse ?? "N/A"}
+        {warehouse ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Note",
-    dataIndex: "note",
-    key: "note",
+    title: 'Note',
+    dataIndex: 'note',
+    key: 'note',
     render: (note) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {note ?? "N/A"}
+        {note ?? 'N/A'}
       </span>
     ),
   },

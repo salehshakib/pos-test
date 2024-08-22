@@ -1,38 +1,38 @@
-import { Button } from "antd";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { onDelete } from "../../../utilities/lib/productTable/counters";
-import CustomCheckbox from "../../Shared/Checkbox/CustomCheckbox";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { ProductTable } from "../../Shared/ProductControllerComponent/ProductTable";
+import { Button } from 'antd';
+import { FaMinus, FaPlus } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { onDelete } from '../../../utilities/lib/productTable/counters';
+import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
+import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
+import { ProductTable } from '../../Shared/ProductControllerComponent/ProductTable';
 
 const columns = [
   {
-    title: "Choose",
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    title: 'Choose',
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 80,
-    fixed: "left",
+    fixed: 'left',
     render: (props, record) => {
       return (
         props && (
           <div className="flex justify-center items-center gap-3 pl-9">
-            <CustomCheckbox value={record?.id} name={["delete", record?.id]} />
+            <CustomCheckbox value={record?.id} name={['delete', record?.id]} />
           </div>
         )
       );
     },
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -40,10 +40,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -52,10 +52,10 @@ const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -65,10 +65,10 @@ const columns = [
   },
 
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -79,7 +79,7 @@ const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() => record.decrementCounter(record?.id)}
@@ -93,7 +93,7 @@ const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() => record.incrementCounter(record?.id)}
@@ -105,10 +105,10 @@ const columns = [
     },
   },
   {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    align: 'center',
     width: 100,
     render: (discount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -117,10 +117,10 @@ const columns = [
     ),
   },
   {
-    title: "Vat",
-    dataIndex: "tax",
-    key: "tax",
-    align: "center",
+    title: 'Vat',
+    dataIndex: 'tax',
+    key: 'tax',
+    align: 'center',
     width: 100,
     render: (tax) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -129,10 +129,10 @@ const columns = [
     ),
   },
   {
-    title: "SubTotal",
-    dataIndex: "subTotal",
-    key: "subTotal",
-    align: "center",
+    title: 'SubTotal',
+    dataIndex: 'subTotal',
+    key: 'subTotal',
+    align: 'center',
     width: 150,
     render: (subTotal) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -171,7 +171,7 @@ function setFormValuesId(
     formValues.product_list.net_unit_cost[id] =
       sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
       sanitizeFloatValue(unit_cost) ||
-      "0";
+      '0';
 
     formValues.product_list.discount[id] = sanitizeFloatValue(
       formValues.product_list.discount?.[id] ?? 0
@@ -228,7 +228,7 @@ export const ReturnProductTable = ({
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
         // message.error("Maximum quantity reached");
-        return openNotification("info", "Maximum quantity reached");
+        return openNotification('info', 'Maximum quantity reached');
       }
 
       const newQty = Math.min(

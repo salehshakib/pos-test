@@ -1,16 +1,16 @@
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
 
 export const FilterDateRange = ({
   customStyle = false,
   onChange,
   value,
-  name = "searchDate",
+  name = 'searchDate',
 }) => {
   return (
     <div className="px-2">
       <CustomDatepicker
         name={name}
-        type={"range"}
+        type={'range'}
         // placeholder="Choose Date"
         presets={true}
         customStyle={customStyle}

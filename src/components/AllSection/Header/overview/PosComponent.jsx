@@ -1,21 +1,21 @@
-import { Button, Col, Form, Modal, Row, Tooltip } from "antd";
-import { useEffect, useState } from "react";
-import { MdPointOfSale } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { fullColLayout, rowLayout } from "../../../../layout/FormLayout";
-import { useCurrentUser } from "../../../../redux/services/auth/authSlice";
+import { Button, Col, Form, Modal, Row, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import { MdPointOfSale } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { fullColLayout, rowLayout } from '../../../../layout/FormLayout';
+import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
 import {
   useCheckPettyCashQuery,
   useCreatePettyCashMutation,
   useUpdatePettyCashMutation,
-} from "../../../../redux/services/pettycash/pettyCashApi";
+} from '../../../../redux/services/pettycash/pettyCashApi';
 import {
   clearPettyCash,
   setPettyCash,
-} from "../../../../redux/services/pettycash/pettyCashSlice";
-import CustomInput from "../../../Shared/Input/CustomInput";
+} from '../../../../redux/services/pettycash/pettyCashSlice';
+import CustomInput from '../../../Shared/Input/CustomInput';
 
 const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
   const [form] = Form.useForm();
@@ -38,16 +38,16 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
         id: pettyCashId,
         data: {
           warehouse_id: user?.warehouse_id,
-          status: "Open",
-          _method: "PUT",
+          status: 'Open',
+          _method: 'PUT',
         },
       });
 
       if (data?.success) {
-        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
+        dispatch(setPettyCash({ status: 'Open', id: data?.data?.id }));
         hideModal();
         form.resetFields();
-        navigate("/pos");
+        navigate('/pos');
       }
 
       if (error) {
@@ -61,14 +61,14 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
       }
     } else {
       const { data, error } = await createPettyCash({
-        data: { ...values, warehouse_id: user?.warehouse_id, status: "Open" },
+        data: { ...values, warehouse_id: user?.warehouse_id, status: 'Open' },
       });
 
       if (data?.success) {
-        dispatch(setPettyCash({ status: "Open", id: data?.data?.id }));
+        dispatch(setPettyCash({ status: 'Open', id: data?.data?.id }));
         hideModal();
         form.resetFields();
-        navigate("/pos");
+        navigate('/pos');
       }
 
       if (error) {
@@ -96,7 +96,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
     <Modal
       width={600}
       centered
-      title={"Cash Register Open"}
+      title={'Cash Register Open'}
       open={open}
       onCancel={hideModal}
       footer={null}
@@ -154,13 +154,13 @@ export const PosComponent = () => {
 
   useEffect(() => {
     if (pettyCashData?.data) {
-      if (pettyCashData?.data?.status === "Open") {
-        dispatch(setPettyCash({ status: "Open", id: pettyCashData?.data?.id }));
+      if (pettyCashData?.data?.status === 'Open') {
+        dispatch(setPettyCash({ status: 'Open', id: pettyCashData?.data?.id }));
       } else if (
-        pettyCashData?.data?.status === "Close" &&
+        pettyCashData?.data?.status === 'Close' &&
         !pettyCashData?.data?.id
       ) {
-        dispatch(setPettyCash({ status: "Close", id: undefined }));
+        dispatch(setPettyCash({ status: 'Close', id: undefined }));
       } else {
         dispatch(clearPettyCash());
       }
@@ -170,9 +170,9 @@ export const PosComponent = () => {
   const [open, setOpen] = useState(false);
 
   const posRegister = () => {
-    if (pettyCash === "Close") {
+    if (pettyCash === 'Close') {
       setOpen(true);
-    } else navigate("/pos");
+    } else navigate('/pos');
   };
 
   return (

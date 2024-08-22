@@ -1,23 +1,23 @@
-import { AutoComplete, Col, Form, Spin } from "antd";
-import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
-import { useDebouncedCallback } from "use-debounce";
-import { fullColLayout } from "../../../layout/FormLayout";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { useGlobalParams } from "../../../utilities/hooks/useParams";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
-import { openNotification } from "../../../utilities/lib/openToaster";
+import { AutoComplete, Col, Form, Spin } from 'antd';
+import { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
+import { useDebouncedCallback } from 'use-debounce';
+import { fullColLayout } from '../../../layout/FormLayout';
+import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
+import { openNotification } from '../../../utilities/lib/openToaster';
 
 const ignorePaths = [
-  "stock-request",
-  "print-barcode",
-  "products",
-  "transfer",
-  "adjustment",
-  "purchase",
-  "quotation",
-  "invoice",
+  'stock-request',
+  'print-barcode',
+  'products',
+  'transfer',
+  'adjustment',
+  'purchase',
+  'quotation',
+  'invoice',
 ];
 
 export const SearchProduct = ({ setProducts }) => {
@@ -27,11 +27,11 @@ export const SearchProduct = ({ setProducts }) => {
   const form = Form.useFormInstance();
   const { pathname } = useLocation();
 
-  const warehouseId = Form.useWatch("warehouse_id", form);
-  const warehouseIdFrom = Form.useWatch("from_warehouse_id", form);
+  const warehouseId = Form.useWatch('warehouse_id', form);
+  const warehouseIdFrom = Form.useWatch('from_warehouse_id', form);
 
   const debounce = useDebouncedCallback(async (value) => {
-    if (value.trim() !== "") {
+    if (value.trim() !== '') {
       setKeyword(value);
     }
   }, 1000);
@@ -41,7 +41,7 @@ export const SearchProduct = ({ setProducts }) => {
 
   const baseParams = {
     warehouse_id:
-      pathname.includes("transfer") || pathname.includes("stock-request")
+      pathname.includes('transfer') || pathname.includes('stock-request')
         ? warehouseIdFrom
         : warehouseId,
   };
@@ -85,7 +85,7 @@ export const SearchProduct = ({ setProducts }) => {
   const options = isFetching
     ? [
         {
-          value: "loading",
+          value: 'loading',
           label: loadingContent,
         },
       ]
@@ -98,7 +98,7 @@ export const SearchProduct = ({ setProducts }) => {
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {
       // message.error("Please select warehouse");
-      openNotification("warning", "Please select warehouse");
+      openNotification('warning', 'Please select warehouse');
 
       return;
     }
@@ -110,7 +110,7 @@ export const SearchProduct = ({ setProducts }) => {
 
     if (!stock && isIgnore) {
       // message.error("Product is out of stock");
-      openNotification("warning", "Product is out of stock");
+      openNotification('warning', 'Product is out of stock');
       setValue(null);
       return;
     }
@@ -125,7 +125,7 @@ export const SearchProduct = ({ setProducts }) => {
       }
 
       // message.warning("Product already exists in the list");
-      openNotification("warning", "Product already exists in the list");
+      openNotification('warning', 'Product already exists in the list');
       return prevProducts;
     });
     setValue(null);

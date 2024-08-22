@@ -1,4 +1,4 @@
-export function getMissingUids(fields, values, keyName = "attachments") {
+export function getMissingUids(fields, values, keyName = 'attachments') {
   const attachmentObject = fields.find((item) => item.name === keyName) || [];
 
   const valueUids = new Set(values?.[keyName]?.map((item) => item.uid) || []);

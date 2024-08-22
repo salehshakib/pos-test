@@ -1,16 +1,16 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetExpenseDetailsQuery,
   useUpdateExpenseMutation,
-} from "../../redux/services/expense/expenseApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { ExpenseForm } from "./ExpenseForm";
+} from '../../redux/services/expense/expenseApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { ExpenseForm } from './ExpenseForm';
 
 export const ExpenseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export const ExpenseEdit = ({ id, setId }) => {
 
     const { data, error } = await updateExpense({
       id,
-      data: { ...sanitizeObj(values), _method: "PUT" },
+      data: { ...sanitizeObj(values), _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -52,7 +52,7 @@ export const ExpenseEdit = ({ id, setId }) => {
   };
   return (
     <CustomDrawer
-      title={"Edit Expense"}
+      title={'Edit Expense'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

@@ -1,18 +1,18 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateTransferMutation } from "../../redux/services/transfer/transferApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateTransferMutation } from '../../redux/services/transfer/transferApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import TransferForm from "./TransferForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import TransferForm from './TransferForm';
 
 const TransferCreate = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const TransferCreate = () => {
     tax_rate: {},
   });
 
-  const warehouseId = Form.useWatch("from_warehouse_id", form);
+  const warehouseId = Form.useWatch('from_warehouse_id', form);
   useEffect(() => {
     if (warehouseId) {
       setFormValues({
@@ -97,7 +97,7 @@ const TransferCreate = () => {
       // message.info("Please add atleast one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -178,7 +178,7 @@ const TransferCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Transfer"}
+      title={'Create Transfer'}
       open={isCreateDrawerOpen}
       width={1400}
     >

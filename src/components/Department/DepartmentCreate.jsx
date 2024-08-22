@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateDepartmentMutation } from "../../redux/services/hrm/department/departmentApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import DepartmentForm from "./DepartmentForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateDepartmentMutation } from '../../redux/services/hrm/department/departmentApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import DepartmentForm from './DepartmentForm';
 
 const DepartmentCreate = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const DepartmentCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Department"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Department'} open={isCreateDrawerOpen}>
       <DepartmentForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

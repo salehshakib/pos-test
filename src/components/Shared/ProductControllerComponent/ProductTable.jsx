@@ -1,6 +1,6 @@
-import { Col } from "antd";
-import { fullColLayout } from "../../../layout/FormLayout";
-import CustomProductTable from "../Table/CustomProductTable";
+import { Col } from 'antd';
+import { fullColLayout } from '../../../layout/FormLayout';
+import CustomProductTable from '../Table/CustomProductTable';
 
 export const ProductTable = ({
   columns,

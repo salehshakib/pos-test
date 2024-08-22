@@ -1,18 +1,18 @@
 export const employeeStatusOptions = [
   {
-    value: "Intern",
-    label: "Intern",
+    value: 'Intern',
+    label: 'Intern',
   },
   {
-    value: "Probation",
-    label: "Probation",
+    value: 'Probation',
+    label: 'Probation',
   },
   {
-    value: "Contractual",
-    label: "Contractual",
+    value: 'Contractual',
+    label: 'Contractual',
   },
   {
-    value: "Permanent",
-    label: "Permanent",
+    value: 'Permanent',
+    label: 'Permanent',
   },
 ];

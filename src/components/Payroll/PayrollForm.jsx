@@ -1,33 +1,33 @@
-import { Col, Form, Row } from "antd";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { paymentTypesOptions } from "../../assets/data/paymentTypes";
+import { Col, Form, Row } from 'antd';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { paymentTypesOptions } from '../../assets/data/paymentTypes';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
-} from "../../layout/FormLayout";
+} from '../../layout/FormLayout';
 import {
   useGetAllEmployeeQuery,
   useGetEmployeeDetailsQuery,
-} from "../../redux/services/hrm/employee/employeeApi";
-import { useCurrency } from "../../redux/services/pos/posSlice";
+} from '../../redux/services/hrm/employee/employeeApi';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
-import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
+} from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { DepartmentComponent } from '../ReusableComponent/DepartmentComponent';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
-  const departmentId = Form.useWatch("department_ids", form);
+  const departmentId = Form.useWatch('department_ids', form);
 
   const params = useGlobalParams({
     params: {
@@ -73,7 +73,7 @@ const PaymentTypeComponent = () => {
 };
 
 export const PayrollForm = (props) => {
-  const employeeId = Form.useWatch("employee_id", props.form);
+  const employeeId = Form.useWatch('employee_id', props.form);
   const { data } = useGetEmployeeDetailsQuery(
     {
       id: employeeId,
@@ -110,7 +110,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Salary"
             name="salary"
-            type={"number_with_money"}
+            type={'number_with_money'}
             suffix={currency?.name}
             required={true}
           />
@@ -119,7 +119,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Bonus"
             name="bonus"
-            type={"number_with_money"}
+            type={'number_with_money'}
             suffix={currency?.name}
           />
         </Col>
@@ -127,7 +127,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Loan"
             name="loan"
-            type={"number_with_money"}
+            type={'number_with_money'}
             suffix={currency?.name}
           />
         </Col>
@@ -136,7 +136,7 @@ export const PayrollForm = (props) => {
           <CustomInput
             label="Description"
             name="description"
-            type={"textarea"}
+            type={'textarea'}
           />
         </Col>
 

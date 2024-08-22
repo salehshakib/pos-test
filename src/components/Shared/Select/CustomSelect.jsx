@@ -109,9 +109,9 @@
 
 // export default CustomSelect;
 
-import { Empty, Form, Select, Spin } from "antd";
-import { FaAngleDown } from "react-icons/fa";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Empty, Form, Select, Spin } from 'antd';
+import { FaAngleDown } from 'react-icons/fa';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const CustomSelect = ({
   name,
@@ -119,29 +119,29 @@ const CustomSelect = ({
   placeholder,
   required = false,
   showSearch = false,
-  mode = "single",
+  mode = 'single',
   options = [],
   isLoading,
   noStyle = false,
   styleProps,
   onChange,
   onSelect,
-  size = "large",
+  size = 'large',
 
   customStyle = false, // for mb-0
 }) => {
   const filterOption = (input, option) =>
-    (option?.label ?? "").toLocaleLowerCase().includes(input.toLowerCase());
+    (option?.label ?? '').toLocaleLowerCase().includes(input.toLowerCase());
 
   const filterSort = (optionA, optionB) =>
-    (optionA?.label ?? "")
+    (optionA?.label ?? '')
       .toLowerCase()
-      .localeCompare((optionB?.label ?? "").toLowerCase());
+      .localeCompare((optionB?.label ?? '').toLowerCase());
 
   const commonSelectProps = {
     onChange,
     placeholder: `Select ${placeholder ?? label}`,
-    className: "mt-1 custom-selector",
+    className: 'mt-1 custom-selector',
     loading: isLoading,
     options,
     mode,
@@ -169,8 +169,8 @@ const CustomSelect = ({
             message: `Please Select ${placeholder ?? label}!`,
           },
         ]}
-        className={`${customStyle && "mb-0"} ${
-          size === "default" && "select-item-default"
+        className={`${customStyle && 'mb-0'} ${
+          size === 'default' && 'select-item-default'
         } `}
         noStyle={noStyle}
       >
@@ -179,7 +179,7 @@ const CustomSelect = ({
           showSearch={showSearch}
           filterOption={showSearch ? filterOption : undefined}
           filterSort={showSearch ? filterSort : undefined}
-          optionFilterProp={showSearch ? "children" : undefined}
+          optionFilterProp={showSearch ? 'children' : undefined}
         />
       </Form.Item>
     </GlobalUtilityStyle>

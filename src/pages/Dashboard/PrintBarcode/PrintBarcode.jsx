@@ -1,12 +1,12 @@
-import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Checkbox, Form, Select } from "antd";
-import { useRef, useState } from "react";
-import Barcode from "react-barcode";
-import { useReactToPrint } from "react-to-print";
-import { toast } from "sonner";
-import CustomForm from "../../../components/Shared/Form/CustomForm";
-import CustomModal from "../../../components/Shared/Modal/CustomModal";
-import ProductSelect from "./ProductSelect";
+import { PageContainer } from '@ant-design/pro-layout';
+import { Button, Checkbox, Form, Select } from 'antd';
+import { useRef, useState } from 'react';
+import Barcode from 'react-barcode';
+import { useReactToPrint } from 'react-to-print';
+import { toast } from 'sonner';
+import CustomForm from '../../../components/Shared/Form/CustomForm';
+import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import ProductSelect from './ProductSelect';
 
 const PrintBarcode = () => {
   const [form] = Form.useForm();
@@ -25,7 +25,7 @@ const PrintBarcode = () => {
 
   const generateBarcode = () => {
     if (products?.length <= 0) {
-      toast?.info("Please Select a Product!");
+      toast?.info('Please Select a Product!');
       return;
     }
 
@@ -51,20 +51,20 @@ const PrintBarcode = () => {
   });
 
   const sizes = [
-    { label: "(3 x 1 inches)", value: "2.625x1" },
-    { label: "(2 x 1 inches)", value: "4x6" },
-    { label: "(1 x 1 inches)", value: "1x1" },
+    { label: '(3 x 1 inches)', value: '2.625x1' },
+    { label: '(2 x 1 inches)', value: '4x6' },
+    { label: '(1 x 1 inches)', value: '1x1' },
   ];
 
   const handleLabelSizeChange = (value) => {
     switch (value) {
-      case "2.625x1":
+      case '2.625x1':
         setLabelSize({ width: 2.625, height: 40 });
         break;
-      case "4x6":
+      case '4x6':
         setLabelSize({ width: 1.5, height: 50 });
         break;
-      case "1x1":
+      case '1x1':
         setLabelSize({ width: 1, height: 20 });
         break;
       default:
@@ -105,7 +105,7 @@ const PrintBarcode = () => {
                 Promotional Price
               </Checkbox>
               <Select
-                placeholder={"Select a label size"}
+                placeholder={'Select a label size'}
                 options={sizes}
                 className="block mt-6"
                 onChange={handleLabelSizeChange}
@@ -144,7 +144,7 @@ const PrintBarcode = () => {
                                   className={`${
                                     barcode?.promotion_price &&
                                     showDiscount &&
-                                    "line-through text-sm"
+                                    'line-through text-sm'
                                   }`}
                                 >
                                   ${barcode?.selling_price}

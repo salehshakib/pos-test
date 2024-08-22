@@ -1,9 +1,9 @@
 export const columns = [
   {
-    title: "Reference",
-    dataIndex: "reference",
-    key: "reference",
-    align: "center",
+    title: 'Reference',
+    dataIndex: 'reference',
+    key: 'reference',
+    align: 'center',
     render: (reference) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference}
@@ -11,49 +11,49 @@ export const columns = [
     ),
   },
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {warehouse ?? "N/A"}
+        {warehouse ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Cashier",
-    dataIndex: "cashier",
-    key: "cashier",
+    title: 'Cashier',
+    dataIndex: 'cashier',
+    key: 'cashier',
     render: (cashier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {cashier ?? "N/A"}
+        {cashier ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
+    title: 'Customer',
+    dataIndex: 'customer',
+    key: 'customer',
     render: (customer) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {customer ?? "N/A"}
+        {customer ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Supplier",
-    dataIndex: "supplier",
-    key: "supplier",
+    title: 'Supplier',
+    dataIndex: 'supplier',
+    key: 'supplier',
     render: (supplier) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {supplier ?? "N/A"}
+        {supplier ?? 'N/A'}
       </span>
     ),
   },
   {
-    title: "Total",
-    dataIndex: "total",
-    key: "total",
+    title: 'Total',
+    dataIndex: 'total',
+    key: 'total',
     render: (total) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {total}
@@ -61,10 +61,10 @@ export const columns = [
     ),
   },
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    align: 'center',
     render: (date) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {date}

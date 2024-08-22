@@ -1,8 +1,8 @@
-import { Spin } from "antd";
-import { useGetCouponDetailsQuery } from "../../redux/services/coupon/couponApi";
-import createDetailsLayout from "../../utilities/lib/createDetailsLayout";
-import { CustomDescription } from "../Shared/Description/CustomDescription";
-import CustomModal from "../Shared/Modal/CustomModal";
+import { Spin } from 'antd';
+import { useGetCouponDetailsQuery } from '../../redux/services/coupon/couponApi';
+import createDetailsLayout from '../../utilities/lib/createDetailsLayout';
+import { CustomDescription } from '../Shared/Description/CustomDescription';
+import CustomModal from '../Shared/Modal/CustomModal';
 
 export const CouponsDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetCouponDetailsQuery(

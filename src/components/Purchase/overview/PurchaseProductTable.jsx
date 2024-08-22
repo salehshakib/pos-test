@@ -1,33 +1,33 @@
-import { Col, Form, Modal, Row, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { colLayout, mdColLayout, rowLayout } from "../../../layout/FormLayout";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
-import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
+import { Col, Form, Modal, Row, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { colLayout, mdColLayout, rowLayout } from '../../../layout/FormLayout';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
+import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { calculateOriginalPrice } from "../../../utilities/lib/calculatePrice";
-import { calculateTotals } from "../../../utilities/lib/calculateTotals";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
+} from '../../../utilities/hooks/useParams';
+import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
+import { calculateTotals } from '../../../utilities/lib/calculateTotals';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
 import {
   decrementCounter,
   incrementCounter,
   onDelete,
   onQuantityChange,
-} from "../../../utilities/lib/productTable/counters";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import { columns, partialColumns } from "./productColumns";
+} from '../../../utilities/lib/productTable/counters';
+import CustomForm from '../../Shared/Form/CustomForm';
+import CustomInput from '../../Shared/Input/CustomInput';
+import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
+import CustomSelect from '../../Shared/Select/CustomSelect';
+import { columns, partialColumns } from './productColumns';
 
 const TaxComponent = ({ productId, setProductUnits }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "rate"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
   });
 
   const { data, isLoading } = useGetAllTaxQuery({ params });
@@ -50,7 +50,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
   return (
     <CustomSelect
-      name={["tax_id", productId]}
+      name={['tax_id', productId]}
       options={options}
       label="Product Vat"
       isLoading={isLoading}
@@ -63,16 +63,16 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
     selectValue: [
       ...DEFAULT_SELECT_VALUES,
-      "operation_value",
-      "operator",
-      "for",
+      'operation_value',
+      'operator',
+      'for',
     ],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === "purchase-unit")
+    ?.filter((unit) => unit.for === 'purchase-unit')
     .map((unit) => ({
       value: unit.id.toString(),
       label: unit.name,
@@ -95,7 +95,7 @@ const ProductUnitComponent = ({ setProductUnits, productId }) => {
       label="Purchase Unit"
       options={productUnits}
       isLoading={isLoading}
-      name={["purchase_unit_id", productId]}
+      name={['purchase_unit_id', productId]}
       onSelect={onSelect}
     />
   );
@@ -122,11 +122,11 @@ const ProductFormComponent = ({
         purchase_unit_id: {
           [productId]:
             formValues?.product_list?.purchase_unit_id[productId]?.toString() ??
-            "",
+            '',
         },
         tax_id: {
           [productId]:
-            formValues?.product_list?.tax_id[productId]?.toString() ?? "",
+            formValues?.product_list?.tax_id[productId]?.toString() ?? '',
         },
       });
     }
@@ -141,22 +141,22 @@ const ProductFormComponent = ({
           ...prevFormValues.product_list,
           qty: {
             ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue("quantity"),
+            [productId]: productForm.getFieldValue('quantity'),
           },
           purchase_unit_id: {
             ...prevFormValues.product_list.purchase_unit_id,
             [productId]: productForm.getFieldValue([
-              "purchase_unit_id",
+              'purchase_unit_id',
               productId,
             ]),
           },
           discount: {
             ...prevFormValues.product_list.discount,
-            [productId]: productForm.getFieldValue("unit_discount"),
+            [productId]: productForm.getFieldValue('unit_discount'),
           },
           net_unit_cost: {
             ...prevFormValues.product_list.net_unit_cost,
-            [productId]: productForm.getFieldValue("unit_price"),
+            [productId]: productForm.getFieldValue('unit_price'),
           },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
@@ -167,14 +167,14 @@ const ProductFormComponent = ({
             [productId]: parseFloat(
               (parseInt(productUnits.purchase_units[productId]) *
                 parseFloat(productUnits.tax_rate[productId]) *
-                parseInt(productForm.getFieldValue("quantity")) *
-                parseInt(productForm.getFieldValue("unit_price"))) /
+                parseInt(productForm.getFieldValue('quantity')) *
+                parseInt(productForm.getFieldValue('unit_price'))) /
                 100
             ).toFixed(2),
           },
           tax_id: {
             ...prevFormValues.product_list.tax_id,
-            [productId]: productForm.getFieldValue(["tax_id", productId]),
+            [productId]: productForm.getFieldValue(['tax_id', productId]),
           },
         },
       };
@@ -198,16 +198,16 @@ const ProductFormComponent = ({
           <Col {...colLayout}>
             <CustomInput
               label="Quantity"
-              type={"number"}
-              name={"quantity"}
-              placeholder={"Enter product name"}
+              type={'number'}
+              name={'quantity'}
+              placeholder={'Enter product name'}
             />
           </Col>
           <Col {...colLayout}>
             <CustomInput
               label="Unit Price"
-              type={"number"}
-              name={"unit_price"}
+              type={'number'}
+              name={'unit_price'}
             />
           </Col>
           <Col {...colLayout}>
@@ -219,8 +219,8 @@ const ProductFormComponent = ({
           <Col {...mdColLayout}>
             <CustomInput
               label="Unit Discount"
-              type={"number"}
-              name={"unit_discount"}
+              type={'number'}
+              name={'unit_discount'}
             />
           </Col>
 
@@ -259,15 +259,15 @@ function setFormValuesId(
     sanitizer(formProductList[field]?.[id] ?? defaultValue);
 
   // Extract and sanitize values
-  const qty = getSanitizedValue("qty", 1, sanitizeIntValue);
+  const qty = getSanitizedValue('qty', 1, sanitizeIntValue);
   const netUnitCost = getSanitizedValue(
-    "net_unit_cost",
+    'net_unit_cost',
     unit_cost,
     sanitizeFloatValue
   );
-  const discount = getSanitizedValue("discount", 0, sanitizeFloatValue);
+  const discount = getSanitizedValue('discount', 0, sanitizeFloatValue);
   const taxRate = getSanitizedValue(
-    "tax_rate",
+    'tax_rate',
     taxes?.rate ?? 0,
     sanitizeIntValue
   );
@@ -287,7 +287,7 @@ function setFormValuesId(
 
   // Calculating total
   const total =
-    tax_method === "Inclusive"
+    tax_method === 'Inclusive'
       ? Math.round(
           (
             productPurchaseUnitsValue * netUnitCost * qty -
@@ -306,23 +306,23 @@ function setFormValuesId(
     formProductList[field][id] = value;
   };
 
-  setFormValue("qty", qty);
-  setFormValue("net_unit_cost", netUnitCost);
-  setFormValue("discount", discount);
-  setFormValue("tax_rate", taxRate);
-  setFormValue("tax", tax);
-  setFormValue("total", total);
+  setFormValue('qty', qty);
+  setFormValue('net_unit_cost', netUnitCost);
+  setFormValue('discount', discount);
+  setFormValue('tax_rate', taxRate);
+  setFormValue('tax', tax);
+  setFormValue('total', total);
   setFormValue(
-    "purchase_unit_id",
+    'purchase_unit_id',
     formProductList.purchase_unit_id?.[id] ?? purchase_unit_id
   );
   setFormValue(
-    "recieved",
+    'recieved',
     sanitizeIntValue(formProductList.recieved?.[id] ?? 0)
   );
 
   if (formProductList.tax_id) {
-    setFormValue("tax_id", formProductList.tax_id?.[id] ?? tax_id);
+    setFormValue('tax_id', formProductList.tax_id?.[id] ?? tax_id);
   }
 }
 
@@ -335,8 +335,8 @@ export const PurchaseProductTable = ({
   setProductUnits,
 }) => {
   const form = Form.useFormInstance();
-  const type = Form.useWatch("purchase_status", form);
-  const warehouseId = Form.useWatch("warehouse_id", form);
+  const type = Form.useWatch('purchase_status', form);
+  const warehouseId = Form.useWatch('warehouse_id', form);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -500,7 +500,7 @@ export const PurchaseProductTable = ({
                 {totalQuantity}
               </Typography.Text>
             </Table.Summary.Cell>
-            {type === "Partial" && (
+            {type === 'Partial' && (
               <Table.Summary.Cell index={3} align="center">
                 <Typography.Text type="" className="font-bold">
                   {totalReceived}
@@ -533,7 +533,7 @@ export const PurchaseProductTable = ({
       <ProductController
         products={products}
         setProducts={setProducts}
-        columns={type === "Partial" ? partialColumns : columns}
+        columns={type === 'Partial' ? partialColumns : columns}
         dataSource={dataSource}
         tableStyle={tableStyle}
       />

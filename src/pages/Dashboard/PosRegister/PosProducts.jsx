@@ -1,15 +1,15 @@
-import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from 'antd';
+import { useCallback, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { openNotification } from "../../../utilities/lib/openToaster";
-import { getWarehouseQuantity } from "../../../utilities/lib/getWarehouseQty";
-import { GlobalUtilityStyle } from "../../../container/Styled";
-import { productImage } from "../../../assets/data/productImage";
+} from '../../../utilities/hooks/useParams';
+import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { productImage } from '../../../assets/data/productImage';
 
 const { Meta } = Card;
 
@@ -20,7 +20,7 @@ const PosProducts = ({
   form,
   searchParams,
 }) => {
-  const warehouseId = Form.useWatch("warehouse_id", form);
+  const warehouseId = Form.useWatch('warehouse_id', form);
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -39,11 +39,11 @@ const PosProducts = ({
     },
     selectValue: [
       ...DEFAULT_SELECT_VALUES,
-      "sku",
-      "buying_price",
-      "tax_id",
-      "sale_unit_id",
-      "purchase_unit_id",
+      'sku',
+      'buying_price',
+      'tax_id',
+      'sale_unit_id',
+      'purchase_unit_id',
     ],
   });
 
@@ -106,7 +106,7 @@ const PosProducts = ({
 
     if (!stock) {
       // message.error("Product is out of stock");
-      openNotification("info", "Product is out of stock");
+      openNotification('info', 'Product is out of stock');
       return;
     }
 
@@ -120,7 +120,7 @@ const PosProducts = ({
       }
 
       // message.warning("Product already exists in the list");
-      openNotification("info", "Product already exists in the list");
+      openNotification('info', 'Product already exists in the list');
       return prevProducts;
     });
     // setValue(null);
@@ -182,11 +182,11 @@ const PosProducts = ({
                             hoverable
                             className="border-secondary-hover"
                             style={{
-                              backgroundColor: "white",
+                              backgroundColor: 'white',
                             }}
                             styles={{
                               body: {
-                                padding: "12px 8px",
+                                padding: '12px 8px',
                               },
                             }}
                             key={product.id}
@@ -208,7 +208,7 @@ const PosProducts = ({
                             <Meta
                               className="text-center"
                               style={{
-                                fontSize: "12px",
+                                fontSize: '12px',
                               }}
                               title={
                                 <Tooltip

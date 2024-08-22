@@ -1,34 +1,34 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
-import { paymentStatusOptions } from "../../assets/data/paymentStatus";
-import { purchaseStatusOptions } from "../../assets/data/purchaseStatus";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
+import { paymentStatusOptions } from '../../assets/data/paymentStatus';
+import { purchaseStatusOptions } from '../../assets/data/purchaseStatus';
 import {
   colLayout,
   fullColLayout,
   largeLayout,
   rowLayout,
-} from "../../layout/FormLayout";
+} from '../../layout/FormLayout';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { useSetFieldValue } from "../../utilities/lib/updateFormValues/useInitialFormField";
-import { OrderTaxComponent } from "../ReusableComponent/OrderTaxComponent";
-import { SupplierComponent } from "../ReusableComponent/SupplierComponent";
-import { TotalRow } from "../ReusableComponent/TotalRow";
-import { WarehouseComponent } from "../ReusableComponent/WarehouseComponent";
-import { CurrencyFormComponent } from "../Sale/overview/CurrencyComponent";
-import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
-import CustomSelect from "../Shared/Select/CustomSelect";
-import CustomUploader from "../Shared/Upload/CustomUploader";
-import { PaymentTypeComponent } from "./overview/PaymentTypeComponent";
-import { PurchaseProductTable } from "./overview/PurchaseProductTable";
+} from '../../utilities/lib/generator/generatorUtils';
+import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
+import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
+import { SupplierComponent } from '../ReusableComponent/SupplierComponent';
+import { TotalRow } from '../ReusableComponent/TotalRow';
+import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
+import { CurrencyFormComponent } from '../Sale/overview/CurrencyComponent';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
+import CustomUploader from '../Shared/Upload/CustomUploader';
+import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
+import { PurchaseProductTable } from './overview/PurchaseProductTable';
 
 const PurchaseStatus = () => {
-  useSetFieldValue("purchase_status", purchaseStatusOptions[0].value);
+  useSetFieldValue('purchase_status', purchaseStatusOptions[0].value);
   return (
     <CustomSelect
       label="Purchase Status"
@@ -39,7 +39,7 @@ const PurchaseStatus = () => {
 };
 
 const PaymentStatusComponent = () => {
-  useSetFieldValue("payment_status", paymentStatusOptions[0].value);
+  useSetFieldValue('payment_status', paymentStatusOptions[0].value);
   return (
     <CustomSelect
       label="Payment Status"
@@ -60,12 +60,12 @@ export const PurchaseForm = ({
 }) => {
   const form = props.form;
 
-  const discount = Form.useWatch("discount", form);
-  const shipping_cost = Form.useWatch("shipping_cost", form);
-  const tax_rate = Form.useWatch("tax_rate", form) ?? 0;
+  const discount = Form.useWatch('discount', form);
+  const shipping_cost = Form.useWatch('shipping_cost', form);
+  const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
 
-  const paymentStatus = Form.useWatch("payment_status", form);
-  const paid_amount = Form.useWatch("paid_amount", form);
+  const paymentStatus = Form.useWatch('payment_status', form);
+  const paid_amount = Form.useWatch('paid_amount', form);
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
@@ -100,13 +100,13 @@ export const PurchaseForm = ({
   }, [discount, formValues, shipping_cost, tax_rate, products]);
 
   useEffect(() => {
-    if (paymentStatus === "Paid") {
-      form.setFieldValue("paid_amount", grandTotal);
+    if (paymentStatus === 'Paid') {
+      form.setFieldValue('paid_amount', grandTotal);
     }
 
-    if (paymentStatus === "Partial") {
+    if (paymentStatus === 'Partial') {
       if (Number(paid_amount) > totalPrice) {
-        form.setFieldValue("paid_amount", totalPrice);
+        form.setFieldValue('paid_amount', totalPrice);
       }
     }
   }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
@@ -156,7 +156,7 @@ export const PurchaseForm = ({
             <PaymentStatusComponent />
           </Col>
 
-          {(paymentStatus === "Paid" || paymentStatus === "Partial") && (
+          {(paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
             <PaymentTypeComponent />
           )}
 

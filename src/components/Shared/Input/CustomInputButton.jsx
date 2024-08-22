@@ -1,5 +1,5 @@
-import { Button, Form, Input, Space } from "antd";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Form, Input, Space } from 'antd';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const CustomInputButton = (props) => {
   const {
@@ -17,7 +17,7 @@ const CustomInputButton = (props) => {
   return (
     <GlobalUtilityStyle>
       <Form.Item label={label} required={required}>
-        <Space.Compact style={{ width: "100%" }}>
+        <Space.Compact style={{ width: '100%' }}>
           <Form.Item
             name={name}
             rules={[
@@ -30,7 +30,7 @@ const CustomInputButton = (props) => {
           >
             <Input
               type={type}
-              placeholder={`${placeholder ?? "Enter" + label}`}
+              placeholder={`${placeholder ?? 'Enter' + label}`}
               className="mt-1 border-2"
               size="large"
               style={{

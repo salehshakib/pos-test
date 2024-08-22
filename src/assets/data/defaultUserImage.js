@@ -1,3 +1,3 @@
-import defaultUser from "../images/default.jpg";
+import defaultUser from '../images/default.jpg';
 
 export default defaultUser;

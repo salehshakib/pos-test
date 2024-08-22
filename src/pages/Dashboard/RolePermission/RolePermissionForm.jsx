@@ -1,6 +1,6 @@
-import { Col, Row } from "antd";
-import CustomForm from "../../../../components/Shared/Form/CustomForm";
-import CustomInput from "../../../../components/Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import CustomForm from '../../../../components/Shared/Form/CustomForm';
+import CustomInput from '../../../../components/Shared/Input/CustomInput';
 
 const rowLayout = {
   gutter: 25,
@@ -29,19 +29,19 @@ const RolePermissionForm = (props) => {
         <Col {...colLayout}>
           <CustomInput
             label="Name"
-            type={"text"}
+            type={'text'}
             required={true}
-            name={"name"}
-            placeholder={"Name"}
+            name={'name'}
+            placeholder={'Name'}
           />
         </Col>
         <Col {...colLayoutDescription}>
           <CustomInput
             label="Description"
-            type={"textarea"}
+            type={'textarea'}
             required={true}
-            name={"description"}
-            placeholder={"Description"}
+            name={'description'}
+            placeholder={'Description'}
           />
         </Col>
       </Row>

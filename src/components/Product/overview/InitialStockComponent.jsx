@@ -1,14 +1,14 @@
-import { Button, Form } from "antd";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { WarehouseController } from "../../WarehouseController/WarehouseController";
+import { Button, Form } from 'antd';
+import { FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
+import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2 `}>
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -18,10 +18,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -32,7 +32,7 @@ const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() => record.decrementCounter(record?.id)}
@@ -46,7 +46,7 @@ const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() => record.incrementCounter(record?.id)}
@@ -60,11 +60,11 @@ const columns = [
 
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -90,7 +90,7 @@ export const InitialStockComponent = ({
   setInitialWarehouses,
 }) => {
   const form = Form.useFormInstance();
-  const hasStock = Form.useWatch("has_stock", form);
+  const hasStock = Form.useWatch('has_stock', form);
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {

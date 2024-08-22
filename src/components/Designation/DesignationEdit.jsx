@@ -1,15 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetDesignationDetailsQuery,
   useUpdateDesignationMutation,
-} from "../../redux/services/hrm/designation/designationApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { DesignationForm } from "./DesignationForm";
+} from '../../redux/services/hrm/designation/designationApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { DesignationForm } from './DesignationForm';
 
 export const DesignationEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -39,9 +39,9 @@ export const DesignationEdit = ({ id, setId }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: "department_id",
+          name: 'department_id',
           value: data?.departments?.id.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -63,7 +63,7 @@ export const DesignationEdit = ({ id, setId }) => {
 
     const { data, error } = await updateDesignation({
       id,
-      data: { ...values, _method: "PUT" },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {
@@ -80,7 +80,7 @@ export const DesignationEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Designation"}
+      title={'Edit Designation'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

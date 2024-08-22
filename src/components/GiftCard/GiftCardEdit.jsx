@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetGiftCardDetailsQuery,
   useUpdateGiftCardMutation,
-} from "../../redux/services/giftcard/giftcard/giftCardApi";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/giftcard/giftcard/giftCardApi';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import GiftCardForm from "./GiftCardForm";
+} from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import GiftCardForm from './GiftCardForm';
 
 const GiftCardEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -31,9 +31,9 @@ const GiftCardEdit = ({ id, setId }) => {
 
       const updateFieldData = [
         {
-          name: "customer_id",
+          name: 'customer_id',
           value: data?.customer_id?.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -49,7 +49,7 @@ const GiftCardEdit = ({ id, setId }) => {
       data: {
         ...values,
         expired_date: values?.expired_date,
-        _method: "PUT",
+        _method: 'PUT',
       },
     });
 
@@ -67,7 +67,7 @@ const GiftCardEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Gift Card"}
+      title={'Edit Gift Card'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

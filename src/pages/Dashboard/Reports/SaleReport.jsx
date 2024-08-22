@@ -1,20 +1,20 @@
-import { Row } from "antd";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { SaleReportTable } from "../../../components/Report/SaleReportTable";
-import { WarehouseFilter } from "../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { rowLayout } from "../../../layout/FormLayout";
-import { useCurrentUser } from "../../../redux/services/auth/authSlice";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
-import { getDateRange } from "../../../utilities/lib/getDateRange";
+import { Row } from 'antd';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SaleReportTable } from '../../../components/Report/SaleReportTable';
+import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { rowLayout } from '../../../layout/FormLayout';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
 
 const columns = [
   {
-    title: "Product Name",
-    dataIndex: "product",
-    key: "product",
+    title: 'Product Name',
+    dataIndex: 'product',
+    key: 'product',
     render: (product) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {product}
@@ -22,9 +22,9 @@ const columns = [
     ),
   },
   {
-    title: "Sold Amount",
-    dataIndex: "soldAmount",
-    key: "soldAmount",
+    title: 'Sold Amount',
+    dataIndex: 'soldAmount',
+    key: 'soldAmount',
     render: (amount) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {amount}
@@ -32,9 +32,9 @@ const columns = [
     ),
   },
   {
-    title: "Sold Qty",
-    dataIndex: "soldQty",
-    key: "soldQty",
+    title: 'Sold Qty',
+    dataIndex: 'soldQty',
+    key: 'soldQty',
     render: (qty) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {qty}
@@ -42,10 +42,10 @@ const columns = [
     ),
   },
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
-    align: "center",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    align: 'center',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {warehouse}
@@ -54,10 +54,10 @@ const columns = [
   },
   {
     //created_at
-    title: "Sale At",
-    dataIndex: "saleAt",
-    key: "saleAt",
-    align: "center",
+    title: 'Sale At',
+    dataIndex: 'saleAt',
+    key: 'saleAt',
+    align: 'center',
     render: (saleAt) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {saleAt}
@@ -81,7 +81,7 @@ export const SaleReport = () => {
   const { keyword, debounce } = useCustomDebounce();
   const { searchParams, setParams } = useFilterParams();
 
-  const [segment, setSegment] = useState("Weekly");
+  const [segment, setSegment] = useState('Weekly');
 
   const onSegmentChange = (value) => {
     setSegment(value);

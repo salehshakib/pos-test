@@ -1,17 +1,17 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useGetAnnouncementDetailsQuery } from "../../redux/services/hrm/announcement/announcementApi";
-import { useUpdateLeaveTypeMutation } from "../../redux/services/settings/leaveType/leaveTypeApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useGetAnnouncementDetailsQuery } from '../../redux/services/hrm/announcement/announcementApi';
+import { useUpdateLeaveTypeMutation } from '../../redux/services/settings/leaveType/leaveTypeApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { AnnouncementForm } from "./AnnouncementForm";
+} from '../../utilities/lib/fieldsToUpdate';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { AnnouncementForm } from './AnnouncementForm';
 
 export const AnnouncementEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -39,14 +39,14 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
       const updateFieldData = [
         {
-          name: "department_ids",
+          name: 'department_ids',
           value: data?.departments?.map((item) => item?.id?.toString()),
-          erros: "",
+          erros: '',
         },
         {
-          name: "is_send_email",
-          value: data?.is_send_email.toString() === "1" ? true : false,
-          erros: "",
+          name: 'is_send_email',
+          value: data?.is_send_email.toString() === '1' ? true : false,
+          erros: '',
         },
       ];
 
@@ -61,8 +61,8 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      is_send_email: values?.is_send_email ? "1" : "0",
-      _method: "PUT",
+      is_send_email: values?.is_send_email ? '1' : '0',
+      _method: 'PUT',
     };
 
     appendToFormData(postData, formData);
@@ -86,7 +86,7 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Annoucement"}
+      title={'Edit Annoucement'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

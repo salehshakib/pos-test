@@ -1,20 +1,20 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreatePurchaseReturnMutation } from "../../redux/services/return/purchaseReturnApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreatePurchaseReturnMutation } from '../../redux/services/return/purchaseReturnApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import { updateProductList } from "../../utilities/lib/return/updateProductList";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { PurchaseReturnForm } from "./PurchaseReturnForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import { updateProductList } from '../../utilities/lib/return/updateProductList';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { PurchaseReturnForm } from './PurchaseReturnForm';
 
 const PurchaseReturnCreate = () => {
   const dispatch = useDispatch();
@@ -96,7 +96,7 @@ const PurchaseReturnCreate = () => {
 
     if (productListArray.length === 0) {
       // message.info("Please add atleast one product");
-      openNotification("info", "Please add atleast one product");
+      openNotification('info', 'Please add atleast one product');
       return;
     }
 
@@ -117,7 +117,7 @@ const PurchaseReturnCreate = () => {
 
     const postData = {
       purchase_return_at: dayjs(values?.purchase_return_at).format(
-        "YYYY-MM-DD"
+        'YYYY-MM-DD'
       ),
       purchase_id: saleData?.id,
       petty_cash_id: saleData?.petty_cash_id,
@@ -180,7 +180,7 @@ const PurchaseReturnCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Purchase Return"}
+      title={'Create Purchase Return'}
       open={isCreateDrawerOpen}
       width={1400}
     >

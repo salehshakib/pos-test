@@ -1,7 +1,7 @@
-import { DEPARTMENT } from "../../../../utilities/apiEndpoints/hrm.api";
-import { openNotification } from "../../../../utilities/lib/openToaster";
-import { verifyToken } from "../../../../utilities/lib/verifyToken";
-import { baseApi } from "../../../api/baseApi";
+import { DEPARTMENT } from '../../../../utilities/apiEndpoints/hrm.api';
+import { openNotification } from '../../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../../utilities/lib/verifyToken';
+import { baseApi } from '../../../api/baseApi';
 
 const departmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const departmentApi = baseApi.injectEndpoints({
       query: ({ params }) => {
         return {
           url: `/${DEPARTMENT}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
@@ -23,7 +23,7 @@ const departmentApi = baseApi.injectEndpoints({
       query: ({ id }) => {
         return {
           url: `${DEPARTMENT}/show/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response) => verifyToken(response.data),
@@ -33,19 +33,19 @@ const departmentApi = baseApi.injectEndpoints({
       query: ({ data }) => {
         return {
           url: `/${DEPARTMENT}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -57,19 +57,19 @@ const departmentApi = baseApi.injectEndpoints({
       query: ({ id, data }) => {
         return {
           url: `/${DEPARTMENT}/update/${id}`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -81,18 +81,18 @@ const departmentApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${DEPARTMENT}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
@@ -104,18 +104,18 @@ const departmentApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           url: `/${DEPARTMENT}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
           return response;
         }
       },
       transformErrorResponse: (response) => {
         if (response?.data?.success === false) {
-          openNotification("error", response?.data?.message);
+          openNotification('error', response?.data?.message);
           return response;
         }
       },

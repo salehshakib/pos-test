@@ -1,28 +1,28 @@
-import { Form } from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetSaleDetailsQuery,
   useUpdateSaleMutation,
-} from "../../redux/services/sale/saleApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
+} from '../../redux/services/sale/saleApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import {
   fieldsToUpdate,
   updateFieldValues,
-} from "../../utilities/lib/fieldsToUpdate";
+} from '../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../utilities/lib/generator/generatorUtils";
-import { openNotification } from "../../utilities/lib/openToaster";
-import { decimalConverter } from "../../utilities/lib/return/decimalComverter";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { SaleForm } from "./SaleForm";
+} from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { SaleForm } from './SaleForm';
 
 export const SaleEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -168,14 +168,14 @@ export const SaleEdit = ({ id, setId }) => {
       const updatedFieldData = [
         // ...fieldData,
         {
-          name: "warehouse_id",
+          name: 'warehouse_id',
           value: data?.warehouse_id?.toString(),
-          errors: "",
+          errors: '',
         },
         {
-          name: "supplier_id",
+          name: 'supplier_id',
           value: data?.supplier_id?.toString(),
-          errors: "",
+          errors: '',
         },
       ];
 
@@ -219,7 +219,7 @@ export const SaleEdit = ({ id, setId }) => {
       // message.info("Please add atleast one product");
       // return;
 
-      return openNotification("info", "Please add atleast one product");
+      return openNotification('info', 'Please add atleast one product');
     }
 
     const totalPrice = calculateTotalPrice(product_list);
@@ -245,7 +245,7 @@ export const SaleEdit = ({ id, setId }) => {
 
     const postObj = {
       ...sanitizeObj(values),
-      sale_at: dayjs(sale_at).format("YYYY-MM-DD"),
+      sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount: Number(discount ?? 0).toFixed(2),
       shipping_cost: Number(shipping_cost ?? 0).toFixed(2),
       tax_rate: Number(tax_rate ?? 0).toFixed(2),
@@ -265,7 +265,7 @@ export const SaleEdit = ({ id, setId }) => {
 
       product_list: JSON.stringify(productListArray),
       // petty_cash_id: 8,
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     if (paid_amount) {
@@ -319,7 +319,7 @@ export const SaleEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Sale"}
+      title={'Edit Sale'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
       width={1400}

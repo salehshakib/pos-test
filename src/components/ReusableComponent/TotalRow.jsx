@@ -1,5 +1,5 @@
-import { Col, Row } from "antd";
-import { fullColLayout } from "../../layout/FormLayout";
+import { Col, Row } from 'antd';
+import { fullColLayout } from '../../layout/FormLayout';
 
 export const TotalRow = ({
   totalItems,
@@ -11,23 +11,23 @@ export const TotalRow = ({
   grandTotal,
 }) => {
   let options = [
-    { label: "Items", value: `${totalItems} (${totalQty})` },
-    { label: "Total", value: totalPrice },
+    { label: 'Items', value: `${totalItems} (${totalQty})` },
+    { label: 'Total', value: totalPrice },
   ];
 
   if (taxRate?.toString()) {
-    options.push({ label: "Vat", value: taxRate });
+    options.push({ label: 'Vat', value: taxRate });
   }
 
   if (discount?.toString()) {
-    options.push({ label: "Discount", value: discount });
+    options.push({ label: 'Discount', value: discount });
   }
 
   if (shippingCost?.toString()) {
-    options.push({ label: "Shipping Cost", value: shippingCost });
+    options.push({ label: 'Shipping Cost', value: shippingCost });
   }
 
-  options = [...options, { label: "Grand Total", value: grandTotal }];
+  options = [...options, { label: 'Grand Total', value: grandTotal }];
 
   return (
     <Row className="pb-20">
@@ -41,7 +41,7 @@ export const TotalRow = ({
             >
               <span className="font-semibold">{label}</span>
               <span>
-                {typeof value === "string"
+                {typeof value === 'string'
                   ? value
                   : Number(value ?? 0)?.toFixed(2)}
               </span>

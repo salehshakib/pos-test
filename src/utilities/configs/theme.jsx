@@ -22,7 +22,7 @@ export function theme({ primaryColor, secondaryColor }) {
       Table: {
         headerSplitColor: primaryColor,
         stickyScrollBarBg: secondaryColor,
-        stickyScrollBarBorderRadius: "0 0 10px 10px",
+        stickyScrollBarBorderRadius: '0 0 10px 10px',
         // borderColor: secondaryColor,
       },
       Menu: {
@@ -31,7 +31,7 @@ export function theme({ primaryColor, secondaryColor }) {
       },
 
       Segmented: {
-        trackBg: "white",
+        trackBg: 'white',
         itemSelectedBg: secondaryColor,
         // itemHoverBg: primaryColor,
         // itemSelectedColor: "white",

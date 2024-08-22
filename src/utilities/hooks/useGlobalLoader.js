@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 export const useGlobalLoader = () => {
   const globalLoading = useSelector((state) => state.loader.loading);

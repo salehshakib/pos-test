@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { PettyCashTable } from "../../../components/PettyCash/PettyCashTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { PETTY_CASH } from "../../../utilities/apiEndpoints/account.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import { PettyCashTable } from '../../../components/PettyCash/PettyCashTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { PETTY_CASH } from '../../../utilities/apiEndpoints/account.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Reference Id",
-    dataIndex: "reference_id",
-    key: "reference_id",
-    align: "center",
+    title: 'Reference Id',
+    dataIndex: 'reference_id',
+    key: 'reference_id',
+    align: 'center',
     render: (reference_id) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {reference_id}
@@ -18,9 +18,9 @@ const columns = [
     ),
   },
   {
-    title: "User",
-    dataIndex: "user",
-    key: "user",
+    title: 'User',
+    dataIndex: 'user',
+    key: 'user',
     render: (user) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {user}
@@ -28,9 +28,9 @@ const columns = [
     ),
   },
   {
-    title: "Warehouse",
-    dataIndex: "warehouse",
-    key: "warehouse",
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
     render: (warehouse) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {warehouse}
@@ -38,9 +38,9 @@ const columns = [
     ),
   },
   {
-    title: "Cash in Hand",
-    dataIndex: "cash_in_hand",
-    key: "cash_in_hand",
+    title: 'Cash in Hand',
+    dataIndex: 'cash_in_hand',
+    key: 'cash_in_hand',
     render: (cash_in_hand) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {cash_in_hand}
@@ -48,10 +48,10 @@ const columns = [
     ),
   },
   {
-    title: "Open At",
-    dataIndex: "open_at",
-    key: "open_at",
-    align: "center",
+    title: 'Open At',
+    dataIndex: 'open_at',
+    key: 'open_at',
+    align: 'center',
     render: (open_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {open_at}
@@ -59,10 +59,10 @@ const columns = [
     ),
   },
   {
-    title: "Closes At",
-    dataIndex: "closes_at",
-    key: "closes_at",
-    align: "center",
+    title: 'Closes At',
+    dataIndex: 'closes_at',
+    key: 'closes_at',
+    align: 'center',
     render: (closes_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {closes_at}

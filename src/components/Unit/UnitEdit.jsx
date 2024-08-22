@@ -1,17 +1,17 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetUnitDetailsQuery,
   useUpdateUnitMutation,
-} from "../../redux/services/unit/unitApi";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import { errorFieldsUpdate } from "../../utilities/lib/errorFieldsUpdate";
-import { fieldsToUpdate } from "../../utilities/lib/fieldsToUpdate";
-import { sanitizeObj } from "../../utilities/lib/sanitizeObj";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import UnitForm from "./UnitForm";
+} from '../../redux/services/unit/unitApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import UnitForm from './UnitForm';
 
 export const UnitdEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export const UnitdEdit = ({ id, setId }) => {
 
     const postData = {
       ...sanitizeObj(values),
-      _method: "PUT",
+      _method: 'PUT',
     };
 
     appendToFormData(postData, formData);
@@ -62,7 +62,7 @@ export const UnitdEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={"Edit Unit"}
+      title={'Edit Unit'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

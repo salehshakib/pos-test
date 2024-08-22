@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteGiftCardDesignMutation,
   useGetAllGiftCardDesignQuery,
   useUpdateGiftCardDesignStatusMutation,
-} from "../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { GiftCardDesigneDetails } from "./GiftCardDesignDetails";
-import { GiftCardDesignEdit } from "./GiftCardDesignEdit";
+import { GiftCardDesigneDetails } from './GiftCardDesignDetails';
+import { GiftCardDesignEdit } from './GiftCardDesignEdit';
 
 const GiftCardDesginTable = ({
   newColumns,

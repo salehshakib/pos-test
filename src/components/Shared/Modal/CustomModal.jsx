@@ -1,9 +1,9 @@
-import { Button, Modal } from "antd";
-import { GlobalUtilityStyle } from "../../../container/Styled";
+import { Button, Modal } from 'antd';
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const CustomModal = (props) => {
   const {
-    title = "Details",
+    title = 'Details',
     openModal,
     hideModal,
     showCloseButton = true,
@@ -41,8 +41,8 @@ const CustomModal = (props) => {
         confirmLoading={loading}
         styles={{
           header: {
-            borderBottom: "2px solid #F0F0F0",
-            paddingBottom: "5px",
+            borderBottom: '2px solid #F0F0F0',
+            paddingBottom: '5px',
           },
         }}
         {...modalProps}
@@ -52,7 +52,7 @@ const CustomModal = (props) => {
             {children}
           </div>
           {notification &&
-            (status === "Pending" ? (
+            (status === 'Pending' ? (
               <div className="w-full flex justify-end items-center gap-3 mt-5 shadow-sm">
                 <Button
                   type=""
@@ -91,7 +91,7 @@ const CustomModal = (props) => {
                   Accept & Transfer
                 </Button>
               </div>
-            ) : status === "Accepted" ? (
+            ) : status === 'Accepted' ? (
               <div className="w-full flex justify-end items-center gap-3 mt-5">
                 <Button type="primary" onClick={hideModal}>
                   Close

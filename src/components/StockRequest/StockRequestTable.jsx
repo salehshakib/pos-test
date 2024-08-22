@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useGetAllStockRequestQuery,
   useResponseStockRequestMutation,
-} from "../../redux/services/stockRequest/stockRequestApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import CustomTable from "../Shared/Table/CustomTable";
-import { StockRequestDetails } from "./StockRequestDetails";
+} from '../../redux/services/stockRequest/stockRequestApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import CustomTable from '../Shared/Table/CustomTable';
+import { StockRequestDetails } from './StockRequestDetails';
 
 const StockRequestTable = ({
   newColumns,
@@ -77,7 +77,7 @@ const StockRequestTable = ({
     setDetailsModal(false);
 
     if (id) {
-      navigate("/inventory/stock-request", { replace: true });
+      navigate('/inventory/stock-request', { replace: true });
     }
   };
 
@@ -92,7 +92,7 @@ const StockRequestTable = ({
     setAcceptLoading(true);
     const { data } = await responseStockRequest({
       request_id: detailsId,
-      status: "Accepted",
+      status: 'Accepted',
     });
 
     if (data?.success) {
@@ -107,7 +107,7 @@ const StockRequestTable = ({
 
     const { data } = await responseStockRequest({
       request_id: detailsId,
-      status: "Accepted",
+      status: 'Accepted',
     });
 
     setAcceptAndTransferLoading(false);
@@ -115,7 +115,7 @@ const StockRequestTable = ({
     if (data?.success) {
       hideModal();
 
-      navigate("/inventory/transfer", {
+      navigate('/inventory/transfer', {
         state: {
           id: detailsId,
         },
@@ -124,7 +124,7 @@ const StockRequestTable = ({
   };
 
   const handleTransfer = async () => {
-    navigate("/inventory/transfer", {
+    navigate('/inventory/transfer', {
       state: {
         id: detailsId,
       },
@@ -135,7 +135,7 @@ const StockRequestTable = ({
     setRejectLoading(true);
     const { data } = await responseStockRequest({
       request_id: detailsId,
-      status: "Rejected",
+      status: 'Rejected',
     });
 
     if (data?.success) {

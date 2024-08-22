@@ -1,11 +1,11 @@
 export const baseUnit = [
   {
-    name: "meter",
-    symbol: "m",
+    name: 'meter',
+    symbol: 'm',
   },
   {
-    name: "piece",
-    symbol: "pc",
+    name: 'piece',
+    symbol: 'pc',
     // subunits: [
     //   {
     //     name: "piece",
@@ -22,8 +22,8 @@ export const baseUnit = [
     // ],
   },
   {
-    name: "kilogram",
-    symbol: "kg",
+    name: 'kilogram',
+    symbol: 'kg',
     // subunits: [
     //   {
     //     name: "gram",
@@ -36,23 +36,23 @@ export const baseUnit = [
     // ],
   },
   {
-    name: "second",
-    symbol: "s",
+    name: 'second',
+    symbol: 's',
   },
   {
-    name: "ampere",
-    symbol: "A",
+    name: 'ampere',
+    symbol: 'A',
   },
   {
-    name: "kelvin",
-    symbol: "K",
+    name: 'kelvin',
+    symbol: 'K',
   },
   {
-    name: "mole",
-    symbol: "mol",
+    name: 'mole',
+    symbol: 'mol',
   },
   {
-    name: "candela",
-    symbol: "cd",
+    name: 'candela',
+    symbol: 'cd',
   },
 ];

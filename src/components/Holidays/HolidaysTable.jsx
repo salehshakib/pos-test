@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteHolidayMutation,
   useGetAllHolidayQuery,
   useUpdateHolidayStatusMutation,
-} from "../../redux/services/hrm/holiday/holidayApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/hrm/holiday/holidayApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { HolidayDetails } from "./HolidayDetails";
-import { HolidaysEdit } from "./HolidaysEdit";
+import { HolidayDetails } from './HolidayDetails';
+import { HolidaysEdit } from './HolidaysEdit';
 
 export const HolidaysTable = ({
   newColumns,
@@ -153,7 +153,7 @@ export const HolidaysTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"holiday"}
+        item={'holiday'}
       />
     </GlobalUtilityStyle>
   );

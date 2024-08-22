@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/services/auth/authSlice";
+import { useSelector } from 'react-redux';
+import { useCurrentUser } from '../../redux/services/auth/authSlice';
 
 function getMenuItems(rolePermissions) {
   const firstParts = rolePermissions.map((permission) =>
-    permission.name.split(".")[0].replace(/-/g, "")
+    permission.name.split('.')[0].replace(/-/g, '')
   );
 
   const menuItems = Array.from(new Set(firstParts));
@@ -17,13 +17,13 @@ function filterPaths(paths, uniqueItems) {
   const parentStructure = {};
 
   paths.forEach((item) => {
-    const modifiedPath = item.path.replace(/-/g, "");
+    const modifiedPath = item.path.replace(/-/g, '');
 
     if (uniqueItems.includes(modifiedPath)) {
       if (item.children) {
         const children = [];
         item.children.forEach((child) => {
-          const childModifiedPath = child.path.replace(/-/g, "");
+          const childModifiedPath = child.path.replace(/-/g, '');
 
           if (uniqueItems.includes(childModifiedPath)) {
             children.push(child.path);
@@ -35,18 +35,18 @@ function filterPaths(paths, uniqueItems) {
       } else {
         parentStructure[item.path] = [];
       }
-    } else if (modifiedPath === "dashboard") {
+    } else if (modifiedPath === 'dashboard') {
       parentStructure[item.path] = [];
     } else if (item.children) {
       const childNames = [];
       item.children.forEach((child) => {
-        const childModifiedPath = child.path.replace(/-/g, "");
+        const childModifiedPath = child.path.replace(/-/g, '');
         if (uniqueItems.includes(childModifiedPath)) {
           childNames.push(child.path);
         }
 
-        if (childModifiedPath === "printbarcode") {
-          childNames.push("print-barcode");
+        if (childModifiedPath === 'printbarcode') {
+          childNames.push('print-barcode');
         }
 
         // console.log(childModifiedPath);
@@ -65,24 +65,24 @@ export const useMenuItems = (adminPaths) => {
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
   const actionKyes = [
-    "accesstoken.issueToken",
-    "authorization.authorize",
-    "transienttoken.refresh",
-    "approveauthorization.approve",
-    "denyauthorization.deny",
-    "authorizedaccesstoken.forUser",
-    "authorizedaccesstoken.destroy",
-    "client.forUser",
-    "scope.all",
-    "personalaccesstoken.forUser",
-    "personalaccesstoken.store",
-    "personalaccesstoken.destroy",
-    "csrfcookie.show",
-    "handlerequests.handleUpdate",
-    "frontendassets.returnJavaScriptAsFile",
-    "frontendassets.maps",
-    "fileupload.handle",
-    "filepreview.handle",
+    'accesstoken.issueToken',
+    'authorization.authorize',
+    'transienttoken.refresh',
+    'approveauthorization.approve',
+    'denyauthorization.deny',
+    'authorizedaccesstoken.forUser',
+    'authorizedaccesstoken.destroy',
+    'client.forUser',
+    'scope.all',
+    'personalaccesstoken.forUser',
+    'personalaccesstoken.store',
+    'personalaccesstoken.destroy',
+    'csrfcookie.show',
+    'handlerequests.handleUpdate',
+    'frontendassets.returnJavaScriptAsFile',
+    'frontendassets.maps',
+    'fileupload.handle',
+    'filepreview.handle',
   ];
 
   const filteredRolePermissions = rolePermissions.filter(
@@ -112,16 +112,15 @@ export const usePermission = (route, moduleName) => {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
-
-  const isAdmin = userData?.roles?.[0]?.name === "admin";
+  const isAdmin = userData?.roles?.[0]?.name === 'admin';
 
   // if (isAdmin) {
   //   return true
   // }
 
   const cleanedRoute =
-    route?.split("/").length > 1
-      ? route?.split("/").slice(1, 2)[0].split("-").join("")
+    route?.split('/').length > 1
+      ? route?.split('/').slice(1, 2)[0].split('-').join('')
       : route;
 
   const isPermitted = hasPermission(rolePermissions, cleanedRoute, moduleName);
@@ -131,8 +130,8 @@ export const usePermission = (route, moduleName) => {
 
 export const useUrlIndexPermission = (pathName) => {
   const route = pathName
-    ? "route/" + pathName
+    ? 'route/' + pathName
     : window.location.pathname.substring(1);
 
-  return usePermission(route, "index");
+  return usePermission(route, 'index');
 };

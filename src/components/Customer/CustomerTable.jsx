@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCustomerMutation,
   useGetAllCustomerQuery,
   useUpdateCustomerStatusMutation,
-} from "../../redux/services/customer/customerApi";
+} from '../../redux/services/customer/customerApi';
 import {
   openEditDrawer,
   setEditId,
-} from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { CustomerDetails } from "./CustomerDetails";
-import CustomerEdit from "./CustomerEdit";
+} from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { CustomerDetails } from './CustomerDetails';
+import CustomerEdit from './CustomerEdit';
 
 const CustomerTable = ({
   newColumns,
@@ -119,7 +119,7 @@ const CustomerTable = ({
       return {
         id,
         name: { name, email },
-        companyName: companyName ?? "N/A",
+        companyName: companyName ?? 'N/A',
         phone,
         customerGroup: customer_groups?.name,
         created_at,
@@ -173,7 +173,7 @@ const CustomerTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"customer"}
+        item={'customer'}
       />
     </GlobalUtilityStyle>
   );

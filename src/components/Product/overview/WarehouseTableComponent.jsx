@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomTable from "../../Shared/Table/CustomTable";
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomTable from '../../Shared/Table/CustomTable';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     width: 150,
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -19,10 +19,10 @@ const columns = [
     ),
   },
   {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    align: "center",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'center',
     render: (price, record) => {
       return price >= 0 ? (
         <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -30,8 +30,8 @@ const columns = [
         </span>
       ) : (
         <CustomInput
-          type={"number"}
-          name={["price_list", "price", record?.id]}
+          type={'number'}
+          name={['price_list', 'price', record?.id]}
           placeholder="quantity"
           noStyle={true}
         />
@@ -40,11 +40,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       const { setRowId } = props ?? {};
       return (
@@ -66,7 +66,7 @@ const columns = [
 
 const WarehouseTableComponent = () => {
   const form = Form.useFormInstance();
-  const warehouse = Form.useWatch("warehouse_id", form);
+  const warehouse = Form.useWatch('warehouse_id', form);
 
   const [rowId, setRowId] = useState(undefined);
 
@@ -93,7 +93,7 @@ const WarehouseTableComponent = () => {
     if (warehouse?.length > 0) {
       const setFormValuesIfNotExists = (productIndex) => {
         const selectedProduct = warehouse[productIndex];
-        const pricePath = ["price_list", "price", selectedProduct];
+        const pricePath = ['price_list', 'price', selectedProduct];
 
         // Check if the value already exists
         const existingPrice = form.getFieldValue(pricePath);
@@ -121,7 +121,7 @@ const WarehouseTableComponent = () => {
     if (rowId !== undefined) {
       const updatedProductData = warehouse?.filter((item) => item !== rowId);
 
-      form.setFieldValue("warehouse_id", updatedProductData);
+      form.setFieldValue('warehouse_id', updatedProductData);
     }
   }, [rowId]);
 

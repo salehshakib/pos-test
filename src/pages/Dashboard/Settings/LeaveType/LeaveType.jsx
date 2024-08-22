@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { LeaveTypeCreate } from "../../../../components/LeaveType/LeaveTypeCreate";
-import { LeaveTypeTable } from "../../../../components/LeaveType/LeaveTypeTable";
-import GlobalContainer from "../../../../container/GlobalContainer/GlobalContainer";
-import { LEAVE_TYPE } from "../../../../utilities/apiEndpoints/hrm.api";
-import { useCustomDebounce } from "../../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import { LeaveTypeCreate } from '../../../../components/LeaveType/LeaveTypeCreate';
+import { LeaveTypeTable } from '../../../../components/LeaveType/LeaveTypeTable';
+import GlobalContainer from '../../../../container/GlobalContainer/GlobalContainer';
+import { LEAVE_TYPE } from '../../../../utilities/apiEndpoints/hrm.api';
+import { useCustomDebounce } from '../../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -19,14 +19,14 @@ const columns = [
   },
 
   {
-    title: "Attachmentable",
-    dataIndex: "attachmentable",
-    key: "attachmentable",
-    align: "center",
+    title: 'Attachmentable',
+    dataIndex: 'attachmentable',
+    key: 'attachmentable',
+    align: 'center',
 
     render: (attachmentable) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {attachmentable === 1 ? "Needed" : "Don't Needed"}
+        {attachmentable === 1 ? 'Needed' : "Don't Needed"}
       </span>
     ),
   },

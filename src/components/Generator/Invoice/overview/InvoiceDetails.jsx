@@ -1,9 +1,9 @@
-import { Spin } from "antd";
-import generatePDF from "react-to-pdf";
-import { useGetInvoiceDetailsQuery } from "../../../../redux/services/invoice/invoiceApi";
-import { generatePdfOptions } from "../../../../utilities/lib/generatePdfOptions";
-import CustomModal from "../../../Shared/Modal/CustomModal";
-import Invoice from "../../Quotation/overview/Invoice";
+import { Spin } from 'antd';
+import generatePDF from 'react-to-pdf';
+import { useGetInvoiceDetailsQuery } from '../../../../redux/services/invoice/invoiceApi';
+import { generatePdfOptions } from '../../../../utilities/lib/generatePdfOptions';
+import CustomModal from '../../../Shared/Modal/CustomModal';
+import Invoice from '../../Quotation/overview/Invoice';
 
 // const columns = [
 //   {
@@ -98,7 +98,7 @@ export const InvoiceDetails = ({ id, ...props }) => {
   //   };
   // });
 
-  const getTargetElement = () => document.getElementById("invoice-container");
+  const getTargetElement = () => document.getElementById('invoice-container');
 
   const handlePrintPdf = () => {
     generatePDF(getTargetElement, {
@@ -110,7 +110,7 @@ export const InvoiceDetails = ({ id, ...props }) => {
   const handleDownload = () => {
     generatePDF(getTargetElement, {
       ...generatePdfOptions,
-      method: "save",
+      method: 'save',
       filename: `${data?.reference_id}.pdf`,
     });
   };
@@ -125,7 +125,7 @@ export const InvoiceDetails = ({ id, ...props }) => {
         <Spin className="w-full flex justify-center items-center my-10" />
       ) : (
         <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
-          <Invoice data={data} type={"INVOICE"} />
+          <Invoice data={data} type={'INVOICE'} />
           {/* <CustomDescription title="Reference" items={referenceId} />
           <CustomDescription title="Beneficiary " items={benDetails} />
 

@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateExpenseMutation } from "../../redux/services/expense/expenseApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import { ExpenseForm } from "./ExpenseForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateExpenseMutation } from '../../redux/services/expense/expenseApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import { ExpenseForm } from './ExpenseForm';
 
 export const ExpenseCreate = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const ExpenseCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Expense"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Expense'} open={isCreateDrawerOpen}>
       <ExpenseForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

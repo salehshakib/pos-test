@@ -1,22 +1,22 @@
-import { Button, Layout, Tag } from "antd";
-import { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useSelector } from "react-redux";
-import { Outlet, useLocation } from "react-router-dom";
-import Logo from "../components/AllSection/Header/Logo";
-import Profile from "../components/AllSection/Header/Profile";
-import { GlobalUtilityStyle } from "../container/Styled";
-import { isDev, mode } from "../utilities/configs/base_url";
-import SideBar from "./SideBar";
+import { Button, Layout, Tag } from 'antd';
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
+import Logo from '../components/AllSection/Header/Logo';
+import Profile from '../components/AllSection/Header/Profile';
+import { GlobalUtilityStyle } from '../container/Styled';
+import { isDev, mode } from '../utilities/configs/base_url';
+import SideBar from './SideBar';
 
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = () => {
   const { pathname } = useLocation();
 
-  const dashboardStyle = pathname.includes("/dashboard")
+  const dashboardStyle = pathname.includes('/dashboard')
     ? {}
-    : { backgroundColor: "white", borderRadius: "8px" };
+    : { backgroundColor: 'white', borderRadius: '8px' };
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -36,12 +36,12 @@ const MainLayout = () => {
             <Logo />
           </div>
           <div>
-            {mode === "local" && (
+            {mode === 'local' && (
               <Tag color="processing" className="font-semibold">
                 {mode.toUpperCase()} MODE
               </Tag>
             )}
-            {isDev.toLowerCase() === "true" && (
+            {isDev.toLowerCase() === 'true' && (
               <Tag color="purple" className="font-semibold">
                 DEV MODE
               </Tag>
@@ -58,11 +58,11 @@ const MainLayout = () => {
           <Layout className="w-48 flex flex-col">
             <Content
               style={{
-                margin: "16px",
+                margin: '16px',
                 marginBottom: 0,
                 ...dashboardStyle,
               }}
-              className={`${pathname.includes("/dashboard") ? "" : "shadow-md"} flex-grow overflow-auto`}
+              className={`${pathname.includes('/dashboard') ? '' : 'shadow-md'} flex-grow overflow-auto`}
             >
               <GlobalUtilityStyle>
                 <Outlet />
@@ -70,18 +70,18 @@ const MainLayout = () => {
             </Content>
             <Footer
               style={{
-                textAlign: "center",
-                padding: "16px",
+                textAlign: 'center',
+                padding: '16px',
               }}
             >
-              POS Inventory ©{new Date().getFullYear()} Created by{" "}
+              POS Inventory ©{new Date().getFullYear()} Created by{' '}
               <a
                 href={`http://${hyperLink}`}
                 className="primary-text hover:underline font-semibold"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {developedBy ?? "Vitasoft Solutions"}
+                {developedBy ?? 'Vitasoft Solutions'}
               </a>
             </Footer>
           </Layout>

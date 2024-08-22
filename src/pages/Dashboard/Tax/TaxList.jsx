@@ -1,17 +1,17 @@
-import { useState } from "react";
-import TaxCreate from "../../../components/Tax/TaxCreate";
-import TaxTable from "../../../components/Tax/TaxTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { TAX } from "../../../utilities/apiEndpoints/helper.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import TaxCreate from '../../../components/Tax/TaxCreate';
+import TaxTable from '../../../components/Tax/TaxTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { TAX } from '../../../utilities/apiEndpoints/helper.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -19,10 +19,10 @@ const columns = [
     ),
   },
   {
-    title: "Rate (%)",
-    dataIndex: "rate",
-    key: "rate",
-    align: "center",
+    title: 'Rate (%)',
+    dataIndex: 'rate',
+    key: 'rate',
+    align: 'center',
     render: (rate) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {rate}

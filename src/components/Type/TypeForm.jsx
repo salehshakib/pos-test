@@ -1,6 +1,6 @@
-import { Col, Row } from "antd";
-import CustomForm from "../Shared/Form/CustomForm";
-import CustomInput from "../Shared/Input/CustomInput";
+import { Col, Row } from 'antd';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 
 const rowLayout = {
   gutter: 25,
@@ -16,10 +16,10 @@ const TypeForm = (props) => {
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <CustomInput
-            label={"Type Name"}
-            type={"text"}
+            label={'Type Name'}
+            type={'text'}
             required={true}
-            name={"name"}
+            name={'name'}
           />
         </Col>
       </Row>

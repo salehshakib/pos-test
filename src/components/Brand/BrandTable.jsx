@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteBrandMutation,
   useGetBrandsQuery,
   useUpdateBrandStatusMutation,
-} from "../../redux/services/brand/brandApi";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
-import CustomTable from "../Shared/Table/CustomTable";
-import { BrandDetails } from "./BrandDetails";
-import { BrandEdit } from "./BrandEdit";
+} from '../../redux/services/brand/brandApi';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
+import CustomTable from '../Shared/Table/CustomTable';
+import { BrandDetails } from './BrandDetails';
+import { BrandEdit } from './BrandEdit';
 
 export const BrandTable = ({
   newColumns,
@@ -154,7 +154,7 @@ export const BrandTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"brand"}
+        item={'brand'}
       />
     </GlobalUtilityStyle>
   );

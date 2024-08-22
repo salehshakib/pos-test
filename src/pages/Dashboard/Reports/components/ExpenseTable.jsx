@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { ExpenseDetails } from "../../../../components/Expense/ExpenseDetails";
-import CustomTable from "../../../../components/Shared/Table/CustomTable";
-import { GlobalUtilityStyle } from "../../../../container/Styled";
-import { useGetAllExpenseQuery } from "../../../../redux/services/expense/expenseApi";
-import { useCurrency } from "../../../../redux/services/pos/posSlice";
-import { usePagination } from "../../../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../../../utilities/hooks/useParams";
-import { showCurrency } from "../../../../utilities/lib/currency";
-import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
-import { columns } from "../data/Expense";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ExpenseDetails } from '../../../../components/Expense/ExpenseDetails';
+import CustomTable from '../../../../components/Shared/Table/CustomTable';
+import { GlobalUtilityStyle } from '../../../../container/Styled';
+import { useGetAllExpenseQuery } from '../../../../redux/services/expense/expenseApi';
+import { useCurrency } from '../../../../redux/services/pos/posSlice';
+import { usePagination } from '../../../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../../utilities/lib/currency';
+import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
+import { columns } from '../data/Expense';
 
 export const ExpenseTable = ({
   keyword,

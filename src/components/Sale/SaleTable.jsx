@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalUtilityStyle } from "../../container/Styled";
-import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalUtilityStyle } from '../../container/Styled';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteSaleMutation,
   useGetAllSaleQuery,
-} from "../../redux/services/sale/saleApi";
-import { usePagination } from "../../utilities/hooks/usePagination";
-import { useGlobalParams } from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
-import DeleteModal from "../Shared/Modal/DeleteModal";
-import CustomTable from "../Shared/Table/CustomTable";
+} from '../../redux/services/sale/saleApi';
+import { usePagination } from '../../utilities/hooks/usePagination';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import DeleteModal from '../Shared/Modal/DeleteModal';
+import CustomTable from '../Shared/Table/CustomTable';
 
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { useFormatDate } from "../../utilities/hooks/useFormatDate";
-import { showCurrency } from "../../utilities/lib/currency";
-import { formatDate } from "../../utilities/lib/dateFormat";
-import { SaleDetails } from "./SaleDetails";
-import { SaleEdit } from "./SaleEdit";
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { showCurrency } from '../../utilities/lib/currency';
+import { formatDate } from '../../utilities/lib/dateFormat';
+import { SaleDetails } from './SaleDetails';
+import { SaleEdit } from './SaleEdit';
 
 export const SaleTable = ({
   newColumns,
@@ -49,7 +49,7 @@ export const SaleTable = ({
   const { data, isLoading } = useGetAllSaleQuery(
     { params },
     {
-      skip: !useUrlIndexPermission("sale"),
+      skip: !useUrlIndexPermission('sale'),
     }
   );
 
@@ -106,8 +106,8 @@ export const SaleTable = ({
         saleStatus: sale_status,
         paymentStatus: payment_status,
         grandTotal: showCurrency(grand_total, currency),
-        paid: showCurrency(paid_amount ?? "0", currency),
-        due: showCurrency(due_amount ?? "0", currency),
+        paid: showCurrency(paid_amount ?? '0', currency),
+        due: showCurrency(due_amount ?? '0', currency),
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -150,7 +150,7 @@ export const SaleTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={"sale"}
+        item={'sale'}
       />
     </GlobalUtilityStyle>
   );

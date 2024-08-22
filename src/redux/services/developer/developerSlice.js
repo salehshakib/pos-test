@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import logo from "../../../assets/data/defaultLogo";
+import { createSlice } from '@reduxjs/toolkit';
+import logo from '../../../assets/data/defaultLogo';
 
 const initialState = {
   developedBy: null,
@@ -7,12 +7,12 @@ const initialState = {
   logo: logo,
   company: null,
 
-  dateFormat: "DD-MM-YYYY",
+  dateFormat: 'DD-MM-YYYY',
   digits: 2,
 };
 
 const developerSlice = createSlice({
-  name: "developer",
+  name: 'developer',
   initialState,
   reducers: {
     setDeveloper: (state, action) => {
@@ -29,7 +29,11 @@ const developerSlice = createSlice({
     },
 
     setDateFormat: (state, action) => {
-      state.dateFormat = action.payload;
+      if (action.payload.toLowerCase() === 'invalid date') {
+        state.dateFormat = 'DD-MM-YYYY';
+      } else {
+        state.dateFormat = action.payload;
+      }
     },
     setDigits: (state, action) => {
       state.digits = parseInt(action.payload, 10);

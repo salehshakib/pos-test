@@ -1,16 +1,16 @@
-import { useState } from "react";
-import TypeCreate from "../../../components/Type/TypeCreate";
-import TypeTable from "../../../components/Type/TypeTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { TYPE } from "../../../utilities/apiEndpoints/helper.api";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import TypeCreate from '../../../components/Type/TypeCreate';
+import TypeTable from '../../../components/Type/TypeTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { TYPE } from '../../../utilities/apiEndpoints/helper.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}

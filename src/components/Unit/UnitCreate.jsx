@@ -1,10 +1,10 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { useCreateUnitMutation } from "../../redux/services/unit/unitApi";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import UnitForm from "./UnitForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateUnitMutation } from '../../redux/services/unit/unitApi';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import UnitForm from './UnitForm';
 
 const UnitCreate = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const UnitCreate = () => {
     const { data, error } = await createUnit({
       data: {
         ...values,
-        operator: values.operator ? values.operator : "*",
+        operator: values.operator ? values.operator : '*',
         operation_value: values.operation_value ? values.operation_value : 1,
       },
     });
@@ -38,7 +38,7 @@ const UnitCreate = () => {
   };
 
   return (
-    <CustomDrawer title={"Create Unit"} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Unit'} open={isCreateDrawerOpen}>
       <UnitForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

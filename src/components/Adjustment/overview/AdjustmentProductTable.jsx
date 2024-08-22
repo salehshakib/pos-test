@@ -1,26 +1,26 @@
-import { Button, Form, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
-import { showCurrency } from "../../../utilities/lib/currency";
+import { Button, Form, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { FaMinus, FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { showCurrency } from '../../../utilities/lib/currency';
 import {
   decrementCounter,
   incrementCounter,
   onActionChange,
   onDelete,
   onQuantityChange,
-} from "../../../utilities/lib/productTable/counters";
-import { CustomQuantityInput } from "../../Shared/Input/CustomQuantityInput";
-import { ProductController } from "../../Shared/ProductControllerComponent/ProductController";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/lib/productTable/counters';
+import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
+import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -28,10 +28,10 @@ const columns = [
     ),
   },
   {
-    title: "SKU",
-    dataIndex: "sku",
-    key: "sku",
-    align: "center",
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
     width: 100,
     render: (sku) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -40,10 +40,10 @@ const columns = [
     ),
   },
   {
-    title: "Unit Cost",
-    dataIndex: "unitCost",
-    key: "unitCost",
-    align: "center",
+    title: 'Unit Cost',
+    dataIndex: 'unitCost',
+    key: 'unitCost',
+    align: 'center',
     width: 100,
     render: (unitCost) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
@@ -52,10 +52,10 @@ const columns = [
     ),
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "center",
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    align: 'center',
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
@@ -66,7 +66,7 @@ const columns = [
         <div className="flex gap-1 justify-center items-center">
           <div>
             <Button
-              key={"sub"}
+              key={'sub'}
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
@@ -84,7 +84,7 @@ const columns = [
           />
           <div>
             <Button
-              key={"add"}
+              key={'add'}
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
@@ -98,32 +98,32 @@ const columns = [
     },
   },
   {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    align: 'center',
     width: 180,
     render: (action, record) => {
       return (
         action && (
           <div className="flex w-full  justify-center items-center gap-3">
             <CustomSelect
-              name={["product_list", "action", record?.id]}
+              name={['product_list', 'action', record?.id]}
               placeholder="Type"
               options={[
                 {
-                  value: "Addition",
-                  label: "Addition (+)",
+                  value: 'Addition',
+                  label: 'Addition (+)',
                 },
                 {
-                  value: "Subtraction",
-                  label: "Subtraction (-)",
+                  value: 'Subtraction',
+                  label: 'Subtraction (-)',
                 },
               ]}
               onChange={(value) =>
                 record.onActionChange(record.id, value, record.setFormValues)
               }
-              styleProps={{ width: "9rem" }}
+              styleProps={{ width: '9rem' }}
               noStyle={true}
             />
           </div>
@@ -133,11 +133,11 @@ const columns = [
   },
   {
     title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
-    dataIndex: "delete",
-    key: "delete",
-    align: "center",
+    dataIndex: 'delete',
+    key: 'delete',
+    align: 'center',
     width: 50,
-    fixed: "right",
+    fixed: 'right',
     render: (props, record) => {
       return (
         props && (
@@ -179,7 +179,7 @@ export const AdjustmentProductTable = ({
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
       formValues.product_list.action[id] =
-        formValues.product_list.action[id] ?? "Addition";
+        formValues.product_list.action[id] ?? 'Addition';
 
       return {
         id,

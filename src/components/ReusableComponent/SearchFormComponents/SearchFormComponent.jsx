@@ -1,36 +1,36 @@
-import { Col } from "antd";
-import { paymentStatusOptions } from "../../../assets/data/paymentStatus";
-import { purchaseStatusOptions } from "../../../assets/data/purchaseStatus";
-import { saleStatusOptions } from "../../../assets/data/saleStatus";
+import { Col } from 'antd';
+import { paymentStatusOptions } from '../../../assets/data/paymentStatus';
+import { purchaseStatusOptions } from '../../../assets/data/purchaseStatus';
+import { saleStatusOptions } from '../../../assets/data/saleStatus';
 // import { mdColLayout } from "../../../layout/FormLayout";
-import { barcodeOptions } from "../../../assets/data/barcode";
-import { baseUnit } from "../../../assets/data/baseUnit";
-import { employeeStatusOptions } from "../../../assets/data/employeeStatus";
-import { paymentTypesOptions } from "../../../assets/data/paymentTypes";
-import { fullColLayout } from "../../../layout/FormLayout";
-import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
-import { useGetAllCashierQuery } from "../../../redux/services/cashier/cashierApi";
-import { useGetAllCategoryQuery } from "../../../redux/services/category/categoryApi";
-import { useGetAllCustomerQuery } from "../../../redux/services/customer/customerApi";
-import { useGetAllCustomerGroupQuery } from "../../../redux/services/customerGroup/customerGroupApi";
-import { useGetAllExpenseCategoryQuery } from "../../../redux/services/expense/expenseCategoryApi";
-import { useGetAllGiftCardTypeQuery } from "../../../redux/services/giftcard/giftcardtype/giftCardTypeApi";
-import { useGetDepartmentsQuery } from "../../../redux/services/hrm/department/departmentApi";
-import { useGetAllDesignationQuery } from "../../../redux/services/hrm/designation/designationApi";
-import { useGetAllEmployeeQuery } from "../../../redux/services/hrm/employee/employeeApi";
-import { useGetAllProductsQuery } from "../../../redux/services/product/productApi";
-import { useGetAllRolesQuery } from "../../../redux/services/roles/rolesApi";
-import { useGetAllLeaveTypeQuery } from "../../../redux/services/settings/leaveType/leaveTypeApi";
-import { useGetAllSupplierQuery } from "../../../redux/services/supplier/supplierApi";
-import { useGetAllTaxQuery } from "../../../redux/services/tax/taxApi";
-import { useGetTypesQuery } from "../../../redux/services/types/typesApi";
-import { useGetAllUnitQuery } from "../../../redux/services/unit/unitApi";
-import { useGetWarehousesQuery } from "../../../redux/services/warehouse/warehouseApi";
+import { barcodeOptions } from '../../../assets/data/barcode';
+import { baseUnit } from '../../../assets/data/baseUnit';
+import { employeeStatusOptions } from '../../../assets/data/employeeStatus';
+import { paymentTypesOptions } from '../../../assets/data/paymentTypes';
+import { fullColLayout } from '../../../layout/FormLayout';
+import { useGetBrandsQuery } from '../../../redux/services/brand/brandApi';
+import { useGetAllCashierQuery } from '../../../redux/services/cashier/cashierApi';
+import { useGetAllCategoryQuery } from '../../../redux/services/category/categoryApi';
+import { useGetAllCustomerQuery } from '../../../redux/services/customer/customerApi';
+import { useGetAllCustomerGroupQuery } from '../../../redux/services/customerGroup/customerGroupApi';
+import { useGetAllExpenseCategoryQuery } from '../../../redux/services/expense/expenseCategoryApi';
+import { useGetAllGiftCardTypeQuery } from '../../../redux/services/giftcard/giftcardtype/giftCardTypeApi';
+import { useGetDepartmentsQuery } from '../../../redux/services/hrm/department/departmentApi';
+import { useGetAllDesignationQuery } from '../../../redux/services/hrm/designation/designationApi';
+import { useGetAllEmployeeQuery } from '../../../redux/services/hrm/employee/employeeApi';
+import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
+import { useGetAllRolesQuery } from '../../../redux/services/roles/rolesApi';
+import { useGetAllLeaveTypeQuery } from '../../../redux/services/settings/leaveType/leaveTypeApi';
+import { useGetAllSupplierQuery } from '../../../redux/services/supplier/supplierApi';
+import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
+import { useGetTypesQuery } from '../../../redux/services/types/typesApi';
+import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
-} from "../../../utilities/hooks/useParams";
-import CustomSelect from "../../Shared/Select/CustomSelect";
+} from '../../../utilities/hooks/useParams';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const mdColLayout = {
   xs: 12,
@@ -39,17 +39,17 @@ const mdColLayout = {
 
 const commonProps = {
   showSearch: true,
-  mode: "multiple",
+  mode: 'multiple',
   // customStyle: true,
   // noStyle: true,
 };
 
 export const ProductTypeFilter = () => {
   const options = [
-    { value: "Standard", label: "Standard" },
-    { value: "Combo", label: "Combo" },
-    { value: "Digital", label: "Digital" },
-    { value: "Service", label: "Service" },
+    { value: 'Standard', label: 'Standard' },
+    { value: 'Combo', label: 'Combo' },
+    { value: 'Digital', label: 'Digital' },
+    { value: 'Service', label: 'Service' },
   ];
 
   return (
@@ -58,14 +58,14 @@ export const ProductTypeFilter = () => {
         {...commonProps}
         label="Product Type"
         options={options}
-        name={"product_types"}
+        name={'product_types'}
       />
     </Col>
   );
 };
 
 export const WarehouseFilter = ({
-  name = "warehouse_ids",
+  name = 'warehouse_ids',
   fullLayout = false,
   multiple = true,
 }) => {
@@ -84,8 +84,8 @@ export const WarehouseFilter = ({
     <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         showSearch={true}
-        mode={multiple && "multiple"}
-        label={"Warehouse"}
+        mode={multiple && 'multiple'}
+        label={'Warehouse'}
         name={name}
         options={options}
         isLoading={isLoading}
@@ -113,7 +113,7 @@ export const BrandFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Brand"
-        name={"brand_ids"}
+        name={'brand_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -122,8 +122,8 @@ export const BrandFilter = () => {
 };
 
 export const CategoryFilter = ({
-  label = "Category",
-  name = "category_ids",
+  label = 'Category',
+  name = 'category_ids',
 }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -167,9 +167,9 @@ export const SupplierFilter = ({ multiple = true, fullLayout = false }) => {
     <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         {...commonProps}
-        multiple={multiple && "multiple"}
+        multiple={multiple && 'multiple'}
         label="Supplier"
-        name={"supplier_ids"}
+        name={'supplier_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -178,7 +178,7 @@ export const SupplierFilter = ({ multiple = true, fullLayout = false }) => {
 };
 
 export const ProductFilter = ({
-  name = "product_ids",
+  name = 'product_ids',
   fullLayout = false,
   multiple = true,
 }) => {
@@ -201,7 +201,7 @@ export const ProductFilter = ({
         name={name}
         options={options}
         isLoading={isLoading}
-        mode={multiple && "multiple"}
+        mode={multiple && 'multiple'}
       />
     </Col>
   );
@@ -209,13 +209,13 @@ export const ProductFilter = ({
 
 export const ProductUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const options = data?.results?.unit
-    ?.filter((unit) => unit.for === "product-unit")
+    ?.filter((unit) => unit.for === 'product-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   return (
@@ -223,7 +223,7 @@ export const ProductUnitFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Product Unit"
-        name={"product_unit__ids"}
+        name={'product_unit__ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -233,13 +233,13 @@ export const ProductUnitFilter = () => {
 
 export const PurchaseUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const options = data?.results?.unit
-    ?.filter((unit) => unit.for === "purchase-unit")
+    ?.filter((unit) => unit.for === 'purchase-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   return (
@@ -247,7 +247,7 @@ export const PurchaseUnitFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Purchase Unit"
-        name={"purchase_unit__ids"}
+        name={'purchase_unit__ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -257,13 +257,13 @@ export const PurchaseUnitFilter = () => {
 
 export const SaleUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, "for"],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
   const options = data?.results?.unit
-    ?.filter((unit) => unit.for === "sale-unit")
+    ?.filter((unit) => unit.for === 'sale-unit')
     .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
 
   return (
@@ -271,7 +271,7 @@ export const SaleUnitFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Sale Unit"
-        name={"sale_unit__ids"}
+        name={'sale_unit__ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -296,7 +296,7 @@ export const CashierFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Cashier"
-        name={"cashier_ids"}
+        name={'cashier_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -323,7 +323,7 @@ export const TaxFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Vat"
-        name={"tax_ids"}
+        name={'tax_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -349,9 +349,9 @@ export const CustomerFilter = ({ multiple = true, fullLayout = false }) => {
     <Col {...(fullLayout ? fullColLayout : mdColLayout)}>
       <CustomSelect
         {...commonProps}
-        multiple={multiple && "multiple"}
+        multiple={multiple && 'multiple'}
         label="Customer"
-        name={"customer_ids"}
+        name={'customer_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -378,7 +378,7 @@ export const GiftCardTypeFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Card Type"
-        name={"gift_card_type_ids"}
+        name={'gift_card_type_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -405,7 +405,7 @@ export const ExpenseCategoryFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Expense Category"
-        name={"expense_category_ids"}
+        name={'expense_category_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -416,12 +416,12 @@ export const ExpenseCategoryFilter = () => {
 export const CouponTypeFilter = () => {
   const options = [
     {
-      value: "Percentage",
-      label: "Percentage",
+      value: 'Percentage',
+      label: 'Percentage',
     },
     {
-      value: "Fixed",
-      label: "Fixed",
+      value: 'Fixed',
+      label: 'Fixed',
     },
   ];
 
@@ -430,7 +430,7 @@ export const CouponTypeFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Coupon Type"
-        name={"coupon_types"}
+        name={'coupon_types'}
         options={options}
       />
     </Col>
@@ -454,7 +454,7 @@ export const DesignationFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Designation"
-        name={"designation_ids"}
+        name={'designation_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -481,7 +481,7 @@ export const DepartmentFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Department"
-        name={"department_ids"}
+        name={'department_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -508,7 +508,7 @@ export const RoleFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Role"
-        name={"role_ids"}
+        name={'role_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -535,7 +535,7 @@ export const EmployeeFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Employee"
-        name={"employee_ids"}
+        name={'employee_ids'}
         options={options}
         isLoading={isLoading}
       />
@@ -588,7 +588,7 @@ export const SaleStatusFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Sale Status"
-        name={"sale_status"}
+        name={'sale_status'}
         options={saleStatusOptions}
       />
     </Col>
@@ -623,8 +623,8 @@ export const LeaveTypeFilter = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         {...commonProps}
-        label={"Leave Type"}
-        name={"leave_type_ids"}
+        label={'Leave Type'}
+        name={'leave_type_ids'}
         options={options}
         isLoading={isLoading}
       />

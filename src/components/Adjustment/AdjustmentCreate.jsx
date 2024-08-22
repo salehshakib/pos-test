@@ -1,11 +1,11 @@
-import { Form } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useCreateAdjustmentMutation } from "../../redux/services/adjustment/adjustmentApi";
-import { closeCreateDrawer } from "../../redux/services/drawer/drawerSlice";
-import { appendToFormData } from "../../utilities/lib/appendFormData";
-import CustomDrawer from "../Shared/Drawer/CustomDrawer";
-import AdjustmentForm from "./AdjustmentForm";
+import { Form } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCreateAdjustmentMutation } from '../../redux/services/adjustment/adjustmentApi';
+import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import CustomDrawer from '../Shared/Drawer/CustomDrawer';
+import AdjustmentForm from './AdjustmentForm';
 
 const AdjustmentCreate = () => {
   const dispatch = useDispatch();
@@ -86,7 +86,7 @@ const AdjustmentCreate = () => {
 
   return (
     <CustomDrawer
-      title={"Create Adjustment"}
+      title={'Create Adjustment'}
       open={isCreateDrawerOpen}
       width={1400}
     >

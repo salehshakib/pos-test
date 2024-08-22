@@ -1,17 +1,17 @@
-import { useState } from "react";
-import DiscountPlanCreate from "../../../components/DiscountPlan/DiscountPlanCreate";
-import DiscountPlanTable from "../../../components/DiscountPlan/DiscountPlanTable";
-import GlobalContainer from "../../../container/GlobalContainer/GlobalContainer";
-import { useCustomDebounce } from "../../../utilities/hooks/useDebounce";
-import { useFilterParams } from "../../../utilities/hooks/useParams";
+import { useState } from 'react';
+import DiscountPlanCreate from '../../../components/DiscountPlan/DiscountPlanCreate';
+import DiscountPlanTable from '../../../components/DiscountPlan/DiscountPlanTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
     // name
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    align: "center",
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    align: 'center',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
@@ -20,10 +20,10 @@ const columns = [
   },
   {
     // products
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
-    align: "center",
+    title: 'Customer',
+    dataIndex: 'customer',
+    key: 'customer',
+    align: 'center',
     render: (customer) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {customer}

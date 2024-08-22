@@ -1,43 +1,43 @@
-import { Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   fullColLayout,
   largeLayout,
   rowLayout,
-} from "../../../layout/FormLayout";
+} from '../../../layout/FormLayout';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
   calculateTotalTax,
-} from "../../../utilities/lib/generator/generatorUtils";
-import { useSetFieldValue } from "../../../utilities/lib/updateFormValues/useInitialFormField";
-import { CashierComponent } from "../../ReusableComponent/CashierComponent";
-import { OrderTaxComponent } from "../../ReusableComponent/OrderTaxComponent";
-import { SupplierComponent } from "../../ReusableComponent/SupplierComponent";
-import { TotalRow } from "../../ReusableComponent/TotalRow";
-import { WarehouseComponent } from "../../ReusableComponent/WarehouseComponent";
-import CustomForm from "../../Shared/Form/CustomForm";
-import CustomInput from "../../Shared/Input/CustomInput";
-import CustomSelect from "../../Shared/Select/CustomSelect";
-import CustomUploader from "../../Shared/Upload/CustomUploader";
-import { CustomerComponent } from "../overview/CustomerComponent";
-import { QuotationProductTable } from "./overview/QuotationProductTable";
+} from '../../../utilities/lib/generator/generatorUtils';
+import { useSetFieldValue } from '../../../utilities/lib/updateFormValues/useInitialFormField';
+import { CashierComponent } from '../../ReusableComponent/CashierComponent';
+import { OrderTaxComponent } from '../../ReusableComponent/OrderTaxComponent';
+import { SupplierComponent } from '../../ReusableComponent/SupplierComponent';
+import { TotalRow } from '../../ReusableComponent/TotalRow';
+import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
+import CustomForm from '../../Shared/Form/CustomForm';
+import CustomInput from '../../Shared/Input/CustomInput';
+import CustomSelect from '../../Shared/Select/CustomSelect';
+import CustomUploader from '../../Shared/Upload/CustomUploader';
+import { CustomerComponent } from '../overview/CustomerComponent';
+import { QuotationProductTable } from './overview/QuotationProductTable';
 
 const StatusComponent = () => {
-  useSetFieldValue("status", "Pending");
+  useSetFieldValue('status', 'Pending');
 
   const options = [
     {
-      value: "Pending",
-      label: "Pending",
+      value: 'Pending',
+      label: 'Pending',
     },
     {
-      value: "Sent",
-      label: "Sent",
+      value: 'Sent',
+      label: 'Sent',
     },
   ];
 
-  return <CustomSelect label="Status" options={options} name={"status"} />;
+  return <CustomSelect label="Status" options={options} name={'status'} />;
 };
 
 export const QuotationForm = ({
@@ -51,9 +51,9 @@ export const QuotationForm = ({
 }) => {
   const form = props.form;
 
-  const discount = Form.useWatch("discount", form);
-  const shipping_cost = Form.useWatch("shipping_cost", form);
-  const tax_rate = Form.useWatch("tax_rate", form);
+  const discount = Form.useWatch('discount', form);
+  const shipping_cost = Form.useWatch('shipping_cost', form);
+  const tax_rate = Form.useWatch('tax_rate', form);
 
   const [totalItems, setTotalItems] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
@@ -87,7 +87,7 @@ export const QuotationForm = ({
     setTaxRate(orderTax);
   }, [discount, formValues, shipping_cost, tax_rate, products]);
 
-  const warehouseId = Form.useWatch("warehouse_id", props.form);
+  const warehouseId = Form.useWatch('warehouse_id', props.form);
 
   useEffect(() => {
     if (warehouseId) {
@@ -145,13 +145,13 @@ export const QuotationForm = ({
             <OrderTaxComponent />
           </Col>
           <Col {...largeLayout}>
-            <CustomInput label="Discount" type={"number"} name={"discount"} />
+            <CustomInput label="Discount" type={'number'} name={'discount'} />
           </Col>
           <Col {...largeLayout}>
             <CustomInput
               label="Shipping Cost"
-              type={"number"}
-              name={"shipping_cost"}
+              type={'number'}
+              name={'shipping_cost'}
             />
           </Col>
           <Col {...largeLayout}>
@@ -159,14 +159,13 @@ export const QuotationForm = ({
           </Col>
 
           <Col {...fullColLayout}>
-            <CustomUploader label="Attachment" name={"attachment"} />
+            <CustomUploader label="Attachment" name={'attachment'} />
           </Col>
           <Col {...fullColLayout}>
-            <CustomInput label="Note" type={"textarea"} name={"note"} />
+            <CustomInput label="Note" type={'textarea'} name={'note'} />
           </Col>
         </Row>
       </CustomForm>
-
 
       <TotalRow
         totalItems={totalItems}

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -11,14 +10,17 @@ import {
   selectEditId,
   setEditId,
 } from "../../redux/services/drawer/drawerSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import AdjustmentDetails from "./AdjustmentDetails";
 import AdjustmentEdit from "./AdjustmentEdit";
+
 const AdjustmentTable = ({
   newColumns,
   setSelectedRows,
@@ -86,13 +88,11 @@ const AdjustmentTable = ({
     data?.results?.adjustment?.map((item) => {
       const { id, note, created_at, warehouses, reference_id } = item ?? {};
 
-      const date = dayjs(created_at).format("DD-MM-YYYY");
-
       return {
         id,
         warehouse: warehouses?.name,
         reference: reference_id,
-        created_at: date,
+        created_at,
         note: note ?? "N/A",
         handleDetailsModal,
         handleEdit,

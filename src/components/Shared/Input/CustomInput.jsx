@@ -181,9 +181,11 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 border-2 w-full"
             min={0}
-            controls={false}
-            changeOnWheel={false}
+            // controls={false}
+            // controls={false}
+            // changeOnWheel={false}
             suffix={suffix}
+            // addonAfter={suffix}
           />
         );
       case "phone":

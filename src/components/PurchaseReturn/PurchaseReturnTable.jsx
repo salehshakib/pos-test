@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -91,14 +90,12 @@ const PurchaseReturnTable = ({
         grand_total,
       } = item ?? {};
 
-      const date = dayjs(purchase_return_at).format("DD-MM-YYYY");
-
       return {
         id,
         referenceNo: reference_id,
         warehouse: warehouses?.name,
         supplier: suppliers?.name,
-        Date: date,
+        created_at: purchase_return_at,
         grandTotal: showCurrency(grand_total ?? 0, currency),
         handleEdit,
         handleDeleteModal,
@@ -124,7 +121,7 @@ const PurchaseReturnTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        created_at={false}
+        // created_at={false}
       />
 
       <PurchaseReturnEdit id={editId} setId={setEditId} />

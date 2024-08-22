@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../../container/Styled";
@@ -20,7 +19,6 @@ import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import InvoiceEdit from "./InvoiceEdit";
 import { InvoiceDetails } from "./overview/InvoiceDetails";
-
 const InvoiceTable = ({
   newColumns,
   setSelectedRows,
@@ -93,7 +91,6 @@ const InvoiceTable = ({
         created_at,
         warehouses,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -103,7 +100,7 @@ const InvoiceTable = ({
         customer: customers?.name ?? "N/A",
         supplier: suppliers?.name ?? "N/A",
         total: showCurrency(grand_total, currency),
-        date,
+        created_at,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -129,7 +126,6 @@ const InvoiceTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        created_at={false}
       />
 
       <InvoiceEdit id={editId} />

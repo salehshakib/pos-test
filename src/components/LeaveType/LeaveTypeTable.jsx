@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -71,13 +70,12 @@ export const LeaveTypeTable = ({
   const dataSource =
     data?.results?.leavetype?.map((item) => {
       const { id, name, created_at, need_attachment } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name,
         attachmentable: need_attachment,
-        created_at: date,
+        created_at,
         handleEdit,
         handleDeleteModal,
       };

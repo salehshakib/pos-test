@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -14,10 +13,12 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
+import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { SaleDetails } from "./SaleDetails";
 import { SaleEdit } from "./SaleEdit";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
 
 export const SaleTable = ({
   newColumns,
@@ -78,6 +79,7 @@ export const SaleTable = ({
       removeDeleteId(setSelectedRows, deleteId);
     }
   };
+  const format = useFormatDate();
 
   const dataSource =
     data?.results?.sale?.map((item) => {
@@ -94,12 +96,10 @@ export const SaleTable = ({
         due_amount,
       } = item ?? {};
 
-      const date = dayjs(sale_at).format("DD-MM-YYYY");
-
       return {
         key: id, // Unique key for each row
         id,
-        date,
+        date: formatDate(sale_at, format),
         reference: reference_id,
         customer: customers?.name,
         cashier: cashiers?.name,

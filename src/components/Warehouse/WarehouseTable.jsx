@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -102,7 +101,6 @@ const WarehouseTable = ({
     data?.results?.warehouse?.map((item) => {
       const { id, name, phone, email, address, created_at, is_active } =
         item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -110,7 +108,7 @@ const WarehouseTable = ({
         phone: phone,
         email: email,
         address: address ?? "N/A",
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleEdit,

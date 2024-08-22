@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -126,7 +125,6 @@ const ProductTable = ({
         units,
         attachments,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -140,7 +138,7 @@ const ProductTable = ({
         unit: units?.for ?? "N/A",
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleDetailsModal,

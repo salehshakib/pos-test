@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -116,7 +115,6 @@ const CustomerTable = ({
         is_active,
         customer_groups,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -124,7 +122,7 @@ const CustomerTable = ({
         companyName: companyName ?? "N/A",
         phone,
         customerGroup: customer_groups?.name,
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleEdit,

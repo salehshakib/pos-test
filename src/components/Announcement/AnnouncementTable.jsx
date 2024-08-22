@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -7,8 +6,10 @@ import {
   useDeleteAnnouncementMutation,
   useGetAllAnnouncementQuery,
 } from "../../redux/services/hrm/announcement/announcementApi";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
@@ -76,12 +77,13 @@ export const AnnouncementTable = ({
     }
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.announcement?.map((item) => {
-      const { id, start_date, end_date, description, title, departments } =
-        item ?? {};
-      const startDate = dayjs(start_date).format("DD-MM-YYYY");
-      const endDate = dayjs(end_date).format("DD-MM-YYYY");
+      const { id, start_date, end_date, description, title } = item ?? {};
+      const startDate = formatDate(start_date, format);
+      const endDate = formatDate(end_date, format);
 
       return {
         id,

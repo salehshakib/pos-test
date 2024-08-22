@@ -8,6 +8,7 @@ import StaffSetting from "../../../components/Settings/GeneralSettings/StaffSett
 import TimeSetting from "../../../components/Settings/GeneralSettings/TimeSetting";
 import CustomLogoUploader from "../../../components/Shared/Upload/CustomLogoUploader";
 import { useUpdateGeneralSettingsMutation } from "../../../redux/services/settings/generalSettings/generalSettingsApi";
+import { getMissingUids } from "../../../utilities/lib/deletedImageIds";
 import { fieldsToUpdate } from "../../../utilities/lib/fieldsToUpdate";
 
 const GeneralSettingForm = ({ data }) => {
@@ -22,6 +23,11 @@ const GeneralSettingForm = ({ data }) => {
       const fieldData = fieldsToUpdate(data);
       const newFieldData = [
         ...fieldData,
+        {
+          name: "date_format",
+          value: data?.date_format,
+          erros: "",
+        },
         {
           name: "logo",
           value: [
@@ -45,7 +51,11 @@ const GeneralSettingForm = ({ data }) => {
       formData.append(key, value);
     });
 
-    if (form.isFieldTouched("logo")) {
+    // if (form.isFieldTouched("logo")) {
+    //   formData.append("logo", logo?.[0]?.originFileObj);
+    // }
+
+    if (logo?.[0]?.originFileObj) {
       formData.append("logo", logo?.[0]?.originFileObj);
     }
 
@@ -55,6 +65,16 @@ const GeneralSettingForm = ({ data }) => {
 
     if (typeof secendary_color === "object") {
       formData.append("secendary_color", secendary_color.toHexString());
+    }
+
+    let deleteAttachmentIds = getMissingUids(fields, values, "logo");
+
+    if (deleteAttachmentIds.length > 0) {
+      deleteAttachmentIds?.map((item) =>
+        formData.append("deleteAttachmentIds[]", item)
+      );
+      // formData.append("deleteAttachmentIds[]", deleteAttachmentIds);
+      // postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     formData.append("_method", "PUT");

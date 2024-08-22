@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -7,16 +6,16 @@ import {
   useDeleteExpenseMutation,
   useGetAllExpenseQuery,
 } from "../../redux/services/expense/expenseApi";
+import { useCurrency } from "../../redux/services/pos/posSlice";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import { ExpenseDetails } from "./ExpenseDetails";
 import { ExpenseEdit } from "./ExpenseEdit";
-import { showCurrency } from "../../utilities/lib/currency";
-import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const ExpenseTable = ({
   newColumns,
@@ -90,7 +89,6 @@ const ExpenseTable = ({
         amount,
         reason,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -100,7 +98,7 @@ const ExpenseTable = ({
         amount: showCurrency(amount, currency),
         note: reason,
         name: name,
-        created_at: date,
+        created_at,
         handleDetailsModal,
         handleEdit,
         handleDeleteModal,

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -99,13 +98,12 @@ export const BrandTable = ({
   const dataSource =
     data?.results?.brand?.map((item) => {
       const { id, name, created_at, attachments, is_active } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         brand: name,
         image: attachments?.[0]?.url,
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleEdit,

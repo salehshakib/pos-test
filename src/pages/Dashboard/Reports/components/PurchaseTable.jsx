@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PurchaseDetails } from "../../../../components/Purchase/PurchaseDetails";
@@ -6,9 +5,11 @@ import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
 import { useCurrency } from "../../../../redux/services/pos/posSlice";
 import { useGetAllPurchaseQuery } from "../../../../redux/services/purchase/purchaseApi";
+import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../../utilities/hooks/useParams";
 import { showCurrency } from "../../../../utilities/lib/currency";
+import { formatDate } from "../../../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { columns } from "../data/purchaseColumns";
 
@@ -58,6 +59,8 @@ export const PurchaseTable = ({
     setDetailsModal(true);
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.purchase?.map((item) => {
       const {
@@ -73,11 +76,10 @@ export const PurchaseTable = ({
         due_amount,
         is_active,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
-        date,
+        date: formatDate(created_at, format),
         reference: reference_id,
         warehouse: warehouses?.name,
         supplier: suppliers?.name,

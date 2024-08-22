@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -87,14 +86,12 @@ const DepartmentTable = ({
   const dataSource =
     data?.results?.department?.map((item) => {
       const { id, name, created_at, is_active } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         department: name,
         status: is_active,
-        created_at: date,
-
+        created_at,
         handleStatusModal,
         handleEdit,
         handleDeleteModal,

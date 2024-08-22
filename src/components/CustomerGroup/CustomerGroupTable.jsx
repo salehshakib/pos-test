@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -81,13 +80,12 @@ const CustomerGroupTable = ({
   const dataSource =
     data?.results?.customergroup?.map((item) => {
       const { id, name, created_at, percentage } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
         percentage: percentage + " percent",
-        created_at: date,
+        created_at,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,

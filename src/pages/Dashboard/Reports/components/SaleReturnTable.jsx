@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SaleReturnDetails } from "../../../../components/SaleReturn/SaleReturnDetails";
@@ -6,9 +5,11 @@ import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
 import { useCurrency } from "../../../../redux/services/pos/posSlice";
 import { useGetAllSaleReturnQuery } from "../../../../redux/services/return/saleReturnApi";
+import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../../utilities/hooks/useParams";
 import { showCurrency } from "../../../../utilities/lib/currency";
+import { formatDate } from "../../../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { columns } from "../data/SaleReturn";
 
@@ -54,6 +55,8 @@ export const SaleReturnTable = ({
     setDetailsModal(true);
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.salereturn?.map((item) => {
       const {
@@ -65,14 +68,12 @@ export const SaleReturnTable = ({
         grand_total,
       } = item ?? {};
 
-      const date = dayjs(sale_return_at).format("DD-MM-YYYY");
-
       return {
         id,
         referenceNo: reference_id,
         warehouse: warehouses?.name,
         cashier: cashiers?.name,
-        date,
+        date: formatDate(sale_return_at, format),
         grandTotal: showCurrency(grand_total ?? 0, currency),
         handleDetailsModal,
       };

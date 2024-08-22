@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SaleDetails } from "../../../../components/Sale/SaleDetails";
@@ -6,9 +5,11 @@ import CustomTable from "../../../../components/Shared/Table/CustomTable";
 import { GlobalUtilityStyle } from "../../../../container/Styled";
 import { useCurrency } from "../../../../redux/services/pos/posSlice";
 import { useGetAllSaleQuery } from "../../../../redux/services/sale/saleApi";
+import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../../utilities/hooks/useParams";
 import { showCurrency } from "../../../../utilities/lib/currency";
+import { formatDate } from "../../../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../../../utilities/lib/getPermission";
 import { saleColumns } from "../data/saleColumn";
 
@@ -53,6 +54,8 @@ export const SaleTable = ({
     setDetailsModal(true);
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.sale?.map((item) => {
       const {
@@ -68,12 +71,10 @@ export const SaleTable = ({
         due_amount,
       } = item ?? {};
 
-      const date = dayjs(sale_at).format("DD-MM-YYYY");
-
       return {
         key: id, // Unique key for each row
         id,
-        date,
+        date: formatDate(sale_at, format),
         reference: reference_id,
         customer: customers?.name,
         cashier: cashiers?.name,

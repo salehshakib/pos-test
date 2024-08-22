@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -14,11 +13,11 @@ import {
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
+import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 import ExpenseCategoryEdit from "./ExpenseCategoryEdit";
-import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 
 const ExpenseCategoryTable = ({
   newColumns,
@@ -94,14 +93,13 @@ const ExpenseCategoryTable = ({
   const dataSource =
     data?.results?.expensecategory?.map((item) => {
       const { id, name, created_at, is_active } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
         status: is_active,
         handleStatusModal,
-        created_at: date,
+        created_at,
         handleEdit,
         handleDeleteModal,
       };

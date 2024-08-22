@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -97,8 +96,6 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
         for: type,
       } = item ?? {};
 
-      const date = dayjs(created_at).format("DD-MM-YYYY");
-
       return {
         id,
         name: name,
@@ -108,7 +105,7 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
         operatorValue: operation_value,
         status: is_active,
         baseUnit: base_unit,
-        created_at: date,
+        created_at,
         handleEdit,
         handleStatusModal,
         handleDeleteModal,

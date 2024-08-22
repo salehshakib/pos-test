@@ -2,11 +2,12 @@ import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetAllPurchaseQuery } from "../../redux/services/purchase/purchaseApi";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
-import { showCurrency } from "../../utilities/lib/currency";
-import CustomTable from "../Shared/Table/CustomTable";
-import dayjs from "dayjs";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
+import CustomTable from "../Shared/Table/CustomTable";
 
 export const PurchaseReportTable = ({
   newColumns,
@@ -34,6 +35,7 @@ export const PurchaseReportTable = ({
   const total = data?.meta?.total;
 
   const currency = useSelector(useCurrency);
+  const format = useFormatDate();
 
   const dataSource =
     data?.results?.purchase?.flatMap((item, index) => {
@@ -45,7 +47,7 @@ export const PurchaseReportTable = ({
         warehouses,
       } = item ?? {};
 
-      const date = dayjs(purchase_at).format("DD-MM-YYYY");
+      const date = formatDate(purchase_at, format);
 
       return purchase_products?.map(({ products }, i) => ({
         id: `${index}-${i}`, // Ensure unique IDs for each entry

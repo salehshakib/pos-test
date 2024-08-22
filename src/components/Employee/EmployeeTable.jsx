@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -8,8 +7,10 @@ import {
   useGetAllEmployeeQuery,
   useUpdateEmployeeStatusMutation,
 } from "../../redux/services/hrm/employee/employeeApi";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
@@ -97,10 +98,13 @@ const EmployeeTable = ({
     }
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.employee?.map((item) => {
       const { id, name, email, join_date, address, phone_number } = item;
-      const date = dayjs(join_date).format("DD-MM-YYYY");
+
+      const date = formatDate(join_date, format);
 
       return {
         id,

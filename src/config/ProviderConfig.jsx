@@ -5,7 +5,10 @@ import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "styled-components";
 import {
+  setCompany,
+  setDateFormat,
   setDeveloper,
+  setDigits,
   setLogo,
 } from "../redux/services/developer/developerSlice";
 import { setMenuItems } from "../redux/services/menu/menuSlice";
@@ -52,19 +55,16 @@ const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
 
 export const ProviderConfig = ({ children }) => {
   const dispatch = useDispatch();
+
   const { data, isLoading } = useGetGeneralSettingsQuery();
+  const menuItems = useMenuItems(adminPaths);
 
   const { primaryColor, secondaryColor, textColor } = useSelector(getColor);
-
+  const { developedBy } = useSelector((state) => state.developer);
   // "#842577"
   document.documentElement.style.setProperty("--firstColor", primaryColor);
-
   // "#B391AC"
   document.documentElement.style.setProperty("--secondColor", secondaryColor);
-
-  const { developedBy } = useSelector((state) => state.developer);
-
-  const menuItems = useMenuItems(adminPaths);
 
   useEffect(() => {
     if (data) {
@@ -86,6 +86,11 @@ export const ProviderConfig = ({ children }) => {
           position: data?.currency_position,
         })
       );
+
+      dispatch(setCompany(data?.company));
+
+      dispatch(setDigits(data?.decimal_point));
+      dispatch(setDateFormat(data?.date_format));
     }
   }, [data, dispatch]);
 

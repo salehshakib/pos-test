@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -112,7 +111,6 @@ const CashierTable = ({
         is_active,
         vat_number,
       } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -120,7 +118,7 @@ const CashierTable = ({
         companyName,
         phone,
         vatNumber: vat_number,
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleEdit,

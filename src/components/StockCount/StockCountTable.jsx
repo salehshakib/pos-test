@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -99,13 +98,6 @@ const StockCountTable = ({
     [api, token]
   );
 
-  // const handleDelete = async () => {
-  //   const { data } = await deleteStockCount(deleteId);
-  //   if (data?.success) {
-  //     setDeleteModal(false);
-  //   }
-  // };
-
   const dataSource =
     data?.results?.stockcount?.map((item) => {
       const {
@@ -118,25 +110,18 @@ const StockCountTable = ({
         brands,
       } = item ?? {};
 
-      const date = dayjs(created_at).format("DD-MM-YYYY");
-
       return {
         id,
         reference: reference_id,
         type: type,
-        created_at: date,
+        created_at,
         warehouse: warehouses?.map((item) => item?.name).join(" "),
         category: categories?.map((item) => item?.name).join(" "),
         brand: brands?.map((item) => item?.name).join(" "),
 
-        // handleDeleteModal,
         handleFileDownload,
       };
     }) ?? [];
-
-  // const hideModal = () => {
-  //   setDeleteModal(false);
-  // };
 
   return (
     <GlobalUtilityStyle>
@@ -153,26 +138,6 @@ const StockCountTable = ({
         status={false}
         created_at={false}
       />
-
-      {/* <StockCountEdit id={editId} setId={setEditId} />
-
-      {detailsId && (
-        <StockCountDetails
-          id={detailsId}
-          openModal={detailsModal}
-          hideModal={hideModal}
-        />
-      )}
-
-       */}
-
-      {/* <DeleteModal
-        deleteModal={deleteModal}
-        hideModal={hideModal}
-        handleDelete={handleDelete}
-        isLoading={isDeleting}
-        item={"stock count"}
-      /> */}
     </GlobalUtilityStyle>
   );
 };

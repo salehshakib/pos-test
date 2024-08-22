@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -15,11 +14,13 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
+import { StockTransfer } from "./StockTransfer";
 import { TransferDetails } from "./TransferDetails";
 import TransferEdit from "./TransferEdit";
-import { StockTransfer } from "./StockTransfer";
 
 const TransferTable = ({
   newColumns,
@@ -84,6 +85,7 @@ const TransferTable = ({
       removeDeleteId(setSelectedRows, deleteId);
     }
   };
+  const format = useFormatDate();
 
   const dataSource = data?.results?.transfer?.map((transfer) => {
     const {
@@ -104,7 +106,7 @@ const TransferTable = ({
       reference: reference_id,
       warehouse_from: from_warehouses?.name,
       warehouse_to: to_warehouses?.name,
-      date: dayjs(date).format("DD-MM-YYYY"),
+      date: formatDate(date, format),
       product_cost: showCurrency(total_cost, currency),
       product_tax: showCurrency(total_tax, currency),
       grand_total: showCurrency(grand_total, currency),

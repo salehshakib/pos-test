@@ -1,21 +1,20 @@
-import dayjs from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import { openEditDrawer } from "../../redux/services/drawer/drawerSlice";
 import {
   useDeletePayrollMutation,
   useGetAllPayrollQuery,
-  useUpdatePayrollStatusMutation,
 } from "../../redux/services/hrm/payroll/payrollApi";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
-import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { showCurrency } from "../../utilities/lib/currency";
 import { PayrollDetails } from "./PayrollDetails";
 import { PayrollEdit } from "./PayrollEdit";
 
@@ -31,9 +30,6 @@ export const PayrollTable = ({
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
-
-  const [statusId, setStatusId] = useState(undefined);
-  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -56,9 +52,6 @@ export const PayrollTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
-    useUpdatePayrollStatusMutation();
-
   const [deletePayroll, { isLoading: isDeleting }] = useDeletePayrollMutation();
 
   const handleEdit = (id) => {
@@ -69,20 +62,6 @@ export const PayrollTable = ({
   const handleDetailsModal = (id) => {
     setDetailsId(id);
     setDetailsModal(true);
-  };
-
-  const handleStatusModal = (id) => {
-    setStatusId(id);
-    setStatusModal(true);
-  };
-
-  const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
-
-    if (data?.success) {
-      setStatusId(undefined);
-      setStatusModal(false);
-    }
   };
 
   const handleDeleteModal = (id) => {
@@ -97,20 +76,25 @@ export const PayrollTable = ({
       removeDeleteId(setSelectedRows, deleteId);
     }
   };
+  const currency = useSelector(useCurrency);
 
   const dataSource =
     data?.results?.payroll?.map((item) => {
-      const { id, name, created_at, attachments, is_active } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+      const { id, created_at, employees, payment_type } = item ?? {};
+
+      console.log(item);
 
       return {
         id,
-        // brand: name,
-        // image: attachments?.[0]?.url,
-        created_at: date,
+        name: employees?.name,
+        email: employees?.email,
+        department: employees?.departments?.name,
+        paymentType: payment_type,
+        salary: showCurrency(item?.salary, currency),
+        bonus: showCurrency(item?.bonus, currency),
+        loan: showCurrency(item?.loan, currency),
 
-        status: is_active,
-        handleStatusModal,
+        created_at,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -118,7 +102,7 @@ export const PayrollTable = ({
     }) ?? [];
 
   const hideModal = () => {
-    setStatusModal(false);
+    // setStatusModal(false);
     setDetailsModal(false);
     setDeleteModal(false);
   };
@@ -135,6 +119,7 @@ export const PayrollTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        status={false}
         created_at={false}
       />
 
@@ -147,13 +132,6 @@ export const PayrollTable = ({
           hideModal={hideModal}
         />
       )}
-
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
 
       <DeleteModal
         deleteModal={deleteModal}

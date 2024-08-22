@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -7,6 +6,7 @@ import {
   useGetAllPettyCashQuery,
 } from "../../redux/services/pettycash/pettyCashApi";
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
 import { showCurrency } from "../../utilities/lib/currency";
@@ -54,6 +54,7 @@ export const PettyCashTable = ({
   };
 
   const currency = useSelector(useCurrency);
+  const format = useFormatDate();
 
   const dataSource =
     data?.results?.pettycash?.map((item) => {
@@ -65,7 +66,8 @@ export const PettyCashTable = ({
         opening_balance,
         status,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      const date = format(created_at, format);
 
       return {
         id,

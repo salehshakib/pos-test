@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -53,8 +52,6 @@ const StockRequestTable = ({
         stock_request_products,
       } = item ?? {};
 
-      const date = dayjs(created_at).format("DD-MM-YYYY");
-
       const sumNeedQty = (arr) => {
         return arr.reduce((sum, item) => sum + parseFloat(item.need_qty), 0);
       };
@@ -64,7 +61,7 @@ const StockRequestTable = ({
         reference: reference_id,
         fromWarehouse: from_warehouses?.name,
         toWarehouse: to_warehouses?.name,
-        created_at: date,
+        created_at,
         reqQty: sumNeedQty(stock_request_products),
 
         handleDetailsModal,

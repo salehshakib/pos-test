@@ -403,14 +403,14 @@ const ProductListEdit = ({ id }) => {
 
     let deleteAttachmentIds = getMissingUids(fields, values);
 
+    if (deleteAttachmentIds.length > 0) {
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
+    }
+
     if (values?.attachments.length > 0) {
       postObj.attachments = values.attachments
         ?.map((file) => (file.originFileObj ? file.originFileObj : null))
         .filter(Boolean);
-    }
-
-    if (deleteAttachmentIds.length > 0) {
-      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
     if (values?.attach_file?.[0].url) {

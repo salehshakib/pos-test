@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ExpenseDetails } from "../../../../components/Expense/ExpenseDetails";
@@ -66,7 +65,6 @@ export const ExpenseTable = ({
         amount,
         reason,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -76,7 +74,7 @@ export const ExpenseTable = ({
         amount: showCurrency(amount, currency),
         note: reason,
         name: name,
-        created_at: date,
+        created_at,
         handleDetailsModal,
       };
     }) ?? [];

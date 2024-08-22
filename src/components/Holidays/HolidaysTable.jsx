@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -99,14 +98,12 @@ export const HolidaysTable = ({
 
   const dataSource =
     data?.results?.holiday?.map((item) => {
-      const { id, name, created_at, attachments, is_active } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+      const { id, created_at, is_active } = item ?? {};
 
       return {
         id,
-
         status: is_active,
-        created_at: date,
+        created_at,
         handleStatusModal,
         handleEdit,
         handleDetailsModal,

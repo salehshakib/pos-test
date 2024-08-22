@@ -79,17 +79,6 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    align: "center",
-    render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {date}
-      </span>
-    ),
-  },
 ];
 
 const SearchComponent = () => {

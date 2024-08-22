@@ -5,7 +5,10 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
 import { MdDelete, MdEditSquare, MdFileDownload } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
+import { useLocation } from "react-router-dom";
+import { useFormatDate } from "../../../utilities/hooks/useFormatDate";
 import { useGlobalLoader } from "../../../utilities/hooks/useGlobalLoader";
+import { formatDate } from "../../../utilities/lib/dateFormat";
 import { usePermission } from "../../../utilities/lib/getPermission";
 
 const getDownloadItems = (record) =>
@@ -216,16 +219,25 @@ const CustomTable = ({
     },
   };
 
+  const format = useFormatDate();
+
+  const { pathname } = useLocation();
+
   const timeColumns = {
     //created_at
-    title: "Created At",
+    title:
+      pathname.includes("generator/invoice") ||
+      pathname.includes("generator/quotation") ||
+      pathname.includes("purchase-return")
+        ? "Date"
+        : "Created At",
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: "100px",
     render: (created_at) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {created_at}
+        {formatDate(created_at, format)}
       </span>
     ),
   };

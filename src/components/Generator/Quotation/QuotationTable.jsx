@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../../container/Styled";
@@ -6,20 +5,20 @@ import {
   openEditDrawer,
   setEditId,
 } from "../../../redux/services/drawer/drawerSlice";
+import { useCurrency } from "../../../redux/services/pos/posSlice";
 import {
   useDeleteQuotationMutation,
   useGetAllQuotationQuery,
 } from "../../../redux/services/quotation/quotationApi";
 import { usePagination } from "../../../utilities/hooks/usePagination";
 import { useGlobalParams } from "../../../utilities/hooks/useParams";
+import { showCurrency } from "../../../utilities/lib/currency";
 import { useUrlIndexPermission } from "../../../utilities/lib/getPermission";
 import { removeDeleteId } from "../../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../../Shared/Modal/DeleteModal";
 import CustomTable from "../../Shared/Table/CustomTable";
 import QuotationEdit from "./QuotationEdit";
 import { QuotationDetails } from "./overview/QuotationDetails";
-import { showCurrency } from "../../../utilities/lib/currency";
-import { useCurrency } from "../../../redux/services/pos/posSlice";
 
 const QuotationTable = ({
   newColumns,
@@ -94,7 +93,6 @@ const QuotationTable = ({
         created_at,
         warehouses,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -104,7 +102,7 @@ const QuotationTable = ({
         customer: customers?.name ?? "N/A",
         supplier: suppliers?.name ?? "N/A",
         total: showCurrency(grand_total, currency),
-        date,
+        created_at,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -130,7 +128,7 @@ const QuotationTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        created_at={false}
+        // created_at={false}
       />
 
       <QuotationEdit id={editId} setId={setEditId} />

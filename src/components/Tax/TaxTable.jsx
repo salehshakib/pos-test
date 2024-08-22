@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
@@ -51,13 +50,12 @@ const TaxTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const dataSource =
     data?.results?.tax?.map((item) => {
       const { id, name, created_at, rate } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
         rate: rate,
-        created_at: date,
+        created_at,
         handleDeleteModal,
       };
     }) ?? [];

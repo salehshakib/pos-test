@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -14,10 +13,12 @@ import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
+import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { PurchaseDetails } from "./PurchaseDetails";
 import { PurchaseEdit } from "./PurchaseEdit";
-import { useCurrency } from "../../redux/services/pos/posSlice";
-import { showCurrency } from "../../utilities/lib/currency";
 
 export const PurchaseTable = ({
   newColumns,
@@ -73,20 +74,6 @@ export const PurchaseTable = ({
     setDetailsModal(true);
   };
 
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // }
-
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
@@ -99,6 +86,8 @@ export const PurchaseTable = ({
       removeDeleteId(setSelectedRows, deleteId);
     }
   };
+
+  const format = useFormatDate();
 
   const dataSource =
     data?.results?.purchase?.map((item) => {
@@ -115,7 +104,8 @@ export const PurchaseTable = ({
         due_amount,
         is_active,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
+
+      const date = formatDate(created_at, format);
 
       return {
         id,

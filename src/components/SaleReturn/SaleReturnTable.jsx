@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -15,7 +14,9 @@ import DeleteModal from "../Shared/Modal/DeleteModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { SaleReturnDetails } from "./SaleReturnDetails";
 import SaleReturnEdit from "./SaleReturnEdit";
 
@@ -80,6 +81,8 @@ const SaleReturnTable = ({
     }
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.salereturn?.map((item) => {
       const {
@@ -91,14 +94,12 @@ const SaleReturnTable = ({
         grand_total,
       } = item ?? {};
 
-      const date = dayjs(sale_return_at).format("DD-MM-YYYY");
-
       return {
         id,
         referenceNo: reference_id,
         warehouse: warehouses?.name,
         cashier: cashiers?.name,
-        date,
+        date: formatDate(sale_return_at, format),
         grandTotal: showCurrency(grand_total ?? 0, currency),
         handleEdit,
         handleDeleteModal,

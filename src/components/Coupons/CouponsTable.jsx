@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -17,7 +16,9 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { CouponsDetails } from "./CouponsDetails";
 import CouponsEdit from "./CouponsEdit";
 
@@ -104,6 +105,8 @@ const CouponsTable = ({
     }
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.coupon?.map((item) => {
       const {
@@ -117,11 +120,10 @@ const CouponsTable = ({
         qty,
         user,
         expired_date,
-        available,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
-      const expiredDate = dayjs(expired_date).format("DD-MM-YYYY");
+      const date = formatDate(created_at, format);
+      const expiredDate = formatDate(expired_date, format);
 
       return {
         id,

@@ -1,4 +1,7 @@
 import { Col, Form, Row } from "antd";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { paymentTypesOptions } from "../../assets/data/paymentTypes";
 import {
   colLayout,
   fullColLayout,
@@ -9,21 +12,18 @@ import {
   useGetAllEmployeeQuery,
   useGetEmployeeDetailsQuery,
 } from "../../redux/services/hrm/employee/employeeApi";
+import { useCurrency } from "../../redux/services/pos/posSlice";
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from "../../utilities/hooks/useParams";
+import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
 import { DepartmentComponent } from "../ReusableComponent/DepartmentComponent";
 import CustomCheckbox from "../Shared/Checkbox/CustomCheckbox";
 import CustomDatepicker from "../Shared/DatePicker/CustomDatepicker";
 import CustomForm from "../Shared/Form/CustomForm";
 import CustomInput from "../Shared/Input/CustomInput";
 import CustomSelect from "../Shared/Select/CustomSelect";
-import { paymentTypesOptions } from "../../assets/data/paymentTypes";
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from "../../utilities/hooks/useParams";
-import { useUrlIndexPermission } from "../../utilities/lib/getPermission";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useCurrency } from "../../redux/services/pos/posSlice";
 
 const EmployeeComponent = () => {
   const form = Form.useFormInstance();
@@ -65,7 +65,7 @@ const PaymentTypeComponent = () => {
   return (
     <CustomSelect
       label="Payment Type"
-      name="peyment_type"
+      name="payment_type"
       options={paymentTypesOptions}
       required={true}
     />

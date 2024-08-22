@@ -4,10 +4,11 @@ import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
 import { useGetAllSaleQuery } from "../../redux/services/sale/saleApi";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { usePagination } from "../../utilities/hooks/usePagination";
-import { showCurrency } from "../../utilities/lib/currency";
-import dayjs from "dayjs";
 import { useGlobalParams } from "../../utilities/hooks/useParams";
+import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 
 export const SaleReportTable = ({
   newColumns,
@@ -35,13 +36,14 @@ export const SaleReportTable = ({
   const total = data?.meta?.total;
 
   const currency = useSelector(useCurrency);
+  const format = useFormatDate();
 
   const dataSource =
     data?.results?.sale?.map((item, index) => {
       const { sale_products, grand_total, sale_at, total_qty, warehouses } =
         item ?? {};
 
-      const date = dayjs(sale_at).format("DD-MM-YYYY");
+      const date = formatDate(sale_at, format);
 
       return sale_products?.map(({ products }, i) => ({
         id: `${index}-${i}`, // Ensure unique IDs for each entry

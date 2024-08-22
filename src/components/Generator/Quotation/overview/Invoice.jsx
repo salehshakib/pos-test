@@ -1,10 +1,11 @@
 import { Table, Typography } from "antd";
-import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import logo from "../../../../assets/data/defaultLogo";
 import { tableProps } from "../../../../layout/TableLayout";
 import { useCurrency } from "../../../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../../../utilities/hooks/useFormatDate";
 import { showCurrency } from "../../../../utilities/lib/currency";
+import { formatDate } from "../../../../utilities/lib/dateFormat";
 
 const columns = [
   //slno
@@ -164,6 +165,8 @@ const Invoice = ({ data, type }) => {
     },
   };
 
+  const format = useFormatDate();
+
   return (
     <div
       className="p-5 min-h-[60vh] space-y-3 w-full relative"
@@ -194,7 +197,7 @@ const Invoice = ({ data, type }) => {
         <div className="flex flex-col items-start gap-1">
           <span className="font-semibold text-lg">DATE</span>
           <span className="text-wrap w-full">
-            {dayjs(data?.created_at).format("DD-MM-YYYY")}
+            {formatDate(data?.created_at, format)}
           </span>
         </div>
       </div>
@@ -212,7 +215,7 @@ const Invoice = ({ data, type }) => {
         <span className="">Payment is due within 15 days</span>
         <span className="">Contact number: XXXXXX123565</span>
       </div>
-      <div className="w-full text-xs text-center absolute bottom-0 left-0 pb-5">
+      <div className="w-full text-xs text-center absolute bottom-0 left-0 p-0">
         Developed By {developedBy}
       </div>
     </div>

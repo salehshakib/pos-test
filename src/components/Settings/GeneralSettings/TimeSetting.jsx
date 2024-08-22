@@ -1,5 +1,5 @@
 import { Col, Divider, Row } from "antd";
-import dateFormats from "../../../assets/data/dateFormats.json";
+import dateFormats from "../../../assets/data/dateFormats.js";
 import timezones from "../../../assets/data/timezones.json";
 import CustomSelect from "../../Shared/Select/CustomSelect";
 
@@ -19,8 +19,8 @@ const TimeSetting = () => {
     return { label: `${name} ${utc}}`, value: zone };
   });
 
-  const dateFormatOptions = dateFormats.formats.map((item) => {
-    return { label: item, value: item.toLowerCase() };
+  const dateFormatOptions = dateFormats.map((item) => {
+    return { label: item, value: item };
   });
 
   return (

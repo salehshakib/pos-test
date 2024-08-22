@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
@@ -78,7 +77,6 @@ const CurrencyTable = ({
   const dataSource =
     data?.results?.currency?.map((item) => {
       const { id, name, created_at, is_default, code, exchange_rate } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -87,7 +85,7 @@ const CurrencyTable = ({
         exchangeRate: exchange_rate,
         status: is_default,
         handleStatusModal,
-        created_at: date,
+        created_at,
         handleDeleteModal,
       };
     }) ?? [];

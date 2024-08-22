@@ -638,7 +638,7 @@ export const PaymentTypeFilter = () => {
       <CustomSelect
         {...commonProps}
         label="Payment Type"
-        name="peyment_types"
+        name="payment_types"
         options={paymentTypesOptions}
       />
     </Col>

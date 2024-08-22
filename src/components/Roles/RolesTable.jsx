@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
@@ -74,12 +73,11 @@ export const RolesTable = ({
   const dataSource =
     data?.results?.role?.map((item) => {
       const { id, name, created_at } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
-        created_at: date,
+        created_at,
         handleDeleteModal,
         handleDetailsModal,
         handleChangePermission,

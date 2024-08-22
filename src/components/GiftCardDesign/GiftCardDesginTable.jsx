@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -105,12 +104,11 @@ const GiftCardDesginTable = ({
   const dataSource =
     data?.results?.giftcarddesign?.map((item) => {
       const { id, created_at, is_active, gift_card_types } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         type: gift_card_types?.name,
-        created_at: date,
+        created_at,
         status: is_active,
         handleStatusModal,
         handleEdit,

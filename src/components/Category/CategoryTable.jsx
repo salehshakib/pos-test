@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -108,13 +107,12 @@ const CategoryTable = ({
         item ?? {};
 
       const { name: parent_name } = parents ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         category: name,
         parentCategory: parent_name ?? "N/A",
-        created_at: date,
+        created_at,
         img: attachments?.[0]?.url,
         status: is_active,
         handleStatusModal,

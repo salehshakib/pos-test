@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { GlobalUtilityStyle } from "../../container/Styled";
 import {
@@ -45,12 +44,11 @@ const TypeTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   const dataSource =
     data?.results?.type?.map((item) => {
       const { id, name, created_at } = item;
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
         name: name,
-        created_at: date,
+        created_at,
         handleDeleteModal,
       };
     }) ?? [];

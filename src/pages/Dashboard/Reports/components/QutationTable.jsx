@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { QuotationDetails } from "../../../../components/Generator/Quotation/overview/QuotationDetails";
@@ -70,7 +69,6 @@ export const QuotationTable = ({
         created_at,
         warehouses,
       } = item ?? {};
-      const date = dayjs(created_at).format("DD-MM-YYYY");
 
       return {
         id,
@@ -80,7 +78,7 @@ export const QuotationTable = ({
         customer: customers?.name ?? "N/A",
         supplier: suppliers?.name ?? "N/A",
         total: showCurrency(grand_total, currency),
-        date,
+        created_at,
         handleDetailsModal,
       };
     }) ?? [];
@@ -99,11 +97,8 @@ export const QuotationTable = ({
         pagination={pagination}
         updatePage={updatePage}
         updatePageSize={updatePageSize}
-        //   setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-        //   isRowSelection={true}
         status={false}
-        created_at={false}
       />
 
       {detailsId && (

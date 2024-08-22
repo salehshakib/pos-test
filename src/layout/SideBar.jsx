@@ -115,7 +115,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     <Sider
       className="h-full overflow-x-auto pb-10 pt-1 bg-white"
       // theme="dark"
-      width={250}
+      width={240}
       trigger={null}
       collapsible
       collapsed={collapsed}

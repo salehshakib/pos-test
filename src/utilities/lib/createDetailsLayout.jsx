@@ -3,6 +3,41 @@ import dayjs from "dayjs";
 import parse from "html-react-parser";
 import defaultUser from "../../assets/data/defaultUserImage";
 
+const fullRowKeys = [
+  "details",
+  "address",
+  "attachments",
+  "reason",
+  "note",
+  "description",
+  "reference_id",
+  "parents",
+];
+
+const booleanKeys = [
+  "is_active",
+  "has_stock",
+  "has_featured",
+  "has_promotion",
+  "has_different_price",
+  "has_expired_date",
+  "has_variants",
+  "is_send_email",
+  "have_access",
+];
+
+const currencyKeys = [
+  "price",
+  "tax",
+  "discount",
+  "total",
+  "grand_total",
+  "paid",
+  "due",
+  "return_amount",
+  "expense",
+];
+
 const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
   const ignoredKeys = [
     ...ignoreDataKeys,
@@ -14,41 +49,6 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
     "purchase_products",
     "sale_products",
     "quotation_products",
-  ];
-
-  const fullRowKeys = [
-    "details",
-    "address",
-    "attachments",
-    "reason",
-    "note",
-    "description",
-    "reference_id",
-    "parents",
-  ];
-
-  const booleanKeys = [
-    "is_active",
-    "has_stock",
-    "has_featured",
-    "has_promotion",
-    "has_different_price",
-    "has_expired_date",
-    "has_variants",
-    "is_send_email",
-    "have_access",
-  ];
-
-  const currencyKeys = [
-    "price",
-    "tax",
-    "discount",
-    "total",
-    "grand_total",
-    "paid",
-    "due",
-    "return_amount",
-    "expense",
   ];
 
   const renderValue = (key, value) => {

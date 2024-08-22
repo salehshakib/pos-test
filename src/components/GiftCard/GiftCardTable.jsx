@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalUtilityStyle } from "../../container/Styled";
@@ -16,7 +15,9 @@ import StatusModal from "../Shared/Modal/StatusModal";
 import CustomTable from "../Shared/Table/CustomTable";
 
 import { useCurrency } from "../../redux/services/pos/posSlice";
+import { useFormatDate } from "../../utilities/hooks/useFormatDate";
 import { showCurrency } from "../../utilities/lib/currency";
+import { formatDate } from "../../utilities/lib/dateFormat";
 import { removeDeleteId } from "../../utilities/lib/signleDeleteRow";
 import { GiftCardDetails } from "./GiftCardDetails";
 import GiftCardEdit from "./GiftCardEdit";
@@ -101,6 +102,8 @@ const GiftCardTable = ({
     }
   };
 
+  const format = useFormatDate();
+
   const dataSource =
     data?.results?.giftcard?.map((item) => {
       const {
@@ -115,19 +118,17 @@ const GiftCardTable = ({
         customers,
       } = item ?? {};
 
-      const date = dayjs(created_at).format("DD-MM-YYYY");
-
       return {
         id,
         cardNo: card_no,
         amount: showCurrency(amount, currency),
         expense: showCurrency(expense, currency),
         balance: showCurrency(amount - expense, currency),
-        expiredDate: dayjs(expired_date).format("DD-MM-YYYY"),
+        expiredDate: formatDate(expired_date, format),
         status: is_active,
         customer: customers?.name ?? "N/A",
         createdBy: created_by ?? "N/A",
-        created_at: date,
+        created_at,
         handleStatusModal,
         handleEdit,
         handleDeleteModal,

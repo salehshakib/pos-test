@@ -380,7 +380,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="h-full">
-      <div className="">
+      <div className="mb-6">
         <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-center justify-between pb-5 mt-1">
           <div
             className="text-2xl font-semibold"

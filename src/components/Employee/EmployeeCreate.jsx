@@ -32,20 +32,20 @@ const EmployeeCreate = () => {
       ),
     };
 
-    if (profile_picture.length > 0) {
+    if (profile_picture?.length > 0) {
       postObj.profile_picture = profile_picture?.[0]?.originFileObj;
     }
 
-    if (nid_front.length > 0) {
+    if (nid_front?.length > 0) {
       postObj.nid_front = nid_front?.[0]?.originFileObj;
     }
-    if (nid_back.length > 0) {
+    if (nid_back?.length > 0) {
       postObj.nid_back = nid_back?.[0]?.originFileObj;
     }
-    if (joining_doc.length > 0) {
+    if (joining_doc?.length > 0) {
       postObj.joining_doc = joining_doc?.[0]?.originFileObj;
     }
-    if (cv.length > 0) {
+    if (cv?.length > 0) {
       postObj.cv = cv?.[0]?.originFileObj;
     }
 

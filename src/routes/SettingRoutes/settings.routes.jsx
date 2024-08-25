@@ -2,7 +2,6 @@ import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { LuClipboardType } from 'react-icons/lu';
 import {
-  MdOutlineMailLock,
   MdOutlineSettingsApplications,
   MdPointOfSale,
   MdTimeToLeave,
@@ -10,7 +9,6 @@ import {
 import { RiVerifiedBadgeLine } from 'react-icons/ri';
 import { TbReceiptTax } from 'react-icons/tb';
 import CustomerGroup from '../../pages/Dashboard/CustomerGroup/CustomerGroup';
-import { EmailConfig } from '../../pages/Dashboard/EmailConfig/EmailConfig';
 import GeneralSettings from '../../pages/Dashboard/GeneralSettings/GeneralSettings';
 import GiftCardType from '../../pages/Dashboard/GiftCardType/GiftCardType';
 import { HrmSettings } from '../../pages/Dashboard/HrmSetting/HrmSettings';
@@ -81,12 +79,6 @@ export const settingPaths = [
     path: 'hrm-settings',
     icon: MdTimeToLeave,
     element: <HrmSettings />,
-  },
-  {
-    name: 'Email Configuration',
-    path: 'email-settings',
-    icon: MdOutlineMailLock,
-    element: <EmailConfig />,
   },
   {
     name: 'Pos Settings',

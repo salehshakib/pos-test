@@ -4,6 +4,7 @@ import { GoPeople } from 'react-icons/go';
 import { LuArchive } from 'react-icons/lu';
 import {
   MdOutlineInventory2,
+  MdOutlineMailLock,
   MdOutlineSettings,
   MdOutlineSpaceDashboard,
 } from 'react-icons/md';
@@ -17,6 +18,7 @@ import {
 import { TfiShoppingCart } from 'react-icons/tfi';
 import AdminDashboard from '../pages/Dashboard/Admin/AdminDashboard';
 import Purchase from '../pages/Dashboard/Purchase/Purchase';
+import { emailPaths } from './EmailManager/email.routes';
 import { expensePaths } from './ExpenseRoutes/expense.routes';
 import { generatorPaths } from './Generator/generator.routes';
 import { hrmPaths } from './HrmRoutes/hrm.routes';
@@ -116,12 +118,12 @@ export const adminPaths = [
     icon: TbReport,
     children: reportPaths,
   },
-  // {
-  //   name: "Roles",
-  //   path: "roles",
-  //   icon: IoPeopleCircle,
-  //   element: <Roles />,
-  // },
+  {
+    name: 'Email Manager',
+    path: 'email',
+    icon: MdOutlineMailLock,
+    children: emailPaths,
+  },
   // {
   //   name: "Documents",
   //   path: "documents",

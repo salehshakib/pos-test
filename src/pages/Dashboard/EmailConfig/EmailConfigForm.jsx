@@ -1,10 +1,10 @@
 import { Button, Col, Form, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import CustomInput from '../../../components/Shared/Input/CustomInput';
+import CustomSelect from '../../../components/Shared/Select/CustomSelect';
 import { mdColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useUpdateEmailSettingsMutation } from '../../../redux/services/settings/emailSettings/emailSettingsApi';
 import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
-import CustomSelect from '../../../components/Shared/Select/CustomSelect';
 
 const ProtocolComponent = () => {
   const options = [
@@ -29,7 +29,7 @@ const ProtocolComponent = () => {
       label="Protocol"
       required={true}
       options={options}
-      name="name"
+      name="mail_server"
     />
   );
 };
@@ -51,7 +51,7 @@ const EmailEncryptionComponent = () => {
       label="Email Encryption"
       required={true}
       options={options}
-      name="encryption"
+      name="mail_encryption"
     />
   );
 };
@@ -70,25 +70,11 @@ export const EmailConfigForm = ({ data }) => {
   }, [data]);
 
   const handleSubmit = async (values) => {
-    // const { logo, primary_color, secendary_color, ...rest } = values;
-
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, value);
     });
-
-    // if (form.isFieldTouched("logo")) {
-    //   formData.append("logo", logo[0]);
-    // }
-
-    // if (typeof primary_color === "object") {
-    //   formData.append("primary_color", primary_color.toHexString());
-    // }
-
-    // if (typeof secendary_color === "object") {
-    //   formData.append("secendary_color", secendary_color.toHexString());
-    // }
 
     formData.append('_method', 'PUT');
 
@@ -111,7 +97,7 @@ export const EmailConfigForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    //console.log(errorInfo);
+    console.log(errorInfo);
   };
 
   return (
@@ -130,12 +116,12 @@ export const EmailConfigForm = ({ data }) => {
             <ProtocolComponent />
           </Col>
           <Col {...mdColLayout}>
-            <CustomInput label="Host" name="host" required={true} />
+            <CustomInput label="Host" name="mail_host" required={true} />
           </Col>
           <Col {...mdColLayout}>
             <CustomInput
               label="Port"
-              name="port"
+              name="mail_port"
               type="number"
               required={true}
             />
@@ -145,12 +131,16 @@ export const EmailConfigForm = ({ data }) => {
             <EmailEncryptionComponent />
           </Col>
           <Col {...mdColLayout}>
-            <CustomInput label="User Name" name="username" required={true} />
+            <CustomInput
+              label="User Name"
+              name="mail_username"
+              required={true}
+            />
           </Col>
           <Col {...mdColLayout}>
             <CustomInput
               label="Password"
-              name="password"
+              name="mail_password"
               type="password"
               required={true}
             />
@@ -158,13 +148,17 @@ export const EmailConfigForm = ({ data }) => {
           <Col {...mdColLayout}>
             <CustomInput
               label="Email Address (From)"
-              name="from_address"
+              name="mail_from_address"
               type="email"
               required={true}
             />
           </Col>
           <Col {...mdColLayout}>
-            <CustomInput label="Name (From)" name="from_name" required={true} />
+            <CustomInput
+              label="Name (From)"
+              name="mail_from_name"
+              required={true}
+            />
           </Col>
         </Row>
 

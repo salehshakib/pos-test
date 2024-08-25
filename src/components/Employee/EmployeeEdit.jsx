@@ -66,6 +66,11 @@ const EmployeeEdit = ({ id, setId }) => {
           value: data?.have_access.toString() === '1' ? true : false,
           errors: '',
         },
+        {
+          name: 'staff_id',
+          value: data?.staff_id.slice(8),
+          errors: '',
+        },
       ];
 
       const newFieldData = updateFieldValues(fieldData, updateFieldValue);

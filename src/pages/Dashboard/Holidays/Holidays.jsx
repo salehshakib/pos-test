@@ -9,27 +9,14 @@ import { HOLIDAY } from '../../../utilities/apiEndpoints/hrm.api';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import { useFilterParams } from '../../../utilities/hooks/useParams';
 
-// const columns = [];
-
 const columns = [
   {
     title: 'Title',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'title',
+    key: 'title',
     render: (name) => (
       <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
         {name}
-      </span>
-    ),
-  },
-  {
-    title: 'Departments',
-    dataIndex: 'departments',
-    key: 'departments',
-    width: 300,
-    render: (departments) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
-        {departments?.mp((item) => item?.name)}
       </span>
     ),
   },

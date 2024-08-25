@@ -41,9 +41,8 @@ export const fieldsToUpdate = (details) => {
       }
 
       if (key.includes('phone')) {
-        // value =
-        // get value of a string from 2nd index
-        value = value.slice(0);
+        // Get value of a string from the 2nd index onward
+        value = value?.toString()?.slice(0);
       }
 
       return {

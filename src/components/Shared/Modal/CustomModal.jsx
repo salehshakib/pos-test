@@ -48,7 +48,7 @@ const CustomModal = (props) => {
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          <div className="max-h-[75vh] overflow-y-auto overflow-x-hidden pr-3">
+          <div className="max-h-[75vh] overflow-y-auto overflow-x-hidden">
             {children}
           </div>
           {notification &&

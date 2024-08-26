@@ -17,6 +17,7 @@
   cursor: -webkit-grab !important;
   cursor: grab !important;
   border-radius: 80px !important;
+  /* margin-left: 10px; */
 }
 
 body {

@@ -23,7 +23,7 @@ export const HolidayDetails = ({ id, ...props }) => {
       {isFetching ? (
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
-        <div className="max-h-[75vh] space-y-5 overflow-y-auto pb-5 pt-3">
+        <div className="space-y-5 pb-5 pr-3 pt-3">
           <CustomDescription title="Leave " items={details} />
         </div>
       )}

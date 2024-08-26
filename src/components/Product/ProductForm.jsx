@@ -152,9 +152,7 @@ const TaxTypeComponent = () => {
     <CustomSelect
       label="Vat Method"
       options={taxTypeOptions}
-      required={true}
       name={'tax_method'}
-      showSearch={true}
     />
   );
 };

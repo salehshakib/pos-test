@@ -59,8 +59,20 @@ export const PurchaseDetails = ({ id, ...props }) => {
 
   const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,
-    warehouse: data?.warehouses?.name,
-    supplier: data?.suppliers?.name,
+  });
+
+  const warehouseInfo = useDetailsLayout({
+    warehouse_name: data?.warehouses?.name,
+    phone_number: data?.warehouses?.phone_number,
+    warehouse_email: data?.warehouses?.email ?? 'N/A',
+    address: data?.warehouses?.address,
+  });
+
+  const supplierInfo = useDetailsLayout({
+    supplier_name: data?.suppliers?.name,
+    phone_number: data?.suppliers?.phone_number,
+    supplier_email: data?.suppliers?.email ?? 'N/A',
+    address: data?.suppliers?.address,
   });
 
   const paymentInfo = useDetailsLayout({
@@ -76,8 +88,8 @@ export const PurchaseDetails = ({ id, ...props }) => {
 
   const purchaseStatus = useDetailsLayout({
     purchase_date: data?.purchase_at,
-    purchase_note: data?.purchase_note,
     purchase_status: data?.purchase_status,
+    purchase_note: data?.purchase_note,
   });
 
   const attachments = useDetailsLayout({ attachments: data?.attachments });
@@ -108,8 +120,9 @@ export const PurchaseDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          {/* <CustomDescription title="Purchase " items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
+          <CustomDescription title="Warehouse Info" items={warehouseInfo} />
+          <CustomDescription title="Supplier Info" items={supplierInfo} />
           <CustomDescription title="Purchase Info" items={purchaseStatus} />
           <Table
             {...tableProps}

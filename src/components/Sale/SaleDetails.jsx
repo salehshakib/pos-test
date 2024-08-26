@@ -58,11 +58,19 @@ export const SaleDetails = ({ id, ...props }) => {
 
   const currency = useSelector(useCurrency);
 
+  console.log(data?.customers);
+
   const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,
     cashier: data?.cashiers?.name,
     warehouse: data?.warehouses?.name,
-    supplier: data?.suppliers?.name,
+  });
+
+  const customerInfo = useDetailsLayout({
+    customer_name: data?.customers?.name,
+    phone_number: data?.customers?.phone_number,
+    customer_email: data?.customers?.email ?? 'N/A',
+    address: data?.customers?.address,
   });
 
   const paymentInfo = useDetailsLayout({
@@ -116,8 +124,8 @@ export const SaleDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          {/* <CustomDescription title="Sale " items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
+          <CustomDescription title="Customer Info" items={customerInfo} />
           <CustomDescription title="Sale Info" items={saleStatus} />
           <Table
             {...tableProps}

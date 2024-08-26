@@ -25,7 +25,11 @@ const CustomerCreate = ({
     const { data, error } = await createCustomer({ data: values });
 
     if (data?.success) {
-      dispatch(closeCreateDrawer());
+      if (subDrawer && isSubDrawerOpen) {
+        handleCloseSubDrawer();
+      } else {
+        dispatch(closeCreateDrawer());
+      }
       form.resetFields();
     }
     if (error) {

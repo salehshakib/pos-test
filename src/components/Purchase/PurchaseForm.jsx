@@ -13,7 +13,6 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from '../../utilities/lib/generator/generatorUtils';
-import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { SupplierComponent } from '../ReusableComponent/SupplierComponent';
 import { TotalRow } from '../ReusableComponent/TotalRow';
@@ -27,8 +26,12 @@ import CustomUploader from '../Shared/Upload/CustomUploader';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 import { PurchaseProductTable } from './overview/PurchaseProductTable';
 
-const PurchaseStatus = () => {
-  useSetFieldValue('purchase_status', purchaseStatusOptions[0].value);
+const PurchaseStatus = ({ form }) => {
+  // useSetFieldValue('purchase_status', purchaseStatusOptions[0].value);
+
+  useEffect(() => {
+    form.setFieldValue('purchase_status', purchaseStatusOptions[0].value);
+  }, [form]);
   return (
     <CustomSelect
       label="Purchase Status"
@@ -38,8 +41,11 @@ const PurchaseStatus = () => {
   );
 };
 
-const PaymentStatusComponent = () => {
-  useSetFieldValue('payment_status', paymentStatusOptions[0].value);
+const PaymentStatusComponent = ({ form }) => {
+  // useSetFieldValue('payment_status', paymentStatusOptions[0].value);
+  useEffect(() => {
+    form.setFieldValue('payment_status', purchaseStatusOptions[0].value);
+  }, [form]);
   return (
     <CustomSelect
       label="Payment Status"
@@ -127,7 +133,7 @@ export const PurchaseForm = ({
             <CustomDatepicker label="Date" required name="purchase_at" />
           </Col>
           <Col {...largeLayout}>
-            <PurchaseStatus />
+            <PurchaseStatus form={form} />
           </Col>
 
           <PurchaseProductTable
@@ -153,7 +159,7 @@ export const PurchaseForm = ({
             />
           </Col>
           <Col {...colLayout}>
-            <PaymentStatusComponent />
+            <PaymentStatusComponent form={form} />
           </Col>
 
           {(paymentStatus === 'Paid' || paymentStatus === 'Partial') && (

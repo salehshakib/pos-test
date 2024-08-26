@@ -13,7 +13,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -24,7 +24,7 @@ const columns = [
     key: 'rate',
     align: 'center',
     render: (rate) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {rate}
       </span>
     ),

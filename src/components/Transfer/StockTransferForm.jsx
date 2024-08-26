@@ -32,15 +32,19 @@ const options = [
   },
 ];
 
-const useSetFieldValue = (field, value) => {
-  const form = Form.useFormInstance();
-  useEffect(() => {
-    form.setFieldValue(field, value);
-  }, [form, field, value]);
-};
+// const useSetFieldValue = (field, value) => {
+//   const form = Form.useFormInstance();
+//   useEffect(() => {
+//     form.setFieldValue(field, value);
+//   }, [form, field, value]);
+// };
 
-const FileStatusComponent = () => {
-  useSetFieldValue('status', options[0].value);
+const FileStatusComponent = ({ form }) => {
+  // useSetFieldValue('status', options[0].value);
+
+  useEffect(() => {
+    form.setFieldValue('status', options[0].value);
+  }, [form]);
 
   return (
     <CustomSelect
@@ -52,8 +56,12 @@ const FileStatusComponent = () => {
   );
 };
 
-const TransferDateComponent = () => {
-  useSetFieldValue('date', getCurrentDate);
+const TransferDateComponent = ({ form }) => {
+  // useSetFieldValue('date', getCurrentDate);
+
+  useEffect(() => {
+    form.setFieldValue('date', getCurrentDate);
+  }, [form]);
 
   return (
     <CustomDatepicker
@@ -196,10 +204,10 @@ export const StockTransferForm = ({
           <WarehouseTransferComponent warehouseData={data} />
 
           <Col {...largeLayout}>
-            <TransferDateComponent />
+            <TransferDateComponent form={form} />
           </Col>
           <Col {...largeLayout}>
-            <FileStatusComponent />
+            <FileStatusComponent form={form} />
           </Col>
 
           <StockTransferProductTable

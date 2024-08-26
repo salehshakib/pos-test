@@ -83,7 +83,7 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
                 alt={label}
                 key={url}
                 width={200}
-                className=" object-cover"
+                className="object-cover"
               />
             ))}
           </div>

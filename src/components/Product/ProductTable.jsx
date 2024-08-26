@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteProductMutation,
@@ -30,7 +27,7 @@ const ProductTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
 
   const currency = useSelector(useCurrency);
 
@@ -89,7 +86,7 @@ const ProductTable = ({
   };
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
@@ -167,7 +164,7 @@ const ProductTable = ({
         isRowSelection={true}
       />
 
-      <ProductEdit id={editId} />
+      <ProductEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <ProductDetails

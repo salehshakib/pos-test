@@ -14,7 +14,6 @@ import {
 } from '../../utilities/lib/generator/generatorUtils';
 import { openNotification } from '../../utilities/lib/openToaster';
 import { updateProductList } from '../../utilities/lib/return/updateProductList';
-import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { TotalRow } from '../ReusableComponent/TotalRow';
 import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
@@ -47,8 +46,12 @@ const options = [
   },
 ];
 
-const PaymentType = () => {
-  useSetFieldValue('payment_type', options[0].value);
+const PaymentType = ({ form }) => {
+  // useSetFieldValue('payment_type', options[0].value);
+
+  useEffect(() => {
+    form.setFieldValue('payment_type', options[0].value);
+  }, [form]);
 
   return (
     <CustomSelect
@@ -62,10 +65,10 @@ const PaymentType = () => {
 const ReturnComponent = ({ reference_id, ...props }) => {
   return (
     <Row {...rowLayout}>
-      <div className=" text-lg font-semibold text-center w-full underline ">
+      <div className="w-full text-center text-lg font-semibold underline">
         Reference ID: {reference_id}
       </div>
-      <div className="text-center w-full">
+      <div className="w-full text-center">
         Only Selected Items will be returned
       </div>
       <ReturnProductTable {...props} />
@@ -83,7 +86,7 @@ const ReturnComponent = ({ reference_id, ...props }) => {
       </Col>
 
       <Col {...colLayout}>
-        <PaymentType />
+        <PaymentType form={props.form} />
       </Col>
 
       <Col {...fullColLayout}>

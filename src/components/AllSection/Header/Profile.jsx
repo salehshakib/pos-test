@@ -28,14 +28,14 @@ const Profile = () => {
   const content = (
     <div>
       <div className="">
-        <div className="py-3 rounded-md px-2">
-          <div className="flex flex-col gap-4 items-center text-lg">
+        <div className="rounded-md px-2 py-3">
+          <div className="flex flex-col items-center gap-4 text-lg">
             <Avatar
               className="avatar-bg shadow-md hover:shadow-lg"
               size={50}
               icon={<UserOutlined />}
             />
-            <div className="flex flex-col font-normal text-center">
+            <div className="flex flex-col text-center font-normal">
               <span className="font-bold">
                 {user?.name ?? user?.username ?? 'User'} (
                 <span className="font-medium">
@@ -45,7 +45,7 @@ const Profile = () => {
               </span>
 
               <span
-                className={`text-sm `}
+                className={`text-sm`}
                 style={{
                   color: token.colorPrimary,
                 }}
@@ -56,13 +56,13 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="py-2 px-4 bg-[#F5F5F5] rounded-md">
+        <div className="rounded-md bg-[#F5F5F5] px-4 py-2">
           <div
-            className="flex gap-2 items-center text-lg  hover:underline profile-ul w-max"
+            className="profile-ul flex w-max items-center gap-2 text-lg hover:underline"
             onClick={() => navigate('/settings/general-settings')}
           >
             <IoSettingsOutline size={18} />
-            <div className="flex flex-col font-semibold text-[15px]">
+            <div className="flex flex-col text-[15px] font-semibold">
               <span className="">General Settings</span>
             </div>
           </div>
@@ -78,7 +78,7 @@ const Profile = () => {
   );
 
   return (
-    <div className=" flex justify-center items-center gap-2">
+    <div className="flex items-center justify-center gap-2">
       {/* <CreateComponent /> */}
       {!pathname.includes('/pos') && <PosComponent />}
 

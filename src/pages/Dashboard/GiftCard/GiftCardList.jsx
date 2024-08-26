@@ -16,7 +16,7 @@ const columns = [
     key: 'cardNo',
     align: 'center',
     render: (cardNo) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {cardNo}
       </span>
     ),
@@ -26,7 +26,7 @@ const columns = [
     dataIndex: 'createdBy',
     key: 'createdBy',
     render: (createdBy) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {createdBy}
       </span>
     ),
@@ -36,7 +36,7 @@ const columns = [
     dataIndex: 'customer',
     key: 'customer',
     render: (customer) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {customer}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'amount',
     key: 'amount',
     render: (amount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {amount}
       </span>
     ),
@@ -57,7 +57,7 @@ const columns = [
     dataIndex: 'expense',
     key: 'expense',
     render: (expense) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {expense}
       </span>
     ),
@@ -67,7 +67,7 @@ const columns = [
     dataIndex: 'balance',
     key: 'balance',
     render: (balance) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {balance}
       </span>
     ),
@@ -86,10 +86,10 @@ const columns = [
             status == 1
               ? 'bg-[#DCFCE7] text-[#16A34A]'
               : 'bg-[#FEF2F2] text-[#EF4444]'
-          } rounded shadow-md w-[80px]`}
+          } w-[80px] rounded shadow-md`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
-          <span className="font-medium text-xs px-2 w-full">
+          <span className="w-full px-2 text-xs font-medium">
             {status.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </button>
@@ -99,9 +99,9 @@ const columns = [
             status == 1
               ? 'bg-[#DCFCE7] text-[#16A34A]'
               : 'bg-[#FEF2F2] text-[#EF4444]'
-          } rounded shadow-md w-[80px]`}
+          } w-[80px] rounded shadow-md`}
         >
-          <span className="font-medium text-xs px-2 w-full">
+          <span className="w-full px-2 text-xs font-medium">
             {status.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </div>

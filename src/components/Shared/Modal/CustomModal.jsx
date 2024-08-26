@@ -48,12 +48,12 @@ const CustomModal = (props) => {
         {...modalProps}
       >
         <GlobalUtilityStyle>
-          <div className="pr-3 max-h-[75vh] overflow-y-auto overflow-x-hidden">
+          <div className="max-h-[75vh] overflow-y-auto overflow-x-hidden pr-3">
             {children}
           </div>
           {notification &&
             (status === 'Pending' ? (
-              <div className="w-full flex justify-end items-center gap-3 mt-5 shadow-sm">
+              <div className="mt-5 flex w-full items-center justify-end gap-3 shadow-sm">
                 <Button
                   type=""
                   onClick={props.onReject}
@@ -92,7 +92,7 @@ const CustomModal = (props) => {
                 </Button>
               </div>
             ) : status === 'Accepted' ? (
-              <div className="w-full flex justify-end items-center gap-3 mt-5">
+              <div className="mt-5 flex w-full items-center justify-end gap-3">
                 <Button type="primary" onClick={hideModal}>
                   Close
                 </Button>
@@ -109,14 +109,14 @@ const CustomModal = (props) => {
                 </Button>
               </div>
             ) : (
-              <div className="w-full flex justify-end items-center gap-3 mt-5">
+              <div className="mt-5 flex w-full items-center justify-end gap-3">
                 <Button type="primary" onClick={hideModal}>
                   Close
                 </Button>
               </div>
             ))}
           {showCloseButton && (
-            <div className="w-full flex justify-end items-center gap-3 mt-5">
+            <div className="mt-5 flex w-full items-center justify-end gap-3">
               {handlePrint && (
                 <Button type="primary" onClick={handlePrint}>
                   Print

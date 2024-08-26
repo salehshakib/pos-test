@@ -65,9 +65,9 @@ const Login = () => {
           backgroundPosition: 'center top -10vh',
         }}
       >
-        <div className="flex justify-center items-center h-full">
-          <div className="lg:w-[500px] md:w-[400px] p-10 bg-white rounded-md shadow-lg space-y-10">
-            <div className="text-center font-bold text-xl border-gray-500 flex flex-col gap-1">
+        <div className="flex h-full items-center justify-center">
+          <div className="space-y-10 rounded-md bg-white p-10 shadow-lg md:w-[400px] lg:w-[500px]">
+            <div className="flex flex-col gap-1 border-gray-500 text-center text-xl font-bold">
               POS INVENTORY
               <div>
                 {isDev.toLowerCase() === 'true' && (

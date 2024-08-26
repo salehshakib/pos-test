@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCustomerMutation,
   useGetAllCustomerQuery,
   useUpdateCustomerStatusMutation,
 } from '../../redux/services/customer/customerApi';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
@@ -28,7 +25,7 @@ const CustomerTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -67,7 +64,7 @@ const CustomerTable = ({
     useDeleteCustomerMutation();
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 

@@ -17,11 +17,11 @@ export const openNotification = (type, message) => {
     <div
       className={`${
         t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      } pointer-events-auto flex w-full max-w-md rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5`}
       aria-live="assertive"
       role="alert"
     >
-      <div className="flex-1 w-0 p-4">
+      <div className="w-0 flex-1 p-4">
         <div className="flex items-start">
           <div className="flex-shrink-0 pt-0.5">
             <img className="h-10 w-10 rounded-full" src={logo} alt="Logo" />
@@ -37,7 +37,7 @@ export const openNotification = (type, message) => {
       <div className="flex border-l border-gray-200">
         <button
           onClick={() => toast.dismiss(t.id)}
-          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium"
+          className="flex w-full items-center justify-center rounded-none rounded-r-lg border border-transparent p-4 text-sm font-medium"
         >
           Close
         </button>

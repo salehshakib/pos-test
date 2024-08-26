@@ -30,8 +30,8 @@ const SearchWarehouse = ({ setWarehouses }) => {
   //console.log(data);
 
   const loadingContent = (
-    <div className="flex items-center justify-center ">
-      <div className="text-center text-lg ">
+    <div className="flex items-center justify-center">
+      <div className="text-center text-lg">
         <Spin />
       </div>
     </div>

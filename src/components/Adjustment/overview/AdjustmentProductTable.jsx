@@ -22,7 +22,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -34,7 +34,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -46,7 +46,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),
@@ -59,11 +59,11 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
-        <div className="flex gap-1 justify-center items-center">
+        <div className="flex items-center justify-center gap-1">
           <div>
             <Button
               key={'sub'}
@@ -106,7 +106,7 @@ const columns = [
     render: (action, record) => {
       return (
         action && (
-          <div className="flex w-full  justify-center items-center gap-3">
+          <div className="flex w-full items-center justify-center gap-3">
             <CustomSelect
               name={['product_list', 'action', record?.id]}
               placeholder="Type"
@@ -132,7 +132,7 @@ const columns = [
     },
   },
   {
-    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
     align: 'center',
@@ -141,7 +141,7 @@ const columns = [
     render: (props, record) => {
       return (
         props && (
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <button
               onClick={() =>
                 record.onDelete(
@@ -150,7 +150,7 @@ const columns = [
                   record.setFormValues
                 )
               }
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
               type="button"
             >
               <MdDelete className="text-lg md:text-xl" />

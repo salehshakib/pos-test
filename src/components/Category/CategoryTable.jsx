@@ -141,6 +141,7 @@ const CategoryTable = ({
         isLoading={isLoading}
         isRowSelection={true}
       />
+
       <Categoryedit id={editId} setId={setEditId} />
 
       {detailsId && (

@@ -15,7 +15,7 @@ const columns = [
     key: 'sl_no',
     align: 'center',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -25,7 +25,7 @@ const columns = [
     dataIndex: 'product_name',
     key: 'product_name',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -36,7 +36,7 @@ const columns = [
     key: 'qty',
     align: 'center',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -48,7 +48,7 @@ const columns = [
     key: 'discount',
     align: 'right',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -60,7 +60,7 @@ const columns = [
     key: 'tax',
     align: 'right',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -72,7 +72,7 @@ const columns = [
     key: 'price',
     align: 'right',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -169,34 +169,34 @@ const Invoice = ({ data, type }) => {
 
   return (
     <div
-      className="p-5 min-h-[60vh] space-y-3 w-full relative"
+      className="relative min-h-[60vh] w-full space-y-3 p-5"
       id="invoice-container"
     >
       <div className="flex items-center justify-between">
-        <div className="font-extrabold text-5xl">{type}</div>
+        <div className="text-5xl font-extrabold">{type}</div>
         <div>
-          <img src={logo} alt="" className="w-32 h-20 object-cover" />
+          <img src={logo} alt="" className="h-20 w-32 object-cover" />
         </div>
       </div>
 
-      <div className="p-5 grid grid-cols-4 gap-1">
+      <div className="grid grid-cols-4 gap-1 p-5">
         <div className="flex flex-col items-start gap-1">
-          <span className="font-semibold text-lg">FROM</span>
-          <span className="text-wrap w-full">{data?.warehouses?.name}</span>
-          <span className="text-wrap w-full">{data?.warehouses?.address}</span>
+          <span className="text-lg font-semibold">FROM</span>
+          <span className="w-full text-wrap">{data?.warehouses?.name}</span>
+          <span className="w-full text-wrap">{data?.warehouses?.address}</span>
         </div>
         <div className="flex flex-col items-start gap-1">
-          <span className="font-semibold text-lg">TO</span>
-          <span className="text-wrap w-full">{data?.customers?.name}</span>
-          <span className="text-wrap w-full">{data?.customers?.address}</span>
+          <span className="text-lg font-semibold">TO</span>
+          <span className="w-full text-wrap">{data?.customers?.name}</span>
+          <span className="w-full text-wrap">{data?.customers?.address}</span>
         </div>
         <div className="flex flex-col items-start gap-1">
-          <span className="font-semibold text-lg">{type} ID</span>
-          <span className="text-wrap w-full">{data?.reference_id}</span>
+          <span className="text-lg font-semibold">{type} ID</span>
+          <span className="w-full text-wrap">{data?.reference_id}</span>
         </div>
         <div className="flex flex-col items-start gap-1">
-          <span className="font-semibold text-lg">DATE</span>
-          <span className="text-wrap w-full">
+          <span className="text-lg font-semibold">DATE</span>
+          <span className="w-full text-wrap">
             {formatDate(data?.created_at, format)}
           </span>
         </div>
@@ -211,11 +211,11 @@ const Invoice = ({ data, type }) => {
       />
 
       <div className="flex flex-col items-end gap-1 pb-20 pt-10 text-end">
-        <span className="font-semibold text-lg w-full">Terms & Conditions</span>
+        <span className="w-full text-lg font-semibold">Terms & Conditions</span>
         <span className="">Payment is due within 15 days</span>
         <span className="">Contact number: XXXXXX123565</span>
       </div>
-      <div className="w-full text-xs text-center absolute bottom-0 left-0 p-0">
+      <div className="absolute bottom-0 left-0 w-full p-0 text-center text-xs">
         Developed By {developedBy}
       </div>
     </div>

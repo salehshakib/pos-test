@@ -5,7 +5,7 @@ export const columns = [
     key: 'referenceNo',
     align: 'center',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -16,7 +16,7 @@ export const columns = [
     key: 'purchaseReference',
     align: 'center',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -27,7 +27,7 @@ export const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text ?? 'N/A'}
       </span>
     ),
@@ -37,7 +37,7 @@ export const columns = [
     dataIndex: 'supplier',
     key: 'supplier',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text ?? 'N/A'}
       </span>
     ),
@@ -48,7 +48,7 @@ export const columns = [
     key: 'date',
     align: 'center',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -59,7 +59,7 @@ export const columns = [
     align: 'right',
     key: 'grandTotal',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),

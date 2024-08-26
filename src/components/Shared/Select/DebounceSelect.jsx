@@ -26,7 +26,7 @@ const DebounceSelect = (props) => {
         <Select
           showSearch
           placeholder={`Search ${placeholder ?? label}`}
-          className="mt-1 custom-selector"
+          className="custom-selector mt-1"
           size="large"
           mode={mode}
           filterOption={false}
@@ -36,7 +36,7 @@ const DebounceSelect = (props) => {
             isLoading && (
               <Spin
                 size="small"
-                className="w-full flex justify-center items-center"
+                className="flex w-full items-center justify-center"
               />
             )
           }

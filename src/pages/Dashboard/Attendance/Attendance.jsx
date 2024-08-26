@@ -22,11 +22,11 @@ const columns = [
     align: 'center',
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+      <div className="mx-auto h-8 w-8 overflow-hidden rounded-full">
         <img
           src={img ?? defaultUser}
           alt="defaultUser"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
     ),
@@ -36,11 +36,11 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name, record) => (
-      <div className="flex flex-col cursor-pointer ">
-        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
+      <div className="flex cursor-pointer flex-col">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="text-xs dark:text-white60 primary-text">
+        <span className="dark:text-white60 primary-text text-xs">
           {record?.email}
         </span>
       </div>
@@ -53,7 +53,7 @@ const columns = [
     key: 'checkIn',
     align: 'center',
     render: (checkIn) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {checkIn}
       </span>
     ),
@@ -65,7 +65,7 @@ const columns = [
     key: 'checkOut',
     align: 'center',
     render: (checkOut) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {checkOut}
       </span>
     ),
@@ -77,7 +77,7 @@ const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {date}
       </span>
     ),

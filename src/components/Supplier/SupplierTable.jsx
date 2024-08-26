@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteSupplierMutation,
   useGetAllSupplierQuery,
@@ -29,7 +26,7 @@ const SupplierTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -64,7 +61,7 @@ const SupplierTable = ({
     useDeleteSupplierMutation();
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 

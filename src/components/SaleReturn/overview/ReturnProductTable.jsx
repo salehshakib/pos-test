@@ -22,7 +22,7 @@ const columns = [
     render: (props, record) => {
       return (
         props && (
-          <div className="flex justify-center items-center gap-3 pl-9">
+          <div className="flex items-center justify-center gap-3 pl-9">
             <CustomCheckbox value={record?.id} name={['delete', record?.id]} />
           </div>
         )
@@ -35,7 +35,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -59,7 +59,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -73,11 +73,11 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
-        <div className="flex gap-1 justify-center items-center">
+        <div className="flex items-center justify-center gap-1">
           <div>
             <Button
               key={'sub'}
@@ -112,7 +112,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (discount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -124,7 +124,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (tax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {tax}
       </span>
     ),
@@ -136,7 +136,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (subTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),

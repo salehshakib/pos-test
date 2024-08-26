@@ -5,7 +5,7 @@ export const saleColumns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {date}
       </span>
     ),
@@ -16,7 +16,7 @@ export const saleColumns = [
     key: 'reference',
     align: 'center',
     render: (reference) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -27,7 +27,7 @@ export const saleColumns = [
     key: 'warehouse',
     align: 'center',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -37,7 +37,7 @@ export const saleColumns = [
     dataIndex: 'customer',
     key: 'customer',
     render: (customer) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {customer ?? 'N/A'}
       </span>
     ),
@@ -47,7 +47,7 @@ export const saleColumns = [
     dataIndex: 'cashier',
     key: 'cashier',
     render: (biller) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {biller}
       </span>
     ),
@@ -58,7 +58,7 @@ export const saleColumns = [
     key: 'saleStatus',
     align: 'center',
     render: (saleStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {saleStatus ?? 'N/A'}
       </span>
     ),
@@ -69,7 +69,7 @@ export const saleColumns = [
     key: 'paymentStatus',
     align: 'center',
     render: (paymentStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {paymentStatus ?? 'N/A'}
       </span>
     ),
@@ -80,7 +80,7 @@ export const saleColumns = [
     align: 'right',
     key: 'grandTotal',
     render: (grandTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),
@@ -91,7 +91,7 @@ export const saleColumns = [
     align: 'right',
     key: 'paid',
     render: (paid) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {paid}
       </span>
     ),
@@ -102,7 +102,7 @@ export const saleColumns = [
     align: 'right',
     key: 'due',
     render: (due) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {due}
       </span>
     ),

@@ -63,7 +63,7 @@ const CustomUploader = ({
         />
       )}
       <Form.Item
-        label={<span className="font-bold mt-2">{label}</span>}
+        label={<span className="mt-2 font-bold">{label}</span>}
         name={name}
         rules={[{ required: required, message: `Please input ${label}!` }]}
         valuePropName="fileList"
@@ -84,7 +84,7 @@ const CustomUploader = ({
           maxCount={multiple ? 20 : 1}
           className={` ${
             multiple
-              ? 'custom-upload border border-gray-400 rounded-md pt-2 pl-2 pr-2 pb-2'
+              ? 'custom-upload rounded-md border border-gray-400 pb-2 pl-2 pr-2 pt-2'
               : 'custom-single-upload'
           } mt-2`}
           accept={type === 'img' && '.png, .jpg, .jpeg'}
@@ -96,7 +96,7 @@ const CustomUploader = ({
                 background: 'none',
               }}
               type="button"
-              className="w-full flex flex-col items-center justify-center"
+              className="flex w-full flex-col items-center justify-center"
             >
               <BiImageAdd
                 style={{

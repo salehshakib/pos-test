@@ -35,7 +35,7 @@ const DeleteModal = ({
       >
         <GlobalUtilityStyle>
           <span>Do you want to delete this {item}?</span>
-          <div className="w-full flex justify-end items-center gap-3">
+          <div className="flex w-full items-center justify-end gap-3">
             <Button onClick={hideModal}>No</Button>
             <Button type="primary" onClick={handleDelete} loading={isLoading}>
               Yes

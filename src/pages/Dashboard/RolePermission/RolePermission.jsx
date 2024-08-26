@@ -14,7 +14,7 @@ const columns = [
     align: 'center',
     width: 80,
     render: (id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {id}
       </span>
     ),
@@ -25,7 +25,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -36,7 +36,7 @@ const columns = [
     key: 'description',
     align: 'center',
     render: (description) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {description}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     key: 'created_at',
     align: 'center',
     render: (created_at) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {created_at}
       </span>
     ),
@@ -61,16 +61,16 @@ const columns = [
     fixed: 'right',
     render: ({ handleEdit, handleDeleteModal }, record) => {
       return (
-        <div className="flex justify-center items-center gap-3 ">
+        <div className="flex items-center justify-center gap-3">
           <button
             onClick={() => handleEdit(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
           >
             <MdEditSquare className="text-lg md:text-xl" />
           </button>
           <button
             onClick={() => handleDeleteModal(record?.id)}
-            className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+            className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
           >
             <MdDelete className="text-lg md:text-xl" />
           </button>

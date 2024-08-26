@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -23,7 +23,7 @@ const columns = [
     key: 'percentage',
     align: 'center',
     render: (percentage) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {percentage}
       </span>
     ),

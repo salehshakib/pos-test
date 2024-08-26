@@ -148,7 +148,7 @@ export const PurchaseTable = ({
         created_at={false}
       />
 
-      <PurchaseEdit id={editId} setId={setEditId} />
+      <PurchaseEdit id={editId} editId={setEditId} />
 
       {detailsId && (
         <PurchaseDetails
@@ -157,13 +157,6 @@ export const PurchaseTable = ({
           hideModal={hideModal}
         />
       )}
-
-      {/* <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

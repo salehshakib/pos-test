@@ -16,19 +16,19 @@ const getDownloadItems = (record) =>
     {
       key: 'pdf',
       icon: <FaFilePdf size={20} />,
-      label: <div className="flex justify-start items-center gap-3">PDF</div>,
+      label: <div className="flex items-center justify-start gap-3">PDF</div>,
       onClick: () => record?.handleFileDownload(record?.id, 'pdf'),
     },
     {
       key: 'xlsx',
       icon: <FaFileExcel size={20} />,
-      label: <div className="flex justify-start items-center gap-3">Excel</div>,
+      label: <div className="flex items-center justify-start gap-3">Excel</div>,
       onClick: () => record?.handleFileDownload(record?.id, 'xlsx'),
     },
     {
       key: 'csv',
       icon: <FaFileCsv size={20} />,
-      label: <div className="flex justify-start items-center gap-3">CSV</div>,
+      label: <div className="flex items-center justify-start gap-3">CSV</div>,
       onClick: () => record?.handleFileDownload(record?.id, 'csv'),
       // disabled: !record.handleDeleteModal,
     },
@@ -94,7 +94,7 @@ const CustomTable = ({
         key: 'edit',
         icon: <MdEditSquare size={20} />,
         label: (
-          <div className="flex justify-start items-center gap-3">Edit</div>
+          <div className="flex items-center justify-start gap-3">Edit</div>
         ),
         onClick: () => record?.handleEdit(record?.id),
         disabled: !record.handleEdit,
@@ -103,7 +103,7 @@ const CustomTable = ({
         key: 'permission',
         icon: <IoIosLock size={20} />,
         label: (
-          <div className="flex justify-start items-center gap-3">
+          <div className="flex items-center justify-start gap-3">
             Set Permissions
           </div>
         ),
@@ -113,7 +113,7 @@ const CustomTable = ({
         key: 'delete',
         icon: <MdDelete size={20} />,
         label: (
-          <div className="flex justify-start items-center gap-3">Delete</div>
+          <div className="flex items-center justify-start gap-3">Delete</div>
         ),
         onClick: () => record?.handleDeleteModal(record?.id),
         disabled: !record.handleDeleteModal,
@@ -122,7 +122,7 @@ const CustomTable = ({
 
   const tableProps = {
     title: () => (
-      <span className="font-semibold text-[14px] underline text-lg">
+      <span className="text-[14px] text-lg font-semibold underline">
         {title}
       </span>
     ),
@@ -174,7 +174,7 @@ const CustomTable = ({
       align: 'center',
       width: 60,
       render: (id) => (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {id}
         </span>
       ),
@@ -196,10 +196,10 @@ const CustomTable = ({
             status?.toString() === '1'
               ? 'bg-[#DCFCE7] text-[#16A34A]'
               : 'bg-[#FEF2F2] text-[#EF4444]'
-          } rounded shadow-md w-[80px]`}
+          } w-[80px] rounded shadow-md`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
-          <span className="font-medium text-xs px-2 w-full">
+          <span className="w-full px-2 text-xs font-medium">
             {status?.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </button>
@@ -209,9 +209,9 @@ const CustomTable = ({
             status?.toString() === '1'
               ? 'bg-[#DCFCE7] text-[#16A34A]'
               : 'bg-[#FEF2F2] text-[#EF4444]'
-          } rounded shadow-md w-[80px]`}
+          } w-[80px] rounded shadow-md`}
         >
-          <span className="font-medium text-xs px-2 w-full">
+          <span className="w-full px-2 text-xs font-medium">
             {status?.toString() === '1' ? 'Active' : 'Inactive'}
           </span>
         </div>
@@ -237,7 +237,7 @@ const CustomTable = ({
     align: 'center',
     width: '100px',
     render: (created_at) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {formatDate(created_at, format)}
       </span>
     ),
@@ -254,10 +254,10 @@ const CustomTable = ({
       if (record?.handleDetailsModal && isDetailsPermitted) {
         // if (record?.handleDetailsModal) {
         return (
-          <div className="flex justify-center items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <button
               onClick={() => record?.handleDetailsModal(record?.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
             >
               <TbListDetails className="text-lg md:text-xl" />
             </button>
@@ -274,7 +274,7 @@ const CustomTable = ({
                 autoAdjustOverflow
                 arrow={{ pointAtCenter: true }}
               >
-                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                <button className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110">
                   <FiMoreHorizontal className="text-lg md:text-xl" />
                 </button>
               </Dropdown>
@@ -283,11 +283,11 @@ const CustomTable = ({
         );
       } else {
         return (
-          <div className="flex justify-center items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             {record?.handleEdit && isEditPermitted && (
               <button
                 onClick={() => record?.handleEdit(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+                className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
               >
                 <MdEditSquare className="text-lg md:text-xl" />
               </button>
@@ -306,7 +306,7 @@ const CustomTable = ({
                 autoAdjustOverflow
                 arrow={{ pointAtCenter: true }}
               >
-                <button className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300">
+                <button className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110">
                   <MdFileDownload className="text-lg md:text-xl" />
                 </button>
               </Dropdown>
@@ -331,7 +331,7 @@ const CustomTable = ({
             {record?.handleDeleteModal && isDeletePermitted && (
               <button
                 onClick={() => record?.handleDeleteModal(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+                className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
               >
                 <MdDelete className="text-lg md:text-xl" />
               </button>

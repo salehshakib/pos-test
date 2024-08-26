@@ -11,7 +11,7 @@ import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ExpenseCategoryForm from './ExpenseCategoryForm';
 
-const ExpenseCategoryEdit = ({ id }) => {
+const ExpenseCategoryEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -43,6 +43,7 @@ const ExpenseCategoryEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

@@ -79,7 +79,7 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
           </Col>
 
           <Col {...fullColLayout}>
-            <div className={`w-full flex gap-3 justify-end items-center py-5`}>
+            <div className={`flex w-full items-center justify-end gap-3 py-5`}>
               <Button htmlType="submit" type="primary">
                 Ok
               </Button>
@@ -178,16 +178,16 @@ export const SupplierReport = () => {
             open={open}
             setOpen={setOpen}
           />
-          <div className="w-full flex justify-center items-center py-5">
+          <div className="flex w-full items-center justify-center py-5">
             <Button onClick={() => setOpen(true)}>Select Supplier</Button>
           </div>
         </>
       ) : (
         <>
-          <div className=" w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
-            <div className="border rounded-md p-4 shadow-sm">
+          <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="rounded-md border p-4 shadow-sm">
               {isFetching ? (
-                <Spin className="w-full h-full flex justify-center items-center py-5" />
+                <Spin className="flex h-full w-full items-center justify-center py-5" />
               ) : (
                 <Descriptions
                   title="Customer Details"
@@ -196,16 +196,16 @@ export const SupplierReport = () => {
                 />
               )}
             </div>
-            <div className="border rounded-md p-4 shadow-sm">
+            <div className="rounded-md border p-4 shadow-sm">
               {isFetching || loading ? (
-                <Spin className="w-full h-full flex justify-center items-center " />
+                <Spin className="flex h-full w-full items-center justify-center" />
               ) : (
                 <Descriptions title="Summary" items={summaryDetails} />
               )}
             </div>
           </div>
           {isFetching ? (
-            <Spin className="w-full h-full flex justify-center items-center py-10" />
+            <Spin className="flex h-full w-full items-center justify-center py-10" />
           ) : data ? (
             <Tabs
               defaultActiveKey="purchase"

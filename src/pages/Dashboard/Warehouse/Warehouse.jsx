@@ -13,7 +13,7 @@ const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -23,7 +23,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     render: (phone) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {'0' + phone}
       </span>
     ),
@@ -33,7 +33,7 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     render: (email) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {email ?? 'N/A'}
       </span>
     ),

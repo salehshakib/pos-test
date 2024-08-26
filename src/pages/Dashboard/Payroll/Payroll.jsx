@@ -19,11 +19,11 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name, record) => (
-      <div className="flex flex-col cursor-pointer ">
-        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
+      <div className="flex cursor-pointer flex-col">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="text-xs dark:text-white60 primary-text">
+        <span className="dark:text-white60 primary-text text-xs">
           {record?.email}
         </span>
       </div>
@@ -35,7 +35,7 @@ const columns = [
     dataIndex: 'department',
     key: 'department',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -45,7 +45,7 @@ const columns = [
     dataIndex: 'paymentType',
     key: 'paymentType',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -56,7 +56,7 @@ const columns = [
     key: 'salary',
     align: 'right',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -68,7 +68,7 @@ const columns = [
     align: 'right',
 
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),
@@ -79,7 +79,7 @@ const columns = [
     key: 'loan',
     align: 'right',
     render: (text) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {text}
       </span>
     ),

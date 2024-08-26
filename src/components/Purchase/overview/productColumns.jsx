@@ -11,13 +11,13 @@ const baseColumns = [
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${
-          name !== 'Total' && 'hover:underline hover:cursor-pointer'
+          name !== 'Total' && 'hover:cursor-pointer hover:underline'
         }`}
         onClick={() => {
           record?.handleProductEdit(record?.id, record?.name);
         }}
       >
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {name}
         </span>
         {name !== 'Total' && <FaEdit className="primary-text" />}
@@ -31,7 +31,7 @@ const baseColumns = [
     align: 'center',
     width: 80,
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -43,7 +43,7 @@ const baseColumns = [
     align: 'center',
     width: 60,
     render: (stock) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {stock}
       </span>
     ),
@@ -55,7 +55,7 @@ const baseColumns = [
     align: 'center',
     width: 120,
     render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -69,11 +69,11 @@ const baseColumns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
-        <div className="flex gap-1 justify-center items-center">
+        <div className="flex items-center justify-center gap-1">
           <div>
             <Button
               key={'sub'}
@@ -130,7 +130,7 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (discount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -142,7 +142,7 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (tax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {tax}
       </span>
     ),
@@ -154,13 +154,13 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (subTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),
   },
   {
-    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
     align: 'center',
@@ -169,7 +169,7 @@ export const columns = [
     render: (props, record) => {
       return (
         props && (
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <button
               onClick={() =>
                 record.onDelete(
@@ -178,7 +178,7 @@ export const columns = [
                   record.setFormValues
                 )
               }
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
               type="button"
             >
               <MdDelete className="text-lg md:text-xl" />
@@ -200,11 +200,11 @@ export const partialColumns = [
     width: 140,
     render: (received, record) => {
       return received > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {received}
         </span>
       ) : (
-        <div className="flex gap-1 justify-center items-center">
+        <div className="flex items-center justify-center gap-1">
           <div>
             <Button
               key={'sub'}
@@ -238,7 +238,7 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (discount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         ${discount}
       </span>
     ),
@@ -250,7 +250,7 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (tax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {tax}
       </span>
     ),
@@ -262,13 +262,13 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (subTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         ${subTotal}
       </span>
     ),
   },
   {
-    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
     align: 'center',
@@ -277,10 +277,10 @@ export const partialColumns = [
     render: (props, record) => {
       return (
         props && (
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <button
               onClick={() => record.onDelete(record.id)}
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
               type="button"
             >
               <MdDelete className="text-lg md:text-xl" />

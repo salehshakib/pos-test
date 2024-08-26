@@ -184,7 +184,7 @@ export const PaymentTypeComponent = ({
     <>
       {paymentType === 'Cash' && (
         <>
-          <span className="text-center w-full pb-5 text-lg font-semibold">
+          <span className="w-full pb-5 text-center text-lg font-semibold">
             Quick Cash
           </span>
           <Col {...fullColLayout}>

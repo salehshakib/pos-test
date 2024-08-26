@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteExpenseCategoryMutation,
   useGetAllExpenseCategoryQuery,
@@ -27,7 +24,7 @@ const ExpenseCategoryTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -59,7 +56,7 @@ const ExpenseCategoryTable = ({
     useDeleteExpenseCategoryMutation();
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
@@ -124,7 +121,7 @@ const ExpenseCategoryTable = ({
         isRowSelection={true}
       />
 
-      <ExpenseCategoryEdit id={editId} />
+      <ExpenseCategoryEdit id={editId} setId={setEditId} />
 
       <StatusModal
         statusModal={statusModal}

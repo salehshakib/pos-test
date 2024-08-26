@@ -54,7 +54,7 @@ export const CustomSelectButton = (props) => {
                 filterOption={filterOption}
                 filterSort={filterSort}
                 placeholder={`Select ${placeholder ?? label}`}
-                className="mt-1 custom-selector"
+                className="custom-selector mt-1"
                 size={size}
                 loading={isLoading}
                 options={options}
@@ -63,7 +63,7 @@ export const CustomSelectButton = (props) => {
                   isLoading && (
                     <Spin
                       size="small"
-                      className="w-full flex justify-center items-center"
+                      className="flex w-full items-center justify-center"
                     />
                   )
                 }
@@ -75,7 +75,7 @@ export const CustomSelectButton = (props) => {
             ) : (
               <Select
                 placeholder={`Select ${placeholder ?? label}`}
-                className="mt-1 custom-selector"
+                className="custom-selector mt-1"
                 size="large"
                 loading={isLoading}
                 options={options}
@@ -84,7 +84,7 @@ export const CustomSelectButton = (props) => {
                   isLoading && (
                     <Spin
                       size="small"
-                      className="w-full flex justify-center items-center"
+                      className="flex w-full items-center justify-center"
                     />
                   )
                 }
@@ -98,7 +98,7 @@ export const CustomSelectButton = (props) => {
           <Button
             onClick={onClick}
             icon={icon}
-            className="border-2 mt-1"
+            className="mt-1 border-2"
             size={size}
           />
         </Space.Compact>

@@ -128,8 +128,8 @@ const PosProducts = ({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center text-lg mt-4">
+      <div className="flex h-full items-center justify-center">
+        <div className="mt-4 text-center text-lg">
           <Spin />
         </div>
       </div>
@@ -137,9 +137,9 @@ const PosProducts = ({
   }
 
   return (
-    <GlobalUtilityStyle className="p-3 pb-0 flex flex-col h-full overflow-auto">
+    <GlobalUtilityStyle className="flex h-full flex-col overflow-auto p-3 pb-0">
       <div className="grow">
-        <div className="overflow-auto " id="scrollable">
+        <div className="overflow-auto" id="scrollable">
           <InfiniteScroll
             dataLength={newData?.length}
             next={loadMoreData}
@@ -156,7 +156,7 @@ const PosProducts = ({
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 xl:grid-cols-4 p-1 overflow-hidden">
+            <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-4">
               {products &&
                 newData.map((product) => {
                   // const images = organizeAttachments(product?.attachments);
@@ -174,7 +174,7 @@ const PosProducts = ({
                         <Badge
                           count={stock}
                           overflowCount={99}
-                          className=" w-full"
+                          className="w-full"
                           offset={[-15, 0]}
                         >
                           <Card
@@ -194,7 +194,7 @@ const PosProducts = ({
                               <div className="w-full">
                                 <img
                                   alt="example"
-                                  className="mx-auto object-cover size-20 "
+                                  className="mx-auto size-20 object-cover"
                                   src={
                                     // images?.attach_file?.[0]?.url ??
                                     // images?.attachments?.[0]?.url ??

@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'fromWarehouse',
     key: 'fromWarehouse',
     render: (fromWarehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {fromWarehouse ?? 'N/A'}
       </span>
     ),
@@ -22,7 +22,7 @@ const columns = [
     dataIndex: 'toWarehouse',
     key: 'toWarehouse',
     render: (toWarehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {toWarehouse ?? 'N/A'}
       </span>
     ),
@@ -33,7 +33,7 @@ const columns = [
     key: 'reqQty',
     align: 'center',
     render: (reqQty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reqQty ?? 'N/A'}
       </span>
     ),

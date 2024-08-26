@@ -24,7 +24,7 @@ export const columns = [
       //   </span>
       //   {name !== "Total" && <FaEdit className="primary-text" />}
       // </div>
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -35,7 +35,7 @@ export const columns = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -46,7 +46,7 @@ export const columns = [
     key: 'unitCost',
     align: 'center',
     render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),
@@ -60,11 +60,11 @@ export const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
-        <div className="flex gap-1 justify-center items-center">
+        <div className="flex items-center justify-center gap-1">
           <div>
             <Button
               key={'sub'}
@@ -97,7 +97,7 @@ export const columns = [
     key: 'discount',
     align: 'center',
     render: (discount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         ${discount}
       </span>
     ),
@@ -108,7 +108,7 @@ export const columns = [
     key: 'tax',
     align: 'center',
     render: (tax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {tax}
       </span>
     ),
@@ -119,13 +119,13 @@ export const columns = [
     key: 'subTotal',
     align: 'center',
     render: (subTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         ${subTotal}
       </span>
     ),
   },
   {
-    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
     align: 'center',
@@ -134,7 +134,7 @@ export const columns = [
     render: (props, record) => {
       return (
         props && (
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             {/* <button
               onClick={() => record.onDelete(record.id)}
               className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"

@@ -15,7 +15,7 @@ const columns = [
     dataIndex: 'product_name',
     key: 'product_name',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -26,7 +26,7 @@ const columns = [
     key: 'qty',
     align: 'center',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -38,7 +38,7 @@ const columns = [
     key: 'price',
     align: 'right',
     render: (text) => (
-      <span className="text-xs md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {text}
       </span>
     ),
@@ -83,7 +83,7 @@ export const PurchaseDetails = ({ id, ...props }) => {
   const attachments = useDetailsLayout({ attachments: data?.attachments });
 
   const title = () => (
-    <span className="text-black font-semibold text-base -ml-2">
+    <span className="-ml-2 text-base font-semibold text-black">
       Purchase Products
     </span>
   );
@@ -105,9 +105,9 @@ export const PurchaseDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center my-10" />
+        <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
-        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
+        <div className="max-h-[75vh] space-y-5 overflow-y-auto pb-5 pt-3">
           {/* <CustomDescription title="Purchase " items={details} /> */}
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Purchase Info" items={purchaseStatus} />

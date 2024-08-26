@@ -16,7 +16,7 @@ const columns = [
     dataIndex: 'product',
     key: 'product',
     render: (product) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {product}
       </span>
     ),
@@ -26,7 +26,7 @@ const columns = [
     dataIndex: 'soldAmount',
     key: 'soldAmount',
     render: (amount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {amount}
       </span>
     ),
@@ -36,7 +36,7 @@ const columns = [
     dataIndex: 'soldQty',
     key: 'soldQty',
     render: (qty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {qty}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     key: 'warehouse',
     align: 'center',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse}
       </span>
     ),
@@ -59,7 +59,7 @@ const columns = [
     key: 'saleAt',
     align: 'center',
     render: (saleAt) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {saleAt}
       </span>
     ),

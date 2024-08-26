@@ -8,7 +8,7 @@ const columns = [
     key: 'slNo',
     align: 'center',
     render: (slNo) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {slNo}
       </span>
     ),
@@ -19,7 +19,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -31,7 +31,7 @@ const columns = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -43,7 +43,7 @@ const columns = [
     key: 'salePrice',
     align: 'right',
     render: (salePrice) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {salePrice}
       </span>
     ),

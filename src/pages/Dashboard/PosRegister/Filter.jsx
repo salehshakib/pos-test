@@ -12,8 +12,8 @@ export const Filter = ({
   const { searchParams, setParams } = useFilterParams();
 
   return (
-    <div className="flex grow ">
-      <div className="flex flex-col w-full ">
+    <div className="flex grow">
+      <div className="flex w-full flex-col">
         <div>
           <PosFilterComponent setParams={setParams} />
         </div>
@@ -21,7 +21,7 @@ export const Filter = ({
           style={{
             borderRadius: '8px',
           }}
-          className="shadow-md grow m-4 bg-gray-200 "
+          className="m-4 grow bg-gray-200 shadow-md"
         >
           <PosProducts
             products={products}

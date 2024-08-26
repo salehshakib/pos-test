@@ -19,7 +19,7 @@ import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomDrawer from '../../Shared/Drawer/CustomDrawer';
 import { QuotationForm } from '../Quotation/QuotationForm';
 
-const InvoiceEdit = ({ id }) => {
+const InvoiceEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
@@ -265,6 +265,7 @@ const InvoiceEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
 
       setFormValues({

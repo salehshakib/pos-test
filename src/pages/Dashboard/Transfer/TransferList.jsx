@@ -16,7 +16,7 @@ const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {date}
       </span>
     ),
@@ -27,7 +27,7 @@ const columns = [
     key: 'reference',
     align: 'center',
     render: (reference) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -37,7 +37,7 @@ const columns = [
     dataIndex: 'warehouse_from',
     key: 'warehouse_from',
     render: (warehouseFrom) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouseFrom ?? 'N/A'}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'warehouse_to',
     key: 'warehouse_to',
     render: (warehouseTo) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouseTo ?? 'N/A'}
       </span>
     ),
@@ -58,7 +58,7 @@ const columns = [
     dataIndex: 'product_cost',
     key: 'product_cost',
     render: (productCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {productCost}
       </span>
     ),
@@ -68,7 +68,7 @@ const columns = [
     dataIndex: 'product_tax',
     key: 'product_tax',
     render: (productTax) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {productTax}
       </span>
     ),
@@ -78,7 +78,7 @@ const columns = [
     dataIndex: 'grand_total',
     key: 'grand_total',
     render: (grandTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),
@@ -96,9 +96,9 @@ const columns = [
             status === 'Completed' || status === 'Sent' || status === 'Send'
               ? 'bg-[#DCFCE7] text-[#16A34A]'
               : 'bg-[#FEF2F2] text-[#EF4444]'
-          } rounded shadow-md w-[80px]`}
+          } w-[80px] rounded shadow-md`}
         >
-          <span className="font-medium text-xs px-2 w-full">{status}</span>
+          <span className="w-full px-2 text-xs font-medium">{status}</span>
         </div>
       );
     },

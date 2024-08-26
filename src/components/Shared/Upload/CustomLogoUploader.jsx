@@ -95,7 +95,7 @@ const CustomLogoUploader = ({ name }) => {
                     background: 'none',
                   }}
                   type="button"
-                  className="w-full flex flex-col items-center justify-center avatar-uploader "
+                  className="avatar-uploader flex w-full flex-col items-center justify-center"
                 >
                   <LiaCloudUploadAltSolid
                     style={{
@@ -113,7 +113,7 @@ const CustomLogoUploader = ({ name }) => {
               )}
             </Upload>
           </Form.Item>
-          <div className="text-center text-md md:text-xl pb-5">Logo</div>
+          <div className="text-md pb-5 text-center md:text-xl">Logo</div>
         </Col>
       </Row>
     </GlobalUtilityStyle>

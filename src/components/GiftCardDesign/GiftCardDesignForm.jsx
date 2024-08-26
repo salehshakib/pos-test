@@ -47,18 +47,18 @@ const FileInput = ({
       />
 
       <div
-        className="image-border h-56  bg-[#FAFAFA] hover:cursor-pointer overflow-hidden"
+        className="image-border h-56 overflow-hidden bg-[#FAFAFA] hover:cursor-pointer"
         onClick={onChooseImage}
       >
         {imageAfterCrop ? (
           <>
             <img
               src={imageAfterCrop}
-              className="w-full h-56 p-2 rounded-md object-contain"
+              className="h-56 w-full rounded-md object-contain p-2"
             />
             <button type="button" onClick={handleRemoveImage}>
               <FaTrash
-                className="absolute top-2 right-2 text-red-500 bg-white rounded-full p-1 cursor-pointer hover:scale-110 duration-300"
+                className="absolute right-2 top-2 cursor-pointer rounded-full bg-white p-1 text-red-500 duration-300 hover:scale-110"
                 style={{ fontSize: 23 }}
               />
             </button>
@@ -67,17 +67,17 @@ const FileInput = ({
           <>
             <img
               src={imageUrl}
-              className="w-full h-56 p-2 rounded-md object-contain"
+              className="h-56 w-full rounded-md object-contain p-2"
             />
             <button type="button" onClick={handleRemoveImage}>
               <FaTrash
-                className="absolute top-2 right-2 text-red-500 bg-white rounded-full p-1 cursor-pointer hover:scale-110 duration-300"
+                className="absolute right-2 top-2 cursor-pointer rounded-full bg-white p-1 text-red-500 duration-300 hover:scale-110"
                 style={{ fontSize: 23 }}
               />
             </button>
           </>
         ) : (
-          <div className="flex justify-center items-center flex-col h-full">
+          <div className="flex h-full flex-col items-center justify-center">
             <BiImageAdd
               style={{
                 fontSize: 25,
@@ -117,7 +117,7 @@ const ImageCropper = ({ image, onCropDone, onCropCancle }) => {
       onCancel={onCropCancle}
       onOk={() => onCropDone(croppedArea)}
     >
-      <div className="relative w-100 h-[50vh] mb-16 ">
+      <div className="w-100 relative mb-16 h-[50vh]">
         <div className="">
           <Cropper
             image={image}
@@ -187,9 +187,9 @@ const FrontImageCroppper = () => {
   }
 
   return (
-    <div className="space-y-3 ">
+    <div className="space-y-3">
       <div className="font-semibold">
-        <span className="text-red-600 mr-1">*</span>
+        <span className="mr-1 text-red-600">*</span>
         Front Image
       </div>
       <FileInput
@@ -250,7 +250,7 @@ const BackImageCroppper = () => {
   return (
     <div className="space-y-3">
       <div className="font-semibold">
-        <span className="text-red-600 mr-1">*</span>
+        <span className="mr-1 text-red-600">*</span>
         Back Image
       </div>
       <FileInput

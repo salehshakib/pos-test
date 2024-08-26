@@ -162,7 +162,7 @@ export const EmailConfigForm = ({ data }) => {
           </Col>
         </Row>
 
-        <div className="w-full flex gap-3 justify-end items-center">
+        <div className="flex w-full items-center justify-end gap-3">
           <Button htmlType="submit" type="primary" loading={isLoading}>
             Update
           </Button>

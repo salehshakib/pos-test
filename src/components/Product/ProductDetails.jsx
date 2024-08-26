@@ -16,7 +16,7 @@ const productQtyColumn = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs  md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {name}
       </span>
     ),
@@ -27,7 +27,7 @@ const productQtyColumn = [
     key: 'qty',
     align: 'center',
     render: (qty) => (
-      <span className="text-xs  md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {qty}
       </span>
     ),
@@ -41,7 +41,7 @@ const priceQtyColumn = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs  md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {name}
       </span>
     ),
@@ -52,7 +52,7 @@ const priceQtyColumn = [
     key: 'price',
     align: 'right',
     render: (price) => (
-      <span className="text-xs  md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs md:text-sm">
         {price}
       </span>
     ),
@@ -101,7 +101,7 @@ export const ProductDetails = ({ id, ...props }) => {
   });
 
   const qtyTitle = () => (
-    <span className="text-black font-semibold text-base -ml-2">
+    <span className="-ml-2 text-base font-semibold text-black">
       Warehouse Inventory List
     </span>
   );
@@ -148,7 +148,7 @@ export const ProductDetails = ({ id, ...props }) => {
   );
 
   const priceTitle = () => (
-    <span className="text-black font-semibold text-base -ml-2">
+    <span className="-ml-2 text-base font-semibold text-black">
       Warehouse Price List
     </span>
   );
@@ -168,9 +168,9 @@ export const ProductDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center my-10" />
+        <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
-        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
+        <div className="max-h-[75vh] space-y-5 overflow-y-auto pb-5 pt-3">
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Category & Units" items={categoryInfo} />
           <CustomDescription title="Inventory Info" items={inventoryInfo} />

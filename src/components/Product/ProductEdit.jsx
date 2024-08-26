@@ -15,7 +15,7 @@ import { openNotification } from '../../utilities/lib/openToaster';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 
-const ProductListEdit = ({ id }) => {
+const ProductListEdit = ({ id, setid }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -432,6 +432,7 @@ const ProductListEdit = ({ id }) => {
     const { data, error } = await updateProduct({ id, formData });
 
     if (data?.success) {
+      setid(undefined);
       dispatch(closeEditDrawer());
     }
 

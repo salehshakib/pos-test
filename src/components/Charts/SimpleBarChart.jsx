@@ -89,7 +89,7 @@ const data = [
 export const SimpleBarChartComponent = () => {
   const { token } = theme.useToken();
   return (
-    <div className="w-full h-full pb-10">
+    <div className="h-full w-full pb-10">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}

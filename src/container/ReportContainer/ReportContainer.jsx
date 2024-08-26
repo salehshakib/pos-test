@@ -64,7 +64,7 @@ export const ReportContainer = ({
       <div className="h-full">
         <PageContainer
           header={{
-            title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
+            title: <div className="py-3 text-2xl lg:text-3xl">{pageTitle}</div>,
           }}
           extra={[
             !pathname.includes('reports/purchase-calender') &&

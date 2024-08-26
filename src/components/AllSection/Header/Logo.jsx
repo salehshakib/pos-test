@@ -10,10 +10,10 @@ const Logo = () => {
 
   return (
     <div
-      className="font-bold hover:cursor-pointer primary-text flex justify-center items-center "
+      className="primary-text flex items-center justify-center font-bold hover:cursor-pointer"
       onClick={() => navigate('/dashboard')}
     >
-      <img src={logo} alt="" className="w-32 h-16 object-cover" />
+      <img src={logo} alt="" className="h-16 w-32 object-cover" />
     </div>
   );
 };

@@ -18,7 +18,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -29,7 +29,7 @@ const columns = [
     key: 'code',
     align: 'center',
     render: (code) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {code}
       </span>
     ),
@@ -41,7 +41,7 @@ const columns = [
     key: 'baseUnit',
     align: 'center',
     render: (baseUnit) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {baseUnit ?? 'N/A'}
       </span>
     ),
@@ -52,7 +52,7 @@ const columns = [
     key: 'type',
     align: 'center',
     render: (type) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {type}
       </span>
     ),
@@ -63,7 +63,7 @@ const columns = [
     key: 'operator',
     align: 'center',
     render: (operator) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {operator ?? 'N/A'}
       </span>
     ),
@@ -74,7 +74,7 @@ const columns = [
     key: 'operatorValue',
     align: 'center',
     render: (operatorValue) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {operatorValue ?? 'N/A'}
       </span>
     ),

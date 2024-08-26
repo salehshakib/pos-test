@@ -19,11 +19,11 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name, record) => (
-      <div className="flex flex-col cursor-pointer ">
-        <span className="text-xs md:text-sm text-dark dark:text-white87 font-medium">
+      <div className="flex cursor-pointer flex-col">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="text-xs dark:text-white60 primary-text">
+        <span className="dark:text-white60 primary-text text-xs">
           {record?.email}
         </span>
       </div>
@@ -34,7 +34,7 @@ const columns = [
     dataIndex: 'leaveType',
     key: 'leaveType',
     render: (leaveType) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {leaveType}
       </span>
     ),
@@ -45,7 +45,7 @@ const columns = [
     key: 'leaveDuration',
     align: 'center',
     render: (leaveDuration) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {leaveDuration}
       </span>
     ),
@@ -56,7 +56,7 @@ const columns = [
     key: 'days',
     align: 'center',
     render: (days) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {days}
       </span>
     ),

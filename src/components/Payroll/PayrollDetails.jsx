@@ -21,9 +21,9 @@ export const PayrollDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center my-10" />
+        <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
-        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
+        <div className="max-h-[75vh] space-y-5 overflow-y-auto pb-5 pt-3">
           <CustomDescription title="Payroll " items={details} />
         </div>
       )}

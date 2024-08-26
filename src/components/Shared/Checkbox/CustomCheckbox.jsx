@@ -27,7 +27,7 @@ const CustomCheckbox = (props) => {
         {mode === 'single' && !onChange && (
           <Checkbox className="my-1" required={required}>
             <span>{label}</span>
-            <span className="text-sm text-gray-500 px-2">{subLabel}</span>
+            <span className="px-2 text-sm text-gray-500">{subLabel}</span>
           </Checkbox>
         )}
 
@@ -39,14 +39,14 @@ const CustomCheckbox = (props) => {
             checked={checked}
           >
             <span>{label}</span>
-            <span className="text-sm text-gray-500 px-2">{subLabel}</span>
+            <span className="px-2 text-sm text-gray-500">{subLabel}</span>
           </Checkbox>
         )}
 
         {mode === 'group' && (
           <>
             <span>{label}</span>
-            <Group options={options} className="flex my-5 gap-3" />
+            <Group options={options} className="my-5 flex gap-3" />
           </>
         )}
       </Form.Item>

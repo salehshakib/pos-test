@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import {
   useDeleteQuotationMutation,
@@ -28,7 +25,8 @@ const QuotationTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
+
   const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
@@ -64,7 +62,7 @@ const QuotationTable = ({
   };
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 

@@ -12,7 +12,7 @@ import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import AdjustmentForm from './AdjustmentForm';
 
-const AdjustmentEdit = ({ id }) => {
+const AdjustmentEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
 
@@ -155,6 +155,7 @@ const AdjustmentEdit = ({ id }) => {
     const { data, error } = await udpateAdjustment({ id, formData });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
       setFormValues({ product_list: { qty: {}, action: {} } });
       setProducts([]);

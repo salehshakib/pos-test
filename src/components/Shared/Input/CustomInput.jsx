@@ -166,7 +166,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="mt-1 border-2 w-full"
+            className="mt-1 w-full border-2"
             min={0}
             max={100}
             controls={false}
@@ -179,7 +179,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="mt-1 border-2 w-full"
+            className="mt-1 w-full border-2"
             min={0}
             // controls={false}
             // controls={false}
@@ -193,7 +193,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="mt-1 border-2 w-full ant-group-number"
+            className="ant-group-number mt-1 w-full border-2"
             placeholder="1XXXX123XX"
             addonBefore={addonBefore}
             controls={false}
@@ -212,7 +212,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="mt-1 border-2 w-full ant-group-number"
+            className="ant-group-number mt-1 w-full border-2"
             placeholder="staff_id"
             max={9999}
             addonBefore={addonBefore}
@@ -225,7 +225,7 @@ const CustomInput = (props) => {
           <InputNumber
             {...commonProps}
             type="number"
-            className="mt-1 border-2 w-full ant-group-addOn"
+            className="ant-group-addOn mt-1 w-full border-2"
             addonAfter={suffix}
             controls={false}
             changeOnWheel={false}

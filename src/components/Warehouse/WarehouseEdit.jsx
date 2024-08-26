@@ -29,13 +29,6 @@ const WarehouseEdit = ({ id, setId }) => {
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-      // ];
 
       setFields(fieldData);
     }

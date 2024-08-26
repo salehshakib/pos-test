@@ -14,12 +14,12 @@ const PosSetting = () => {
       <PageContainer
         header={{
           title: (
-            <div className="text-2xl lg:text-3xl border-r-2 pr-2 border-black py-1">
+            <div className="border-r-2 border-black py-1 pr-2 text-2xl lg:text-3xl">
               Settings
             </div>
           ),
           subTitle: (
-            <div className="text-2xl lg:text-3xl py-1">Pos Settings</div>
+            <div className="py-1 text-2xl lg:text-3xl">Pos Settings</div>
           ),
         }}
         loading={isLoading}

@@ -52,8 +52,8 @@ export const Brands = ({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center text-lg mt-4">
+      <div className="flex h-screen items-center justify-center">
+        <div className="mt-4 text-center text-lg">
           <Spin />
         </div>
       </div>
@@ -91,7 +91,7 @@ export const Brands = ({
             handleSubmit={handleSubmit}
             onClose={onClose}
           >
-            <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+            <div className="grid grid-cols-3 gap-4 md:grid-cols-5 lg:grid-cols-7">
               {brands &&
                 newData?.map((item) => (
                   <Card
@@ -101,13 +101,13 @@ export const Brands = ({
                       borderColor: isSelected.includes(item.id) && color,
                     }}
                     key={item.id}
-                    className="shadow-md border "
+                    className="border shadow-md"
                     onClick={() => handleCardSelect(item.id)}
                     cover={
                       <div className="w-full">
                         <img
                           alt="example"
-                          className="overflow-hidden size-32 object-cover mx-auto"
+                          className="mx-auto size-32 overflow-hidden object-cover"
                           src={productImage}
                         />
                       </div>
@@ -123,7 +123,7 @@ export const Brands = ({
             </div>
           </CustomForm>
           {newData?.length < total && (
-            <div className="text-center my-4 pb-10">
+            <div className="my-4 pb-10 text-center">
               Pull down to load more ....
             </div>
           )}

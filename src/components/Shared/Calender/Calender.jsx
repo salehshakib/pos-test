@@ -30,7 +30,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -42,7 +42,7 @@ const columns = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -54,7 +54,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {quantity}
       </span>
     ),
@@ -65,7 +65,7 @@ const columns = [
     key: 'total',
     align: 'right',
     render: (total, record) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {showCurrency(total, record?.currency)}
       </span>
     ),
@@ -164,7 +164,7 @@ const CustomCalender = ({ onChange, data }) => {
 
   if (!data)
     return (
-      <Spin className="w-full flex justify-center items-center h-[70vh]" />
+      <Spin className="flex h-[70vh] w-full items-center justify-center" />
     );
 
   return (
@@ -175,20 +175,20 @@ const CustomCalender = ({ onChange, data }) => {
         onSelect={handleCellClick}
       />
       <CustomModal openModal={modalOpen} hideModal={() => setModalOpen(false)}>
-        <div className="grid grid-cols-3 p-2 divide-x-2 ">
-          <div className="flex gap-2 justify-center">
+        <div className="grid grid-cols-3 divide-x-2 p-2">
+          <div className="flex justify-center gap-2">
             <span className="text-lg font-medium">Grand Total</span>
             <span className="text-lg font-medium">
               {showCurrency(dataSource?.[0]?.grand_total, currency)}
             </span>
           </div>
-          <div className="flex gap-2  justify-center">
+          <div className="flex justify-center gap-2">
             <span className="text-lg font-medium">Paid Amount</span>
             <span className="text-lg font-medium">
               {showCurrency(dataSource?.[0]?.paid_amount, currency)}
             </span>
           </div>
-          <div className="flex gap-2 justify-center">
+          <div className="flex justify-center gap-2">
             <span className="text-lg font-medium">Due Amount</span>
             <span className="text-lg font-medium">
               {showCurrency(dataSource?.[0]?.due_amount, currency)}

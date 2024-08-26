@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'type',
     key: 'type',
     render: (type) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {type}
       </span>
     ),

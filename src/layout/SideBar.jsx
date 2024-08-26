@@ -113,7 +113,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
 
   return (
     <Sider
-      className="h-full overflow-x-auto pb-10 pt-1 bg-white"
+      className="h-full overflow-x-auto bg-white pb-10 pt-1"
       // theme="dark"
       width={240}
       trigger={null}
@@ -129,13 +129,13 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     >
       {pathname.includes('/pos') && !pathname.includes('pos-settings') && (
         <div className="w-full">
-          <img src={logo} alt="" className="w-32 h-16 object-cover mx-auto" />
+          <img src={logo} alt="" className="mx-auto h-16 w-32 object-cover" />
         </div>
       )}
       <Menu
         theme="light"
         mode="inline"
-        className="h-full w-full "
+        className="h-full w-full"
         defaultSelectedKeys={['Dashboard']}
         items={sidebarItems}
         onOpenChange={onOpenChange}

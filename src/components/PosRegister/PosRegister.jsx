@@ -212,7 +212,7 @@ const RegisterForm = ({ products, setProducts }) => {
   }, [form]);
 
   return (
-    <GlobalUtilityStyle className="pb-5 ">
+    <GlobalUtilityStyle className="pb-5">
       <div className="flex flex-col">
         <Row gutter={5}>
           <Col span={4}>
@@ -424,7 +424,7 @@ export const PosRegister = ({
         className="h-[90vh]"
         noStyle
       >
-        <div className="p-4 flex flex-col h-full">
+        <div className="flex h-full flex-col p-4">
           <div className="flex-none">
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
@@ -441,8 +441,8 @@ export const PosRegister = ({
             />
           </div>
 
-          <div className="flex-none bg-white pb-3 px-2 flex flex-col gap-2 rounded-md shadow-md">
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 xl:gap-2 px-2">
+          <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
+            <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
               <div className="grid grid-cols-2">
                 <span>Items</span>
                 <span className="font-semibold">
@@ -455,7 +455,7 @@ export const PosRegister = ({
               </div>
               <div className="grid grid-cols-2">
                 <span
-                  className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
+                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
                   onClick={() => showModal('Discount')}
                 >
                   Discount
@@ -466,7 +466,7 @@ export const PosRegister = ({
               </div>
               <div className="grid grid-cols-2">
                 <span
-                  className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
+                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
                   onClick={() => showModal('Coupon')}
                 >
                   Coupon
@@ -477,7 +477,7 @@ export const PosRegister = ({
               </div>
               <div className="grid grid-cols-2">
                 <span
-                  className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline "
+                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
                   onClick={() => showModal('Tax')}
                 >
                   Vat
@@ -488,7 +488,7 @@ export const PosRegister = ({
               </div>
               <div className="grid grid-cols-2">
                 <span
-                  className="flex justify-start items-center gap-2 hover:cursor-pointer hover:underline"
+                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
                   onClick={() => showModal('Shipping Cost')}
                 >
                   Shipping
@@ -499,7 +499,7 @@ export const PosRegister = ({
               </div>
             </div>
 
-            <div className="text-center secondary-bg primary-text text-lg py-1 font-semibold rounded-sm">
+            <div className="secondary-bg primary-text rounded-sm py-1 text-center text-lg font-semibold">
               Grand Total {grand_total.toFixed(2) ?? 0}
             </div>
 
@@ -529,7 +529,7 @@ export const PosRegister = ({
                   tax_rate: {},
                 });
               }}
-              className=" flex justify-center items-center gap-2"
+              className="flex items-center justify-center gap-2"
             >
               Reset
             </Button>

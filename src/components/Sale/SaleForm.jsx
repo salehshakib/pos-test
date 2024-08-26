@@ -16,7 +16,6 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from '../../utilities/lib/generator/generatorUtils';
-import { useSetFieldValue } from '../../utilities/lib/updateFormValues/useInitialFormField';
 import { CashierComponent } from '../ReusableComponent/CashierComponent';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { TotalRow } from '../ReusableComponent/TotalRow';
@@ -31,9 +30,12 @@ import { CustomerComponent } from './overview/CustomerComponent';
 import { PaymentTypeComponent } from './overview/PaymentFormComponent';
 import { SaleProductTable } from './overview/SaleProductTable';
 
-const StatusComponent = () => {
-  useSetFieldValue('sale_status', saleStatusOptions[0].value);
+const StatusComponent = ({ form }) => {
+  // useSetFieldValue('sale_status', saleStatusOptions[0].value);
 
+  useEffect(() => {
+    form.setFieldValue('sale_status', saleStatusOptions[0].value);
+  }, [form]);
   return (
     <CustomSelect
       label="Sale Status"
@@ -43,8 +45,13 @@ const StatusComponent = () => {
   );
 };
 
-const PaymentStatusComponent = () => {
-  useSetFieldValue('payment_status', paymentStatusOptions[0].value);
+const PaymentStatusComponent = ({ form }) => {
+  // useSetFieldValue('payment_status', paymentStatusOptions[0].value);
+
+  useEffect(() => {
+    form.setFieldValue('payment_status', paymentStatusOptions[0].value);
+  }, [form]);
+
   return (
     <CustomSelect
       label="Payment Status"
@@ -183,13 +190,13 @@ export const SaleForm = ({
           </Col>
 
           <Col {...colLayout}>
-            <PaymentStatusComponent />
+            <PaymentStatusComponent form={form} />
           </Col>
 
           <PaymentTypeComponent grandTotal={grandTotal} />
 
           <Col {...colLayout}>
-            <StatusComponent />
+            <StatusComponent form={form} />
           </Col>
 
           <Col {...fullColLayout}>

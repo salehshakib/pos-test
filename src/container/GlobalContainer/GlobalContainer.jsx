@@ -79,7 +79,7 @@ const GlobalContainer = ({
   };
 
   const header = {
-    title: <div className="text-2xl lg:text-3xl py-3">{pageTitle}</div>,
+    title: <div className="py-3 text-2xl lg:text-3xl">{pageTitle}</div>,
     subTitle: usePermission(api, 'store') &&
       !['/petty-cash', '/reports'].some((path) => pathname.includes(path)) && (
         <div className="">
@@ -89,7 +89,7 @@ const GlobalContainer = ({
             icon={<FaCirclePlus size={30} />}
             style={{ width: '45px', height: '100%' }}
             onClick={handleDrawerOpen}
-            className="primary-text flex justify-center items-center"
+            className="primary-text flex items-center justify-center"
           />
         </div>
       ),
@@ -357,7 +357,7 @@ const GlobalContainer = ({
         {searchFilterContent}
       </div>
 
-      <div className={`w-full flex gap-3 justify-end items-center pt-5 pb-3`}>
+      <div className={`flex w-full items-center justify-end gap-3 pb-3 pt-5`}>
         <Button type="default" onClick={handlePopoverClose}>
           Cancel
         </Button>
@@ -402,12 +402,12 @@ const GlobalContainer = ({
                   type="text"
                   key="search"
                   size="large"
-                  className="w-full border rounded-md border-gray-300 focus:outline-none focus:border-primary"
+                  className="focus:border-primary w-full rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Search"
                   prefix={
                     <IoSearch
                       style={{ fontSize: '16px' }}
-                      className="primary-text hover:cursor-pointer hover:scale-110 duration-300 text-xs lg:text-[16px]"
+                      className="primary-text text-xs duration-300 hover:scale-110 hover:cursor-pointer lg:text-[16px]"
                     />
                   }
                   onChange={(e) => debounce(e.target.value)}
@@ -439,7 +439,7 @@ const GlobalContainer = ({
                   >
                     <TbFilterSearch
                       style={{ fontSize: '16px' }}
-                      className="text-xs primary-text lg:text-[16px]"
+                      className="primary-text text-xs lg:text-[16px]"
                     />
                   </Button>
                   {/* <CustomModal
@@ -469,7 +469,7 @@ const GlobalContainer = ({
                 <Button
                   style={{ padding: '0px 12px' }}
                   size="large"
-                  className="flex justify-center items-center"
+                  className="flex items-center justify-center"
                 >
                   <FaEllipsis size={20} />
                 </Button>
@@ -479,7 +479,7 @@ const GlobalContainer = ({
               {selectedRows?.length > 0 && (
                 <div>
                   <button
-                    className="custom-primary-btn p-2 rounded-xl text-white duration-300"
+                    className="custom-primary-btn rounded-xl p-2 text-white duration-300"
                     size="large"
                     onClick={handleDeleteModal}
                   >
@@ -494,7 +494,7 @@ const GlobalContainer = ({
               {
                 <Space
                   key={'extra'}
-                  className="w-full flex justify-end items-center pb-3 gap-2 underline font-semibold"
+                  className="flex w-full items-center justify-end gap-2 pb-3 font-semibold underline"
                 >
                   <span>{`Showing ${
                     advanceSearch ? 'Filtered' : 'All'

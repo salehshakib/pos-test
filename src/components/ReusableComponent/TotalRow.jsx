@@ -32,11 +32,11 @@ export const TotalRow = ({
   return (
     <Row className="pb-20">
       <Col {...fullColLayout}>
-        <Row className="rounded-md overflow-hidden">
+        <Row className="overflow-hidden rounded-md">
           {options.map(({ label, value }) => (
             <Col
               span={24 / options.length}
-              className="border flex justify-between items-center px-2 py-5 text-sm lg:text-base"
+              className="flex items-center justify-between border px-2 py-5 text-sm lg:text-base"
               key={label}
             >
               <span className="font-semibold">{label}</span>

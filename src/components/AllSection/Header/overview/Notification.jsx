@@ -90,18 +90,18 @@ export const Notification = () => {
   const title = () => {
     return (
       <div className="space-y-2">
-        <div className="text-start font-bold text-[1.4rem]">Notifications</div>
+        <div className="text-start text-[1.4rem] font-bold">Notifications</div>
         <div className="flex items-center gap-2 text-sm">
           <span
             style={selected === 'All' ? selectedStyleProps : {}}
-            className={`${selected === 'Unread' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} duration-300 px-4 py-1 rounded-full`}
+            className={`${selected === 'Unread' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} rounded-full px-4 py-1 duration-300`}
             onClick={() => setSelected('All')}
           >
             All
           </span>
           <span
             style={selected === 'Unread' ? selectedStyleProps : {}}
-            className={`${selected === 'All' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} duration-300 px-4 py-1 rounded-full`}
+            className={`${selected === 'All' ? 'cursor-pointer hover:bg-[#f5f5f5]' : 'cursor-default'} rounded-full px-4 py-1 duration-300`}
             onClick={() => setSelected('Unread')}
           >
             Unread
@@ -137,7 +137,7 @@ export const Notification = () => {
     >
       <Button
         onClick={handleNotification}
-        className="flex justify-center items-center"
+        className="flex items-center justify-center"
       >
         <Tooltip title="Notifications">
           <Badge dot={show}>
@@ -146,7 +146,7 @@ export const Notification = () => {
               style={{
                 color: token.colorPrimary,
               }}
-              className="hover:cursor-pointer "
+              className="hover:cursor-pointer"
             />
           </Badge>
         </Tooltip>

@@ -118,7 +118,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
             />
           </Col>
         </Row>
-        <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+        <div className={`flex w-full items-center justify-end gap-3 pt-5`}>
           <Button type="default" onClick={hideModal}>
             Cancel
           </Button>
@@ -180,7 +180,7 @@ export const PosComponent = () => {
       <Tooltip title="POS">
         <Button
           icon={<MdPointOfSale size={18} />}
-          className="flex justify-center items-center gap-1 shadow-sm"
+          className="flex items-center justify-center gap-1 shadow-sm"
           onClick={posRegister}
         >
           POS

@@ -147,7 +147,7 @@ const CustomSelect = ({
     mode,
     size,
     notFoundContent: isLoading ? (
-      <Spin size="small" className="w-full flex justify-center items-center" />
+      <Spin size="small" className="flex w-full items-center justify-center" />
     ) : (
       <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
     ),

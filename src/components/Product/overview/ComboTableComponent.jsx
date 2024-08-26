@@ -13,7 +13,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -26,7 +26,7 @@ const columns = [
     width: 200,
     render: (quantity, record) => {
       return quantity >= 0 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -47,7 +47,7 @@ const columns = [
     width: 200,
     render: (unitPrice, record) => {
       return unitPrice >= 0 ? (
-        <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
           {unitPrice}
         </span>
       ) : (
@@ -62,7 +62,7 @@ const columns = [
   },
 
   {
-    title: <MdDelete className="text-lg md:text-xl text-center w-full" />,
+    title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
     align: 'center',
@@ -72,11 +72,11 @@ const columns = [
       const { setRowId } = props ?? {};
       return (
         props && (
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <button
               onClick={() => setRowId(record?.id)}
               type="button"
-              className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
+              className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110"
             >
               <MdDelete className="text-lg md:text-xl" />
             </button>

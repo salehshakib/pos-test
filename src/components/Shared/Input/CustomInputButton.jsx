@@ -41,7 +41,7 @@ const CustomInputButton = (props) => {
           <Button
             onClick={onClick}
             icon={icon}
-            className="border-2 mt-1 flex justify-center items-center"
+            className="mt-1 flex items-center justify-center border-2"
             size="large"
           >
             {btnText}

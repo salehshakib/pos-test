@@ -29,11 +29,11 @@ const columns = [
     align: 'center',
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
+      <div className="mx-auto h-8 w-8 overflow-hidden rounded-md">
         <img
           src={img ?? defaultUser}
           alt="defaultUser"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
     ),
@@ -43,7 +43,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -54,7 +54,7 @@ const columns = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -65,7 +65,7 @@ const columns = [
     key: 'type',
     align: 'center',
     render: (type) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {type}
       </span>
     ),
@@ -75,7 +75,7 @@ const columns = [
     dataIndex: 'brand',
     key: 'brand',
     render: (brand) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {brand ?? 'N/A'}
       </span>
     ),
@@ -85,7 +85,7 @@ const columns = [
     dataIndex: 'category',
     key: 'category',
     render: (category) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {category ?? 'N/A'}
       </span>
     ),
@@ -96,7 +96,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {quantity ?? 0}
       </span>
     ),
@@ -107,7 +107,7 @@ const columns = [
     dataIndex: 'cost',
     key: 'cost',
     render: (cost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {cost}
       </span>
     ),
@@ -117,7 +117,7 @@ const columns = [
     dataIndex: 'price',
     key: 'price',
     render: (price) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {price}
       </span>
     ),

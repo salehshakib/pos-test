@@ -10,7 +10,6 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from '../../../utilities/lib/generator/generatorUtils';
-import { useSetFieldValue } from '../../../utilities/lib/updateFormValues/useInitialFormField';
 import { CashierComponent } from '../../ReusableComponent/CashierComponent';
 import { OrderTaxComponent } from '../../ReusableComponent/OrderTaxComponent';
 import { SupplierComponent } from '../../ReusableComponent/SupplierComponent';
@@ -23,8 +22,10 @@ import CustomUploader from '../../Shared/Upload/CustomUploader';
 import { CustomerComponent } from '../overview/CustomerComponent';
 import { QuotationProductTable } from './overview/QuotationProductTable';
 
-const StatusComponent = () => {
-  useSetFieldValue('status', 'Pending');
+const StatusComponent = ({ form }) => {
+  useEffect(() => {
+    form.setFieldValue('status', 'Pending');
+  }, [form]);
 
   const options = [
     {
@@ -129,7 +130,7 @@ export const InvoiceForm = ({
             <SupplierComponent required={false} />
           </Col>
           <Col {...largeLayout}>
-            <CustomerComponent />
+            <CustomerComponent required={true} />
           </Col>
 
           <QuotationProductTable
@@ -155,7 +156,7 @@ export const InvoiceForm = ({
             />
           </Col>
           <Col {...largeLayout}>
-            <StatusComponent />
+            <StatusComponent form={form} />
           </Col>
 
           <Col {...fullColLayout}>

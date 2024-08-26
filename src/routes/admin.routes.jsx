@@ -1,7 +1,7 @@
 //components
+import { CiBoxes } from 'react-icons/ci';
 import { FiShoppingBag } from 'react-icons/fi';
 import { GoPeople } from 'react-icons/go';
-import { LuArchive } from 'react-icons/lu';
 import {
   MdOutlineInventory2,
   MdOutlineMailLock,
@@ -40,7 +40,7 @@ export const adminPaths = [
   {
     name: 'Products',
     path: 'products',
-    icon: LuArchive,
+    icon: CiBoxes,
     children: productPaths,
   },
   {

@@ -15,7 +15,7 @@ const columns = [
     align: 'center',
     width: 80,
     render: (id) => (
-      <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-sm font-medium md:text-xs">
         {id}
       </span>
     ),
@@ -28,11 +28,11 @@ const columns = [
     align: 'center',
     width: 50,
     render: (img) => (
-      <div className="w-8 h-8 rounded-full overflow-hidden mx-auto">
+      <div className="mx-auto h-8 w-8 overflow-hidden rounded-full">
         <img
           src={img}
           alt="defaultUser"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
     ),
@@ -43,7 +43,7 @@ const columns = [
     key: 'name',
     fixed: 'left',
     render: (name) => (
-      <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-sm font-medium md:text-xs">
         {name}
       </span>
     ),
@@ -54,7 +54,7 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     render: (email) => (
-      <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-sm font-medium md:text-xs">
         {email}
       </span>
     ),
@@ -65,7 +65,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     render: (phone) => (
-      <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-sm font-medium md:text-xs">
         {'0' + phone}
       </span>
     ),
@@ -77,7 +77,7 @@ const columns = [
     key: 'department',
     align: 'center',
     render: (department) => (
-      <span className="text-sm font-medium md:text-xs text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-sm font-medium md:text-xs">
         {department}
       </span>
     ),
@@ -91,12 +91,12 @@ const columns = [
     width: 50,
     fixed: 'right',
     render: () => (
-      <div className="flex justify-center items-center gap-3 ">
-        <Button className="flex items-center justify-center text-black border-none bg-transparent hover:bg-none hover:text-posPurple p-0">
+      <div className="flex items-center justify-center gap-3">
+        <Button className="hover:text-posPurple flex items-center justify-center border-none bg-transparent p-0 text-black hover:bg-none">
           <MdEditSquare className="text-2xl" />
         </Button>
 
-        <Button className="flex items-center justify-center text-black border-none bg-transparent hover:bg-none hover:text-posPurple p-0">
+        <Button className="hover:text-posPurple flex items-center justify-center border-none bg-transparent p-0 text-black hover:bg-none">
           <MdDeleteOutline className="text-2xl" />
         </Button>
       </div>
@@ -120,14 +120,14 @@ const Hrm = () => {
     }),
   };
   return (
-    <div className="h-full ">
+    <div className="h-full">
       <PageContainer
         title=<div className="text-xl md:text-3xl">HRM</div>
         subTitle={
           <Button
             type="text"
             icon={<FaCirclePlus />}
-            className="flex justify-center items-center text-xl md:text-3xl hover:bg-none"
+            className="flex items-center justify-center text-xl hover:bg-none md:text-3xl"
           />
         }
         extra={[]}

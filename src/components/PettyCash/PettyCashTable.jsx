@@ -13,6 +13,7 @@ import { showCurrency } from '../../utilities/lib/currency';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
+import { formatDate } from '../../utilities/lib/dateFormat';
 
 export const PettyCashTable = ({
   newColumns,
@@ -67,7 +68,7 @@ export const PettyCashTable = ({
         status,
       } = item ?? {};
 
-      const date = format(created_at, format);
+      const date = formatDate(created_at, format);
 
       return {
         id,

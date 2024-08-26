@@ -31,7 +31,7 @@ export const CustomQuantityInput = (props) => {
       >
         <InputNumber
           type="number"
-          className="mt-1 border-2 w-full"
+          className="mt-1 w-full border-2"
           size="large"
           prefix={prefix}
           suffix={suffix}

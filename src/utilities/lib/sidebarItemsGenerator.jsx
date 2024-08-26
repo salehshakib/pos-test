@@ -77,7 +77,7 @@ export const sidebarItemsGenerator = (items, parentPath = '') => {
       ) : (
         <NavLink
           className={({ isActive }) =>
-            isActive ? 'font-bold text-xs lg:text-sm' : 'text-xs lg:text-sm'
+            isActive ? 'text-xs font-bold lg:text-sm' : 'text-xs lg:text-sm'
           }
           to={currentPath}
         >

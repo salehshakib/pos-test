@@ -34,7 +34,7 @@ const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
 
   if (isLoading || (isDataLoading && !data)) {
     return (
-      <div className="w-full h-screen flex flex-col justify-center items-center gap-5">
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-5">
         <Spin size="large" />
         <span>Setting up your environment...</span>
       </div>
@@ -44,7 +44,7 @@ const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
   if (!data) {
     return (
       <div
-        className="text-xl  font-semibold h-screen flex justify-center items-center w-full"
+        className="flex h-screen w-full items-center justify-center text-xl font-semibold"
         style={{ color: primaryColor }}
       >
         Something went wrong. Please contact the developer.

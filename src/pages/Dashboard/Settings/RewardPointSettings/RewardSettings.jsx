@@ -8,12 +8,12 @@ export const RewardSettings = () => {
       <PageContainer
         header={{
           title: (
-            <div className="text-2xl lg:text-3xl border-r-2 pr-2 border-black py-1">
+            <div className="border-r-2 border-black py-1 pr-2 text-2xl lg:text-3xl">
               Settings
             </div>
           ),
           subTitle: (
-            <div className="text-2xl lg:text-3xl py-1">Reward Settings</div>
+            <div className="py-1 text-2xl lg:text-3xl">Reward Settings</div>
           ),
         }}
         // loading={isLoading}

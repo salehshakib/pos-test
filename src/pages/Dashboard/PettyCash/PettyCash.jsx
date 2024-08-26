@@ -12,7 +12,7 @@ const columns = [
     key: 'reference_id',
     align: 'center',
     render: (reference_id) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reference_id}
       </span>
     ),
@@ -22,7 +22,7 @@ const columns = [
     dataIndex: 'user',
     key: 'user',
     render: (user) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {user}
       </span>
     ),
@@ -32,7 +32,7 @@ const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse}
       </span>
     ),
@@ -42,7 +42,7 @@ const columns = [
     dataIndex: 'cash_in_hand',
     key: 'cash_in_hand',
     render: (cash_in_hand) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {cash_in_hand}
       </span>
     ),
@@ -53,7 +53,7 @@ const columns = [
     key: 'open_at',
     align: 'center',
     render: (open_at) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {open_at}
       </span>
     ),
@@ -64,7 +64,7 @@ const columns = [
     key: 'closes_at',
     align: 'center',
     render: (closes_at) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {closes_at}
       </span>
     ),

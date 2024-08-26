@@ -23,20 +23,11 @@ export const HolidaysEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetHolidayDetailsQuery({ id }, { skip: !id });
 
-  // //console.log(isEditDrawerOpen, id);
-
   const [updateHoliday, { isLoading }] = useUpdateHolidayMutation();
 
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-      // ];
 
       setFields(fieldData);
     }

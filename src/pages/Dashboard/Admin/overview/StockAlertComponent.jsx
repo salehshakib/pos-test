@@ -18,7 +18,7 @@ const columns = [
     key: 'slNo',
     align: 'center',
     render: (slNo) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {slNo}
       </span>
     ),
@@ -29,7 +29,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -41,7 +41,7 @@ const columns = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -53,7 +53,7 @@ const columns = [
     key: 'warehouse',
     align: 'center',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse}
       </span>
     ),
@@ -65,7 +65,7 @@ const columns = [
     key: 'minQty',
     align: 'center',
     render: (minQty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {minQty}
       </span>
     ),
@@ -78,7 +78,7 @@ const columns = [
     align: 'center',
     render: (stock, record) => (
       <span
-        className={`"text-xs font-medium md:text-sm text-dark dark:text-white87" ${
+        className={`"text-xs text-dark dark:text-white87" font-medium md:text-sm ${
           record?.stock < record?.minQty ? 'text-red-500' : ''
         }`}
       >
@@ -93,7 +93,7 @@ const columns = [
     key: 'unitCost',
     align: 'center',
     render: (unitCost) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),

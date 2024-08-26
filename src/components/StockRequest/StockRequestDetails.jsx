@@ -12,7 +12,7 @@ const productReqTable = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -24,7 +24,7 @@ const productReqTable = [
     key: 'sku',
     align: 'center',
     render: (sku) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {sku}
       </span>
     ),
@@ -35,7 +35,7 @@ const productReqTable = [
     dataIndex: 'alertQty',
     key: 'alertQty',
     render: (alertQty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {alertQty}
       </span>
     ),
@@ -45,7 +45,7 @@ const productReqTable = [
     dataIndex: 'reqQty',
     key: 'reqQty',
     render: (reqQty) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reqQty}
       </span>
     ),
@@ -70,7 +70,7 @@ export const StockRequestDetails = ({ id, ...props }) => {
   });
 
   const productReqTitle = () => (
-    <span className="text-black font-semibold text-base -ml-2">
+    <span className="-ml-2 text-base font-semibold text-black">
       Product Request List
     </span>
   );
@@ -87,9 +87,9 @@ export const StockRequestDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props} status={data?.status}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center my-10" />
+        <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
-        <div className="space-y-5 max-h-[75vh] overflow-y-auto pt-3 pb-5">
+        <div className="max-h-[75vh] space-y-5 overflow-y-auto pb-5 pt-3">
           <CustomDescription title="Basic Info" items={warehouseInfo} />
           <Table
             {...tableProps}

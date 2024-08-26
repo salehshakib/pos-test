@@ -16,11 +16,11 @@ const columns = [
     align: 'center',
     width: 70,
     render: (img) => (
-      <div className="w-8 h-8 rounded-md overflow-hidden mx-auto">
+      <div className="mx-auto h-8 w-8 overflow-hidden rounded-md">
         <img
           src={img ?? defaultUser}
           alt="defaultUser"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
     ),
@@ -30,7 +30,7 @@ const columns = [
     dataIndex: 'brand',
     key: 'brand',
     render: (brand) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {brand}
       </span>
     ),

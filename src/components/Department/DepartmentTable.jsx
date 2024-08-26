@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteDepartmentMutation,
   useGetDepartmentsQuery,
@@ -26,7 +23,7 @@ const DepartmentTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { editId } = useSelector((state) => state.drawer);
+  const [editId, setEditId] = useState(undefined);
 
   const [statusId, setStatusId] = useState(undefined);
   const [statusModal, setStatusModal] = useState(false);
@@ -52,7 +49,7 @@ const DepartmentTable = ({
     useDeleteDepartmentMutation();
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
@@ -117,7 +114,7 @@ const DepartmentTable = ({
         isRowSelection={true}
       />
 
-      <DepartmentEdit id={editId} />
+      <DepartmentEdit id={editId} setId={setEditId} />
 
       <StatusModal
         statusModal={statusModal}

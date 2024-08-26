@@ -21,9 +21,9 @@ const CustomInvoiceForm = ({ name, label }) => {
         />
       </Col>
       <Col {...mdColLayout}>
-        <div className="border-2 rounded-md mt-8 flex justify-center items-center">
+        <div className="mt-8 flex items-center justify-center rounded-md border-2">
           <div
-            className=" overflow-auto h-[42.5rem]"
+            className="h-[42.5rem] overflow-auto"
             dangerouslySetInnerHTML={{ __html: data }}
             // className="w-[90%] border"
           />

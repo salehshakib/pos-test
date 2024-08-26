@@ -16,7 +16,7 @@ const columns = [
     key: 'couponCode',
     align: 'center',
     render: (couponCode) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {couponCode}
       </span>
     ),
@@ -27,7 +27,7 @@ const columns = [
     key: 'type',
     align: 'center',
     render: (type) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {type}
       </span>
     ),
@@ -37,7 +37,7 @@ const columns = [
     dataIndex: 'amount',
     key: 'amount',
     render: (amount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {amount}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'minimumAmount',
     key: 'minimumAmount',
     render: (minimumAmount) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {minimumAmount}
       </span>
     ),
@@ -58,7 +58,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {quantity}
       </span>
     ),
@@ -79,7 +79,7 @@ const columns = [
     dataIndex: 'createdBy',
     key: 'createdBy',
     render: (createdBy) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {createdBy}
       </span>
     ),
@@ -90,7 +90,7 @@ const columns = [
     key: 'createdAt',
     align: 'center',
     render: (createdAt) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {createdAt}
       </span>
     ),
@@ -101,7 +101,7 @@ const columns = [
     key: 'expiredAt',
     align: 'center',
     render: (expiredAt) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {expiredAt}
       </span>
     ),

@@ -14,12 +14,12 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
       onClick={() => handleReadNotification(item)}
       // className={`hover:cursor-pointer hover:bg-[#f5f5f5] duration-300 p-2 rounded-lg  ${item?.read_at !== null ? "bg-[#f5f5f5]" : "hover:shadow-md"}`}
 
-      className="hover:cursor-pointer hover:bg-[#f5f5f5] duration-300 p-2 rounded-lg hover:shadow-md"
+      className="rounded-lg p-2 duration-300 hover:cursor-pointer hover:bg-[#f5f5f5] hover:shadow-md"
     >
-      <div className="flex items-start gap-2 w-full ">
+      <div className="flex w-full items-start gap-2">
         <img src={warehouseLogo} className="w-12 rounded-full shadow-md" />
-        <div className="flex justify-between items-center w-full">
-          <div className="font-medium flex flex-col gap-1 ">
+        <div className="flex w-full items-center justify-between">
+          <div className="flex flex-col gap-1 font-medium">
             <div>{item?.data?.message}</div>
             <div
               className="text-xs"
@@ -32,7 +32,7 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
           </div>
           {item?.read_at === null && (
             <div
-              className="rounded-full w-2 h-2"
+              className="h-2 w-2 rounded-full"
               style={{
                 backgroundColor: token.colorPrimary,
               }}
@@ -61,7 +61,7 @@ const NotificationComponent = ({ data, handleReadNotification, loading }) => {
       <div className="flex flex-col gap-1">
         {todayNotifications?.length > 0 && (
           <>
-            <span className="text-base font-semibold px-1">New</span>
+            <span className="px-1 text-base font-semibold">New</span>
             {todayNotifications.map((item) => (
               <SingleNotificationComponent
                 key={item?.id}
@@ -75,7 +75,7 @@ const NotificationComponent = ({ data, handleReadNotification, loading }) => {
       <div className="flex flex-col gap-1">
         {olderNotifications?.length > 0 && (
           <>
-            <span className="text-base font-semibold px-1">Earlier</span>
+            <span className="px-1 text-base font-semibold">Earlier</span>
             {olderNotifications.map((item) => (
               <SingleNotificationComponent
                 key={item?.id}
@@ -88,7 +88,7 @@ const NotificationComponent = ({ data, handleReadNotification, loading }) => {
       </div>
 
       {!data && (
-        <div className="text-center text-base pb-5">
+        <div className="pb-5 text-center text-base">
           No notifications available
         </div>
       )}

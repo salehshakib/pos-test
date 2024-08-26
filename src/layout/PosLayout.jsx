@@ -207,9 +207,9 @@ const PosLayout = () => {
 
   return (
     <GlobalUtilityStyle>
-      <div className="flex flex-col relative h-screen">
-        <div className="grow min-h-[60vh]  overflow-auto h-full bg-[#F5F5F5]">
-          <div className="grid grid-cols-5 h-[85vh] ">
+      <div className="relative flex h-screen flex-col">
+        <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
+          <div className="grid h-[85vh] grid-cols-5">
             <div className="col-span-3">
               <PosRegister
                 formValues={formValues}
@@ -226,11 +226,11 @@ const PosLayout = () => {
               />
             </div>
 
-            <div className="relative flex flex-col h-[90vh] col-span-2">
-              <div className="bg-white flex justify-between items-center px-5 w-full top-0 z-50 shadow-md">
+            <div className="relative col-span-2 flex h-[90vh] flex-col">
+              <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
                 <div className="flex items-center gap-6 text-2xl">
                   <Button
-                    className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
+                    className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
                     type="text"
                     icon={<GiHamburgerMenu />}
                     onClick={() => setCollapsed(!collapsed)}
@@ -302,7 +302,7 @@ const PosLayout = () => {
           />
         </Footer>
 
-        <div className="absolute h-[100vh] overflow-auto z-40 left-0 ">
+        <div className="absolute left-0 z-40 h-[100vh] overflow-auto">
           <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
         </div>
       </div>

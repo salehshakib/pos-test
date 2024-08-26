@@ -34,10 +34,10 @@ import { StockAlertComponent } from './overview/StockAlertComponent';
 
 const DashboardCard = ({ title, icon, data, currency }) => {
   return (
-    <div className="bg-white rounded-lg p-5 shadow-md hover:cursor-pointer hover:shadow-lg ">
+    <div className="rounded-lg bg-white p-5 shadow-md hover:cursor-pointer hover:shadow-lg">
       <div className="flex items-center justify-start gap-5">
         {icon && <div className="flex items-center">{icon}</div>}
-        <div className={` font-semibold text-[16px]`}>
+        <div className={`text-[16px] font-semibold`}>
           <div className="flex flex-col">
             <div>{title}</div>
             <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
       <Row
         {...rowLayout}
         gutter={0}
-        className="grid grid-cols-1 xl:grid-cols-2 space-x-2 items-center gap-2 lg:gap-0"
+        className="grid grid-cols-1 items-center gap-2 space-x-2 lg:gap-0 xl:grid-cols-2"
       >
         <Col {...fullColLayout} className="">
           <CustomSelect
@@ -177,9 +177,9 @@ const CashStatistic = ({ data }) => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">Transactions </span>
+      <span className="text-lg font-semibold">Transactions </span>
       <div className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
           <DashboardCard
             title={'Total Purchase'}
             icon={<MdOutlineNumbers {...iconProps} />}
@@ -226,7 +226,7 @@ const CashStatistic = ({ data }) => {
             currency={currency}
           />
         </div>
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
           {/* <DashboardCard
             title={"Today's Payment Received"}
             icon={<SlWallet {...iconProps} />}
@@ -255,8 +255,8 @@ const WarehouseStatistic = ({ data }) => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">Inventory</span>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <span className="text-lg font-semibold">Inventory</span>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         <DashboardCard
           title={'Warehouse'}
           icon={<PiWarehouse {...iconProps} />}
@@ -292,8 +292,8 @@ const PeopleStatistic = ({ data }) => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">People</span>
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
+      <span className="text-lg font-semibold">People</span>
+      <div className="grid grid-cols-1 gap-3 xl:grid-cols-3">
         <DashboardCard
           title={'Customer'}
           icon={<PiUserList {...iconProps} />}
@@ -326,8 +326,8 @@ const EmployeeStatistic = ({ data }) => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold text-lg">HRM</span>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+      <span className="text-lg font-semibold">HRM</span>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DashboardCard
           title={'Department'}
           icon={<FaBuilding {...iconProps} />}
@@ -381,7 +381,7 @@ const AdminDashboard = () => {
   return (
     <div className="h-full">
       <div className="mb-6">
-        <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-center justify-between pb-5 mt-1">
+        <div className="mt-1 flex flex-col items-center justify-between gap-3 pb-5 lg:flex-row lg:gap-0">
           <div
             className="text-2xl font-semibold"
             style={{
@@ -394,7 +394,7 @@ const AdminDashboard = () => {
           <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />
         </div>
 
-        <div className="flex flex-wrap gap-2 py-2 w-full justify-end">
+        <div className="flex w-full flex-wrap justify-end gap-2 py-2">
           {warehouses.map((warehouse, index) => {
             return (
               <Tag
@@ -409,7 +409,7 @@ const AdminDashboard = () => {
         <div className="space-y-6">
           <CashStatistic data={data} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             <WarehouseStatistic data={data} />
             <PeopleStatistic data={data} />
           </div>
@@ -418,21 +418,21 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 gap-y-6">
-        <div className="py-5 w-full h-[26rem] bg-white p-5 rounded-lg shadow-md">
-          <div className="text-lg w-full text-center font-semibold pb-4 h-full">
+      <div className="grid grid-cols-1 gap-3 gap-y-6 xl:grid-cols-2">
+        <div className="h-[26rem] w-full rounded-lg bg-white p-5 py-5 shadow-md">
+          <div className="h-full w-full pb-4 text-center text-lg font-semibold">
             Purchase & Sale
             <SimpleBarChartComponent />
           </div>
         </div>
 
-        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
+        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
           <RecentlyAddedComponent />
         </div>
-        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
+        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
           <ExpiredItemsComponent />
         </div>
-        <div className=" w-full h-[26rem] bg-white shadow-md rounded-lg">
+        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
           <StockAlertComponent />
         </div>
       </div>

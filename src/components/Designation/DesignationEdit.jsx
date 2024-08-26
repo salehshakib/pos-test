@@ -50,17 +50,6 @@ export const DesignationEdit = ({ id, setId }) => {
   }, [data, setFields]);
 
   const handleUpdate = async (values) => {
-    // const formData = new FormData();
-
-    //console.log(values);
-
-    // const postData = {
-    //   ...values,
-    //   _method: "PUT",
-    // };
-
-    // appendToFormData(postData, formData);
-
     const { data, error } = await updateDesignation({
       id,
       data: { ...values, _method: 'PUT' },

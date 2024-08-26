@@ -53,11 +53,11 @@ const Payment = ({
   return (
     <>
       <div className="bg-[#F5F5F5]">
-        <div className="mx-auto grid grid-cols-3 lg:grid-cols-6 gap-x-3 gap-y-2">
+        <div className="mx-auto grid grid-cols-3 gap-x-3 gap-y-2 lg:grid-cols-6">
           <Button
             type="primary"
             icon={<BsCash />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             onClick={() => handleOpenModal('Cash')}
           >
             Cash
@@ -65,7 +65,7 @@ const Payment = ({
           <Button
             type="primary"
             icon={<FaCreditCard />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             onClick={() => handleOpenModal('Card')}
           >
             Card
@@ -74,7 +74,7 @@ const Payment = ({
           <Button
             type="primary"
             icon={<HiOutlineBanknotes />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             onClick={() => handleOpenModal('Cheque')}
           >
             Cheque
@@ -82,7 +82,7 @@ const Payment = ({
           <Button
             type="primary"
             icon={<MdCardGiftcard />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             onClick={() => handleOpenModal('Gift Card')}
           >
             Gift Card
@@ -91,7 +91,7 @@ const Payment = ({
           <Button
             type="primary"
             icon={<IoRocketOutline />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             onClick={() => handleOpenModal('Points')}
           >
             Points
@@ -100,7 +100,7 @@ const Payment = ({
           <Button
             type="primary"
             icon={<GoHistory />}
-            className=" flex justify-center items-center min-w-fit"
+            className="flex min-w-fit items-center justify-center"
             //  onClick={() => handleOpenModal("Card")}
           >
             Transactions

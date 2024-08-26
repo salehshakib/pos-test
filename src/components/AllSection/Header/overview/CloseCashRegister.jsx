@@ -60,16 +60,18 @@ export const CloseCashRegister = () => {
     <>
       <Button
         onClick={handleCashRegister}
-        className="flex justify-center items-center"
+        className="flex items-center justify-center"
       >
         <Tooltip title="Petty Cash">
-          <FaCashRegister
-            size={16}
-            style={{
-              color: token.colorPrimary,
-            }}
-            className="hover:cursor-pointer hover:shadow-lg"
-          />
+          <div>
+            <FaCashRegister
+              size={16}
+              style={{
+                color: token.colorPrimary,
+              }}
+              className="hover:cursor-pointer hover:shadow-lg"
+            />
+          </div>
         </Tooltip>
       </Button>
 
@@ -96,7 +98,7 @@ export const CloseCashRegister = () => {
             {' '}
             Are you sure you want to close cash register?
           </span>
-          <div className={`w-full flex gap-3 justify-end items-center pt-5`}>
+          <div className={`flex w-full items-center justify-end gap-3 pt-5`}>
             <Button
               htmlType="button"
               onClick={closeCashRegister}

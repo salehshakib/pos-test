@@ -1,19 +1,13 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteAdjustmentMutation,
   useGetAllAdjustmentQuery,
 } from '../../redux/services/adjustment/adjustmentApi';
-import {
-  openEditDrawer,
-  selectEditId,
-  setEditId,
-} from '../../redux/services/drawer/drawerSlice';
-import { useFormatDate } from '../../utilities/hooks/useFormatDate';
+import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
-import { formatDate } from '../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
@@ -29,7 +23,7 @@ const AdjustmentTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const editId = useSelector(selectEditId);
+  const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -67,7 +61,7 @@ const AdjustmentTable = ({
   };
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
@@ -105,6 +99,8 @@ const AdjustmentTable = ({
     setDetailsModal(false);
   };
 
+  console.log(detailsId);
+
   return (
     <GlobalUtilityStyle>
       <CustomTable
@@ -120,7 +116,7 @@ const AdjustmentTable = ({
         status={false}
       />
 
-      <AdjustmentEdit id={editId} />
+      <AdjustmentEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <AdjustmentDetails

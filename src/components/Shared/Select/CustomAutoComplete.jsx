@@ -25,7 +25,7 @@ export const CustomAutoComplete = (props) => {
       >
         <AutoComplete
           placeholder={`Type ${placeholder ?? label}`}
-          className="mt-2 custom-selector"
+          className="custom-selector mt-2"
           size="large"
           //   mode={mode}
           //   filterOption={false}

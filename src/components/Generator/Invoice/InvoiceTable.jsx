@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import {
-  openEditDrawer,
-  setEditId,
-} from '../../../redux/services/drawer/drawerSlice';
+import { openEditDrawer } from '../../../redux/services/drawer/drawerSlice';
 import {
   useDeleteInvoiceMutation,
   useGetAllInvoiceQuery,
@@ -26,9 +23,9 @@ const InvoiceTable = ({
   searchParams,
 }) => {
   const dispatch = useDispatch();
-
-  const { editId } = useSelector((state) => state.drawer);
   const currency = useSelector(useCurrency);
+
+  const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -62,7 +59,7 @@ const InvoiceTable = ({
   };
 
   const handleEdit = (id) => {
-    dispatch(setEditId(id));
+    setEditId(id);
     dispatch(openEditDrawer());
   };
 
@@ -128,7 +125,7 @@ const InvoiceTable = ({
         status={false}
       />
 
-      <InvoiceEdit id={editId} />
+      <InvoiceEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <InvoiceDetails

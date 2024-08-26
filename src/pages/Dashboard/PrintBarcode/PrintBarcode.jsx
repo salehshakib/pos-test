@@ -76,16 +76,16 @@ const PrintBarcode = () => {
     <PageContainer
       header={{
         title: (
-          <div className="text-2xl lg:text-3xl border-r-2 pr-2 border-black py-1">
+          <div className="border-r-2 border-black py-1 pr-2 text-2xl lg:text-3xl">
             Product
           </div>
         ),
         subTitle: (
-          <div className="text-2xl lg:text-3xl py-1">Print Barcode</div>
+          <div className="py-1 text-2xl lg:text-3xl">Print Barcode</div>
         ),
       }}
     >
-      <div className="max-w-7xl mx-auto mt-10">
+      <div className="mx-auto mt-10 max-w-7xl">
         <CustomForm form={form} submitBtn={false}>
           <ProductSelect
             formValues={formValues}
@@ -93,7 +93,7 @@ const PrintBarcode = () => {
             products={products}
             setProducts={setProducts}
           />
-          <div className="mt-32 flex flex-col justify-center items-center">
+          <div className="mt-32 flex flex-col items-center justify-center">
             <div>
               <Checkbox onChange={(e) => setShowName(e.target.checked)}>
                 Product Name
@@ -107,7 +107,7 @@ const PrintBarcode = () => {
               <Select
                 placeholder={'Select a label size'}
                 options={sizes}
-                className="block mt-6"
+                className="mt-6 block"
                 onChange={handleLabelSizeChange}
               />
             </div>
@@ -122,7 +122,7 @@ const PrintBarcode = () => {
               openModal={codeModal}
               hideModal={() => setCodeModal(!codeModal)}
             >
-              <div className="flex flex-col justify-center items-center py-10">
+              <div className="flex flex-col items-center justify-center py-10">
                 <div className="flex items-center gap-4 py-10">
                   <Button className="px-20" size="large" onClick={handlePrint}>
                     Print
@@ -135,16 +135,16 @@ const PrintBarcode = () => {
                         {[...Array(barcode?.quantity)]?.map((_, i) => (
                           <div
                             key={i}
-                            className="mt-10 border border-gray-300 mx-auto rounded-lg p-3"
+                            className="mx-auto mt-10 rounded-lg border border-gray-300 p-3"
                           >
-                            <div className="flex items-center justify-center font-bold gap-4 text-base mx-auto">
+                            <div className="mx-auto flex items-center justify-center gap-4 text-base font-bold">
                               {showName && <div>{barcode?.name}</div>}
                               {showPrice && (
                                 <div
                                   className={`${
                                     barcode?.promotion_price &&
                                     showDiscount &&
-                                    'line-through text-sm'
+                                    'text-sm line-through'
                                   }`}
                                 >
                                   ${barcode?.selling_price}

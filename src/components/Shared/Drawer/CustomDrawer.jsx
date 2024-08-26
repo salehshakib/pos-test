@@ -33,9 +33,9 @@ const CustomDrawer = ({
       maskClosable
       destroyOnClose
     >
-      <div className="relative w-full h-full ">
+      <div className="relative h-full w-full">
         {isLoading ? (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
             <Spin size="default" />
           </div>
         ) : (

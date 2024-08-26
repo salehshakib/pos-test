@@ -15,7 +15,7 @@ export const StockCountDetails = ({ id, ...props }) => {
   return (
     <CustomModal {...props}>
       {isFetching ? (
-        <Spin className="w-full flex justify-center items-center my-10" />
+        <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <CustomDescription
           title="StockCount"

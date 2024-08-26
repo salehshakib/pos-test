@@ -15,7 +15,7 @@ const columns = [
     dataIndex: 'title',
     key: 'title',
     render: (name) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {name}
       </span>
     ),
@@ -25,7 +25,7 @@ const columns = [
     dataIndex: 'startDate',
     key: 'startDate',
     render: (startDate) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {startDate}
       </span>
     ),
@@ -35,7 +35,7 @@ const columns = [
     dataIndex: 'endDate',
     key: 'endDate',
     render: (endDate) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {endDate}
       </span>
     ),
@@ -46,7 +46,7 @@ const columns = [
     key: 'description',
     width: 300,
     render: (description) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {description ?? 'N/A'}
       </span>
     ),

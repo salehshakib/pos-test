@@ -5,7 +5,7 @@ export const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {date}
       </span>
     ),
@@ -17,7 +17,7 @@ export const columns = [
     align: 'center',
 
     render: (reference) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -27,7 +27,7 @@ export const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -37,7 +37,7 @@ export const columns = [
     dataIndex: 'supplier',
     key: 'supplier',
     render: (supplier) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {supplier ?? 'N/A'}
       </span>
     ),
@@ -48,7 +48,7 @@ export const columns = [
     key: 'purchaseStatus',
     align: 'center',
     render: (purchaseStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {purchaseStatus ?? 'N/A'}
       </span>
     ),
@@ -59,7 +59,7 @@ export const columns = [
     key: 'paymentStatus',
     align: 'center',
     render: (paymentStatus) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {paymentStatus ?? 'N/A'}
       </span>
     ),
@@ -69,7 +69,7 @@ export const columns = [
     dataIndex: 'grandTotal',
     key: 'grandTotal',
     render: (grandTotal) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),
@@ -79,7 +79,7 @@ export const columns = [
     dataIndex: 'paid',
     key: 'paid',
     render: (paid) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {paid}
       </span>
     ),
@@ -89,7 +89,7 @@ export const columns = [
     dataIndex: 'due',
     key: 'due',
     render: (due) => (
-      <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {due}
       </span>
     ),

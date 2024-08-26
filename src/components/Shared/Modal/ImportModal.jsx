@@ -81,12 +81,12 @@ const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
             type="primary"
             onClick={handleImport}
             loading={isLoading}
-            className="w-full mb-5 flex justify-center items-center "
+            className="mb-5 flex w-full items-center justify-center"
             icon={<FaDownload />}
           >
             Download Format
           </Button>
-          <div className="w-full flex justify-end items-center gap-3">
+          <div className="flex w-full items-center justify-end gap-3">
             <Button onClick={hideModal}>Cancel</Button>
             <Button type="primary" onClick={handleImport} loading={isLoading}>
               Import

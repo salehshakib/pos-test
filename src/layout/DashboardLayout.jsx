@@ -19,10 +19,10 @@ const DashboardLayout = () => {
   return (
     <GlobalUtilityStyle>
       <div className="relative">
-        <Header className="bg-white flex justify-between items-center px-5 fixed w-full top-0 z-50 shadow-md">
+        <Header className="fixed top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
           <div className="flex items-center gap-6 text-2xl">
             <Button
-              className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
+              className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
               type="text"
               icon={<GiHamburgerMenu />}
               onClick={() => setCollapsed(!collapsed)}
@@ -46,11 +46,11 @@ const DashboardLayout = () => {
         </Header>
 
         <div className="flex pt-16">
-          <div className="h-[calc(100vh-4rem)] sticky z-40 top-[4rem] left-0 ">
+          <div className="sticky left-0 top-[4rem] z-40 h-[calc(100vh-4rem)]">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="w-48 flex flex-col ">
+          <Layout className="flex w-48 flex-col">
             <Content
               style={{
                 margin: '16px',
@@ -73,7 +73,7 @@ const DashboardLayout = () => {
               POS Inventory ©{new Date().getFullYear()} Created by{' '}
               <a
                 href={`http://${hyperLink}`}
-                className="primary-text hover:underline font-semibold"
+                className="primary-text font-semibold hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >

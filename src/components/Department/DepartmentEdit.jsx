@@ -10,7 +10,7 @@ import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import DepartmentForm from './DepartmentForm';
 import { Form } from 'antd';
 
-const DepartmentEdit = ({ id }) => {
+const DepartmentEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -46,6 +46,7 @@ const DepartmentEdit = ({ id }) => {
     });
 
     if (data?.success) {
+      setId(undefined);
       dispatch(closeEditDrawer());
     }
 

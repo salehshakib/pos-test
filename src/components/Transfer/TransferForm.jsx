@@ -31,15 +31,19 @@ const options = [
   },
 ];
 
-const useSetFieldValue = (field, value) => {
-  const form = Form.useFormInstance();
-  useEffect(() => {
-    form.setFieldValue(field, value);
-  }, [form, field, value]);
-};
+// const useSetFieldValue = (field, value) => {
+//   const form = Form.useFormInstance();
+//   useEffect(() => {
+//     form.setFieldValue(field, value);
+//   }, [form, field, value]);
+// };
 
-const FileStatusComponent = () => {
-  useSetFieldValue('status', options[0].value);
+const FileStatusComponent = ({ form }) => {
+  // useSetFieldValue('status', options[0].value);
+
+  useEffect(() => {
+    form.setFieldValue('status', options[0].value);
+  }, [form]);
 
   return (
     <CustomSelect
@@ -51,14 +55,14 @@ const FileStatusComponent = () => {
   );
 };
 
-const TransferDateComponent = () => {
+const TransferDateComponent = ({ form }) => {
   // const form = Form.useFormInstance();
 
-  // useEffect(() => {
-  //   form.setFieldValue("date", getCurrentDate);
-  // }, [form]);
+  useEffect(() => {
+    form.setFieldValue('date', getCurrentDate);
+  }, [form]);
 
-  useSetFieldValue('date', getCurrentDate);
+  // useSetFieldValue('date', getCurrentDate);
 
   return (
     <CustomDatepicker
@@ -118,10 +122,10 @@ const TransferForm = ({
           <WarehouseTransferComponent />
 
           <Col {...largeLayout}>
-            <TransferDateComponent />
+            <TransferDateComponent form={form} />
           </Col>
           <Col {...largeLayout}>
-            <FileStatusComponent />
+            <FileStatusComponent form={form} />
           </Col>
 
           <TransferProductTable

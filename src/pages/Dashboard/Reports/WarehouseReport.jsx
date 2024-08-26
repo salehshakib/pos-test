@@ -112,10 +112,10 @@ export const WarehouseReport = () => {
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchFilterComponent />}
     >
-      <div className=" w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
-        <div className="border rounded-md p-4 shadow-sm">
+      <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="rounded-md border p-4 shadow-sm">
           {isFetching ? (
-            <Spin className="w-full h-full flex justify-center items-center py-5" />
+            <Spin className="flex h-full w-full items-center justify-center py-5" />
           ) : (
             <Descriptions
               title="Warehouse Details"
@@ -124,9 +124,9 @@ export const WarehouseReport = () => {
             />
           )}
         </div>
-        <div className="border rounded-md p-4 shadow-sm">
+        <div className="rounded-md border p-4 shadow-sm">
           {isFetching || loading ? (
-            <Spin className="w-full h-full flex justify-center items-center " />
+            <Spin className="flex h-full w-full items-center justify-center" />
           ) : (
             <Descriptions title="Summary" items={summaryDetails} />
           )}
@@ -182,7 +182,7 @@ export const WarehouseReport = () => {
           ]}
         />
       ) : isFetching ? (
-        <Spin className="w-full h-full flex justify-center items-center py-10" />
+        <Spin className="flex h-full w-full items-center justify-center py-10" />
       ) : (
         <Empty />
       )}

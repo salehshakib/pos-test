@@ -279,6 +279,25 @@ const CustomTable = ({
                 </button>
               </Dropdown>
             )}
+
+            {record?.handleFileDownload && (
+              <Dropdown
+                menu={{
+                  items: getDownloadItems(record),
+                }}
+                overlayStyle={{
+                  width: 'max-content',
+                }}
+                placement="bottom"
+                trigger={['click']}
+                autoAdjustOverflow
+                arrow={{ pointAtCenter: true }}
+              >
+                <button className="primary-bg rounded-xl p-1 text-white duration-300 hover:scale-110">
+                  <MdFileDownload className="text-lg md:text-xl" />
+                </button>
+              </Dropdown>
+            )}
           </div>
         );
       } else {

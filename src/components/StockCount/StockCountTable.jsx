@@ -10,6 +10,7 @@ import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { downloadFile } from '../../utilities/lib/downloadFile';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import CustomTable from '../Shared/Table/CustomTable';
+import { StockCountDetails } from './StockCountDetails';
 
 const pageTitle = 'Stock Count';
 const api = STOCK_COUNT;
@@ -22,8 +23,8 @@ const StockCountTable = ({
 }) => {
   const token = useSelector(useCurrentToken);
 
-  // const [deleteId, setDeleteId] = useState(undefined);
-  // const [deleteModal, setDeleteModal] = useState(false);
+  const [detailsId, setDetailsId] = useState(undefined);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const { pagination, updatePage, updatePageSize } = usePagination();
 
@@ -51,12 +52,12 @@ const StockCountTable = ({
   // };
 
   const handleFileDownload = (id, format) => {
-    handleExport(id, format);
+    handleDownload(id, format);
   };
 
   const [loading, setLoading] = useState(false);
 
-  const handleExport = useCallback(
+  const handleDownload = useCallback(
     async (id, format) => {
       setLoading(true);
       const fileUrl = new URL(`${base_url}/${api}/print/${id}`);
@@ -98,6 +99,11 @@ const StockCountTable = ({
     [api, token]
   );
 
+  const handleDetailsModal = (id) => {
+    setDetailsId(id);
+    setDetailsModal(true);
+  };
+
   const dataSource =
     data?.results?.stockcount?.map((item) => {
       const {
@@ -118,10 +124,14 @@ const StockCountTable = ({
         warehouse: warehouses?.map((item) => item?.name).join(' '),
         category: categories?.map((item) => item?.name).join(' '),
         brand: brands?.map((item) => item?.name).join(' '),
-
+        handleDetailsModal,
         handleFileDownload,
       };
     }) ?? [];
+
+  const hideModal = () => {
+    setDetailsModal(false);
+  };
 
   return (
     <GlobalUtilityStyle>
@@ -138,6 +148,14 @@ const StockCountTable = ({
         status={false}
         created_at={false}
       />
+
+      {detailsId && (
+        <StockCountDetails
+          id={detailsId}
+          openModal={detailsModal}
+          hideModal={hideModal}
+        />
+      )}
     </GlobalUtilityStyle>
   );
 };

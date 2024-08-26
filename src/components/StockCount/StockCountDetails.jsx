@@ -10,6 +10,8 @@ export const StockCountDetails = ({ id, ...props }) => {
     { skip: !id }
   );
 
+  console.log(data);
+
   const details = useDetailsLayout(data, true);
 
   return (

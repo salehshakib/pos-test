@@ -27,10 +27,11 @@ const CustomerCreate = ({
     if (data?.success) {
       if (subDrawer && isSubDrawerOpen) {
         handleCloseSubDrawer();
+        subForm.resetFields();
       } else {
         dispatch(closeCreateDrawer());
+        form.resetFields();
       }
-      form.resetFields();
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({

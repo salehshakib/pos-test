@@ -33,7 +33,7 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
     });
 
     if (data?.success) {
-      if (subDrawer) {
+      if (subDrawer && isSubDrawerOpen) {
         handleCloseSubDrawer();
         subForm.resetFields();
       } else {

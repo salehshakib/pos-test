@@ -1,3 +1,5 @@
+import { decimalConverter } from '../return/decimalComverter';
+
 export const calculateTotalPrice = (data) => {
   const totals = Object.values(data?.total).map(
     (value) => parseFloat(value) || 0
@@ -7,8 +9,11 @@ export const calculateTotalPrice = (data) => {
   return totalPrice;
 };
 
-export const calculateTotalTax = (totalPrice, taxRate = 0) => {
-  const totalTax = (totalPrice * taxRate) / 100;
+export const calculateTotalTax = (totalPrice, taxRate = 0, discount = 0) => {
+  const price = decimalConverter(totalPrice);
+  const discountValue = decimalConverter(discount);
+
+  const totalTax = ((price - discountValue) * taxRate) / 100;
   return totalTax ? Number(totalTax).toFixed(2) : '0.00';
 };
 
@@ -20,9 +25,12 @@ export const calculateGrandTotal = (
   // orderTaxRate
 ) => {
   const parsedTotalPrice = parseFloat(totalPrice) || 0;
-  const parsedTax = parseFloat(calculateTotalTax(totalPrice, taxRate)) || 0;
+
+  const parsedTax =
+    parseFloat(calculateTotalTax(totalPrice, taxRate, discount)) || 0;
 
   const parsedDiscount = parseFloat(discount) || 0;
+
   const parsedShippingCost = parseFloat(shipping_cost) || 0;
 
   let grandTotal = parsedTotalPrice + parsedTax;

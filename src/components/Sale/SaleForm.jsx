@@ -125,7 +125,11 @@ export const SaleForm = ({
     ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
 
     const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
-    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+    const orderTax = calculateTotalTax(
+      calculatedTotalPrice,
+      tax_rate,
+      discount
+    );
 
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,

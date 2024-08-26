@@ -36,7 +36,7 @@ export function setFormValuesId(
 
   // Calculating tax
   const tax = sanitizeFloatValue(
-    ((qty * taxRate * netUnitPrice) / 100).toFixed(2)
+    ((qty * taxRate * (netUnitPrice - discount)) / 100).toFixed(2)
   );
 
   // Get or set sale units value
@@ -46,6 +46,16 @@ export function setFormValuesId(
 
   productUnits.sale_units[id] = productSaleUnitsValue;
 
+  // const total =
+  //   tax_method === 'Inclusive'
+  //     ? Math.round(
+  //         (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+  //           2
+  //         )
+  //       )
+  //     : (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+  //         2
+  //       );
   const total =
     tax_method === 'Inclusive'
       ? Math.round(
@@ -53,7 +63,7 @@ export function setFormValuesId(
             2
           )
         )
-      : (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
+      : (productSaleUnitsValue * netUnitPrice * qty + tax - discount).toFixed(
           2
         );
 

@@ -53,7 +53,7 @@ const SearchWarehouse = ({ setWarehouses }) => {
   const onSelect = (_, option) => {
     setWarehouses((prevWarehouse) => {
       const warehouseExists = prevWarehouse.some((warehouse) => {
-        return warehouse?.id === option?.warehouse?.id;
+        return warehouse?.id.toString() === option?.warehouse?.id.toString();
       });
 
       if (!warehouseExists) {

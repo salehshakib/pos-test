@@ -207,7 +207,11 @@ const PurchaseReturnEdit = ({ id, setId }) => {
     }
 
     const totalPrice = calculateTotalPrice(updatedList);
-    const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
+    const orderTax = calculateTotalTax(
+      totalPrice,
+      values.tax_rate,
+      values?.discount
+    );
 
     const totalQty =
       Object.values(updatedList?.qty).reduce(

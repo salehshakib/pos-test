@@ -72,7 +72,11 @@ export const QuotationForm = ({
 
     const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
 
-    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+    const orderTax = calculateTotalTax(
+      calculatedTotalPrice,
+      tax_rate,
+      discount
+    );
 
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,

@@ -89,7 +89,11 @@ export const PurchaseForm = ({
 
     const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
 
-    const orderTax = calculateTotalTax(calculatedTotalPrice, tax_rate);
+    const orderTax = calculateTotalTax(
+      calculatedTotalPrice,
+      tax_rate,
+      discount
+    );
 
     const calculatedGrandTotal = calculateGrandTotal(
       calculatedTotalPrice,
@@ -97,6 +101,13 @@ export const PurchaseForm = ({
       discount,
       shipping_cost
     );
+
+    console.log({
+      orderTax,
+      calculatedTotalPrice,
+      calculatedGrandTotal,
+      discount,
+    });
 
     setTotalItems(calculatedTotalItems);
     setTotalQty(calculatedTotalQty);

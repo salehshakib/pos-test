@@ -15,12 +15,12 @@ export const TotalRow = ({
     { label: 'Total', value: totalPrice },
   ];
 
-  if (taxRate?.toString()) {
-    options.push({ label: 'Vat', value: taxRate });
-  }
-
   if (discount?.toString()) {
     options.push({ label: 'Discount', value: discount });
+  }
+
+  if (taxRate?.toString()) {
+    options.push({ label: 'Vat', value: taxRate });
   }
 
   if (shippingCost?.toString()) {

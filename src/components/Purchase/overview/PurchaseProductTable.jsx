@@ -282,7 +282,10 @@ function setFormValuesId(
 
   // Calculating tax
   const tax = sanitizeFloatValue(
-    ((productPurchaseUnitsValue * taxRate * netUnitCost * qty) / 100).toFixed(2)
+    (
+      (productPurchaseUnitsValue * taxRate * (netUnitCost - discount) * qty) /
+      100
+    ).toFixed(2)
   );
 
   // Calculating total
@@ -296,9 +299,9 @@ function setFormValuesId(
           ).toFixed(2)
         )
       : (
-          productPurchaseUnitsValue * netUnitCost * qty -
-          discount +
-          tax
+          productPurchaseUnitsValue * netUnitCost * qty +
+          tax -
+          discount
         ).toFixed(2);
 
   // Set form values

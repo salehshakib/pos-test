@@ -15,7 +15,7 @@ const ignorePaths = [
   'products',
   'transfer',
   'adjustment',
-  'purchase',
+  // 'purchase',
   'quotation',
   'invoice',
 ];
@@ -117,7 +117,7 @@ export const SearchProduct = ({ setProducts }) => {
 
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
-        return product?.id === option?.product?.id;
+        return product?.id.toString() === option?.product?.id.toString();
       });
 
       if (!productExists) {

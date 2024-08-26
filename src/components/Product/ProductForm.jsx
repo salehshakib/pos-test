@@ -148,11 +148,14 @@ const AlertComponent = () => {
 };
 
 const TaxTypeComponent = () => {
+  const form = Form.useFormInstance();
+
   return (
     <CustomSelect
       label="Vat Method"
       options={taxTypeOptions}
       name={'tax_method'}
+      required={Form.useWatch('tax_id', form) ? true : false}
     />
   );
 };

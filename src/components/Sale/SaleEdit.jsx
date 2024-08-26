@@ -225,7 +225,7 @@ export const SaleEdit = ({ id, setId }) => {
     }
 
     const totalPrice = calculateTotalPrice(product_list);
-    const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
+    const orderTax = calculateTotalTax(totalPrice, values.tax_rate, discount);
 
     const totalQty =
       Object.values(formValues.product_list?.qty).reduce(

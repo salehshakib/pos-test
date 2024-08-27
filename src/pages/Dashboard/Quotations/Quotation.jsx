@@ -49,16 +49,6 @@ const columns = [
     ),
   },
   {
-    title: 'Customer',
-    dataIndex: 'customer',
-    key: 'customer',
-    render: (customer) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {customer ?? 'N/A'}
-      </span>
-    ),
-  },
-  {
     title: 'Supplier',
     dataIndex: 'supplier',
     key: 'supplier',

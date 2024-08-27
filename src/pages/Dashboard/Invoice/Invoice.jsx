@@ -59,16 +59,6 @@ const columns = [
     ),
   },
   {
-    title: 'Supplier',
-    dataIndex: 'supplier',
-    key: 'supplier',
-    render: (supplier) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {supplier ?? 'N/A'}
-      </span>
-    ),
-  },
-  {
     title: 'Total',
     dataIndex: 'total',
     align: 'right',

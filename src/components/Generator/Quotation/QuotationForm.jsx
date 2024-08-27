@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import {
+  colLayout,
   fullColLayout,
   largeLayout,
   rowLayout,
@@ -19,7 +20,6 @@ import CustomForm from '../../Shared/Form/CustomForm';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 import CustomUploader from '../../Shared/Upload/CustomUploader';
-import { CustomerComponent } from '../overview/CustomerComponent';
 import { QuotationProductTable } from './overview/QuotationProductTable';
 
 const StatusComponent = ({ form }) => {
@@ -124,18 +124,18 @@ export const QuotationForm = ({
     <>
       <CustomForm {...props}>
         <Row {...rowLayout}>
-          <Col {...largeLayout}>
+          <Col {...colLayout}>
             <WarehouseComponent />
           </Col>
-          <Col {...largeLayout}>
+          <Col {...colLayout}>
             <CashierComponent />
           </Col>
-          <Col {...largeLayout}>
+          <Col {...colLayout}>
             <SupplierComponent />
           </Col>
-          <Col {...largeLayout}>
+          {/* <Col {...colLayout}>
             <CustomerComponent />
-          </Col>
+          </Col> */}
 
           <QuotationProductTable
             formValues={formValues}

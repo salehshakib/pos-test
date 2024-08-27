@@ -6,7 +6,10 @@ import {
 import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
-export const CustomerComponent = () => {
+export const CustomerComponent = ({
+  name = 'customer_id',
+  required = false,
+}) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -29,7 +32,8 @@ export const CustomerComponent = () => {
       label="Customer"
       options={options}
       isLoading={isLoading}
-      name="customer_id"
+      name={name}
+      required={required}
     />
   );
 };

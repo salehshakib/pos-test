@@ -11,7 +11,7 @@ import {
 } from '../../../utilities/lib/generator/generatorUtils';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomDrawer from '../../Shared/Drawer/CustomDrawer';
-import { QuotationForm } from '../Quotation/QuotationForm';
+import { InvoiceForm } from './InvoiceForm';
 
 const InvoiceCreate = () => {
   const dispatch = useDispatch();
@@ -141,7 +141,7 @@ const InvoiceCreate = () => {
       open={isCreateDrawerOpen}
       width={1400}
     >
-      <QuotationForm
+      <InvoiceForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}

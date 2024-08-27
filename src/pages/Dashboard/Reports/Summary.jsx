@@ -588,13 +588,13 @@ export const Summary = () => {
     if (dateString[0] && dateString[1]) {
       setParams((prev) => ({
         ...prev,
-        created_daterange: dateString,
+        daterange: dateString,
       }));
     } else {
       const dateRange = getDateRange(segment);
       setParams((prev) => ({
         ...prev,
-        created_daterange: dateRange,
+        daterange: dateRange,
       }));
     }
   };
@@ -603,7 +603,7 @@ export const Summary = () => {
     const dateRange = getDateRange(segment);
     setParams((prev) => ({
       ...prev,
-      created_daterange: dateRange,
+      daterange: dateRange,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment]);

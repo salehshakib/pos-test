@@ -16,6 +16,7 @@ import DeleteModal from '../../Shared/Modal/DeleteModal';
 import CustomTable from '../../Shared/Table/CustomTable';
 import InvoiceEdit from './InvoiceEdit';
 import { InvoiceDetails } from './overview/InvoiceDetails';
+
 const InvoiceTable = ({
   newColumns,
   setSelectedRows,

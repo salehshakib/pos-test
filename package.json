@@ -11,7 +11,8 @@
     "lint": "eslint */**/*.{js,ts,tsx,jsx}",
     "lint:fix": "eslint */**/*.{js,ts,tsx,jsx} --quiet --fix",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx|jsx)\" --write",
-    "gittu": " git add . && git commit && git push"
+    "gittu": "git add . && git commit && git push",
+    "gittu:fix-format": "eslint */**/*.{js,ts,tsx,jsx} --quiet --fix && prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx|jsx)\" --write && git add . && git commit && git push"
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",

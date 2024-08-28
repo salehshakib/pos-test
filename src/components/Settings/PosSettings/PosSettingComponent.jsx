@@ -18,7 +18,7 @@ const CustomInvoiceForm = ({ name, label }) => {
           name={name}
           label={label}
           type={'textarea'}
-          maxlength={30}
+          maxlength={15}
         />
       </Col>
       <Col {...mdColLayout}>

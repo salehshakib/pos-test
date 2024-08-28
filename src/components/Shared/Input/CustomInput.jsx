@@ -46,7 +46,7 @@ const CustomInput = (props) => {
             {...commonProps}
             className="mt-1 border-2"
             allowClear={true}
-            autoSize={{ minRows: maxlength }}
+            autoSize={{ minRows: maxlength, maxRows: 30 }}
             showCount
           />
         );

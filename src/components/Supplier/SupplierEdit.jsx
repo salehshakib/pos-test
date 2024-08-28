@@ -9,7 +9,6 @@ import {
 } from '../../redux/services/supplier/supplierApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import SupplierForm from './SupplierForm';
 
@@ -38,7 +37,7 @@ const SupplierEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateSupplier({
       id,
-      data: { ...sanitizeObj(values), _method: 'PUT' },
+      data: { ...values, _method: 'PUT' },
     });
 
     if (data?.success) {

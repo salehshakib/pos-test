@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateUnitMutation } from '../../redux/services/unit/unitApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import UnitForm from './UnitForm';
 
@@ -18,13 +19,20 @@ const UnitCreate = () => {
   const [createUnit, { isLoading }] = useCreateUnitMutation();
 
   const handleSubmit = async (values) => {
+    const formData = new FormData();
+
+    const postObj = {
+      ...values,
+      operator: values.operator ? values.operator : '*',
+      operation_value: values.operation_value ? values.operation_value : 1,
+    };
+
+    appendToFormData(postObj, formData);
+
     const { data, error } = await createUnit({
-      data: {
-        ...values,
-        operator: values.operator ? values.operator : '*',
-        operation_value: values.operation_value ? values.operation_value : 1,
-      },
+      data: formData,
     });
+
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();

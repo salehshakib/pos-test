@@ -48,17 +48,6 @@ const columns = [
     ),
   },
   {
-    title: 'For',
-    dataIndex: 'type',
-    key: 'type',
-    align: 'center',
-    render: (type) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {type}
-      </span>
-    ),
-  },
-  {
     title: 'Operator',
     dataIndex: 'operator',
     key: 'operator',

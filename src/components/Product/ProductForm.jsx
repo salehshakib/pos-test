@@ -183,21 +183,9 @@ const PromotionalPriceComponent = () => {
   const form = Form.useFormInstance();
   const hasPromotionalPrice = Form.useWatch('has_promotion', form);
 
-  // const disabledDate = (current) => {
-  //   return current < dayjs().startOf("day");
-  // };
-
   const start_date = Form.useWatch(['promotion', 'starting_date'], form);
 
   const disabledDateStart = (current) => {
-    // if (start_date) {
-    //   return (
-    //     current && start_date && current < dayjs(start_date).startOf("day")
-    //   );
-    // } else {
-    //   return current < dayjs().startOf("day");
-    // }
-
     return disabledDate(current, start_date);
   };
 

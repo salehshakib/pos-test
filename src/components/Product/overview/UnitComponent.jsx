@@ -61,31 +61,24 @@ const UnitComponent = () => {
   const productType = Form.useWatch('type', form);
 
   const params = useGlobalParams({
-    selectValue: ['name', 'id', 'for'],
+    selectValue: ['name', 'id'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({
     params,
   });
 
-  const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'product-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
-
-  const saleUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'sale-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
-
-  const purchaseUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'purchase-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+  const options = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+  }));
 
   if (productType === 'Standard') {
     return (
       <>
-        <ProductUnit options={productUnits} isLoading={isLoading} />
-        <PurchaseUnit options={purchaseUnits} isLoading={isLoading} />
-        <SaleUnit options={saleUnits} isLoading={isLoading} />
+        <ProductUnit options={options} isLoading={isLoading} />
+        <PurchaseUnit options={options} isLoading={isLoading} />
+        <SaleUnit options={options} isLoading={isLoading} />
       </>
     );
   }

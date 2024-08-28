@@ -13,7 +13,6 @@ import {
   fieldsToUpdate,
   updateFieldValues,
 } from '../../utilities/lib/fieldsToUpdate';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { PayrollForm } from './PayrollForm';
 
@@ -53,7 +52,7 @@ export const PayrollEdit = ({ id, setId }) => {
     const formData = new FormData();
 
     const postData = {
-      ...sanitizeObj(values),
+      ...values,
       is_send_email: values?.is_send_email == true ? '1' : '0',
       bonus: Number(values?.bonus).toFixed(2),
       loan: Number(values?.loan).toFixed(2),

@@ -93,14 +93,12 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
         operator,
         operation_value,
         is_active,
-        for: type,
       } = item ?? {};
 
       return {
         id,
         name: name,
         code: code,
-        type,
         operator,
         operatorValue: operation_value,
         status: is_active,

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreatePayrollMutation } from '../../redux/services/hrm/payroll/payrollApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { PayrollForm } from './PayrollForm';
 
@@ -22,7 +21,7 @@ export const PayrollCreate = () => {
     const formData = new FormData();
 
     const postData = {
-      ...sanitizeObj(values),
+      ...values,
       is_send_email: values?.is_send_email == true ? '1' : '0',
       bonus: values?.bonus && Number(values?.bonus).toFixed(2),
       loan: values?.loan && Number(values?.loan).toFixed(2),

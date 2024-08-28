@@ -62,24 +62,17 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [
-      ...DEFAULT_SELECT_VALUES,
-      'operation_value',
-      'operator',
-      'for',
-    ],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'purchase-unit')
-    .map((unit) => ({
-      value: unit.id.toString(),
-      label: unit.name,
-      operationValue: unit?.operation_value,
-      operator: unit?.operator,
-    }));
+  const productUnits = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit?.operation_value,
+    operator: unit?.operator,
+  }));
 
   const onSelect = (value, option) => {
     setProductUnits((prevValues) => ({

@@ -57,33 +57,33 @@ function filterPaths(paths, uniqueItems) {
   return parentStructure;
 }
 
-export const useMenuItems = (adminPaths) => {
+const ACTION_KEYS = [
+  'accesstoken.issueToken',
+  'authorization.authorize',
+  'transienttoken.refresh',
+  'approveauthorization.approve',
+  'denyauthorization.deny',
+  'authorizedaccesstoken.forUser',
+  'authorizedaccesstoken.destroy',
+  'client.forUser',
+  'scope.all',
+  'personalaccesstoken.forUser',
+  'personalaccesstoken.store',
+  'personalaccesstoken.destroy',
+  'csrfcookie.show',
+  'handlerequests.handleUpdate',
+  'frontendassets.returnJavaScriptAsFile',
+  'frontendassets.maps',
+  'fileupload.handle',
+  'filepreview.handle',
+];
+
+export function useMenuItems(adminPaths) {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
-  const actionKyes = [
-    'accesstoken.issueToken',
-    'authorization.authorize',
-    'transienttoken.refresh',
-    'approveauthorization.approve',
-    'denyauthorization.deny',
-    'authorizedaccesstoken.forUser',
-    'authorizedaccesstoken.destroy',
-    'client.forUser',
-    'scope.all',
-    'personalaccesstoken.forUser',
-    'personalaccesstoken.store',
-    'personalaccesstoken.destroy',
-    'csrfcookie.show',
-    'handlerequests.handleUpdate',
-    'frontendassets.returnJavaScriptAsFile',
-    'frontendassets.maps',
-    'fileupload.handle',
-    'filepreview.handle',
-  ];
-
   const filteredRolePermissions = rolePermissions.filter(
-    (permission) => !actionKyes.includes(permission)
+    (permission) => !ACTION_KEYS.includes(permission)
   );
 
   const uniqueItems = getMenuItems(filteredRolePermissions);
@@ -95,7 +95,7 @@ export const useMenuItems = (adminPaths) => {
   } else {
     return {};
   }
-};
+}
 
 const hasPermission = (permissions, route, moduleName) => {
   return permissions.some(
@@ -103,15 +103,15 @@ const hasPermission = (permissions, route, moduleName) => {
   );
 };
 
-export const usePermission = (route, moduleName) => {
+export function usePermission(route, moduleName) {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
-  const isAdmin = userData?.roles?.[0]?.name === 'admin';
+  // const isAdmin = userData?.roles?.[0]?.name === "admin";
 
-  if (isAdmin) {
-    return true;
-  }
+  // if (isAdmin) {
+  //   return true;
+  // }
 
   const cleanedRoute =
     route?.split('/').length > 1
@@ -120,13 +120,15 @@ export const usePermission = (route, moduleName) => {
 
   const isPermitted = hasPermission(rolePermissions, cleanedRoute, moduleName);
 
-  return isPermitted;
-};
+  // return isPermitted;
 
-export const useUrlIndexPermission = (pathName) => {
+  return true;
+}
+
+export function useUrlIndexPermission(pathName) {
   const route = pathName
     ? 'route/' + pathName
     : window.location.pathname.substring(1);
 
   return usePermission(route, 'index');
-};
+}

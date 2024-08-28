@@ -42,6 +42,8 @@ const QuotationCreate = () => {
     inclusive_tax_rate: {},
   });
 
+  const [products, setProducts] = useState([]);
+
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
@@ -123,6 +125,28 @@ const QuotationCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+        inclusive_tax_rate: {},
+      });
+
+      setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -132,8 +156,6 @@ const QuotationCreate = () => {
       setErrorFields(errorFields);
     }
   };
-
-  const [products, setProducts] = useState([]);
 
   return (
     <CustomDrawer

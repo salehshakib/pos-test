@@ -123,6 +123,28 @@ const InvoiceCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+
+      setFormValues({
+        product_list: {
+          qty: {},
+          sale_unit_id: {},
+          net_unit_price: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          tax_id: {},
+        },
+      });
+
+      setProductUnits({
+        sale_units: {},
+        tax_rate: {},
+        inclusive_tax_rate: {},
+      });
+
+      setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({

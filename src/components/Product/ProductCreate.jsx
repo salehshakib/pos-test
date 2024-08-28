@@ -31,6 +31,10 @@ const ProductCreate = () => {
     },
   });
 
+  const [products, setProducts] = useState([]);
+  const [initialWarehouses, setInitialWarehouses] = useState([]);
+  const [priceWarehouses, setPriceWarehouses] = useState([]);
+
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
@@ -192,6 +196,10 @@ const ProductCreate = () => {
           price: {},
         },
       });
+
+      setInitialWarehouses([]);
+      setPriceWarehouses([]);
+      setProducts([]);
     }
 
     if (error) {
@@ -203,10 +211,6 @@ const ProductCreate = () => {
       setErrorFields(errorFields);
     }
   };
-
-  const [products, setProducts] = useState([]);
-  const [initialWarehouses, setInitialWarehouses] = useState([]);
-  const [priceWarehouses, setPriceWarehouses] = useState([]);
 
   //console.log(formValues);
 

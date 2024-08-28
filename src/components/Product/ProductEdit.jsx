@@ -67,9 +67,7 @@ const ProductListEdit = ({ id, setId }) => {
       });
 
       setProducts([]);
-
       setInitialWarehouses([]);
-
       setPriceWarehouses([]);
     }
   }, [isEditDrawerOpen]);

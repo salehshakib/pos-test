@@ -87,7 +87,7 @@ const CustomUploader = ({
               ? 'custom-upload rounded-md border border-gray-400 pb-2 pl-2 pr-2 pt-2'
               : 'custom-single-upload'
           } mt-2`}
-          accept={type === 'img' && '.png, .jpg, .jpeg'}
+          accept={type === 'img' ? '.png, .jpg, .jpeg' : ''}
         >
           {(multiple || (!multiple && fileList.length < 1)) && (
             <button

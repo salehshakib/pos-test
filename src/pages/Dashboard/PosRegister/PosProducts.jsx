@@ -66,7 +66,6 @@ const PosProducts = ({
 
   useEffect(() => {
     if (products?.length > 0 && pagination.page > 1) {
-      //console.log(products);
       setNewData((prevData) => [...prevData, ...products]);
     } else if (products?.length > 0) {
       setNewData(products);
@@ -160,10 +159,6 @@ const PosProducts = ({
             <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-4">
               {products &&
                 newData.map((product) => {
-                  // const images = organizeAttachments(product?.attachments);
-
-                  //console.log(product);
-
                   const stock = getWarehouseQuantity(
                     product?.product_qties,
                     warehouseId

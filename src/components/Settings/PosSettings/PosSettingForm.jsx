@@ -60,8 +60,6 @@ export const PosSettingForm = ({ data }) => {
   }, [data, form]);
 
   const handleSubmit = async (values) => {
-    console.log(values);
-
     // return;
     const formData = new FormData();
 
@@ -102,7 +100,6 @@ export const PosSettingForm = ({ data }) => {
 
     if (updatedData?.success) {
       // window.location.reload();
-      console.log(updatedData?.data);
     }
   };
 

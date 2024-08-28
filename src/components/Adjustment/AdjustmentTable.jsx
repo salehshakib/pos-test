@@ -100,8 +100,6 @@ const AdjustmentTable = ({
     setDetailsModal(false);
   };
 
-  console.log(detailsId);
-
   return (
     <GlobalUtilityStyle>
       <CustomTable

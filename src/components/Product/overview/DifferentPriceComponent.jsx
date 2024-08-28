@@ -128,12 +128,8 @@ export const DifferentPriceComponent = ({
     );
   };
 
-  //console.log(priceWarehouses);
-
   const dataSource =
     priceWarehouses?.map((warehouse) => {
-      //console.log(warehouse);
-
       const { id, name } = warehouse;
 
       formValues.price_list.price[id] = formValues.price_list.price[id] ?? 0;

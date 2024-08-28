@@ -53,8 +53,8 @@ const CustomProductTable = ({
           ...rowSelection,
         }
       : false,
-    onRow: (record) => ({
-      onClick: () => console.log(record.id),
+    onRow: (_record) => ({
+      onClick: () => {},
     }),
     loading: isLoading || globalLoading,
     scroll: {

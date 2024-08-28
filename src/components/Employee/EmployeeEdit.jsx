@@ -44,8 +44,6 @@ const EmployeeEdit = ({ id, setId }) => {
       form.resetFields();
       const fieldData = fieldsToUpdate(data);
 
-      console.log(data);
-
       const updateFieldValue = [
         {
           name: 'role_id',

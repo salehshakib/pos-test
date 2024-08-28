@@ -213,8 +213,6 @@ const ProductCreate = () => {
     }
   };
 
-  //console.log(formValues);
-
   return (
     <CustomDrawer
       title={'Create Product'}

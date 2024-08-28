@@ -59,8 +59,6 @@ export const SaleDetails = ({ id, ...props }) => {
 
   const currency = useSelector(useCurrency);
 
-  console.log(data?.customers);
-
   const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,
     cashier: data?.cashiers?.name,

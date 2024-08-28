@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import PosLayout from './layout/PosLayout';
 
 function Pos() {
-  const [api, contextHolder] = notification.useNotification();
+  const [_api, contextHolder] = notification.useNotification();
 
   return (
     <>

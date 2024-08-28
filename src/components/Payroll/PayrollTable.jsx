@@ -82,8 +82,6 @@ export const PayrollTable = ({
     data?.results?.payroll?.map((item) => {
       const { id, date, employees, payment_type } = item ?? {};
 
-      console.log(item);
-
       return {
         id,
         name: employees?.name,

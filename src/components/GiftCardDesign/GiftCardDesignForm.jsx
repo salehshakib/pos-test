@@ -36,8 +36,6 @@ const FileInput = ({
     removeImage();
   };
 
-  //console.log(imageUrl);
-
   return (
     <div>
       <input

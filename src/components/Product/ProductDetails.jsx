@@ -164,8 +164,6 @@ export const ProductDetails = ({ id, ...props }) => {
     };
   });
 
-  console.log(data?.details);
-
   return (
     <CustomModal {...props}>
       {isFetching ? (

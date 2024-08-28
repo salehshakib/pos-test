@@ -403,12 +403,6 @@ export const PosRegister = ({
 
   const currency = useSelector(useCurrency);
 
-  // console.log(type);
-
-  // console.log(totalPrice);
-
-  // console.log(productUnits.minimum_amount);
-
   useEffect(() => {
     if (type?.toLowerCase() === 'fixed') {
       setCoupon(productUnits.coupon_rate);

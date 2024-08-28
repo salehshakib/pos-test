@@ -201,8 +201,6 @@ export const PurchaseEdit = ({ id, setId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
-  console.log(data);
-
   const handleUpdate = async (values) => {
     const formData = new FormData();
 

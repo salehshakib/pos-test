@@ -169,7 +169,7 @@ export const ProductTableComponent = () => {
 
   const dataSource =
     productData?.map((item) => {
-      const { value, label, sku, unitCost } = item ?? {};
+      const { sku, unitCost } = item ?? {};
 
       return {
         id: item,

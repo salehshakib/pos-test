@@ -157,8 +157,6 @@ const ProductListEdit = ({ id, setId }) => {
         attachments,
       } = data;
 
-      //console.log(data);
-
       const fieldData = fieldsToUpdate({
         name,
         sku,
@@ -324,8 +322,6 @@ const ProductListEdit = ({ id, setId }) => {
 
     const { qty_list, price_list, product_list } = formValues;
 
-    //console.log(qty_list, price_list);
-
     const qtyListArray = has_stock
       ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
           return {
@@ -343,8 +339,6 @@ const ProductListEdit = ({ id, setId }) => {
       (sum, item) => parseInt(sum) + parseInt(item.qty),
       0
     );
-
-    //console.log(has_different_price);
 
     const priceListArray = has_different_price
       ? Object.keys(price_list?.price || {}).map((warehouseId) => {
@@ -441,8 +435,6 @@ const ProductListEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
-
-  //console.log(products);
 
   return (
     <CustomDrawer

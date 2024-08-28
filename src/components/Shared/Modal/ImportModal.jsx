@@ -12,7 +12,6 @@ const modalProps = {
 };
 
 const normFile = (e) => {
-  console.log('Upload event:', e);
   if (Array.isArray(e)) {
     return e;
   }
@@ -22,9 +21,7 @@ const normFile = (e) => {
 const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
   const [importForm] = Form.useForm();
 
-  const handleSubmit = async (values) => {
-    console.log(values);
-  };
+  const handleSubmit = async (_values) => {};
 
   const { token } = theme.useToken();
   return (

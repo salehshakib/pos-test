@@ -100,7 +100,6 @@ export const HolidaysTable = ({
 
   const dataSource =
     data?.results?.holiday?.map((item) => {
-      // console.log(item);
       const { id, title, description } = item ?? {};
 
       return {

@@ -104,8 +104,6 @@ const ProductTable = ({
     }
   };
 
-  //console.log(data);
-
   const dataSource =
     data?.results?.product?.map((item) => {
       const {

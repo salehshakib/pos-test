@@ -126,8 +126,6 @@ export const WarehouseStockTableComponent = () => {
     }
   }, [rowId]);
 
-  //console.log(warehouse);
-
   const dataSource = warehouse?.map((item) => {
     return {
       key: item,

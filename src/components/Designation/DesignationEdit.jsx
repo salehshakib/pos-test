@@ -30,8 +30,6 @@ export const DesignationEdit = ({ id, setId }) => {
     { skip: !id }
   );
 
-  //console.log(isEditDrawerOpen, id);
-
   const [updateDesignation, { isLoading }] = useUpdateDesignationMutation();
 
   useEffect(() => {

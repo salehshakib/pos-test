@@ -21,12 +21,6 @@ const ProductUnit = ({ options = [], isLoading }) => {
 };
 
 const PurchaseUnit = ({ options = [], isLoading }) => {
-  // const form = Form.useFormInstance();
-
-  // const unit_id = Form.useWatch("unit_id", form);
-
-  // console.log(unit_id);
-
   return (
     <Col {...colLayout}>
       <CustomSelect

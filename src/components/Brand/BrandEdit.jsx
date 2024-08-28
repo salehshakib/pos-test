@@ -67,8 +67,6 @@ export const BrandEdit = ({ id, setId }) => {
       postData.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    console.log(deleteAttachmentIds);
-
     if (values?.logo?.length > 0) {
       postData.logo = values?.logo?.[0]?.originFileObj;
     }
@@ -91,8 +89,6 @@ export const BrandEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
-
-  //console.log(fields);
 
   return (
     <CustomDrawer

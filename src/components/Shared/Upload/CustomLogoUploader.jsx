@@ -48,8 +48,6 @@ const CustomLogoUploader = ({ name }) => {
     setFileList(newFileList);
   };
 
-  // //console.log(fileList);
-
   return (
     <GlobalUtilityStyle>
       <Row {...rowLayout} className="">

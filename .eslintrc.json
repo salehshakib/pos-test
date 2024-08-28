@@ -44,7 +44,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "no-console": ["warn", { "allow": ["debug", "warn", "error"] }]
+    "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
   },
   "overrides": [
     {

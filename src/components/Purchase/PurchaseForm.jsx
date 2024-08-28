@@ -103,13 +103,6 @@ export const PurchaseForm = ({
       shipping_cost
     );
 
-    console.log({
-      orderTax,
-      calculatedTotalPrice,
-      calculatedGrandTotal,
-      discount,
-    });
-
     setTotalItems(calculatedTotalItems);
     setTotalQty(calculatedTotalQty);
     setTotalPrice(calculatedTotalPrice);

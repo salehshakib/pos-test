@@ -35,8 +35,6 @@ const ExpenseCategoryEdit = ({ id, setId }) => {
     }
   }, [data, setFields]);
 
-  //console.log(id);
-
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpenseCategory({
       id,

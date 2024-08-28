@@ -157,8 +157,6 @@ const createDetailsLayout = (data, nostyle, ignoreDataKeys = []) => {
     []
   );
 
-  //console.log(details);
-
   return details;
 };
 

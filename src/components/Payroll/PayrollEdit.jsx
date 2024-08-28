@@ -26,8 +26,6 @@ export const PayrollEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetPayrollDetailsQuery({ id }, { skip: !id });
 
-  // //console.log(isEditDrawerOpen, id);
-
   const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
   useEffect(() => {

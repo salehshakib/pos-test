@@ -87,8 +87,6 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, 'delete');
   const isStatusPermitted = usePermission(route, 'status');
 
-  // console.log(isEditPermitted, route, isDeletePermitted);
-
   const getMenuItems = (record) =>
     [
       isEditPermitted && {
@@ -139,8 +137,8 @@ const CustomTable = ({
           ...rowSelection,
         }
       : false,
-    onRow: (record) => ({
-      onClick: () => console.log(record.id),
+    onRow: (_record) => ({
+      onClick: () => {},
     }),
     scroll: {
       x: 'max-content',

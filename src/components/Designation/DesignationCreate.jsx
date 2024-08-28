@@ -17,7 +17,6 @@ export const DesignationCreate = () => {
   const [createDesignation, { isLoading }] = useCreateDesignationMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createDesignation({
       data: values,
     });

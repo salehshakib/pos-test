@@ -28,8 +28,6 @@ const SearchWarehouse = ({ setWarehouses }) => {
     params,
   });
 
-  //console.log(data);
-
   const loadingContent = (
     <div className="flex items-center justify-center">
       <div className="text-center text-lg">

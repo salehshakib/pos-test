@@ -60,8 +60,6 @@ export const LeaveEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    //console.log(values);
-
     const postData = {
       ...values,
       leave_end_date:

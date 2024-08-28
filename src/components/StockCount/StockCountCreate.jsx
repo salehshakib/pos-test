@@ -18,7 +18,6 @@ const StockCountCreate = () => {
   const [createStockCount, { isLoading }] = useCreateStockCountMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createStockCount({
       data: values,
     });

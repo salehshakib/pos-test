@@ -32,12 +32,8 @@ const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
   const [editor, setEditor] = useState('');
 
   const hangleChange = (content, editor) => {
-    console.log(content);
-    console.log(editor);
     const data = editor.getData();
     setEditor(data);
-
-    console.log(data);
   };
 
   //   useImperativeHandle(ref, () => ({

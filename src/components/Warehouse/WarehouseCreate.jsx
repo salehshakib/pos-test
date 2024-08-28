@@ -18,7 +18,6 @@ const WarehouseCreate = () => {
   const [createWarehouse, { isLoading }] = useCreateWarehouseMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createWarehouse({
       data: values,
     });

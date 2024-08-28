@@ -9,8 +9,6 @@ function getMenuItems(rolePermissions) {
 
   const menuItems = Array.from(new Set(firstParts));
 
-  // console.log(menuItems);
-
   return menuItems;
 }
 
@@ -49,8 +47,6 @@ function filterPaths(paths, uniqueItems) {
         if (childModifiedPath === 'printbarcode') {
           childNames.push('print-barcode');
         }
-
-        // console.log(childModifiedPath);
       });
       if (childNames.length > 0) {
         parentStructure[item.path] = childNames;
@@ -92,8 +88,6 @@ export const useMenuItems = (adminPaths) => {
 
   const uniqueItems = getMenuItems(filteredRolePermissions);
 
-  // console.log(uniqueItems);
-
   if (uniqueItems.length) {
     const filteredStructure = filterPaths(adminPaths, uniqueItems);
 
@@ -115,9 +109,9 @@ export const usePermission = (route, moduleName) => {
 
   const isAdmin = userData?.roles?.[0]?.name === 'admin';
 
-  // if (isAdmin) {
-  //   return true
-  // }
+  if (isAdmin) {
+    return true;
+  }
 
   const cleanedRoute =
     route?.split('/').length > 1

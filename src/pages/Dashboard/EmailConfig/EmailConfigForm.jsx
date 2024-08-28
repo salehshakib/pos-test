@@ -98,7 +98,7 @@ export const EmailConfigForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    console.error(errorInfo);
   };
 
   return (

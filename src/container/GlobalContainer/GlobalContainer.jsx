@@ -107,12 +107,9 @@ const GlobalContainer = ({
   };
 
   const handleOpenChange = (nextOpen, info) => {
-    console.log(nextOpen, info);
     if (info.source === 'trigger' || nextOpen) {
       setOpen(nextOpen);
     }
-
-    // setOpen(nextOpen);
   };
 
   const handleCheckedOpenChange = (nextOpen, info) => {
@@ -266,10 +263,8 @@ const GlobalContainer = ({
       hideModal();
       setSelectedRows([]);
     } else {
-      console.log(error);
+      console.error(error);
     }
-
-    console.log(data, error);
   };
 
   const hideModal = () => {

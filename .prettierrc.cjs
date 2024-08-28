@@ -8,6 +8,7 @@ module.exports = {
     '',
     '<TYPES>',
     '<TYPES>^[./]',
+    '',
   ],
   trailingComma: 'es5',
   tabWidth: 2,

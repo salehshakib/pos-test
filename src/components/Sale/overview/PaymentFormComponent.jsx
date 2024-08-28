@@ -59,8 +59,6 @@ const GiftCardComponent = () => {
     };
   });
 
-  //console.log(data);
-
   return (
     <Col {...fullColLayout}>
       <CustomSelect

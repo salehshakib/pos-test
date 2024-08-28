@@ -7,8 +7,6 @@ const Logo = () => {
   const navigate = useNavigate();
   const logo = useSelector(getLogo);
 
-  // console.log(logo);
-
   return (
     <div
       className="primary-text flex items-center justify-center font-bold hover:cursor-pointer"

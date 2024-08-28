@@ -27,7 +27,6 @@ const CategoryFilterComponent = ({ setParams, color }) => {
   };
 
   const handleSubmit = async () => {
-    // console.log(isSelected);
     setParams({ category_ids: isSelected });
     handleCloseDrawer();
   };

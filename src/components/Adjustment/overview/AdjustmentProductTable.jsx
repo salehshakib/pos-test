@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../utilities/lib/currency';
 import {

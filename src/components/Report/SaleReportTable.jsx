@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
-import { GlobalUtilityStyle } from '../../container/Styled';
-import CustomTable from '../Shared/Table/CustomTable';
 
+import { GlobalUtilityStyle } from '../../container/Styled';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetAllSaleQuery } from '../../redux/services/sale/saleApi';
 import { useFormatDate } from '../../utilities/hooks/useFormatDate';
@@ -9,6 +8,7 @@ import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { showCurrency } from '../../utilities/lib/currency';
 import { formatDate } from '../../utilities/lib/dateFormat';
+import CustomTable from '../Shared/Table/CustomTable';
 
 export const SaleReportTable = ({
   newColumns,

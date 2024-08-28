@@ -1,5 +1,6 @@
 import { Button, Modal } from 'antd';
 import { RiErrorWarningFill } from 'react-icons/ri';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const modalProps = {

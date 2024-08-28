@@ -1,4 +1,5 @@
 import toast from 'react-hot-toast';
+
 import logo from '../../assets/data/defaultLogo';
 
 const typeToColor = {

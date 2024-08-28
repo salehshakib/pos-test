@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetCategoryDetailsQuery } from '../../redux/services/category/categoryApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

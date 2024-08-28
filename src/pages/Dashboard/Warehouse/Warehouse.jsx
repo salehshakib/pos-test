@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import WarehouseCreate from '../../../components/Warehouse/WarehouseCreate';
 import WarehouseTable from '../../../components/Warehouse/WarehouseTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

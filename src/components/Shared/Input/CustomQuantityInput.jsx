@@ -1,4 +1,5 @@
 import { Form, InputNumber } from 'antd';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 export const CustomQuantityInput = (props) => {

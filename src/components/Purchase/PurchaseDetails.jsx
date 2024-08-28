@@ -1,9 +1,9 @@
 import { Spin, Table } from 'antd';
 import { useSelector } from 'react-redux';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetPurchaseDetailsQuery } from '../../redux/services/purchase/purchaseApi';
-
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

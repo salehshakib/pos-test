@@ -1,6 +1,7 @@
 import { FaChalkboardUser } from 'react-icons/fa6';
 import { LiaCashRegisterSolid } from 'react-icons/lia';
 import { PiUserList } from 'react-icons/pi';
+
 import Cashier from '../../pages/Dashboard/Cashier/Cashier';
 import Customer from '../../pages/Dashboard/Customer/Customer';
 import { Supplier } from '../../pages/Dashboard/Supplier/Supplier';

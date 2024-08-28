@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { SaleReturnDetails } from '../../../../components/SaleReturn/SaleReturnDetails';
 import CustomTable from '../../../../components/Shared/Table/CustomTable';
 import { GlobalUtilityStyle } from '../../../../container/Styled';

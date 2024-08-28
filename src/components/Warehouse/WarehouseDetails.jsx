@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetWarehouseDetailsQuery } from '../../redux/services/warehouse/warehouseApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

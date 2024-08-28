@@ -1,4 +1,5 @@
 import { Spin, Table } from 'antd';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';

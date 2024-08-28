@@ -2,10 +2,12 @@ import { Button, Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+
 import { onQuantityChange } from '../../../utilities/lib/productTable/counters';
 import CustomInput from '../../Shared/Input/CustomInput';
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
+
 // import { columns } from "./columns/ProductColumns";
 
 const columns = [

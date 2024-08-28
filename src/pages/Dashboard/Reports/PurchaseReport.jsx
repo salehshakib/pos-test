@@ -1,6 +1,7 @@
 import { Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { PurchaseReportTable } from '../../../components/Report/PurchaseReportTable';
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

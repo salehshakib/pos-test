@@ -1,4 +1,5 @@
 import { Button, Modal } from 'antd';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const CustomModal = (props) => {

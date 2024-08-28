@@ -1,4 +1,5 @@
 import { BiTransfer } from 'react-icons/bi';
+
 import TransferList from '../../pages/Dashboard/Transfer/TransferList';
 
 export const transferPaths = [

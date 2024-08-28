@@ -1,8 +1,4 @@
 import { Spin } from 'antd';
-import { useGetQuotationDetailsQuery } from '../../../../redux/services/quotation/quotationApi';
-import CustomModal from '../../../Shared/Modal/CustomModal';
-import Invoice from './Invoice';
-
 // const columns = [
 //   {
 //     title: "Product Name",
@@ -64,7 +60,11 @@ import Invoice from './Invoice';
 // ];
 
 import generatePDF from 'react-to-pdf';
+
+import { useGetQuotationDetailsQuery } from '../../../../redux/services/quotation/quotationApi';
 import { generatePdfOptions } from '../../../../utilities/lib/generatePdfOptions';
+import CustomModal from '../../../Shared/Modal/CustomModal';
+import Invoice from './Invoice';
 
 export const QuotationDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetQuotationDetailsQuery(

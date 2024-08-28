@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetLeaveDetailsQuery } from '../../redux/services/hrm/leave/leaveApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

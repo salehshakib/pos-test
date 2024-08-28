@@ -114,7 +114,9 @@
 // export default CustomInput;
 
 import { Form, Input, InputNumber } from 'antd';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
+
 const { TextArea, Password } = Input;
 
 const CustomInput = (props) => {

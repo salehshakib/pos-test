@@ -1,7 +1,7 @@
+import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Form } from 'antd';
 import defaultUser from '../../assets/data/defaultUserImage';
 import {
   useGetCategoryDetailsQuery,

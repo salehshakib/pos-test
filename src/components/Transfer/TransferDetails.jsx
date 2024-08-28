@@ -1,4 +1,5 @@
 import { Spin, Table } from 'antd';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useGetTransferDetailsQuery } from '../../redux/services/transfer/transferApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';

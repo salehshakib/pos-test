@@ -1,8 +1,9 @@
 import { Col, Row } from 'antd';
+
 import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
-import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
 
 export const LeaveTypeForm = (props) => {
   return (

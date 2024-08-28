@@ -1,6 +1,7 @@
 import { Card, Divider, Form, Skeleton, Spin } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 import { productImage } from '../../../assets/data/productImage';
 import { useGetAllCategoryQuery } from '../../../redux/services/category/categoryApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';

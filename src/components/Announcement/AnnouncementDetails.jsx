@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetAnnouncementDetailsQuery } from '../../redux/services/hrm/announcement/announcementApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

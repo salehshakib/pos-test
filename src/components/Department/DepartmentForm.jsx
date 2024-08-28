@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd';
-import CustomForm from '../Shared/Form/CustomForm';
+
 import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 
 const DepartmentForm = (props) => {

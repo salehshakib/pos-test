@@ -1,5 +1,6 @@
 import { Row } from 'antd';
 import { useState } from 'react';
+
 import CouponsCreate from '../../../components/Coupons/CouponsCreate';
 import CouponsTable from '../../../components/Coupons/CouponsTable';
 import { CouponTypeFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';

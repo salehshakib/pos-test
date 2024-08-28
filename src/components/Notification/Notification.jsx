@@ -1,5 +1,6 @@
 // const SingleNotification = ({ data, handleReadNotification }) => {
 import { Skeleton, theme } from 'antd';
+
 import warehouseLogo from '../../assets/data/warehouseLogo';
 import {
   categorizeNotificationsByDate,

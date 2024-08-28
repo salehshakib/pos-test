@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteRolesMutation,
@@ -9,7 +10,6 @@ import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
-
 import { RoleDetails } from './RoleDetails';
 import SetRolePermission from './SetRolePermission';
 

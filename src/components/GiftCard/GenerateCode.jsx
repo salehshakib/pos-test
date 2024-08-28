@@ -1,4 +1,5 @@
 import { Button, Col, Form, Input, Row } from 'antd';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { fullColLayout } from '../../layout/FormLayout';
 import { generateRandomCode } from '../../utilities/lib/generateCode';

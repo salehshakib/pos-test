@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaBell } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
 import {
   useGetAllNotificationQuery,

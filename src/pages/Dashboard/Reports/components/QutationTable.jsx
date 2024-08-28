@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { QuotationDetails } from '../../../../components/Generator/Quotation/overview/QuotationDetails';
 import CustomTable from '../../../../components/Shared/Table/CustomTable';
 import { GlobalUtilityStyle } from '../../../../container/Styled';

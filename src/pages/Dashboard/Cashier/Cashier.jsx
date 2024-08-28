@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import CashierCreate from '../../../components/Cashier/CashierCreate';
 import CashierTable from '../../../components/Cashier/CashierTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { useCurrentUser } from '../../redux/services/auth/authSlice';
 
 function getMenuItems(rolePermissions) {

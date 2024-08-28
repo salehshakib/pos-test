@@ -181,6 +181,7 @@
 import { Badge, Image } from 'antd';
 import parse from 'html-react-parser';
 import { useSelector } from 'react-redux';
+
 import defaultUser from '../../assets/data/defaultUserImage';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { showCurrency } from '../lib/currency';

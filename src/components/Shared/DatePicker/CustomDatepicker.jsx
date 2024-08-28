@@ -80,9 +80,10 @@
 // export default CustomDatepicker;
 
 import { DatePicker, Form, TimePicker } from 'antd';
-import { MdDateRange, MdOutlineWatchLater } from 'react-icons/md';
-import { GlobalUtilityStyle } from '../../../container/Styled';
 import dayjs from 'dayjs';
+import { MdDateRange, MdOutlineWatchLater } from 'react-icons/md';
+
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const { RangePicker } = DatePicker;
 

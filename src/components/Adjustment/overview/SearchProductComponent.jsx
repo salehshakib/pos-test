@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDebouncedCallback } from 'use-debounce';
+
 import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
 import { setProduct } from '../../../redux/services/product/productSlice';
 import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';

@@ -1,5 +1,6 @@
 import { Table, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+
 import logo from '../../../../assets/data/defaultLogo';
 import { tableProps } from '../../../../layout/TableLayout';
 import { useCurrency } from '../../../../redux/services/pos/posSlice';

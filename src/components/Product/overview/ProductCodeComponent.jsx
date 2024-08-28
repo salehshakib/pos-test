@@ -1,5 +1,6 @@
 import { Form } from 'antd';
 import { RiRefreshLine } from 'react-icons/ri';
+
 import { generateRandomCode } from '../../../utilities/lib/generateCode';
 import CustomInputButton from '../../Shared/Input/CustomInputButton';
 

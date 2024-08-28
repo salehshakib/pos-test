@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetGiftCardDetailsQuery } from '../../redux/services/giftcard/giftcard/giftCardApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

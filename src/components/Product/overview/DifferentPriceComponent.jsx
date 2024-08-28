@@ -1,5 +1,6 @@
 import { Form } from 'antd';
 import { MdDelete } from 'react-icons/md';
+
 import CustomInput from '../../Shared/Input/CustomInput';
 import { WarehouseController } from '../../WarehouseController/WarehouseController';
 

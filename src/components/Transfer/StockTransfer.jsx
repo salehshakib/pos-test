@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useGetStockRequestDetailsQuery } from '../../redux/services/stockRequest/stockRequestApi';
 import { useCreateTransferMutation } from '../../redux/services/transfer/transferApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';

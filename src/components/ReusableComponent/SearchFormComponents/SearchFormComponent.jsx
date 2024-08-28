@@ -1,12 +1,13 @@
 import { Col } from 'antd';
-import { paymentStatusOptions } from '../../../assets/data/paymentStatus';
-import { purchaseStatusOptions } from '../../../assets/data/purchaseStatus';
-import { saleStatusOptions } from '../../../assets/data/saleStatus';
+
 // import { mdColLayout } from "../../../layout/FormLayout";
 import { barcodeOptions } from '../../../assets/data/barcode';
 import { baseUnit } from '../../../assets/data/baseUnit';
 import { employeeStatusOptions } from '../../../assets/data/employeeStatus';
+import { paymentStatusOptions } from '../../../assets/data/paymentStatus';
 import { paymentTypesOptions } from '../../../assets/data/paymentTypes';
+import { purchaseStatusOptions } from '../../../assets/data/purchaseStatus';
+import { saleStatusOptions } from '../../../assets/data/saleStatus';
 import { fullColLayout } from '../../../layout/FormLayout';
 import { useGetBrandsQuery } from '../../../redux/services/brand/brandApi';
 import { useGetAllCashierQuery } from '../../../redux/services/cashier/cashierApi';

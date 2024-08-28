@@ -3,6 +3,7 @@ import { Col, Form, Row, Tooltip } from 'antd';
 import { currencies } from 'currencies.json';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';

@@ -1,4 +1,5 @@
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+
 import Purchase from '../../pages/Dashboard/Purchase/Purchase';
 
 export const purchasePaths = [

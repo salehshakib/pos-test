@@ -1,6 +1,7 @@
 import { Form, Image, Upload } from 'antd';
 import { useState } from 'react';
 import { BiImageAdd } from 'react-icons/bi';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const getBase64 = (file) =>

@@ -1,8 +1,9 @@
 import { Form, Image, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
 import { BiImageAdd } from 'react-icons/bi';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import ImgCrop from 'antd-img-crop';
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {

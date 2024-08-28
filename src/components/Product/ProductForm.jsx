@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
+
 import { barcodeOptions } from '../../assets/data/barcode';
 import { taxTypeOptions } from '../../assets/data/taxType';
 import {

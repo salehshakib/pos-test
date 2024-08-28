@@ -1,15 +1,16 @@
 import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import { productImage } from '../../../assets/data/productImage';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
-import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
-import { openNotification } from '../../../utilities/lib/openToaster';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
-import { GlobalUtilityStyle } from '../../../container/Styled';
-import { productImage } from '../../../assets/data/productImage';
+import { openNotification } from '../../../utilities/lib/openToaster';
 
 const { Meta } = Card;
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { colLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';

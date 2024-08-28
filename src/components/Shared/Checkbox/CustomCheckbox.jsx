@@ -1,5 +1,7 @@
 import { Checkbox, Form } from 'antd';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
+
 const { Group } = Checkbox;
 
 const CustomCheckbox = (props) => {

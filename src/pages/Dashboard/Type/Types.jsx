@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import TypeCreate from '../../../components/Type/TypeCreate';
 import TypeTable from '../../../components/Type/TypeTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

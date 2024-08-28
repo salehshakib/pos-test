@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from 'styled-components';
+
 import {
   setCompany,
   setDateFormat,

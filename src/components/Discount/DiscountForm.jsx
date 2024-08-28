@@ -1,14 +1,15 @@
 import { Col, Row } from 'antd';
+import { useSelector } from 'react-redux';
+
+import { colLayout, fullColLayout, rowLayout } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
 import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
 import CustomForm from '../Shared/Form/CustomForm';
-import { colLayout, fullColLayout, rowLayout } from '../../layout/FormLayout';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import ApplicableForm from './overview/ApplicableForm';
 import { SpecificProductComponent } from './overview/SpecificProductComponent';
-import { useSelector } from 'react-redux';
-import { useCurrency } from '../../redux/services/pos/posSlice';
 
 const weekDays = [
   {

@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetCouponDetailsQuery } from '../../redux/services/coupon/couponApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

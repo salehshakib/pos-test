@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import { GlobalUtilityStyle } from '../../../container/Styled';
 import { Col, Form, Image, Row, Upload } from 'antd';
+import { useEffect, useState } from 'react';
 import { LiaCloudUploadAltSolid } from 'react-icons/lia';
+
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const rowLayout = {
   gutter: 25,

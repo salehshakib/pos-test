@@ -1,4 +1,5 @@
 import { Spin, Table } from 'antd';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useGetAdjustmentDetailsQuery } from '../../redux/services/adjustment/adjustmentApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';

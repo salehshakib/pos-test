@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetHolidayDetailsQuery } from '../../redux/services/hrm/holiday/holidayApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

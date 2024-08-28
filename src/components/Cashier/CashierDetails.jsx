@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetCashierDetailsQuery } from '../../redux/services/cashier/cashierApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

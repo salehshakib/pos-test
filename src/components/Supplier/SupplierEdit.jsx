@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetSupplierDetailsQuery,
@@ -8,9 +9,9 @@ import {
 } from '../../redux/services/supplier/supplierApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import SupplierForm from './SupplierForm';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 
 const SupplierEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

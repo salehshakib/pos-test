@@ -2,6 +2,7 @@ import { Badge, Calendar, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../utilities/lib/currency';
 import CustomModal from '../Modal/CustomModal';

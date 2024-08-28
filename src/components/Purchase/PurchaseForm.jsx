@@ -45,7 +45,7 @@ const PurchaseStatus = ({ form }) => {
 const PaymentStatusComponent = ({ form }) => {
   // useSetFieldValue('payment_status', paymentStatusOptions[0].value);
   useEffect(() => {
-    form.setFieldValue('payment_status', purchaseStatusOptions[0].value);
+    form.setFieldValue('payment_status', paymentStatusOptions[0].value);
   }, [form]);
   return (
     <CustomSelect

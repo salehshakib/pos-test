@@ -50,7 +50,7 @@ const GiftCardTypeTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateGiftCardTypeStatus, { isLoading: isStatusUpdating }] =
     useUpdateGiftCardTypeStatusMutation();
 
   const [deleteGiftCardTypes, { isLoading: isDeleting }] =
@@ -67,7 +67,7 @@ const GiftCardTypeTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateGiftCardTypeStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

@@ -50,7 +50,7 @@ const ExpenseCategoryTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateExpenseCategoryStatus, { isLoading: isStatusUpdating }] =
     useUpdateExpenseCategoryStatusMutation();
 
   const [deleteExpenseCategory, { isLoading: isDeleting }] =
@@ -67,7 +67,7 @@ const ExpenseCategoryTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateExpenseCategoryStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

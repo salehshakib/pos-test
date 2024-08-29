@@ -54,7 +54,7 @@ const SupplierTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateSupplierStatus, { isLoading: isStatusUpdating }] =
     useUpdateSupplierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
@@ -76,7 +76,7 @@ const SupplierTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateSupplierStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

@@ -54,7 +54,7 @@ const CashierTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateCashierStatus, { isLoading: isStatusUpdating }] =
     useUpdateCashierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
@@ -76,7 +76,7 @@ const CashierTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateCashierStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

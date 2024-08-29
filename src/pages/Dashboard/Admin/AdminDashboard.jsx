@@ -228,10 +228,6 @@ const CashStatistic = ({ data }) => {
           />
         </div>
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
-          {/* <DashboardCard
-            title={"Today's Payment Received"}
-            icon={<SlWallet {...iconProps} />}
-          /> */}
           <DashboardCard
             title={'Petty Cash'}
             icon={<SlWallet {...iconProps} />}
@@ -262,7 +258,7 @@ const WarehouseStatistic = ({ data }) => {
           title={'Warehouse'}
           icon={<PiWarehouse {...iconProps} />}
           data={data?.active_warehouse}
-        />{' '}
+        />
         <DashboardCard
           title={'Product'}
           icon={<MdAddShoppingCart {...iconProps} />}
@@ -389,7 +385,8 @@ const AdminDashboard = () => {
               color: token.colorPrimary,
             }}
           >
-            Welcome 😃, {user?.name ?? user?.roles?.[0]?.name ?? 'User'} 👋
+            Welcome, {user?.name ?? user?.roles?.[0]?.name ?? 'User'}{' '}
+            <span className="inline-block animate-wave ">👋</span>
           </div>
 
           <ExtraComponent setParams={setParams} setWarehouses={setWarehouses} />

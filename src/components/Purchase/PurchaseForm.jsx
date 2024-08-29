@@ -28,8 +28,6 @@ import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 import { PurchaseProductTable } from './overview/PurchaseProductTable';
 
 const PurchaseStatus = ({ form }) => {
-  // useSetFieldValue('purchase_status', purchaseStatusOptions[0].value);
-
   useEffect(() => {
     form.setFieldValue('purchase_status', purchaseStatusOptions[0].value);
   }, [form]);
@@ -43,7 +41,6 @@ const PurchaseStatus = ({ form }) => {
 };
 
 const PaymentStatusComponent = ({ form }) => {
-  // useSetFieldValue('payment_status', paymentStatusOptions[0].value);
   useEffect(() => {
     form.setFieldValue('payment_status', paymentStatusOptions[0].value);
   }, [form]);

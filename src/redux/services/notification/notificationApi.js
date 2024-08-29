@@ -6,7 +6,7 @@ import {
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
 
-const notificationSlice = baseApi.injectEndpoints({
+const notificationApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllNotification: build.query({
       query: ({ id }) => ({
@@ -144,4 +144,4 @@ export const {
   // useUpdateNotificationMutation,
   // useUpdateNotificationStatusMutation,
   // useDeleteNotificationMutation,
-} = notificationSlice;
+} = notificationApi;

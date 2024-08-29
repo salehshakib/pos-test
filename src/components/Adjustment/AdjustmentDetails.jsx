@@ -78,7 +78,7 @@ const AdjustmentDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <CustomDescription title="Adjustment " items={details} />
+          <CustomDescription title="Adjustment" items={details} />
           <Table
             {...tableProps}
             title={title}

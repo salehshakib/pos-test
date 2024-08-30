@@ -35,95 +35,6 @@ const ProductListEdit = ({ id, setId }) => {
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     qty: {},
-  //     amount: {},
-  //   },
-  //   qty_list: {
-  //     qty: {},
-  //   },
-  //   price_list: {
-  //     price: {},
-  //   },
-  // });
-
-  // const [products, setProducts] = useState([]);
-  // const [initialWarehouses, setInitialWarehouses] = useState([]);
-  // const [priceWarehouses, setPriceWarehouses] = useState([]);
-
-  // useEffect(() => {
-  //   if (!isEditDrawerOpen) {
-  //     setFormValues({
-  //       product_list: {
-  //         qty: {},
-  //         amount: {},
-  //       },
-  //       qty_list: {
-  //         qty: {},
-  //       },
-  //       price_list: {
-  //         price: {},
-  //       },
-  //     });
-
-  //     setProducts([]);
-  //     setInitialWarehouses([]);
-  //     setPriceWarehouses([]);
-  //   }
-  // }, [isEditDrawerOpen]);
-
-  // const updateStateWithProductData = ({
-  //   product_prices,
-  //   product_qties,
-  //   product_combos,
-  // }) => {
-  //   // Update state with product prices
-  //   product_prices.forEach((item) => {
-  //     setFormValues((prevFormValues) => ({
-  //       ...prevFormValues,
-  //       price_list: {
-  //         ...prevFormValues.price_list,
-  //         price: {
-  //           ...prevFormValues.price_list.price,
-  //           [item.warehouse_id.toString()]: item.price,
-  //         },
-  //       },
-  //     }));
-  //   });
-
-  //   // Update state with product quantities
-  //   product_qties.forEach((item) => {
-  //     setFormValues((prevFormValues) => ({
-  //       ...prevFormValues,
-  //       qty_list: {
-  //         ...prevFormValues.qty_list,
-  //         qty: {
-  //           ...prevFormValues.qty_list.qty,
-  //           [item.warehouse_id.toString()]: item.qty,
-  //         },
-  //       },
-  //     }));
-  //   });
-
-  //   product_combos.forEach((item) => {
-  //     setFormValues((prevFormValues) => ({
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [item.combo_product_id.toString()]: item.qty,
-  //         },
-  //         amount: {
-  //           ...prevFormValues.product_list.amount,
-  //           [item.combo_product_id.toString()]: item.price,
-  //         },
-  //       },
-  //     }));
-  //   });
-  // };
-
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
       const {
@@ -176,43 +87,6 @@ const ProductListEdit = ({ id, setId }) => {
         attachments,
         details,
       });
-
-      // updateStateWithProductData({
-      //   product_prices: data?.product_prices,
-      //   product_qties: data?.product_qties,
-      //   product_combos: data?.product_combos,
-      // });
-
-      // data?.product_prices?.forEach((item) => {
-      //   setPriceWarehouses((prevWarehouses) => [
-      //     ...prevWarehouses,
-      //     {
-      //       id: item.warehouse_id,
-      //       name: item?.warehouses?.name ?? 'need backend relation',
-      //     },
-      //   ]);
-      // });
-
-      // data?.product_qties?.forEach((item) => {
-      //   setInitialWarehouses((prevWarehouses) => [
-      //     ...prevWarehouses,
-      //     {
-      //       id: item.warehouse_id,
-      //       name: item?.warehouses?.name ?? 'need backend relation',
-      //     },
-      //   ]);
-      // });
-
-      // data?.product_combos?.forEach((item) => {
-      //   setProducts((prevProducts) => [
-      //     ...prevProducts,
-      //     {
-      //       id: item?.combo_product_id,
-      //       name: item?.products?.name ?? 'need backend relation',
-      //       sku: item?.products?.sku ?? 'need backend relation',
-      //     },
-      //   ]);
-      // });
 
       const newFieldData = [
         ...fieldData,
@@ -443,14 +317,6 @@ const ProductListEdit = ({ id, setId }) => {
         fields={fields}
         form={form}
         data={data}
-        // formValues={formValues}
-        // setFormValues={setFormValues}
-        // products={products}
-        // setProducts={setProducts}
-        // initialWarehouses={initialWarehouses}
-        // setInitialWarehouses={setInitialWarehouses}
-        // priceWarehouses={priceWarehouses}
-        // setPriceWarehouses={setPriceWarehouses}
       />
     </CustomDrawer>
   );

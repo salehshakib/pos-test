@@ -27,7 +27,7 @@ import { ProductController } from '../../Shared/ProductControllerComponent/Produ
 import CustomSelect from '../../Shared/Select/CustomSelect';
 import { columns, partialColumns } from './productColumns';
 
-const TaxComponent = ({ productId, setProductUnits }) => {
+const TaxComponent = ({ productId, setFormUpdateValues }) => {
   const params = useGlobalParams({
     selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
   });
@@ -41,11 +41,12 @@ const TaxComponent = ({ productId, setProductUnits }) => {
   }));
 
   const onSelect = (value, option) => {
-    setProductUnits((prevValues) => ({
+    setFormUpdateValues((prevValues) => ({
       ...prevValues,
+
       tax_rate: {
         ...prevValues.tax_rate,
-        [productId]: option.rate ?? 0,
+        [productId]: option.rate,
       },
     }));
   };
@@ -61,7 +62,7 @@ const TaxComponent = ({ productId, setProductUnits }) => {
   );
 };
 
-const ProductUnitComponent = ({ setFormValues, productId }) => {
+const ProductUnitComponent = ({ productId, setFormUpdateValues }) => {
   const params = useGlobalParams({
     selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
@@ -76,11 +77,16 @@ const ProductUnitComponent = ({ setFormValues, productId }) => {
   }));
 
   const onSelect = (value, option) => {
-    setFormValues((prevValues) => ({
+    setFormUpdateValues((prevValues) => ({
       ...prevValues,
-      units: {
-        ...prevValues.units,
-        [productId]: option.operationValue ?? 1,
+
+      operator: {
+        ...prevValues.operator,
+        [productId]: option.operator,
+      },
+      operation_value: {
+        ...prevValues.operation_value,
+        [productId]: option.operationValue,
       },
     }));
   };
@@ -105,6 +111,13 @@ const ProductFormComponent = ({
   setFormValues,
 }) => {
   const [productForm] = Form.useForm();
+
+  const [formUpdateValues, setFormUpdateValues] = useState({
+    tax_rate: {},
+
+    operator: {},
+    operation_value: {},
+  });
 
   useEffect(() => {
     if (productId) {
@@ -145,31 +158,32 @@ const ProductFormComponent = ({
               productId,
             ]),
           },
-          discount: {
-            ...prevFormValues.product_list.discount,
-            [productId]: productForm.getFieldValue('unit_discount'),
-          },
           net_unit_cost: {
             ...prevFormValues.product_list.net_unit_cost,
             [productId]: productForm.getFieldValue('unit_price'),
           },
+          discount: {
+            ...prevFormValues.product_list.discount,
+            [productId]: productForm.getFieldValue('unit_discount'),
+          },
           tax_rate: {
             ...prevFormValues.product_list.tax_rate,
-            [productId]: formValues?.taxData?.tax_rate[productId],
-          },
-          tax: {
-            ...prevFormValues.product_list.tax,
-            [productId]: parseFloat(
-              (parseInt(productUnits.purchase_units[productId]) *
-                parseFloat(productUnits.tax_rate[productId]) *
-                parseInt(productForm.getFieldValue('quantity')) *
-                parseInt(productForm.getFieldValue('unit_price'))) /
-                100
-            ).toFixed(2),
+            [productId]: formUpdateValues?.tax_rate[productId],
           },
           tax_id: {
             ...prevFormValues.product_list.tax_id,
             [productId]: productForm.getFieldValue(['tax_id', productId]),
+          },
+        },
+        units: {
+          ...prevFormValues.units,
+          operator: {
+            ...prevFormValues.units.operator,
+            [productId]: formUpdateValues?.operator[productId],
+          },
+          operation_value: {
+            ...prevFormValues.units.operation_value,
+            [productId]: formUpdateValues?.operation_value[productId],
           },
         },
       };
@@ -207,8 +221,8 @@ const ProductFormComponent = ({
           </Col>
           <Col {...colLayout}>
             <ProductUnitComponent
-              setFormValues={setFormValues}
               productId={productId}
+              setFormUpdateValues={setFormUpdateValues}
             />
           </Col>
           <Col {...mdColLayout}>
@@ -220,101 +234,16 @@ const ProductFormComponent = ({
           </Col>
 
           <Col {...mdColLayout}>
-            <TaxComponent productId={productId} setFormValues={setFormValues} />
+            <TaxComponent
+              productId={productId}
+              setFormUpdateValues={setFormUpdateValues}
+            />
           </Col>
         </Row>
       </CustomForm>
     </Modal>
   );
 };
-
-// function updateFormValues(id, unitCost, productUnitData, taxData, formValues) {
-//   if (!id) return;
-
-//   const sanitizeValue = (value, sanitizer, defaultValue = 0) =>
-//     sanitizer(value ?? defaultValue);
-
-//   const formProductList = formValues.product_list;
-//   const formUnitList = formValues.units;
-
-//   const getSanitizedValue = (field, defaultValue, sanitizer) =>
-//     sanitizeValue(formProductList[field]?.[id], sanitizer, defaultValue);
-
-//   const setFormValue = (field, value) => {
-//     formProductList[field][id] = value;
-//   };
-
-//   const qty = getSanitizedValue('qty', 1, parseInt);
-//   let productUnitCost = unitCost;
-
-//   const calculateProductUnitCost = (field) => {
-//     if (formProductList[field]) {
-//       productUnitCost = getSanitizedValue(field, unitCost, parseFloat);
-//       setFormValue(field, productUnitCost);
-//     }
-//   };
-
-//   calculateProductUnitCost('net_unit_cost');
-//   calculateProductUnitCost('net_unit_price');
-
-//   const discount = getSanitizedValue('discount', 0, parseFloat);
-//   const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);
-//   const productUnitOperator = formUnitList.operator[id] ?? productUnitData?.operator;
-//   const productUnitOperationValue = sanitizeValue(
-//     formUnitList.operation_value[id],
-//     parseFloat,
-//     parseFloat(productUnitData?.operation_value) || 1
-//   );
-
-//   const calculateTax = () => {
-//     const baseValue = (productUnitCost - discount) * qty;
-//     const taxAmount = productUnitOperator === '/'
-//       ? (taxRate * baseValue) / (100 * productUnitOperationValue)
-//       : (productUnitOperationValue * taxRate * baseValue) / 100;
-
-//     return sanitizeValue(taxAmount.toFixed(2), parseFloat);
-//   };
-
-//   const tax = calculateTax();
-
-//   const calculateTotal = (netUnitCost) => {
-//     const baseValue = productUnitOperator === '/'
-//       ? (netUnitCost * qty) / productUnitOperationValue
-//       : productUnitOperationValue * netUnitCost * qty;
-
-//     return taxData?.tax_method === 'Inclusive'
-//       ? Math.round((baseValue - discount + tax).toFixed(2))
-//       : Math.round((baseValue + tax - discount).toFixed(2));
-//   };
-
-//   const total = calculateTotal(productUnitCost);
-
-//   // Set form values
-//   setFormValue('qty', qty);
-
-//   if (formProductList.purchase_unit_id) {
-//     setFormValue(
-//       'purchase_unit_id',
-//       formProductList.purchase_unit_id[id] ?? productUnitData?.id
-//     );
-//   }
-
-//   if (formProductList.sale_unit_id) {
-//     setFormValue(
-//       'sale_unit_id',
-//       formProductList.sale_unit_id[id] ?? productUnitData?.id
-//     );
-//   }
-
-//   setFormValue('discount', discount);
-//   setFormValue('tax_rate', taxRate);
-//   setFormValue('tax', tax);
-//   setFormValue('total', total);
-
-//   if (formProductList?.recieved) {
-//     setFormValue('recieved', formProductList.recieved[id]);
-//   }
-// }
 
 export const PurchaseProductTable = ({
   formValues,

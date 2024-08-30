@@ -35,94 +35,94 @@ const ProductListEdit = ({ id, setId }) => {
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      amount: {},
-    },
-    qty_list: {
-      qty: {},
-    },
-    price_list: {
-      price: {},
-    },
-  });
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     amount: {},
+  //   },
+  //   qty_list: {
+  //     qty: {},
+  //   },
+  //   price_list: {
+  //     price: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
-  const [initialWarehouses, setInitialWarehouses] = useState([]);
-  const [priceWarehouses, setPriceWarehouses] = useState([]);
+  // const [products, setProducts] = useState([]);
+  // const [initialWarehouses, setInitialWarehouses] = useState([]);
+  // const [priceWarehouses, setPriceWarehouses] = useState([]);
 
-  useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          amount: {},
-        },
-        qty_list: {
-          qty: {},
-        },
-        price_list: {
-          price: {},
-        },
-      });
+  // useEffect(() => {
+  //   if (!isEditDrawerOpen) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         amount: {},
+  //       },
+  //       qty_list: {
+  //         qty: {},
+  //       },
+  //       price_list: {
+  //         price: {},
+  //       },
+  //     });
 
-      setProducts([]);
-      setInitialWarehouses([]);
-      setPriceWarehouses([]);
-    }
-  }, [isEditDrawerOpen]);
+  //     setProducts([]);
+  //     setInitialWarehouses([]);
+  //     setPriceWarehouses([]);
+  //   }
+  // }, [isEditDrawerOpen]);
 
-  const updateStateWithProductData = ({
-    product_prices,
-    product_qties,
-    product_combos,
-  }) => {
-    // Update state with product prices
-    product_prices.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        price_list: {
-          ...prevFormValues.price_list,
-          price: {
-            ...prevFormValues.price_list.price,
-            [item.warehouse_id.toString()]: item.price,
-          },
-        },
-      }));
-    });
+  // const updateStateWithProductData = ({
+  //   product_prices,
+  //   product_qties,
+  //   product_combos,
+  // }) => {
+  //   // Update state with product prices
+  //   product_prices.forEach((item) => {
+  //     setFormValues((prevFormValues) => ({
+  //       ...prevFormValues,
+  //       price_list: {
+  //         ...prevFormValues.price_list,
+  //         price: {
+  //           ...prevFormValues.price_list.price,
+  //           [item.warehouse_id.toString()]: item.price,
+  //         },
+  //       },
+  //     }));
+  //   });
 
-    // Update state with product quantities
-    product_qties.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        qty_list: {
-          ...prevFormValues.qty_list,
-          qty: {
-            ...prevFormValues.qty_list.qty,
-            [item.warehouse_id.toString()]: item.qty,
-          },
-        },
-      }));
-    });
+  //   // Update state with product quantities
+  //   product_qties.forEach((item) => {
+  //     setFormValues((prevFormValues) => ({
+  //       ...prevFormValues,
+  //       qty_list: {
+  //         ...prevFormValues.qty_list,
+  //         qty: {
+  //           ...prevFormValues.qty_list.qty,
+  //           [item.warehouse_id.toString()]: item.qty,
+  //         },
+  //       },
+  //     }));
+  //   });
 
-    product_combos.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [item.combo_product_id.toString()]: item.qty,
-          },
-          amount: {
-            ...prevFormValues.product_list.amount,
-            [item.combo_product_id.toString()]: item.price,
-          },
-        },
-      }));
-    });
-  };
+  //   product_combos.forEach((item) => {
+  //     setFormValues((prevFormValues) => ({
+  //       ...prevFormValues,
+  //       product_list: {
+  //         ...prevFormValues.product_list,
+  //         qty: {
+  //           ...prevFormValues.product_list.qty,
+  //           [item.combo_product_id.toString()]: item.qty,
+  //         },
+  //         amount: {
+  //           ...prevFormValues.product_list.amount,
+  //           [item.combo_product_id.toString()]: item.price,
+  //         },
+  //       },
+  //     }));
+  //   });
+  // };
 
   useEffect(() => {
     if (data && isEditDrawerOpen && !isFetching) {
@@ -177,42 +177,42 @@ const ProductListEdit = ({ id, setId }) => {
         details,
       });
 
-      updateStateWithProductData({
-        product_prices: data?.product_prices,
-        product_qties: data?.product_qties,
-        product_combos: data?.product_combos,
-      });
+      // updateStateWithProductData({
+      //   product_prices: data?.product_prices,
+      //   product_qties: data?.product_qties,
+      //   product_combos: data?.product_combos,
+      // });
 
-      data?.product_prices?.forEach((item) => {
-        setPriceWarehouses((prevWarehouses) => [
-          ...prevWarehouses,
-          {
-            id: item.warehouse_id,
-            name: item?.warehouses?.name ?? 'need backend relation',
-          },
-        ]);
-      });
+      // data?.product_prices?.forEach((item) => {
+      //   setPriceWarehouses((prevWarehouses) => [
+      //     ...prevWarehouses,
+      //     {
+      //       id: item.warehouse_id,
+      //       name: item?.warehouses?.name ?? 'need backend relation',
+      //     },
+      //   ]);
+      // });
 
-      data?.product_qties?.forEach((item) => {
-        setInitialWarehouses((prevWarehouses) => [
-          ...prevWarehouses,
-          {
-            id: item.warehouse_id,
-            name: item?.warehouses?.name ?? 'need backend relation',
-          },
-        ]);
-      });
+      // data?.product_qties?.forEach((item) => {
+      //   setInitialWarehouses((prevWarehouses) => [
+      //     ...prevWarehouses,
+      //     {
+      //       id: item.warehouse_id,
+      //       name: item?.warehouses?.name ?? 'need backend relation',
+      //     },
+      //   ]);
+      // });
 
-      data?.product_combos?.forEach((item) => {
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: item?.combo_product_id,
-            name: item?.products?.name ?? 'need backend relation',
-            sku: item?.products?.sku ?? 'need backend relation',
-          },
-        ]);
-      });
+      // data?.product_combos?.forEach((item) => {
+      //   setProducts((prevProducts) => [
+      //     ...prevProducts,
+      //     {
+      //       id: item?.combo_product_id,
+      //       name: item?.products?.name ?? 'need backend relation',
+      //       sku: item?.products?.sku ?? 'need backend relation',
+      //     },
+      //   ]);
+      // });
 
       const newFieldData = [
         ...fieldData,
@@ -287,14 +287,11 @@ const ProductListEdit = ({ id, setId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const {
       name,
       type,
       sku,
-      // qty_list,
-      // price_list,
-      // product_list,
       symbology,
       brand_id,
       category_id,
@@ -307,16 +304,13 @@ const ProductListEdit = ({ id, setId }) => {
       daily_sale_qty,
       tax_method,
       tax_id,
-      // has_featured,
       has_stock,
       has_variant,
-      // embedded_barcode,
       has_promotion,
       promotion,
       has_different_price,
       has_expired_date,
       product_expire,
-      // ecommerce_sync,
       details,
     } = values ?? {};
 
@@ -448,14 +442,15 @@ const ProductListEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        initialWarehouses={initialWarehouses}
-        setInitialWarehouses={setInitialWarehouses}
-        priceWarehouses={priceWarehouses}
-        setPriceWarehouses={setPriceWarehouses}
+        data={data}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // initialWarehouses={initialWarehouses}
+        // setInitialWarehouses={setInitialWarehouses}
+        // priceWarehouses={priceWarehouses}
+        // setPriceWarehouses={setPriceWarehouses}
       />
     </CustomDrawer>
   );

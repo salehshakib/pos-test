@@ -14,6 +14,7 @@
     "gittu": "git add . && git commit && git push",
     "gittu:fix-format": "eslint */**/*.{js,ts,tsx,jsx} --quiet --fix && prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx|jsx)\" --write && git add . && git commit && git push"
   },
+  "engineStrict": false,
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",
     "@ant-design/pro-components": "^2.7.1",

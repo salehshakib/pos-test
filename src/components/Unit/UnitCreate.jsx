@@ -8,10 +8,12 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import UnitForm from './UnitForm';
 
-const UnitCreate = () => {
+const UnitCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
+
   const [errorFields, setErrorFields] = useState([]);
 
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -34,9 +36,15 @@ const UnitCreate = () => {
     });
 
     if (data?.success) {
-      dispatch(closeCreateDrawer());
-      form.resetFields();
+      if (subDrawer && isSubDrawerOpen) {
+        handleCloseSubDrawer();
+        subForm.resetFields();
+      } else {
+        dispatch(closeCreateDrawer());
+        form.resetFields();
+      }
     }
+
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,
@@ -47,12 +55,17 @@ const UnitCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Unit'} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={'Create Unit'}
+      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      onClose={subDrawer && handleCloseSubDrawer}
+    >
       <UnitForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        form={form}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

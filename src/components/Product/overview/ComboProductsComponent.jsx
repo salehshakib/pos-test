@@ -54,7 +54,7 @@ const columns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(record?.id, record.setFormValues)
+                record.decrementCounter(record?.id, record?.setFormValues)
               }
             />
           </div>
@@ -72,7 +72,7 @@ const columns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record.setFormValues)
+                record.incrementCounter(record?.id, record?.setFormValues)
               }
               className=""
             />
@@ -136,10 +136,11 @@ const ComboProductsComponent = ({
 }) => {
   const form = Form.useFormInstance();
 
-  const incrementCounter = (id, stock = 5) => {
+  const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.min(currentQty + 1, stock);
+
+      const newQty = parseInt(currentQty) + 1;
 
       return {
         ...prevFormValues,
@@ -157,7 +158,8 @@ const ComboProductsComponent = ({
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
-      const newQty = Math.max(currentQty - 1, 0);
+
+      const newQty = Math.max(parseInt(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
@@ -172,36 +174,16 @@ const ComboProductsComponent = ({
     });
   };
 
-  // const onQuantityChange = (id, value) => {
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       qty: {
-  //         ...prevFormValues.product_list.qty,
-  //         [id]: parseInt(value, 10) || 0,
-  //       },
-  //     },
-  //   }));
-  // };
-
-  // const onDelete = (id) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.filter((product) => product.id !== id)
-  //   );
-  // };
-
   const onDelete = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
     );
 
     setFormValues((prevFormValues) => {
-      const { product_list, qty_list, price_list } = prevFormValues;
+      const { product_list } = prevFormValues;
 
       const updatedProductList = Object.keys(product_list).reduce(
         (acc, key) => {
-          // eslint-disable-next-line no-unused-vars
           const { [id]: _, ...rest } = product_list[key];
           acc[key] = rest;
           return acc;
@@ -209,25 +191,23 @@ const ComboProductsComponent = ({
         {}
       );
 
-      const updatedQtyList = Object.keys(qty_list).reduce((acc, key) => {
-        // eslint-disable-next-line no-unused-vars
-        const { [id]: _, ...rest } = qty_list[key];
-        acc[key] = rest;
-        return acc;
-      }, {});
+      // const updatedQtyList = Object.keys(qty_list).reduce((acc, key) => {
+      //   const { [id]: _, ...rest } = qty_list[key];
+      //   acc[key] = rest;
+      //   return acc;
+      // }, {});
 
-      const updatedPriceList = Object.keys(price_list).reduce((acc, key) => {
-        // eslint-disable-next-line no-unused-vars
-        const { [id]: _, ...rest } = price_list[key];
-        acc[key] = rest;
-        return acc;
-      }, {});
+      // const updatedPriceList = Object.keys(price_list).reduce((acc, key) => {
+      //   const { [id]: _, ...rest } = price_list[key];
+      //   acc[key] = rest;
+      //   return acc;
+      // }, {});
 
       return {
         ...prevFormValues,
         product_list: updatedProductList,
-        qty_list: updatedQtyList,
-        price_list: updatedPriceList,
+        // qty_list: updatedQtyList,
+        // price_list: updatedPriceList,
       };
     });
   };
@@ -291,7 +271,9 @@ const ComboProductsComponent = ({
       );
       setTotalUnitPrice(totalAmount);
     }
-  }, [formValues, products]);
+
+    form.setFieldsValue(formValues);
+  }, [form, formValues, products]);
 
   products?.length > 0 &&
     dataSource.push({
@@ -300,8 +282,6 @@ const ComboProductsComponent = ({
       quantity: totalQuantity,
       unitPrice: Number(totalUnitPrice)?.toFixed(2),
     });
-
-  form?.setFieldsValue(formValues);
 
   return (
     <ProductController

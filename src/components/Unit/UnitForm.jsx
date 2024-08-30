@@ -8,7 +8,7 @@ import CustomInput from '../Shared/Input/CustomInput';
 import CustomRadio from '../Shared/Radio/CustomRadio';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Paragraph, Text } = Typography;
 
 const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
   return { label: `${name} (${symbol})`, value: name };
@@ -19,7 +19,6 @@ const BaseUnit = () => {
     <CustomSelect
       label={'Base Unit'}
       name={'base_unit'}
-      // required={true}
       options={baseUnitOptions}
     />
   );

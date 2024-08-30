@@ -32,7 +32,6 @@ const QuotationCreate = () => {
       tax_rate: {},
       tax: {},
       total: {},
-
       tax_id: {},
     },
   });

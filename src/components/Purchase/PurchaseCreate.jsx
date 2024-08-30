@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useCurrentUser } from '../../redux/services/auth/authSlice';
@@ -29,58 +29,7 @@ export const PurchaseCreate = () => {
 
   const [createPurchase, { isLoading }] = useCreatePurchaseMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      recieved: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      tax_id: {},
-    },
-  });
-
-  const [products, setProducts] = useState([]);
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-    tax_rate: {},
-  });
-
-  const warehouseId = Form.useWatch('warehouse_id', form);
-
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
-
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -104,7 +53,6 @@ export const PurchaseCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -193,29 +141,6 @@ export const PurchaseCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -238,12 +163,6 @@ export const PurchaseCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

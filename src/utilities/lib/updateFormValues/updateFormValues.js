@@ -87,3 +87,102 @@ export function setFormValuesId(
     setFormValue('tax_id', formProductList.tax_id?.[id] ?? tax_id);
   }
 }
+
+export function updateFormValues(
+  id,
+  unitCost,
+  productUnitData,
+  taxData,
+  formValues
+) {
+  if (!id) return;
+
+  const sanitizeValue = (value, sanitizer, defaultValue = 0) =>
+    sanitizer(value ?? defaultValue);
+
+  const formProductList = formValues.product_list;
+  const formUnitList = formValues.units;
+
+  const getSanitizedValue = (field, defaultValue, sanitizer) =>
+    sanitizeValue(formProductList[field]?.[id], sanitizer, defaultValue);
+
+  const setFormValue = (field, value) => {
+    formProductList[field][id] = value;
+  };
+
+  const qty = getSanitizedValue('qty', 1, parseInt);
+  let productUnitCost = unitCost;
+
+  const calculateProductUnitCost = (field) => {
+    if (formProductList[field]) {
+      productUnitCost = getSanitizedValue(field, unitCost, parseFloat);
+      setFormValue(field, productUnitCost);
+    }
+  };
+
+  calculateProductUnitCost('net_unit_cost');
+  calculateProductUnitCost('net_unit_price');
+
+  const discount = getSanitizedValue('discount', 0, parseFloat);
+  const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);
+  const productUnitOperator =
+    formUnitList.operator[id] ?? productUnitData?.operator;
+  const productUnitOperationValue = sanitizeValue(
+    formUnitList.operation_value[id],
+    parseFloat,
+    parseFloat(productUnitData?.operation_value) || 1
+  );
+
+  const calculateTax = () => {
+    const baseValue = (productUnitCost - discount) * qty;
+    const taxAmount =
+      productUnitOperator === '/'
+        ? (taxRate * baseValue) / (100 * productUnitOperationValue)
+        : (productUnitOperationValue * taxRate * baseValue) / 100;
+
+    return sanitizeValue(taxAmount.toFixed(2), parseFloat);
+  };
+
+  const tax = calculateTax();
+
+  const calculateTotal = (netUnitCost) => {
+    const baseValue =
+      productUnitOperator === '/'
+        ? (netUnitCost * qty) / productUnitOperationValue
+        : productUnitOperationValue * netUnitCost * qty;
+
+    return taxData?.tax_method === 'Inclusive'
+      ? Math.round((baseValue - discount + tax).toFixed(2))
+      : Math.round((baseValue + tax - discount).toFixed(2));
+  };
+
+  const total = calculateTotal(productUnitCost);
+
+  // Set form values
+  setFormValue('qty', qty);
+
+  if (formProductList.purchase_unit_id) {
+    setFormValue(
+      'purchase_unit_id',
+      formProductList.purchase_unit_id[id] ?? productUnitData?.id
+    );
+  }
+
+  if (formProductList.sale_unit_id) {
+    setFormValue(
+      'sale_unit_id',
+      formProductList.sale_unit_id[id] ?? productUnitData?.id
+    );
+  }
+
+  setFormValue('discount', discount);
+  setFormValue('tax_rate', taxRate);
+  setFormValue('tax', tax);
+  setFormValue('total', total);
+
+  if (formProductList?.recieved) {
+    setFormValue('recieved', formProductList.recieved[id]);
+  }
+
+  setFormValue('tax_id', formProductList.tax_id?.[id] ?? taxData?.id);
+}

@@ -24,14 +24,12 @@ const TransferCreate = () => {
 
   const [formValues, setFormValues] = useState({
     product_list: {
-      product_id: {},
       qty: {},
       purchase_unit_id: {},
       net_unit_cost: {},
       tax_rate: {},
       tax: {},
       total: {},
-
       tax_id: {},
     },
   });
@@ -48,14 +46,12 @@ const TransferCreate = () => {
     if (warehouseId) {
       setFormValues({
         product_list: {
-          product_id: {},
           qty: {},
           purchase_unit_id: {},
           net_unit_cost: {},
           tax_rate: {},
           tax: {},
           total: {},
-
           tax_id: {},
         },
       });

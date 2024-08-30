@@ -60,7 +60,7 @@ const OperatorComponent = () => {
     if (baseUnit) {
       form.setFieldsValue({
         operator: '*',
-        operator_value: 1,
+        operation_value: 1,
       });
     }
   }, [form, baseUnit]);

@@ -54,7 +54,7 @@ const WarehouseTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateWarehouseStatus, { isLoading: isStatusUpdating }] =
     useUpdateWarehouseStatusMutation();
 
   const [deleteWarehouse, { isLoading: isDeleting }] =
@@ -76,7 +76,7 @@ const WarehouseTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateWarehouseStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

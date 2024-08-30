@@ -25,7 +25,7 @@ export const PayrollDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <CustomDescription title="Payroll " items={details} />
+          <CustomDescription title="Payroll" items={details} />
         </div>
       )}
     </CustomModal>

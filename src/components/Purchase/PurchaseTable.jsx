@@ -58,9 +58,6 @@ export const PurchaseTable = ({
 
   const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdatePurchaseStatusMutation();
-
   const [deletePurchase, { isLoading: isDeleting }] =
     useDeletePurchaseMutation();
 
@@ -128,7 +125,6 @@ export const PurchaseTable = ({
 
   const hideModal = () => {
     setDetailsModal(false);
-    // setStatusModal(false);
     setDeleteModal(false);
   };
 

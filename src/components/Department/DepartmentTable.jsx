@@ -43,7 +43,7 @@ const DepartmentTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateDepartmentStatus, { isLoading: isStatusUpdating }] =
     useUpdateDepartmentStatusMutation();
 
   const [deleteDepartment, { isLoading: isDeleting }] =
@@ -60,7 +60,7 @@ const DepartmentTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateDepartmentStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

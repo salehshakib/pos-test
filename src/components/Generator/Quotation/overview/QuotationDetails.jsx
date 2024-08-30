@@ -159,7 +159,7 @@ export const QuotationDetails = ({ id, ...props }) => {
         <div className="space-y-5 pb-5 pr-3 pt-3">
           <Invoice data={data} type="QUOTATION" />
           {/* <CustomDescription title="Reference" items={referenceId} />
-          <CustomDescription title="Beneficiary " items={benDetails} />
+          <CustomDescription title="Beneficiary" items={benDetails} />
 
           <CustomDescription title="Quotation" items={quotationDetails} />
           <Table
@@ -168,7 +168,7 @@ export const QuotationDetails = ({ id, ...props }) => {
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Attachemnt " items={attachment} />
+          <CustomDescription title="Attachemnt" items={attachment} />
           <CustomDescription title="Additional" items={additionalInfo} />
 
           <div className="w-full flex flex-col gap-5 justify-center items-center ">

@@ -255,6 +255,8 @@ export const PurchaseProductTable = ({
   const type = Form.useWatch('purchase_status', form);
   const warehouseId = Form.useWatch('warehouse_id', form);
 
+  console.log(warehouseId);
+
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
   const [productName, setProductName] = useState(null);
@@ -331,6 +333,8 @@ export const PurchaseProductTable = ({
       tax_method,
       product_qties,
     } = product ?? {};
+
+    console.log(product);
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 

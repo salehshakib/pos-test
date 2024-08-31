@@ -123,56 +123,11 @@ export const CustomPurchaseProductComponent = ({
 
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    setFormValues({
-      product_list: {
-        qty: {},
-        purchase_unit_id: {},
-        net_unit_cost: {},
-        discount: {},
-        tax_rate: {},
-        tax: {},
-        total: {},
-
-        recieved: {},
-
-        tax_id: {}, // product tax id for update form
-      },
-      units: {
-        operator: {},
-        operation_value: {},
-      },
-    });
-
-    setProducts([]);
-  }, [warehouseId]);
-
-  const handleCustomSubmit = useCallback(() => {
-    return formValues;
-  }, [formValues]);
-
-  onCustomSubmit(handleCustomSubmit);
-
-  //   console.log(products);
+  console.log(warehouseId, data?.warehouse_id);
+  console.log(data?.warehouse_id);
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
-      updateStateWithProductData(data?.purchase_products, setFormValues);
-
-      const purchaseProducts = data?.purchase_products?.map((product) => ({
-        id: product.product_id,
-        name: product.products?.name,
-        sku: product.products?.sku,
-        buying_price: product.products?.buying_price,
-        purchase_unit_id: product.purchase_unit_id,
-        purchase_units: product.products?.purchase_units,
-        tax_id: product.products?.tax_id,
-        taxes: product.taxes,
-      }));
-
-      setProducts(purchaseProducts);
-    } else {
-      setProducts([]);
+    if (warehouseId && warehouseId !== data?.warehouse_id) {
       setFormValues({
         product_list: {
           qty: {},
@@ -192,6 +147,56 @@ export const CustomPurchaseProductComponent = ({
           operation_value: {},
         },
       });
+
+      setProducts([]);
+    }
+  }, [warehouseId, data?.warehouse_id]);
+
+  const handleCustomSubmit = useCallback(() => {
+    return formValues;
+  }, [formValues]);
+
+  onCustomSubmit(handleCustomSubmit);
+
+  useEffect(() => {
+    if (data && isEditDrawerOpen) {
+      updateStateWithProductData(data?.purchase_products, setFormValues);
+
+      const purchaseProducts = data?.purchase_products?.map((product) => ({
+        id: product.product_id,
+        name: product.products?.name,
+        sku: product.products?.sku,
+        buying_price: product.products?.buying_price,
+        purchase_unit_id: product.purchase_unit_id,
+        purchase_units: product.products?.purchase_units,
+        tax_id: product.products?.tax_id,
+        taxes: product?.products.taxes,
+        product_qties: product?.products?.product_qties,
+      }));
+
+      setProducts(purchaseProducts);
+    } else {
+      setFormValues({
+        product_list: {
+          qty: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
+          discount: {},
+          tax_rate: {},
+          tax: {},
+          total: {},
+
+          recieved: {},
+
+          tax_id: {}, // product tax id for update form
+        },
+        units: {
+          operator: {},
+          operation_value: {},
+        },
+      });
+
+      setProducts([]);
     }
   }, [data, isEditDrawerOpen]);
 

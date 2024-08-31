@@ -78,9 +78,9 @@ export const PurchaseEdit = ({ id, setId }) => {
         ];
       }
 
+      // console.log(newFieldData);
+
       setFields(newFieldData);
-    } else {
-      form.resetFields();
     }
   }, [data, isEditDrawerOpen, setFields, form]);
 

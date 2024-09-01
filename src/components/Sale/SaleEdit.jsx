@@ -41,130 +41,130 @@ export const SaleEdit = ({ id, setId }) => {
         parent: 1,
       },
     },
-    { skip: !id || !isEditDrawerOpen }
+    { skip: !id }
   );
 
   const [updateSale, { isLoading }] = useUpdateSaleMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     product_id: {},
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  // });
+
+  // useEffect(() => {
+  //   if (!isEditDrawerOpen) {
+  //     setFormValues({
+  //       product_list: {
+  //         product_id: {},
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+
+  //         tax_id: {},
+  //       },
+  //     });
+
+  //     setProducts([]);
+
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+    if (data && isEditDrawerOpen) {
+      // form.resetFields();
+      // data?.sale_products?.forEach((product) => {
+      //   setFormValues((prevFormValues) => ({
+      //     ...prevFormValues,
+      //     product_list: {
+      //       ...prevFormValues.product_list,
+      //       product_id: {
+      //         ...prevFormValues.product_list.product_id,
+      //         [product.product_id.toString()]: product.product_id,
+      //       },
+      //       qty: {
+      //         ...prevFormValues.product_list.qty,
+      //         [product.product_id.toString()]: product.qty,
+      //       },
+      //       sale_unit_id: {
+      //         ...prevFormValues.product_list.sale_unit_id,
+      //         [product.product_id.toString()]: product.sale_unit_id,
+      //       },
+      //       net_unit_price: {
+      //         ...prevFormValues.product_list.net_unit_price,
+      //         [product.product_id.toString()]: product.net_unit_price,
+      //       },
+      //       discount: {
+      //         ...prevFormValues.product_list.discount,
+      //         [product.product_id.toString()]: product.discount,
+      //       },
+      //       tax_rate: {
+      //         ...prevFormValues.product_list.tax_rate,
+      //         [product.product_id.toString()]: product.tax_rate,
+      //       },
+      //       tax: {
+      //         ...prevFormValues.product_list.tax,
+      //         [product.product_id.toString()]: product.tax,
+      //       },
+      //       total: {
+      //         ...prevFormValues.product_list.total,
+      //         [product.product_id.toString()]: product.total,
+      //       },
+      //       tax_id: {
+      //         ...prevFormValues.product_list.tax_id,
+      //         [product.product_id.toString()]: product.products?.tax_id,
+      //       },
+      //     },
+      //   }));
 
-          tax_id: {},
-        },
-      });
+      //   setProducts((prevProducts) => [
+      //     ...prevProducts,
+      //     {
+      //       id: product.product_id,
+      //       name: product.products?.name,
+      //       sku: product.products?.sku,
+      //       buying_price: product.products?.buying_price,
+      //       sale_unit_id: product.sale_unit_id,
+      //       sale_units: product.products?.sale_units,
+      //       tax_id: product.products?.tax_id,
+      //       taxes: product.taxes,
+      //     },
+      //   ]);
 
-      setProducts([]);
+      //   setProductUnits((prevProductUnits) => ({
+      //     ...prevProductUnits,
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
-      data?.sale_products?.forEach((product) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            product_id: {
-              ...prevFormValues.product_list.product_id,
-              [product.product_id.toString()]: product.product_id,
-            },
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [product.product_id.toString()]: product.qty,
-            },
-            sale_unit_id: {
-              ...prevFormValues.product_list.sale_unit_id,
-              [product.product_id.toString()]: product.sale_unit_id,
-            },
-            net_unit_price: {
-              ...prevFormValues.product_list.net_unit_price,
-              [product.product_id.toString()]: product.net_unit_price,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [product.product_id.toString()]: product.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [product.product_id.toString()]: product.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [product.product_id.toString()]: product.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [product.product_id.toString()]: product.total,
-            },
-            tax_id: {
-              ...prevFormValues.product_list.tax_id,
-              [product.product_id.toString()]: product.products?.tax_id,
-            },
-          },
-        }));
-
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: product.product_id,
-            name: product.products?.name,
-            sku: product.products?.sku,
-            buying_price: product.products?.buying_price,
-            sale_unit_id: product.sale_unit_id,
-            sale_units: product.products?.sale_units,
-            tax_id: product.products?.tax_id,
-            taxes: product.taxes,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          sale_units: {
-            ...prevProductUnits.sale_units,
-            [product?.product_id.toString()]:
-              product?.products?.sale_units?.operation_value ?? 1,
-          },
-        }));
-      });
+      //     sale_units: {
+      //       ...prevProductUnits.sale_units,
+      //       [product?.product_id.toString()]:
+      //         product?.products?.sale_units?.operation_value ?? 1,
+      //     },
+      //   }));
+      // });
 
       const fieldData = fieldsToUpdate(data);
       const updatedFieldData = [
@@ -183,10 +183,12 @@ export const SaleEdit = ({ id, setId }) => {
 
       const newFieldData = updateFieldValues(fieldData, updatedFieldData);
       setFields(newFieldData);
+    } else {
+      form.resetFields();
     }
-  }, [data, form, isEditDrawerOpen, isFetching, setFields]);
+  }, [data, form, isEditDrawerOpen, setFields]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -218,9 +220,6 @@ export const SaleEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
       return openNotification('info', 'Please add atleast one product');
     }
 
@@ -295,27 +294,27 @@ export const SaleEdit = ({ id, setId }) => {
       setId(undefined);
       dispatch(closeEditDrawer());
 
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+      // setFormValues({
+      //   product_list: {
+      //     product_id: {},
+      //     qty: {},
+      //     sale_unit_id: {},
+      //     net_unit_price: {},
+      //     discount: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
 
-          tax_id: {},
-        },
-      });
+      //     tax_id: {},
+      //   },
+      // });
 
-      setProducts([]);
+      // setProducts([]);
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
+      // setProductUnits({
+      //   sale_units: {},
+      //   tax_rate: {},
+      // });
     }
 
     if (error) {
@@ -337,12 +336,13 @@ export const SaleEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        data={data}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

@@ -113,7 +113,7 @@ const columns = [
     width: 100,
     render: (discount) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        ${discount}
+        {discount}
       </span>
     ),
   },

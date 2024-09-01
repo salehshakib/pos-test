@@ -365,41 +365,41 @@ export const PosRegister = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grand_total, setGrandTotal, totalPrice]);
 
-  const tableStyleProps = {
-    summary: () => {
-      return (
-        <Table.Summary fixed="bottom">
-          <Table.Summary.Row>
-            <Table.Summary.Cell index={1} colSpan={4}>
-              <Text className="font-bold" type="">
-                Total
-              </Text>
-            </Table.Summary.Cell>
+  // const tableStyleProps = {
+  //   summary: () => {
+  //     return (
+  //       <Table.Summary fixed="bottom">
+  //         <Table.Summary.Row>
+  //           <Table.Summary.Cell index={1} colSpan={4}>
+  //             <Text className="font-bold" type="">
+  //               Total
+  //             </Text>
+  //           </Table.Summary.Cell>
 
-            <Table.Summary.Cell index={2} align="center">
-              <Text type="" className="font-bold">
-                {totalQuantity}
-              </Text>
-            </Table.Summary.Cell>
-            <Table.Summary.Cell index={3} align="center">
-              <Text type="" className="font-bold">
-                {showCurrency(totalPrice, currency)}
-              </Text>
-            </Table.Summary.Cell>
-          </Table.Summary.Row>
-        </Table.Summary>
-      );
-    },
-    sticky: {
-      // offsetHeader: 440,
-      offsetScroll: 400,
-    },
-    scroll: {
-      x: 'min-content',
-    },
-  };
+  //           <Table.Summary.Cell index={2} align="center">
+  //             <Text type="" className="font-bold">
+  //               {totalQuantity}
+  //             </Text>
+  //           </Table.Summary.Cell>
+  //           <Table.Summary.Cell index={3} align="center">
+  //             <Text type="" className="font-bold">
+  //               {showCurrency(totalPrice, currency)}
+  //             </Text>
+  //           </Table.Summary.Cell>
+  //         </Table.Summary.Row>
+  //       </Table.Summary>
+  //     );
+  //   },
+  //   sticky: {
+  //     // offsetHeader: 440,
+  //     offsetScroll: 400,
+  //   },
+  //   scroll: {
+  //     x: 'min-content',
+  //   },
+  // };
 
-  const item = Object.values(formValues.product_list.qty).length;
+  // const item = Object.values(formValues.product_list.qty).length;
 
   const currency = useSelector(useCurrency);
 
@@ -426,7 +426,7 @@ export const PosRegister = ({
           </div>
 
           <div className="flex-grow overflow-y-auto bg-white">
-            <ProductTableComponent
+            {/* <ProductTableComponent
               products={products}
               setProducts={setProducts}
               formValues={formValues}
@@ -434,7 +434,7 @@ export const PosRegister = ({
               productUnits={productUnits}
               setProductUnits={setProductUnits}
               tableStyleProps={item && tableStyleProps}
-            />
+            /> */}
           </div>
 
           <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">

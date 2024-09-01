@@ -1,19 +1,13 @@
-import { Button, Col, Form, Modal, Row } from 'antd';
+import { Button, Form, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
-import { colLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
-import { useGetAllTaxQuery } from '../../redux/services/tax/taxApi';
-import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
-import {
-  DEFAULT_SELECT_VALUES,
-  useGlobalParams,
-} from '../../utilities/hooks/useParams';
 import { calculateOriginalPrice } from '../../utilities/lib/calculatePrice';
+import { calculateTotals } from '../../utilities/lib/calculateTotals';
 import { showCurrency } from '../../utilities/lib/currency';
 import { getWarehouseQuantity } from '../../utilities/lib/getWarehouseQty';
 import {
@@ -22,11 +16,9 @@ import {
   onDelete,
   onQuantityChange,
 } from '../../utilities/lib/productTable/counters';
-import { setFormValuesId } from '../../utilities/lib/updateFormValues/updateFormValues';
-import CustomForm from '../Shared/Form/CustomForm';
-import CustomInput from '../Shared/Input/CustomInput';
+import { updateFormValues } from '../../utilities/lib/updateFormValues/updateFormValues';
+import { ProductFormComponent } from '../ReusableComponent/ProductDetailsUpdateForm';
 import { CustomQuantityInput } from '../Shared/Input/CustomQuantityInput';
-import CustomSelect from '../Shared/Select/CustomSelect';
 import CustomProductTable from '../Shared/Table/CustomProductTable';
 
 const columns = [
@@ -34,7 +26,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    width: 250,
+    // width: 100,
     align: 'left',
     render: (name, record) => (
       <div
@@ -69,7 +61,7 @@ const columns = [
     dataIndex: 'stock',
     key: 'stock',
     align: 'center',
-    width: 100,
+    width: 60,
     render: (stock) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {stock ?? 0}
@@ -186,221 +178,224 @@ const columns = [
   },
 ];
 
-const TaxComponent = ({ productId, setProductUnits }) => {
-  const params = useGlobalParams({
-    selectValue: ['id', 'name', 'rate'],
-  });
+// const TaxComponent = ({ productId, setFormUpdateValues }) => {
+//   const params = useGlobalParams({
+//     selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
+//   });
 
-  const { data, isLoading } = useGetAllTaxQuery({
-    params,
-  });
+//   const { data, isLoading } = useGetAllTaxQuery({ params });
 
-  const options = data?.results?.tax?.map((tax) => ({
-    value: tax.id?.toString(),
-    label: tax.name,
-    rate: tax.rate,
-  }));
+//   const options = data?.results?.tax?.map((tax) => ({
+//     value: tax.id?.toString(),
+//     label: tax.name,
+//     rate: tax.rate,
+//   }));
 
-  const onSelect = (value, option) => {
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        tax_rate: {
-          [productId]: option.rate ?? 0,
-        },
-      };
-    });
-  };
+//   const onSelect = (value, option) => {
+//     setFormUpdateValues((prevValues) => ({
+//       ...prevValues,
 
-  return (
-    <CustomSelect
-      name={['tax_id', productId]}
-      options={options}
-      label="Product Vat"
-      isLoading={isLoading}
-      onSelect={onSelect}
-    />
-  );
-};
+//       tax_rate: {
+//         ...prevValues.tax_rate,
+//         [productId]: option.rate,
+//       },
+//     }));
+//   };
 
-const ProductUnitComponent = ({ setProductUnits, productId }) => {
-  const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
-  });
+//   return (
+//     <CustomSelect
+//       name={['tax_id', productId]}
+//       options={options}
+//       label="Product Vat"
+//       isLoading={isLoading}
+//       onSelect={onSelect}
+//     />
+//   );
+// };
 
-  const { data, isLoading } = useGetAllUnitQuery({ params });
+// const ProductUnitComponent = ({ productId, setFormUpdateValues }) => {
+//   const params = useGlobalParams({
+//     selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
+//   });
 
-  const productUnits = data?.results?.unit.map((unit) => ({
-    value: unit.id.toString(),
-    label: unit.name,
-    operationValue: unit.operation_value,
-    operator: unit.operator,
-  }));
+//   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const onSelect = (value, option) => {
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        sale_units: {
-          [productId]: option.operationValue ?? 1,
-        },
-      };
-    });
-  };
+//   const productUnits = data?.results?.unit.map((unit) => ({
+//     value: unit.id.toString(),
+//     label: unit.name,
+//     operationValue: unit.operation_value,
+//     operator: unit.operator,
+//   }));
 
-  return (
-    <CustomSelect
-      label="Sale Unit"
-      options={productUnits}
-      isLoading={isLoading}
-      name={['sale_unit_id', productId]}
-      onSelect={onSelect}
-    />
-  );
-};
+//   const onSelect = (value, option) => {
+//     setFormUpdateValues((prevValues) => ({
+//       ...prevValues,
 
-const ProductFormComponent = ({
-  productId,
-  productName,
-  productEditModal,
-  hideModal,
-  formValues,
-  setFormValues,
-  productUnits,
-  setProductUnits,
-}) => {
-  const [productForm] = Form.useForm();
+//       operator: {
+//         ...prevValues.operator,
+//         [productId]: option.operator,
+//       },
+//       operation_value: {
+//         ...prevValues.operation_value,
+//         [productId]: option.operationValue,
+//       },
+//     }));
+//   };
 
-  useEffect(() => {
-    if (productId) {
-      productForm.setFieldsValue({
-        quantity: formValues?.product_list?.qty[productId],
-        unit_discount: formValues?.product_list?.discount[productId],
-        unit_price: formValues?.product_list?.net_unit_price[productId],
-        sale_unit_id: {
-          [productId]:
-            formValues?.product_list?.sale_unit_id[productId]?.toString() ?? '',
-        },
-        tax_id: {
-          [productId]: formValues?.product_list?.tax_id[productId]?.toString(),
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formValues, productForm, productId]);
+//   return (
+//     <CustomSelect
+//       label="Sale Unit"
+//       options={productUnits}
+//       isLoading={isLoading}
+//       name={['sale_unit_id', productId]}
+//       onSelect={onSelect}
+//     />
+//   );
+// };
 
-  const handleSubmit = () => {
-    setFormValues((prevFormValues) => {
-      return {
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue('quantity'),
-          },
-          sale_unit_id: {
-            ...prevFormValues.product_list.sale_unit_id,
-            [productId]: productForm.getFieldValue(['sale_unit_id', productId]),
-          },
-          discount: {
-            ...prevFormValues.product_list.discount,
-            [productId]: productForm.getFieldValue('unit_discount'),
-          },
-          net_unit_price: {
-            ...prevFormValues.product_list.net_unit_price,
-            [productId]: productForm.getFieldValue('unit_price'),
-          },
-          tax_rate: {
-            ...prevFormValues.product_list.tax_rate,
-            [productId]: productUnits?.tax_rate[productId],
-          },
-          tax: {
-            ...prevFormValues.product_list.tax,
-            [productId]: parseFloat(
-              (parseInt(productUnits.sale_units[productId]) *
-                parseInt(productUnits.tax_rate[productId]) *
-                parseInt(productForm.getFieldValue('quantity')) *
-                parseInt(productForm.getFieldValue('unit_price'))) /
-                100
-            ).toFixed(2),
-          },
-          tax_id: {
-            ...prevFormValues.product_list.tax_id,
-            [productId]: productForm.getFieldValue(['tax_id', productId]),
-          },
-        },
-      };
-    });
+// const ProductFormComponent = ({
+//   productId,
+//   productName,
+//   productEditModal,
+//   hideModal,
+//   formValues,
+//   setFormValues,
+//   productUnits,
+//   setProductUnits,
+// }) => {
+//   const [productForm] = Form.useForm();
 
-    hideModal();
-  };
+//   useEffect(() => {
+//     if (productId) {
+//       productForm.setFieldsValue({
+//         quantity: formValues?.product_list?.qty[productId],
+//         unit_discount: formValues?.product_list?.discount[productId],
+//         unit_price: formValues?.product_list?.net_unit_price[productId],
+//         sale_unit_id: {
+//           [productId]:
+//             formValues?.product_list?.sale_unit_id[productId]?.toString() ?? '',
+//         },
+//         tax_id: {
+//           [productId]: formValues?.product_list?.tax_id[productId]?.toString(),
+//         },
+//       });
+//     }
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [formValues, productForm, productId]);
 
-  return (
-    <Modal
-      title={productName}
-      open={productEditModal}
-      onCancel={hideModal}
-      centered
-      width={800}
-      okText="Update"
-      onOk={handleSubmit}
-    >
-      <CustomForm submitBtn={false} form={productForm}>
-        <Row {...rowLayout}>
-          <Col {...colLayout}>
-            <CustomInput
-              label="Quantity"
-              type={'number'}
-              name={'quantity'}
-              placeholder={'Enter product name'}
-            />
-          </Col>
-          <Col {...colLayout}>
-            <CustomInput
-              label="Unit Price"
-              type={'number'}
-              name={'unit_price'}
-            />
-          </Col>
-          <Col {...colLayout}>
-            <ProductUnitComponent
-              setProductUnits={setProductUnits}
-              productId={productId}
-            />
-          </Col>
-          <Col {...mdColLayout}>
-            <CustomInput
-              label="Unit Discount"
-              type={'number'}
-              name={'unit_discount'}
-            />
-          </Col>
+//   const handleSubmit = () => {
+//     setFormValues((prevFormValues) => {
+//       return {
+//         ...prevFormValues,
+//         product_list: {
+//           ...prevFormValues.product_list,
+//           qty: {
+//             ...prevFormValues.product_list.qty,
+//             [productId]: productForm.getFieldValue('quantity'),
+//           },
+//           sale_unit_id: {
+//             ...prevFormValues.product_list.sale_unit_id,
+//             [productId]: productForm.getFieldValue(['sale_unit_id', productId]),
+//           },
+//           discount: {
+//             ...prevFormValues.product_list.discount,
+//             [productId]: productForm.getFieldValue('unit_discount'),
+//           },
+//           net_unit_price: {
+//             ...prevFormValues.product_list.net_unit_price,
+//             [productId]: productForm.getFieldValue('unit_price'),
+//           },
+//           tax_rate: {
+//             ...prevFormValues.product_list.tax_rate,
+//             [productId]: productUnits?.tax_rate[productId],
+//           },
+//           tax: {
+//             ...prevFormValues.product_list.tax,
+//             [productId]: parseFloat(
+//               (parseInt(productUnits.sale_units[productId]) *
+//                 parseInt(productUnits.tax_rate[productId]) *
+//                 parseInt(productForm.getFieldValue('quantity')) *
+//                 parseInt(productForm.getFieldValue('unit_price'))) /
+//                 100
+//             ).toFixed(2),
+//           },
+//           tax_id: {
+//             ...prevFormValues.product_list.tax_id,
+//             [productId]: productForm.getFieldValue(['tax_id', productId]),
+//           },
+//         },
+//       };
+//     });
 
-          <Col {...mdColLayout}>
-            <TaxComponent
-              productId={productId}
-              setProductUnits={setProductUnits}
-            />
-          </Col>
-        </Row>
-      </CustomForm>
-    </Modal>
-  );
-};
+//     hideModal();
+//   };
+
+//   return (
+//     <Modal
+//       title={productName}
+//       open={productEditModal}
+//       onCancel={hideModal}
+//       centered
+//       width={800}
+//       okText="Update"
+//       onOk={handleSubmit}
+//     >
+//       <CustomForm submitBtn={false} form={productForm}>
+//         <Row {...rowLayout}>
+//           <Col {...colLayout}>
+//             <CustomInput
+//               label="Quantity"
+//               type={'number'}
+//               name={'quantity'}
+//               placeholder={'Enter product name'}
+//             />
+//           </Col>
+//           <Col {...colLayout}>
+//             <CustomInput
+//               label="Unit Price"
+//               type={'number'}
+//               name={'unit_price'}
+//             />
+//           </Col>
+//           <Col {...colLayout}>
+//             <ProductUnitComponent
+//               setProductUnits={setProductUnits}
+//               productId={productId}
+//             />
+//           </Col>
+//           <Col {...mdColLayout}>
+//             <CustomInput
+//               label="Unit Discount"
+//               type={'number'}
+//               name={'unit_discount'}
+//             />
+//           </Col>
+
+//           <Col {...mdColLayout}>
+//             <TaxComponent
+//               productId={productId}
+//               setProductUnits={setProductUnits}
+//             />
+//           </Col>
+//         </Row>
+//       </CustomForm>
+//     </Modal>
+//   );
+// };
 
 const ProductTableComponent = ({
   products,
   setProducts,
   formValues,
   setFormValues,
-  productUnits,
-  setProductUnits,
-  tableStyleProps,
+  // productUnits,
+  // setProductUnits,
+  // tableStyleProps,
 }) => {
   const form = Form.useFormInstance();
-
   const warehouseId = Form.useWatch('warehouse_id', form);
+
+  const currency = useSelector(useCurrency);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -416,17 +411,13 @@ const ProductTableComponent = ({
     setProductEditModal(false);
   };
 
-  const currency = useSelector(useCurrency);
-
   const dataSource = products?.map((product) => {
     const {
       id,
       name,
       sku,
       selling_price: unit_cost,
-      sale_unit_id,
       sale_units,
-      tax_id,
       taxes,
       tax_method,
       product_qties,
@@ -434,16 +425,12 @@ const ProductTableComponent = ({
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 
-    setFormValuesId(
+    updateFormValues(
       id,
-      sale_unit_id,
       calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       sale_units,
-      formValues,
-      productUnits,
-      tax_id,
       taxes,
-      stock
+      formValues
     );
 
     return {
@@ -471,7 +458,45 @@ const ProductTableComponent = ({
     };
   });
 
-  form.setFieldsValue(formValues);
+  const { totalQuantity, totalPrice } = calculateTotals(formValues);
+
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [formValues, products, form]);
+
+  const tableStyleProps = {
+    summary: () => {
+      return (
+        <Table.Summary fixed="bottom">
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={1} colSpan={4}>
+              <Typography.Text className="font-bold" type="">
+                Total
+              </Typography.Text>
+            </Table.Summary.Cell>
+
+            <Table.Summary.Cell index={2} align="center">
+              <Typography.Text type="" className="font-bold">
+                {totalQuantity}
+              </Typography.Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={3} align="center">
+              <Typography.Text type="" className="font-bold">
+                {showCurrency(totalPrice, currency)}
+              </Typography.Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      );
+    },
+    sticky: {
+      // offsetHeader: 440,
+      offsetScroll: 400,
+    },
+    scroll: {
+      x: 'min-content',
+    },
+  };
 
   return (
     <GlobalUtilityStyle className="">
@@ -484,18 +509,14 @@ const ProductTableComponent = ({
         />
       </div>
 
-      {productEditModal && (
-        <ProductFormComponent
-          productEditModal={productEditModal}
-          productId={productId}
-          productName={productName}
-          hideModal={hideModal}
-          formValues={formValues}
-          setFormValues={setFormValues}
-          productUnits={productUnits}
-          setProductUnits={setProductUnits}
-        />
-      )}
+      <ProductFormComponent
+        productEditModal={productEditModal}
+        productId={productId}
+        productName={productName}
+        hideModal={hideModal}
+        formValues={formValues}
+        setFormValues={setFormValues}
+      />
     </GlobalUtilityStyle>
   );
 };

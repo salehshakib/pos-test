@@ -16,8 +16,8 @@ const { Meta } = Card;
 
 const PosProducts = ({
   setProducts,
-  setFormValues,
-  setProductUnits,
+  // setFormValues,
+  // setProductUnits,
   form,
   searchParams,
 }) => {
@@ -74,31 +74,31 @@ const PosProducts = ({
     }
   }, [pagination.page, products]);
 
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+  // useEffect(() => {
+  //   if (warehouseId) {
+  //     setFormValues({
+  //       product_list: {
+  //         product_id: {},
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
 
-          tax_id: {},
-        },
-      });
+  //         tax_id: {},
+  //       },
+  //     });
 
-      setProducts([]);
+  //     setProducts([]);
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   const onSelect = (selectedProduct) => {
     const stock = getWarehouseQuantity(
@@ -230,13 +230,7 @@ const PosProducts = ({
           </InfiniteScroll>
         </div>
       </div>
-      <div>
-        {/* {newData?.length < total && ( */}
-        {/* <Divider plain>
-          Pull down to load more ....
-        </Divider> */}
-        {/* )} */}
-      </div>
+      <div></div>
     </GlobalUtilityStyle>
   );
 };

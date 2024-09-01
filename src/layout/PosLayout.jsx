@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import Logo from '../components/AllSection/Header/Logo';
 import Profile from '../components/AllSection/Header/Profile';
+import { CustomPaymentComponent } from '../components/PosRegister/overview/CustomPaymentComponent';
 import Payment from '../components/PosRegister/Payment';
 import { PosRegister } from '../components/PosRegister/PosRegister';
 import { GlobalUtilityStyle } from '../container/Styled';
@@ -36,22 +37,22 @@ const PosLayout = () => {
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     product_id: {},
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   const [productUnits, setProductUnits] = useState({
     sale_units: {},
@@ -213,10 +214,10 @@ const PosLayout = () => {
           <div className="grid h-[85vh] grid-cols-5">
             <div className="col-span-3">
               <PosRegister
-                formValues={formValues}
-                setFormValues={setFormValues}
-                products={products}
-                setProducts={setProducts}
+                // formValues={formValues}
+                // setFormValues={setFormValues}
+                // products={products}
+                // setProducts={setProducts}
                 productUnits={productUnits}
                 setProductUnits={setProductUnits}
                 form={posForm}
@@ -254,27 +255,6 @@ const PosLayout = () => {
                 <Profile />
               </div>
 
-              {/* <div className="flex grow ">
-                <div className="flex flex-col w-full ">
-                  <div>
-                    <PosFilterComponent />
-                  </div>
-                  <div
-                    style={{
-                      borderRadius: "8px",
-                    }}
-                    className="shadow-md grow m-4 bg-gray-200 "
-                  >
-                    <PosProducts
-                      products={products}
-                      setProducts={setProducts}
-                      setFormValues={setFormValues}
-                      setProductUnits={setProductUnits}
-                      form={posForm}
-                    />
-                  </div>
-                </div>
-              </div> */}
               <Filter
                 products={products}
                 setProducts={setProducts}
@@ -292,15 +272,7 @@ const PosLayout = () => {
           }}
           className="py-4"
         >
-          <Payment
-            handleSubmit={handleSubmit}
-            form={posForm}
-            fields={errorFields}
-            isLoading={isLoading}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            grandTotal={grandTotal}
-          />
+          <CustomPaymentComponent />
         </Footer>
 
         <div className="absolute left-0 z-40 h-[100vh] overflow-auto">

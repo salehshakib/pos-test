@@ -22,7 +22,7 @@ const CustomInput = (props) => {
     addonBefore = '+880',
     size = 'large',
     maxlength = 2,
-    min,
+    min = 0,
     max,
 
     //for mb-0
@@ -70,9 +70,8 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 w-full border-2"
             min={0}
-            // controls={false}
-            // controls={false}
-            // changeOnWheel={false}
+            controls={false}
+            changeOnWheel={false}
             suffix={suffix}
             // addonAfter={suffix}
           />

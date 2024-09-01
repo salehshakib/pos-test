@@ -85,7 +85,7 @@ export const WarehouseReport = () => {
     {
       key: '3',
       label: 'Phone Number',
-      children: data?.phone ?? '---',
+      children: data?.phone ? '+880 ' + data?.phone : '---',
       span: 24,
     },
     {

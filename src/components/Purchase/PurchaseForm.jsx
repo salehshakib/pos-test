@@ -70,12 +70,14 @@ export const PurchaseForm = ({ data, ...props }) => {
     props.handleSubmit(values, { formValues });
   };
 
+  const warehousePurchaseRef = useRef(null);
+
   return (
     <>
       <CustomForm {...props} handleSubmit={handleSubmit}>
         <Row {...rowLayout}>
           <Col {...largeLayout}>
-            <WarehouseComponent />
+            <WarehouseComponent warehousePurchaseRef={warehousePurchaseRef} />
           </Col>
           <Col {...largeLayout}>
             <SupplierComponent />
@@ -90,6 +92,7 @@ export const PurchaseForm = ({ data, ...props }) => {
           <CustomPurchaseProductComponent
             onCustomSubmit={handleProducts}
             data={data}
+            ref={warehousePurchaseRef}
           >
             <Col {...colLayout}>
               <OrderTaxComponent />

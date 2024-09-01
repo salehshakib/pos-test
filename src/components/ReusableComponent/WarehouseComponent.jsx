@@ -16,6 +16,7 @@ export const WarehouseComponent = ({
   title = 'Warehouse',
   placeholder = 'Warehouse',
   size,
+  warehousePurchaseRef,
 }) => {
   const form = Form.useFormInstance();
   const user = useSelector(useCurrentUser);
@@ -37,6 +38,12 @@ export const WarehouseComponent = ({
     }
   }, [form, name, options, user?.warehouse_id]);
 
+  const handleChange = () => {
+    if (warehousePurchaseRef && warehousePurchaseRef.current) {
+      warehousePurchaseRef.current.resetFormAndProducts();
+    }
+  };
+
   return (
     <CustomSelect
       label={label && title}
@@ -48,6 +55,7 @@ export const WarehouseComponent = ({
       required={true}
       customStyle={!label}
       size={size}
+      onChange={handleChange}
     />
   );
 };

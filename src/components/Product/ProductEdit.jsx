@@ -35,8 +35,10 @@ const ProductListEdit = ({ id, setId }) => {
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
+  // console.log(form.get)
+
   useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
+    if (data && isEditDrawerOpen) {
       const {
         name,
         sku,
@@ -157,9 +159,10 @@ const ProductListEdit = ({ id, setId }) => {
       ];
 
       setFields(newFieldData);
+    } else {
+      form.resetFields();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isEditDrawerOpen, setFields]);
+  }, [data, isEditDrawerOpen, setFields, form]);
 
   const handleUpdate = async (values, { formValues }) => {
     const {

@@ -132,7 +132,7 @@ export const CustomerReport = () => {
     {
       key: '3',
       label: 'Phone Number',
-      children: data?.phone_number ?? '---',
+      children: data?.phone_number ? '+880 ' + data?.phone_number : '---',
       span: 24,
     },
     {

@@ -115,9 +115,21 @@ export const onDelete = (id, setProducts, setFormValues) => {
       return acc;
     }, {});
 
+    let updatedUnitList;
+
+    if (prevFormValues.units) {
+      updatedUnitList = Object.keys(prevFormValues.units).reduce((acc, key) => {
+        // eslint-disable-next-line no-unused-vars
+        const { [id]: _, ...rest } = prevFormValues.units[key];
+        acc[key] = rest;
+        return acc;
+      }, {});
+    }
+
     return {
       ...prevFormValues,
       product_list: updatedProductList,
+      units: updatedUnitList,
     };
   });
 };

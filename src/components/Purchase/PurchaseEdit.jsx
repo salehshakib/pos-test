@@ -81,6 +81,8 @@ export const PurchaseEdit = ({ id, setId }) => {
       // console.log(newFieldData);
 
       setFields(newFieldData);
+    } else {
+      form.resetFields();
     }
   }, [data, isEditDrawerOpen, setFields, form]);
 
@@ -220,13 +222,15 @@ export const PurchaseEdit = ({ id, setId }) => {
       isLoading={isFetching}
       width={1400}
     >
-      <PurchaseForm
-        handleSubmit={handleUpdate}
-        isLoading={isLoading}
-        fields={fields}
-        form={form}
-        data={data}
-      />
+      {!isFetching && (
+        <PurchaseForm
+          handleSubmit={handleUpdate}
+          isLoading={isLoading}
+          fields={fields}
+          form={form}
+          data={data}
+        />
+      )}
     </CustomDrawer>
   );
 };

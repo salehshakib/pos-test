@@ -1,5 +1,11 @@
 import { Form } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 
 import { PurchaseProductTable } from './PurchaseProductTable';
@@ -91,43 +97,36 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
   }));
 };
 
-export const CustomPurchaseProductComponent = ({
-  children,
-  onCustomSubmit,
-  data,
-}) => {
-  const form = Form.useFormInstance();
-  const warehouseId = Form.useWatch('warehouse_id', form);
+export const CustomPurchaseProductComponent = forwardRef(
+  ({ children, onCustomSubmit, data }, ref) => {
+    const form = Form.useFormInstance();
+    const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+    const [formValues, setFormValues] = useState({
+      product_list: {
+        qty: {},
+        purchase_unit_id: {},
+        net_unit_cost: {},
+        discount: {},
+        tax_rate: {},
+        tax: {},
+        total: {},
+        recieved: {},
+        tax_id: {},
+      },
+      units: {
+        operator: {},
+        operation_value: {},
+      },
+    });
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      discount: {},
-      tax_rate: {}, // product  tax rate
-      tax: {}, // product tax
-      total: {},
+    const [products, setProducts] = useState([]);
 
-      recieved: {},
+    console.log(products);
 
-      tax_id: {}, //product tax id for update form
-    },
-    units: {
-      operator: {},
-      operation_value: {},
-    },
-  });
-
-  const [products, setProducts] = useState([]);
-
-  console.log(warehouseId, data?.warehouse_id);
-  console.log(data?.warehouse_id);
-
-  useEffect(() => {
-    if (warehouseId && warehouseId !== data?.warehouse_id) {
+    // Define a function to reset form values and products
+    const resetFormAndProducts = useCallback(() => {
+      console.log('first');
       setFormValues({
         product_list: {
           qty: {},
@@ -137,79 +136,63 @@ export const CustomPurchaseProductComponent = ({
           tax_rate: {},
           tax: {},
           total: {},
-
           recieved: {},
-
-          tax_id: {}, // product tax id for update form
+          tax_id: {},
         },
         units: {
           operator: {},
           operation_value: {},
         },
       });
-
       setProducts([]);
-    }
-  }, [warehouseId, data?.warehouse_id]);
+    }, []);
 
-  const handleCustomSubmit = useCallback(() => {
-    return formValues;
-  }, [formValues]);
+    const handleCustomSubmit = useCallback(() => formValues, [formValues]);
 
-  onCustomSubmit(handleCustomSubmit);
+    useEffect(() => {
+      onCustomSubmit(handleCustomSubmit);
+    }, [handleCustomSubmit, onCustomSubmit]);
 
-  useEffect(() => {
-    if (data && isEditDrawerOpen) {
-      updateStateWithProductData(data?.purchase_products, setFormValues);
+    useEffect(() => {
+      if (data && isEditDrawerOpen) {
+        updateStateWithProductData(data?.purchase_products, setFormValues);
 
-      const purchaseProducts = data?.purchase_products?.map((product) => ({
-        id: product.product_id,
-        name: product.products?.name,
-        sku: product.products?.sku,
-        buying_price: product.products?.buying_price,
-        purchase_unit_id: product.purchase_unit_id,
-        purchase_units: product.products?.purchase_units,
-        tax_id: product.products?.tax_id,
-        taxes: product?.products.taxes,
-        product_qties: product?.products?.product_qties,
-      }));
+        const purchaseProducts = data?.purchase_products?.map((product) => ({
+          id: product.product_id,
+          name: product.products?.name,
+          sku: product.products?.sku,
+          buying_price: product.products?.buying_price,
+          purchase_unit_id: product.purchase_unit_id,
+          purchase_units: product.products?.purchase_units,
+          tax_id: product.products?.tax_id,
+          taxes: product?.products.taxes,
+          product_qties: product?.products?.product_qties,
+        }));
 
-      setProducts(purchaseProducts);
-    } else {
-      setFormValues({
-        product_list: {
-          qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+        setProducts(purchaseProducts);
+      } else {
+        resetFormAndProducts();
+      }
+    }, [data, isEditDrawerOpen, resetFormAndProducts]);
 
-          recieved: {},
+    useImperativeHandle(ref, () => ({
+      resetFormAndProducts,
+    }));
 
-          tax_id: {}, // product tax id for update form
-        },
-        units: {
-          operator: {},
-          operation_value: {},
-        },
-      });
+    return (
+      <>
+        <PurchaseProductTable
+          formValues={formValues}
+          setFormValues={setFormValues}
+          products={products}
+          setProducts={setProducts}
+        />
+        {children}
+        <PurchaseSummary formValues={formValues} />
+      </>
+    );
+  }
+);
 
-      setProducts([]);
-    }
-  }, [data, isEditDrawerOpen]);
-
-  return (
-    <>
-      <PurchaseProductTable
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-      />
-      {children}
-      <PurchaseSummary formValues={formValues} />
-    </>
-  );
-};
+// Set the display name for the component
+CustomPurchaseProductComponent.displayName = 'CustomPurchaseProductComponent';

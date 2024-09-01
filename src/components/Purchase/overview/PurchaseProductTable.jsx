@@ -253,6 +253,7 @@ export const PurchaseProductTable = ({
 }) => {
   const form = Form.useFormInstance();
   const type = Form.useWatch('purchase_status', form);
+
   const warehouseId = Form.useWatch('warehouse_id', form);
 
   console.log(warehouseId);

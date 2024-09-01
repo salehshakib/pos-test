@@ -25,7 +25,7 @@ const columns = [
     key: 'phone',
     render: (phone) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {'0' + phone}
+        {'+880 ' + phone}
       </span>
     ),
   },

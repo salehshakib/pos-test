@@ -1,5 +1,6 @@
 import { Col, Form } from 'antd';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { fullColLayout } from '../../layout/FormLayout';
 import { calculateSummary } from '../../utilities/lib/generator/generatorUtils';
@@ -29,14 +30,22 @@ export const TransactionSummary = ({ formValues }) => {
     }
   }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
 
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+
   return (
     <Col {...fullColLayout}>
       <TotalRow
         totalItems={totalItems}
         totalQty={totalQty}
         totalPrice={totalPrice}
-        taxRate={taxRate ?? 0}
-        discount={discount ?? 0}
+        taxRate={
+          !pathname.includes('inventory/transfer') ? (taxRate ?? 0) : undefined
+        }
+        discount={
+          !pathname.includes('inventory/transfer') ? (discount ?? 0) : undefined
+        }
         shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}
       />

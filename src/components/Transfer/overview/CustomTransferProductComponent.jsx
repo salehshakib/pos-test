@@ -7,14 +7,13 @@ import {
 } from 'react';
 import { useSelector } from 'react-redux';
 
-import { TransactionSummary } from '../../../ReusableComponent/TransactionSummary';
-import { QuotationProductTable } from '../../Quotation/overview/QuotationProductTable';
+import { TransactionSummary } from '../../ReusableComponent/TransactionSummary';
+import { TransferProductTable } from './TransferProductTable';
 
-const updateStateWithProductData = (invoiceProducts, setFormValues) => {
+const updateStateWithProductData = (transferProducts, setFormValues) => {
   const updatedQty = {};
-  const updatedSaleUnitId = {};
-  const updatedProductPrice = {};
-  const updatedDiscount = {};
+  const updatedPurchaseUnitId = {};
+  const updatedProductCost = {};
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
@@ -23,11 +22,10 @@ const updateStateWithProductData = (invoiceProducts, setFormValues) => {
   const updatedOperator = {};
   const updatedOperationValue = {};
 
-  invoiceProducts.forEach((item) => {
+  transferProducts.forEach((item) => {
     updatedQty[item.product_id.toString()] = item.qty;
-    updatedSaleUnitId[item.product_id.toString()] = item.sale_unit_id;
-    updatedProductPrice[item.product_id.toString()] = item.net_unit_price;
-    updatedDiscount[item.product_id.toString()] = item.discount;
+    updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
+    updatedProductCost[item.product_id.toString()] = item.net_unit_cost;
     updatedTaxRate[item.product_id.toString()] = item.tax_rate;
     updatedTax[item.product_id.toString()] = item.tax;
     updatedTotal[item.product_id.toString()] = item.total;
@@ -49,15 +47,11 @@ const updateStateWithProductData = (invoiceProducts, setFormValues) => {
       },
       sale_unit_id: {
         ...prevFormValues.product_list.sale_unit_id,
-        ...updatedSaleUnitId,
+        ...updatedPurchaseUnitId,
       },
-      net_unit_price: {
-        ...prevFormValues.product_list.net_unit_price,
-        ...updatedProductPrice,
-      },
-      discount: {
-        ...prevFormValues.product_list.discount,
-        ...updatedDiscount,
+      net_unit_cost: {
+        ...prevFormValues.product_list.net_unit_cost,
+        ...updatedProductCost,
       },
       tax_rate: {
         ...prevFormValues.product_list.tax_rate,
@@ -90,16 +84,15 @@ const updateStateWithProductData = (invoiceProducts, setFormValues) => {
   }));
 };
 
-export const CustomInvoiceProductTable = forwardRef(
+export const CustomTransferProductComponent = forwardRef(
   ({ children, onCustomSubmit, data }, ref) => {
     const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
     const [formValues, setFormValues] = useState({
       product_list: {
         qty: {},
-        sale_unit_id: {},
-        net_unit_price: {},
-        discount: {},
+        purchase_unit_id: {},
+        net_unit_cost: {},
         tax_rate: {},
         tax: {},
         total: {},
@@ -117,9 +110,8 @@ export const CustomInvoiceProductTable = forwardRef(
       setFormValues({
         product_list: {
           qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
+          purchase_unit_id: {},
+          net_unit_cost: {},
           tax_rate: {},
           tax: {},
           total: {},
@@ -141,20 +133,20 @@ export const CustomInvoiceProductTable = forwardRef(
 
     useEffect(() => {
       if (data && isEditDrawerOpen) {
-        updateStateWithProductData(data?.invoice_products, setFormValues);
+        updateStateWithProductData(data?.transfer_products, setFormValues);
 
-        const quotationProducts = data?.invoice_products?.map((product) => ({
+        const transferProducts = data?.transfer_products?.map((product) => ({
           id: product.product_id,
           name: product.products?.name,
           sku: product.products?.sku,
           buying_price: product.products?.buying_price,
-          sale_unit_id: product.sale_unit_id,
-          sale_units: product.products?.sale_units,
+          purchase_unit_id_unit_id: product.purchase_unit_id_unit_id,
+          purchase_units: product.products?.purchase_units,
           tax_id: product.products?.tax_id,
           taxes: product?.products.taxes,
         }));
 
-        setProducts(quotationProducts);
+        setProducts(transferProducts);
       } else {
         resetFormAndProducts();
       }
@@ -166,7 +158,7 @@ export const CustomInvoiceProductTable = forwardRef(
 
     return (
       <>
-        <QuotationProductTable
+        <TransferProductTable
           formValues={formValues}
           setFormValues={setFormValues}
           products={products}
@@ -179,4 +171,4 @@ export const CustomInvoiceProductTable = forwardRef(
   }
 );
 
-CustomInvoiceProductTable.displayName = 'CustomInvoiceProductTable';
+CustomTransferProductComponent.displayName = 'CustomTransferProductComponent';

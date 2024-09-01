@@ -8,9 +8,9 @@ import {
 import { useSelector } from 'react-redux';
 
 import { TransactionSummary } from '../../../ReusableComponent/TransactionSummary';
-import { QuotationProductTable } from './QuotationProductTable';
+import { QuotationProductTable } from '../../Quotation/overview/QuotationProductTable';
 
-const updateStateWithProductData = (quotationProducts, setFormValues) => {
+const updateStateWithProductData = (invoiceProducts, setFormValues) => {
   const updatedQty = {};
   const updatedSaleUnitId = {};
   const updatedProductPrice = {};
@@ -23,7 +23,7 @@ const updateStateWithProductData = (quotationProducts, setFormValues) => {
   const updatedOperator = {};
   const updatedOperationValue = {};
 
-  quotationProducts.forEach((item) => {
+  invoiceProducts.forEach((item) => {
     updatedQty[item.product_id.toString()] = item.qty;
     updatedSaleUnitId[item.product_id.toString()] = item.sale_unit_id;
     updatedProductPrice[item.product_id.toString()] = item.net_unit_price;
@@ -90,7 +90,7 @@ const updateStateWithProductData = (quotationProducts, setFormValues) => {
   }));
 };
 
-export const CustomQuotationProductTable = forwardRef(
+export const CustomInvoiceProductComponent = forwardRef(
   ({ children, onCustomSubmit, data }, ref) => {
     const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -141,9 +141,9 @@ export const CustomQuotationProductTable = forwardRef(
 
     useEffect(() => {
       if (data && isEditDrawerOpen) {
-        updateStateWithProductData(data?.quotation_products, setFormValues);
+        updateStateWithProductData(data?.invoice_products, setFormValues);
 
-        const quotationProducts = data?.quotation_products?.map((product) => ({
+        const invoiceProducts = data?.invoice_products?.map((product) => ({
           id: product.product_id,
           name: product.products?.name,
           sku: product.products?.sku,
@@ -154,7 +154,7 @@ export const CustomQuotationProductTable = forwardRef(
           taxes: product?.products.taxes,
         }));
 
-        setProducts(quotationProducts);
+        setProducts(invoiceProducts);
       } else {
         resetFormAndProducts();
       }
@@ -179,4 +179,4 @@ export const CustomQuotationProductTable = forwardRef(
   }
 );
 
-CustomQuotationProductTable.displayName = 'CustomQuotationProductTable';
+CustomInvoiceProductComponent.displayName = 'CustomInvoiceProductComponent';

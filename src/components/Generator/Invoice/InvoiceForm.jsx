@@ -15,7 +15,7 @@ import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 import CustomUploader from '../../Shared/Upload/CustomUploader';
 import { CustomerComponent } from '../overview/CustomerComponent';
-import { CustomInvoiceProductTable } from './overview/CustomInvoiceProductTable';
+import { CustomInvoiceProductComponent } from './overview/CustomInvoiceProductComponent';
 
 const options = [
   {
@@ -150,7 +150,7 @@ export const InvoiceForm = ({
             <CustomerComponent required={true} />
           </Col>
 
-          <CustomInvoiceProductTable
+          <CustomInvoiceProductComponent
             onCustomSubmit={handleProducts}
             data={data}
             ref={invoiceRef}
@@ -178,7 +178,7 @@ export const InvoiceForm = ({
             <Col {...fullColLayout}>
               <CustomInput label="Note" type={'textarea'} name={'note'} />
             </Col>
-          </CustomInvoiceProductTable>
+          </CustomInvoiceProductComponent>
         </Row>
       </CustomForm>
 

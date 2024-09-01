@@ -179,7 +179,9 @@ export function updateFormValues(
     );
   }
 
-  setFormValue('discount', discount);
+  if (formValues.discount) {
+    setFormValue('discount', discount);
+  }
   setFormValue('tax_rate', taxRate);
   setFormValue('tax', tax);
   setFormValue('total', total);

@@ -35,118 +35,118 @@ const TransferEdit = ({ id, setId }) => {
   );
   const [updateTransfer, { isLoading }] = useUpdateTransferMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     product_id: {},
+  //     qty: {},
+  //     purchase_unit_id: {},
+  //     net_unit_cost: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-    tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   purchase_units: {},
+  //   tax_rate: {},
+  // });
+
+  // useEffect(() => {
+  //   if (!isEditDrawerOpen) {
+  //     setFormValues({
+  //       product_list: {
+  //         product_id: {},
+  //         qty: {},
+  //         purchase_unit_id: {},
+  //         net_unit_cost: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+
+  //         tax_id: {},
+  //       },
+  //     });
+
+  //     setProducts([]);
+
+  //     setProductUnits({
+  //       purchase_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+    if (data && isEditDrawerOpen) {
+      // data?.transfer_products?.forEach((product) => {
+      //   setFormValues((prevFormValues) => ({
+      //     ...prevFormValues,
+      //     product_list: {
+      //       ...prevFormValues.product_list,
+      //       product_id: {
+      //         ...prevFormValues.product_list.product_id,
+      //         [product.product_id.toString()]: product.product_id,
+      //       },
+      //       qty: {
+      //         ...prevFormValues.product_list.qty,
+      //         [product.product_id.toString()]: product.qty,
+      //       },
+      //       purchase_unit_id: {
+      //         ...prevFormValues.product_list.purchase_unit_id,
+      //         [product.product_id.toString()]: product.purchase_unit_id,
+      //       },
+      //       net_unit_cost: {
+      //         ...prevFormValues.product_list.net_unit_cost,
+      //         [product.product_id.toString()]: product.net_unit_cost,
+      //       },
+      //       tax_rate: {
+      //         ...prevFormValues.product_list.tax_rate,
+      //         [product.product_id.toString()]: product.tax_rate,
+      //       },
+      //       tax: {
+      //         ...prevFormValues.product_list.tax,
+      //         [product.product_id.toString()]: product.tax,
+      //       },
+      //       total: {
+      //         ...prevFormValues.product_list.total,
+      //         [product.product_id.toString()]: product.total,
+      //       },
+      //       tax_id: {
+      //         ...prevFormValues.product_list.tax_id,
+      //         [product.product_id.toString()]: product.products?.tax_id,
+      //       },
+      //     },
+      //   }));
 
-          tax_id: {},
-        },
-      });
+      //   setProducts((prevProducts) => [
+      //     ...prevProducts,
+      //     {
+      //       id: product.product_id,
+      //       name: product.products?.name,
+      //       sku: product.products?.sku,
+      //       buying_price: product.products?.buying_price,
+      //       purchase_unit_id: product.purchase_unit_id,
+      //       purchase_units: product.products?.purchase_units,
+      //       tax_id: product.products?.tax_id,
+      //       taxes: product.taxes,
+      //     },
+      //   ]);
 
-      setProducts([]);
+      //   setProductUnits((prevProductUnits) => ({
+      //     ...prevProductUnits,
 
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      data?.transfer_products?.forEach((product) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            product_id: {
-              ...prevFormValues.product_list.product_id,
-              [product.product_id.toString()]: product.product_id,
-            },
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [product.product_id.toString()]: product.qty,
-            },
-            purchase_unit_id: {
-              ...prevFormValues.product_list.purchase_unit_id,
-              [product.product_id.toString()]: product.purchase_unit_id,
-            },
-            net_unit_cost: {
-              ...prevFormValues.product_list.net_unit_cost,
-              [product.product_id.toString()]: product.net_unit_cost,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [product.product_id.toString()]: product.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [product.product_id.toString()]: product.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [product.product_id.toString()]: product.total,
-            },
-            tax_id: {
-              ...prevFormValues.product_list.tax_id,
-              [product.product_id.toString()]: product.products?.tax_id,
-            },
-          },
-        }));
-
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: product.product_id,
-            name: product.products?.name,
-            sku: product.products?.sku,
-            buying_price: product.products?.buying_price,
-            purchase_unit_id: product.purchase_unit_id,
-            purchase_units: product.products?.purchase_units,
-            tax_id: product.products?.tax_id,
-            taxes: product.taxes,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          purchase_units: {
-            ...prevProductUnits.purchase_units,
-            [product?.product_id.toString()]:
-              product?.products?.sale_units?.operation_value ?? 1,
-          },
-        }));
-      });
+      //     purchase_units: {
+      //       ...prevProductUnits.purchase_units,
+      //       [product?.product_id.toString()]:
+      //         product?.products?.sale_units?.operation_value ?? 1,
+      //     },
+      //   }));
+      // });
 
       const fieldData = fieldsToUpdate(data);
       const newFieldData = [
@@ -167,7 +167,7 @@ const TransferEdit = ({ id, setId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -191,9 +191,6 @@ const TransferEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
       return openNotification('info', 'Please add atleast one product');
     }
 
@@ -251,26 +248,26 @@ const TransferEdit = ({ id, setId }) => {
       setId(undefined);
       dispatch(closeEditDrawer());
 
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+      // setFormValues({
+      //   product_list: {
+      //     product_id: {},
+      //     qty: {},
+      //     purchase_unit_id: {},
+      //     net_unit_cost: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
 
-          tax_id: {},
-        },
-      });
+      //     tax_id: {},
+      //   },
+      // });
 
-      setProducts([]);
+      // setProducts([]);
 
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
+      // setProductUnits({
+      //   purchase_units: {},
+      //   tax_rate: {},
+      // });
     }
 
     if (error) {
@@ -291,12 +288,13 @@ const TransferEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        data={data}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

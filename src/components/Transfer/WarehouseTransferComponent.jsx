@@ -11,7 +11,10 @@ import {
 } from '../../utilities/hooks/useParams';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
-export const WarehouseTransferComponent = ({ fullLayout = false }) => {
+export const WarehouseTransferComponent = ({
+  fullLayout = false,
+  warehouseRef,
+}) => {
   const form = Form.useFormInstance();
 
   const warehouseFrom = Form.useWatch('from_warehouse_id', form);
@@ -45,6 +48,12 @@ export const WarehouseTransferComponent = ({ fullLayout = false }) => {
     form.resetFields(['to_warehouse_id']);
   }, [warehouseFrom, form]);
 
+  const handleChange = () => {
+    if (warehouseRef && warehouseRef.current) {
+      warehouseRef.current.resetFormAndProducts();
+    }
+  };
+
   return (
     <>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
@@ -56,6 +65,7 @@ export const WarehouseTransferComponent = ({ fullLayout = false }) => {
           options={warehouseFromOptions}
           name="from_warehouse_id"
           required={true}
+          onChange={handleChange}
         />
       </Col>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>

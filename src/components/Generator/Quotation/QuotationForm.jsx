@@ -15,7 +15,7 @@ import CustomForm from '../../Shared/Form/CustomForm';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 import CustomUploader from '../../Shared/Upload/CustomUploader';
-import { CustomQuotationProductTable } from './overview/CustomQuotationProductTable';
+import { CustomQuotationProductComponent } from './overview/CustomQuotationProductComponent';
 
 const options = [
   {
@@ -159,7 +159,7 @@ export const QuotationForm = ({
             setProductUnits={setProductUnits}
           /> */}
 
-          <CustomQuotationProductTable
+          <CustomQuotationProductComponent
             onCustomSubmit={handleProducts}
             data={data}
             ref={quotationRef}
@@ -187,7 +187,7 @@ export const QuotationForm = ({
             <Col {...fullColLayout}>
               <CustomInput label="Note" type={'textarea'} name={'note'} />
             </Col>
-          </CustomQuotationProductTable>
+          </CustomQuotationProductComponent>
         </Row>
       </CustomForm>
 

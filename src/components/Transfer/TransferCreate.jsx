@@ -1,5 +1,5 @@
 import { Form } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -22,52 +22,52 @@ const TransferCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-      tax_id: {},
-    },
-  });
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     purchase_unit_id: {},
+  //     net_unit_cost: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-    tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   purchase_units: {},
+  //   tax_rate: {},
+  // });
 
-  const warehouseId = Form.useWatch('from_warehouse_id', form);
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-          tax_id: {},
-        },
-      });
+  // const warehouseId = Form.useWatch('from_warehouse_id', form);
+  // useEffect(() => {
+  //   if (warehouseId) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         purchase_unit_id: {},
+  //         net_unit_cost: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+  //         tax_id: {},
+  //       },
+  //     });
 
-      setProducts([]);
+  //     setProducts([]);
 
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [warehouseId]);
+  //     setProductUnits({
+  //       purchase_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [warehouseId]);
 
   const [createTransfer, { isLoading }] = useCreateTransferMutation();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -91,9 +91,6 @@ const TransferCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
       return openNotification('info', 'Please add atleast one product');
     }
 
@@ -142,26 +139,26 @@ const TransferCreate = () => {
       dispatch(closeCreateDrawer());
       form.resetFields();
 
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+      // setFormValues({
+      //   product_list: {
+      //     product_id: {},
+      //     qty: {},
+      //     purchase_unit_id: {},
+      //     net_unit_cost: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
 
-          tax_id: {},
-        },
-      });
+      //     tax_id: {},
+      //   },
+      // });
 
-      setProducts([]);
+      // setProducts([]);
 
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
+      // setProductUnits({
+      //   purchase_units: {},
+      //   tax_rate: {},
+      // });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -184,12 +181,12 @@ const TransferCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

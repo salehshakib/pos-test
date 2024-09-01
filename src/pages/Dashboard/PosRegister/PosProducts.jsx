@@ -15,11 +15,11 @@ import { openNotification } from '../../../utilities/lib/openToaster';
 const { Meta } = Card;
 
 const PosProducts = ({
+  form,
   setProducts,
+  searchParams,
   // setFormValues,
   // setProductUnits,
-  form,
-  searchParams,
 }) => {
   const warehouseId = Form.useWatch('warehouse_id', form);
 

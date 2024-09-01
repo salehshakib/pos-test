@@ -3,10 +3,10 @@ import { useFilterParams } from '../../../utilities/hooks/useParams';
 import PosProducts from './PosProducts';
 
 export const Filter = ({
-  products,
+  // products,
   setProducts,
-  setFormValues,
-  setProductUnits,
+  // setFormValues,
+  // setProductUnits,
   posForm,
 }) => {
   const { searchParams, setParams } = useFilterParams();
@@ -24,12 +24,12 @@ export const Filter = ({
           className="m-4 grow bg-gray-200 shadow-md"
         >
           <PosProducts
-            products={products}
-            setProducts={setProducts}
-            setFormValues={setFormValues}
-            setProductUnits={setProductUnits}
             form={posForm}
+            setProducts={setProducts}
             searchParams={searchParams}
+            // products={products}
+            // setFormValues={setFormValues}
+            // setProductUnits={setProductUnits}
           />
         </div>
       </div>

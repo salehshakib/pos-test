@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import Logo from '../components/AllSection/Header/Logo';
 import Profile from '../components/AllSection/Header/Profile';
 import { CustomPaymentComponent } from '../components/PosRegister/overview/CustomPaymentComponent';
+import { CustomPosLayoutComponent } from '../components/PosRegister/overview/CustomPosLayoutComponent';
 import Payment from '../components/PosRegister/Payment';
 import { PosRegister } from '../components/PosRegister/PosRegister';
 import { GlobalUtilityStyle } from '../container/Styled';
@@ -54,12 +55,12 @@ const PosLayout = () => {
 
   // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-    coupon_rate: {},
-    minimum_amount: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  //   coupon_rate: {},
+  //   minimum_amount: {},
+  // });
 
   const [type, setType] = useState(null);
 
@@ -210,70 +211,7 @@ const PosLayout = () => {
   return (
     <GlobalUtilityStyle>
       <div className="relative flex h-screen flex-col">
-        <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
-          <div className="grid h-[85vh] grid-cols-5">
-            <div className="col-span-3">
-              <PosRegister
-                // formValues={formValues}
-                // setFormValues={setFormValues}
-                // products={products}
-                // setProducts={setProducts}
-                productUnits={productUnits}
-                setProductUnits={setProductUnits}
-                form={posForm}
-                fields={errorFields}
-                setGrandTotal={setGrandTotal}
-                type={type}
-                setType={setType}
-              />
-            </div>
-
-            <div className="relative col-span-2 flex h-[90vh] flex-col">
-              <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
-                <div className="flex items-center gap-6 text-2xl">
-                  <Button
-                    className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
-                    type="text"
-                    icon={<GiHamburgerMenu />}
-                    onClick={() => setCollapsed(!collapsed)}
-                  ></Button>
-                  <Logo />
-                </div>
-                <div>
-                  {mode === 'local' && (
-                    <Tag color="processing" className="font-semibold">
-                      {mode.toUpperCase()} MODE
-                    </Tag>
-                  )}
-
-                  {isDev.toLowerCase() === 'true' && (
-                    <Tag color="purple" className="font-semibold">
-                      DEV MODE
-                    </Tag>
-                  )}
-                </div>
-                <Profile />
-              </div>
-
-              <Filter
-                products={products}
-                setProducts={setProducts}
-                setFormValues={setFormValues}
-                setProductUnits={setProductUnits}
-                posForm={posForm}
-              />
-            </div>
-          </div>
-        </div>
-
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-          className="py-4"
-        >
-          <CustomPaymentComponent />
-        </Footer>
+        <CustomPosLayoutComponent />
 
         <div className="absolute left-0 z-40 h-[100vh] overflow-auto">
           <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />

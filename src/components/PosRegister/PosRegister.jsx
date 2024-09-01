@@ -209,9 +209,11 @@ const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();
 
   useEffect(() => {
-    const currentDate = dayjs(new Date());
-    form.setFieldValue('sale_at', currentDate);
-  }, [form]);
+    if (products?.length === 0) {
+      const currentDate = dayjs(new Date());
+      form.setFieldValue('sale_at', currentDate);
+    }
+  }, [form, products]);
 
   return (
     <GlobalUtilityStyle className="pb-5">

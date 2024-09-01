@@ -8,31 +8,29 @@ import {
 import { useSelector } from 'react-redux';
 
 import { TransactionSummary } from '../../ReusableComponent/TransactionSummary';
-import { PurchaseProductTable } from './PurchaseProductTable';
+import { SaleProductTable } from './SaleProductTable';
 
-const updateStateWithProductData = (purchaseProducts, setFormValues) => {
+const updateStateWithProductData = (saleProducts, setFormValues) => {
   const updatedQty = {};
-  const updatedPurchaseUnitId = {};
+  const updatedSaleUnitId = {};
   const updatedProductCost = {};
   const updatedDiscount = {};
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-  const updatedRecieved = {};
   const updatedTaxId = {};
 
   const updatedOperator = {};
   const updatedOperationValue = {};
 
-  purchaseProducts.forEach((item) => {
+  saleProducts.forEach((item) => {
     updatedQty[item.product_id.toString()] = item.qty;
-    updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
-    updatedProductCost[item.product_id.toString()] = item.net_unit_cost;
+    updatedSaleUnitId[item.product_id.toString()] = item.sale_unit_id;
+    updatedProductCost[item.product_id.toString()] = item.net_unit_price;
     updatedDiscount[item.product_id.toString()] = item.discount;
     updatedTaxRate[item.product_id.toString()] = item.tax_rate;
     updatedTax[item.product_id.toString()] = item.tax;
     updatedTotal[item.product_id.toString()] = item.total;
-    updatedRecieved[item.product_id.toString()] = item.recieved;
     updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
 
     updatedOperator[item.product_id.toString()] =
@@ -49,12 +47,12 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
       },
-      purchase_unit_id: {
+      sale_unit_id: {
         ...prevFormValues.product_list.purchase_unit_id,
-        ...updatedPurchaseUnitId,
+        ...updatedSaleUnitId,
       },
-      net_unit_cost: {
-        ...prevFormValues.product_list.net_unit_cost,
+      net_unit_price: {
+        ...prevFormValues.product_list.net_unit_price,
         ...updatedProductCost,
       },
       discount: {
@@ -72,10 +70,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
       total: {
         ...prevFormValues.product_list.total,
         ...updatedTotal,
-      },
-      recieved: {
-        ...prevFormValues.product_list.recieved,
-        ...updatedRecieved,
       },
       tax_id: {
         ...prevFormValues.product_list.tax_id,
@@ -96,20 +90,20 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
   }));
 };
 
-export const CustomPurchaseProductComponent = forwardRef(
+export const CustomSaleProductComponent = forwardRef(
   ({ children, onCustomSubmit, data }, ref) => {
     const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
     const [formValues, setFormValues] = useState({
       product_list: {
         qty: {},
-        purchase_unit_id: {},
-        net_unit_cost: {},
+        sale_unit_id: {},
+        net_unit_price: {},
         discount: {},
         tax_rate: {},
         tax: {},
         total: {},
-        recieved: {},
+
         tax_id: {},
       },
       units: {
@@ -120,18 +114,17 @@ export const CustomPurchaseProductComponent = forwardRef(
 
     const [products, setProducts] = useState([]);
 
-    // Define a function to reset form values and products
     const resetFormAndProducts = useCallback(() => {
       setFormValues({
         product_list: {
           qty: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
+          sale_unit_id: {},
+          net_unit_price: {},
           discount: {},
           tax_rate: {},
           tax: {},
           total: {},
-          recieved: {},
+
           tax_id: {},
         },
         units: {
@@ -150,21 +143,21 @@ export const CustomPurchaseProductComponent = forwardRef(
 
     useEffect(() => {
       if (data && isEditDrawerOpen) {
-        updateStateWithProductData(data?.purchase_products, setFormValues);
+        updateStateWithProductData(data?.sale_products, setFormValues);
 
-        const purchaseProducts = data?.purchase_products?.map((product) => ({
+        const saleProducts = data?.sale_products?.map((product) => ({
           id: product.product_id,
           name: product.products?.name,
           sku: product.products?.sku,
-          buying_price: product.products?.buying_price,
-          purchase_unit_id: product.purchase_unit_id,
-          purchase_units: product.products?.purchase_units,
+          selling_price: product.products?.selling_price,
+          sale_unit_id: product.sale_unit_id,
+          sale_units: product.products?.sale_units,
           tax_id: product.products?.tax_id,
           taxes: product?.products.taxes,
           product_qties: product?.products?.product_qties,
         }));
 
-        setProducts(purchaseProducts);
+        setProducts(saleProducts);
       } else {
         resetFormAndProducts();
       }
@@ -176,7 +169,7 @@ export const CustomPurchaseProductComponent = forwardRef(
 
     return (
       <>
-        <PurchaseProductTable
+        <SaleProductTable
           formValues={formValues}
           setFormValues={setFormValues}
           products={products}
@@ -189,5 +182,4 @@ export const CustomPurchaseProductComponent = forwardRef(
   }
 );
 
-// Set the display name for the component
-CustomPurchaseProductComponent.displayName = 'CustomPurchaseProductComponent';
+CustomSaleProductComponent.displayName = 'CustomSaleProductComponent';

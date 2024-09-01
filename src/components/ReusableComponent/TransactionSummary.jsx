@@ -1,11 +1,11 @@
 import { Col, Form } from 'antd';
 import { useEffect } from 'react';
 
-import { fullColLayout } from '../../../layout/FormLayout';
-import { calculateSummary } from '../../../utilities/lib/generator/generatorUtils';
-import { TotalRow } from '../../ReusableComponent/TotalRow';
+import { fullColLayout } from '../../layout/FormLayout';
+import { calculateSummary } from '../../utilities/lib/generator/generatorUtils';
+import { TotalRow } from './TotalRow';
 
-export const PurchaseSummary = ({ formValues }) => {
+export const TransactionSummary = ({ formValues }) => {
   const form = Form.useFormInstance();
 
   const paymentStatus = Form.useWatch('payment_status', form);

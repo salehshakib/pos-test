@@ -131,8 +131,7 @@ const ProductFormComponent = ({
             '',
         },
         tax_id: {
-          [productId]:
-            formValues?.product_list?.tax_id[productId]?.toString() ?? '',
+          [productId]: formValues?.product_list?.tax_id[productId]?.toString(),
         },
       });
     } else {
@@ -253,10 +252,9 @@ export const PurchaseProductTable = ({
 }) => {
   const form = Form.useFormInstance();
   const type = Form.useWatch('purchase_status', form);
-
   const warehouseId = Form.useWatch('warehouse_id', form);
 
-  console.log(warehouseId);
+  const currency = useSelector(useCurrency);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);
@@ -321,8 +319,6 @@ export const PurchaseProductTable = ({
     }));
   };
 
-  const currency = useSelector(useCurrency);
-
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -334,8 +330,6 @@ export const PurchaseProductTable = ({
       tax_method,
       product_qties,
     } = product ?? {};
-
-    console.log(product);
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 

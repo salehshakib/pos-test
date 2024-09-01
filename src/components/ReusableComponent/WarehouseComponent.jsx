@@ -16,7 +16,7 @@ export const WarehouseComponent = ({
   title = 'Warehouse',
   placeholder = 'Warehouse',
   size,
-  warehousePurchaseRef,
+  warehouseRef,
 }) => {
   const form = Form.useFormInstance();
   const user = useSelector(useCurrentUser);
@@ -39,8 +39,8 @@ export const WarehouseComponent = ({
   }, [form, name, options, user?.warehouse_id]);
 
   const handleChange = () => {
-    if (warehousePurchaseRef && warehousePurchaseRef.current) {
-      warehousePurchaseRef.current.resetFormAndProducts();
+    if (warehouseRef && warehouseRef.current) {
+      warehouseRef.current.resetFormAndProducts();
     }
   };
 

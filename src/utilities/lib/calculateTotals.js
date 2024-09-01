@@ -7,12 +7,15 @@ export const calculateTotals = (formValues) => {
     0
   );
 
-  const totalReceived =
-    formValues.product_list?.recieved &&
-    Object.values(formValues.product_list?.recieved).reduce(
-      (acc, cur) => acc + sanitizeIntValue(cur),
-      0
-    );
+  let totalReceived = 0;
+  if (formValues.product_list.recieved) {
+    totalReceived =
+      formValues.product_list?.recieved &&
+      Object.values(formValues.product_list?.recieved).reduce(
+        (acc, cur) => acc + sanitizeIntValue(cur),
+        0
+      );
+  }
 
   const totalPrice =
     formValues.product_list?.total &&

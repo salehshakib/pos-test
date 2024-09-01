@@ -52,6 +52,8 @@ const PosProducts = ({
     params,
   });
 
+  console.log(data);
+
   const [newData, setNewData] = useState([]);
 
   const products = data?.results?.product;
@@ -69,6 +71,8 @@ const PosProducts = ({
       setNewData((prevData) => [...prevData, ...products]);
     } else if (products?.length > 0) {
       setNewData(products);
+    } else {
+      setNewData([]);
     }
   }, [pagination.page, products]);
 

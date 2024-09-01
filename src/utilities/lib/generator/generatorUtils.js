@@ -1,5 +1,34 @@
 import { decimalConverter } from '../return/decimalComverter';
 
+export const calculateSummary = (
+  formValues,
+  tax_rate = 0,
+  discount = 0,
+  shipping_cost = 0
+) => {
+  const productList = formValues.product_list || {};
+
+  const totalItems = Object.keys(productList?.qty || {}).length;
+
+  const totalQty = Object.values(productList?.qty || {}).reduce(
+    (acc, cur) => acc + (parseFloat(cur) || 0),
+    0
+  );
+
+  const totalPrice = calculateTotalPrice(productList);
+
+  const taxRate = calculateTotalTax(totalPrice, tax_rate, discount);
+
+  const grandTotal = calculateGrandTotal(
+    totalPrice,
+    tax_rate,
+    discount,
+    shipping_cost
+  );
+
+  return { totalItems, totalQty, totalPrice, taxRate, grandTotal };
+};
+
 export const calculateTotalPrice = (data) => {
   const totals = Object.values(data?.total).map(
     (value) => parseFloat(value) || 0

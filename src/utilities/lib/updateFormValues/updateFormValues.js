@@ -151,9 +151,11 @@ export function updateFormValues(
         ? (netUnitCost * qty) / productUnitOperationValue
         : productUnitOperationValue * netUnitCost * qty;
 
-    return taxData?.tax_method === 'Inclusive'
-      ? Math.round((baseValue - discount + tax).toFixed(2))
-      : Math.round((baseValue + tax - discount).toFixed(2));
+    if (taxData?.tax_method === 'Inclusive') {
+      return Math.round((baseValue - discount + tax).toFixed(2));
+    } else {
+      return parseFloat((baseValue + tax - discount).toFixed(2));
+    }
   };
 
   const total = calculateTotal(productUnitCost);
@@ -186,3 +188,89 @@ export function updateFormValues(
 
   setFormValue('tax_id', formProductList.tax_id?.[id] ?? taxData?.id);
 }
+
+// export const updateStateWithProductData = (products, setFormValues) => {
+//   const updatedQty = {};
+//   const updatedPurchaseUnitId = {};
+//   const updatedProductCost = {};
+//   const updatedDiscount = {};
+//   const updatedTaxRate = {};
+//   const updatedTax = {};
+//   const updatedTotal = {};
+//   const updatedRecieved = {};
+//   const updatedTaxId = {};
+
+//   const updatedOperator = {};
+//   const updatedOperationValue = {};
+
+//   products.forEach((item) => {
+//     updatedQty[item.product_id.toString()] = item.qty;
+//     updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
+//     updatedProductCost[item.product_id.toString()] = item.net_unit_cost;
+//     updatedDiscount[item.product_id.toString()] = item.discount;
+//     updatedTaxRate[item.product_id.toString()] = item.tax_rate;
+//     updatedTax[item.product_id.toString()] = item.tax;
+//     updatedTotal[item.product_id.toString()] = item.total;
+//     updatedRecieved[item.product_id.toString()] = item.recieved;
+//     updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
+
+//     updatedOperator[item.product_id.toString()] =
+//       item.products?.purchase_units?.operator;
+//     updatedOperationValue[item.product_id.toString()] =
+//       item.products?.purchase_units?.operation_value;
+//   });
+
+//   setFormValues((prevFormValues) => ({
+//     ...prevFormValues,
+//     product_list: {
+//       ...prevFormValues.product_list,
+//       qty: {
+//         ...prevFormValues.product_list.qty,
+//         ...updatedQty,
+//       },
+//       purchase_unit_id: {
+//         ...prevFormValues.product_list.purchase_unit_id,
+//         ...updatedPurchaseUnitId,
+//       },
+//       net_unit_cost: {
+//         ...prevFormValues.product_list.net_unit_cost,
+//         ...updatedProductCost,
+//       },
+//       discount: {
+//         ...prevFormValues.product_list.discount,
+//         ...updatedDiscount,
+//       },
+//       tax_rate: {
+//         ...prevFormValues.product_list.tax_rate,
+//         ...updatedTaxRate,
+//       },
+//       tax: {
+//         ...prevFormValues.product_list.tax,
+//         ...updatedTax,
+//       },
+//       total: {
+//         ...prevFormValues.product_list.total,
+//         ...updatedTotal,
+//       },
+//       recieved: {
+//         ...prevFormValues.product_list.recieved,
+//         ...updatedRecieved,
+//       },
+//       tax_id: {
+//         ...prevFormValues.product_list.tax_id,
+//         ...updatedTaxId,
+//       },
+//     },
+//     units: {
+//       ...prevFormValues.units,
+//       operator: {
+//         ...prevFormValues.units.operator,
+//         ...updatedOperator,
+//       },
+//       operation_value: {
+//         ...prevFormValues.units.operation_value,
+//         ...updatedOperationValue,
+//       },
+//     },
+//   }));
+// };

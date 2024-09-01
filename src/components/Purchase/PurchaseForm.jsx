@@ -77,7 +77,7 @@ export const PurchaseForm = ({ data, ...props }) => {
       <CustomForm {...props} handleSubmit={handleSubmit}>
         <Row {...rowLayout}>
           <Col {...largeLayout}>
-            <WarehouseComponent warehousePurchaseRef={warehousePurchaseRef} />
+            <WarehouseComponent warehouseRef={warehousePurchaseRef} />
           </Col>
           <Col {...largeLayout}>
             <SupplierComponent />

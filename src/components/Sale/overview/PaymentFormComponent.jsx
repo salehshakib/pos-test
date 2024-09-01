@@ -146,7 +146,7 @@ const ChequeComponent = () => {
   );
 };
 
-export const PaymentTypeComponent = ({ grandTotal }) => {
+export const PaymentTypeComponent = () => {
   const form = Form.useFormInstance();
   const paymentStatus = Form.useWatch('payment_status', form);
 
@@ -155,19 +155,24 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
 
   const paymentType = Form.useWatch('payment_type', form);
 
-  useEffect(() => {
-    if (paymentStatus === 'Paid') {
-      form.setFieldValue('paid_amount', grandTotal);
-    }
+  // const taxRate = Form.useWatch('tax_rate', form);
+  // const discount = Form.useWatch('discount', form);
+  // const shippingCost = Form.useWatch('shipping_cost', form);
 
-    // if (paymentStatus === "Partial") {
-    //   form.setFieldValue("paid_amount", receivedAmount);
-    // }
+  // const calculatedGrandTotal = calculateGrandTotal(
+  //   calculatedTotalPrice,
+  //   tax_rate ?? 0,
+  //   discount,
+  //   shipping_cost
+  // );
 
-    // if (paymentStatus === "Paid" && receivedAmount < grandTotal) {
-    //   form.setFieldValue("recieved_amount", paidAmount);
-    // }
-  }, [paidAmount, form, paymentStatus, grandTotal, receivedAmount]);
+  // useEffect(() => {
+  //   if (paymentStatus === 'Paid') {
+  //     const tax_rate =form.getFieldValue('tax_rate') ?? 0
+
+  //     form.setFieldValue('paid_amount', grandTotal);
+  //   }
+  // }, [paidAmount, form, paymentStatus,  receivedAmount]);
 
   const change = Number(
     parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)
@@ -205,16 +210,16 @@ export const PaymentTypeComponent = ({ grandTotal }) => {
           />
         </Col>
 
-        {(paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
+        {paymentStatus === 'Paid' && (
           <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">Change: {change}</div>
           </Col>
         )}
 
         {paymentStatus === 'Partial' && (
-          <Col {...(paymentStatus === 'Partial' ? mdColLayout : fullColLayout)}>
+          <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">
-              Due: {Number(grandTotal - receivedAmount || 0).toFixed(2)}
+              Due: {Number(paidAmount - receivedAmount || 0).toFixed(2)}
             </div>
           </Col>
         )}

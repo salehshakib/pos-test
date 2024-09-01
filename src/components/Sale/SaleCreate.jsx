@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -26,57 +26,57 @@ export const SaleCreate = () => {
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     product_id: {},
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-  });
+  // const [products, setProducts] = useState([]);
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  // });
 
-  // reset state
-  const warehouseId = Form.useWatch('warehouse_id', form);
+  // // reset state
+  // const warehouseId = Form.useWatch('warehouse_id', form);
 
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+  // useEffect(() => {
+  //   if (warehouseId) {
+  //     setFormValues({
+  //       product_list: {
+  //         product_id: {},
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
 
-          tax_id: {},
-        },
-      });
+  //         tax_id: {},
+  //       },
+  //     });
 
-      setProducts([]);
+  //     setProducts([]);
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -182,28 +182,6 @@ export const SaleCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -222,12 +200,6 @@ export const SaleCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

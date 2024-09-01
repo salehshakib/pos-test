@@ -123,7 +123,7 @@ const TransferForm = ({
 
   return (
     <>
-      <CustomForm {...props} onSubmit={handleSubmit}>
+      <CustomForm {...props} handleSubmit={handleSubmit}>
         <Row {...rowLayout}>
           <WarehouseTransferComponent warehouseRef={transferRef} />
 

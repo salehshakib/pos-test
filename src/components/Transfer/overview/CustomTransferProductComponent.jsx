@@ -45,8 +45,8 @@ const updateStateWithProductData = (transferProducts, setFormValues) => {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
       },
-      sale_unit_id: {
-        ...prevFormValues.product_list.sale_unit_id,
+      purchase_unit_id: {
+        ...prevFormValues.product_list.purchase_unit_id,
         ...updatedPurchaseUnitId,
       },
       net_unit_cost: {

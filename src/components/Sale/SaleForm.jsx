@@ -62,12 +62,14 @@ const DiscountTypeComponent = () => {
   const required = !!discount;
 
   return (
-    <CustomSelect
-      options={discountTypeOptions}
-      label="Discount Type"
-      name={'discount_type'}
-      required={required}
-    />
+    <Col {...largeLayout}>
+      <CustomSelect
+        options={discountTypeOptions}
+        label="Discount Type"
+        name={'discount_type'}
+        required={required}
+      />
+    </Col>
   );
 };
 
@@ -182,16 +184,22 @@ export const SaleForm = ({ data, ...props }) => {
             </Col>
 
             <Col {...largeLayout}>
-              <DiscountTypeComponent />
+              <CustomInput
+                label="Discount"
+                type={'number'}
+                name={'discount'}
+                min={0}
+              />
             </Col>
-            <Col {...largeLayout}>
-              <CustomInput label="Discount" type={'number'} name={'discount'} />
-            </Col>
+
+            <DiscountTypeComponent />
+
             <Col {...largeLayout}>
               <CustomInput
                 label="Shipping Cost"
                 type={'number'}
                 name={'shipping_cost'}
+                min={0}
               />
             </Col>
 

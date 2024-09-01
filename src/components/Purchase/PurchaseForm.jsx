@@ -98,13 +98,19 @@ export const PurchaseForm = ({ data, ...props }) => {
               <OrderTaxComponent />
             </Col>
             <Col {...colLayout}>
-              <CustomInput label="Discount" type="number" name="discount" />
+              <CustomInput
+                label="Discount"
+                type="number"
+                name="discount"
+                min={0}
+              />
             </Col>
             <Col {...colLayout}>
               <CustomInput
                 label="Shipping Cost"
                 type="number"
                 name="shipping_cost"
+                min={0}
               />
             </Col>
             <Col {...colLayout}>

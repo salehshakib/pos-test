@@ -12,12 +12,19 @@ export const TransactionSummary = ({ formValues }) => {
   const paymentStatus = Form.useWatch('payment_status', form);
 
   const discount = Form.useWatch('discount', form);
+  const discountType = Form.useWatch('discount_type', form);
   const shipping_cost = Form.useWatch('shipping_cost', form);
   const tax_rate = Form.useWatch('tax_rate', form);
   const paid_amount = Form.useWatch('paid_amount', form);
 
   const { totalItems, totalQty, totalPrice, taxRate, grandTotal } =
-    calculateSummary(formValues, tax_rate ?? 0, discount, shipping_cost);
+    calculateSummary(
+      formValues,
+      tax_rate ?? 0,
+      discount,
+      shipping_cost,
+      discountType
+    );
 
   useEffect(() => {
     if (paymentStatus === 'Paid') {
@@ -29,6 +36,12 @@ export const TransactionSummary = ({ formValues }) => {
       form.setFieldValue('paid_amount', totalPrice);
     }
   }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
+
+  let percentDiscount = 0;
+
+  if (discountType === 'Percentage') {
+    percentDiscount = parseFloat((discount * totalPrice) / 100).toFixed(2);
+  }
 
   const { pathname } = useLocation();
 
@@ -42,7 +55,11 @@ export const TransactionSummary = ({ formValues }) => {
           !pathname.includes('inventory/transfer') ? (taxRate ?? 0) : undefined
         }
         discount={
-          !pathname.includes('inventory/transfer') ? (discount ?? 0) : undefined
+          !pathname.includes('inventory/transfer')
+            ? discountType === 'Percentage'
+              ? percentDiscount
+              : (discount ?? 0)
+            : undefined
         }
         shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}

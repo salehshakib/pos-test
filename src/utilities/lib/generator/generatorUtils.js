@@ -4,7 +4,8 @@ export const calculateSummary = (
   formValues,
   tax_rate = 0,
   discount = 0,
-  shipping_cost = 0
+  shipping_cost = 0,
+  discountType = 'Fixed'
 ) => {
   const productList = formValues.product_list || {};
 
@@ -16,6 +17,10 @@ export const calculateSummary = (
   );
 
   const totalPrice = calculateTotalPrice(productList);
+
+  if (discountType === 'Percentage') {
+    discount = (totalPrice * discount) / 100;
+  }
 
   const taxRate = calculateTotalTax(totalPrice, tax_rate, discount);
 

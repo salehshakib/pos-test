@@ -149,7 +149,12 @@ const EmployeeForm = (props) => {
           <CustomInput label="Email" name={'email'} required={true} />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="NID Number" name={'id_number'} required={true} />
+          <CustomInput
+            label="NID Number"
+            name={'id_number'}
+            required={true}
+            type="number"
+          />
         </Col>
         <Col {...mdColLayout}>
           <CustomInput

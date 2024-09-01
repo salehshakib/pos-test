@@ -1,5 +1,5 @@
 import { Col, Form, Row } from 'antd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import {
   colLayout,
@@ -7,173 +7,182 @@ import {
   largeLayout,
   rowLayout,
 } from '../../../layout/FormLayout';
-import {
-  calculateGrandTotal,
-  calculateTotalPrice,
-  calculateTotalTax,
-} from '../../../utilities/lib/generator/generatorUtils';
 import { CashierComponent } from '../../ReusableComponent/CashierComponent';
 import { OrderTaxComponent } from '../../ReusableComponent/OrderTaxComponent';
-import { TotalRow } from '../../ReusableComponent/TotalRow';
 import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import CustomForm from '../../Shared/Form/CustomForm';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 import CustomUploader from '../../Shared/Upload/CustomUploader';
 import { CustomerComponent } from '../overview/CustomerComponent';
-import { QuotationProductTable } from '../Quotation/overview/QuotationProductTable';
+import { CustomInvoiceProductTable } from './overview/CustomInvoiceProductTable';
 
-const StatusComponent = ({ form }) => {
+const options = [
+  {
+    value: 'Pending',
+    label: 'Pending',
+  },
+  {
+    value: 'Sent',
+    label: 'Sent',
+  },
+];
+
+const StatusComponent = () => {
+  const form = Form.useFormInstance();
+
   useEffect(() => {
     form.setFieldValue('status', 'Pending');
   }, [form]);
-
-  const options = [
-    {
-      value: 'Pending',
-      label: 'Pending',
-    },
-    {
-      value: 'Sent',
-      label: 'Sent',
-    },
-  ];
 
   return <CustomSelect label="Status" options={options} name={'status'} />;
 };
 
 export const InvoiceForm = ({
-  formValues,
-  setFormValues,
-  products,
-  setProducts,
-  productUnits,
-  setProductUnits,
+  // formValues,
+  // setFormValues,
+  // products,
+  // setProducts,
+  // productUnits,
+  // setProductUnits,
+  data,
   ...props
 }) => {
-  const form = props.form;
+  // const form = props.form;
 
-  const discount = Form.useWatch('discount', form);
-  const shipping_cost = Form.useWatch('shipping_cost', form);
-  const tax_rate = Form.useWatch('tax_rate', form);
+  // const discount = Form.useWatch('discount', form);
+  // const shipping_cost = Form.useWatch('shipping_cost', form);
+  // const tax_rate = Form.useWatch('tax_rate', form);
 
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalQty, setTotalQty] = useState(0);
-  const [taxRate, setTaxRate] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
+  // const [totalItems, setTotalItems] = useState(0);
+  // const [totalQty, setTotalQty] = useState(0);
+  // const [taxRate, setTaxRate] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
+  // const [grandTotal, setGrandTotal] = useState(0);
 
-  useEffect(() => {
-    const calculatedTotalItems =
-      Object.keys(formValues.product_list?.qty).length ?? 0;
+  // useEffect(() => {
+  //   const calculatedTotalItems =
+  //     Object.keys(formValues.product_list?.qty).length ?? 0;
 
-    const calculatedTotalQty = Object.values(
-      formValues.product_list?.qty
-    ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
+  //   const calculatedTotalQty = Object.values(
+  //     formValues.product_list?.qty
+  //   ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
 
-    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
+  //   const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
 
-    const orderTax = calculateTotalTax(
-      calculatedTotalPrice,
-      tax_rate,
-      discount
-    );
+  //   const orderTax = calculateTotalTax(
+  //     calculatedTotalPrice,
+  //     tax_rate,
+  //     discount
+  //   );
 
-    const calculatedGrandTotal = calculateGrandTotal(
-      calculatedTotalPrice,
-      tax_rate ?? 0,
-      discount,
-      shipping_cost
-    );
+  //   const calculatedGrandTotal = calculateGrandTotal(
+  //     calculatedTotalPrice,
+  //     tax_rate ?? 0,
+  //     discount,
+  //     shipping_cost
+  //   );
 
-    setTotalItems(calculatedTotalItems);
-    setTotalQty(calculatedTotalQty);
-    setTotalPrice(calculatedTotalPrice);
-    setGrandTotal(calculatedGrandTotal);
-    setTaxRate(orderTax);
-  }, [discount, formValues, shipping_cost, tax_rate, products]);
+  //   setTotalItems(calculatedTotalItems);
+  //   setTotalQty(calculatedTotalQty);
+  //   setTotalPrice(calculatedTotalPrice);
+  //   setGrandTotal(calculatedGrandTotal);
+  //   setTaxRate(orderTax);
+  // }, [discount, formValues, shipping_cost, tax_rate, products]);
 
-  const warehouseId = Form.useWatch('warehouse_id', props.form);
+  // const warehouseId = Form.useWatch('warehouse_id', props.form);
 
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+  // useEffect(() => {
+  //   if (warehouseId) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
 
-          tax_id: {},
-        },
-      });
+  //         tax_id: {},
+  //       },
+  //     });
 
-      setProducts([]);
+  //     setProducts([]);
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-        inclusive_tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //       inclusive_tax_rate: {},
+  //     });
+  //   }
+  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+
+  const productsRef = useRef(null);
+
+  const handleProducts = useCallback((submitFunction) => {
+    productsRef.current = submitFunction;
+  }, []);
+
+  const handleSubmit = (values) => {
+    const productsData = productsRef.current ? productsRef.current() : null;
+
+    const formValues = {
+      product_list: productsData.product_list,
+    };
+
+    props.handleSubmit(values, { formValues });
+  };
+
+  const invoiceRef = useRef(null);
 
   return (
     <>
-      <CustomForm {...props}>
+      <CustomForm {...props} handleSubmit={handleSubmit}>
         <Row {...rowLayout}>
           <Col {...colLayout}>
-            <WarehouseComponent />
+            <WarehouseComponent warehouseRef={invoiceRef} />
           </Col>
           <Col {...colLayout}>
             <CashierComponent />
           </Col>
-          {/* <Col {...colLayout}>
-            <SupplierComponent required={false} />
-          </Col> */}
           <Col {...colLayout}>
             <CustomerComponent required={true} />
           </Col>
 
-          <QuotationProductTable
-            formValues={formValues}
-            setFormValues={setFormValues}
-            products={products}
-            setProducts={setProducts}
-            productUnits={productUnits}
-            setProductUnits={setProductUnits}
-          />
+          <CustomInvoiceProductTable
+            onCustomSubmit={handleProducts}
+            data={data}
+            ref={invoiceRef}
+          >
+            <Col {...largeLayout}>
+              <OrderTaxComponent />
+            </Col>
+            <Col {...largeLayout}>
+              <CustomInput label="Discount" type={'number'} name={'discount'} />
+            </Col>
+            <Col {...largeLayout}>
+              <CustomInput
+                label="Shipping Cost"
+                type={'number'}
+                name={'shipping_cost'}
+              />
+            </Col>
+            <Col {...largeLayout}>
+              <StatusComponent />
+            </Col>
 
-          <Col {...largeLayout}>
-            <OrderTaxComponent />
-          </Col>
-          <Col {...largeLayout}>
-            <CustomInput label="Discount" type={'number'} name={'discount'} />
-          </Col>
-          <Col {...largeLayout}>
-            <CustomInput
-              label="Shipping Cost"
-              type={'number'}
-              name={'shipping_cost'}
-            />
-          </Col>
-          <Col {...largeLayout}>
-            <StatusComponent form={form} />
-          </Col>
-
-          <Col {...fullColLayout}>
-            <CustomUploader label="Attachment" name={'attachment'} />
-          </Col>
-          <Col {...fullColLayout}>
-            <CustomInput label="Note" type={'textarea'} name={'note'} />
-          </Col>
+            <Col {...fullColLayout}>
+              <CustomUploader label="Attachment" name={'attachment'} />
+            </Col>
+            <Col {...fullColLayout}>
+              <CustomInput label="Note" type={'textarea'} name={'note'} />
+            </Col>
+          </CustomInvoiceProductTable>
         </Row>
       </CustomForm>
 
-      <TotalRow
+      {/* <TotalRow
         totalItems={totalItems}
         totalQty={totalQty}
         totalPrice={totalPrice}
@@ -181,7 +190,7 @@ export const InvoiceForm = ({
         discount={discount ?? 0}
         shippingCost={shipping_cost ?? 0}
         grandTotal={grandTotal}
-      />
+      /> */}
     </>
   );
 };

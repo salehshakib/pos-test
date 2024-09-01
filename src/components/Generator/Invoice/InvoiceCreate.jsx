@@ -23,27 +23,27 @@ const InvoiceCreate = () => {
 
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-    inclusive_tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  //   inclusive_tax_rate: {},
+  // });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -65,7 +65,6 @@ const InvoiceCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -109,7 +108,6 @@ const InvoiceCreate = () => {
         discount,
         shipping_cost
       ),
-      // attachment: attachment?.[0].originFileObj,
       product_list: JSON.stringify(productListArray),
     };
 
@@ -125,27 +123,27 @@ const InvoiceCreate = () => {
       dispatch(closeCreateDrawer());
       form.resetFields();
 
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+      // setFormValues({
+      //   product_list: {
+      //     qty: {},
+      //     sale_unit_id: {},
+      //     net_unit_price: {},
+      //     discount: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
 
-          tax_id: {},
-        },
-      });
+      //     tax_id: {},
+      //   },
+      // });
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-        inclusive_tax_rate: {},
-      });
+      // setProductUnits({
+      //   sale_units: {},
+      //   tax_rate: {},
+      //   inclusive_tax_rate: {},
+      // });
 
-      setProducts([]);
+      // setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -156,7 +154,7 @@ const InvoiceCreate = () => {
     }
   };
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   return (
     <CustomDrawer
@@ -169,12 +167,12 @@ const InvoiceCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

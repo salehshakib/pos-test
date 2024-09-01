@@ -18,7 +18,7 @@ import {
 } from '../../../utilities/lib/generator/generatorUtils';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomDrawer from '../../Shared/Drawer/CustomDrawer';
-import { QuotationForm } from '../Quotation/QuotationForm';
+import { InvoiceForm } from './InvoiceForm';
 
 const InvoiceEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
@@ -40,113 +40,113 @@ const InvoiceEdit = ({ id, setId }) => {
 
   const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-    inclusive_tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  //   inclusive_tax_rate: {},
+  // });
+
+  // useEffect(() => {
+  //   if (!isEditDrawerOpen) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+  //       },
+  //     });
+  //     setProducts([]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProducts([]);
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
+    if (data && isEditDrawerOpen) {
       form.resetFields();
 
-      data?.invoice_products?.forEach((item) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [item?.product_id.toString()]: item?.qty,
-            },
-            sale_unit_id: {
-              ...prevFormValues.product_list.sale_unit_id,
-              [item?.product_id.toString()]: item?.sale_unit_id,
-            },
-            net_unit_price: {
-              ...prevFormValues.product_list.net_unit_price,
-              [item?.product_id.toString()]: item?.net_unit_price,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [item?.product_id.toString()]: item?.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [item?.product_id.toString()]: item?.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [item?.product_id.toString()]: item?.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [item?.product_id.toString()]: item?.total,
-            },
-          },
-        }));
+      // data?.invoice_products?.forEach((item) => {
+      //   setFormValues((prevFormValues) => ({
+      //     ...prevFormValues,
+      //     product_list: {
+      //       ...prevFormValues.product_list,
+      //       qty: {
+      //         ...prevFormValues.product_list.qty,
+      //         [item?.product_id.toString()]: item?.qty,
+      //       },
+      //       sale_unit_id: {
+      //         ...prevFormValues.product_list.sale_unit_id,
+      //         [item?.product_id.toString()]: item?.sale_unit_id,
+      //       },
+      //       net_unit_price: {
+      //         ...prevFormValues.product_list.net_unit_price,
+      //         [item?.product_id.toString()]: item?.net_unit_price,
+      //       },
+      //       discount: {
+      //         ...prevFormValues.product_list.discount,
+      //         [item?.product_id.toString()]: item?.discount,
+      //       },
+      //       tax_rate: {
+      //         ...prevFormValues.product_list.tax_rate,
+      //         [item?.product_id.toString()]: item?.tax_rate,
+      //       },
+      //       tax: {
+      //         ...prevFormValues.product_list.tax,
+      //         [item?.product_id.toString()]: item?.tax,
+      //       },
+      //       total: {
+      //         ...prevFormValues.product_list.total,
+      //         [item?.product_id.toString()]: item?.total,
+      //       },
+      //     },
+      //   }));
 
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: item?.product_id,
-            sku: item?.products?.sku,
-            name: item?.products?.name,
-            sale_unit_id: item?.sale_unit_id,
-            tax_id: item?.products?.tax_id,
-            taxes: item?.products?.taxes,
-            sale_units: item?.products?.sale_units,
-            buying_price: item?.products?.buying_price,
-          },
-        ]);
+      //   setProducts((prevProducts) => [
+      //     ...prevProducts,
+      //     {
+      //       id: item?.product_id,
+      //       sku: item?.products?.sku,
+      //       name: item?.products?.name,
+      //       sale_unit_id: item?.sale_unit_id,
+      //       tax_id: item?.products?.tax_id,
+      //       taxes: item?.products?.taxes,
+      //       sale_units: item?.products?.sale_units,
+      //       buying_price: item?.products?.buying_price,
+      //     },
+      //   ]);
 
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
+      //   setProductUnits((prevProductUnits) => ({
+      //     ...prevProductUnits,
 
-          sale_units: {
-            ...prevProductUnits.sale_units,
-            [item?.product_id.toString()]:
-              item?.products?.sale_units?.operation_value ?? 1,
-          },
-        }));
-      });
+      //     sale_units: {
+      //       ...prevProductUnits.sale_units,
+      //       [item?.product_id.toString()]:
+      //         item?.products?.sale_units?.operation_value ?? 1,
+      //     },
+      //   }));
+      // });
 
       const fieldData = fieldsToUpdate(data);
 
@@ -179,7 +179,7 @@ const InvoiceEdit = ({ id, setId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, setFields, isEditDrawerOpen]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -201,7 +201,6 @@ const InvoiceEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -269,22 +268,22 @@ const InvoiceEdit = ({ id, setId }) => {
       setId(undefined);
       dispatch(closeEditDrawer());
 
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProducts([]);
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
+      // setFormValues({
+      //   product_list: {
+      //     qty: {},
+      //     sale_unit_id: {},
+      //     net_unit_price: {},
+      //     discount: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
+      //   },
+      // });
+      // setProducts([]);
+      // setProductUnits({
+      //   sale_units: {},
+      //   tax_rate: {},
+      // });
     }
 
     if (error) {
@@ -302,17 +301,18 @@ const InvoiceEdit = ({ id, setId }) => {
       isLoading={isFetching}
       width={1400}
     >
-      <QuotationForm
+      <InvoiceForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        data={data}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

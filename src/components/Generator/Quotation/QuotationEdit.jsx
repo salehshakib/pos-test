@@ -35,118 +35,116 @@ const QuotationEdit = ({ id, setId }) => {
         child: 1,
       },
     },
-    { skip: !id || !isEditDrawerOpen }
+    { skip: !id }
   );
   const [updateQuotation, { isLoading }] = useUpdateQuotationMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     sale_unit_id: {},
+  //     net_unit_price: {},
+  //     discount: {},
+  //     tax_rate: {},
+  //     tax: {},
+  //     total: {},
 
-      tax_id: {},
-    },
-  });
+  //     tax_id: {},
+  //   },
+  // });
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-    tax_rate: {},
-    inclusive_tax_rate: {},
-  });
+  // const [productUnits, setProductUnits] = useState({
+  //   sale_units: {},
+  //   tax_rate: {},
+  //   inclusive_tax_rate: {},
+  // });
+
+  // useEffect(() => {
+  //   if (!isEditDrawerOpen) {
+  //     setFormValues({
+  //       product_list: {
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
+  //       },
+  //     });
+  //     setProducts([]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProducts([]);
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditDrawerOpen]);
+    if (data && isEditDrawerOpen) {
+      // data?.quotation_products?.forEach((item) => {
+      //   setFormValues((prevFormValues) => ({
+      //     ...prevFormValues,
+      //     product_list: {
+      //       ...prevFormValues.product_list,
+      //       qty: {
+      //         ...prevFormValues.product_list.qty,
+      //         [item?.product_id.toString()]: item?.qty,
+      //       },
+      //       sale_unit_id: {
+      //         ...prevFormValues.product_list.sale_unit_id,
+      //         [item?.product_id.toString()]: item?.sale_unit_id,
+      //       },
+      //       net_unit_price: {
+      //         ...prevFormValues.product_list.net_unit_price,
+      //         [item?.product_id.toString()]: item?.net_unit_price,
+      //       },
+      //       discount: {
+      //         ...prevFormValues.product_list.discount,
+      //         [item?.product_id.toString()]: item?.discount,
+      //       },
+      //       tax_rate: {
+      //         ...prevFormValues.product_list.tax_rate,
+      //         [item?.product_id.toString()]: item?.tax_rate,
+      //       },
+      //       tax: {
+      //         ...prevFormValues.product_list.tax,
+      //         [item?.product_id.toString()]: item?.tax,
+      //       },
+      //       total: {
+      //         ...prevFormValues.product_list.total,
+      //         [item?.product_id.toString()]: item?.total,
+      //       },
+      //     },
+      //   }));
 
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
+      // setProducts((prevProducts) => [
+      //   ...prevProducts,
+      //   {
+      //     id: item?.product_id,
+      //     sku: item?.products?.sku,
+      //     name: item?.products?.name,
+      //     sale_unit_id: item?.sale_unit_id,
+      //     tax_id: item?.products?.tax_id,
+      //     taxes: item?.products?.taxes,
+      //     sale_units: item?.products?.sale_units,
+      //     buying_price: item?.products?.buying_price,
+      //   },
+      // ]);
 
-      data?.quotation_products?.forEach((item) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [item?.product_id.toString()]: item?.qty,
-            },
-            sale_unit_id: {
-              ...prevFormValues.product_list.sale_unit_id,
-              [item?.product_id.toString()]: item?.sale_unit_id,
-            },
-            net_unit_price: {
-              ...prevFormValues.product_list.net_unit_price,
-              [item?.product_id.toString()]: item?.net_unit_price,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [item?.product_id.toString()]: item?.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [item?.product_id.toString()]: item?.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [item?.product_id.toString()]: item?.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [item?.product_id.toString()]: item?.total,
-            },
-          },
-        }));
+      // setProductUnits((prevProductUnits) => ({
+      //   ...prevProductUnits,
 
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: item?.product_id,
-            sku: item?.products?.sku,
-            name: item?.products?.name,
-            sale_unit_id: item?.sale_unit_id,
-            tax_id: item?.products?.tax_id,
-            taxes: item?.products?.taxes,
-            sale_units: item?.products?.sale_units,
-            buying_price: item?.products?.buying_price,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          sale_units: {
-            ...prevProductUnits.sale_units,
-            [item?.product_id.toString()]:
-              item?.products?.sale_units?.operation_value ?? 1,
-          },
-        }));
-      });
+      //   sale_units: {
+      //     ...prevProductUnits.sale_units,
+      //     [item?.product_id.toString()]:
+      //       item?.products?.sale_units?.operation_value ?? 1,
+      //   },
+      // }));
+      // });
 
       const fieldData = fieldsToUpdate(data);
 
@@ -175,11 +173,13 @@ const QuotationEdit = ({ id, setId }) => {
       ];
 
       setFields(newFieldData);
+    } else {
+      setFields([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, setFields, isEditDrawerOpen]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -201,7 +201,6 @@ const QuotationEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -270,22 +269,22 @@ const QuotationEdit = ({ id, setId }) => {
       setId(undefined);
       dispatch(closeEditDrawer());
 
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProducts([]);
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
+      // setFormValues({
+      //   product_list: {
+      //     qty: {},
+      //     sale_unit_id: {},
+      //     net_unit_price: {},
+      //     discount: {},
+      //     tax_rate: {},
+      //     tax: {},
+      //     total: {},
+      //   },
+      // });
+      // setProducts([]);
+      // setProductUnits({
+      //   sale_units: {},
+      //   tax_rate: {},
+      // });
     }
 
     if (error) {
@@ -309,12 +308,13 @@ const QuotationEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
+        data={data}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // productUnits={productUnits}
+        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

@@ -160,7 +160,7 @@ const ProductListEdit = ({ id, setId }) => {
 
       setFields(newFieldData);
     } else {
-      form.resetFields();
+      setFields([]);
     }
   }, [data, isEditDrawerOpen, setFields, form]);
 

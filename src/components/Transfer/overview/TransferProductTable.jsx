@@ -253,8 +253,7 @@ const ProductFormComponent = ({
             '',
         },
         tax_id: {
-          [productId]:
-            formValues?.product_list?.tax_id[productId]?.toString() ?? '',
+          [productId]: formValues?.product_list?.tax_id[productId]?.toString(),
         },
       });
     }

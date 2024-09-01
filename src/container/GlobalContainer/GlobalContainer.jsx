@@ -24,6 +24,7 @@ import { IoSearch } from 'react-icons/io5';
 import { TbFilterSearch } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import { FilterDateRange } from '../../components/ReusableComponent/FilterDateRange';
 import CustomForm from '../../components/Shared/Form/CustomForm';
 import DeleteModal from '../../components/Shared/Modal/DeleteModal';
@@ -106,12 +107,9 @@ const GlobalContainer = ({
   };
 
   const handleOpenChange = (nextOpen, info) => {
-    console.log(nextOpen, info);
     if (info.source === 'trigger' || nextOpen) {
       setOpen(nextOpen);
     }
-
-    // setOpen(nextOpen);
   };
 
   const handleCheckedOpenChange = (nextOpen, info) => {
@@ -265,10 +263,8 @@ const GlobalContainer = ({
       hideModal();
       setSelectedRows([]);
     } else {
-      console.log(error);
+      console.error(error);
     }
-
-    console.log(data, error);
   };
 
   const hideModal = () => {

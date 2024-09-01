@@ -1,13 +1,14 @@
+import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+
 import { useGetAllCustomerQuery } from '../../../redux/services/customer/customerApi';
-import CustomerCreate from '../../Customer/CustomerCreate';
-import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
-import { Form } from 'antd';
+import CustomerCreate from '../../Customer/CustomerCreate';
+import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 
 //CustomerButtonComponent
 export const CustomerComponent = () => {

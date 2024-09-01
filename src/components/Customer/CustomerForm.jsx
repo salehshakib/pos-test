@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
+
 import { countries } from '../../assets/data/countries';
 import {
   colLayout,
@@ -8,13 +9,13 @@ import {
   rowLayout,
 } from '../../layout/FormLayout';
 import { useGetAllCustomerGroupQuery } from '../../redux/services/customerGroup/customerGroupApi';
-import CustomForm from '../Shared/Form/CustomForm';
-import CustomInput from '../Shared/Input/CustomInput';
-import CustomSelect from '../Shared/Select/CustomSelect';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../utilities/hooks/useParams';
+import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
+import CustomSelect from '../Shared/Select/CustomSelect';
 
 const CustomerGroupComonent = () => {
   const form = Form.useFormInstance();

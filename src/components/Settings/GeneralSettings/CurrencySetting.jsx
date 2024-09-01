@@ -1,5 +1,6 @@
 import { Col, Divider, Form, Radio, Row } from 'antd';
 import { currencies } from 'currencies.json';
+
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 

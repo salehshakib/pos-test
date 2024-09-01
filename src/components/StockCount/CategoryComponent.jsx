@@ -1,6 +1,7 @@
 import { Col } from 'antd';
-import { useGetAllCategoryQuery } from '../../redux/services/category/categoryApi';
+
 import { mdColLayout } from '../../layout/FormLayout';
+import { useGetAllCategoryQuery } from '../../redux/services/category/categoryApi';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
 export const CategoryComponent = () => {

@@ -2,6 +2,7 @@
 import { Col, Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+
 import { fullColLayout } from '../../../layout/FormLayout';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomTable from '../../Shared/Table/CustomTable';
@@ -92,32 +93,7 @@ const ComboTableComponent = () => {
   const productData = Form.useWatch('product_id', form);
   const productListData = Form.useWatch('product_list', form);
 
-  //console.log(productData);
-
   const [rowId, setRowId] = useState(undefined);
-
-  // useEffect(() => {
-  //   if (productData?.length > 0) {
-  //     if (rowId !== undefined) {
-  //       const selectedProduct = productData[rowId];
-
-  //       form.setFieldValue(["product_list", "qty", selectedProduct], 1);
-  //       form.setFieldValue(["product_list", "unit_price", selectedProduct], 0);
-
-  //       setRowId(undefined);
-  //     } else if (productData?.length > 0 && productData) {
-  //       const lastProductIndex = productData.length - 1;
-
-  //       if (lastProductIndex >= 0) {
-  //         const lastProduct = productData[lastProductIndex];
-
-  //         form.setFieldValue(["product_list", "qty", lastProduct], 1);
-  //         form.setFieldValue(["product_list", "unit_price", lastProduct], 0);
-  //       }
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [productData]);
 
   useEffect(() => {
     if (productData?.length > 0) {
@@ -158,16 +134,6 @@ const ComboTableComponent = () => {
       form.setFieldValue('product_id', updatedProductData);
     }
   }, [rowId]);
-
-  //console.log(rowId);
-
-  // const { productDetails } = useSelector((state) => state.product);
-
-  // const filteredProducts = productDetails.filter((product) =>
-  //   productData?.includes(product.value)
-  // );
-
-  // //console.log(filteredProducts);
 
   const dataSource =
     productData?.map((item) => {

@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetPayrollDetailsQuery,
@@ -12,7 +13,6 @@ import {
   fieldsToUpdate,
   updateFieldValues,
 } from '../../utilities/lib/fieldsToUpdate';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { PayrollForm } from './PayrollForm';
 
@@ -25,8 +25,6 @@ export const PayrollEdit = ({ id, setId }) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const { data, isFetching } = useGetPayrollDetailsQuery({ id }, { skip: !id });
-
-  // //console.log(isEditDrawerOpen, id);
 
   const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
@@ -52,7 +50,7 @@ export const PayrollEdit = ({ id, setId }) => {
     const formData = new FormData();
 
     const postData = {
-      ...sanitizeObj(values),
+      ...values,
       is_send_email: values?.is_send_email == true ? '1' : '0',
       bonus: Number(values?.bonus).toFixed(2),
       loan: Number(values?.loan).toFixed(2),

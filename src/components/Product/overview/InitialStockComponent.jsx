@@ -1,6 +1,8 @@
 import { Button, Form } from 'antd';
+import { useEffect } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
@@ -90,7 +92,6 @@ export const InitialStockComponent = ({
   setInitialWarehouses,
 }) => {
   const form = Form.useFormInstance();
-  const hasStock = Form.useWatch('has_stock', form);
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
@@ -142,8 +143,6 @@ export const InitialStockComponent = ({
     }));
   };
 
-  //console.log(formValues.qty_list);
-
   const onDelete = (id) => {
     setInitialWarehouses((prevWarehouse) =>
       prevWarehouse.filter((warehouse) => warehouse.id !== id)
@@ -181,16 +180,20 @@ export const InitialStockComponent = ({
       };
     }) ?? [];
 
-  form.setFieldsValue(formValues);
+  console.log(initialWarehouses);
+
+  console.log(dataSource);
+
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [form, formValues, initialWarehouses]);
 
   return (
-    hasStock && (
-      <WarehouseController
-        warehouses={initialWarehouses}
-        setWarehouses={setInitialWarehouses}
-        columns={columns}
-        dataSource={dataSource}
-      />
-    )
+    <WarehouseController
+      warehouses={initialWarehouses}
+      setWarehouses={setInitialWarehouses}
+      columns={columns}
+      dataSource={dataSource}
+    />
   );
 };

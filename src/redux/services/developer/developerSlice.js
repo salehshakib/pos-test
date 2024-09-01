@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import logo from '../../../assets/data/defaultLogo';
 
 const initialState = {

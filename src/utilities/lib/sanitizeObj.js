@@ -2,7 +2,10 @@ import dayjs from 'dayjs';
 
 export const sanitizeObj = (values) => {
   const sanitizedValues = {};
+
   Object.keys(values).forEach((key) => {
+    // console.log(key);
+
     if (
       values[key] &&
       typeof values[key] === 'string' &&

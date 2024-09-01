@@ -10,6 +10,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import { baseApi } from './api/baseApi';
 import authSlice from './services/auth/authSlice';
 import cashRegisterSlice from './services/cashRegister/cashRegisterSlice';

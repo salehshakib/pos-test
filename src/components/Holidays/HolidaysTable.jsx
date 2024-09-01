@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useDeleteHolidayMutation,
   useGetAllHolidayQuery,
 } from '../../redux/services/hrm/holiday/holidayApi';
+import { useFormatDate } from '../../utilities/hooks/useFormatDate';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { formatDate } from '../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
-
-import { useFormatDate } from '../../utilities/hooks/useFormatDate';
-import { formatDate } from '../../utilities/lib/dateFormat';
 import { HolidayDetails } from './HolidayDetails';
 import { HolidaysEdit } from './HolidaysEdit';
 
@@ -30,9 +30,6 @@ export const HolidaysTable = ({
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
-
-  // const [statusId, setStatusId] = useState(undefined);
-  // const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -54,9 +51,6 @@ export const HolidaysTable = ({
 
   const total = data?.meta?.total;
 
-  // const [updateStatus, { isLoading: isStatusUpdating }] =
-  //   useUpdateHolidayStatusMutation();
-
   const [deleteHoliday, { isLoading: isDeleting }] = useDeleteHolidayMutation();
 
   const handleEdit = (id) => {
@@ -68,20 +62,6 @@ export const HolidaysTable = ({
     setDetailsId(id);
     setDetailsModal(true);
   };
-
-  // const handleStatusModal = (id) => {
-  //   setStatusId(id);
-  //   setStatusModal(true);
-  // };
-
-  // const handleStatus = async () => {
-  //   const { data } = await updateStatus(statusId);
-
-  //   if (data?.success) {
-  //     setStatusId(undefined);
-  //     setStatusModal(false);
-  //   }
-  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -100,7 +80,6 @@ export const HolidaysTable = ({
 
   const dataSource =
     data?.results?.holiday?.map((item) => {
-      // console.log(item);
       const { id, title, description } = item ?? {};
 
       return {
@@ -117,7 +96,6 @@ export const HolidaysTable = ({
 
   const hideModal = () => {
     setDetailsModal(false);
-    // setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -146,13 +124,6 @@ export const HolidaysTable = ({
           hideModal={hideModal}
         />
       )}
-
-      {/* <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      /> */}
 
       <DeleteModal
         deleteModal={deleteModal}

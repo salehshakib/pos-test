@@ -1,7 +1,8 @@
 import { Col, Divider, Form, Radio, Row } from 'antd';
+
 import { invoiceFormats } from '../../../assets/data/invoiceFormats';
-import CustomSelect from '../../Shared/Select/CustomSelect';
 import { staffAcessOptions } from '../../../assets/data/staffAccessOptions';
+import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const rowLayout = {
   gutter: 25,

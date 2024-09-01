@@ -2,6 +2,7 @@ import { BiCategoryAlt } from 'react-icons/bi';
 import { FaBarcode } from 'react-icons/fa6';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { TbBrandAirtable } from 'react-icons/tb';
+
 import Brand from '../../pages/Dashboard/Brand/Brand';
 import Category from '../../pages/Dashboard/Category/Category';
 import PrintBarcode from '../../pages/Dashboard/PrintBarcode/PrintBarcode';

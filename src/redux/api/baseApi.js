@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { base_url } from '../../utilities/configs/base_url';
-import { logout } from '../services/auth/authSlice';
 import { openNotification } from '../../utilities/lib/openToaster';
+import { logout } from '../services/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${base_url}`,

@@ -1,4 +1,5 @@
 import { Spin, Table } from 'antd';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useGetSaleReturnDetailsQuery } from '../../redux/services/return/saleReturnApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
@@ -108,7 +109,7 @@ export const SaleReturnDetails = ({ id, ...props }) => {
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
           <CustomDescription title="Reference" items={referenceId} />
-          <CustomDescription title="Beneficiary " items={benDetails} />
+          <CustomDescription title="Beneficiary" items={benDetails} />
 
           <CustomDescription title="Sale Return" items={saleReturnDetails} />
           <Table
@@ -117,7 +118,7 @@ export const SaleReturnDetails = ({ id, ...props }) => {
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Attachemnt " items={attachment} />
+          <CustomDescription title="Attachemnt" items={attachment} />
           <CustomDescription title="Additional" items={additionalInfo} />
         </div>
       )}

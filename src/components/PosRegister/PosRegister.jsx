@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { FaPlus, FaRegEdit } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { fullColLayout } from '../../layout/FormLayout';
 import { useGetAllCouponQuery } from '../../redux/services/coupon/couponApi';
@@ -27,6 +28,7 @@ import { SearchProduct } from '../Shared/ProductControllerComponent/SearchProduc
 import CustomSelect from '../Shared/Select/CustomSelect';
 import { CustomSelectButton } from '../Shared/Select/CustomSelectButton';
 import ProductTableComponent from './PosProductTableComponent';
+
 const { Text } = Typography;
 
 const CustomerComponent = ({ size }) => {
@@ -400,12 +402,6 @@ export const PosRegister = ({
   const item = Object.values(formValues.product_list.qty).length;
 
   const currency = useSelector(useCurrency);
-
-  // console.log(type);
-
-  // console.log(totalPrice);
-
-  // console.log(productUnits.minimum_amount);
 
   useEffect(() => {
     if (type?.toLowerCase() === 'fixed') {

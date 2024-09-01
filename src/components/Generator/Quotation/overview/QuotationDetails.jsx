@@ -1,8 +1,4 @@
 import { Spin } from 'antd';
-import { useGetQuotationDetailsQuery } from '../../../../redux/services/quotation/quotationApi';
-import CustomModal from '../../../Shared/Modal/CustomModal';
-import Invoice from './Invoice';
-
 // const columns = [
 //   {
 //     title: "Product Name",
@@ -64,7 +60,11 @@ import Invoice from './Invoice';
 // ];
 
 import generatePDF from 'react-to-pdf';
+
+import { useGetQuotationDetailsQuery } from '../../../../redux/services/quotation/quotationApi';
 import { generatePdfOptions } from '../../../../utilities/lib/generatePdfOptions';
+import CustomModal from '../../../Shared/Modal/CustomModal';
+import Invoice from './Invoice';
 
 export const QuotationDetails = ({ id, ...props }) => {
   const { data, isFetching } = useGetQuotationDetailsQuery(
@@ -159,7 +159,7 @@ export const QuotationDetails = ({ id, ...props }) => {
         <div className="space-y-5 pb-5 pr-3 pt-3">
           <Invoice data={data} type="QUOTATION" />
           {/* <CustomDescription title="Reference" items={referenceId} />
-          <CustomDescription title="Beneficiary " items={benDetails} />
+          <CustomDescription title="Beneficiary" items={benDetails} />
 
           <CustomDescription title="Quotation" items={quotationDetails} />
           <Table
@@ -168,7 +168,7 @@ export const QuotationDetails = ({ id, ...props }) => {
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Attachemnt " items={attachment} />
+          <CustomDescription title="Attachemnt" items={attachment} />
           <CustomDescription title="Additional" items={additionalInfo} />
 
           <div className="w-full flex flex-col gap-5 justify-center items-center ">

@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateTransferMutation } from '../../redux/services/transfer/transferApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
@@ -23,14 +24,12 @@ const TransferCreate = () => {
 
   const [formValues, setFormValues] = useState({
     product_list: {
-      product_id: {},
       qty: {},
       purchase_unit_id: {},
       net_unit_cost: {},
       tax_rate: {},
       tax: {},
       total: {},
-
       tax_id: {},
     },
   });
@@ -47,14 +46,12 @@ const TransferCreate = () => {
     if (warehouseId) {
       setFormValues({
         product_list: {
-          product_id: {},
           qty: {},
           purchase_unit_id: {},
           net_unit_cost: {},
           tax_rate: {},
           tax: {},
           total: {},
-
           tax_id: {},
         },
       });

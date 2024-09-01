@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+
 import { useGetAllCategoryQuery } from '../../../redux/services/category/categoryApi';
 import CategoryCreate from '../../Category/CategoryCreate';
 import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';

@@ -1,5 +1,6 @@
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   selectPagination,
   updatePage,
@@ -52,8 +53,8 @@ const CustomProductTable = ({
           ...rowSelection,
         }
       : false,
-    onRow: (record) => ({
-      onClick: () => console.log(record.id),
+    onRow: (_record) => ({
+      onClick: () => {},
     }),
     loading: isLoading || globalLoading,
     scroll: {

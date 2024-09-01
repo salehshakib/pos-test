@@ -1,5 +1,7 @@
+import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetDepartmentDetailsQuery,
@@ -8,7 +10,6 @@ import {
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import DepartmentForm from './DepartmentForm';
-import { Form } from 'antd';
 
 const DepartmentEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

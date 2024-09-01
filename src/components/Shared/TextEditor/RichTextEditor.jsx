@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Form } from 'antd';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const module = {

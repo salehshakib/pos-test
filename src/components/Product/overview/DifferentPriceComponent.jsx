@@ -1,5 +1,7 @@
 import { Form } from 'antd';
+import { useEffect } from 'react';
 import { MdDelete } from 'react-icons/md';
+
 import CustomInput from '../../Shared/Input/CustomInput';
 import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
@@ -31,7 +33,7 @@ const columns = [
         <CustomInput
           type={'number'}
           name={['price_list', 'price', record?.id]}
-          placeholder="quantity"
+          placeholder="price"
           noStyle={true}
           onChange={(value) => record.onUnitPriceChange(record.id, value)}
         />
@@ -70,7 +72,6 @@ export const DifferentPriceComponent = ({
   setPriceWarehouses,
 }) => {
   const form = Form.useFormInstance();
-  const hasDifferentPrice = Form.useWatch('has_different_price', form);
 
   const incrementCounter = (id, stock = 5) => {
     setFormValues((prevFormValues) => {
@@ -127,12 +128,8 @@ export const DifferentPriceComponent = ({
     );
   };
 
-  //console.log(priceWarehouses);
-
   const dataSource =
     priceWarehouses?.map((warehouse) => {
-      //console.log(warehouse);
-
       const { id, name } = warehouse;
 
       formValues.price_list.price[id] = formValues.price_list.price[id] ?? 0;
@@ -148,16 +145,16 @@ export const DifferentPriceComponent = ({
       };
     }) ?? [];
 
-  form.setFieldsValue(formValues);
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [form, formValues, priceWarehouses]);
 
   return (
-    hasDifferentPrice && (
-      <WarehouseController
-        warehouses={priceWarehouses}
-        setWarehouses={setPriceWarehouses}
-        columns={columns}
-        dataSource={dataSource}
-      />
-    )
+    <WarehouseController
+      warehouses={priceWarehouses}
+      setWarehouses={setPriceWarehouses}
+      columns={columns}
+      dataSource={dataSource}
+    />
   );
 };

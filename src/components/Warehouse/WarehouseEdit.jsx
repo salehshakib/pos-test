@@ -1,15 +1,16 @@
+import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetWarehouseDetailsQuery,
   useUpdateWarehouseMutation,
 } from '../../redux/services/warehouse/warehouseApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import WarehouseForm from './WarehouseForm';
-import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { Form } from 'antd';
 
 const WarehouseEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

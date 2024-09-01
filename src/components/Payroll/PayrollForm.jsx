@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 import { paymentTypesOptions } from '../../assets/data/paymentTypes';
 import {
   colLayout,

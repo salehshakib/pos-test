@@ -1,8 +1,9 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCreateRolesMutation } from '../../redux/services/roles/rolesApi';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useCreateRolesMutation } from '../../redux/services/roles/rolesApi';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { RolesForm } from './RolesForm';
 
@@ -16,7 +17,6 @@ export const RolesCreate = () => {
   const [createRoles, { isLoading }] = useCreateRolesMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createRoles({
       data: values,
     });

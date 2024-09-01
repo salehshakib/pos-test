@@ -1,4 +1,5 @@
 import { MdOutlineAttachEmail, MdOutlineMailLock } from 'react-icons/md';
+
 import { EmailConfig } from '../../pages/Dashboard/EmailConfig/EmailConfig';
 import EmailTemplate from '../../pages/Dashboard/EmailTemplate/EmailTemplate';
 

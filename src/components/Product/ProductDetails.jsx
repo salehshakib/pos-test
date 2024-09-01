@@ -1,5 +1,6 @@
 import { Descriptions, Spin, Table } from 'antd';
 import { useSelector } from 'react-redux';
+
 import { detailsLayout } from '../../layout/DescriptionLayout';
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
@@ -162,8 +163,6 @@ export const ProductDetails = ({ id, ...props }) => {
       price: showCurrency(item?.price, currency) ?? 'Unknown Quantity',
     };
   });
-
-  console.log(data?.details);
 
   return (
     <CustomModal {...props}>

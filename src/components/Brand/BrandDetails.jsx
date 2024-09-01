@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetBrandDetailsQuery } from '../../redux/services/brand/brandApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
@@ -24,7 +25,7 @@ export const BrandDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <CustomDescription title="Brand " items={details} />
+          <CustomDescription title="Brand" items={details} />
         </div>
       )}
     </CustomModal>

@@ -1,4 +1,5 @@
 import { Col, Form, Radio, Row } from 'antd';
+
 import {
   largeLayout,
   mdColLayout,
@@ -17,7 +18,7 @@ const CustomInvoiceForm = ({ name, label }) => {
           name={name}
           label={label}
           type={'textarea'}
-          maxlength={30}
+          maxlength={15}
         />
       </Col>
       <Col {...mdColLayout}>

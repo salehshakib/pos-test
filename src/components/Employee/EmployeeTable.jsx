@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -55,7 +56,7 @@ const EmployeeTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateEmployeeStatus, { isLoading: isStatusUpdating }] =
     useUpdateEmployeeStatusMutation();
 
   const [deleteEmployee, { isLoading: isDeleting }] =
@@ -77,7 +78,7 @@ const EmployeeTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateEmployeeStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

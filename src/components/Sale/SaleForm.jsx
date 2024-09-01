@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+
 import { discountTypeOptions } from '../../assets/data/discountTypes';
 import { paymentStatusOptions } from '../../assets/data/paymentStatus';
 import { saleStatusOptions } from '../../assets/data/saleStatus';

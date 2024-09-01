@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import DiscountCreate from '../../../components/Discount/DiscountCreate';
 import { DiscountTable } from '../../../components/Discount/DiscountTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
@@ -96,7 +97,7 @@ const Discount = () => {
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       setParams={setParams}
-      searchFilterContent={<SearchComponent />}
+      // searchFilterContent={<SearchComponent />}
       // api={DISCOUNT}
     >
       <DiscountCreate />

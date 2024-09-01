@@ -1,13 +1,14 @@
 import { PageContainer } from '@ant-design/pro-layout';
+
 import { PosSettingForm } from '../../../components/Settings/PosSettings/PosSettingForm';
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { useGetPosSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
 
 const PosSetting = () => {
   const params = {
     child: 1,
   };
-  const { data, isLoading } = useGetGeneralSettingsQuery(params);
+  const { data, isLoading } = useGetPosSettingsQuery(params);
 
   return (
     <GlobalUtilityStyle>
@@ -24,7 +25,7 @@ const PosSetting = () => {
         }}
         loading={isLoading}
       >
-        <PosSettingForm data={data?.pos_setting} />
+        <PosSettingForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );

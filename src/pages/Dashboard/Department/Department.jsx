@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import DepartmentCreate from '../../../components/Department/DepartmentCreate';
 import DepartmentTable from '../../../components/Department/DepartmentTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

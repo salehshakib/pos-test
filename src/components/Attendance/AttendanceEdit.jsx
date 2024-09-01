@@ -1,6 +1,8 @@
 import { Form } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetAttendenceDetailsQuery,
@@ -14,7 +16,6 @@ import {
 } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { AttendanceForm } from './AttendanceForm';
-import dayjs from 'dayjs';
 
 export const AttendanceEdit = ({ id, setId }) => {
   const dispatch = useDispatch();

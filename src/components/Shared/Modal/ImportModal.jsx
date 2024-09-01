@@ -1,6 +1,7 @@
 import { Button, Form, Modal, theme, Upload } from 'antd';
 import { FaDownload, FaUpload } from 'react-icons/fa';
 import { FaFileArrowUp } from 'react-icons/fa6';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import CustomForm from '../Form/CustomForm';
 
@@ -11,7 +12,6 @@ const modalProps = {
 };
 
 const normFile = (e) => {
-  console.log('Upload event:', e);
   if (Array.isArray(e)) {
     return e;
   }
@@ -21,9 +21,7 @@ const normFile = (e) => {
 const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
   const [importForm] = Form.useForm();
 
-  const handleSubmit = async (values) => {
-    console.log(values);
-  };
+  const handleSubmit = async (_values) => {};
 
   const { token } = theme.useToken();
   return (

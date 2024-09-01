@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -14,7 +15,6 @@ import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
-
 import { GiftCardDesigneDetails } from './GiftCardDesignDetails';
 import { GiftCardDesignEdit } from './GiftCardDesignEdit';
 
@@ -58,7 +58,7 @@ const GiftCardDesginTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateGiftCardDesignStatus, { isLoading: isStatusUpdating }] =
     useUpdateGiftCardDesignStatusMutation();
 
   const [deleteGiftCardDesign, { isLoading: isDeleting }] =
@@ -80,7 +80,7 @@ const GiftCardDesginTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateGiftCardDesignStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { DesignationCreate } from '../../../components/Designation/DesignationCreate';
 import { DesignationTable } from '../../../components/Designation/DesignationTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

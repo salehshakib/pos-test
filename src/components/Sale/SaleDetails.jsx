@@ -1,5 +1,6 @@
 import { Spin, Table } from 'antd';
 import { useSelector } from 'react-redux';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetSaleDetailsQuery } from '../../redux/services/sale/saleApi';
@@ -57,8 +58,6 @@ export const SaleDetails = ({ id, ...props }) => {
   );
 
   const currency = useSelector(useCurrency);
-
-  console.log(data?.customers);
 
   const basicInfo = useDetailsLayout({
     reference_id: data?.reference_id,

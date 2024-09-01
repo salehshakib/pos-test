@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetRolePermissionDetailsQuery } from '../../redux/services/rolePermission/rolePermissionApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
@@ -32,7 +33,7 @@ export const RoleDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <CustomDescription title="Role " items={details} />
+          <CustomDescription title="Role" items={details} />
         </div>
       )}
     </CustomModal>

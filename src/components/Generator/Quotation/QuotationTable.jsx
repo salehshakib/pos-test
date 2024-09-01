@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import { openEditDrawer } from '../../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
@@ -14,8 +15,8 @@ import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../../Shared/Modal/DeleteModal';
 import CustomTable from '../../Shared/Table/CustomTable';
-import QuotationEdit from './QuotationEdit';
 import { QuotationDetails } from './overview/QuotationDetails';
+import QuotationEdit from './QuotationEdit';
 
 const QuotationTable = ({
   newColumns,

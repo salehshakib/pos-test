@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import WarehouseCreate from '../../../components/Warehouse/WarehouseCreate';
 import WarehouseTable from '../../../components/Warehouse/WarehouseTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
@@ -24,7 +25,7 @@ const columns = [
     key: 'phone',
     render: (phone) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {'0' + phone}
+        {'+880 ' + phone}
       </span>
     ),
   },

@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
+
 import { barcodeOptions } from '../../assets/data/barcode';
 import { taxTypeOptions } from '../../assets/data/taxType';
 import {
@@ -19,11 +20,11 @@ import CustomInputButton from '../Shared/Input/CustomInputButton';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import RichTextEditor from '../Shared/TextEditor/RichTextEditor';
 import CustomUploader from '../Shared/Upload/CustomUploader';
+import { CustomDifferentPriceComponent } from './customcomponents/CustomDifferentPriceComponent';
+import { CustomInititalStockComponent } from './customcomponents/CustomInitialStockComponent';
+import { CustomProductComponent } from './customcomponents/CustomProductComponent';
 import { BrandComponent } from './overview/BrandComponent';
 import { CategoryComponent } from './overview/CategoryComponent';
-import ComboProductsComponent from './overview/ComboProductsComponent';
-import { DifferentPriceComponent } from './overview/DifferentPriceComponent';
-import { InitialStockComponent } from './overview/InitialStockComponent';
 import { TaxComponent } from './overview/TaxComponent';
 import UnitComponent from './overview/UnitComponent';
 
@@ -110,6 +111,8 @@ const AttachmentComponent = () => {
         />
       </Col>
     );
+
+  return null;
 };
 
 const ProductCostComponent = () => {
@@ -182,21 +185,9 @@ const PromotionalPriceComponent = () => {
   const form = Form.useFormInstance();
   const hasPromotionalPrice = Form.useWatch('has_promotion', form);
 
-  // const disabledDate = (current) => {
-  //   return current < dayjs().startOf("day");
-  // };
-
   const start_date = Form.useWatch(['promotion', 'starting_date'], form);
 
   const disabledDateStart = (current) => {
-    // if (start_date) {
-    //   return (
-    //     current && start_date && current < dayjs(start_date).startOf("day")
-    //   );
-    // } else {
-    //   return current < dayjs().startOf("day");
-    // }
-
     return disabledDate(current, start_date);
   };
 
@@ -244,26 +235,51 @@ const PromotionalPriceComponent = () => {
   );
 };
 
-const ProductForm = ({
-  formValues,
-  setFormValues,
-  products,
-  setProducts,
-  initialWarehouses,
-  setInitialWarehouses,
-  priceWarehouses,
-  setPriceWarehouses,
-  ...props
-}) => {
-  const productType = Form.useWatch('type', props.form);
+const ProductForm = ({ data, ...props }) => {
+  const comboProductSubmitRef = useRef(null);
+  const initialStockSubmitRef = useRef(null);
+  const diffPriceSubmitRef = useRef(null);
+
+  const handleComboProduct = useCallback((submitFunction) => {
+    comboProductSubmitRef.current = submitFunction;
+  }, []);
+
+  const handleInitialProduct = useCallback((submitFunction) => {
+    initialStockSubmitRef.current = submitFunction;
+  }, []);
+
+  const handlediffPriceProduct = useCallback((submitFunction) => {
+    diffPriceSubmitRef.current = submitFunction;
+  }, []);
+
+  const handleSubmit = (values) => {
+    const comboData = comboProductSubmitRef.current
+      ? comboProductSubmitRef.current()
+      : null;
+
+    const initialData = initialStockSubmitRef.current
+      ? initialStockSubmitRef.current()
+      : null;
+
+    const diffPriceData = diffPriceSubmitRef.current
+      ? diffPriceSubmitRef.current()
+      : null;
+
+    const formValues = {
+      product_list: comboData.product_list,
+      qty_list: initialData.qty_list,
+      price_list: diffPriceData.price_list,
+    };
+
+    props.handleSubmit(values, { formValues });
+  };
 
   return (
-    <CustomForm {...props}>
+    <CustomForm {...props} handleSubmit={handleSubmit}>
       <Row {...rowLayout}>
         <Col {...colLayout}>
           <ProductTypeComponent />
         </Col>
-
         <Col {...colLayout}>
           <CustomInput
             label="Product Name"
@@ -272,23 +288,17 @@ const ProductForm = ({
             name={'name'}
           />
         </Col>
-
         <Col {...colLayout}>
           <ProductCodeComponent />
         </Col>
-
         <Col {...colLayout}>
           <BarCodeComponent />
         </Col>
 
-        {productType === 'Combo' && (
-          <ComboProductsComponent
-            formValues={formValues}
-            setFormValues={setFormValues}
-            products={products}
-            setProducts={setProducts}
-          />
-        )}
+        <CustomProductComponent
+          onCustomSubmit={handleComboProduct}
+          data={data}
+        />
 
         <AttachmentComponent />
 
@@ -298,11 +308,8 @@ const ProductForm = ({
         <Col {...colLayout}>
           <CategoryComponent />
         </Col>
-
         <UnitComponent />
-
         <ProductCostComponent />
-
         <Col {...colLayout}>
           <CustomInput
             label="Product Selling Price"
@@ -319,9 +326,7 @@ const ProductForm = ({
             name={'daily_sale_qty'}
           />
         </Col>
-
         <AlertComponent />
-
         <Col {...colLayout}>
           <TaxComponent />
         </Col>
@@ -332,18 +337,12 @@ const ProductForm = ({
 
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="Initial Stock"
-            name="has_stock"
-            // required={true}
-          />
+          <CustomCheckbox label="Initial Stock" name="has_stock" />
         </Col>
 
-        <InitialStockComponent
-          initialWarehouses={initialWarehouses}
-          setInitialWarehouses={setInitialWarehouses}
-          formValues={formValues}
-          setFormValues={setFormValues}
+        <CustomInititalStockComponent
+          onCustomSubmit={handleInitialProduct}
+          data={data}
         />
 
         {/* <Col {...fullColLayout}>
@@ -371,7 +370,11 @@ const ProductForm = ({
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <RichTextEditor label="Product" name="details" required={true} />
+          <RichTextEditor
+            label="Product Details"
+            name="details"
+            required={true}
+          />
         </Col>
       </Row>
 
@@ -385,11 +388,9 @@ const ProductForm = ({
           />
         </Col>
 
-        <DifferentPriceComponent
-          formValues={formValues}
-          setFormValues={setFormValues}
-          priceWarehouses={priceWarehouses}
-          setPriceWarehouses={setPriceWarehouses}
+        <CustomDifferentPriceComponent
+          onCustomSubmit={handlediffPriceProduct}
+          data={data}
         />
       </Row>
 

@@ -1,5 +1,6 @@
 import { Button, Modal } from 'antd';
 import { FaInfoCircle } from 'react-icons/fa';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const props = {

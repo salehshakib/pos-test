@@ -1,4 +1,5 @@
 import { Col, Row } from 'antd';
+
 import { fullColLayout } from '../../layout/FormLayout';
 
 export const TotalRow = ({

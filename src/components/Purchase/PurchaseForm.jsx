@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+
 import { paymentStatusOptions } from '../../assets/data/paymentStatus';
 import { purchaseStatusOptions } from '../../assets/data/purchaseStatus';
 import {
@@ -8,14 +9,8 @@ import {
   largeLayout,
   rowLayout,
 } from '../../layout/FormLayout';
-import {
-  calculateGrandTotal,
-  calculateTotalPrice,
-  calculateTotalTax,
-} from '../../utilities/lib/generator/generatorUtils';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { SupplierComponent } from '../ReusableComponent/SupplierComponent';
-import { TotalRow } from '../ReusableComponent/TotalRow';
 import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
 import { CurrencyFormComponent } from '../Sale/overview/CurrencyComponent';
 import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
@@ -23,15 +18,16 @@ import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import CustomUploader from '../Shared/Upload/CustomUploader';
+import { CustomPurchaseProductComponent } from './overview/CustomPurchaseProductComponent';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
-import { PurchaseProductTable } from './overview/PurchaseProductTable';
 
-const PurchaseStatus = ({ form }) => {
-  // useSetFieldValue('purchase_status', purchaseStatusOptions[0].value);
+const PurchaseStatus = () => {
+  const form = Form.useFormInstance();
 
   useEffect(() => {
     form.setFieldValue('purchase_status', purchaseStatusOptions[0].value);
   }, [form]);
+
   return (
     <CustomSelect
       label="Purchase Status"
@@ -41,11 +37,13 @@ const PurchaseStatus = ({ form }) => {
   );
 };
 
-const PaymentStatusComponent = ({ form }) => {
-  // useSetFieldValue('payment_status', paymentStatusOptions[0].value);
+const PaymentStatusComponent = () => {
+  const form = Form.useFormInstance();
+
   useEffect(() => {
-    form.setFieldValue('payment_status', purchaseStatusOptions[0].value);
+    form.setFieldValue('payment_status', paymentStatusOptions[0].value);
   }, [form]);
+
   return (
     <CustomSelect
       label="Payment Status"
@@ -55,87 +53,31 @@ const PaymentStatusComponent = ({ form }) => {
   );
 };
 
-export const PurchaseForm = ({
-  formValues,
-  setFormValues,
-  products,
-  setProducts,
-  productUnits,
-  setProductUnits,
-  ...props
-}) => {
-  const form = props.form;
+export const PurchaseForm = ({ data, ...props }) => {
+  const productsRef = useRef(null);
 
-  const discount = Form.useWatch('discount', form);
-  const shipping_cost = Form.useWatch('shipping_cost', form);
-  const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
+  const handleProducts = useCallback((submitFunction) => {
+    productsRef.current = submitFunction;
+  }, []);
 
-  const paymentStatus = Form.useWatch('payment_status', form);
-  const paid_amount = Form.useWatch('paid_amount', form);
+  const handleSubmit = (values) => {
+    const productsData = productsRef.current ? productsRef.current() : null;
 
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalQty, setTotalQty] = useState(0);
-  const [taxRate, setTaxRate] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
+    const formValues = {
+      product_list: productsData.product_list,
+    };
 
-  useEffect(() => {
-    const calculatedTotalItems =
-      Object.keys(formValues.product_list?.qty).length ?? 0;
+    props.handleSubmit(values, { formValues });
+  };
 
-    const calculatedTotalQty = Object.values(
-      formValues.product_list?.qty
-    ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
-
-    const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
-
-    const orderTax = calculateTotalTax(
-      calculatedTotalPrice,
-      tax_rate,
-      discount
-    );
-
-    const calculatedGrandTotal = calculateGrandTotal(
-      calculatedTotalPrice,
-      tax_rate ?? 0,
-      discount,
-      shipping_cost
-    );
-
-    console.log({
-      orderTax,
-      calculatedTotalPrice,
-      calculatedGrandTotal,
-      discount,
-    });
-
-    setTotalItems(calculatedTotalItems);
-    setTotalQty(calculatedTotalQty);
-    setTotalPrice(calculatedTotalPrice);
-    setGrandTotal(calculatedGrandTotal);
-    setTaxRate(orderTax);
-  }, [discount, formValues, shipping_cost, tax_rate, products]);
-
-  useEffect(() => {
-    if (paymentStatus === 'Paid') {
-      form.setFieldValue('paid_amount', grandTotal);
-    }
-
-    if (paymentStatus === 'Partial') {
-      if (Number(paid_amount) > totalPrice) {
-        form.setFieldValue('paid_amount', totalPrice);
-      }
-    }
-  }, [paymentStatus, form, totalPrice, paid_amount, grandTotal]);
-
-  // reset state
+  const warehousePurchaseRef = useRef(null);
 
   return (
     <>
-      <CustomForm {...props}>
+      <CustomForm {...props} handleSubmit={handleSubmit}>
         <Row {...rowLayout}>
           <Col {...largeLayout}>
-            <WarehouseComponent />
+            <WarehouseComponent warehousePurchaseRef={warehousePurchaseRef} />
           </Col>
           <Col {...largeLayout}>
             <SupplierComponent />
@@ -144,64 +86,50 @@ export const PurchaseForm = ({
             <CustomDatepicker label="Date" required name="purchase_at" />
           </Col>
           <Col {...largeLayout}>
-            <PurchaseStatus form={form} />
+            <PurchaseStatus />
           </Col>
 
-          <PurchaseProductTable
-            formValues={formValues}
-            setFormValues={setFormValues}
-            products={products}
-            setProducts={setProducts}
-            productUnits={productUnits}
-            setProductUnits={setProductUnits}
-          />
+          <CustomPurchaseProductComponent
+            onCustomSubmit={handleProducts}
+            data={data}
+            ref={warehousePurchaseRef}
+          >
+            <Col {...colLayout}>
+              <OrderTaxComponent />
+            </Col>
+            <Col {...colLayout}>
+              <CustomInput label="Discount" type="number" name="discount" />
+            </Col>
+            <Col {...colLayout}>
+              <CustomInput
+                label="Shipping Cost"
+                type="number"
+                name="shipping_cost"
+              />
+            </Col>
+            <Col {...colLayout}>
+              <PaymentStatusComponent />
+            </Col>
 
-          <Col {...colLayout}>
-            <OrderTaxComponent />
-          </Col>
-          <Col {...colLayout}>
-            <CustomInput label="Discount" type="number" name="discount" />
-          </Col>
-          <Col {...colLayout}>
-            <CustomInput
-              label="Shipping Cost"
-              type="number"
-              name="shipping_cost"
-            />
-          </Col>
-          <Col {...colLayout}>
-            <PaymentStatusComponent form={form} />
-          </Col>
-
-          {(paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
             <PaymentTypeComponent />
-          )}
 
-          <Col {...colLayout}>
-            <CurrencyFormComponent />
-          </Col>
+            <Col {...colLayout}>
+              <CurrencyFormComponent />
+            </Col>
 
-          <Col {...fullColLayout}>
-            <CustomUploader label="Attach Document" name="attachment" />
-          </Col>
-          <Col {...fullColLayout}>
-            <CustomInput
-              type="textarea"
-              name="purchase_note"
-              label="Purchase Note"
-            />
-          </Col>
+            <Col {...fullColLayout}>
+              <CustomUploader label="Attach Document" name="attachment" />
+            </Col>
+            <Col {...fullColLayout}>
+              <CustomInput
+                type="textarea"
+                name="purchase_note"
+                label="Purchase Note"
+              />
+            </Col>
+          </CustomPurchaseProductComponent>
         </Row>
       </CustomForm>
-      <TotalRow
-        totalItems={totalItems}
-        totalQty={totalQty}
-        totalPrice={totalPrice}
-        taxRate={taxRate ?? 0}
-        discount={discount ?? 0}
-        shippingCost={shipping_cost ?? 0}
-        grandTotal={grandTotal}
-      />
     </>
   );
 };

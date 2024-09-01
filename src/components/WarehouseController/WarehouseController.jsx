@@ -2,6 +2,7 @@ import { AutoComplete, Col, Spin } from 'antd';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDebouncedCallback } from 'use-debounce';
+
 import { fullColLayout } from '../../layout/FormLayout';
 import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
@@ -26,8 +27,6 @@ const SearchWarehouse = ({ setWarehouses }) => {
   const { data, isFetching } = useGetWarehousesQuery({
     params,
   });
-
-  //console.log(data);
 
   const loadingContent = (
     <div className="flex items-center justify-center">

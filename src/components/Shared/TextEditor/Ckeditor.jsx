@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Form } from 'antd';
-import { useState } from 'react';
-import { GlobalUtilityStyle } from '../../../container/Styled';
-
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { Form } from 'antd';
 import {
   BlockQuote,
   Bold,
@@ -25,6 +22,9 @@ import {
   Table,
   Undo,
 } from 'ckeditor5';
+import { useState } from 'react';
+
+import { GlobalUtilityStyle } from '../../../container/Styled';
 
 import 'ckeditor5/ckeditor5.css';
 
@@ -32,12 +32,8 @@ const Ckeditor = ({ value, onChange, name, required, label, initialData }) => {
   const [editor, setEditor] = useState('');
 
   const hangleChange = (content, editor) => {
-    console.log(content);
-    console.log(editor);
     const data = editor.getData();
     setEditor(data);
-
-    console.log(data);
   };
 
   //   useImperativeHandle(ref, () => ({

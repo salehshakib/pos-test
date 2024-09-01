@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetUnitDetailsQuery,
@@ -9,7 +10,6 @@ import {
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import UnitForm from './UnitForm';
 
@@ -37,7 +37,8 @@ export const UnitdEdit = ({ id, setId }) => {
     const formData = new FormData();
 
     const postData = {
-      ...sanitizeObj(values),
+      ...values,
+      base_unit: values?.base_unit,
       _method: 'PUT',
     };
 

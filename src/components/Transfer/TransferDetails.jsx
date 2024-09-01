@@ -1,4 +1,5 @@
 import { Spin, Table } from 'antd';
+
 import { tableProps } from '../../layout/TableLayout';
 import { useGetTransferDetailsQuery } from '../../redux/services/transfer/transferApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
@@ -102,7 +103,7 @@ export const TransferDetails = ({ id, ...props }) => {
         <div className="space-y-5 pb-5 pr-3 pt-3">
           <CustomDescription title="Reference" items={referenceId} />
           <CustomDescription title="Warehouse" items={warehouseDetails} />
-          <CustomDescription title="Transfer " items={transferDetails} />
+          <CustomDescription title="Transfer" items={transferDetails} />
 
           <Table
             {...tableProps}
@@ -110,7 +111,7 @@ export const TransferDetails = ({ id, ...props }) => {
             columns={columns}
             dataSource={dataSource}
           />
-          <CustomDescription title="Attachemnt " items={attachment} />
+          <CustomDescription title="Attachemnt" items={attachment} />
           <CustomDescription title="Additional" items={additionalInfo} />
         </div>
       )}

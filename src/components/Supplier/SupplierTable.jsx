@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -14,7 +15,6 @@ import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
-
 import { SupplierDetails } from './SupplierDetails';
 import SupplierEdit from './SupplierEdit';
 
@@ -54,7 +54,7 @@ const SupplierTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateSupplierStatus, { isLoading: isStatusUpdating }] =
     useUpdateSupplierStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
@@ -76,7 +76,7 @@ const SupplierTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateSupplierStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

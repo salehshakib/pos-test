@@ -1,15 +1,19 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateUnitMutation } from '../../redux/services/unit/unitApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import UnitForm from './UnitForm';
 
-const UnitCreate = () => {
+const UnitCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
+
   const [errorFields, setErrorFields] = useState([]);
 
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
@@ -17,17 +21,30 @@ const UnitCreate = () => {
   const [createUnit, { isLoading }] = useCreateUnitMutation();
 
   const handleSubmit = async (values) => {
+    const formData = new FormData();
+
+    const postObj = {
+      ...values,
+      operator: values.operator ? values.operator : '*',
+      operation_value: values.operation_value ? values.operation_value : 1,
+    };
+
+    appendToFormData(postObj, formData);
+
     const { data, error } = await createUnit({
-      data: {
-        ...values,
-        operator: values.operator ? values.operator : '*',
-        operation_value: values.operation_value ? values.operation_value : 1,
-      },
+      data: formData,
     });
+
     if (data?.success) {
-      dispatch(closeCreateDrawer());
-      form.resetFields();
+      if (subDrawer && isSubDrawerOpen) {
+        handleCloseSubDrawer();
+        subForm.resetFields();
+      } else {
+        dispatch(closeCreateDrawer());
+        form.resetFields();
+      }
     }
+
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,
@@ -38,12 +55,17 @@ const UnitCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Unit'} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={'Create Unit'}
+      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      onClose={subDrawer && handleCloseSubDrawer}
+    >
       <UnitForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        form={form}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

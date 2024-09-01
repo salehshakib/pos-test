@@ -1,4 +1,5 @@
 import { Col } from 'antd';
+
 import { fullColLayout } from '../../../layout/FormLayout';
 import CustomProductTable from '../Table/CustomProductTable';
 

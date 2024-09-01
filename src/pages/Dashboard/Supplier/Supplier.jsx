@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import SupplierCreate from '../../../components/Supplier/SupplierCreate';
 import SupplierTable from '../../../components/Supplier/SupplierTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
@@ -37,7 +38,7 @@ const columns = [
     key: 'phone',
     render: (phone) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {'0' + phone}
+        {'+880 ' + phone}
       </span>
     ),
   },

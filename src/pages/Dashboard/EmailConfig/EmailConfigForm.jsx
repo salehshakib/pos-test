@@ -1,5 +1,6 @@
 import { Button, Col, Form, Row } from 'antd';
 import { useEffect, useState } from 'react';
+
 import CustomInput from '../../../components/Shared/Input/CustomInput';
 import CustomSelect from '../../../components/Shared/Select/CustomSelect';
 import { mdColLayout, rowLayout } from '../../../layout/FormLayout';
@@ -97,7 +98,7 @@ export const EmailConfigForm = ({ data }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    console.error(errorInfo);
   };
 
   return (

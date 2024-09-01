@@ -6,6 +6,7 @@ import { IoIosLock } from 'react-icons/io';
 import { MdDelete, MdEditSquare, MdFileDownload } from 'react-icons/md';
 import { TbListDetails } from 'react-icons/tb';
 import { useLocation } from 'react-router-dom';
+
 import { useFormatDate } from '../../../utilities/hooks/useFormatDate';
 import { useGlobalLoader } from '../../../utilities/hooks/useGlobalLoader';
 import { formatDate } from '../../../utilities/lib/dateFormat';
@@ -86,8 +87,6 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, 'delete');
   const isStatusPermitted = usePermission(route, 'status');
 
-  // console.log(isEditPermitted, route, isDeletePermitted);
-
   const getMenuItems = (record) =>
     [
       isEditPermitted && {
@@ -138,8 +137,8 @@ const CustomTable = ({
           ...rowSelection,
         }
       : false,
-    onRow: (record) => ({
-      onClick: () => console.log(record.id),
+    onRow: (_record) => ({
+      onClick: () => {},
     }),
     scroll: {
       x: 'max-content',

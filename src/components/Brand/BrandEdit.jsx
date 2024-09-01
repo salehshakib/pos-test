@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import defaultUser from '../../assets/data/defaultUserImage';
 import {
   useGetBrandDetailsQuery,
@@ -66,8 +67,6 @@ export const BrandEdit = ({ id, setId }) => {
       postData.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    console.log(deleteAttachmentIds);
-
     if (values?.logo?.length > 0) {
       postData.logo = values?.logo?.[0]?.originFileObj;
     }
@@ -90,8 +89,6 @@ export const BrandEdit = ({ id, setId }) => {
       setFields(errorFields);
     }
   };
-
-  //console.log(fields);
 
   return (
     <CustomDrawer

@@ -1,5 +1,5 @@
-// const SingleNotification = ({ data, handleReadNotification }) => {
 import { Skeleton, theme } from 'antd';
+
 import warehouseLogo from '../../assets/data/warehouseLogo';
 import {
   categorizeNotificationsByDate,
@@ -12,8 +12,6 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
   return (
     <div
       onClick={() => handleReadNotification(item)}
-      // className={`hover:cursor-pointer hover:bg-[#f5f5f5] duration-300 p-2 rounded-lg  ${item?.read_at !== null ? "bg-[#f5f5f5]" : "hover:shadow-md"}`}
-
       className="rounded-lg p-2 duration-300 hover:cursor-pointer hover:bg-[#f5f5f5] hover:shadow-md"
     >
       <div className="flex w-full items-start gap-2">
@@ -45,10 +43,6 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
 };
 
 const NotificationComponent = ({ data, handleReadNotification, loading }) => {
-  // if (!data) {
-  //   return <Skeleton paragraph avatar />;
-  // }
-
   if (loading) {
     return <Skeleton paragraph avatar />;
   }

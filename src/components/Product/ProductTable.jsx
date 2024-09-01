@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../redux/services/pos/posSlice';
@@ -61,7 +62,7 @@ const ProductTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateProductStatus, { isLoading: isStatusUpdating }] =
     useUpdateProductStatusMutation();
 
   const handleStatusModal = (id) => {
@@ -70,7 +71,7 @@ const ProductTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateProductStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);
@@ -102,8 +103,6 @@ const ProductTable = ({
       removeDeleteId(setSelectedRows, deleteId);
     }
   };
-
-  //console.log(data);
 
   const dataSource =
     data?.results?.product?.map((item) => {

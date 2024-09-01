@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import { BiImageAdd } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
+
 import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { cropImage } from '../../utilities/lib/cropImage';
 import { GiftCardTypeComponent } from '../ReusableComponent/GiftCardTypeComponent';
@@ -34,8 +35,6 @@ const FileInput = ({
     e.stopPropagation();
     removeImage();
   };
-
-  //console.log(imageUrl);
 
   return (
     <div>

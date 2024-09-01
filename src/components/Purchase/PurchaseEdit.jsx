@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useCurrentUser } from '../../redux/services/auth/authSlice';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -34,131 +35,13 @@ export const PurchaseEdit = ({ id, setId }) => {
 
   const { data, isFetching } = useGetPurchaseDetailsQuery(
     { id, params: { child: 1, parent: 1 } },
-    { skip: !id || !isEditDrawerOpen }
+    { skip: !id }
   );
-
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      product_id: {},
-      qty: {},
-      recieved: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      tax_id: {},
-    },
-  });
-  const [products, setProducts] = useState([]);
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-    tax_rate: {},
-  });
-
-  useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
 
   const [updatePurchase, { isLoading }] = useUpdatePurchaseMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
-      data?.purchase_products?.forEach((product) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            product_id: {
-              ...prevFormValues.product_list.product_id,
-              [product.product_id.toString()]: product.product_id,
-            },
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [product.product_id.toString()]: product.qty,
-            },
-            purchase_unit_id: {
-              ...prevFormValues.product_list.purchase_unit_id,
-              [product.product_id.toString()]: product.purchase_unit_id,
-            },
-            net_unit_cost: {
-              ...prevFormValues.product_list.net_unit_cost,
-              [product.product_id.toString()]: product.net_unit_cost,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [product.product_id.toString()]: product.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [product.product_id.toString()]: product.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [product.product_id.toString()]: product.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [product.product_id.toString()]: product.total,
-            },
-            tax_id: {
-              ...prevFormValues.product_list.tax_id,
-              [product.product_id.toString()]: product.products?.tax_id,
-            },
-          },
-        }));
-
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: product.product_id,
-            name: product.products?.name,
-            sku: product.products?.sku,
-            buying_cost: product.products?.buying_cost,
-            purchase_unit_id: product.purchase_unit_id,
-            purchase_units: product.products?.purchase_units,
-            tax_id: product.products?.tax_id,
-            taxes: product.taxes,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          purchase_units: {
-            ...prevProductUnits.purchase_units,
-            [product?.product_id.toString()]:
-              product?.products?.purchase_units?.operation_value ?? 1,
-          },
-        }));
-      });
-
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       let newFieldData = [
@@ -173,11 +56,11 @@ export const PurchaseEdit = ({ id, setId }) => {
           value: data?.supplier_id.toString(),
           errors: '',
         },
-        {
-          name: 'supplier_id',
-          value: data?.supplier_id.toString(),
-          errors: '',
-        },
+        // {
+        //   name: 'tax_id',
+        //   value: data?.supplier_id.toString(),
+        //   errors: '',
+        // },
       ];
 
       if (data?.attachments?.length > 0) {
@@ -195,14 +78,15 @@ export const PurchaseEdit = ({ id, setId }) => {
         ];
       }
 
+      // console.log(newFieldData);
+
       setFields(newFieldData);
+    } else {
+      form.resetFields();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isEditDrawerOpen, setFields]);
+  }, [data, isEditDrawerOpen, setFields, form]);
 
-  console.log(data);
-
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
@@ -226,7 +110,6 @@ export const PurchaseEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
 
       return;
@@ -323,29 +206,6 @@ export const PurchaseEdit = ({ id, setId }) => {
     if (data?.success) {
       setId(undefined);
       dispatch(closeEditDrawer());
-
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          recieved: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          tax_id: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-        tax_rate: {},
-      });
     }
 
     if (error) {
@@ -362,18 +222,15 @@ export const PurchaseEdit = ({ id, setId }) => {
       isLoading={isFetching}
       width={1400}
     >
-      <PurchaseForm
-        handleSubmit={handleUpdate}
-        isLoading={isLoading}
-        fields={fields}
-        form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-      />
+      {!isFetching && (
+        <PurchaseForm
+          handleSubmit={handleUpdate}
+          isLoading={isLoading}
+          fields={fields}
+          form={form}
+          data={data}
+        />
+      )}
     </CustomDrawer>
   );
 };

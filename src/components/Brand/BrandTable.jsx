@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteBrandMutation,
@@ -53,7 +54,7 @@ export const BrandTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateBrandStatus, { isLoading: isStatusUpdating }] =
     useUpdateBrandStatusMutation();
 
   const [deleteBrand, { isLoading: isDeleting }] = useDeleteBrandMutation();
@@ -74,7 +75,7 @@ export const BrandTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateBrandStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

@@ -1,5 +1,6 @@
 import { Row } from 'antd';
 import { useState } from 'react';
+
 import CustomerCreate from '../../../components/Customer/CustomerCreate';
 import CustomerTable from '../../../components/Customer/CustomerTable';
 import { CustomerGroupFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
@@ -52,7 +53,7 @@ const columns = [
     key: 'phone',
     render: (phone) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {'0' + phone}
+        {'+880 ' + phone}
       </span>
     ),
   },

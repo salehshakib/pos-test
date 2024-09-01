@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GiftCardTypeCreate } from '../../../components/GiftCardType/GiftCardTypeCreate';
 import GiftCardTypeTable from '../../../components/GiftCardType/GiftCardTypeTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';

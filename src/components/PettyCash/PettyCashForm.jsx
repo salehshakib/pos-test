@@ -1,8 +1,9 @@
 import { Col, Row } from 'antd';
+
 import { fullColLayout, rowLayout } from '../../layout/FormLayout';
+import { WarehouseComponent } from '../Generator/overview/WarehouseComponent';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
-import { WarehouseComponent } from '../Generator/overview/WarehouseComponent';
 
 export const PettyCashForm = (props) => {
   return (

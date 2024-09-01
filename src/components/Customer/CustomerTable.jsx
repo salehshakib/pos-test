@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCustomerMutation,
@@ -57,7 +58,7 @@ const CustomerTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateCustomerStatus, { isLoading: isStatusUpdating }] =
     useUpdateCustomerStatusMutation();
 
   const [deleteCustomer, { isLoading: isDeleting }] =
@@ -79,7 +80,7 @@ const CustomerTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateCustomerStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

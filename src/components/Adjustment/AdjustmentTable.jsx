@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteAdjustmentMutation,
@@ -98,8 +99,6 @@ const AdjustmentTable = ({
     setDeleteModal(false);
     setDetailsModal(false);
   };
-
-  console.log(detailsId);
 
   return (
     <GlobalUtilityStyle>

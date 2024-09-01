@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetEmployeeDetailsQuery } from '../../redux/services/hrm/employee/employeeApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';

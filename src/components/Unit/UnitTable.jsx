@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -14,7 +15,6 @@ import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
-
 import { UnitdEdit } from './UnitEdit';
 
 const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
@@ -45,7 +45,7 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateUnitStatus, { isLoading: isStatusUpdating }] =
     useUpdateUnitStatusMutation();
 
   const handleEdit = (id) => {
@@ -59,7 +59,7 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateUnitStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);
@@ -93,14 +93,12 @@ const UnitTable = ({ newColumns, setSelectedRows, keyword, searchParams }) => {
         operator,
         operation_value,
         is_active,
-        for: type,
       } = item ?? {};
 
       return {
         id,
         name: name,
         code: code,
-        type,
         operator,
         operatorValue: operation_value,
         status: is_active,

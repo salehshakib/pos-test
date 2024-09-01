@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateLeaveTypeMutation } from '../../redux/services/settings/leaveType/leaveTypeApi';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -16,7 +17,6 @@ export const LeaveTypeCreate = () => {
   const [createLeaveType, { isLoading }] = useCreateLeaveTypeMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createLeaveType({
       data: values,
     });

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from 'styled-components';
+
+import logo from '../assets/data/defaultLogo';
 import {
   setCompany,
   setDateFormat,
@@ -78,7 +80,7 @@ export const ProviderConfig = ({ children }) => {
       dispatch(setPrimaryColor(data.primary_color));
       dispatch(setSecondaryColor(data.secendary_color));
 
-      dispatch(setLogo(data?.attachments?.[0]?.url));
+      dispatch(setLogo(data?.attachments?.[0]?.url ?? logo));
 
       dispatch(
         setCurrency({

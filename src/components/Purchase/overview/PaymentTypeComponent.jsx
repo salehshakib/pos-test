@@ -1,5 +1,6 @@
 import { Col, Form } from 'antd';
 import { useEffect } from 'react';
+
 import { colLayout } from '../../../layout/FormLayout';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
@@ -37,20 +38,27 @@ const PaymentType = () => {
 };
 
 export const PaymentTypeComponent = () => {
-  return (
-    <>
-      <Col {...colLayout}>
-        <PaymentType />
-      </Col>
+  const form = Form.useFormInstance();
 
-      <Col {...colLayout}>
-        <CustomInput
-          type={'number'}
-          name="paid_amount"
-          label="Paid Amount"
-          required={true}
-        />
-      </Col>
-    </>
-  );
+  const paymentStatus = Form.useWatch('payment_status', form);
+
+  if (paymentStatus === 'Paid' || paymentStatus === 'Partial')
+    return (
+      <>
+        <Col {...colLayout}>
+          <PaymentType />
+        </Col>
+
+        <Col {...colLayout}>
+          <CustomInput
+            type={'number'}
+            name="paid_amount"
+            label="Paid Amount"
+            required={true}
+          />
+        </Col>
+      </>
+    );
+
+  return null;
 };

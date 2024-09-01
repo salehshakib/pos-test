@@ -1,15 +1,16 @@
 import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import { productImage } from '../../../assets/data/productImage';
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
-import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
-import { openNotification } from '../../../utilities/lib/openToaster';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
-import { GlobalUtilityStyle } from '../../../container/Styled';
-import { productImage } from '../../../assets/data/productImage';
+import { openNotification } from '../../../utilities/lib/openToaster';
 
 const { Meta } = Card;
 
@@ -65,7 +66,6 @@ const PosProducts = ({
 
   useEffect(() => {
     if (products?.length > 0 && pagination.page > 1) {
-      //console.log(products);
       setNewData((prevData) => [...prevData, ...products]);
     } else if (products?.length > 0) {
       setNewData(products);
@@ -159,10 +159,6 @@ const PosProducts = ({
             <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-4">
               {products &&
                 newData.map((product) => {
-                  // const images = organizeAttachments(product?.attachments);
-
-                  //console.log(product);
-
                   const stock = getWarehouseQuantity(
                     product?.product_qties,
                     warehouseId

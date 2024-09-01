@@ -1,5 +1,6 @@
 import { Button, theme } from 'antd';
 import { useState } from 'react';
+
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { Brands } from './Brand/Brands';
 import { Categories } from './Categories/Categories';
@@ -26,7 +27,6 @@ const CategoryFilterComponent = ({ setParams, color }) => {
   };
 
   const handleSubmit = async () => {
-    // console.log(isSelected);
     setParams({ category_ids: isSelected });
     handleCloseDrawer();
   };

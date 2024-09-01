@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateGiftCardMutation } from '../../redux/services/giftcard/giftcard/giftCardApi';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -16,7 +17,6 @@ const GiftCardCreate = () => {
   const [createGiftCard, { isLoading }] = useCreateGiftCardMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createGiftCard({
       data: {
         ...values,

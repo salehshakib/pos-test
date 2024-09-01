@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { colLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
@@ -224,23 +225,17 @@ const TaxComponent = ({ productId, setProductUnits }) => {
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [
-      ...DEFAULT_SELECT_VALUES,
-      'operation_value',
-      'operator',
-      'for',
-    ],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'sale-unit')
-    .map((unit) => ({
-      value: unit.id.toString(),
-      label: unit.name,
-      operationValue: unit.operation_value,
-    }));
+  const productUnits = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit.operation_value,
+    operator: unit.operator,
+  }));
 
   const onSelect = (value, option) => {
     setProductUnits((prevValues) => {

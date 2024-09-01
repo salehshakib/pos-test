@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd';
-import CustomForm from '../Shared/Form/CustomForm';
+
 import { colLayout, fullColLayout, rowLayout } from '../../layout/FormLayout';
+import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 
 const PhoneNumberComponent = () => {

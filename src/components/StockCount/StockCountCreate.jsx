@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateStockCountMutation } from '../../redux/services/stockCount/stockCountApi';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -17,7 +18,6 @@ const StockCountCreate = () => {
   const [createStockCount, { isLoading }] = useCreateStockCountMutation();
 
   const handleSubmit = async (values) => {
-    //console.log(values);
     const { data, error } = await createStockCount({
       data: values,
     });

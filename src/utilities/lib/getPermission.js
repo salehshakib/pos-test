@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { useCurrentUser } from '../../redux/services/auth/authSlice';
 
 function getMenuItems(rolePermissions) {
@@ -7,8 +8,6 @@ function getMenuItems(rolePermissions) {
   );
 
   const menuItems = Array.from(new Set(firstParts));
-
-  // console.log(menuItems);
 
   return menuItems;
 }
@@ -48,8 +47,6 @@ function filterPaths(paths, uniqueItems) {
         if (childModifiedPath === 'printbarcode') {
           childNames.push('print-barcode');
         }
-
-        // console.log(childModifiedPath);
       });
       if (childNames.length > 0) {
         parentStructure[item.path] = childNames;
@@ -60,38 +57,36 @@ function filterPaths(paths, uniqueItems) {
   return parentStructure;
 }
 
-export const useMenuItems = (adminPaths) => {
+const ACTION_KEYS = [
+  'accesstoken.issueToken',
+  'authorization.authorize',
+  'transienttoken.refresh',
+  'approveauthorization.approve',
+  'denyauthorization.deny',
+  'authorizedaccesstoken.forUser',
+  'authorizedaccesstoken.destroy',
+  'client.forUser',
+  'scope.all',
+  'personalaccesstoken.forUser',
+  'personalaccesstoken.store',
+  'personalaccesstoken.destroy',
+  'csrfcookie.show',
+  'handlerequests.handleUpdate',
+  'frontendassets.returnJavaScriptAsFile',
+  'frontendassets.maps',
+  'fileupload.handle',
+  'filepreview.handle',
+];
+
+export function useMenuItems(adminPaths) {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
-  const actionKyes = [
-    'accesstoken.issueToken',
-    'authorization.authorize',
-    'transienttoken.refresh',
-    'approveauthorization.approve',
-    'denyauthorization.deny',
-    'authorizedaccesstoken.forUser',
-    'authorizedaccesstoken.destroy',
-    'client.forUser',
-    'scope.all',
-    'personalaccesstoken.forUser',
-    'personalaccesstoken.store',
-    'personalaccesstoken.destroy',
-    'csrfcookie.show',
-    'handlerequests.handleUpdate',
-    'frontendassets.returnJavaScriptAsFile',
-    'frontendassets.maps',
-    'fileupload.handle',
-    'filepreview.handle',
-  ];
-
   const filteredRolePermissions = rolePermissions.filter(
-    (permission) => !actionKyes.includes(permission)
+    (permission) => !ACTION_KEYS.includes(permission)
   );
 
   const uniqueItems = getMenuItems(filteredRolePermissions);
-
-  // console.log(uniqueItems);
 
   if (uniqueItems.length) {
     const filteredStructure = filterPaths(adminPaths, uniqueItems);
@@ -100,7 +95,7 @@ export const useMenuItems = (adminPaths) => {
   } else {
     return {};
   }
-};
+}
 
 const hasPermission = (permissions, route, moduleName) => {
   return permissions.some(
@@ -108,15 +103,15 @@ const hasPermission = (permissions, route, moduleName) => {
   );
 };
 
-export const usePermission = (route, moduleName) => {
+export function usePermission(route, moduleName) {
   const userData = useSelector(useCurrentUser);
   const rolePermissions = userData?.roles?.[0]?.permissions || [];
 
   const isAdmin = userData?.roles?.[0]?.name === 'admin';
 
-  // if (isAdmin) {
-  //   return true
-  // }
+  if (isAdmin) {
+    return true;
+  }
 
   const cleanedRoute =
     route?.split('/').length > 1
@@ -126,12 +121,12 @@ export const usePermission = (route, moduleName) => {
   const isPermitted = hasPermission(rolePermissions, cleanedRoute, moduleName);
 
   return isPermitted;
-};
+}
 
-export const useUrlIndexPermission = (pathName) => {
+export function useUrlIndexPermission(pathName) {
   const route = pathName
     ? 'route/' + pathName
     : window.location.pathname.substring(1);
 
   return usePermission(route, 'index');
-};
+}

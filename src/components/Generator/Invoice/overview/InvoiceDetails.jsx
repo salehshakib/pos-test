@@ -1,5 +1,6 @@
 import { Spin } from 'antd';
 import generatePDF from 'react-to-pdf';
+
 import { useGetInvoiceDetailsQuery } from '../../../../redux/services/invoice/invoiceApi';
 import { generatePdfOptions } from '../../../../utilities/lib/generatePdfOptions';
 import CustomModal from '../../../Shared/Modal/CustomModal';

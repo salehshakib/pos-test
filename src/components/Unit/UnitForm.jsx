@@ -1,12 +1,14 @@
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Typography } from 'antd';
+import { useEffect } from 'react';
+
 import { baseUnit } from '../../assets/data/baseUnit';
 import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
-import { useGetTypesQuery } from '../../redux/services/types/typesApi';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomRadio from '../Shared/Radio/CustomRadio';
 import CustomSelect from '../Shared/Select/CustomSelect';
-import { useGlobalParams } from '../../utilities/hooks/useParams';
+
+const { Paragraph, Text } = Typography;
 
 const baseUnitOptions = baseUnit.map(({ name, symbol }) => {
   return { label: `${name} (${symbol})`, value: name };
@@ -17,42 +19,50 @@ const BaseUnit = () => {
     <CustomSelect
       label={'Base Unit'}
       name={'base_unit'}
-      // required={true}
       options={baseUnitOptions}
     />
   );
 };
 
-const TypeUnit = () => {
-  const params = useGlobalParams({
-    selectValue: ['name'],
-  });
-  const { data, isFetching } = useGetTypesQuery({ params });
+// const TypeUnit = () => {
+//   const params = useGlobalParams({
+//     selectValue: ['name'],
+//   });
+//   const { data, isFetching } = useGetTypesQuery({ params });
 
-  const options = data?.results?.type?.map((item) => {
-    return {
-      value: item.name,
-      label: item.name,
-    };
-  });
+//   const options = data?.results?.type?.map((item) => {
+//     return {
+//       value: item.name,
+//       label: item.name,
+//     };
+//   });
 
-  return (
-    <Col {...mdColLayout}>
-      <CustomSelect
-        label="Type"
-        name={'for'}
-        required={true}
-        options={options}
-        placeholder={'Type'}
-        isLoading={isFetching}
-      />
-    </Col>
-  );
-};
+//   return (
+//     <Col {...mdColLayout}>
+//       <CustomSelect
+//         label="Type"
+//         name={'for'}
+//         required={true}
+//         options={options}
+//         placeholder={'Type'}
+//         isLoading={isFetching}
+//       />
+//     </Col>
+//   );
+// };
 
 const OperatorComponent = () => {
   const form = Form.useFormInstance();
   const baseUnit = Form.useWatch('base_unit', form);
+
+  useEffect(() => {
+    if (baseUnit) {
+      form.setFieldsValue({
+        operator: '*',
+        operation_value: 1,
+      });
+    }
+  }, [form, baseUnit]);
 
   const options = [
     {
@@ -76,12 +86,24 @@ const OperatorComponent = () => {
   if (baseUnit) {
     return (
       <>
+        <Typography>
+          <Paragraph className="rounded-md bg-slate-100 p-3">
+            If you&apos;re defining a unit of measurement for{' '}
+            <Text strong>grams</Text>, it is advisable to select{' '}
+            <Text strong>kilogram (kg)</Text> as the{' '}
+            <Text strong>base unit </Text>. In this case, the{' '}
+            <Text strong>operator</Text> would involve{' '}
+            <Text strong>division (/)</Text>, with the{' '}
+            <Text strong>operator</Text> value of <Text strong>1000</Text>.
+          </Paragraph>
+        </Typography>
+
         <Col {...fullColLayout}>
           <CustomRadio
             options={options}
             name={'operator'}
             label={'Operator'}
-            // required={true}
+            required={true}
           />
         </Col>
 
@@ -90,7 +112,8 @@ const OperatorComponent = () => {
             label={'Operator Value'}
             type={'number'}
             name={'operation_value'}
-            // required={true}
+            required={true}
+            min={1}
           />
         </Col>
       </>
@@ -122,7 +145,7 @@ const UnitForm = (props) => {
           <BaseUnit />
         </Col>
 
-        <TypeUnit />
+        {/* <TypeUnit /> */}
 
         <OperatorComponent />
       </Row>

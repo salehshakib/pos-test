@@ -1,7 +1,5 @@
 export function errorFieldsUpdate(fields, error) {
   return Object.keys(error?.data?.errors)?.map((fieldName) => {
-    //console.log(fields.find((field) => field?.name === fieldName));
-
     if (fieldName === 'product_list') {
       return {
         name: 'product_name',

@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 
 const baseColumns = [

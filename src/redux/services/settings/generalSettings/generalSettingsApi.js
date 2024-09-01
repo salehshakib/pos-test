@@ -20,6 +20,18 @@ const generalSettingsApi = baseApi.injectEndpoints({
       providesTags: () => [{ type: GENERAL_SETTING }, GENERAL_SETTING],
     }),
 
+    getPosSettings: build.query({
+      query: (params) => {
+        return {
+          url: `/${POS_SETTING}/show/1`,
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: () => [{ type: POS_SETTING }, POS_SETTING],
+    }),
+
     updateGeneralSettings: build.mutation({
       query: ({ data }) => {
         return {
@@ -76,4 +88,5 @@ export const {
   useGetGeneralSettingsQuery,
   useUpdateGeneralSettingsMutation,
   useUpdatePosSettingsMutation,
+  useGetPosSettingsQuery,
 } = generalSettingsApi;

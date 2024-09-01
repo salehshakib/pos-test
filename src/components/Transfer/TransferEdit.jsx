@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetTransferDetailsQuery,
@@ -54,8 +55,6 @@ const TransferEdit = ({ id, setId }) => {
     purchase_units: {},
     tax_rate: {},
   });
-
-  //console.log(data);
 
   useEffect(() => {
     if (!isEditDrawerOpen) {

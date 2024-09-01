@@ -1,15 +1,16 @@
 import { Col, Form, Row } from 'antd';
+import { useEffect } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
+
 import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 import { generateRandomCode } from '../../utilities/lib/generateCode';
+import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
 import CustomForm from '../Shared/Form/CustomForm';
+import CustomInput from '../Shared/Input/CustomInput';
 import CustomInputButton from '../Shared/Input/CustomInputButton';
 import CustomSelect from '../Shared/Select/CustomSelect';
-import CustomInput from '../Shared/Input/CustomInput';
-import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useCurrency } from '../../redux/services/pos/posSlice';
 
 const CouponCodeComponent = () => {
   const form = Form.useFormInstance();

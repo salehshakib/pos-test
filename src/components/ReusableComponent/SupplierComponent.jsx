@@ -21,8 +21,6 @@ export const SupplierComponent = ({
     label: supplier?.name,
   }));
 
-  console.log({ required, name });
-
   useInitialFormField(name, options);
 
   return (

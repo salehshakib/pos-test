@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetExpenseCategoryDetailsQuery,
@@ -33,8 +34,6 @@ const ExpenseCategoryEdit = ({ id, setId }) => {
       setFields(fieldData);
     }
   }, [data, setFields]);
-
-  //console.log(id);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpenseCategory({

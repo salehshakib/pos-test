@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+
 import { colLayout, rowLayout } from '../../../layout/FormLayout';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
@@ -195,18 +196,17 @@ const columns = [
 
 const ProductUnitComponent = ({ setProductUnits, productId }) => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'for'],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const productUnits = data?.results?.unit
-    ?.filter((unit) => unit.for === 'purchase-unit')
-    .map((unit) => ({
-      value: unit.id.toString(),
-      label: unit.name,
-      operationValue: unit.operation_value,
-    }));
+  const productUnits = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit.operation_value,
+    operator: unit.operator,
+  }));
 
   const onSelect = (value, option) => {
     setProductUnits((prevValues) => {

@@ -1,6 +1,7 @@
 import { Form, Image, Upload } from 'antd';
 import { useState } from 'react';
 import { BiImageAdd } from 'react-icons/bi';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 const getBase64 = (file) =>
@@ -12,7 +13,6 @@ const getBase64 = (file) =>
   });
 
 const normFile = (e) => {
-  //console.log(e);
   if (Array.isArray(e)) {
     return e;
   }
@@ -40,12 +40,8 @@ const CustomUploader = ({
   };
 
   const handleFileChange = ({ fileList: newFileList }) => {
-    //console.log(newFileList);
-
     setFileList(newFileList);
   };
-
-  //console.log(defaultValue);
 
   return (
     <GlobalUtilityStyle>
@@ -77,7 +73,6 @@ const CustomUploader = ({
           onPreview={handlePreview}
           beforeUpload={(file) => {
             setFileList([...fileList, file]);
-            //console.log(file);
             return false;
           }}
           multiple={multiple}

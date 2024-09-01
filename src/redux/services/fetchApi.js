@@ -16,7 +16,6 @@ const fetchApi = baseApi.injectEndpoints({
     }),
     handleEdit: build.query({
       query: ({ url, id }) => {
-        //console.log(url, id);
         return {
           url: `${url}/show/${id}`,
           method: 'GET',

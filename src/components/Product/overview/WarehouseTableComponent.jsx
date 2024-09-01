@@ -2,6 +2,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomTable from '../../Shared/Table/CustomTable';
 

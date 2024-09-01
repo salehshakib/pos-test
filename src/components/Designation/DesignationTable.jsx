@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -53,7 +54,7 @@ export const DesignationTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateDesignationStatus, { isLoading: isStatusUpdating }] =
     useUpdateDesignationStatusMutation();
 
   const [deleteDesignation, { isLoading: isDeleting }] =
@@ -70,7 +71,7 @@ export const DesignationTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateDesignationStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

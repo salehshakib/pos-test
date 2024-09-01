@@ -2,6 +2,7 @@
 import { Col, Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+
 import { fullColLayout } from '../../../layout/FormLayout';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
@@ -168,7 +169,7 @@ export const ProductTableComponent = () => {
 
   const dataSource =
     productData?.map((item) => {
-      const { value, label, sku, unitCost } = item ?? {};
+      const { sku, unitCost } = item ?? {};
 
       return {
         id: item,

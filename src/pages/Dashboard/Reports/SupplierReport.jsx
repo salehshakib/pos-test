@@ -1,5 +1,6 @@
 import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
 import { useState } from 'react';
+
 import { SupplierFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
 import CustomModal from '../../../components/Shared/Modal/CustomModal';
@@ -132,7 +133,7 @@ export const SupplierReport = () => {
     {
       key: '3',
       label: 'Phone Number',
-      children: data?.phone_number ?? '---',
+      children: data?.phone_number ? '+880 ' + data?.phone_number : '---',
       span: 24,
     },
     {

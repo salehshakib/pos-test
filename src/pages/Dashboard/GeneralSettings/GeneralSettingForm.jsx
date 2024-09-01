@@ -1,5 +1,6 @@
 import { Button, Form } from 'antd';
 import { useEffect, useState } from 'react';
+
 import logo from '../../../assets/data/defaultLogo';
 import ColorSettingComponent from '../../../components/Settings/GeneralSettings/ColorSetting';
 import CompanySetting from '../../../components/Settings/GeneralSettings/CompanySetting';

@@ -2,6 +2,7 @@
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomTable from '../../Shared/Table/CustomTable';
 
@@ -124,8 +125,6 @@ export const WarehouseStockTableComponent = () => {
       form.setFieldValue('initial_stock_warehouse_id', updatedProductData);
     }
   }, [rowId]);
-
-  //console.log(warehouse);
 
   const dataSource = warehouse?.map((item) => {
     return {

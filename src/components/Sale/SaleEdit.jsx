@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetSaleDetailsQuery,
@@ -21,7 +22,6 @@ import {
 } from '../../utilities/lib/generator/generatorUtils';
 import { openNotification } from '../../utilities/lib/openToaster';
 import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
-import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { SaleForm } from './SaleForm';
 
@@ -246,7 +246,7 @@ export const SaleEdit = ({ id, setId }) => {
       ) ?? 0;
 
     const postObj = {
-      ...sanitizeObj(values),
+      ...values,
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount: Number(discount ?? 0).toFixed(2),
       shipping_cost: Number(shipping_cost ?? 0).toFixed(2),

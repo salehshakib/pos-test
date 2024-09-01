@@ -1,6 +1,7 @@
 import { Descriptions, Empty, Row, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
 import { rowLayout } from '../../../layout/FormLayout';
@@ -84,7 +85,7 @@ export const WarehouseReport = () => {
     {
       key: '3',
       label: 'Phone Number',
-      children: data?.phone ?? '---',
+      children: data?.phone ? '+880 ' + data?.phone : '---',
       span: 24,
     },
     {

@@ -1,4 +1,5 @@
-import { Button, Form, Select, Space, Spin } from 'antd';
+import { Button, Empty, Form, Select, Space, Spin } from 'antd';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
 
 export const CustomSelectButton = (props) => {
@@ -60,11 +61,13 @@ export const CustomSelectButton = (props) => {
                 options={options}
                 mode={mode}
                 notFoundContent={
-                  isLoading && (
+                  isLoading ? (
                     <Spin
                       size="small"
                       className="flex w-full items-center justify-center"
                     />
+                  ) : (
+                    <Empty />
                   )
                 }
                 style={{
@@ -81,11 +84,13 @@ export const CustomSelectButton = (props) => {
                 options={options}
                 mode={mode}
                 notFoundContent={
-                  isLoading && (
+                  isLoading ? (
                     <Spin
                       size="small"
                       className="flex w-full items-center justify-center"
                     />
+                  ) : (
+                    <Empty />
                   )
                 }
                 style={{

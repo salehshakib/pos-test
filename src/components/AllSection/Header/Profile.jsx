@@ -3,6 +3,7 @@ import { Avatar, Button, Popover, theme } from 'antd';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { logout, useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { CloseCashRegister } from './overview/CloseCashRegister';

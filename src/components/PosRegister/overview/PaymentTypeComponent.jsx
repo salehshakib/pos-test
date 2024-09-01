@@ -1,12 +1,13 @@
 import { Button, Col, Form } from 'antd';
 import { useEffect } from 'react';
 import { BsCash } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+
 import { fullColLayout, mdColLayout } from '../../../layout/FormLayout';
 import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
-import { useSelector } from 'react-redux';
-import { useCurrency } from '../../../redux/services/pos/posSlice';
 
 const PaymentType = ({ paymentType }) => {
   const form = Form.useFormInstance();
@@ -64,8 +65,6 @@ const GiftCardComponent = () => {
       label: item.card_no,
     };
   });
-
-  //console.log(data);
 
   return (
     <Col {...fullColLayout}>

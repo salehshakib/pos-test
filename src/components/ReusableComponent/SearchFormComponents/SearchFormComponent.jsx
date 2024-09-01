@@ -1,12 +1,13 @@
 import { Col } from 'antd';
-import { paymentStatusOptions } from '../../../assets/data/paymentStatus';
-import { purchaseStatusOptions } from '../../../assets/data/purchaseStatus';
-import { saleStatusOptions } from '../../../assets/data/saleStatus';
+
 // import { mdColLayout } from "../../../layout/FormLayout";
 import { barcodeOptions } from '../../../assets/data/barcode';
 import { baseUnit } from '../../../assets/data/baseUnit';
 import { employeeStatusOptions } from '../../../assets/data/employeeStatus';
+import { paymentStatusOptions } from '../../../assets/data/paymentStatus';
 import { paymentTypesOptions } from '../../../assets/data/paymentTypes';
+import { purchaseStatusOptions } from '../../../assets/data/purchaseStatus';
+import { saleStatusOptions } from '../../../assets/data/saleStatus';
 import { fullColLayout } from '../../../layout/FormLayout';
 import { useGetBrandsQuery } from '../../../redux/services/brand/brandApi';
 import { useGetAllCashierQuery } from '../../../redux/services/cashier/cashierApi';
@@ -209,14 +210,17 @@ export const ProductFilter = ({
 
 export const ProductUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const options = data?.results?.unit
-    ?.filter((unit) => unit.for === 'product-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+  const options = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit.operation_value,
+    operator: unit.operator,
+  }));
 
   return (
     <Col {...mdColLayout}>
@@ -233,14 +237,17 @@ export const ProductUnitFilter = () => {
 
 export const PurchaseUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const options = data?.results?.unit
-    ?.filter((unit) => unit.for === 'purchase-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+  const options = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit.operation_value,
+    operator: unit.operator,
+  }));
 
   return (
     <Col {...mdColLayout}>
@@ -257,14 +264,17 @@ export const PurchaseUnitFilter = () => {
 
 export const SaleUnitFilter = () => {
   const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'for'],
+    selectValue: [...DEFAULT_SELECT_VALUES, 'operation_value', 'operator'],
   });
 
   const { data, isLoading } = useGetAllUnitQuery({ params });
 
-  const options = data?.results?.unit
-    ?.filter((unit) => unit.for === 'sale-unit')
-    .map((unit) => ({ value: unit.id.toString(), label: unit.name }));
+  const options = data?.results?.unit.map((unit) => ({
+    value: unit.id.toString(),
+    label: unit.name,
+    operationValue: unit.operation_value,
+    operator: unit.operator,
+  }));
 
   return (
     <Col {...mdColLayout}>

@@ -1,8 +1,9 @@
 import { Form, Image, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
 import { BiImageAdd } from 'react-icons/bi';
+
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import ImgCrop from 'antd-img-crop';
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -42,8 +43,6 @@ const CustomImageCrop = ({
     setFileList(newFileList);
   };
 
-  //console.log(fileList);
-
   return (
     <GlobalUtilityStyle>
       {previewImage && (
@@ -66,28 +65,14 @@ const CustomImageCrop = ({
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
-        <ImgCrop
-          showGrid
-          rotationSlider
-          aspectSlider
-          showReset
-          // onVisibleChange
-          // onModalOk={(s) => {
-          //   //console.log(s);
-          // }}
-          // onModalCancel={(s) => {
-          //   //console.log(s);
-          // }}
-        >
+        <ImgCrop showGrid rotationSlider aspectSlider showReset>
           <Upload
             listType="picture-card"
             name={'file'}
             fileList={fileList}
             onChange={handleFileChange}
             onPreview={handlePreview}
-            beforeUpload={(file, s) => {
-              //console.log(file);
-              //console.log(s);
+            beforeUpload={(file, _s) => {
               setFileList([...fileList, file]);
               return false;
             }}

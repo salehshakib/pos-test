@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { getLogo } from '../../../redux/services/developer/developerSlice';
 
 const Logo = () => {
   const navigate = useNavigate();
   const logo = useSelector(getLogo);
-
-  // console.log(logo);
 
   return (
     <div

@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateProductMutation } from '../../redux/services/product/productApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
@@ -18,24 +19,24 @@ const ProductCreate = () => {
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      amount: {},
-    },
-    qty_list: {
-      qty: {},
-    },
-    price_list: {
-      price: {},
-    },
-  });
+  // const [formValues, setFormValues] = useState({
+  //   product_list: {
+  //     qty: {},
+  //     amount: {},
+  //   },
+  //   qty_list: {
+  //     qty: {},
+  //   },
+  // price_list: {
+  //   price: {},
+  // },
+  // });
 
-  const [products, setProducts] = useState([]);
-  const [initialWarehouses, setInitialWarehouses] = useState([]);
-  const [priceWarehouses, setPriceWarehouses] = useState([]);
+  // const [products, setProducts] = useState([]);
+  // const [initialWarehouses, setInitialWarehouses] = useState([]);
+  // const [priceWarehouses, setPriceWarehouses] = useState([]);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
     const {
@@ -125,7 +126,7 @@ const ProductCreate = () => {
       qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
-      tax_id: parseInt(tax_id),
+      tax_id: tax_id ? parseInt(tax_id) : undefined,
       tax_method,
       has_featured: has_featured ? '1' : '0',
       has_stock: has_stock ? '1' : '0',
@@ -184,22 +185,22 @@ const ProductCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-      setFormValues({
-        product_list: {
-          qty: {},
-          amount: {},
-        },
-        qty_list: {
-          qty: {},
-        },
-        price_list: {
-          price: {},
-        },
-      });
+      // setFormValues({
+      //   product_list: {
+      //     qty: {},
+      //     amount: {},
+      //   },
+      //   qty_list: {
+      //     qty: {},
+      //   },
+      //   price_list: {
+      //     price: {},
+      //   },
+      // });
 
-      setInitialWarehouses([]);
-      setPriceWarehouses([]);
-      setProducts([]);
+      // setInitialWarehouses([]);
+      // setPriceWarehouses([]);
+      // setProducts([]);
     }
 
     if (error) {
@@ -212,8 +213,6 @@ const ProductCreate = () => {
     }
   };
 
-  //console.log(formValues);
-
   return (
     <CustomDrawer
       title={'Create Product'}
@@ -225,14 +224,14 @@ const ProductCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        initialWarehouses={initialWarehouses}
-        setInitialWarehouses={setInitialWarehouses}
-        priceWarehouses={priceWarehouses}
-        setPriceWarehouses={setPriceWarehouses}
+        // formValues={formValues}
+        // setFormValues={setFormValues}
+        // products={products}
+        // setProducts={setProducts}
+        // initialWarehouses={initialWarehouses}
+        // setInitialWarehouses={setInitialWarehouses}
+        // priceWarehouses={priceWarehouses}
+        // setPriceWarehouses={setPriceWarehouses}
       />
     </CustomDrawer>
   );

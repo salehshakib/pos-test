@@ -4,6 +4,7 @@ import { FaPeopleRoof } from 'react-icons/fa6';
 import { GrAnnounce } from 'react-icons/gr';
 import { MdCoPresent, MdPayment, MdTimeToLeave } from 'react-icons/md';
 import { SlCalender } from 'react-icons/sl';
+
 import { Announcement } from '../../pages/Dashboard/Announcement/Announcement';
 import { Attendance } from '../../pages/Dashboard/Attendance/Attendance';
 import Department from '../../pages/Dashboard/Department/Department';

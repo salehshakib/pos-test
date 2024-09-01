@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+
 import { useGetGiftCardDesignDetailsQuery } from '../../redux/services/giftcard/giftcarddesgin/giftCardDesignApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
@@ -24,7 +25,7 @@ export const GiftCardDesigneDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <CustomDescription title="Leave " items={details} />
+          <CustomDescription title="Leave" items={details} />
         </div>
       )}
     </CustomModal>

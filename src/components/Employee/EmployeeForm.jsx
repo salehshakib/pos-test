@@ -1,19 +1,21 @@
 import { Col, Form, Row } from 'antd';
+
 import { company_code } from '../../assets/data/companyCode';
+// import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
+import { employeeStatusOptions } from '../../assets/data/employeeStatus';
 import {
   colLayout,
   fullColLayout,
   mdColLayout,
   rowLayout,
 } from '../../layout/FormLayout';
-// import { useGetDepartmentsQuery } from "../../redux/services/hrm/department/departmentApi";
-import { employeeStatusOptions } from '../../assets/data/employeeStatus';
 import { useGetAllDesignationQuery } from '../../redux/services/hrm/designation/designationApi';
 import { useGetAllRolesQuery } from '../../redux/services/roles/rolesApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../utilities/hooks/useParams';
+import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { staffIdGenerator } from '../../utilities/lib/staffIdGenerator';
 import { CashierComponent } from '../Generator/overview/CashierComponent';
 import { DepartmentComponent } from '../ReusableComponent/DepartmentComponent';
@@ -24,7 +26,6 @@ import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import CustomUploader from '../Shared/Upload/CustomUploader';
-import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 
 const DesignationComponent = () => {
   const params = useGlobalParams({

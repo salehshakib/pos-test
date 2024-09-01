@@ -1,5 +1,6 @@
 import { Col, Form } from 'antd';
 import { useEffect } from 'react';
+
 import {
   colLayout,
   fullColLayout,
@@ -57,8 +58,6 @@ const GiftCardComponent = () => {
       label: item.card_no,
     };
   });
-
-  //console.log(data);
 
   return (
     <Col {...fullColLayout}>

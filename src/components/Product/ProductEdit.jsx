@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
   useGetProductDetailsQuery,
@@ -34,97 +35,10 @@ const ProductListEdit = ({ id, setId }) => {
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      amount: {},
-    },
-    qty_list: {
-      qty: {},
-    },
-    price_list: {
-      price: {},
-    },
-  });
-
-  const [products, setProducts] = useState([]);
-  const [initialWarehouses, setInitialWarehouses] = useState([]);
-  const [priceWarehouses, setPriceWarehouses] = useState([]);
+  // console.log(form.get)
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          amount: {},
-        },
-        qty_list: {
-          qty: {},
-        },
-        price_list: {
-          price: {},
-        },
-      });
-
-      setProducts([]);
-      setInitialWarehouses([]);
-      setPriceWarehouses([]);
-    }
-  }, [isEditDrawerOpen]);
-
-  const updateStateWithProductData = ({
-    product_prices,
-    product_qties,
-    product_combos,
-  }) => {
-    // Update state with product prices
-    product_prices.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        price_list: {
-          ...prevFormValues.price_list,
-          price: {
-            ...prevFormValues.price_list.price,
-            [item.warehouse_id.toString()]: item.price,
-          },
-        },
-      }));
-    });
-
-    // Update state with product quantities
-    product_qties.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        qty_list: {
-          ...prevFormValues.qty_list,
-          qty: {
-            ...prevFormValues.qty_list.qty,
-            [item.warehouse_id.toString()]: item.qty,
-          },
-        },
-      }));
-    });
-
-    product_combos.forEach((item) => {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        product_list: {
-          ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [item.combo_product_id.toString()]: item.qty,
-          },
-          amount: {
-            ...prevFormValues.product_list.amount,
-            [item.combo_product_id.toString()]: item.price,
-          },
-        },
-      }));
-    });
-  };
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
+    if (data && isEditDrawerOpen) {
       const {
         name,
         sku,
@@ -156,8 +70,6 @@ const ProductListEdit = ({ id, setId }) => {
         attachments,
       } = data;
 
-      //console.log(data);
-
       const fieldData = fieldsToUpdate({
         name,
         sku,
@@ -176,43 +88,6 @@ const ProductListEdit = ({ id, setId }) => {
         tax_id,
         attachments,
         details,
-      });
-
-      updateStateWithProductData({
-        product_prices: data?.product_prices,
-        product_qties: data?.product_qties,
-        product_combos: data?.product_combos,
-      });
-
-      data?.product_prices?.forEach((item) => {
-        setPriceWarehouses((prevWarehouses) => [
-          ...prevWarehouses,
-          {
-            id: item.warehouse_id,
-            name: item?.warehouses?.name ?? 'need backend relation',
-          },
-        ]);
-      });
-
-      data?.product_qties?.forEach((item) => {
-        setInitialWarehouses((prevWarehouses) => [
-          ...prevWarehouses,
-          {
-            id: item.warehouse_id,
-            name: item?.warehouses?.name ?? 'need backend relation',
-          },
-        ]);
-      });
-
-      data?.product_combos?.forEach((item) => {
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: item?.combo_product_id,
-            name: item?.products?.name ?? 'need backend relation',
-            sku: item?.products?.sku ?? 'need backend relation',
-          },
-        ]);
       });
 
       const newFieldData = [
@@ -284,18 +159,16 @@ const ProductListEdit = ({ id, setId }) => {
       ];
 
       setFields(newFieldData);
+    } else {
+      form.resetFields();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isEditDrawerOpen, setFields]);
+  }, [data, isEditDrawerOpen, setFields, form]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { formValues }) => {
     const {
       name,
       type,
       sku,
-      // qty_list,
-      // price_list,
-      // product_list,
       symbology,
       brand_id,
       category_id,
@@ -308,22 +181,17 @@ const ProductListEdit = ({ id, setId }) => {
       daily_sale_qty,
       tax_method,
       tax_id,
-      // has_featured,
       has_stock,
       has_variant,
-      // embedded_barcode,
       has_promotion,
       promotion,
       has_different_price,
       has_expired_date,
       product_expire,
-      // ecommerce_sync,
       details,
     } = values ?? {};
 
     const { qty_list, price_list, product_list } = formValues;
-
-    //console.log(qty_list, price_list);
 
     const qtyListArray = has_stock
       ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
@@ -342,8 +210,6 @@ const ProductListEdit = ({ id, setId }) => {
       (sum, item) => parseInt(sum) + parseInt(item.qty),
       0
     );
-
-    //console.log(has_different_price);
 
     const priceListArray = has_different_price
       ? Object.keys(price_list?.price || {}).map((warehouseId) => {
@@ -441,8 +307,6 @@ const ProductListEdit = ({ id, setId }) => {
     }
   };
 
-  //console.log(products);
-
   return (
     <CustomDrawer
       title={'Edit Product'}
@@ -455,14 +319,7 @@ const ProductListEdit = ({ id, setId }) => {
         isLoading={isLoading}
         fields={fields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-        initialWarehouses={initialWarehouses}
-        setInitialWarehouses={setInitialWarehouses}
-        priceWarehouses={priceWarehouses}
-        setPriceWarehouses={setPriceWarehouses}
+        data={data}
       />
     </CustomDrawer>
   );

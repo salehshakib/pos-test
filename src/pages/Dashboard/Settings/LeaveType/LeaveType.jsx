@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { LeaveTypeCreate } from '../../../../components/LeaveType/LeaveTypeCreate';
 import { LeaveTypeTable } from '../../../../components/LeaveType/LeaveTypeTable';
 import GlobalContainer from '../../../../container/GlobalContainer/GlobalContainer';

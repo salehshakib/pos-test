@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteCategoryMutation,
@@ -58,7 +59,7 @@ const CategoryTable = ({
 
   const total = data?.meta?.total;
 
-  const [updateStatus, { isLoading: isStatusUpdating }] =
+  const [updateCategoryStatus, { isLoading: isStatusUpdating }] =
     useUpdateCategoryStatusMutation();
 
   const [deleteCategory, { isLoading: isDeleting }] =
@@ -80,7 +81,7 @@ const CategoryTable = ({
   };
 
   const handleStatus = async () => {
-    const { data } = await updateStatus(statusId);
+    const { data } = await updateCategoryStatus(statusId);
 
     if (data?.success) {
       setStatusId(undefined);

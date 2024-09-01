@@ -133,10 +133,6 @@ export function updateFormValues(
     parseFloat(productUnitData?.operation_value) || 1
   );
 
-  console.log(discount);
-
-  console.log(formValues);
-
   const calculateTax = () => {
     const baseValue = (productUnitCost - discount) * qty;
     const taxAmount =

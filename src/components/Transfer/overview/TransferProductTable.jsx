@@ -446,8 +446,6 @@ export const TransferProductTable = ({
   setFormValues,
   products,
   setProducts,
-  productUnits,
-  setProductUnits,
 }) => {
   const form = Form.useFormInstance();
   const warehouseId = Form.useWatch('from_warehouse_id', form);

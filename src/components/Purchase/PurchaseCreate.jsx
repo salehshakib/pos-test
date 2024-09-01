@@ -96,6 +96,13 @@ export const PurchaseCreate = () => {
       payment_type,
     } = values;
 
+    const grandTotal = calculateGrandTotal(
+      totalPrice,
+      values.tax_rate,
+      values?.discount ?? 0,
+      values?.shipping_cost ?? 0
+    );
+
     const postObj = {
       warehouse_id,
       supplier_id,
@@ -106,7 +113,7 @@ export const PurchaseCreate = () => {
       payment_status,
       payment_type,
       paid_amount: paid_amount && decimalConverter(paid_amount),
-      due_amount: paid_amount ? decimalConverter(totalPrice - paid_amount) : 0,
+      due_amount: paid_amount ? decimalConverter(grandTotal - paid_amount) : 0,
       purchase_at: dayjs(values?.purchase_at).format('YYYY-MM-DD'),
       discount: decimalConverter(values?.discount),
       shipping_cost: decimalConverter(values?.shipping_cost),
@@ -117,14 +124,7 @@ export const PurchaseCreate = () => {
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax: decimalConverter(orderTax),
-
-      grand_total: calculateGrandTotal(
-        totalPrice,
-        values.tax_rate,
-        values?.discount ?? 0,
-        values?.shipping_cost ?? 0
-      ),
-
+      grand_total: grandTotal,
       product_list: JSON.stringify(productListArray),
       petty_cash_id: user?.petty_cash_id,
     };

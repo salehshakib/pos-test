@@ -42,8 +42,6 @@ export const QuotationProductTable = ({
     setProductEditModal(false);
   };
 
-  console.log(formValues);
-
   const dataSource = products?.map((product) => {
     const {
       id,
@@ -54,8 +52,6 @@ export const QuotationProductTable = ({
       sale_units,
       tax_method,
     } = product ?? {};
-
-    console.log(product);
 
     updateFormValues(
       id,

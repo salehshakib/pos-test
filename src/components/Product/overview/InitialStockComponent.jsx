@@ -180,10 +180,6 @@ export const InitialStockComponent = ({
       };
     }) ?? [];
 
-  console.log(initialWarehouses);
-
-  console.log(dataSource);
-
   useEffect(() => {
     form.setFieldsValue(formValues);
   }, [form, formValues, initialWarehouses]);

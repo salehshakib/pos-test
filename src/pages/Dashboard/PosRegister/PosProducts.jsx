@@ -52,8 +52,6 @@ const PosProducts = ({
     params,
   });
 
-  console.log(data);
-
   const [newData, setNewData] = useState([]);
 
   const products = data?.results?.product;

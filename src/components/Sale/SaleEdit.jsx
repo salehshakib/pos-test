@@ -126,33 +126,36 @@ export const SaleEdit = ({ id, setId }) => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(
+      totalPrice,
+      values.tax_rate,
+      discount ?? 0,
+      shipping_cost ?? 0
+    );
+
     const postObj = {
       ...values,
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
-      discount: Number(discount ?? 0).toFixed(2),
-      shipping_cost: Number(shipping_cost ?? 0).toFixed(2),
-      tax_rate: Number(tax_rate ?? 0).toFixed(2),
+      discount: decimalConverter(discount),
+      shipping_cost: decimalConverter(shipping_cost),
+      tax_rate: decimalConverter(tax_rate),
       item: productListArray.length,
       total_qty: totalQty,
-      total_discount: Number(totalDiscount).toFixed(2),
-      total_tax: Number(totalTax).toFixed(2),
-      total_price: Number(totalPrice).toFixed(2),
-      tax: Number(orderTax).toFixed(2),
-      change: values?.recieved_amount - values?.paid_amount,
-      grand_total: calculateGrandTotal(
-        totalPrice,
-        values.tax_rate,
-        discount,
-        shipping_cost
+      total_discount: decimalConverter(totalDiscount),
+      total_tax: decimalConverter(totalTax),
+      total_price: decimalConverter(totalPrice),
+      tax: decimalConverter(orderTax),
+      change: decimalConverter(
+        Number(values?.recieved_amount) - Number(values?.paid_amount)
       ),
-
+      grand_total: grandTotal,
       product_list: JSON.stringify(productListArray),
       // petty_cash_id: 8,
       _method: 'PUT',
     };
 
     if (paid_amount) {
-      postObj.paid_amount = Number(paid_amount).toFixed(2);
+      postObj.paid_amount = decimalConverter(paid_amount);
     }
 
     if (attachment?.length > 0) {

@@ -26,56 +26,6 @@ export const SaleCreate = () => {
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     product_id: {},
-  //     qty: {},
-  //     sale_unit_id: {},
-  //     net_unit_price: {},
-  //     discount: {},
-  //     tax_rate: {},
-  //     tax: {},
-  //     total: {},
-
-  //     tax_id: {},
-  //   },
-  // });
-
-  // const [products, setProducts] = useState([]);
-  // const [productUnits, setProductUnits] = useState({
-  //   sale_units: {},
-  //   tax_rate: {},
-  // });
-
-  // // reset state
-  // const warehouseId = Form.useWatch('warehouse_id', form);
-
-  // useEffect(() => {
-  //   if (warehouseId) {
-  //     setFormValues({
-  //       product_list: {
-  //         product_id: {},
-  //         qty: {},
-  //         sale_unit_id: {},
-  //         net_unit_price: {},
-  //         discount: {},
-  //         tax_rate: {},
-  //         tax: {},
-  //         total: {},
-
-  //         tax_id: {},
-  //       },
-  //     });
-
-  //     setProducts([]);
-
-  //     setProductUnits({
-  //       sale_units: {},
-  //       tax_rate: {},
-  //     });
-  //   }
-  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
-
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
@@ -108,9 +58,6 @@ export const SaleCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
       return openNotification('info', 'Please add atleast one product');
     }
 
@@ -139,6 +86,13 @@ export const SaleCreate = () => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(
+      totalPrice,
+      values.tax_rate,
+      discount ?? 0,
+      shipping_cost ?? 0
+    );
+
     const postObj = {
       ...values,
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
@@ -154,12 +108,7 @@ export const SaleCreate = () => {
       change: decimalConverter(
         Number(values?.recieved_amount ?? 0) - Number(values?.paid_amount ?? 0)
       ),
-      grand_total: calculateGrandTotal(
-        totalPrice,
-        values.tax_rate,
-        discount,
-        shipping_cost
-      ),
+      grand_total: decimalConverter(grandTotal),
 
       product_list: JSON.stringify(productListArray),
       // petty_cash_id: user?.petty_cash_id,
@@ -167,7 +116,7 @@ export const SaleCreate = () => {
     };
 
     if (paid_amount) {
-      postObj.paid_amount = Number(paid_amount).toFixed(2);
+      postObj.paid_amount = decimalConverter(paid_amount);
     }
 
     if (attachment?.[0].originFileObj) {

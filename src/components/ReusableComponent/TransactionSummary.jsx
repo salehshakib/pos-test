@@ -32,8 +32,6 @@ export const TransactionSummary = ({ formValues }) => {
 
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   return (
     <Col {...fullColLayout}>
       <TotalRow

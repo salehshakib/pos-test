@@ -168,15 +168,25 @@ const ExpireComponent = () => {
   const productType = Form.useWatch('type', form);
   const hasExpiredDate = Form.useWatch('has_expired_date', form);
 
-  if (productType === 'Standard' && hasExpiredDate) {
+  if (productType === 'Standard') {
     return (
-      <Col {...mdColLayout}>
-        <CustomDatepicker
-          label={'Expired Date'}
-          name={['product_expire', 'expired_date']}
-          required={true}
-        />
-      </Col>
+      <>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label="This product has batch and expired date"
+            name="has_expired_date"
+          />
+        </Col>
+        {hasExpiredDate && (
+          <Col {...mdColLayout}>
+            <CustomDatepicker
+              label={'Expired Date'}
+              name={['product_expire', 'expired_date']}
+              required={true}
+            />
+          </Col>
+        )}
+      </>
     );
   } else return null;
 };
@@ -395,13 +405,6 @@ const ProductForm = ({ data, ...props }) => {
       </Row>
 
       <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="This product has batch and expired date"
-            name="has_expired_date"
-          />
-        </Col>
-
         <ExpireComponent />
       </Row>
 

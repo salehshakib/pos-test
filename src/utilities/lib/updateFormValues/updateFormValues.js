@@ -133,6 +133,8 @@ export function updateFormValues(
     parseFloat(productUnitData?.operation_value) || 1
   );
 
+  console.log(discount);
+
   console.log(formValues);
 
   const calculateTax = () => {
@@ -179,7 +181,7 @@ export function updateFormValues(
     );
   }
 
-  if (formValues.discount) {
+  if (formProductList.discount) {
     setFormValue('discount', discount);
   }
   setFormValue('tax_rate', taxRate);

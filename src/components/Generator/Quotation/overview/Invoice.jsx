@@ -83,7 +83,7 @@ const columns = [
 const Invoice = ({ data, type }) => {
   const currency = useSelector(useCurrency);
 
-  const dataSource = data?.quotation_products?.map((item, index) => {
+  const dataSource = data?.invoice_products?.map((item, index) => {
     return {
       id: item?.id,
       sl_no: index + 1,

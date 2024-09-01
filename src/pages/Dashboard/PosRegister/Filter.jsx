@@ -2,13 +2,7 @@ import PosFilterComponent from '../../../components/PosRegister/PosFilterCompone
 import { useFilterParams } from '../../../utilities/hooks/useParams';
 import PosProducts from './PosProducts';
 
-export const Filter = ({
-  // products,
-  setProducts,
-  // setFormValues,
-  // setProductUnits,
-  posForm,
-}) => {
+export const Filter = ({ form, setProducts }) => {
   const { searchParams, setParams } = useFilterParams();
 
   return (
@@ -24,12 +18,9 @@ export const Filter = ({
           className="m-4 grow bg-gray-200 shadow-md"
         >
           <PosProducts
-            form={posForm}
+            form={form}
             setProducts={setProducts}
             searchParams={searchParams}
-            // products={products}
-            // setFormValues={setFormValues}
-            // setProductUnits={setProductUnits}
           />
         </div>
       </div>

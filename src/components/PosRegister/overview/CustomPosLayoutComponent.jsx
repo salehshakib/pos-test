@@ -1,24 +1,50 @@
-export const CustomPosLayoutComponent = () => {
+import { Button, Form, Layout, Tag } from 'antd';
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+
+import { GlobalUtilityStyle } from '../../../container/Styled';
+import { Filter } from '../../../pages/Dashboard/PosRegister/Filter';
+import { isDev, mode } from '../../../utilities/configs/base_url';
+import Logo from '../../AllSection/Header/Logo';
+import Profile from '../../AllSection/Header/Profile';
+import Payment from '../Payment';
+import { PosRegister } from '../PosRegister';
+import { CustomPaymentComponent } from './CustomPaymentComponent';
+
+const { Footer } = Layout;
+
+export const CustomPosLayoutComponent = ({ setCollapsed }) => {
+  const [products, setProducts] = useState([]);
+  const [posForm] = Form.useForm();
+
+  const handleSubmit = (values, { formValues }) => {
+    console.log({ values, formValues });
+  };
+
+  console.log(products);
+
   return (
-    <>
+    <GlobalUtilityStyle>
       <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
-        <div className="grid h-[85vh] grid-cols-5">
-          <div className="col-span-3">
+        <div className="grid h-[85vh] grid-cols-6">
+          <div className="col-span-4">
             <PosRegister
               // formValues={formValues}
               // setFormValues={setFormValues}
-              // products={products}
-              // setProducts={setProducts}
+              form={posForm}
+              products={products}
+              setProducts={setProducts}
               // productUnits={productUnits}
               // setProductUnits={setProductUnits}
-              form={posForm}
-              fields={errorFields}
-              setGrandTotal={setGrandTotal}
-              type={type}
-              setType={setType}
+              // form={posForm}
+              // errorFields={errorFields}
+              // setGrandTotal={setGrandTotal}
+              // type={type}
+              // setType={setType}
             />
           </div>
 
+          {/* sidebar button */}
           <div className="relative col-span-2 flex h-[90vh] flex-col">
             <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
               <div className="flex items-center gap-6 text-2xl">
@@ -26,8 +52,9 @@ export const CustomPosLayoutComponent = () => {
                   className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
                   type="text"
                   icon={<GiHamburgerMenu />}
-                  onClick={() => setCollapsed(!collapsed)}
-                ></Button>
+                  onClick={() => setCollapsed((prev) => !prev)}
+                />
+
                 <Logo />
               </div>
               <div>
@@ -47,10 +74,10 @@ export const CustomPosLayoutComponent = () => {
             </div>
 
             <Filter
-              posForm={posForm}
-              products={products}
+              form={posForm}
+              // products={products}
               setProducts={setProducts}
-              setFormValues={setFormValues}
+              // setFormValues={setFormValues}
               // setProductUnits={setProductUnits}
             />
           </div>
@@ -63,8 +90,17 @@ export const CustomPosLayoutComponent = () => {
         }}
         className="py-4"
       >
-        <CustomPaymentComponent />
+        {/* <CustomPaymentComponent /> */}
+        <Payment
+        // handleSubmit={handleSubmit}
+        // form={posForm}
+        // fields={errorFields}
+        // isLoading={isLoading}
+        // isModalOpen={isModalOpen}
+        // setIsModalOpen={setIsModalOpen}
+        // grandTotal={grandTotal}
+        />
       </Footer>
-    </>
+    </GlobalUtilityStyle>
   );
 };

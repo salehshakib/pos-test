@@ -13,14 +13,16 @@ import CustomInput from '../Shared/Input/CustomInput';
 import CustomModal from '../Shared/Modal/CustomModal';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 
-const Payment = ({
-  handleSubmit,
-  form,
-  isModalOpen,
-  setIsModalOpen,
-  isLoading,
-  grandTotal,
-}) => {
+const Payment = (
+  {
+    // handleSubmit,
+    // form,
+    // isModalOpen,
+    // setIsModalOpen,
+    // isLoading,
+    // grandTotal,
+  }
+) => {
   const [paymentType, setPaymentType] = useState('Card');
 
   const handleOpenModal = (value) => {
@@ -102,7 +104,6 @@ const Payment = ({
             type="primary"
             icon={<GoHistory />}
             className="flex min-w-fit items-center justify-center"
-            //  onClick={() => handleOpenModal("Card")}
           >
             Transactions
           </Button>

@@ -142,68 +142,68 @@ const CurrencyExchangeComponent = (size) => {
   );
 };
 
-const TaxComponent = () => {
-  const params = useGlobalParams({
-    selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
-  });
+// const TaxComponent = () => {
+//   const params = useGlobalParams({
+//     selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
+//   });
 
-  const { data, isFetching } = useGetAllTaxQuery({
-    params,
-  });
+//   const { data, isFetching } = useGetAllTaxQuery({
+//     params,
+//   });
 
-  const options = data?.results?.tax?.map((item) => {
-    return {
-      value: item.rate,
-      label: item.name,
-    };
-  });
-  return (
-    <CustomSelect
-      options={options}
-      name={'tax_rate'}
-      isLoading={isFetching}
-      placeholder={'Vat'}
-    />
-  );
-};
+//   const options = data?.results?.tax?.map((item) => {
+//     return {
+//       value: item.rate,
+//       label: item.name,
+//     };
+//   });
+//   return (
+//     <CustomSelect
+//       options={options}
+//       name={'tax_rate'}
+//       isLoading={isFetching}
+//       placeholder={'Vat'}
+//     />
+//   );
+// };
 
-const CouponComponent = ({ setType, setProductUnits }) => {
-  const params = useGlobalParams({});
+// const CouponComponent = ({ setType, setProductUnits }) => {
+//   const params = useGlobalParams({});
 
-  const { data, isFetching } = useGetAllCouponQuery({ params });
+//   const { data, isFetching } = useGetAllCouponQuery({ params });
 
-  const options = data?.results?.coupon?.map((item) => {
-    return {
-      value: item.id?.toString(),
-      label: item.code,
-      type: item.type,
-      rate: item.amount,
-      minimum_amount: item.minimum_amount,
-    };
-  });
+//   const options = data?.results?.coupon?.map((item) => {
+//     return {
+//       value: item.id?.toString(),
+//       label: item.code,
+//       type: item.type,
+//       rate: item.amount,
+//       minimum_amount: item.minimum_amount,
+//     };
+//   });
 
-  const onSelect = (value, option) => {
-    setType(option.type);
-    setProductUnits((prevValues) => {
-      return {
-        ...prevValues,
-        coupon_rate: option.rate,
-        minimum_amount: option.minimum_amount,
-      };
-    });
-  };
+//   const onSelect = (value, option) => {
+//     setType(option.type);
+//     setProductUnits((prevValues) => {
+//       return {
+//         ...prevValues,
+//         coupon_rate: option.rate,
+//         minimum_amount: option.minimum_amount,
+//       };
+//     });
+//   };
 
-  return (
-    <CustomSelect
-      options={options}
-      name={'coupon_id'}
-      isLoading={isFetching}
-      placeholder={'Coupon'}
-      onSelect={onSelect}
-      showSearch={true}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       options={options}
+//       name={'coupon_id'}
+//       isLoading={isFetching}
+//       placeholder={'Coupon'}
+//       onSelect={onSelect}
+//       showSearch={true}
+//     />
+//   );
+// };
 
 const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();
@@ -243,7 +243,6 @@ const RegisterForm = ({ products, setProducts }) => {
           <Col span={12}>
             <CustomInput
               type={'text'}
-              // required={true}
               placeholder={'Reference Number'}
               name={'reference_number'}
               size="default"
@@ -268,154 +267,114 @@ const RegisterForm = ({ products, setProducts }) => {
 };
 
 export const PosRegister = ({
-  formValues,
-  setFormValues,
+  // formValues,
+  // setFormValues,
+  // products,
+  // setProducts,
+  // productUnits,
+  // setProductUnits,
+  form,
+  // fields,
+  // setGrandTotal,
+  // type,
+  // setType,
+
   products,
   setProducts,
-  productUnits,
-  setProductUnits,
-  form,
-  fields,
-  setGrandTotal,
-  type,
-  setType,
 }) => {
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(() => {
-    const total = Object.values(formValues.product_list.qty).reduce(
-      (acc, cur) => acc + parseInt(cur),
-      0
-    );
-    setTotalQuantity(total);
+  // useEffect(() => {
+  //   const total = Object.values(formValues.product_list.qty).reduce(
+  //     (acc, cur) => acc + parseInt(cur),
+  //     0
+  //   );
+  //   setTotalQuantity(total);
 
-    const totalPrice = Object.values(formValues.product_list.total).reduce(
-      (acc, cur) => acc + parseFloat(cur),
-      0
-    );
-    setTotalPrice(totalPrice?.toFixed(2));
-  }, [formValues, products]);
+  //   const totalPrice = Object.values(formValues.product_list.total).reduce(
+  //     (acc, cur) => acc + parseFloat(cur),
+  //     0
+  //   );
+  //   setTotalPrice(totalPrice?.toFixed(2));
+  // }, [formValues, products]);
 
-  const [discount, setDiscount] = useState(0);
-  const [shipping, setShipping] = useState(0);
-  const [coupon, setCoupon] = useState(0);
+  // const [discount, setDiscount] = useState(0);
+  // const [shipping, setShipping] = useState(0);
+  // const [coupon, setCoupon] = useState(0);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(null);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [modalType, setModalType] = useState(null);
 
-  const showModal = (value) => {
-    setIsModalOpen(true);
-    setModalType(value);
-  };
-  const hideModal = () => {
-    setIsModalOpen(false);
-    setModalType(null);
-  };
-
-  const taxRate = Form.useWatch('tax_rate', form);
-
-  const handleSubmit = async () => {
-    if (modalType === 'Discount') {
-      setDiscount(form.getFieldValue(modalType));
-    }
-
-    if (modalType === 'Shipping Cost') {
-      setShipping(form.getFieldValue(modalType));
-    }
-
-    if (modalType === 'Coupon') {
-      if (totalPrice < productUnits.minimum_amount) {
-        // message.error(
-        //   "Coupon can be applied only if total price is greater than " +
-        //     productUnits.minimum_amount
-        // );
-
-        openNotification(
-          'info',
-          'Coupon can be applied only if total price is greater than ' +
-            productUnits.minimum_amount
-        );
-
-        // hideModal();
-        return;
-      }
-
-      if (type?.toLowerCase() === 'fixed') {
-        setCoupon(productUnits.coupon_rate);
-      }
-    }
-
-    hideModal();
-  };
-
-  const tax = (totalPrice * (taxRate ?? 0)) / 100;
-
-  const grand_total =
-    parseFloat(totalPrice) +
-    parseFloat(tax ?? 0) +
-    parseFloat(shipping) -
-    parseFloat(discount) -
-    parseFloat(coupon);
-
-  useEffect(() => {
-    setGrandTotal(grand_total);
-
-    // if (type.toLowerCase() === "percentage") {
-    //   setCoupon((totalPrice * productUnits.coupon_rate) / 100);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grand_total, setGrandTotal, totalPrice]);
-
-  // const tableStyleProps = {
-  //   summary: () => {
-  //     return (
-  //       <Table.Summary fixed="bottom">
-  //         <Table.Summary.Row>
-  //           <Table.Summary.Cell index={1} colSpan={4}>
-  //             <Text className="font-bold" type="">
-  //               Total
-  //             </Text>
-  //           </Table.Summary.Cell>
-
-  //           <Table.Summary.Cell index={2} align="center">
-  //             <Text type="" className="font-bold">
-  //               {totalQuantity}
-  //             </Text>
-  //           </Table.Summary.Cell>
-  //           <Table.Summary.Cell index={3} align="center">
-  //             <Text type="" className="font-bold">
-  //               {showCurrency(totalPrice, currency)}
-  //             </Text>
-  //           </Table.Summary.Cell>
-  //         </Table.Summary.Row>
-  //       </Table.Summary>
-  //     );
-  //   },
-  //   sticky: {
-  //     // offsetHeader: 440,
-  //     offsetScroll: 400,
-  //   },
-  //   scroll: {
-  //     x: 'min-content',
-  //   },
+  // const showModal = (value) => {
+  //   setIsModalOpen(true);
+  //   setModalType(value);
+  // };
+  // const hideModal = () => {
+  //   setIsModalOpen(false);
+  //   setModalType(null);
   // };
 
-  // const item = Object.values(formValues.product_list.qty).length;
+  // const taxRate = Form.useWatch('tax_rate', form);
 
-  const currency = useSelector(useCurrency);
+  // const handleSubmit = async () => {
+  //   if (modalType === 'Discount') {
+  //     setDiscount(form.getFieldValue(modalType));
+  //   }
 
-  useEffect(() => {
-    if (type?.toLowerCase() === 'fixed') {
-      setCoupon(productUnits.coupon_rate);
-    }
-  }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
+  //   if (modalType === 'Shipping Cost') {
+  //     setShipping(form.getFieldValue(modalType));
+  //   }
+
+  //   if (modalType === 'Coupon') {
+  //     if (totalPrice < productUnits.minimum_amount) {
+
+  //       openNotification(
+  //         'info',
+  //         'Coupon can be applied only if total price is greater than ' +
+  //           productUnits.minimum_amount
+  //       );
+
+  //       // hideModal();
+  //       return;
+  //     }
+
+  //     if (type?.toLowerCase() === 'fixed') {
+  //       setCoupon(productUnits.coupon_rate);
+  //     }
+  //   }
+
+  //   hideModal();
+  // };
+
+  // const tax = (totalPrice * (taxRate ?? 0)) / 100;
+
+  // const grand_total =
+  //   parseFloat(totalPrice) +
+  //   parseFloat(tax ?? 0) +
+  //   parseFloat(shipping) -
+  //   parseFloat(discount) -
+  //   parseFloat(coupon);
+
+  // useEffect(() => {
+  //   setGrandTotal(grand_total);
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [grand_total, setGrandTotal, totalPrice]);
+
+  // const currency = useSelector(useCurrency);
+
+  // useEffect(() => {
+  //   if (type?.toLowerCase() === 'fixed') {
+  //     setCoupon(productUnits.coupon_rate);
+  //   }
+  // }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
 
   return (
     <>
       <Form
         form={form}
-        fields={fields}
+        // fields={fields}
         layout="vertical"
         autoComplete="on"
         scrollToFirstError
@@ -427,8 +386,8 @@ export const PosRegister = ({
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
 
-          <div className="flex-grow overflow-y-auto bg-white">
-            {/* <ProductTableComponent
+          {/* <div className="flex-grow overflow-y-auto bg-white">
+            <ProductTableComponent
               products={products}
               setProducts={setProducts}
               formValues={formValues}
@@ -436,10 +395,10 @@ export const PosRegister = ({
               productUnits={productUnits}
               setProductUnits={setProductUnits}
               tableStyleProps={item && tableStyleProps}
-            /> */}
-          </div>
+            />
+          </div> */}
 
-          <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
+          {/* <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
             <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
               <div className="grid grid-cols-2">
                 <span>Items</span>
@@ -531,11 +490,11 @@ export const PosRegister = ({
             >
               Reset
             </Button>
-          </div>
+          </div> */}
         </div>
       </Form>
 
-      <CustomModal
+      {/* <CustomModal
         openModal={isModalOpen}
         hideModal={hideModal}
         title={modalType}
@@ -571,7 +530,7 @@ export const PosRegister = ({
             </Col>
           </Row>
         </Form>
-      </CustomModal>
+      </CustomModal> */}
     </>
   );
 };

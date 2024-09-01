@@ -3,7 +3,7 @@ import Payment from '../Payment';
 export const CustomPaymentComponent = () => {
   return (
     <>
-      {/* <Payment
+      <Payment
         handleSubmit={handleSubmit}
         form={posForm}
         fields={errorFields}
@@ -11,7 +11,7 @@ export const CustomPaymentComponent = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         grandTotal={grandTotal}
-      /> */}
+      />
     </>
   );
 };

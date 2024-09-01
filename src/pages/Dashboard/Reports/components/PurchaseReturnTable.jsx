@@ -12,7 +12,7 @@ import { useGlobalParams } from '../../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../../utilities/lib/currency';
 import { formatDate } from '../../../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
-import { columns } from '../data/PurchaseReturn';
+import { columns } from '../data/PurchaseReturnColumns';
 
 export const PurchaseReturnTable = ({
   keyword,

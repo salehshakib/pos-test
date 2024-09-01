@@ -38,6 +38,7 @@ export const SaleCreate = () => {
       tax_rate,
       sale_at,
       paid_amount,
+      discount_type,
     } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -90,13 +91,19 @@ export const SaleCreate = () => {
       totalPrice,
       values.tax_rate,
       discount ?? 0,
-      shipping_cost ?? 0
+      shipping_cost ?? 0,
+      discount_type
     );
 
     const postObj = {
       ...values,
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
-      discount: decimalConverter(discount),
+      discount:
+        discount_type === 'Percentage'
+          ? decimalConverter(
+              (parseFloat(discount) * parseFloat(totalPrice)) / 100
+            )
+          : decimalConverter(discount),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
       item: productListArray.length,

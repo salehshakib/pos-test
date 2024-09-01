@@ -55,7 +55,8 @@ export const calculateGrandTotal = (
   totalPrice,
   taxRate,
   discount,
-  shipping_cost
+  shipping_cost,
+  discountType = 'Fixed'
   // orderTaxRate
 ) => {
   const parsedTotalPrice = parseFloat(totalPrice) || 0;
@@ -63,7 +64,10 @@ export const calculateGrandTotal = (
   const parsedTax =
     parseFloat(calculateTotalTax(totalPrice, taxRate, discount)) || 0;
 
-  const parsedDiscount = parseFloat(discount) || 0;
+  const parsedDiscount =
+    discountType === 'Percentage'
+      ? parseFloat((discount * parsedTotalPrice) / 100)
+      : parseFloat(discount) || 0;
 
   const parsedShippingCost = parseFloat(shipping_cost) || 0;
 

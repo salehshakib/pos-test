@@ -73,6 +73,7 @@ const CustomInput = (props) => {
             controls={false}
             changeOnWheel={false}
             suffix={suffix}
+            onChange={onChange}
             // addonAfter={suffix}
           />
         );

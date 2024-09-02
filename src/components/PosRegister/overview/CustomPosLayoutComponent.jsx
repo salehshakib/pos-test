@@ -17,12 +17,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   const [products, setProducts] = useState([]);
   const [posForm] = Form.useForm();
 
-  const handleSubmit = (values, { formValues }) => {
-    console.log({ values, formValues });
-  };
-
-  console.log(products);
-
   return (
     <GlobalUtilityStyle>
       <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
@@ -91,15 +85,15 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         className="py-4"
       >
         {/* <CustomPaymentComponent /> */}
-        <Payment
-        // handleSubmit={handleSubmit}
-        // form={posForm}
-        // fields={errorFields}
-        // isLoading={isLoading}
-        // isModalOpen={isModalOpen}
-        // setIsModalOpen={setIsModalOpen}
-        // grandTotal={grandTotal}
-        />
+        {/* <Payment
+        handleSubmit={handleSubmit}
+        form={posForm}
+        fields={errorFields}
+        isLoading={isLoading}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        grandTotal={grandTotal}
+        /> */}
       </Footer>
     </GlobalUtilityStyle>
   );

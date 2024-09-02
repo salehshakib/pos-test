@@ -8,7 +8,7 @@ import {
 } from '../../../redux/services/drawer/drawerSlice';
 import { sanitizeObj } from '../../../utilities/lib/sanitizeObj';
 
-const FormButton = ({ loading, children, onClose }) => {
+const FormButton = ({ loading, children, onClose, btnStyle }) => {
   const dispatch = useDispatch();
   const form = Form.useFormInstance();
 
@@ -19,7 +19,9 @@ const FormButton = ({ loading, children, onClose }) => {
   };
 
   return (
-    <div className={`flex w-full items-center justify-end gap-3 pb-20 pt-5`}>
+    <div
+      className={`flex w-full items-center justify-end gap-3 pt-5 ${btnStyle ? 'pb-20' : ''}`}
+    >
       <Button type="default" onClick={onClose ?? handleDrawerClose}>
         Cancel
       </Button>
@@ -42,6 +44,7 @@ const CustomForm = (props) => {
     form,
     onChange,
     layout = 'vertical',
+    btnStyle = true,
   } = props;
 
   const onFinish = (values) => {
@@ -67,7 +70,7 @@ const CustomForm = (props) => {
         {children}
 
         {submitBtn && (
-          <FormButton loading={isLoading} onClose={onClose}>
+          <FormButton loading={isLoading} onClose={onClose} btnStyle={btnStyle}>
             {submitBtnText}
           </FormButton>
         )}

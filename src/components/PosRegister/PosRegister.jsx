@@ -27,6 +27,7 @@ import CustomModal from '../Shared/Modal/CustomModal';
 import { SearchProduct } from '../Shared/ProductControllerComponent/SearchProduct';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import { CustomSelectButton } from '../Shared/Select/CustomSelectButton';
+import { CustomPosProductsComponent } from './overview/CustomPosProductsComponent';
 import ProductTableComponent from './PosProductTableComponent';
 
 const { Text } = Typography;
@@ -370,6 +371,12 @@ export const PosRegister = ({
   //   }
   // }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
 
+  const handleSubmit = (values, { formValues }) => {
+    console.log({ values, formValues });
+  };
+
+  console.log(products);
+
   return (
     <>
       <Form
@@ -385,6 +392,8 @@ export const PosRegister = ({
           <div className="flex-none">
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
+
+          <CustomPosProductsComponent />
 
           {/* <div className="flex-grow overflow-y-auto bg-white">
             <ProductTableComponent

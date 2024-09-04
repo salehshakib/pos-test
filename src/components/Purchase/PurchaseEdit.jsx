@@ -44,45 +44,24 @@ export const PurchaseEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      let newFieldData = [
+      const newFieldData = [
         ...fieldData,
-        {
-          name: 'warehouse_id',
-          value: data?.warehouse_id.toString(),
-          errors: '',
+        data?.attachments?.length > 0 && {
+          name: 'attachment',
+          value: [
+            {
+              url: data?.attachments?.[0]?.url,
+            },
+          ],
+          erros: '',
         },
-        {
-          name: 'supplier_id',
-          value: data?.supplier_id.toString(),
-          errors: '',
-        },
-        // {
-        //   name: 'tax_id',
-        //   value: data?.supplier_id.toString(),
-        //   errors: '',
-        // },
       ];
-
-      if (data?.attachments?.length > 0) {
-        newFieldData = [
-          ...newFieldData,
-          {
-            name: 'attachment',
-            value: [
-              {
-                url: data?.attachments?.[0]?.url,
-              },
-            ],
-            erros: '',
-          },
-        ];
-      }
 
       setFields(newFieldData);
     } else {
       setFields([]);
     }
-  }, [data, isEditDrawerOpen, setFields, form]);
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();

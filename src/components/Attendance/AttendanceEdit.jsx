@@ -33,20 +33,10 @@ export const AttendanceEdit = ({ id, setId }) => {
   const [updateAttendence, { isLoading }] = useUpdateAttendenceMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldValue = [
-        {
-          name: 'department_id',
-          value: data?.department_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'employee_id',
-          value: data?.employee_id.toString(),
-          errors: '',
-        },
         {
           name: 'check_in',
           value: dayjs(data?.check_in, 'HH:mm:ss'),
@@ -62,8 +52,10 @@ export const AttendanceEdit = ({ id, setId }) => {
       const newFieldData = updateFieldValues(fieldData, updateFieldValue);
 
       setFields(newFieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

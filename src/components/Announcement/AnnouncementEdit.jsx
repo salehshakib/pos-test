@@ -35,7 +35,7 @@ export const AnnouncementEdit = ({ id, setId }) => {
   const [updateLeaveType, { isLoading }] = useUpdateLeaveTypeMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldData = [
@@ -54,8 +54,10 @@ export const AnnouncementEdit = ({ id, setId }) => {
       const newFieldData = updateFieldValues(fieldData, updateFieldData);
 
       setFields(newFieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

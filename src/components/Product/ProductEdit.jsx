@@ -59,14 +59,9 @@ const ProductListEdit = ({ id, setId }) => {
         promotion_price,
         starting_date,
         last_date,
-        has_different_price,
         has_expired_date,
         expired_date,
-        // has_featured,
-        // embedded_barcode,
-        // ecommerce_sync,
         details,
-        has_stock,
         attachments,
       } = data;
 
@@ -93,21 +88,6 @@ const ProductListEdit = ({ id, setId }) => {
       const newFieldData = [
         ...fieldData,
         {
-          name: 'has_stock',
-          value: has_stock.toString() === '1' ? true : false,
-          errors: '',
-        },
-        {
-          name: 'has_different_price',
-          value: has_different_price.toString() === '1' ? true : false,
-          errors: '',
-        },
-        {
-          name: 'has_promotion',
-          value: has_promotion.toString() === '1' ? true : false,
-          errors: '',
-        },
-        {
           name: ['promotion', 'promotion_price'],
           value: promotion_price,
           errors: '',
@@ -128,11 +108,7 @@ const ProductListEdit = ({ id, setId }) => {
               : '',
           errors: '',
         },
-        {
-          name: 'has_expired_date',
-          value: has_expired_date.toString() === '1' ? true : false,
-          errors: '',
-        },
+
         {
           name: ['product_expire', 'expired_date'],
           value:

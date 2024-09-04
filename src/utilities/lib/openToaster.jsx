@@ -22,16 +22,16 @@ export const openNotification = (type, message) => {
       aria-live="assertive"
       role="alert"
     >
-      <div className="w-0 flex-1 p-4">
+      <div className="w-96 flex-1 p-4">
         <div className="flex items-start">
           <div className="flex-shrink-0 pt-0.5">
             <img className="h-10 w-10 rounded-full" src={logo} alt="Logo" />
           </div>
           <div className="ml-3 flex-1">
             <span className={colorClass}>{typeText}</span>
-            <p className="mt-1 text-sm text-gray-500">
+            <div className="mt-1 text-sm text-gray-500  overflow-hidden truncate w-[19rem]">
               {message ?? 'No Message is provided. Task Completed Successfully'}
-            </p>
+            </div>
           </div>
         </div>
       </div>

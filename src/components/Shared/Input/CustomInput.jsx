@@ -70,6 +70,7 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 w-full border-2"
             min={0}
+            onChange={onChange}
             // controls={false}
             // controls={false}
             // changeOnWheel={false}

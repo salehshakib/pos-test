@@ -72,6 +72,8 @@ export const PurchaseForm = ({ data, ...props }) => {
 
   const warehousePurchaseRef = useRef(null);
 
+  console.log('first');
+
   return (
     <>
       <CustomForm {...props} handleSubmit={handleSubmit}>

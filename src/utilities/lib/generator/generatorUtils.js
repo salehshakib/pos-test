@@ -1,4 +1,3 @@
-import { openNotification } from '../openToaster';
 import { decimalConverter } from '../return/decimalComverter';
 
 export const calculateSummary = (
@@ -35,7 +34,7 @@ export const calculateSummary = (
   let totalCoupon = 0;
 
   if (
-    formValues?.order.coupon.minimum_amount &&
+    formValues?.order?.coupon?.minimum_amount &&
     Number(formValues?.order?.coupon.minimum_amount) < Number(totalPrice)
   ) {
     if (formValues?.order?.coupon.type === 'Percentage') {

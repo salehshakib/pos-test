@@ -40,31 +40,10 @@ const EmployeeEdit = ({ id, setId }) => {
   const [updateEmployee, { isLoading }] = useUpdateEmployeeMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldValue = [
-        {
-          name: 'role_id',
-          value: data?.employee_accesses?.role_id?.toString(),
-          errors: '',
-        },
-        {
-          name: 'warehouse_id',
-          value: data?.employee_accesses?.warehouse_id?.toString(),
-          errors: '',
-        },
-        {
-          name: 'cashier_id',
-          value: data?.employee_accesses?.cashier_id?.toString(),
-          errors: '',
-        },
-        {
-          name: 'have_access',
-          value: data?.have_access.toString() === '1' ? true : false,
-          errors: '',
-        },
         {
           name: 'staff_id',
           value: data?.staff_id.slice(8),
@@ -75,7 +54,9 @@ const EmployeeEdit = ({ id, setId }) => {
       const newFieldData = updateFieldValues(fieldData, updateFieldValue);
 
       setFields(newFieldData);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    } else {
+      setFields([]);
+    }
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {

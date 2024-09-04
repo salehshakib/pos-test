@@ -11,10 +11,7 @@ import {
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import {
   calculateGrandTotal,
   calculateTotalPrice,
@@ -49,26 +46,12 @@ export const SaleEdit = ({ id, setId }) => {
   useEffect(() => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
-      const updatedFieldData = [
-        // ...fieldData,
-        {
-          name: 'warehouse_id',
-          value: data?.warehouse_id?.toString(),
-          errors: '',
-        },
-        {
-          name: 'supplier_id',
-          value: data?.supplier_id?.toString(),
-          errors: '',
-        },
-      ];
 
-      const newFieldData = updateFieldValues(fieldData, updatedFieldData);
-      setFields(newFieldData);
+      setFields(fieldData);
     } else {
       setFields([]);
     }
-  }, [data, form, isEditDrawerOpen, setFields]);
+  }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();

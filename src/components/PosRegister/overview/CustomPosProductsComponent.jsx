@@ -150,12 +150,21 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
 
   const handleDiscountChange = (values) => {
     console.log(values);
-    // setUpdatedFormValues
+    setUpdatedFormValues((prev) => {
+      return {
+        ...prev,
+        discount: values,
+      };
+    });
   };
 
   const handleShippingCostChange = (values) => {
-    console.log(values);
-    // setUpdatedFormValues
+    setUpdatedFormValues((prev) => {
+      return {
+        ...prev,
+        shipping_cost: values,
+      };
+    });
   };
 
   const handleSubmit = (values) => {

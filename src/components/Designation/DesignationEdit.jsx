@@ -35,16 +35,10 @@ export const DesignationEdit = ({ id, setId }) => {
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
-      const newFieldData = [
-        ...fieldData,
-        {
-          name: 'department_id',
-          value: data?.departments?.id.toString(),
-          errors: '',
-        },
-      ];
 
-      setFields(newFieldData);
+      setFields(fieldData);
+    } else {
+      setFields([]);
     }
   }, [data, setFields]);
 

@@ -39,144 +39,14 @@ const QuotationEdit = ({ id, setId }) => {
   );
   const [updateQuotation, { isLoading }] = useUpdateQuotationMutation();
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     qty: {},
-  //     sale_unit_id: {},
-  //     net_unit_price: {},
-  //     discount: {},
-  //     tax_rate: {},
-  //     tax: {},
-  //     total: {},
-
-  //     tax_id: {},
-  //   },
-  // });
-
-  // const [products, setProducts] = useState([]);
-
-  // const [productUnits, setProductUnits] = useState({
-  //   sale_units: {},
-  //   tax_rate: {},
-  //   inclusive_tax_rate: {},
-  // });
-
-  // useEffect(() => {
-  //   if (!isEditDrawerOpen) {
-  //     setFormValues({
-  //       product_list: {
-  //         qty: {},
-  //         sale_unit_id: {},
-  //         net_unit_price: {},
-  //         discount: {},
-  //         tax_rate: {},
-  //         tax: {},
-  //         total: {},
-  //       },
-  //     });
-  //     setProducts([]);
-  //     setProductUnits({
-  //       sale_units: {},
-  //       tax_rate: {},
-  //     });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isEditDrawerOpen]);
-
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      // data?.quotation_products?.forEach((item) => {
-      //   setFormValues((prevFormValues) => ({
-      //     ...prevFormValues,
-      //     product_list: {
-      //       ...prevFormValues.product_list,
-      //       qty: {
-      //         ...prevFormValues.product_list.qty,
-      //         [item?.product_id.toString()]: item?.qty,
-      //       },
-      //       sale_unit_id: {
-      //         ...prevFormValues.product_list.sale_unit_id,
-      //         [item?.product_id.toString()]: item?.sale_unit_id,
-      //       },
-      //       net_unit_price: {
-      //         ...prevFormValues.product_list.net_unit_price,
-      //         [item?.product_id.toString()]: item?.net_unit_price,
-      //       },
-      //       discount: {
-      //         ...prevFormValues.product_list.discount,
-      //         [item?.product_id.toString()]: item?.discount,
-      //       },
-      //       tax_rate: {
-      //         ...prevFormValues.product_list.tax_rate,
-      //         [item?.product_id.toString()]: item?.tax_rate,
-      //       },
-      //       tax: {
-      //         ...prevFormValues.product_list.tax,
-      //         [item?.product_id.toString()]: item?.tax,
-      //       },
-      //       total: {
-      //         ...prevFormValues.product_list.total,
-      //         [item?.product_id.toString()]: item?.total,
-      //       },
-      //     },
-      //   }));
-
-      // setProducts((prevProducts) => [
-      //   ...prevProducts,
-      //   {
-      //     id: item?.product_id,
-      //     sku: item?.products?.sku,
-      //     name: item?.products?.name,
-      //     sale_unit_id: item?.sale_unit_id,
-      //     tax_id: item?.products?.tax_id,
-      //     taxes: item?.products?.taxes,
-      //     sale_units: item?.products?.sale_units,
-      //     buying_price: item?.products?.buying_price,
-      //   },
-      // ]);
-
-      // setProductUnits((prevProductUnits) => ({
-      //   ...prevProductUnits,
-
-      //   sale_units: {
-      //     ...prevProductUnits.sale_units,
-      //     [item?.product_id.toString()]:
-      //       item?.products?.sale_units?.operation_value ?? 1,
-      //   },
-      // }));
-      // });
-
       const fieldData = fieldsToUpdate(data);
 
-      const newFieldData = [
-        ...fieldData,
-        {
-          name: 'warehouse_id',
-          value: data?.warehouse_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'cashier_id',
-          value: data?.cashier_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'supplier_id',
-          value: data?.supplier_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'customer_id',
-          value: data?.customer_id.toString(),
-          errors: '',
-        },
-      ];
-
-      setFields(newFieldData);
+      setFields(fieldData);
     } else {
       setFields([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values, { formValues }) => {

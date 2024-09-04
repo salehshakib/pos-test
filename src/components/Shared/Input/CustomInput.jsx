@@ -22,7 +22,7 @@ const CustomInput = (props) => {
     addonBefore = '+880',
     size = 'large',
     maxlength = 2,
-    min = 0,
+    min,
     max,
 
     //for mb-0
@@ -70,10 +70,10 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 w-full border-2"
             min={0}
-            controls={false}
-            changeOnWheel={false}
+            // controls={false}
+            // controls={false}
+            // changeOnWheel={false}
             suffix={suffix}
-            onChange={onChange}
             // addonAfter={suffix}
           />
         );
@@ -113,7 +113,7 @@ const CustomInput = (props) => {
         return (
           <InputNumber
             {...commonProps}
-            type="number"
+            // type="number"
             className="ant-group-addOn mt-1 w-full border-2"
             addonAfter={suffix}
             controls={false}
@@ -145,7 +145,7 @@ const CustomInput = (props) => {
         rules={[
           {
             required: required,
-            message: `Please Input ${requireMsg ?? label}!`,
+            message: `Please Input ${requireMsg ?? placeholder ?? label}!`,
           },
         ]}
         tooltip={tooltip}

@@ -1,36 +1,27 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Row, Table, Tooltip, Typography } from 'antd';
+import { Col, Form, Row, Tooltip } from 'antd';
 import { currencies } from 'currencies.json';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { FaPlus, FaRegEdit } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
-import { fullColLayout } from '../../layout/FormLayout';
-import { useGetAllCouponQuery } from '../../redux/services/coupon/couponApi';
 import { useGetAllCustomerQuery } from '../../redux/services/customer/customerApi';
 import { useCurrency } from '../../redux/services/pos/posSlice';
-import { useGetAllTaxQuery } from '../../redux/services/tax/taxApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
 } from '../../utilities/hooks/useParams';
-import { showCurrency } from '../../utilities/lib/currency';
-import { openNotification } from '../../utilities/lib/openToaster';
 import CustomerCreate from '../Customer/CustomerCreate';
 import { CashierComponent } from '../ReusableComponent/CashierComponent';
 import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
 import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
 import CustomInput from '../Shared/Input/CustomInput';
-import CustomModal from '../Shared/Modal/CustomModal';
 import { SearchProduct } from '../Shared/ProductControllerComponent/SearchProduct';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import { CustomSelectButton } from '../Shared/Select/CustomSelectButton';
 import { CustomPosProductsComponent } from './overview/CustomPosProductsComponent';
-import ProductTableComponent from './PosProductTableComponent';
-
-const { Text } = Typography;
 
 const CustomerComponent = ({ size }) => {
   const form = Form.useFormInstance();
@@ -143,69 +134,6 @@ const CurrencyExchangeComponent = (size) => {
   );
 };
 
-// const TaxComponent = () => {
-//   const params = useGlobalParams({
-//     selectValue: [...DEFAULT_SELECT_VALUES, 'rate'],
-//   });
-
-//   const { data, isFetching } = useGetAllTaxQuery({
-//     params,
-//   });
-
-//   const options = data?.results?.tax?.map((item) => {
-//     return {
-//       value: item.rate,
-//       label: item.name,
-//     };
-//   });
-//   return (
-//     <CustomSelect
-//       options={options}
-//       name={'tax_rate'}
-//       isLoading={isFetching}
-//       placeholder={'Vat'}
-//     />
-//   );
-// };
-
-// const CouponComponent = ({ setType, setProductUnits }) => {
-//   const params = useGlobalParams({});
-
-//   const { data, isFetching } = useGetAllCouponQuery({ params });
-
-//   const options = data?.results?.coupon?.map((item) => {
-//     return {
-//       value: item.id?.toString(),
-//       label: item.code,
-//       type: item.type,
-//       rate: item.amount,
-//       minimum_amount: item.minimum_amount,
-//     };
-//   });
-
-//   const onSelect = (value, option) => {
-//     setType(option.type);
-//     setProductUnits((prevValues) => {
-//       return {
-//         ...prevValues,
-//         coupon_rate: option.rate,
-//         minimum_amount: option.minimum_amount,
-//       };
-//     });
-//   };
-
-//   return (
-//     <CustomSelect
-//       options={options}
-//       name={'coupon_id'}
-//       isLoading={isFetching}
-//       placeholder={'Coupon'}
-//       onSelect={onSelect}
-//       showSearch={true}
-//     />
-//   );
-// };
-
 const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();
 
@@ -268,20 +196,11 @@ const RegisterForm = ({ products, setProducts }) => {
 };
 
 export const PosRegister = ({
-  // formValues,
-  // setFormValues,
-  // products,
-  // setProducts,
-  // productUnits,
-  // setProductUnits,
   form,
-  // fields,
-  // setGrandTotal,
-  // type,
-  // setType,
-
   products,
   setProducts,
+  handleGrandTotal,
+  handleSubmit,
 }) => {
   // const [totalQuantity, setTotalQuantity] = useState(0);
   // const [totalPrice, setTotalPrice] = useState(0);
@@ -371,17 +290,16 @@ export const PosRegister = ({
   //   }
   // }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
 
-  const handleSubmit = (values, { formValues }) => {
-    console.log({ values, formValues });
-  };
+  // const handleSubmit = (values, { formValues }) => {
+  //   console.log({ values, formValues });
+  // };
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <>
       <Form
         form={form}
-        // fields={fields}
         layout="vertical"
         autoComplete="on"
         scrollToFirstError
@@ -393,153 +311,14 @@ export const PosRegister = ({
             <RegisterForm products={products} setProducts={setProducts} />
           </div>
 
-          <CustomPosProductsComponent />
-
-          {/* <div className="flex-grow overflow-y-auto bg-white">
-            <ProductTableComponent
-              products={products}
-              setProducts={setProducts}
-              formValues={formValues}
-              setFormValues={setFormValues}
-              productUnits={productUnits}
-              setProductUnits={setProductUnits}
-              tableStyleProps={item && tableStyleProps}
-            />
-          </div> */}
-
-          {/* <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
-            <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
-              <div className="grid grid-cols-2">
-                <span>Items</span>
-                <span className="font-semibold">
-                  {Object.keys(formValues.product_list.qty).length}
-                </span>
-              </div>
-              <div className="grid grid-cols-2">
-                <span>Total</span>
-                <span className="font-semibold">{totalPrice}</span>
-              </div>
-              <div className="grid grid-cols-2">
-                <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Discount')}
-                >
-                  Discount
-                  <FaRegEdit className="primary-text" />
-                </span>
-                <Form.Item name="Discount" noStyle></Form.Item>
-                <span className="font-semibold">{discount ?? 0}</span>
-              </div>
-              <div className="grid grid-cols-2">
-                <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Coupon')}
-                >
-                  Coupon
-                  <FaRegEdit className="primary-text" />
-                </span>
-                <Form.Item name="Coupon" noStyle></Form.Item>
-                <span className="font-semibold">{coupon ?? 0}</span>
-              </div>
-              <div className="grid grid-cols-2">
-                <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Tax')}
-                >
-                  Vat
-                  <FaRegEdit className="primary-text" />
-                </span>
-                <Form.Item name="Tax" noStyle></Form.Item>
-                <span className="font-semibold">{tax ?? 0}</span>
-              </div>
-              <div className="grid grid-cols-2">
-                <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Shipping Cost')}
-                >
-                  Shipping
-                  <FaRegEdit className="primary-text" />
-                </span>
-                <Form.Item name="Shipping" noStyle></Form.Item>
-                <span className="font-semibold">{shipping ?? 0}</span>
-              </div>
-            </div>
-
-            <div className="secondary-bg primary-text rounded-sm py-1 text-center text-lg font-semibold">
-              Grand Total {grand_total.toFixed(2) ?? 0}
-            </div>
-
-            <Button
-              type="primary"
-              onClick={() => {
-                form.resetFields();
-                setFormValues({
-                  product_list: {
-                    product_id: {},
-                    qty: {},
-                    sale_unit_id: {},
-                    net_unit_price: {},
-                    discount: {},
-                    tax_rate: {},
-                    tax: {},
-                    total: {},
-
-                    tax_id: {},
-                  },
-                });
-
-                setProducts([]);
-
-                setProductUnits({
-                  sale_units: {},
-                  tax_rate: {},
-                });
-              }}
-              className="flex items-center justify-center gap-2"
-            >
-              Reset
-            </Button>
-          </div> */}
+          <CustomPosProductsComponent
+            handleGrandTotal={handleGrandTotal}
+            products={products}
+            setProducts={setProducts}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </Form>
-
-      {/* <CustomModal
-        openModal={isModalOpen}
-        hideModal={hideModal}
-        title={modalType}
-        width={600}
-        showCloseButton={false}
-        footer={true}
-        onOk={handleSubmit}
-      >
-        <Form
-          form={form}
-          fields={fields}
-          layout="vertical"
-          autoComplete="on"
-          scrollToFirstError
-        >
-          <Row>
-            <Col {...fullColLayout}>
-              {modalType === 'Tax' ? (
-                <TaxComponent />
-              ) : modalType === 'Coupon' ? (
-                <CouponComponent
-                  setType={setType}
-                  setProductUnits={setProductUnits}
-                />
-              ) : (
-                <CustomInput
-                  type="number_with_money"
-                  name={modalType}
-                  placeholder={modalType}
-                  suffix={currency?.name}
-                />
-              )}
-            </Col>
-          </Row>
-        </Form>
-      </CustomModal> */}
     </>
   );
 };

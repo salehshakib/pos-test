@@ -24,12 +24,14 @@ const GiftCardEdit = ({ id, setId }) => {
   const [updateGiftCard, { isLoading }] = useUpdateGiftCardMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateGiftCard({

@@ -28,19 +28,14 @@ const StockCountEdit = ({ id, setId }) => {
   const [updateStockCount, { isLoading }] = useUpdateStockCountMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
-      // const fieldData = [
-      //   {
-      //     name: "name",
-      //     value: data?.name,
-      //     errors: "",
-      //   },
-      // ];
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateStockCount({

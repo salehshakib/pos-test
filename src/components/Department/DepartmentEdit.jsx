@@ -8,6 +8,7 @@ import {
   useUpdateDepartmentMutation,
 } from '../../redux/services/hrm/department/departmentApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import DepartmentForm from './DepartmentForm';
 
@@ -26,19 +27,14 @@ const DepartmentEdit = ({ id, setId }) => {
   const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
 
   useEffect(() => {
-    if (data) {
-      // const fieldData = fieldsToUpdate(data);
-      const fieldData = [
-        {
-          name: 'name',
-          value: data?.name,
-          errors: '',
-        },
-      ];
+    if (data && isEditDrawerOpen) {
+      const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateDepartment({

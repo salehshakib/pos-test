@@ -101,6 +101,7 @@ export const onActionChange = (id, value, setFormValues) => {
 };
 
 export const onDelete = (id, setProducts, setFormValues) => {
+  console.log(id);
   setProducts((prevProducts) =>
     prevProducts.filter((product) => product.id !== id)
   );

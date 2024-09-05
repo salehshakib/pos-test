@@ -29,22 +29,14 @@ export const PayrollEdit = ({ id, setId }) => {
   const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const udpateFieldData = [
-        {
-          name: 'is_send_email',
-          value: data?.is_send_email.toString() === '1' ? true : false,
-          errors: '',
-        },
-      ];
-
-      const newFieldData = updateFieldValues(fieldData, udpateFieldData);
-
-      setFields(newFieldData);
+      setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

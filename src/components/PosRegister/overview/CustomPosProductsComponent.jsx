@@ -1,5 +1,5 @@
 import { Button, Col, Form, Row } from 'antd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -110,8 +110,13 @@ const CouponComponent = ({ setUpdatedFormValues }) => {
   );
 };
 
-const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
-  const [additionalForm] = Form.useForm();
+const ModalComponent = ({
+  title,
+  modalType,
+  setFormValues,
+  totalPrice,
+  additionalForm,
+}) => {
   const currency = useSelector(useCurrency);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -121,8 +126,6 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
   const showModal = () => setIsModalOpen(true);
 
   const [updatedFormValues, setUpdatedFormValues] = useState({
-    discount: undefined,
-    shipping_cost: undefined,
     tax_id: undefined,
     tax_rate: undefined,
     coupon_id: undefined,
@@ -131,219 +134,175 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
     minimum_amount: undefined,
   });
 
-  //   const [fields, setFields] = useState([]);
-
-  //   useEffect(() => {
-  //     setFields([
-  //       {
-  //         name: 'discount',
-  //         value: 0,
-  //         errors: '',
-  //       },
-  //       {
-  //         name: 'shipping_cost',
-  //         value: 0,
-  //         errors: '',
-  //       },
-  //     ]);
-  //   }, []);
-
-  const handleDiscountChange = (values) => {
-    console.log(values);
-    setUpdatedFormValues((prev) => {
-      return {
-        ...prev,
-        discount: values,
-      };
-    });
-  };
-
-  const handleShippingCostChange = (values) => {
-    setUpdatedFormValues((prev) => {
-      return {
-        ...prev,
-        shipping_cost: values,
-      };
-    });
-  };
-
   const handleSubmit = (values) => {
-    console.log(updatedFormValues);
+    switch (modalType) {
+      case 'discount':
+        if (values.discount) {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                discount: values.discount,
+              },
+            };
+          });
 
-    if (updatedFormValues.tax_id) {
-      setFormValues((prev) => {
-        return {
-          ...prev,
-          order: {
-            ...prev.order,
-            tax_rate: updatedFormValues.tax_rate,
-          },
-        };
-      });
+          additionalForm.setFieldsValue({
+            discount: values.discount,
+          });
+        } else {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                discount: 0,
+              },
+            };
+          });
 
-      additionalForm.setFieldsValue({
-        tax_id: updatedFormValues.tax_id,
-      });
-    } else {
-      //   setFormValues((prev) => {
-      //     return {
-      //       ...prev,
-      //       order: {
-      //         ...prev.order,
-      //         tax_rate: undefined,
-      //       },
-      //     };
-      //   });
-      //   additionalForm.setFieldsValue({
-      //     tax_id: undefined,
-      //   });
+          additionalForm.setFieldsValue({
+            discount: 0,
+          });
+        }
+
+        break;
+
+      case 'coupon':
+        if (values.coupon_id) {
+          if (
+            updatedFormValues.minimum_amount &&
+            Number(updatedFormValues.minimum_amount) >= Number(totalPrice)
+          ) {
+            openNotification(
+              'error',
+              'Coupon cannot be applied. Minimum amount is' +
+                ' ' +
+                updatedFormValues.minimum_amount
+            );
+
+            setUpdatedFormValues((prevValues) => {
+              return {
+                ...prevValues,
+                coupon_id: undefined,
+                coupon_type: undefined,
+                coupon_rate: undefined,
+                minimum_amount: undefined,
+              };
+            });
+
+            additionalForm.setFieldsValue({
+              coupon_id: undefined,
+            });
+            return;
+          }
+
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                coupon: {
+                  ...prev.order.coupon,
+                  type: updatedFormValues.coupon_type,
+                  rate: updatedFormValues.coupon_rate,
+                  minimum_amount: updatedFormValues.minimum_amount,
+                },
+              },
+            };
+          });
+          additionalForm.setFieldsValue({
+            coupon_id: updatedFormValues.coupon_id,
+          });
+        } else {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                coupon: {
+                  ...prev.order.coupon,
+                  type: undefined,
+                  rate: undefined,
+                  minimum_amount: undefined,
+                },
+              },
+            };
+          });
+          additionalForm.setFieldsValue({
+            coupon_id: undefined,
+          });
+        }
+
+        break;
+
+      case 'tax':
+        if (values.tax_id) {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                tax_rate: updatedFormValues.tax_rate,
+              },
+            };
+          });
+
+          additionalForm.setFieldsValue({
+            tax_id: values.tax_id,
+          });
+        } else {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                tax_rate: 0,
+              },
+            };
+          });
+
+          additionalForm.setFieldsValue({
+            tax_id: undefined,
+          });
+        }
+
+        break;
+
+      case 'shipping_cost':
+        if (values.shipping_cost) {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                shipping_cost: values.shipping_cost,
+              },
+            };
+          });
+
+          additionalForm.setFieldsValue({
+            shipping_cost: values.shipping_cost,
+          });
+        } else {
+          setFormValues((prev) => {
+            return {
+              ...prev,
+              order: {
+                ...prev.order,
+                shipping_cost: 0,
+              },
+            };
+          });
+
+          additionalForm.setFieldsValue({
+            shipping_cost: 0,
+          });
+        }
+
+        break;
     }
-
-    // if (updatedFormValues.coupon_id) {
-    //   if (
-    //     updatedFormValues.minimum_amount &&
-    //     Number(updatedFormValues.minimum_amount) >= Number(totalPrice)
-    //   ) {
-    //     openNotification(
-    //       'error',
-    //       'Coupon cannot be applied. Minimum amount is' +
-    //         ' ' +
-    //         updatedFormValues.minimum_amount
-    //     );
-
-    //     setUpdatedFormValues((prevValues) => {
-    //       return {
-    //         ...prevValues,
-    //         coupon_id: undefined,
-    //         coupon_type: undefined,
-    //         coupon_rate: undefined,
-    //         minimum_amount: undefined,
-    //       };
-    //     });
-
-    //     setFormValues((prevValues) => {
-    //       return {
-    //         ...prevValues,
-    //         order: {
-    //           ...prevValues.order,
-    //           coupon: {
-    //             ...prevValues.order.coupon,
-    //             type: undefined,
-    //             rate: undefined,
-    //             minimum_amount: undefined,
-    //           },
-    //         },
-    //       };
-    //     });
-
-    //     additionalForm.setFieldsValue({
-    //       coupon_id: undefined,
-    //     });
-    //   } else {
-    //     setFormValues((prevValues) => {
-    //       return {
-    //         ...prevValues,
-    //         order: {
-    //           ...prevValues.order,
-    //           coupon: {
-    //             ...prevValues.order.coupon,
-    //             type: updatedFormValues.coupon_type,
-    //             rate: updatedFormValues.coupon_rate,
-    //             minimum_amount: updatedFormValues.minimum_amount,
-    //           },
-    //         },
-    //       };
-    //     });
-
-    //     additionalForm.setFieldsValue({
-    //       coupon_id: updatedFormValues.coupon_id,
-    //     });
-    //   }
-    // }
-
-    // if (!values.coupon_id) {
-    //   setFormValues((prevValues) => {
-    //     return {
-    //       ...prevValues,
-    //       order: {
-    //         ...prevValues.order,
-    //         coupon: {
-    //           ...prevValues.order.coupon,
-    //           type: undefined,
-    //           rate: undefined,
-    //           minimum_amount: undefined,
-    //         },
-    //       },
-    //     };
-    //   });
-
-    //   additionalForm.setFieldsValue({
-    //     coupon_id: undefined,
-    //   });
-    // }
-
-    // if (values.discount) {
-    //   setFormValues((prevValues) => {
-    //     return {
-    //       ...prevValues,
-    //       order: {
-    //         ...prevValues.order,
-    //         discount: values.discount,
-    //       },
-    //     };
-    //   });
-
-    //   additionalForm.setFieldsValue({
-    //     discount: values.discount,
-    //   });
-    // }
-    // else {
-    //   setFormValues((prevValues) => {
-    //     return {
-    //       ...prevValues,
-    //       order: {
-    //         ...prevValues.order,
-    //         discount: undefined,
-    //       },
-    //     };
-    //   });
-
-    //   additionalForm.setFieldsValue({
-    //     discount: undefined,
-    //   });
-    // }
-
-    console.log(values);
-
-    // if (values.shipping_cost) {
-    //   setFormValues((prevValues) => {
-    //     return {
-    //       ...prevValues,
-    //       order: {
-    //         ...prevValues.order,
-    //         shipping_cost: values.shipping_cost,
-    //       },
-    //     };
-    //   });
-    //   additionalForm.setFieldsValue({
-    //     shipping_cost: values.shipping_cost,
-    //   });
-    // }
-    // else if(additionalForm.getFieldValue('shipping_cost')) {
-    //   setFormValues((prevValues) => {
-    //     return {
-    //       ...prevValues,
-    //       order: {
-    //         ...prevValues.order,
-    //         shipping_cost: undefined,
-    //       },
-    //     };
-    //   });
-    //   additionalForm.setFieldsValue({
-    //     shipping_cost: undefined,
-    //   });
-    // }
-
     hideModal();
   };
 
@@ -364,7 +323,6 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
         width={600}
         showCloseButton={false}
         footer={null}
-        // onOk={handleSubmit}
       >
         <CustomForm
           form={additionalForm}
@@ -388,11 +346,6 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
                   placeholder={modalType}
                   suffix={currency?.name}
                   min={0}
-                  onChange={
-                    modalType === 'discount'
-                      ? handleDiscountChange
-                      : handleShippingCostChange
-                  } //handleInputChange}
                 />
               )}
             </Col>
@@ -404,11 +357,13 @@ const ModalComponent = ({ title, modalType, setFormValues, totalPrice }) => {
 };
 
 export const CustomPosProductsComponent = ({
-  onCustomSubmit,
   products,
   setProducts,
+  handleGrandTotal,
+  handleSubmit,
 }) => {
   const currency = useSelector(useCurrency);
+  const [additionalForm] = Form.useForm();
 
   const [formValues, setFormValues] = useState({
     product_list: {
@@ -468,11 +423,11 @@ export const CustomPosProductsComponent = ({
     });
 
     setProducts([]);
+
+    additionalForm.resetFields();
   };
 
-  console.log(formValues);
-
-  const { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon } =
+  const { totalItems, totalPrice, taxRate, grandTotal, totalCoupon } =
     calculateSummary(
       formValues,
       formValues.order.tax_rate ?? 0,
@@ -480,14 +435,23 @@ export const CustomPosProductsComponent = ({
       formValues.order.shipping_cost ?? 0
     );
 
-  return (
-    // <ProductTableComponent
-    //   products={products}
-    //   setProducts={setProducts}
-    //   formValues={formValues}
-    //   setFormValues={setFormValues}
-    // />
+  const handleFormValuesSubmit = useCallback(() => {
+    return formValues;
+  }, [formValues]);
 
+  useEffect(() => {
+    handleSubmit(handleFormValuesSubmit);
+  }, [handleFormValuesSubmit, handleSubmit]);
+
+  const handleGrandTotalSubmit = useCallback(() => {
+    return grandTotal;
+  }, [grandTotal]);
+
+  useEffect(() => {
+    handleGrandTotal(handleGrandTotalSubmit);
+  }, [handleGrandTotalSubmit, handleGrandTotal]);
+
+  return (
     <>
       <div className="flex-grow overflow-y-auto bg-white">
         <ProductTableComponent
@@ -495,9 +459,6 @@ export const CustomPosProductsComponent = ({
           setProducts={setProducts}
           formValues={formValues}
           setFormValues={setFormValues}
-          // productUnits={productUnits}
-          // setProductUnits={setProductUnits}
-          // tableStyleProps={item && tableStyleProps}
         />
       </div>
 
@@ -505,10 +466,7 @@ export const CustomPosProductsComponent = ({
         <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
           <div className="grid grid-cols-2">
             <span>Items</span>
-            <span className="font-semibold">
-              {/* {Object.keys(formValues.product_list.qty).length} */}
-              {totalItems}
-            </span>
+            <span className="font-semibold">{totalItems}</span>
           </div>
           <div className="grid grid-cols-2">
             <span>Total</span>
@@ -517,79 +475,46 @@ export const CustomPosProductsComponent = ({
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Discount')}
-                >
-                  Discount
-                  <FaRegEdit className="primary-text" />
-                </span> */}
             <ModalComponent
               title={'Discount'}
               modalType={'discount'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
+              additionalForm={additionalForm}
             />
 
-            {/* <Form.Item name="Discount" noStyle></Form.Item> */}
             <span className="font-semibold">
               {showCurrency(formValues.order.discount ?? 0, currency)}
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Coupon')}
-            >
-              Coupon
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Coupon" noStyle></Form.Item>
-            <span className="font-semibold">{coupon ?? 0}</span> */}
             <ModalComponent
               title={'Coupon'}
               modalType={'coupon'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
               totalPrice={totalPrice}
+              additionalForm={additionalForm}
             />
             <span className="font-semibold">
               {showCurrency(totalCoupon ?? 0, currency)}
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Tax')}
-            >
-              Vat
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Tax" noStyle></Form.Item> */}
             <ModalComponent
               title={'Vat'}
               modalType={'tax'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
+              additionalForm={additionalForm}
             />
             <span className="font-semibold">
               {showCurrency(taxRate ?? 0, currency)}
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Shipping Cost')}
-            >
-              Shipping
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Shipping" noStyle></Form.Item> */}
             <ModalComponent
               title={'Shipping Cost'}
               modalType={'shipping_cost'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
+              additionalForm={additionalForm}
             />
             <span className="font-semibold">
               {showCurrency(formValues.order.shipping_cost ?? 0, currency)}

@@ -8,6 +8,7 @@ const BOOLEAN_KEYS = [
   'has_different_price',
   'has_promotion',
   'has_expired_date',
+  'need_attachment',
 ];
 
 export const fieldsToUpdate = (details) => {

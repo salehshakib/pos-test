@@ -27,12 +27,14 @@ export const HolidaysEdit = ({ id, setId }) => {
   const [updateHoliday, { isLoading }] = useUpdateHolidayMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

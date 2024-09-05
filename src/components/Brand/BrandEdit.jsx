@@ -38,7 +38,7 @@ export const BrandEdit = ({ id, setId }) => {
       name: 'logo',
       value:
         data?.attachments?.length > 0
-          ? data.attachments[0].url
+          ? [{ url: data?.attachments[0]?.url }]
           : [{ url: defaultUser }],
       errors: '',
     };

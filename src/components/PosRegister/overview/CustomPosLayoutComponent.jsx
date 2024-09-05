@@ -1,15 +1,15 @@
 import { Button, Form, Layout, Tag } from 'antd';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import { Filter } from '../../../pages/Dashboard/PosRegister/Filter';
 import { isDev, mode } from '../../../utilities/configs/base_url';
+import { openNotification } from '../../../utilities/lib/openToaster';
 import Logo from '../../AllSection/Header/Logo';
 import Profile from '../../AllSection/Header/Profile';
 import Payment from '../Payment';
 import { PosRegister } from '../PosRegister';
-import { CustomPaymentComponent } from './CustomPaymentComponent';
 
 const { Footer } = Layout;
 
@@ -17,28 +17,89 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   const [products, setProducts] = useState([]);
   const [posForm] = Form.useForm();
 
+  const formValuesRef = useRef(null);
+
+  // const handleFormValues = () => {
+  //   if (formValuesRef.current) {
+  //     return formValuesRef.current();
+  //   } else {
+  //     return null;
+  //   }
+  // };
+
+  const handleSubmit = useCallback(
+    (submitFunction) => {
+      const data = posForm.getFieldsValue([
+        'sale_at',
+        'warehouse_id',
+        'cashier_id',
+        'customer_id',
+        'reference_number',
+      ]);
+
+      // Map field names to user-friendly labels
+      const fieldNames = {
+        sale_at: 'Sale Date',
+        warehouse_id: 'Warehouse',
+        cashier_id: 'Cashier',
+        customer_id: 'Customer',
+        reference_number: 'Reference Number',
+      };
+
+      // Find missing fields
+      const missingFields = Object.keys(data).filter(
+        (key) => data[key] === undefined || data[key] === null
+      );
+
+      // Check if any missing fields and display a message
+      if (missingFields.length > 0) {
+        const missingFieldsNames = missingFields
+          .map((key) => fieldNames[key])
+          .join(', ');
+
+        openNotification(
+          'error',
+          `Please fill all the required fields. Missing: ${missingFieldsNames}.`
+        );
+        return;
+      }
+
+      console.log(data);
+
+      const formValues = submitFunction();
+
+      console.log(formValues);
+
+      return { data, formValues };
+    },
+    [posForm]
+  );
+
+  //payment
+  const paymentRef = useRef(null);
+
+  const handleGrandTotal = useCallback((submitFunction) => {
+    paymentRef.current = submitFunction;
+  }, []);
+
+  const updateGrandTotal = () => {
+    return paymentRef.current ? parseFloat(paymentRef.current()) : 0;
+  };
+
   return (
     <GlobalUtilityStyle>
       <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
         <div className="grid h-[85vh] grid-cols-6">
           <div className="col-span-4">
             <PosRegister
-              // formValues={formValues}
-              // setFormValues={setFormValues}
               form={posForm}
               products={products}
               setProducts={setProducts}
-              // productUnits={productUnits}
-              // setProductUnits={setProductUnits}
-              // form={posForm}
-              // errorFields={errorFields}
-              // setGrandTotal={setGrandTotal}
-              // type={type}
-              // setType={setType}
+              handleGrandTotal={handleGrandTotal}
+              handleSubmit={handleSubmit}
             />
           </div>
 
-          {/* sidebar button */}
           <div className="relative col-span-2 flex h-[90vh] flex-col">
             <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
               <div className="flex items-center gap-6 text-2xl">
@@ -67,13 +128,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
               <Profile />
             </div>
 
-            <Filter
-              form={posForm}
-              // products={products}
-              setProducts={setProducts}
-              // setFormValues={setFormValues}
-              // setProductUnits={setProductUnits}
-            />
+            <Filter form={posForm} setProducts={setProducts} />
           </div>
         </div>
       </div>
@@ -84,16 +139,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         }}
         className="py-4"
       >
-        {/* <CustomPaymentComponent /> */}
-        {/* <Payment
-        handleSubmit={handleSubmit}
-        form={posForm}
-        fields={errorFields}
-        isLoading={isLoading}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        grandTotal={grandTotal}
-        /> */}
+        <Payment handleSubmit={handleSubmit} getGrandTotal={updateGrandTotal} />
       </Footer>
     </GlobalUtilityStyle>
   );

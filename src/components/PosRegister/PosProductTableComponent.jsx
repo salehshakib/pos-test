@@ -388,9 +388,6 @@ const ProductTableComponent = ({
   setProducts,
   formValues,
   setFormValues,
-  // productUnits,
-  // setProductUnits,
-  // tableStyleProps,
 }) => {
   const form = Form.useFormInstance();
   const warehouseId = Form.useWatch('warehouse_id', form);

@@ -9,10 +9,7 @@ import {
 } from '../../redux/services/hrm/payroll/payrollApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { PayrollForm } from './PayrollForm';
 

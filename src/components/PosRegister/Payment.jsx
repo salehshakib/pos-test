@@ -33,7 +33,9 @@ const Payment = ({ handleSubmit, isLoading, getGrandTotal }) => {
   };
 
   const onSubmit = (values) => {
-    const { data, formValues } = handleSubmit();
+    const { data, formValues } = handleSubmit() || {};
+
+    if (!data) return;
 
     console.log(values);
     console.log(data);

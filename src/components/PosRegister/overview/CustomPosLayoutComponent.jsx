@@ -19,16 +19,12 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
 
   const formValuesRef = useRef(null);
 
-  // const handleFormValues = () => {
-  //   if (formValuesRef.current) {
-  //     return formValuesRef.current();
-  //   } else {
-  //     return null;
-  //   }
-  // };
+  const handleSubmit = useCallback((submitFunction) => {
+    formValuesRef.current = submitFunction;
+  }, []);
 
-  const handleSubmit = useCallback(
-    (submitFunction) => {
+  const handleFormValues = () => {
+    if (formValuesRef.current) {
       const data = posForm.getFieldsValue([
         'sale_at',
         'warehouse_id',
@@ -37,7 +33,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         'reference_number',
       ]);
 
-      // Map field names to user-friendly labels
       const fieldNames = {
         sale_at: 'Sale Date',
         warehouse_id: 'Warehouse',
@@ -46,34 +41,31 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         reference_number: 'Reference Number',
       };
 
-      // Find missing fields
       const missingFields = Object.keys(data).filter(
         (key) => data[key] === undefined || data[key] === null
       );
 
-      // Check if any missing fields and display a message
       if (missingFields.length > 0) {
         const missingFieldsNames = missingFields
           .map((key) => fieldNames[key])
           .join(', ');
 
-        openNotification(
-          'error',
-          `Please fill all the required fields. Missing: ${missingFieldsNames}.`
-        );
+        openNotification('error', `Missing: ${missingFieldsNames}.`);
         return;
       }
 
-      console.log(data);
+      const formValues = formValuesRef.current();
 
-      const formValues = submitFunction();
-
-      console.log(formValues);
+      if (products.length === 0) {
+        openNotification('error', 'Please add at least one products.');
+        return null;
+      }
 
       return { data, formValues };
-    },
-    [posForm]
-  );
+    } else {
+      return null;
+    }
+  };
 
   //payment
   const paymentRef = useRef(null);
@@ -139,7 +131,10 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         }}
         className="py-4"
       >
-        <Payment handleSubmit={handleSubmit} getGrandTotal={updateGrandTotal} />
+        <Payment
+          handleSubmit={handleFormValues}
+          getGrandTotal={updateGrandTotal}
+        />
       </Footer>
     </GlobalUtilityStyle>
   );

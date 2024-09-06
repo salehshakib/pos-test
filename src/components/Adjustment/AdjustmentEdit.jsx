@@ -48,7 +48,7 @@ const AdjustmentEdit = ({ id, setId }) => {
   }, [isEditDrawerOpen]);
 
   useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
+    if (data && isEditDrawerOpen) {
       data?.adjustment_products?.forEach((item) => {
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
@@ -82,7 +82,7 @@ const AdjustmentEdit = ({ id, setId }) => {
       const fieldData = [
         {
           name: 'warehouse_id',
-          value: data?.warehouse_id,
+          value: data?.warehouse_id?.toString(),
           errors: '',
         },
         data?.attachments?.length > 0
@@ -112,8 +112,9 @@ const AdjustmentEdit = ({ id, setId }) => {
       ];
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {

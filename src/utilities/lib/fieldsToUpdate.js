@@ -1,8 +1,16 @@
 import dayjs from 'dayjs';
 
-// const isBoolean = [
-//   'cash'
-// ]
+const BOOLEAN_KEYS = [
+  'has_seo',
+  'have_access',
+  'is_send_email',
+  'has_stock',
+  'has_different_price',
+  'has_promotion',
+  'has_expired_date',
+  'need_attachment',
+];
+
 export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
     .filter(
@@ -41,8 +49,15 @@ export const fieldsToUpdate = (details) => {
       }
 
       if (key.includes('phone')) {
-        // Get value of a string from the 2nd index onward
         value = value?.toString()?.slice(0);
+      }
+
+      if (key.includes('_id')) {
+        value = value?.toString();
+      }
+
+      if (BOOLEAN_KEYS.includes(key) && key !== 'staff_id') {
+        value = value.toString() === '1' ? true : false;
       }
 
       return {

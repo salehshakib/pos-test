@@ -41,7 +41,7 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
     useUpdateGiftCardDesignMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       const frontSideUrl = data?.attachments?.find(
@@ -56,8 +56,10 @@ export const GiftCardDesignEdit = ({ id, setId }) => {
       form.setFieldValue('backImageUrl', backSideUrl);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, form, setFields]);
+  }, [data, form, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

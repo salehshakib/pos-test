@@ -8,6 +8,7 @@ import {
   useUpdateLeaveTypeMutation,
 } from '../../redux/services/settings/leaveType/leaveTypeApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { LeaveTypeForm } from './LeaveTypeForm';
 
@@ -27,23 +28,14 @@ export const LeaveTypeEdit = ({ id, setId }) => {
   const [updateLeaveType, { isLoading }] = useUpdateLeaveTypeMutation();
 
   useEffect(() => {
-    if (data) {
-      const fieldData = [
-        {
-          name: 'name',
-          value: data?.name,
-          errors: '',
-        },
-        {
-          name: 'need_attachment',
-          value: data?.need_attachment === 1 ? true : false,
-          errors: '',
-        },
-      ];
+    if (data && isEditDrawerOpen) {
+      const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateLeaveType({

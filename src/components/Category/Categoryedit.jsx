@@ -31,7 +31,7 @@ const Categoryedit = ({ id, setId }) => {
   const [updateCategory, { isLoading }] = useUpdateCategoryMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       let newFieldData = fieldData;
@@ -52,8 +52,10 @@ const Categoryedit = ({ id, setId }) => {
       }
 
       setFields(newFieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const postObj = { ...values, _method: 'PUT' };

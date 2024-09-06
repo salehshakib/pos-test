@@ -7,10 +7,7 @@ import {
   useUpdateGiftCardMutation,
 } from '../../redux/services/giftcard/giftcard/giftCardApi';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import GiftCardForm from './GiftCardForm';
 
@@ -27,22 +24,14 @@ const GiftCardEdit = ({ id, setId }) => {
   const [updateGiftCard, { isLoading }] = useUpdateGiftCardMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const updateFieldData = [
-        {
-          name: 'customer_id',
-          value: data?.customer_id?.toString(),
-          errors: '',
-        },
-      ];
-
-      const newFieldData = updateFieldValues(fieldData, updateFieldData);
-
-      setFields(newFieldData);
+      setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const { data, error } = await updateGiftCard({

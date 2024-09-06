@@ -14,13 +14,7 @@ import { openNotification } from '../../../utilities/lib/openToaster';
 
 const { Meta } = Card;
 
-const PosProducts = ({
-  setProducts,
-  setFormValues,
-  setProductUnits,
-  form,
-  searchParams,
-}) => {
+const PosProducts = ({ form, setProducts, searchParams }) => {
   const warehouseId = Form.useWatch('warehouse_id', form);
 
   const [pagination, setPagination] = useState({
@@ -48,9 +42,14 @@ const PosProducts = ({
     ],
   });
 
-  const { data, isLoading } = useGetAllProductsQuery({
-    params,
-  });
+  const { data, isLoading } = useGetAllProductsQuery(
+    {
+      params,
+    },
+    {
+      skip: !warehouseId,
+    }
+  );
 
   const [newData, setNewData] = useState([]);
 
@@ -74,31 +73,31 @@ const PosProducts = ({
     }
   }, [pagination.page, products]);
 
-  useEffect(() => {
-    if (warehouseId) {
-      setFormValues({
-        product_list: {
-          product_id: {},
-          qty: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
+  // useEffect(() => {
+  //   if (warehouseId) {
+  //     setFormValues({
+  //       product_list: {
+  //         product_id: {},
+  //         qty: {},
+  //         sale_unit_id: {},
+  //         net_unit_price: {},
+  //         discount: {},
+  //         tax_rate: {},
+  //         tax: {},
+  //         total: {},
 
-          tax_id: {},
-        },
-      });
+  //         tax_id: {},
+  //       },
+  //     });
 
-      setProducts([]);
+  //     setProducts([]);
 
-      setProductUnits({
-        sale_units: {},
-        tax_rate: {},
-      });
-    }
-  }, [setFormValues, setProductUnits, setProducts, warehouseId]);
+  //     setProductUnits({
+  //       sale_units: {},
+  //       tax_rate: {},
+  //     });
+  //   }
+  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   const onSelect = (selectedProduct) => {
     const stock = getWarehouseQuantity(
@@ -114,7 +113,9 @@ const PosProducts = ({
 
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
-        return product?.id === selectedProduct?.product?.id;
+        return (
+          product?.id.toString() === selectedProduct?.product?.id.toString()
+        );
       });
 
       if (!productExists) {
@@ -168,12 +169,12 @@ const PosProducts = ({
 
                   if (stock > 1)
                     return (
-                      <div key={product.id} className="w-full p-2">
+                      <div key={product.id} className="w-full p-1">
                         <Badge
                           count={stock}
                           overflowCount={99}
                           className="w-full"
-                          offset={[-15, 0]}
+                          offset={[-13, 5]}
                         >
                           <Card
                             bordered
@@ -184,7 +185,7 @@ const PosProducts = ({
                             }}
                             styles={{
                               body: {
-                                padding: '12px 8px',
+                                padding: '8px 8px',
                               },
                             }}
                             key={product.id}
@@ -230,13 +231,7 @@ const PosProducts = ({
           </InfiniteScroll>
         </div>
       </div>
-      <div>
-        {/* {newData?.length < total && ( */}
-        {/* <Divider plain>
-          Pull down to load more ....
-        </Divider> */}
-        {/* )} */}
-      </div>
+      <div></div>
     </GlobalUtilityStyle>
   );
 };

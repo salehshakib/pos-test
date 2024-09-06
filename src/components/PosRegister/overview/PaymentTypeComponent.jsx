@@ -272,7 +272,9 @@ export const PaymentTypeComponent = ({
       </Col>
 
       <Col {...fullColLayout}>
-        <div className="py-2 pb-8 text-lg font-semibold">Change: {change}</div>
+        <div className="py-2 pb-8 text-lg font-semibold">
+          {`${parseFloat(change) < 0 ? 'Due' : 'Change'}`}: {change}
+        </div>
       </Col>
 
       {paymentType === 'Gift Card' && <GiftCardComponent />}

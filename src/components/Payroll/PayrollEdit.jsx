@@ -9,10 +9,7 @@ import {
 } from '../../redux/services/hrm/payroll/payrollApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { PayrollForm } from './PayrollForm';
 
@@ -29,22 +26,14 @@ export const PayrollEdit = ({ id, setId }) => {
   const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const udpateFieldData = [
-        {
-          name: 'is_send_email',
-          value: data?.is_send_email.toString() === '1' ? true : false,
-          errors: '',
-        },
-      ];
-
-      const newFieldData = updateFieldValues(fieldData, udpateFieldData);
-
-      setFields(newFieldData);
+      setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

@@ -31,7 +31,20 @@ export const calculateSummary = (
     shipping_cost
   );
 
-  return { totalItems, totalQty, totalPrice, taxRate, grandTotal };
+  let totalCoupon = 0;
+
+  if (
+    formValues?.order?.coupon?.minimum_amount &&
+    Number(formValues?.order?.coupon.minimum_amount) < Number(totalPrice)
+  ) {
+    if (formValues?.order?.coupon.type === 'Percentage') {
+      totalCoupon = (totalPrice * formValues?.order?.coupon.rate) / 100;
+    } else if (formValues?.order?.coupon.type === 'Fixed') {
+      totalCoupon = decimalConverter(formValues?.order?.coupon.rate);
+    }
+  }
+
+  return { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon };
 };
 
 export const calculateTotalPrice = (data) => {

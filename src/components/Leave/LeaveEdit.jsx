@@ -10,10 +10,7 @@ import {
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { LeaveForm } from './LeaveForm';
 
@@ -33,27 +30,9 @@ export const LeaveEdit = ({ id, setId }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      const updateFieldData = [
-        {
-          name: 'department_id',
-          value: data?.department_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'employee_id',
-          value: data?.employee_id.toString(),
-          errors: '',
-        },
-        {
-          name: 'leave_type_id',
-          value: data?.leave_type_id.toString(),
-          errors: '',
-        },
-      ];
-
-      const newFieldData = updateFieldValues(fieldData, updateFieldData);
-
-      setFields(newFieldData);
+      setFields(fieldData);
+    } else {
+      setFields([]);
     }
   }, [data, setFields]);
 

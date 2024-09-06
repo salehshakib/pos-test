@@ -26,12 +26,14 @@ export const UnitdEdit = ({ id, setId }) => {
   const [updateUnit, { isLoading }] = useUpdateUnitMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-  }, [data, isEditDrawerOpen, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

@@ -28,29 +28,22 @@ export const BrandEdit = ({ id, setId }) => {
   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
-      const fieldData = fieldsToUpdate(data);
-
-      let newFieldData = fieldData;
-
-      if (data?.attachments?.length === 0) {
-        newFieldData = [
-          ...fieldData,
-          {
-            name: 'logo',
-            value: [
-              {
-                url: defaultUser,
-              },
-            ],
-            erros: '',
-          },
-        ];
-      }
-
-      setFields(newFieldData);
+    if (!data || !isEditDrawerOpen) {
+      setFields([]);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const fieldData = fieldsToUpdate(data);
+    const logoField = {
+      name: 'logo',
+      value:
+        data?.attachments?.length > 0
+          ? [{ url: data?.attachments[0]?.url }]
+          : [{ url: defaultUser }],
+      errors: '',
+    };
+
+    setFields([...fieldData, logoField]);
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {

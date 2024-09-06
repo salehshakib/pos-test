@@ -70,6 +70,7 @@ const CustomInput = (props) => {
             type="number"
             className="mt-1 w-full border-2"
             min={0}
+            onChange={onChange}
             // controls={false}
             // controls={false}
             // changeOnWheel={false}
@@ -113,7 +114,7 @@ const CustomInput = (props) => {
         return (
           <InputNumber
             {...commonProps}
-            type="number"
+            // type="number"
             className="ant-group-addOn mt-1 w-full border-2"
             addonAfter={suffix}
             controls={false}
@@ -145,7 +146,7 @@ const CustomInput = (props) => {
         rules={[
           {
             required: required,
-            message: `Please Input ${requireMsg ?? label}!`,
+            message: `Please Input ${requireMsg ?? placeholder ?? label}!`,
           },
         ]}
         tooltip={tooltip}

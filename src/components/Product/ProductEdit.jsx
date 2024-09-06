@@ -63,6 +63,9 @@ const ProductListEdit = ({ id, setId }) => {
         expired_date,
         details,
         attachments,
+        has_stock,
+        has_variant,
+        has_different_price,
       } = data;
 
       const fieldData = fieldsToUpdate({
@@ -83,6 +86,10 @@ const ProductListEdit = ({ id, setId }) => {
         tax_id,
         attachments,
         details,
+        has_stock,
+        has_promotion,
+        has_variant,
+        has_different_price,
       });
 
       const newFieldData = [
@@ -135,6 +142,8 @@ const ProductListEdit = ({ id, setId }) => {
       ];
 
       setFields(newFieldData);
+
+      console.log(newFieldData);
     } else {
       setFields([]);
     }

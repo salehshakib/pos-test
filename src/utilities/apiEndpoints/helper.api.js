@@ -6,3 +6,5 @@ export const CUSTOMER_GROUP = 'helpers/customer-group';
 
 export const NOTIFICATION = 'helpers/notification';
 export const NOTIFICATION_READ = 'helpers/notification/read';
+
+export const EMAIL_TEMPLATE = 'helper/email-template';

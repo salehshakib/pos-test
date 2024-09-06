@@ -1,5 +1,5 @@
 import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CustomerFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
@@ -18,6 +18,7 @@ import {
   useFilterParams,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
@@ -110,6 +111,21 @@ export const CustomerReport = () => {
 
   const summaryDetails = useDetailsLayout(summaryData);
 
+  const [segment, setSegment] = useState('Weekly');
+
+  const onSegmentChange = (value) => {
+    setSegment(value);
+  };
+
+  useEffect(() => {
+    const dateRange = getDateRange(segment);
+    setParams((prev) => ({
+      ...prev,
+      created_daterange: dateRange,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment]);
+
   const summaryType = {
     customer_ids: [
       searchParams?.customer_ids ? searchParams?.customer_ids : data?.id,
@@ -160,16 +176,19 @@ export const CustomerReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
-    summary: 'customer,sale',
+    searchParams,
+    segment,
   };
 
   return (
     <GlobalContainer
       pageTitle="Customer Report"
       popoverWidth={400}
-      searchFilterContent={<SearchFilterComponent />}
       debounce={debounce}
       setParams={setParams}
+      segment={segment}
+      onSegmentChange={onSegmentChange}
+      searchFilterContent={<SearchFilterComponent />}
     >
       {!customerId ? (
         <>
@@ -214,22 +233,37 @@ export const CustomerReport = () => {
                 {
                   label: 'Sale',
                   key: 'sale',
-                  children: <SaleTable {...props} />,
+                  children: <SaleTable {...props} summary={'customer, sale'} />,
                 },
                 {
                   label: 'Quotation',
                   key: 'quotation',
-                  children: <QuotationTable {...props} />,
+                  children: (
+                    <QuotationTable
+                      {...props}
+                      summary={'customer, quotation'}
+                    />
+                  ),
                 },
                 {
                   label: 'Purchase Return',
                   key: 'purchasereturn',
-                  children: <PurchaseReturnTable {...props} />,
+                  children: (
+                    <PurchaseReturnTable
+                      {...props}
+                      summary={'customer, purchasereturn'}
+                    />
+                  ),
                 },
                 {
                   label: 'Sale Return',
                   key: 'salereturn',
-                  children: <SaleReturnTable {...props} />,
+                  children: (
+                    <SaleReturnTable
+                      {...props}
+                      summary={'customer, salereturn'}
+                    />
+                  ),
                 },
               ]}
             />

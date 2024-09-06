@@ -1,63 +1,63 @@
 import dayjs from 'dayjs';
 
-const BOOLEAN_KEYS = [
-  'has_seo',
-  'have_access',
-  'is_send_email',
-  'has_stock',
-  'has_different_price',
-  'has_promotion',
-  'has_expired_date',
-  'need_attachment',
+import { BOOLEAN_KEYS } from '../../assets/data/booleanKeys';
+
+const IGNORED_KEYS = [
+  'updated_at',
+  'deleted_at',
+  'created_at',
+  'is_active',
+  'expired_at',
+  'id',
 ];
 
 export const fieldsToUpdate = (details) => {
   const fieldsToUpdate = Object.keys(details)
-    .filter(
-      (key) =>
-        !key.includes('updated_at') &&
-        !key.includes('deleted_at') &&
-        !key.includes('created_at') &&
-        !key.includes('is_active') &&
-        !key.includes('expired_at') &&
-        key !== 'id'
-    )
+    .filter((key) => !IGNORED_KEYS.includes(key))
     .map((key) => {
       let value = details[key];
 
-      if (key.includes('attachments')) {
-        // Group attachments by their label
-        const groupedAttachments = value.reduce((acc, attachment) => {
-          const { label, id, url } = attachment;
-          if (!acc[label]) {
-            acc[label] = [];
-          }
-          acc[label].push({ uid: id, url });
-          return acc;
-        }, {});
+      switch (true) {
+        // Group attachments by label
+        case key.includes('attachments'): {
+          const groupedAttachments = value.reduce((acc, attachment) => {
+            const { label, id, url } = attachment;
+            if (!acc[label]) {
+              acc[label] = [];
+            }
+            acc[label].push({ uid: id, url });
+            return acc;
+          }, {});
 
-        // Convert the grouped attachments to the desired format
-        return Object.keys(groupedAttachments).map((label) => ({
-          name: label,
-          value: groupedAttachments[label],
-          errors: '',
-        }));
-      }
+          return Object.keys(groupedAttachments).map((label) => ({
+            name: label,
+            value: groupedAttachments[label],
+            errors: '',
+          }));
+        }
 
-      if (key.includes('date') || key.includes('_at')) {
-        value = dayjs(value, 'YYYY-MM-DD');
-      }
+        // Handle date fields or keys with '_at'
+        case key.includes('date') || key.includes('_at'):
+          value = dayjs(value, 'YYYY-MM-DD');
+          break;
 
-      if (key.includes('phone')) {
-        value = value?.toString()?.slice(0);
-      }
+        // Handle phone number formatting
+        case key.includes('phone'):
+          value = value?.toString()?.slice(0);
+          break;
 
-      if (key.includes('_id')) {
-        value = value?.toString();
-      }
+        // Handle fields with '_id'
+        case key.includes('_id'):
+          value = value?.toString();
+          break;
 
-      if (BOOLEAN_KEYS.includes(key) && key !== 'staff_id') {
-        value = value.toString() === '1' ? true : false;
+        // Handle boolean fields except 'staff_id'
+        case BOOLEAN_KEYS.includes(key) && key !== 'staff_id':
+          value = value.toString() === '1' ? true : false;
+          break;
+
+        default:
+          break;
       }
 
       return {
@@ -66,7 +66,7 @@ export const fieldsToUpdate = (details) => {
         errors: '',
       };
     })
-    .flat(); // Flatten the array to merge nested arrays
+    .flat(); // Flatten the array to merge any nested arrays
 
   return fieldsToUpdate;
 };

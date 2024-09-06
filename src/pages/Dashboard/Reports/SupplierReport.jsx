@@ -1,5 +1,5 @@
 import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SupplierFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
@@ -18,6 +18,7 @@ import {
   useFilterParams,
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
+import { getDateRange } from '../../../utilities/lib/getDateRange';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
 import { PurchaseTable } from './components/PurchaseTable';
 import { QuotationTable } from './components/QutationTable';
@@ -111,6 +112,21 @@ export const SupplierReport = () => {
 
   const summaryDetails = useDetailsLayout(summaryData);
 
+  const [segment, setSegment] = useState('Weekly');
+
+  const onSegmentChange = (value) => {
+    setSegment(value);
+  };
+
+  useEffect(() => {
+    const dateRange = getDateRange(segment);
+    setParams((prev) => ({
+      ...prev,
+      created_daterange: dateRange,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segment]);
+
   const summaryType = {
     supplier_ids: [
       searchParams?.supplier_ids ? searchParams?.supplier_ids : data?.id,
@@ -161,16 +177,19 @@ export const SupplierReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
-    summary: 'supplier,sale',
+    searchParams,
+    segment,
   };
 
   return (
     <GlobalContainer
       pageTitle="Supplier Report"
       popoverWidth={400}
-      searchFilterContent={<SearchFilterComponent />}
       debounce={debounce}
       setParams={setParams}
+      segment={segment}
+      onSegmentChange={onSegmentChange}
+      searchFilterContent={<SearchFilterComponent />}
     >
       {!supplierId ? (
         <>
@@ -214,22 +233,39 @@ export const SupplierReport = () => {
                 {
                   label: 'Purchase',
                   key: 'purchase',
-                  children: <PurchaseTable {...props} />,
+                  children: (
+                    <PurchaseTable {...props} summary={'supplier, purchase'} />
+                  ),
                 },
                 {
                   label: 'Quotation',
                   key: 'quotation',
-                  children: <QuotationTable {...props} />,
+                  children: (
+                    <QuotationTable
+                      {...props}
+                      summary={'supplier, quotation'}
+                    />
+                  ),
                 },
                 {
                   label: 'Purchase Return',
                   key: 'purchasereturn',
-                  children: <PurchaseReturnTable {...props} />,
+                  children: (
+                    <PurchaseReturnTable
+                      {...props}
+                      summary={'supplier, purchasereturn'}
+                    />
+                  ),
                 },
                 {
                   label: 'Sale Return',
                   key: 'salereturn',
-                  children: <SaleReturnTable {...props} />,
+                  children: (
+                    <SaleReturnTable
+                      {...props}
+                      summary={'supplier, salereturn'}
+                    />
+                  ),
                 },
               ]}
             />

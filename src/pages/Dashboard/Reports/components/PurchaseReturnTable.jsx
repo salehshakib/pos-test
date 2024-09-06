@@ -11,6 +11,7 @@ import { usePagination } from '../../../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../../utilities/lib/currency';
 import { formatDate } from '../../../../utilities/lib/dateFormat';
+import { getDateRange } from '../../../../utilities/lib/getDateRange';
 import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
 import { columns } from '../data/PurchaseReturnColumns';
 
@@ -19,6 +20,8 @@ export const PurchaseReturnTable = ({
   summaryType,
   summary,
   setSummaryData,
+  searchParams,
+  segment,
 }) => {
   const currency = useSelector(useCurrency);
   const [detailsId, setDetailsId] = useState(undefined);
@@ -33,6 +36,8 @@ export const PurchaseReturnTable = ({
       ...pagination,
       ...summaryType,
       summary,
+      purchase_return_daterange:
+        searchParams?.created_daterange ?? getDateRange(segment),
     },
     keyword,
   });

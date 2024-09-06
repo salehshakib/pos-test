@@ -9,6 +9,7 @@ import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { usePagination } from '../../../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../../utilities/lib/currency';
+import { getDateRange } from '../../../../utilities/lib/getDateRange';
 import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
 import { columns } from '../data/Expense';
 
@@ -17,6 +18,8 @@ export const ExpenseTable = ({
   summaryType,
   summary,
   setSummaryData,
+  searchParams,
+  segment,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -28,7 +31,13 @@ export const ExpenseTable = ({
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
-    params: { ...pagination, ...summaryType, summary },
+    params: {
+      ...pagination,
+      ...summaryType,
+      summary,
+      created_daterange:
+        searchParams?.created_daterange ?? getDateRange(segment),
+    },
     keyword,
   });
 

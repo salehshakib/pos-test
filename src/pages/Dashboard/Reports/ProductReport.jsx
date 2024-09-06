@@ -132,7 +132,6 @@ export const ProductReport = () => {
 
   const summaryType = {
     product_id: searchParams?.product_id ? searchParams?.product_id : data?.id,
-    created_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
   const props = {
@@ -140,6 +139,8 @@ export const ProductReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
+    searchParams,
+    segment,
   };
 
   return (

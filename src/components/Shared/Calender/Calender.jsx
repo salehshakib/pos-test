@@ -137,13 +137,13 @@ const CustomCalender = ({ onChange, data }) => {
   const handleCellClick = (date) => {
     const value = data?.[dayjs(date).format('YYYY-MM-DD')];
 
-    const processedData =
-      value?.flatMap((item) => {
-        const { purchase_products, sale_products } = item ?? {};
-        const products = purchase_products || sale_products;
+    const processedData = value?.flatMap((item) => {
+      const { purchase_products, sale_products } = item ?? {};
+      const products = purchase_products || sale_products;
 
-        return products?.map((productItem) => ({
-          id: productItem?.products?.id,
+      return (
+        products?.map((productItem, index) => ({
+          id: `${item?.id}-${productItem?.products?.id}`,
           name: productItem?.products?.name,
           sku: productItem?.products?.sku,
           quantity: productItem?.qty,
@@ -152,8 +152,9 @@ const CustomCalender = ({ onChange, data }) => {
           grand_total: item?.grand_total,
           paid_amount: item?.paid_amount,
           due_amount: item?.due_amount,
-        }));
-      }) || [];
+        })) ?? []
+      );
+    });
 
     if (value) {
       setModalOpen(true);

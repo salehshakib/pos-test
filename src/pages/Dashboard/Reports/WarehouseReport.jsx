@@ -65,8 +65,6 @@ export const WarehouseReport = () => {
     warehouse_ids: searchParams?.warehouse_ids
       ? searchParams?.warehouse_ids
       : user?.warehouse_id,
-
-    created_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
   const warehouseItems = [
@@ -101,6 +99,8 @@ export const WarehouseReport = () => {
     summaryType,
     setSummaryData,
     setLoading,
+    searchParams,
+    segment,
   };
 
   return (
@@ -135,7 +135,7 @@ export const WarehouseReport = () => {
       </div>
       {data ? (
         <Tabs
-          defaultActiveKey="sale"
+          defaultActiveKey={'sale'}
           items={[
             {
               label: 'Sale',

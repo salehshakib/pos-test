@@ -11,6 +11,7 @@ import { usePagination } from '../../../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../../utilities/lib/currency';
 import { formatDate } from '../../../../utilities/lib/dateFormat';
+import { getDateRange } from '../../../../utilities/lib/getDateRange';
 import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
 import { columns } from '../data/SaleReturnColumns';
 
@@ -19,6 +20,8 @@ export const SaleReturnTable = ({
   summaryType,
   summary,
   setSummaryData,
+  searchParams,
+  segment,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -30,7 +33,13 @@ export const SaleReturnTable = ({
   const params = useGlobalParams({
     isDefaultParams: false,
     isRelationalParams: true,
-    params: { ...pagination, ...summaryType, summary },
+    params: {
+      ...pagination,
+      ...summaryType,
+      summary,
+      sale_return_daterange:
+        searchParams?.created_daterange ?? getDateRange(segment),
+    },
     keyword,
   });
 

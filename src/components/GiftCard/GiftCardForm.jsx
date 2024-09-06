@@ -8,6 +8,7 @@ import {
   rowLayout,
 } from '../../layout/FormLayout';
 import { useGetAllCustomerQuery } from '../../redux/services/customer/customerApi';
+import { useGetAllEmployeeQuery } from '../../redux/services/hrm/employee/employeeApi';
 import { generateRandomCode } from '../../utilities/lib/generateCode';
 import { GiftCardTypeComponent } from '../ReusableComponent/GiftCardTypeComponent';
 import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
@@ -64,9 +65,9 @@ const GiftCardComponent = () => {
 };
 
 const EmployeeComponent = () => {
-  const { data, isLoading } = useGetAllCustomerQuery({});
+  const { data, isLoading } = useGetAllEmployeeQuery({});
 
-  const options = data?.results?.customer?.map((customer) => ({
+  const options = data?.results?.employee?.map((customer) => ({
     value: customer.id?.toString(),
     label: customer.name,
   }));

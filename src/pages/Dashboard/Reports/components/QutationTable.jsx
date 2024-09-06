@@ -9,6 +9,7 @@ import { useGetAllQuotationQuery } from '../../../../redux/services/quotation/qu
 import { usePagination } from '../../../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../../utilities/lib/currency';
+import { getDateRange } from '../../../../utilities/lib/getDateRange';
 import { useUrlIndexPermission } from '../../../../utilities/lib/getPermission';
 import { columns } from '../data/QuotationColumns';
 
@@ -17,6 +18,8 @@ export const QuotationTable = ({
   summaryType,
   summary,
   setSummaryData,
+  searchParams,
+  segment,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -32,6 +35,8 @@ export const QuotationTable = ({
       ...pagination,
       ...summaryType,
       summary,
+      created_daterange:
+        searchParams?.created_daterange ?? getDateRange(segment),
     },
     keyword,
   });

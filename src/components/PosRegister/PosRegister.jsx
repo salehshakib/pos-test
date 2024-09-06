@@ -201,101 +201,8 @@ export const PosRegister = ({
   setProducts,
   handleGrandTotal,
   handleSubmit,
+  resetRef,
 }) => {
-  // const [totalQuantity, setTotalQuantity] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
-
-  // useEffect(() => {
-  //   const total = Object.values(formValues.product_list.qty).reduce(
-  //     (acc, cur) => acc + parseInt(cur),
-  //     0
-  //   );
-  //   setTotalQuantity(total);
-
-  //   const totalPrice = Object.values(formValues.product_list.total).reduce(
-  //     (acc, cur) => acc + parseFloat(cur),
-  //     0
-  //   );
-  //   setTotalPrice(totalPrice?.toFixed(2));
-  // }, [formValues, products]);
-
-  // const [discount, setDiscount] = useState(0);
-  // const [shipping, setShipping] = useState(0);
-  // const [coupon, setCoupon] = useState(0);
-
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [modalType, setModalType] = useState(null);
-
-  // const showModal = (value) => {
-  //   setIsModalOpen(true);
-  //   setModalType(value);
-  // };
-  // const hideModal = () => {
-  //   setIsModalOpen(false);
-  //   setModalType(null);
-  // };
-
-  // const taxRate = Form.useWatch('tax_rate', form);
-
-  // const handleSubmit = async () => {
-  //   if (modalType === 'Discount') {
-  //     setDiscount(form.getFieldValue(modalType));
-  //   }
-
-  //   if (modalType === 'Shipping Cost') {
-  //     setShipping(form.getFieldValue(modalType));
-  //   }
-
-  //   if (modalType === 'Coupon') {
-  //     if (totalPrice < productUnits.minimum_amount) {
-
-  //       openNotification(
-  //         'info',
-  //         'Coupon can be applied only if total price is greater than ' +
-  //           productUnits.minimum_amount
-  //       );
-
-  //       // hideModal();
-  //       return;
-  //     }
-
-  //     if (type?.toLowerCase() === 'fixed') {
-  //       setCoupon(productUnits.coupon_rate);
-  //     }
-  //   }
-
-  //   hideModal();
-  // };
-
-  // const tax = (totalPrice * (taxRate ?? 0)) / 100;
-
-  // const grand_total =
-  //   parseFloat(totalPrice) +
-  //   parseFloat(tax ?? 0) +
-  //   parseFloat(shipping) -
-  //   parseFloat(discount) -
-  //   parseFloat(coupon);
-
-  // useEffect(() => {
-  //   setGrandTotal(grand_total);
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [grand_total, setGrandTotal, totalPrice]);
-
-  // const currency = useSelector(useCurrency);
-
-  // useEffect(() => {
-  //   if (type?.toLowerCase() === 'fixed') {
-  //     setCoupon(productUnits.coupon_rate);
-  //   }
-  // }, [type, productUnits.coupon_rate, totalPrice, productUnits.minimum_amount]);
-
-  // const handleSubmit = (values, { formValues }) => {
-  //   console.log({ values, formValues });
-  // };
-
-  // console.log(products);
-
   return (
     <>
       <Form
@@ -303,7 +210,7 @@ export const PosRegister = ({
         layout="vertical"
         autoComplete="on"
         scrollToFirstError
-        className="h-[90vh]"
+        className="h-[93vh]"
         noStyle
       >
         <div className="flex h-full flex-col p-4">
@@ -316,6 +223,7 @@ export const PosRegister = ({
             products={products}
             setProducts={setProducts}
             handleSubmit={handleSubmit}
+            ref={resetRef}
           />
         </div>
       </Form>

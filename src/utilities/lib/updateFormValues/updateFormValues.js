@@ -120,8 +120,13 @@ export function updateFormValues(
     }
   };
 
-  calculateProductUnitCost('net_unit_cost');
-  calculateProductUnitCost('net_unit_price');
+  if (formProductList.net_unit_cost) {
+    calculateProductUnitCost('net_unit_cost');
+  }
+
+  if (formProductList.net_unit_price) {
+    calculateProductUnitCost('net_unit_price');
+  }
 
   const discount = getSanitizedValue('discount', 0, parseFloat);
   const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);

@@ -455,6 +455,8 @@ const ProductTableComponent = ({
     };
   });
 
+  console.log(formValues.product_list);
+
   const { totalQuantity, totalPrice } = calculateTotals(formValues);
 
   useEffect(() => {

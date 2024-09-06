@@ -1,4 +1,5 @@
 import { Button, Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { BsCash } from 'react-icons/bs';
 import { FaCreditCard } from 'react-icons/fa';
@@ -8,13 +9,25 @@ import { IoRocketOutline } from 'react-icons/io5';
 import { MdCardGiftcard } from 'react-icons/md';
 
 import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
+import {
+  calculateGrandTotal,
+  calculateTotalPrice,
+  calculateTotalTax,
+} from '../../utilities/lib/generator/generatorUtils';
+import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
+import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomModal from '../Shared/Modal/CustomModal';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 
-const Payment = ({ handleSubmit, isLoading, getGrandTotal }) => {
+const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const [paymentForm] = Form.useForm();
+  const [errorFields, setErrorFields] = useState([]);
+
+  const [createSale, { isLoading }] = useCreateSaleMutation();
 
   const [paymentType, setPaymentType] = useState('Cash');
 
@@ -27,19 +40,138 @@ const Payment = ({ handleSubmit, isLoading, getGrandTotal }) => {
   const showModal = (type) => {
     setPaymentType(type);
 
-    setGrandTotal(getGrandTotal());
+    const total = getGrandTotal();
+
+    if (total) {
+      setGrandTotal(total);
+    } else {
+      return;
+    }
 
     setIsModalOpen(true);
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     const { data, formValues } = handleSubmit() || {};
 
     if (!data) return;
 
-    console.log(values);
-    console.log(data);
-    console.log(formValues);
+    const { discount, shipping_cost, tax_rate } = formValues.order ?? {};
+    const { paid_amount } = values ?? {};
+    const {
+      sale_at,
+      warehouse_id,
+      cashier_id,
+      customer_id,
+      reference_number,
+      currency,
+      exchange_rate,
+    } = data ?? {};
+
+    const { product_list } = formValues;
+
+    const productListArray = product_list?.qty
+      ? Object.keys(product_list.qty)
+          .filter((product_id) => product_list.qty[product_id] !== undefined)
+          .map((product_id) => ({
+            product_id: parseInt(product_id),
+            qty: product_list.qty[product_id],
+            sale_unit_id: product_list.sale_unit_id[product_id],
+            net_unit_price: decimalConverter(
+              product_list.net_unit_price[product_id]
+            ),
+            discount: decimalConverter(product_list.discount[product_id]),
+            tax_rate: decimalConverter(product_list.tax_rate[product_id]),
+            tax: decimalConverter(product_list.tax[product_id]),
+            total: decimalConverter(product_list.total[product_id]),
+          }))
+      : [];
+
+    const totalPrice = calculateTotalPrice(product_list);
+    const orderTax = calculateTotalTax(totalPrice, values.tax_rate, discount);
+
+    const totalQty =
+      Object.values(formValues.product_list?.qty).reduce(
+        (acc, cur) => acc + parseInt(cur),
+        0
+      ) ?? 0;
+
+    const totalDiscount =
+      Object.values(formValues.product_list?.discount).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      ) ?? 0;
+
+    const totalTax =
+      Object.values(formValues.product_list?.tax).reduce(
+        (acc, cur) => acc + parseFloat(cur),
+        0
+      ) ?? 0;
+
+    const postObj = {
+      ...sanitizeObj(values),
+      sale_status: 'Completed',
+      sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
+      discount: decimalConverter(discount),
+      shipping_cost: decimalConverter(shipping_cost),
+      tax_rate: decimalConverter(tax_rate),
+      item: productListArray.length,
+      total_qty: totalQty,
+      total_discount: decimalConverter(totalDiscount),
+      total_tax: decimalConverter(totalTax),
+      total_price: decimalConverter(totalPrice),
+      tax: decimalConverter(orderTax),
+      change: decimalConverter(
+        Number(values?.recieved_amount ?? 0) - Number(values?.paid_amount ?? 0)
+      ),
+      grand_total: calculateGrandTotal(
+        totalPrice,
+        values.tax_rate,
+        discount,
+        shipping_cost
+      ),
+      product_list: JSON.stringify(productListArray),
+      // petty_cash_id: 8,
+      warehouse_id,
+      cashier_id,
+      customer_id,
+      reference_number,
+      payment_status: 'Paid',
+      currency,
+      exchange_rate,
+    };
+
+    if (paid_amount) {
+      postObj.paid_amount = Number(paid_amount).toFixed(2);
+    }
+
+    const formData = new FormData();
+    appendToFormData(postObj, formData);
+
+    try {
+      const { data, error } = await createSale({ data: formData });
+      if (data?.success) {
+        hideModal();
+        paymentForm.resetFields();
+
+        handleReset();
+      }
+
+      if (error) {
+        const errorFields = Object.keys(error?.data?.errors).map(
+          (fieldName) => ({
+            name: fieldName,
+            errors: error?.data?.errors[fieldName],
+          })
+        );
+        setErrorFields(errorFields);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      hideModal();
+      paymentForm.resetFields();
+    }
   };
 
   return (
@@ -116,6 +248,7 @@ const Payment = ({ handleSubmit, isLoading, getGrandTotal }) => {
           onClose={hideModal}
           btnStyle={false}
           isLoading={isLoading}
+          fields={errorFields}
         >
           <Row {...rowLayout}>
             <PaymentTypeComponent

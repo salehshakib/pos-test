@@ -31,6 +31,8 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         'cashier_id',
         'customer_id',
         'reference_number',
+        'currency',
+        'exchange_rate',
       ]);
 
       const fieldNames = {
@@ -38,11 +40,14 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         warehouse_id: 'Warehouse',
         cashier_id: 'Cashier',
         customer_id: 'Customer',
-        reference_number: 'Reference Number',
+        currency: 'Currency',
+        exchange_rate: 'Exchange Rate',
       };
 
       const missingFields = Object.keys(data).filter(
-        (key) => data[key] === undefined || data[key] === null
+        (key) =>
+          key !== 'reference_number' &&
+          (data[key] === undefined || data[key] === null)
       );
 
       if (missingFields.length > 0) {
@@ -55,11 +60,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
       }
 
       const formValues = formValuesRef.current();
-
-      if (products.length === 0) {
-        openNotification('error', 'Please add at least one products.');
-        return null;
-      }
 
       return { data, formValues };
     } else {
@@ -75,13 +75,24 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   }, []);
 
   const updateGrandTotal = () => {
+    if (products.length === 0) {
+      openNotification('error', 'Please add at least one products.');
+      return null;
+    }
+
     return paymentRef.current ? parseFloat(paymentRef.current()) : 0;
   };
 
+  const resetRef = useRef(null);
+
+  const triggerReset = () => {
+    return resetRef.current ? resetRef.current.resetFields() : null;
+  };
+
   return (
-    <GlobalUtilityStyle>
-      <div className="h-full min-h-[60vh] grow overflow-auto bg-[#F5F5F5]">
-        <div className="grid h-[85vh] grid-cols-6">
+    <GlobalUtilityStyle className="relative h-full">
+      <div className="grow overflow-auto bg-[#F5F5F5]">
+        <div className="grid h-[95vh] grid-cols-6">
           <div className="col-span-4">
             <PosRegister
               form={posForm}
@@ -89,10 +100,11 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
               setProducts={setProducts}
               handleGrandTotal={handleGrandTotal}
               handleSubmit={handleSubmit}
+              resetRef={resetRef}
             />
           </div>
 
-          <div className="relative col-span-2 flex h-[90vh] flex-col">
+          <div className="relative col-span-2 flex h-[95vh] flex-col overflow-y-auto overflow-x-hidden">
             <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
               <div className="flex items-center gap-6 text-2xl">
                 <Button
@@ -129,11 +141,12 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         style={{
           textAlign: 'center',
         }}
-        className="py-4"
+        className="absolute bottom-0 z-50 w-full py-2 bg-white"
       >
         <Payment
           handleSubmit={handleFormValues}
           getGrandTotal={updateGrandTotal}
+          handleReset={triggerReset}
         />
       </Footer>
     </GlobalUtilityStyle>

@@ -1,14 +1,16 @@
 import { PageContainer } from '@ant-design/pro-layout';
 
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { useGetAllHrmSettingQuery } from '../../../redux/services/settings/hrmSettings/hrmSettingsApi';
 import { HrmSettingForm } from './HrmSettingsForm';
 
 export const HrmSettings = () => {
   const params = {
     child: 1,
   };
-  const { data, isLoading } = useGetGeneralSettingsQuery(params);
+  const { data, isLoading } = useGetAllHrmSettingQuery(params);
+
+  console.log(data);
 
   return (
     <GlobalUtilityStyle>
@@ -25,7 +27,7 @@ export const HrmSettings = () => {
         }}
         loading={isLoading}
       >
-        <HrmSettingForm data={data?.hrm_setting} />
+        <HrmSettingForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );

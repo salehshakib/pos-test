@@ -147,7 +147,7 @@ const CustomDatepicker = ({
     size,
     className: 'border-2 mt-1',
     style: { width: '100%' },
-    format: getFormat(),
+    // format: getFormat(),
     suffixIcon: getSuffixIcon(),
     onChange,
     // placeholder: "Please Input " + placeholder + " Date",

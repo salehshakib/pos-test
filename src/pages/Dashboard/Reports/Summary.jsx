@@ -9,37 +9,7 @@ import { useFilterParams } from '../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../utilities/lib/currency';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
 
-// const { Text } = Typography;
-
 const styleProps = {
-  // summary: () => {
-  //   return (
-  //     <Table.Summary fixed="bottom">
-  //       <Table.Summary.Row>
-  //         <Table.Summary.Cell index={1} colSpan={3}>
-  //           <Text className="font-bold" type="">
-  //             Total Purchase
-  //           </Text>
-  //         </Table.Summary.Cell>
-  //         <Table.Summary.Cell index={2} align="center">
-  //           <Text type="" className="font-bold">
-  //             {data?.total_purchase}
-  //           </Text>
-  //         </Table.Summary.Cell>
-  //         {/* <Table.Summary.Cell index={3} align="center">
-  //           <Text type="" className="font-bold">
-  //             // {/* {totalPrice} */}
-  //         {/* </Text> */}
-  //         {/* </Table.Summary.Cell> */}
-  //       </Table.Summary.Row>
-  //     </Table.Summary>
-  //   );
-  // },
-  // sticky: {
-  //   // offsetHeader: 440,
-  //   offsetScroll: 400,
-  // },
-
   scroll: {
     x: 'max-content',
   },
@@ -590,7 +560,7 @@ export const Summary = () => {
     if (dateString[0] && dateString[1]) {
       setParams((prev) => ({
         ...prev,
-        daterange: dateString,
+        date_range: dateString,
       }));
     } else {
       const dateRange = getDateRange(segment);
@@ -605,7 +575,7 @@ export const Summary = () => {
     const dateRange = getDateRange(segment);
     setParams((prev) => ({
       ...prev,
-      daterange: dateRange,
+      date_range: dateRange,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment]);

@@ -43,12 +43,18 @@ export const HrmSettingForm = ({ data }) => {
       const updateFieldData = [
         {
           name: 'start_time',
-          value: dayjs(data?.start_time, 'HH:mm:ss'),
+          value: dayjs(
+            data?.start_time === 'Invalid Date' ? '00:00:00' : data?.start_time,
+            'HH:mm:ss'
+          ),
           errors: '',
         },
         {
           name: 'end_time',
-          value: dayjs(data?.end_time, 'HH:mm:ss'),
+          value: dayjs(
+            data?.end_time === 'Invalid Date' ? '00:00:00' : data?.end_time,
+            'HH:mm:ss'
+          ),
           errors: '',
         },
       ];
@@ -115,12 +121,12 @@ export const HrmSettingForm = ({ data }) => {
         <Row {...rowLayout}>
           <Col {...colLayout}>
             <CustomDatepicker
-              label="Start Time"
-              type="time"
-              picker="time"
+              name="start_time"
+              label=" Start Time"
+              placeholder="Start Time"
               required={true}
-              name={'start_time'}
-              placeholder={'Start Time'}
+              type="time"
+              picker={'time'}
             />
           </Col>
           <Col {...colLayout}>

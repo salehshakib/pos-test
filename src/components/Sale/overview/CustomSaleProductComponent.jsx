@@ -34,9 +34,9 @@ const updateStateWithProductData = (saleProducts, setFormValues) => {
     updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
 
     updatedOperator[item.product_id.toString()] =
-      item.products?.purchase_units?.operator;
+      item.products?.sale_units?.operator;
     updatedOperationValue[item.product_id.toString()] =
-      item.products?.purchase_units?.operation_value;
+      item.products?.sale_units?.operation_value;
   });
 
   setFormValues((prevFormValues) => ({
@@ -48,7 +48,7 @@ const updateStateWithProductData = (saleProducts, setFormValues) => {
         ...updatedQty,
       },
       sale_unit_id: {
-        ...prevFormValues.product_list.purchase_unit_id,
+        ...prevFormValues.product_list.sale_unit_id,
         ...updatedSaleUnitId,
       },
       net_unit_price: {

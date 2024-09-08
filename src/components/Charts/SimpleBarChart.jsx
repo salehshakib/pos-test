@@ -1,4 +1,4 @@
-import { theme } from 'antd';
+import { Spin, theme } from 'antd';
 import {
   Bar,
   BarChart,
@@ -96,27 +96,25 @@ const formatDateName = (dateStr, format = 'day') => {
 
 // Function to transform data based on date range
 const transformChartData = (chartData) => {
-  if (!chartData?.preiods) return [];
-
   const dateRange = chartData?.periods?.length;
 
   if (dateRange <= 7) {
     // Case 1: Less than or equal to 7 days, return day name
-    return chartData?.periods.map((item, index) => ({
+    return chartData?.periods?.map((item, index) => ({
       name: formatDateName(item, 'day'),
       purchase: parseFloat(chartData.purchases[index]) || 0,
       sale: parseFloat(chartData.sales[index]) || 0,
     }));
   } else if (dateRange > 7 && dateRange < 30) {
     // Case 2: Between 7 and 30 days, return original date as name
-    return chartData.periods.map((item, index) => ({
+    return chartData?.periods?.map((item, index) => ({
       name: item, // Use the original date as the name
       purchase: parseFloat(chartData.purchases[index]) || 0,
       sale: parseFloat(chartData.sales[index]) || 0,
     }));
   } else {
     // Case 3: More than 30 days, aggregate by month
-    const monthlyData = chartData.periods.reduce((acc, item, index) => {
+    const monthlyData = chartData?.periods?.reduce((acc, item, index) => {
       const month = formatDateName(item, 'month');
 
       if (!acc[month]) {
@@ -130,7 +128,7 @@ const transformChartData = (chartData) => {
     }, {});
 
     // Convert aggregated data into an array
-    return Object.keys(monthlyData).map((month) => ({
+    return Object.keys(monthlyData ?? {})?.map((month) => ({
       name: month,
       purchase: monthlyData[month].purchase,
       sale: monthlyData[month].sale,
@@ -141,7 +139,7 @@ const transformChartData = (chartData) => {
 export const SimpleBarChartComponent = ({ params }) => {
   const { token } = theme.useToken();
 
-  const { data: chartData, isLoading } = useGetSalePurchaseChartQuery(
+  const { data: chartData, isFetching } = useGetSalePurchaseChartQuery(
     {
       params: {
         start_date: params?.date_range[0],
@@ -154,54 +152,44 @@ export const SimpleBarChartComponent = ({ params }) => {
     }
   );
 
-  // function getDayName(dateString) {
-  //   const date = new Date(dateString); // Parse the date
-  //   const options = { weekday: 'long' }; // Options for day name
-  //   return new Intl.DateTimeFormat('en-US', options).format(date); // Format date as day name
-  // }
-
-  // const modifiedData =
-  //   chartData?.periods?.map((item, index) => {
-  //     return {
-  //       name: getDayName(item),
-  //       purchase: parseFloat(chartData?.purchase?.[index]) || 0,
-  //       sale: parseFloat(chartData?.sale?.[index]) || 0,
-  //     };
-  //   }) ?? [];
-
   const modifiedData = transformChartData(chartData);
 
-  console.log(chartData);
   return (
     <div className="h-full w-full pb-10">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={modifiedData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar
-            dataKey="purchase"
-            fill={token.colorPrimary}
-            activeBar={<Rectangle fill="pink" stroke={token.colorPrimary} />}
-          />
-          <Bar
-            dataKey="sale"
-            fill={token.secondaryColor}
-            activeBar={<Rectangle fill="gold" stroke={token.secondaryColor} />}
-          />
-        </BarChart>
+        {chartData && !isFetching ? (
+          <BarChart
+            width={500}
+            height={300}
+            data={modifiedData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar
+              dataKey="purchase"
+              fill={token.colorPrimary}
+              activeBar={<Rectangle fill="pink" stroke={token.colorPrimary} />}
+            />
+            <Bar
+              dataKey="sale"
+              fill={token.secondaryColor}
+              activeBar={
+                <Rectangle fill="gold" stroke={token.secondaryColor} />
+              }
+            />
+          </BarChart>
+        ) : (
+          <Spin className="my-10 flex w-full items-center justify-center h-full" />
+        )}
       </ResponsiveContainer>
     </div>
   );

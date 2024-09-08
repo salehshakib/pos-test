@@ -11,6 +11,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useGetSalePurchaseChartQuery } from '../../redux/services/dashboard/dashboardApi';
+
 const data = [
   {
     name: 'January',
@@ -88,6 +90,10 @@ const data = [
 
 export const SimpleBarChartComponent = () => {
   const { token } = theme.useToken();
+
+  const { data, isLoading } = useGetSalePurchaseChartQuery({});
+  console.log(data);
+
   return (
     <div className="h-full w-full pb-10">
       <ResponsiveContainer width="100%" height="100%">

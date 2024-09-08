@@ -1,5 +1,6 @@
 // Import necessary dependencies
 import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';
+import { PURCHASE_SALE_CHART } from '../../../utilities/apiEndpoints/report.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -16,6 +17,19 @@ const dashboardApi = baseApi.injectEndpoints({
       providesTags: (result, error, { params }) => [
         { type: PRODUCT, ...params },
         PRODUCT,
+      ],
+    }),
+
+    getSalePurchaseChart: build.query({
+      query: ({ params }) => ({
+        url: `/${PURCHASE_SALE_CHART}`,
+        method: 'GET',
+        params,
+      }),
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { params }) => [
+        { type: PURCHASE_SALE_CHART, ...params },
+        PURCHASE_SALE_CHART,
       ],
     }),
 
@@ -120,4 +134,5 @@ export const {
   useUpdateDashboardDataMutation,
   useUpdateDashboardDataStatusMutation,
   useDeleteDashboardDataMutation,
+  useGetSalePurchaseChartQuery,
 } = dashboardApi;

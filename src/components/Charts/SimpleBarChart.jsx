@@ -96,11 +96,13 @@ const formatDateName = (dateStr, format = 'day') => {
 
 // Function to transform data based on date range
 const transformChartData = (chartData) => {
-  const dateRange = chartData.periods.length;
+  if (!chartData?.preiods) return [];
+
+  const dateRange = chartData?.periods?.length;
 
   if (dateRange <= 7) {
     // Case 1: Less than or equal to 7 days, return day name
-    return chartData.periods.map((item, index) => ({
+    return chartData?.periods.map((item, index) => ({
       name: formatDateName(item, 'day'),
       purchase: parseFloat(chartData.purchases[index]) || 0,
       sale: parseFloat(chartData.sales[index]) || 0,

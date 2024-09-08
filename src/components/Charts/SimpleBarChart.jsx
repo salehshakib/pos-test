@@ -16,83 +16,102 @@ import { useGetSalePurchaseChartQuery } from '../../redux/services/dashboard/das
 const data = [
   {
     name: 'January',
-    uv: 4000,
-    pv: 2400,
+    sale: 4000,
+    purchase: 2400,
     amt: 2400,
   },
   {
     name: 'February',
-    uv: 3000,
-    pv: 1398,
+    sale: 3000,
+    purchase: 1398,
     amt: 2210,
   },
   {
     name: 'March',
-    uv: 2000,
-    pv: 9800,
+    sale: 2000,
+    purchase: 9800,
     amt: 2290,
   },
   {
     name: 'April',
-    uv: 2780,
-    pv: 3908,
+    sale: 2780,
+    purchase: 3908,
     amt: 2000,
   },
   {
     name: 'May',
-    uv: 1890,
-    pv: 4800,
+    sale: 1890,
+    purchase: 4800,
     amt: 2181,
   },
   {
     name: 'June',
-    uv: 2390,
-    pv: 3800,
+    sale: 2390,
+    purchase: 3800,
     amt: 2500,
   },
   {
     name: 'July',
-    uv: 3490,
-    pv: 4300,
+    sale: 3490,
+    purchase: 4300,
     amt: 2100,
   },
   {
     name: 'August',
-    uv: 3190,
-    pv: 4100,
+    sale: 3190,
+    purchase: 4100,
     amt: 2300,
   },
   {
     name: 'September',
-    uv: 2590,
-    pv: 3500,
+    sale: 2590,
+    purchase: 3500,
     amt: 2400,
   },
   {
     name: 'October',
-    uv: 2790,
-    pv: 3200,
+    sale: 2790,
+    purchase: 3200,
     amt: 2200,
   },
   {
     name: 'November',
-    uv: 1990,
-    pv: 2800,
+    sale: 1990,
+    purchase: 2800,
     amt: 2100,
   },
   {
     name: 'December',
-    uv: 2190,
-    pv: 3300,
+    sale: 2190,
+    purchase: 3300,
     amt: 2300,
   },
 ];
 
-export const SimpleBarChartComponent = () => {
+export const SimpleBarChartComponent = ({ params }) => {
   const { token } = theme.useToken();
 
-  const { data, isLoading } = useGetSalePurchaseChartQuery({});
-  console.log(data);
+  const { data: chartData, isLoading } = useGetSalePurchaseChartQuery(
+    {
+      params: {
+        start_date: params?.date_range[0],
+        end_date: params?.date_range[1],
+        warehouse_ids: params?.warehouse_ids,
+      },
+    }
+    // {
+    //   skip: params?.warehouse_ids?.length === 0 || !params?.warehouse_ids,
+    // }
+  );
+
+  const modifiedData =
+    chartData?.months?.map((item, index) => {
+      return {
+        name: item,
+        purchase: parseFloat(chartData?.purchase?.[index]) || 0,
+        sale: parseFloat(chartData?.sale?.[index]) || 0,
+      };
+    }) ?? [];
 
   return (
     <div className="h-full w-full pb-10">
@@ -100,7 +119,7 @@ export const SimpleBarChartComponent = () => {
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={modifiedData}
           margin={{
             top: 5,
             right: 30,
@@ -114,12 +133,12 @@ export const SimpleBarChartComponent = () => {
           <Tooltip />
           <Legend />
           <Bar
-            dataKey="pv"
+            dataKey="purchase"
             fill={token.colorPrimary}
             activeBar={<Rectangle fill="pink" stroke={token.colorPrimary} />}
           />
           <Bar
-            dataKey="uv"
+            dataKey="sale"
             fill={token.secondaryColor}
             activeBar={<Rectangle fill="gold" stroke={token.secondaryColor} />}
           />

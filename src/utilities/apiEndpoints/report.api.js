@@ -6,4 +6,4 @@ export const SALE_REPORT = 'report/sale';
 
 export const COUNTER = 'report/counter';
 
-export const PURCHASE_SALE_CHART = 'report/purchase-sale-chart';
+export const PURCHASE_SALE_CHART = 'report/sale-purchase-chart';

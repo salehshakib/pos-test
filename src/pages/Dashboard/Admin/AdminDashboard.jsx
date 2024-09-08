@@ -157,7 +157,7 @@ const ExtraComponent = ({ setParams, setWarehouses }) => {
             <Segmented
               size="large"
               className="mt-1"
-              options={['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']}
+              options={['Daily', 'Weekly', 'Monthly', 'Yearly']}
               onChange={onDateRangeChange}
             />
           </Form.Item>
@@ -420,7 +420,7 @@ const AdminDashboard = () => {
         <div className="h-[26rem] w-full rounded-lg bg-white p-5 py-5 shadow-md">
           <div className="h-full w-full pb-4 text-center text-lg font-semibold">
             Purchase & Sale
-            <SimpleBarChartComponent />
+            <SimpleBarChartComponent params={params} />
           </div>
         </div>
 

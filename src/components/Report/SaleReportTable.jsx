@@ -39,19 +39,19 @@ export const SaleReportTable = ({
   const format = useFormatDate();
 
   const dataSource =
-    data?.results?.sale?.map((item, index) => {
+    data?.results?.sale?.flatMap((item, index) => {
       const { sale_products, grand_total, sale_at, total_qty, warehouses } =
         item ?? {};
 
       const date = formatDate(sale_at, format);
 
       return sale_products?.map(({ products }, i) => ({
-        id: `${index}-${i}`, // Ensure unique IDs for each entry
+        id: `${i}-${index + 1}`, // Ensure unique IDs for each entry
         product: products?.name,
         warehouse: warehouses?.name,
-        purchasedQty: total_qty,
-        purchasedAt: date,
-        purchaseAmount: showCurrency(grand_total, currency),
+        soldQty: total_qty,
+        saleAt: date,
+        soldAmount: showCurrency(grand_total, currency),
       }));
     }) ?? [];
 

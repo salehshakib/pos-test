@@ -92,7 +92,7 @@ export const PurchaseReport = () => {
     const dateRange = getDateRange(segment);
     setParams((prev) => ({
       ...prev,
-      created_daterange: dateRange,
+      purchase_daterange: dateRange,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment]);

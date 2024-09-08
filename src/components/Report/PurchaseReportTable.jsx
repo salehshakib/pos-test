@@ -51,7 +51,7 @@ export const PurchaseReportTable = ({
       const date = formatDate(purchase_at, format);
 
       return purchase_products?.map(({ products }, i) => ({
-        id: `${index}-${i}`, // Ensure unique IDs for each entry
+        id: `${i}-${index + 1}`, // Ensure unique IDs for each entry
         product: products?.name,
         warehouse: warehouses?.name,
         purchasedQty: total_qty,

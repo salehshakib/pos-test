@@ -150,6 +150,7 @@ export const StockAlertComponent = () => {
       return product_qties.map((qty, i) => ({
         id: `${index}-${i}`,
         name,
+        slNo: i + 1,
         sku,
         minQty: alert_qty,
         warehouse: qty.warehouses?.name ?? '',

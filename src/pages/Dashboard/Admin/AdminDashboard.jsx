@@ -416,22 +416,22 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 gap-y-6 xl:grid-cols-2">
-        <div className="h-[26rem] w-full rounded-lg bg-white p-5 py-5 shadow-md">
+      <div className="grid grid-cols-2 gap-3 gap-y-6 xl:grid-cols-2">
+        <div className="h-[26rem] w-full rounded-lg bg-white p-5 py-5 shadow-md col-span-2">
           <div className="h-full w-full pb-4 text-center text-lg font-semibold">
             Purchase & Sale
             <SimpleBarChartComponent params={params} />
           </div>
         </div>
+        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md col-span-2">
+          <StockAlertComponent />
+        </div>
 
-        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
+        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md ">
           <RecentlyAddedComponent />
         </div>
         <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
           <ExpiredItemsComponent />
-        </div>
-        <div className="h-[26rem] w-full rounded-lg bg-white shadow-md">
-          <StockAlertComponent />
         </div>
       </div>
     </div>

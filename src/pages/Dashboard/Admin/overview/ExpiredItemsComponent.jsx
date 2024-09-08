@@ -90,6 +90,8 @@ export const ExpiredItemsComponent = () => {
     }
   );
 
+  console.log(data);
+
   return (
     <CustomTable
       title={'Expired Products'}

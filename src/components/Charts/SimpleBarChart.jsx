@@ -96,37 +96,44 @@ const formatDateName = (dateStr, format = 'day') => {
 
 // Function to transform data based on date range
 const transformChartData = (chartData) => {
-  const isLessThan30Days = chartData.periods.length < 30;
+  const dateRange = chartData.periods.length;
 
-  if (isLessThan30Days) {
-    // Return daily data with day names
+  if (dateRange <= 7) {
+    // Case 1: Less than or equal to 7 days, return day name
     return chartData.periods.map((item, index) => ({
       name: formatDateName(item, 'day'),
       purchase: parseFloat(chartData.purchases[index]) || 0,
       sale: parseFloat(chartData.sales[index]) || 0,
     }));
+  } else if (dateRange > 7 && dateRange < 30) {
+    // Case 2: Between 7 and 30 days, return original date as name
+    return chartData.periods.map((item, index) => ({
+      name: item, // Use the original date as the name
+      purchase: parseFloat(chartData.purchases[index]) || 0,
+      sale: parseFloat(chartData.sales[index]) || 0,
+    }));
+  } else {
+    // Case 3: More than 30 days, aggregate by month
+    const monthlyData = chartData.periods.reduce((acc, item, index) => {
+      const month = formatDateName(item, 'month');
+
+      if (!acc[month]) {
+        acc[month] = { purchase: 0, sale: 0 };
+      }
+
+      acc[month].purchase += parseFloat(chartData.purchases[index]) || 0;
+      acc[month].sale += parseFloat(chartData.sales[index]) || 0;
+
+      return acc;
+    }, {});
+
+    // Convert aggregated data into an array
+    return Object.keys(monthlyData).map((month) => ({
+      name: month,
+      purchase: monthlyData[month].purchase,
+      sale: monthlyData[month].sale,
+    }));
   }
-
-  // Aggregate data by month
-  const monthlyData = chartData.periods.reduce((acc, item, index) => {
-    const month = formatDateName(item, 'month');
-
-    if (!acc[month]) {
-      acc[month] = { purchase: 0, sale: 0 };
-    }
-
-    acc[month].purchase += parseFloat(chartData.purchases[index]) || 0;
-    acc[month].sale += parseFloat(chartData.sales[index]) || 0;
-
-    return acc;
-  }, {});
-
-  // Convert aggregated data into an array
-  return Object.keys(monthlyData).map((month) => ({
-    name: month,
-    purchase: monthlyData[month].purchase,
-    sale: monthlyData[month].sale,
-  }));
 };
 
 export const SimpleBarChartComponent = ({ params }) => {

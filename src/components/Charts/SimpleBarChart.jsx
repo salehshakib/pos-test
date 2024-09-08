@@ -88,6 +88,47 @@ const data = [
   },
 ];
 
+const formatDateName = (dateStr, format = 'day') => {
+  const date = new Date(dateStr);
+  const options = format === 'day' ? { weekday: 'long' } : { month: 'long' };
+  return date.toLocaleString('en-US', options);
+};
+
+// Function to transform data based on date range
+const transformChartData = (chartData) => {
+  const isLessThan30Days = chartData.periods.length < 30;
+
+  if (isLessThan30Days) {
+    // Return daily data with day names
+    return chartData.periods.map((item, index) => ({
+      name: formatDateName(item, 'day'),
+      purchase: parseFloat(chartData.purchases[index]) || 0,
+      sale: parseFloat(chartData.sales[index]) || 0,
+    }));
+  }
+
+  // Aggregate data by month
+  const monthlyData = chartData.periods.reduce((acc, item, index) => {
+    const month = formatDateName(item, 'month');
+
+    if (!acc[month]) {
+      acc[month] = { purchase: 0, sale: 0 };
+    }
+
+    acc[month].purchase += parseFloat(chartData.purchases[index]) || 0;
+    acc[month].sale += parseFloat(chartData.sales[index]) || 0;
+
+    return acc;
+  }, {});
+
+  // Convert aggregated data into an array
+  return Object.keys(monthlyData).map((month) => ({
+    name: month,
+    purchase: monthlyData[month].purchase,
+    sale: monthlyData[month].sale,
+  }));
+};
+
 export const SimpleBarChartComponent = ({ params }) => {
   const { token } = theme.useToken();
 
@@ -98,21 +139,30 @@ export const SimpleBarChartComponent = ({ params }) => {
         end_date: params?.date_range[1],
         warehouse_ids: params?.warehouse_ids,
       },
+    },
+    {
+      skip: params?.warehouse_ids?.length === 0 || !params?.warehouse_ids,
     }
-    // {
-    //   skip: params?.warehouse_ids?.length === 0 || !params?.warehouse_ids,
-    // }
   );
 
-  const modifiedData =
-    chartData?.months?.map((item, index) => {
-      return {
-        name: item,
-        purchase: parseFloat(chartData?.purchase?.[index]) || 0,
-        sale: parseFloat(chartData?.sale?.[index]) || 0,
-      };
-    }) ?? [];
+  // function getDayName(dateString) {
+  //   const date = new Date(dateString); // Parse the date
+  //   const options = { weekday: 'long' }; // Options for day name
+  //   return new Intl.DateTimeFormat('en-US', options).format(date); // Format date as day name
+  // }
 
+  // const modifiedData =
+  //   chartData?.periods?.map((item, index) => {
+  //     return {
+  //       name: getDayName(item),
+  //       purchase: parseFloat(chartData?.purchase?.[index]) || 0,
+  //       sale: parseFloat(chartData?.sale?.[index]) || 0,
+  //     };
+  //   }) ?? [];
+
+  const modifiedData = transformChartData(chartData);
+
+  console.log(chartData);
   return (
     <div className="h-full w-full pb-10">
       <ResponsiveContainer width="100%" height="100%">

@@ -8,6 +8,8 @@ import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
 } from '../../redux/services/product/productApi';
+import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
@@ -35,7 +37,13 @@ const ProductListEdit = ({ id, setId }) => {
   );
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  // console.log(form.get)
+  const params = useGlobalParams({});
+
+  const { data: unitData } = useGetAllUnitQuery({
+    params,
+  });
+
+  const units = unitData?.results?.unit;
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {

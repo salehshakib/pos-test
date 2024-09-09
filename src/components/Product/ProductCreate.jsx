@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCreateProductMutation } from '../../redux/services/product/productApi';
+import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
+import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { openNotification } from '../../utilities/lib/openToaster';
+import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 
@@ -19,22 +22,13 @@ const ProductCreate = () => {
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     qty: {},
-  //     amount: {},
-  //   },
-  //   qty_list: {
-  //     qty: {},
-  //   },
-  // price_list: {
-  //   price: {},
-  // },
-  // });
+  const params = useGlobalParams({});
 
-  // const [products, setProducts] = useState([]);
-  // const [initialWarehouses, setInitialWarehouses] = useState([]);
-  // const [priceWarehouses, setPriceWarehouses] = useState([]);
+  const { data } = useGetAllUnitQuery({
+    params,
+  });
+
+  const units = data?.results?.unit;
 
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
@@ -120,8 +114,10 @@ const ProductCreate = () => {
 
       brand_id: parseInt(brand_id),
       category_id: parseInt(category_id),
-      buying_price: parseInt(buying_price),
-      selling_price: parseInt(selling_price),
+      // buying_price: parseInt(buying_price),
+      // selling_price: parseInt(selling_price),
+      buying_price: calculateById(units, purchase_unit_id, buying_price),
+      selling_price: calculateById(units, sale_unit_id, selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
       qty: qty.toString(),
       alert_qty,
@@ -185,22 +181,6 @@ const ProductCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-      // setFormValues({
-      //   product_list: {
-      //     qty: {},
-      //     amount: {},
-      //   },
-      //   qty_list: {
-      //     qty: {},
-      //   },
-      //   price_list: {
-      //     price: {},
-      //   },
-      // });
-
-      // setInitialWarehouses([]);
-      // setPriceWarehouses([]);
-      // setProducts([]);
     }
 
     if (error) {

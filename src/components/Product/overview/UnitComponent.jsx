@@ -126,15 +126,6 @@ const SaleUnit = ({ options = [], isLoading }) => {
 
   return (
     <Col {...colLayout}>
-      {/* <CustomSelect
-        label="Sale Unit"
-        options={options}
-        isLoading={isLoading}
-        required={true}
-        name={'sale_unit_id'}
-        showSearch={true}
-      /> */}
-
       <CustomSelectButton
         label="Sale Unit"
         options={options}

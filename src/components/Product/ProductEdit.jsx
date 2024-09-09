@@ -15,6 +15,7 @@ import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import { openNotification } from '../../utilities/lib/openToaster';
+import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 
@@ -150,8 +151,6 @@ const ProductListEdit = ({ id, setId }) => {
       ];
 
       setFields(newFieldData);
-
-      console.log(newFieldData);
     } else {
       setFields([]);
     }
@@ -235,8 +234,10 @@ const ProductListEdit = ({ id, setId }) => {
       unit_id: parseInt(unit_id),
       purchase_unit_id: parseInt(purchase_unit_id),
       sale_unit_id: parseInt(sale_unit_id),
-      buying_price: parseInt(buying_price),
-      selling_price: parseInt(selling_price),
+      buying_price: calculateById(units, purchase_unit_id, buying_price),
+      selling_price: calculateById(units, sale_unit_id, selling_price),
+      // buying_price: parseInt(buying_price),
+      // selling_price: parseInt(selling_price),
       profit: parseInt(Number(selling_price) - Number(buying_price)),
       qty: qty.toString(),
       alert_qty,

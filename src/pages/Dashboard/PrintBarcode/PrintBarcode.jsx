@@ -73,6 +73,10 @@ const PrintBarcode = () => {
     }
   };
 
+  const hideModal = () => {
+    setBarcodes([]);
+    setCodeModal(false);
+  };
   return (
     <PageContainer
       header={{
@@ -121,7 +125,8 @@ const PrintBarcode = () => {
             </Button>
             <CustomModal
               openModal={codeModal}
-              hideModal={() => setCodeModal(!codeModal)}
+              hideModal={hideModal}
+              onCancel={hideModal}
             >
               <div className="flex flex-col items-center justify-center py-10">
                 <div className="flex items-center gap-4 py-10">
@@ -132,13 +137,13 @@ const PrintBarcode = () => {
                 <div ref={componentRef}>
                   {barcodes?.map((barcode, index) => (
                     <div key={index}>
-                      <div className="grid grid-cols-3 gap-x-10">
+                      <div className="grid grid-cols-1 gap-x-10">
                         {[...Array(barcode?.quantity)]?.map((_, i) => (
                           <div
                             key={i}
                             className="mx-auto mt-10 rounded-lg border border-gray-300 p-3"
                           >
-                            <div className="mx-auto flex items-center justify-center gap-4 text-base font-bold">
+                            <div className="mx-auto flex flex-col items-center justify-center text-base font-bold">
                               {showName && <div>{barcode?.name}</div>}
                               {showPrice && (
                                 <div
@@ -155,12 +160,14 @@ const PrintBarcode = () => {
                                 <div>${barcode?.promotion_price}</div>
                               )}
                             </div>
-                            <Barcode
-                              value={barcode?.sku}
-                              width={labelSize.width}
-                              height={labelSize.height}
-                              format={barcode?.symbology}
-                            />
+                            <div className="mx-auto flex flex-col items-center justify-center">
+                              <Barcode
+                                value={barcode?.sku}
+                                width={labelSize.width}
+                                height={labelSize.height}
+                                format={barcode?.symbology}
+                              />
+                            </div>
                           </div>
                         ))}
                       </div>

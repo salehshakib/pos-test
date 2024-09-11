@@ -16,7 +16,7 @@ const columns = [
     title: 'Img',
     dataIndex: 'img',
     key: 'img',
-    fixed: 'left',
+    // fixed: 'left',
     align: 'center',
     width: 70,
     render: (img) => (

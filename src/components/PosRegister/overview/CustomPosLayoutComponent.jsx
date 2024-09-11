@@ -90,9 +90,9 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   };
 
   return (
-    <GlobalUtilityStyle className="relative h-full">
+    <GlobalUtilityStyle className="lg:relative h-full">
       <div className="grow overflow-auto bg-[#F5F5F5]">
-        <div className="grid h-[95vh] grid-cols-6">
+        <div className="lg:grid h-[95vh] grid-cols-6">
           <div className="col-span-4">
             <PosRegister
               form={posForm}
@@ -104,7 +104,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
             />
           </div>
 
-          <div className="relative col-span-2 flex h-[95vh] flex-col overflow-y-auto overflow-x-hidden">
+          <div className="lg:relative col-span-2 flex h-[95vh] flex-col overflow-y-auto overflow-x-hidden">
             <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
               <div className="flex items-center gap-6 text-2xl">
                 <Button

@@ -330,46 +330,48 @@ const GlobalContainer = ({
   };
 
   const FilterContentForm = (
-    <CustomForm
-      form={searchForm}
-      handleSubmit={handleSubmit}
-      submitBtn={false}
-      layout="vertical"
-    >
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <FilterDateRange />
-        </Col>
-      </Row>
-
-      <div
-        style={{
-          maxHeight: 300,
-          overflowY: 'auto',
-          overflowX: 'hidden',
-          padding: '0 10px',
-        }}
+    <div className="ml-32 md:ml-0">
+      <CustomForm
+        form={searchForm}
+        handleSubmit={handleSubmit}
+        submitBtn={false}
+        layout="vertical"
       >
-        {searchFilterContent}
-      </div>
+        <Row {...rowLayout}>
+          <Col {...fullColLayout}>
+            <FilterDateRange />
+          </Col>
+        </Row>
 
-      <div className={`flex w-full items-center justify-end gap-3 pb-3 pt-5`}>
-        <Button type="default" onClick={handlePopoverClose}>
-          Cancel
-        </Button>
-        <Button type="default" onClick={handleReset}>
-          Reset
-        </Button>
-        <Button
-          htmlType="submit"
-          type="primary"
-
-          // loading={loading}
+        <div
+          style={{
+            maxHeight: 300,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            padding: '0 10px',
+          }}
         >
-          Search
-        </Button>
-      </div>
-    </CustomForm>
+          {searchFilterContent}
+        </div>
+
+        <div className={`flex w-full items-center justify-end gap-3 pb-3 pt-5`}>
+          <Button type="default" onClick={handlePopoverClose}>
+            Cancel
+          </Button>
+          <Button type="default" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+
+            // loading={loading}
+          >
+            Search
+          </Button>
+        </div>
+      </CustomForm>
+    </div>
   );
 
   return (

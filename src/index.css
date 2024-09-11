@@ -176,3 +176,7 @@ html {
   cursor: pointer;
   color: var(--firstColor) !important;
 }
+
+.ant-table {
+  overflow-x: auto;
+}

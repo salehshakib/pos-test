@@ -36,7 +36,7 @@ const MainLayout = () => {
             ></Button>
             <Logo />
           </div>
-          <div>
+          <div className="hidden lg:block">
             {mode === 'local' && (
               <Tag color="processing" className="font-semibold">
                 {mode.toUpperCase()} MODE

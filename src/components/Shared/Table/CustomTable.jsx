@@ -140,9 +140,9 @@ const CustomTable = ({
     onRow: (_record) => ({
       onClick: () => {},
     }),
-    scroll: {
-      x: 'max-content',
-    },
+    // scroll: {
+    //   x: 'max-content',
+    // },
 
     ...tableStyleProps,
   };
@@ -169,7 +169,7 @@ const CustomTable = ({
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      fixed: 'left',
+      // fixed: 'left',
       align: 'center',
       width: 60,
       render: (id) => (

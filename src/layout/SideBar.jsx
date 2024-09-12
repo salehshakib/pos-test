@@ -134,6 +134,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
           <img src={logo} alt="" className="mx-auto h-16 w-32 object-cover" />
         </div>
       )}
+
       <Menu
         theme="light"
         mode="inline"

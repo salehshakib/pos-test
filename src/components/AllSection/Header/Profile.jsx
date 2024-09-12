@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { logout, useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { openNotification } from '../../../utilities/lib/openToaster';
+import Translate from '../../Shared/Translate/Translate';
 import { CloseCashRegister } from './overview/CloseCashRegister';
 import { Notification } from './overview/Notification';
 import { PosComponent } from './overview/PosComponent';
@@ -80,6 +81,8 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
+      <Translate />
+
       {/* <CreateComponent /> */}
       {!pathname.includes('/pos') && <PosComponent />}
 

@@ -180,3 +180,31 @@ html {
 .ant-table {
   overflow-x: auto;
 }
+
+body > .skiptranslate > iframe.skiptranslate {
+  display: none;
+}
+
+body > .skiptranslate > .goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-gadget-icon {
+  display: none;
+}
+
+.goog-te-gadget-simple {
+  display: flex !important;
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border: 1px solid var(--firstColor);
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.VIpgJd-ZVi9od-xl07Ob-lTBxed img {
+  display: none;
+}

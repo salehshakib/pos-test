@@ -104,6 +104,18 @@ const columns = [
     },
   },
   {
+    title: 'Unit',
+    dataIndex: 'unit',
+    key: 'unit',
+    align: 'center',
+    width: 100,
+    render: (unit) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {unit}
+      </span>
+    ),
+  },
+  {
     title: <MdDelete className="w-full text-center text-lg md:text-xl" />,
     dataIndex: 'delete',
     key: 'delete',
@@ -126,6 +138,7 @@ const columns = [
       );
     },
   },
+
 ];
 
 const ComboProductsComponent = ({
@@ -227,17 +240,20 @@ const ComboProductsComponent = ({
 
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku, buying_price: unitPrice } = product;
+      const { id, name, sku, buying_price: unitPrice, units } = product;
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
       formValues.product_list.amount[id] =
         formValues.product_list.amount[id] ?? parseInt(unitPrice) ?? 0;
+
+
 
       return {
         id,
         name,
         sku,
         unitPrice: `$${formValues.product_list.amount[id]}`,
+        unit: units?.base_unit,
         delete: true,
         incrementCounter,
         decrementCounter,

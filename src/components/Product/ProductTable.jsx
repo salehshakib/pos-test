@@ -122,6 +122,8 @@ const ProductTable = ({
         attachments,
       } = item ?? {};
 
+
+
       return {
         id,
         name: name,
@@ -131,7 +133,7 @@ const ProductTable = ({
         brand: brands?.name,
         category: categories?.name,
         quantity: qty,
-        unit: units?.for ?? 'N/A',
+        unit: units?.base_unit,
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
         created_at,

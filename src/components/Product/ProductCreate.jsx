@@ -116,9 +116,22 @@ const ProductCreate = () => {
       category_id: parseInt(category_id),
       // buying_price: parseInt(buying_price),
       // selling_price: parseInt(selling_price),
-      buying_price: calculateById(units, purchase_unit_id, buying_price),
-      selling_price: calculateById(units, sale_unit_id, selling_price),
-      profit: parseInt(Number(selling_price) - Number(buying_price)),
+      buying_price:
+        purchase_unit_id &&
+        calculateById(units, purchase_unit_id, buying_price),
+
+      selling_price: sale_unit_id
+        ? calculateById(units, sale_unit_id, selling_price)
+        : parseFloat(selling_price),
+
+      profit:
+        purchase_unit_id &&
+        sale_unit_id &&
+        parseFloat(
+          calculateById(units, sale_unit_id, selling_price) -
+            calculateById(units, purchase_unit_id, buying_price)
+        ),
+
       qty: qty.toString(),
       alert_qty,
       daily_sale_qty,

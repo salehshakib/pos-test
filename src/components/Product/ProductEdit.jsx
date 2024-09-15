@@ -187,11 +187,11 @@ const ProductListEdit = ({ id, setId }) => {
 
     const qtyListArray = has_stock
       ? Object.keys(qty_list?.qty || {}).map((warehouseId) => {
-          return {
-            warehouse_id: warehouseId,
-            qty: qty_list?.qty?.[warehouseId],
-          };
-        })
+        return {
+          warehouse_id: warehouseId,
+          qty: qty_list?.qty?.[warehouseId],
+        };
+      })
       : [];
 
     if (has_stock && qtyListArray.length === 0) {
@@ -205,11 +205,11 @@ const ProductListEdit = ({ id, setId }) => {
 
     const priceListArray = has_different_price
       ? Object.keys(price_list?.price || {}).map((warehouseId) => {
-          return {
-            warehouse_id: warehouseId,
-            price: price_list?.price?.[warehouseId],
-          };
-        })
+        return {
+          warehouse_id: warehouseId,
+          price: price_list?.price?.[warehouseId],
+        };
+      })
       : [];
 
     const productListArray = Object.keys(product_list?.qty || {})?.map(
@@ -234,11 +234,11 @@ const ProductListEdit = ({ id, setId }) => {
       unit_id: parseInt(unit_id),
       purchase_unit_id: parseInt(purchase_unit_id),
       sale_unit_id: parseInt(sale_unit_id),
-      buying_price: calculateById(units, purchase_unit_id, buying_price),
-      selling_price: calculateById(units, sale_unit_id, selling_price),
-      // buying_price: parseInt(buying_price),
-      // selling_price: parseInt(selling_price),
-      profit: parseInt(Number(selling_price) - Number(buying_price)),
+      buying_price: purchase_unit_id && calculateById(units, purchase_unit_id, buying_price),
+      selling_price: sale_unit_id ? calculateById(units, sale_unit_id, selling_price) : parseFloat(selling_price),
+      profit: purchase_unit_id && sale_unit_id && parseFloat(calculateById(units, sale_unit_id, selling_price) - calculateById(units, purchase_unit_id, buying_price)),
+
+
       qty: qty.toString(),
       alert_qty,
       daily_sale_qty,

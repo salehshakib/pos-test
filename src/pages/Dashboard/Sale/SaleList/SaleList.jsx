@@ -141,7 +141,7 @@ const SaleList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Sale"
+      pageTitle="Sell"
       columns={columns}
       selectedRows={selectedRows}
       debounce={debounce}

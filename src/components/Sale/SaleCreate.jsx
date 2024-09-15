@@ -150,7 +150,7 @@ export const SaleCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Sale'} open={isCreateDrawerOpen} width={1400}>
+    <CustomDrawer title={'Create Sell'} open={isCreateDrawerOpen} width={1400}>
       <SaleForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

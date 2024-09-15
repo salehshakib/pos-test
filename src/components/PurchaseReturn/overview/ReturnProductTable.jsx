@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { useEffect } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -229,7 +230,9 @@ export const ReturnProductTable = ({
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
         // message.error("Maximum quantity reached");
-        return openNotification('info', 'Maximum quantity reached');
+        openNotification('info', 'Maximum quantity reached');
+
+        return prevFormValues;
       }
 
       const newQty = Math.min(
@@ -339,7 +342,9 @@ export const ReturnProductTable = ({
     };
   });
 
-  form.setFieldsValue(formValues);
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [form, formValues]);
 
   return <ProductTable columns={columns} dataSource={dataSource} />;
 };

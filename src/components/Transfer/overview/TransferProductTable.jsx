@@ -296,16 +296,6 @@ const ProductFormComponent = ({
             ...prevFormValues.product_list.tax_rate,
             [productId]: formUpdateValues?.tax_rate[productId],
           },
-          // tax: {
-          //   ...prevFormValues.product_list.tax,
-          //   [productId]: parseFloat(
-          //     (parseInt(productUnits.purchase_units[productId]) *
-          //       parseFloat(productUnits.tax_rate[productId]) *
-          //       parseInt(productForm.getFieldValue('quantity')) *
-          //       parseInt(productForm.getFieldValue('unit_price'))) /
-          //       100
-          //   ).toFixed(2),
-          // },
           tax_id: {
             ...prevFormValues.product_list.tax_id,
             [productId]: productForm.getFieldValue(['tax_id', productId]),
@@ -367,80 +357,6 @@ const ProductFormComponent = ({
   );
 };
 
-// function setFormValuesId(
-//   id,
-//   purchase_unit_id,
-//   unit_cost,
-//   purchase_units,
-//   formValues,
-//   productUnits,
-//   tax_id,
-//   taxes,
-//   tax_method
-// ) {
-//   const sanitizeIntValue = (value) => parseInt(value) || 0;
-//   const sanitizeFloatValue = (value) => parseFloat(value) || 0;
-
-//   if (!id) return;
-
-//   const formProductList = formValues.product_list;
-
-//   // Helper function to get and sanitize form values
-//   const getSanitizedValue = (field, defaultValue, sanitizer) =>
-//     sanitizer(formProductList[field]?.[id] ?? defaultValue);
-
-//   // Extract and sanitize values
-//   const qty = getSanitizedValue('qty', 1, sanitizeIntValue);
-//   const netUnitCost = getSanitizedValue(
-//     'net_unit_cost',
-//     unit_cost,
-//     sanitizeFloatValue
-//   );
-//   const taxRate = getSanitizedValue(
-//     'tax_rate',
-//     taxes?.rate ?? 0,
-//     sanitizeIntValue
-//   );
-
-//   // Get or set purchase units value
-//   const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
-//   const productPurchaseUnitsValue =
-//     sanitizeIntValue(productUnits.purchase_units?.[id]) ||
-//     purchaseUnitsOperationValue;
-//   productUnits.purchase_units[id] = productPurchaseUnitsValue;
-
-//   // Calculating tax
-//   const tax = sanitizeFloatValue(
-//     ((productPurchaseUnitsValue * taxRate * netUnitCost * qty) / 100).toFixed(2)
-//   );
-
-//   const total =
-//     tax_method === 'Inclusive'
-//       ? Math.round(
-//           (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2)
-//         )
-//       : (productPurchaseUnitsValue * netUnitCost * qty + tax).toFixed(2);
-
-//   // Set form values
-//   const setFormValue = (field, value) => {
-//     formProductList[field][id] = value;
-//   };
-
-//   setFormValue('qty', qty);
-//   setFormValue('net_unit_cost', netUnitCost);
-//   setFormValue('tax_rate', taxRate);
-//   setFormValue('tax', tax);
-//   setFormValue('total', total);
-//   setFormValue(
-//     'purchase_unit_id',
-//     formProductList.purchase_unit_id?.[id] ?? purchase_unit_id
-//   );
-
-//   if (formProductList.tax_id) {
-//     setFormValue('tax_id', formProductList.tax_id?.[id] ?? tax_id);
-//   }
-// }
-
 export const TransferProductTable = ({
   formValues,
   setFormValues,
@@ -481,18 +397,7 @@ export const TransferProductTable = ({
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 
-      // setFormValuesId(
-      //   id,
-      //   purchase_unit_id,
-      //   calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
-
-      //   purchase_units,
-      //   formValues,
-      //   productUnits,
-      //   tax_id,
-      //   taxes,
-      //   tax_method
-      // );
+      console.log(product);
 
       updateFormValues(
         id,
@@ -525,28 +430,6 @@ export const TransferProductTable = ({
         setFormValues,
       };
     }) ?? [];
-
-  // const [totalQuantity, setTotalQuantity] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [totalTax, setTotalTax] = useState(0);
-
-  // useEffect(() => {
-  //   const {
-  //     totalQuantity,
-  //     // totalReceived,
-  //     totalPrice,
-  //     totalTax,
-  //     // totalDiscount,
-  //   } = calculateTotals(formValues);
-
-  //   setTotalQuantity(totalQuantity);
-  //   // setTotalReceived(totalReceived);
-  //   setTotalPrice(totalPrice);
-  //   setTotalTax(totalTax);
-  //   // setTotalDiscount(totalDiscount);
-  // }, [formValues, products]);
-
-  // form.setFieldsValue(formValues);
 
   const { totalQuantity, totalPrice, totalTax } = calculateTotals(formValues);
 

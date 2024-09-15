@@ -138,7 +138,6 @@ const columns = [
       );
     },
   },
-
 ];
 
 const ComboProductsComponent = ({
@@ -246,14 +245,12 @@ const ComboProductsComponent = ({
       formValues.product_list.amount[id] =
         formValues.product_list.amount[id] ?? parseInt(unitPrice) ?? 0;
 
-
-
       return {
         id,
         name,
         sku,
         unitPrice: `$${formValues.product_list.amount[id]}`,
-        unit: units?.base_unit,
+        unit: units?.base_unit ?? 'N/A',
         delete: true,
         incrementCounter,
         decrementCounter,

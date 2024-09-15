@@ -120,6 +120,8 @@ export const PurchaseReturnForm = ({
   const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
   const deleteRows = Form.useWatch('delete', form);
 
+  console.log(formValues?.product_list);
+
   const updatedProductList = updateProductList(
     {
       delete: deleteRows,

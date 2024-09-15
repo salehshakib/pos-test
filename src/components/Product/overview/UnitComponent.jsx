@@ -85,7 +85,7 @@ const PurchaseUnit = ({ options = [], isLoading }) => {
       /> */}
 
       <CustomSelectButton
-        label="Purchase Unit"
+        label="Purchasing Unit"
         options={options}
         isLoading={isLoading}
         required={'true'}
@@ -127,7 +127,7 @@ const SaleUnit = ({ options = [], isLoading }) => {
   return (
     <Col {...colLayout}>
       <CustomSelectButton
-        label="Sale Unit"
+        label="Selling Unit"
         options={options}
         isLoading={isLoading}
         required={'true'}

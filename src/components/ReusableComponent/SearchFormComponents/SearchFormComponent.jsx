@@ -253,7 +253,7 @@ export const PurchaseUnitFilter = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         {...commonProps}
-        label="Purchase Unit"
+        label="Purchasing Unit"
         name={'purchase_unit__ids'}
         options={options}
         isLoading={isLoading}
@@ -280,7 +280,7 @@ export const SaleUnitFilter = () => {
     <Col {...mdColLayout}>
       <CustomSelect
         {...commonProps}
-        label="Sale Unit"
+        label="Selling Unit"
         name={'sale_unit__ids'}
         options={options}
         isLoading={isLoading}

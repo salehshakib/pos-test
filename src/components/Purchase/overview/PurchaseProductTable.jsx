@@ -55,7 +55,7 @@ const TaxComponent = ({ productId, setFormUpdateValues }) => {
     <CustomSelect
       name={['tax_id', productId]}
       options={options}
-      label="Product Vat"
+      label="Product VAT"
       isLoading={isLoading}
       onSelect={onSelect}
     />
@@ -93,7 +93,7 @@ const ProductUnitComponent = ({ productId, setFormUpdateValues }) => {
 
   return (
     <CustomSelect
-      label="Purchase Unit"
+      label="Purchasing Unit"
       options={productUnits}
       isLoading={isLoading}
       name={['purchase_unit_id', productId]}

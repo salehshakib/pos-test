@@ -40,7 +40,7 @@ const TaxComponent = ({ productId, setFormUpdateValues }) => {
     <CustomSelect
       name={['tax_id', productId]}
       options={options}
-      label="Product Vat"
+      label="Product VAT"
       isLoading={isLoading}
       onSelect={onSelect}
     />
@@ -50,7 +50,7 @@ const TaxComponent = ({ productId, setFormUpdateValues }) => {
 const ProductUnitComponent = ({
   productId,
   setFormUpdateValues,
-  label = 'Sale Unit',
+  label = 'Selling Unit',
   name = 'sale_unit_id',
 }) => {
   const params = useGlobalParams({

@@ -226,7 +226,7 @@ const ProductUnitComponent = ({ productId, setFormUpdateValues }) => {
 
   return (
     <CustomSelect
-      label="Purchase Unit"
+      label="Purchasing Unit"
       options={productUnits}
       isLoading={isLoading}
       name={['purchase_unit_id', productId]}

@@ -2,15 +2,20 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Checkbox, Form, Select } from 'antd';
 import { useRef, useState } from 'react';
 import Barcode from 'react-barcode';
+import { useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import { toast } from 'sonner';
 
 import CustomForm from '../../../components/Shared/Form/CustomForm';
 import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { showCurrency } from '../../../utilities/lib/currency';
 import ProductSelect from './ProductSelect';
 
 const PrintBarcode = () => {
   const [form] = Form.useForm();
+
+  const currency = useSelector(useCurrency);
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
@@ -153,7 +158,12 @@ const PrintBarcode = () => {
                                     'text-sm line-through'
                                   }`}
                                 >
-                                  ${barcode?.selling_price}
+                                  {showCurrency(
+                                    parseFloat(
+                                      barcode?.selling_price || 0
+                                    ).toFixed(2),
+                                    currency
+                                  )}
                                 </div>
                               )}
                               {showDiscount && barcode?.promotion_price && (

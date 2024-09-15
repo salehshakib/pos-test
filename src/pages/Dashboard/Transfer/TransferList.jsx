@@ -65,7 +65,7 @@ const columns = [
     ),
   },
   {
-    title: 'Product Vat',
+    title: 'Product VAT',
     dataIndex: 'product_tax',
     key: 'product_tax',
     render: (productTax) => (

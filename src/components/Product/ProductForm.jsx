@@ -66,7 +66,7 @@ const ProductCodeComponent = () => {
 
   return (
     <CustomInputButton
-      label="Sku"
+      label="SKU"
       type={'text'}
       required={true}
       name={'sku'}
@@ -155,7 +155,7 @@ const TaxTypeComponent = () => {
 
   return (
     <CustomSelect
-      label="Vat Method"
+      label="VAT Method"
       options={taxTypeOptions}
       name={'tax_method'}
       required={Form.useWatch('tax_id', form) ? true : false}

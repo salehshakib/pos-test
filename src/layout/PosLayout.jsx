@@ -12,7 +12,7 @@ const PosLayout = () => {
       <div className="relative flex h-screen flex-col">
         <CustomPosLayoutComponent setCollapsed={setCollapsed} />
 
-        <div className="absolute left-0 z-40 h-[100vh] overflow-auto">
+        <div className="absolute left-0 z-40 h-[100vh] overflow-auto ">
           <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
         </div>
       </div>

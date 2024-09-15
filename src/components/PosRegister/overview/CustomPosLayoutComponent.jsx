@@ -93,19 +93,47 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     <GlobalUtilityStyle className="lg:relative h-full">
       <div className="grow overflow-auto bg-[#F5F5F5]">
         <div className="lg:grid h-[95vh] grid-cols-6">
-          <div className="col-span-4">
-            <PosRegister
-              form={posForm}
-              products={products}
-              setProducts={setProducts}
-              handleGrandTotal={handleGrandTotal}
-              handleSubmit={handleSubmit}
-              resetRef={resetRef}
-            />
+          <div className="col-span-4 relative">
+            <div className="fixed z-50 flex w-full items-center justify-between bg-white px-5 shadow-md lg:hidden">
+              <div className="flex items-center gap-6 text-2xl">
+                <Button
+                  className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
+                  type="text"
+                  icon={<GiHamburgerMenu />}
+                  onClick={() => setCollapsed((prev) => !prev)}
+                />
+
+                <Logo />
+              </div>
+              <div>
+                {mode === 'local' && (
+                  <Tag color="processing" className="font-semibold">
+                    {mode.toUpperCase()} MODE
+                  </Tag>
+                )}
+
+                {isDev.toLowerCase() === 'true' && (
+                  <Tag color="purple" className="font-semibold">
+                    DEV MODE
+                  </Tag>
+                )}
+              </div>
+              <Profile />
+            </div>
+            <div className="pt-20 lg:pt-0">
+              <PosRegister
+                form={posForm}
+                products={products}
+                setProducts={setProducts}
+                handleGrandTotal={handleGrandTotal}
+                handleSubmit={handleSubmit}
+                resetRef={resetRef}
+              />
+            </div>
           </div>
 
           <div className="lg:relative col-span-2 flex h-[95vh] flex-col overflow-y-auto overflow-x-hidden">
-            <div className="top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
+            <div className="hidden top-0 z-50 lg:flex w-full items-center justify-between bg-white px-5 shadow-md ">
               <div className="flex items-center gap-6 text-2xl">
                 <Button
                   className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"

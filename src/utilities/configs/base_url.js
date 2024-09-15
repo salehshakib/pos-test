@@ -7,4 +7,5 @@ const apiEndpoints = {
 };
 
 export const base_url = apiEndpoints[mode];
+// export const base_url = 'https://dhakatech.vitasoftsolutions.com/api';
 export const api_key = import.meta.env.VITE_SECRET_KEY;

@@ -125,6 +125,18 @@ const columns = [
       </span>
     ),
   },
+  {
+    title: 'Unit',
+    dataIndex: 'unit',
+    key: 'unit',
+    align: 'center',
+    width: 100,
+    render: (unit) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {unit}
+      </span>
+    ),
+  },
 ];
 
 const SearchComponent = () => {

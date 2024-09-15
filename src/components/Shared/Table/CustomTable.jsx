@@ -133,16 +133,16 @@ const CustomTable = ({
     rowKey: (record) => record?.id,
     rowSelection: isRowSelection
       ? {
-          type: 'checkbox',
-          ...rowSelection,
-        }
+        type: 'checkbox',
+        ...rowSelection,
+      }
       : false,
     onRow: (_record) => ({
-      onClick: () => {},
+      onClick: () => { },
     }),
-    // scroll: {
-    //   x: 'max-content',
-    // },
+    scroll: {
+      x: 'max-content',
+    },
 
     ...tableStyleProps,
   };
@@ -165,19 +165,19 @@ const CustomTable = ({
   };
 
   const idColumn = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      // fixed: 'left',
-      align: 'center',
-      width: 60,
-      render: (id) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-          {id}
-        </span>
-      ),
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'id',
+    //   key: 'id',
+    //   // fixed: 'left',
+    //   align: 'center',
+    //   width: 60,
+    //   render: (id) => (
+    //     <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+    //       {id}
+    //     </span>
+    //   ),
+    // },
   ];
 
   const baseColumns = [...idColumn, ...columns];
@@ -191,11 +191,10 @@ const CustomTable = ({
     render: (status, record) => {
       return record?.handleStatusModal ? (
         <button
-          className={`p-0 ${
-            status?.toString() === '1'
-              ? 'bg-[#DCFCE7] text-[#16A34A]'
-              : 'bg-[#FEF2F2] text-[#EF4444]'
-          } w-[80px] rounded shadow-md`}
+          className={`p-0 ${status?.toString() === '1'
+            ? 'bg-[#DCFCE7] text-[#16A34A]'
+            : 'bg-[#FEF2F2] text-[#EF4444]'
+            } w-[80px] rounded shadow-md`}
           onClick={() => record?.handleStatusModal(record.id)}
         >
           <span className="w-full px-2 text-xs font-medium">
@@ -204,11 +203,10 @@ const CustomTable = ({
         </button>
       ) : (
         <div
-          className={`p-0 ${
-            status?.toString() === '1'
-              ? 'bg-[#DCFCE7] text-[#16A34A]'
-              : 'bg-[#FEF2F2] text-[#EF4444]'
-          } w-[80px] rounded shadow-md`}
+          className={`p-0 ${status?.toString() === '1'
+            ? 'bg-[#DCFCE7] text-[#16A34A]'
+            : 'bg-[#FEF2F2] text-[#EF4444]'
+            } w-[80px] rounded shadow-md`}
         >
           <span className="w-full px-2 text-xs font-medium">
             {status?.toString() === '1' ? 'Active' : 'Inactive'}
@@ -226,9 +224,9 @@ const CustomTable = ({
     //created_at
     title:
       pathname.includes('generator/invoice') ||
-      pathname.includes('generator/quotation') ||
-      pathname.includes('purchase-return') ||
-      pathname.includes('payroll')
+        pathname.includes('generator/quotation') ||
+        pathname.includes('purchase-return') ||
+        pathname.includes('payroll')
         ? 'Date'
         : 'Created At',
     dataIndex: 'created_at',

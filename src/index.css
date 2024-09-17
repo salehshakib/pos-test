@@ -25,6 +25,8 @@ body {
   padding: 0 !important;
   /* padding-top: 4rem !important; */
   height: 100%;
+  position: relative;
+  top: 0 !important;
 }
 
 *,
@@ -182,10 +184,29 @@ html {
 }
 
 body > .skiptranslate > iframe.skiptranslate {
-  display: none;
+  display: none !important;
 }
 
-body > .skiptranslate > .goog-te-banner-frame.skiptranslate {
+/* Hide the Google Translate banner frame */
+body > .goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+iframe.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Hide any banner frames or elements Google adds */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-gadget-simple {
+  display: none !important;
+}
+
+/* Optional: Hides the 'powered by Google Translate' label */
+.goog-logo-link {
   display: none !important;
 }
 

@@ -24,8 +24,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
   const updatedOperator = {};
   const updatedOperationValue = {};
 
-  console.log(purchaseProducts);
-
   purchaseProducts.forEach((item) => {
     updatedQty[item.product_id.toString()] = item.qty;
     updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
@@ -150,12 +148,8 @@ export const CustomPurchaseProductComponent = forwardRef(
       onCustomSubmit(handleCustomSubmit);
     }, [handleCustomSubmit, onCustomSubmit]);
 
-    console.log(data);
-
     useEffect(() => {
       if (data && isEditDrawerOpen) {
-        console.log(data?.purchase_products);
-
         updateStateWithProductData(data?.purchase_products, setFormValues);
 
         const purchaseProducts = data?.purchase_products?.map((product) => ({

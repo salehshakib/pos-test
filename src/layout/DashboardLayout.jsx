@@ -46,7 +46,7 @@ const DashboardLayout = () => {
           <Profile />
         </Header>
 
-        <div className="flex pt-6">
+        <div className="flex pt-16">
           <div className="sticky left-0 top-[4rem] z-40 h-[calc(100vh-4rem)]">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>

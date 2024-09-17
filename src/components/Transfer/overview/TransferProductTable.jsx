@@ -398,16 +398,12 @@ export const TransferProductTable = ({
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 
-      console.log(product);
-
       const price = calculateUnitCost(
         purchase_units,
         unit_cost,
         formValues?.units,
         id
       );
-
-      console.log(price);
 
       updateFormValues(
         id,
@@ -440,8 +436,6 @@ export const TransferProductTable = ({
         setFormValues,
       };
     }) ?? [];
-
-  console.log(formValues);
 
   const { totalQuantity, totalPrice, totalTax } = calculateTotals(formValues);
 

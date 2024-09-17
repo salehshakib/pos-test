@@ -193,8 +193,6 @@ export const PurchaseEdit = ({ id, setId }) => {
     }
   };
 
-  console.log(data);
-
   return (
     <CustomDrawer
       title={'Edit Purchase'}

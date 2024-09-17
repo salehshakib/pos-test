@@ -31,8 +31,6 @@ export const EmailTemplateEdit = ({ id, setId }) => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
 
-      console.log(JSON.parse(data?.shortcode));
-
       const newFieldData = [
         ...fieldData,
         {

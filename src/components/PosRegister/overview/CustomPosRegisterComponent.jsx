@@ -120,8 +120,6 @@ const ModalComponent = ({
   const handleSubmit = () => {
     const values = additionalForm.getFieldsValue();
 
-    console.log(values);
-
     if (values.discount) {
       setFormValues((prevValues) => {
         return {
@@ -193,11 +191,7 @@ const ModalComponent = ({
   );
 };
 
-export const CustomPosRegisterComponent = ({
-  onCustomSubmit,
-  products,
-  setProducts,
-}) => {
+export const CustomPosRegisterComponent = ({ products, setProducts }) => {
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
@@ -258,7 +252,7 @@ export const CustomPosRegisterComponent = ({
     setProducts([]);
   };
 
-  const { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon } =
+  const { totalItems, totalPrice, taxRate, grandTotal, totalCoupon } =
     calculateSummary(
       formValues,
       formValues.order.tax_rate ?? 0,

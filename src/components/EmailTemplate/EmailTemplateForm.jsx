@@ -67,8 +67,6 @@ export const EmailTemplateForm = (props) => {
                                 .getFieldValue(['fields', name, 'key'])
                                 ?.trim();
 
-                              console.log(trimmedValue, trimmedKey);
-
                               if (trimmedValue && !trimmedKey) {
                                 // If the object is filled but the key is not, we return a promise reject for the key field.
                                 props.form.validateFields([

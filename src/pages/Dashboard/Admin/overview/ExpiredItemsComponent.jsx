@@ -82,15 +82,13 @@ export const ExpiredItemsComponent = () => {
     },
   });
 
-  const { data, isLoading } = useGetAllProductsQuery(
+  const { isLoading } = useGetAllProductsQuery(
     { params },
     {
       skip: !warehouseIds?.length,
       // skip: !useUrlIndexPermission(),
     }
   );
-
-  console.log(data);
 
   return (
     <CustomTable

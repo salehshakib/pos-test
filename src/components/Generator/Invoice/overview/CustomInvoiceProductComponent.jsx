@@ -143,8 +143,6 @@ export const CustomInvoiceProductComponent = forwardRef(
       if (data && isEditDrawerOpen) {
         updateStateWithProductData(data?.invoice_products, setFormValues);
 
-        // console.log(data);
-
         const invoiceProducts = data?.invoice_products?.map((product) => ({
           id: product.product_id,
           name: product.products?.name,

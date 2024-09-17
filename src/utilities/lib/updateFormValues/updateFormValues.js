@@ -59,7 +59,6 @@ export function setFormValuesId(
 
   const baseAmount = netUnitPrice - discount;
 
-  console.log(baseAmount);
   const total =
     tax_method === 'Inclusive'
       ? Math.round((productSaleUnitsValue * baseAmount * qty + tax).toFixed(2))
@@ -99,7 +98,7 @@ export function updateFormValues(
     sanitizer(value ?? defaultValue);
 
   const formProductList = formValues.product_list;
-  const formUnitList = formValues.units;
+  // const formUnitList = formValues.units;
 
   const getSanitizedValue = (field, defaultValue, sanitizer) =>
     sanitizeValue(formProductList[field]?.[id], sanitizer, defaultValue);
@@ -129,13 +128,13 @@ export function updateFormValues(
   const discount = getSanitizedValue('discount', 0, parseFloat);
   const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);
 
-  const productUnitOperator =
-    formUnitList.operator[id] ?? productUnitData?.operator;
-  const productUnitOperationValue = sanitizeValue(
-    formUnitList.operation_value[id],
-    parseFloat,
-    parseFloat(productUnitData?.operation_value) || 1
-  );
+  // const productUnitOperator =
+  //   formUnitList.operator[id] ?? productUnitData?.operator;
+  // const productUnitOperationValue = sanitizeValue(
+  //   formUnitList.operation_value[id],
+  //   parseFloat,
+  //   parseFloat(productUnitData?.operation_value) || 1
+  // );
 
   const calculateTax = () => {
     const baseValue = (productUnitCost - discount) * qty;

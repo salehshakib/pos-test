@@ -1,6 +1,6 @@
 import { openNotification } from '../openToaster';
 
-export const incrementCounter = (id, setFormValues, stock, alertQty) => {
+export const incrementCounter = (id, setFormValues, stock) => {
   setFormValues((prevFormValues) => {
     const currentQty = prevFormValues.product_list.qty[id] ?? 0;
 
@@ -101,7 +101,6 @@ export const onActionChange = (id, value, setFormValues) => {
 };
 
 export const onDelete = (id, setProducts, setFormValues) => {
-  console.log(id);
   setProducts((prevProducts) =>
     prevProducts.filter((product) => product.id !== id)
   );

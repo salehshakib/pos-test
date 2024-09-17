@@ -45,8 +45,6 @@ const TransferEdit = ({ id, setId }) => {
     }
   }, [data, isEditDrawerOpen, setFields]);
 
-  console.log(fields);
-
   const handleUpdate = async (values, { formValues }) => {
     const formData = new FormData();
 

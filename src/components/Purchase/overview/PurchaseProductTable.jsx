@@ -377,8 +377,6 @@ export const PurchaseProductTable = ({
     };
   });
 
-  console.log(formValues);
-
   const { totalQuantity, totalReceived, totalPrice, totalTax, totalDiscount } =
     calculateTotals(formValues);
 

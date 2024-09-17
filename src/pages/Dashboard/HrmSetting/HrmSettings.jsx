@@ -10,8 +10,6 @@ export const HrmSettings = () => {
   };
   const { data, isLoading } = useGetAllHrmSettingQuery(params);
 
-  console.log(data);
-
   return (
     <GlobalUtilityStyle>
       <PageContainer

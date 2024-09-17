@@ -41,7 +41,7 @@ export const CustomerGroupEdit = ({ id, setId }) => {
       id,
       data: {
         ...values,
-        percentage: values.percentage.toString(),
+        percentage: values?.percentage ? values.percentage.toString() : '0',
         _method: 'PUT',
       },
     });

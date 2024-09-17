@@ -22,6 +22,7 @@ export const PurchaseTable = ({
   setSummaryData,
   searchParams,
   segment,
+  pagination: isPagination,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -34,7 +35,7 @@ export const PurchaseTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(isPagination ? pagination : {}),
       ...summaryType,
       summary,
       purchase_daterange:

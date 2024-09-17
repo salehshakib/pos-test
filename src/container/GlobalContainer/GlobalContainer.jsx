@@ -52,9 +52,9 @@ const GlobalContainer = ({
   debounce,
   setParams,
   popoverWidth = 600,
-
   segment = 'Weekly',
   onSegmentChange,
+  setOpenPrint,
 
   // handleSeach
 }) => {
@@ -80,20 +80,30 @@ const GlobalContainer = ({
   };
 
   const header = {
-    title: <div className="py-3 text-2xl lg:text-3xl">{pageTitle}</div>,
-    subTitle: usePermission(api, 'store') &&
-      !['/petty-cash', '/reports'].some((path) => pathname.includes(path)) && (
-        <div className="">
-          <Button
-            key={'create'}
-            type="text"
-            icon={<FaCirclePlus size={30} />}
-            style={{ width: '45px', height: '100%' }}
-            onClick={handleDrawerOpen}
-            className="primary-text flex items-center justify-center"
-          />
-        </div>
-      ),
+    title: (
+      <div>
+        <div className="py-3 text-2xl lg:text-3xl">{pageTitle}</div>
+      </div>
+    ),
+    subTitle: (
+      <>
+        {usePermission(api, 'store') &&
+          !['/petty-cash', '/reports'].some((path) =>
+            pathname.includes(path)
+          ) && (
+            <div>
+              <Button
+                key={'create'}
+                type="text"
+                icon={<FaCirclePlus size={30} />}
+                style={{ width: '45px', height: '100%' }}
+                onClick={handleDrawerOpen}
+                className="primary-text flex items-center justify-center"
+              />
+            </div>
+          )}
+      </>
+    ),
   };
 
   const handleMenuClick = (e) => {
@@ -492,8 +502,18 @@ const GlobalContainer = ({
               {
                 <Space
                   key={'extra'}
-                  className="flex w-full items-center justify-end gap-2 pb-3 font-semibold underline"
+                  className="flex w-full items-center justify-between gap-2 pb-3 font-semibold underline mb-6"
                 >
+                  {pathname.includes('reports') && (
+                    <Button
+                      key={'print'}
+                      type="primary"
+                      onClick={() => setOpenPrint(true)}
+                      className="px-12 py-4"
+                    >
+                      Print Report
+                    </Button>
+                  )}
                   <span>{`Showing ${
                     advanceSearch ? 'Filtered' : 'All'
                   }  Results`}</span>

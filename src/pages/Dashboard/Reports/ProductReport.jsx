@@ -1,6 +1,17 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
+import {
+  Button,
+  Col,
+  Descriptions,
+  Empty,
+  Form,
+  Modal,
+  Row,
+  Spin,
+  Tabs,
+} from 'antd';
 import parse from 'html-react-parser';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 import { ProductFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
@@ -143,117 +154,234 @@ export const ProductReport = () => {
     segment,
   };
 
+  const printRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: 'Product Details',
+  });
+
+  const [openPrint, setOpenPrint] = useState(false);
+
   return (
-    <GlobalContainer
-      pageTitle="Product Report"
-      popoverWidth={400}
-      debounce={debounce}
-      setParams={setParams}
-      segment={segment}
-      onSegmentChange={onSegmentChange}
-      searchFilterContent={<SearchFilterComponent />}
-    >
-      {!productId ? (
-        <>
-          <SupplierModal
-            setSupplierId={setProductId}
-            open={open}
-            setOpen={setOpen}
-          />
-          <div className="flex w-full items-center justify-center py-5">
-            <Button onClick={() => setOpen(true)}>Select Product</Button>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="rounded-md border p-4 shadow-sm">
-              {isFetching ? (
-                <Spin className="flex h-full w-full items-center justify-center py-5" />
-              ) : (
-                <Descriptions title="Product Details" layout="">
-                  <Descriptions.Item label="Product" key={1} span={24}>
-                    <div>{data?.name}</div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Sku" key={2} span={24}>
-                    <div>{data?.sku}</div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Type" key={3} span={24}>
-                    <div>{data?.type}</div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Details" key={4} span={24}>
-                    <div>{parse(data?.details)}</div>
-                  </Descriptions.Item>
-                </Descriptions>
-              )}
+    <>
+      <GlobalContainer
+        pageTitle="Product Report"
+        popoverWidth={400}
+        debounce={debounce}
+        setParams={setParams}
+        segment={segment}
+        onSegmentChange={onSegmentChange}
+        searchFilterContent={<SearchFilterComponent />}
+        setOpenPrint={setOpenPrint}
+      >
+        {!productId ? (
+          <>
+            <SupplierModal
+              setSupplierId={setProductId}
+              open={open}
+              setOpen={setOpen}
+            />
+            <div className="flex w-full items-center justify-center py-5">
+              <Button onClick={() => setOpen(true)}>Select Product</Button>
             </div>
-            <div className="rounded-md border p-4 shadow-sm">
-              {isFetching || loading ? (
-                <Spin className="flex h-full w-full items-center justify-center" />
-              ) : (
-                <Descriptions title="Summary" items={summaryDetails} />
-              )}
+          </>
+        ) : (
+          <div>
+            <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+              <div className="rounded-md border p-4 shadow-sm">
+                {isFetching ? (
+                  <Spin className="flex h-full w-full items-center justify-center py-5" />
+                ) : (
+                  <Descriptions title="Product Details" layout="">
+                    <Descriptions.Item label="Product" key={1} span={24}>
+                      <div>{data?.name}</div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sku" key={2} span={24}>
+                      <div>{data?.sku}</div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Type" key={3} span={24}>
+                      <div>{data?.type}</div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Details" key={4} span={24}>
+                      <div>{parse(data?.details)}</div>
+                    </Descriptions.Item>
+                  </Descriptions>
+                )}
+              </div>
+              <div className="rounded-md border p-4 shadow-sm">
+                {isFetching || loading ? (
+                  <Spin className="flex h-full w-full items-center justify-center" />
+                ) : (
+                  <Descriptions title="Summary" items={summaryDetails} />
+                )}
+              </div>
             </div>
+            {isFetching ? (
+              <Spin className="flex h-full w-full items-center justify-center py-10" />
+            ) : data ? (
+              <Tabs
+                defaultActiveKey="sale"
+                items={[
+                  {
+                    label: 'Sale',
+                    key: 'sale',
+                    children: <SaleTable {...props} summary={'product,sale'} />,
+                  },
+                  {
+                    label: 'Purchase',
+                    key: 'purchase',
+                    children: (
+                      <PurchaseTable {...props} summary={'product,purchase'} />
+                    ),
+                  },
+                  {
+                    label: 'Quotation',
+                    key: 'quotation',
+                    children: (
+                      <QuotationTable
+                        {...props}
+                        summary={'product,quotation'}
+                      />
+                    ),
+                  },
+                  {
+                    label: 'Purchase Return',
+                    key: 'purchasereturn',
+                    children: (
+                      <PurchaseReturnTable
+                        {...props}
+                        summary={'product,purchasereturn'}
+                      />
+                    ),
+                  },
+                  {
+                    label: 'Sale Return',
+                    key: 'salereturn',
+                    children: (
+                      <SaleReturnTable
+                        {...props}
+                        summary={'product,salereturn'}
+                      />
+                    ),
+                  },
+                  {
+                    label: 'Expense',
+                    key: 'expense',
+                    children: (
+                      <ExpenseTable {...props} summary={'product,expense'} />
+                    ),
+                  },
+                ]}
+              />
+            ) : (
+              <Empty />
+            )}
           </div>
-          {isFetching ? (
-            <Spin className="flex h-full w-full items-center justify-center py-10" />
-          ) : data ? (
-            <Tabs
-              defaultActiveKey="sale"
-              items={[
-                {
-                  label: 'Sale',
-                  key: 'sale',
-                  children: <SaleTable {...props} summary={'product,sale'} />,
-                },
-                {
-                  label: 'Purchase',
-                  key: 'purchase',
-                  children: (
-                    <PurchaseTable {...props} summary={'product,purchase'} />
-                  ),
-                },
-                {
-                  label: 'Quotation',
-                  key: 'quotation',
-                  children: (
+        )}
+
+        <Modal
+          title={
+            <div className="flex items-center gap-4 mb-10">
+              <h2>Print Report</h2>
+              <Button
+                key={'print'}
+                type="primary"
+                onClick={handlePrint}
+                className="px-12 py-4"
+              >
+                Print
+              </Button>
+            </div>
+          }
+          open={openPrint}
+          onCancel={() => setOpenPrint(false)}
+          footer={null}
+          width={1100}
+        >
+          {productId && (
+            <>
+              <div ref={printRef} className="p-10">
+                <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+                  <div className="rounded-md border p-4 shadow-sm">
+                    {isFetching ? (
+                      <Spin className="flex h-full w-full items-center justify-center py-5" />
+                    ) : (
+                      <Descriptions title="Product Details" layout="">
+                        <Descriptions.Item label="Product" key={1} span={24}>
+                          <div>{data?.name}</div>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Sku" key={2} span={24}>
+                          <div>{data?.sku}</div>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Type" key={3} span={24}>
+                          <div>{data?.type}</div>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Details" key={4} span={24}>
+                          <div>{data?.details && parse(data?.details)}</div>
+                        </Descriptions.Item>
+                      </Descriptions>
+                    )}
+                  </div>
+                  <div className="rounded-md border p-4 shadow-sm">
+                    {isFetching || loading ? (
+                      <Spin className="flex h-full w-full items-center justify-center" />
+                    ) : (
+                      <Descriptions title="Summary" items={summaryDetails} />
+                    )}
+                  </div>
+                </div>
+                {isFetching ? (
+                  <Spin className="flex h-full w-full items-center justify-center py-10" />
+                ) : data ? (
+                  <div className="flex flex-col justify-center items-center">
+                    <span className="text-center font-bold text-xl mt-4">
+                      Sell Table
+                    </span>
+                    <SaleTable
+                      {...props}
+                      pagination={false}
+                      summary={'product,sale'}
+                    />
+                    <span className="text-center font-bold text-xl mt-4">
+                      Purchase Table
+                    </span>
+                    <PurchaseTable
+                      {...props}
+                      pagination={false}
+                      summary={'product,purchase'}
+                    />
+                    <span className="text-center font-bold text-xl mt-4">
+                      Quotation Table
+                    </span>
                     <QuotationTable {...props} summary={'product,quotation'} />
-                  ),
-                },
-                {
-                  label: 'Purchase Return',
-                  key: 'purchasereturn',
-                  children: (
+                    <span className="text-center font-bold text-xl mt-4">
+                      Purchase Return Table
+                    </span>
                     <PurchaseReturnTable
                       {...props}
                       summary={'product,purchasereturn'}
                     />
-                  ),
-                },
-                {
-                  label: 'Sale Return',
-                  key: 'salereturn',
-                  children: (
+                    <span className="text-center font-bold text-xl mt-4">
+                      Sell Return Table
+                    </span>
                     <SaleReturnTable
                       {...props}
                       summary={'product,salereturn'}
                     />
-                  ),
-                },
-                {
-                  label: 'Expense',
-                  key: 'expense',
-                  children: (
+                    <span className="text-center font-bold text-xl mt-4">
+                      Expense Table
+                    </span>
                     <ExpenseTable {...props} summary={'product,expense'} />
-                  ),
-                },
-              ]}
-            />
-          ) : (
-            <Empty />
+                  </div>
+                ) : (
+                  <Empty />
+                )}
+              </div>
+            </>
           )}
-        </>
-      )}
-    </GlobalContainer>
+        </Modal>
+      </GlobalContainer>
+    </>
   );
 };

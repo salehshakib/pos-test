@@ -56,16 +56,14 @@ export function setFormValuesId(
   //     : (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
   //         2
   //       );
+
+  const baseAmount = netUnitPrice - discount;
+
+  console.log(baseAmount);
   const total =
     tax_method === 'Inclusive'
-      ? Math.round(
-          (productSaleUnitsValue * netUnitPrice * qty - discount + tax).toFixed(
-            2
-          )
-        )
-      : (productSaleUnitsValue * netUnitPrice * qty + tax - discount).toFixed(
-          2
-        );
+      ? Math.round((productSaleUnitsValue * baseAmount * qty + tax).toFixed(2))
+      : (productSaleUnitsValue * baseAmount * qty + tax).toFixed(2);
 
   // Set form values
   const setFormValue = (field, value) => {
@@ -130,6 +128,7 @@ export function updateFormValues(
 
   const discount = getSanitizedValue('discount', 0, parseFloat);
   const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);
+
   const productUnitOperator =
     formUnitList.operator[id] ?? productUnitData?.operator;
   const productUnitOperationValue = sanitizeValue(
@@ -140,10 +139,10 @@ export function updateFormValues(
 
   const calculateTax = () => {
     const baseValue = (productUnitCost - discount) * qty;
-    const taxAmount =
-      productUnitOperator === '/'
-        ? (taxRate * baseValue) / (100 * productUnitOperationValue)
-        : (productUnitOperationValue * taxRate * baseValue) / 100;
+    const taxAmount = (taxRate * baseValue) / 100;
+    // productUnitOperator === '/'
+    //   ? (taxRate * baseValue) / (100 * productUnitOperationValue)
+    //   : (productUnitOperationValue * taxRate * baseValue) / 100;
 
     return sanitizeValue(taxAmount.toFixed(2), parseFloat);
   };
@@ -151,15 +150,15 @@ export function updateFormValues(
   const tax = calculateTax();
 
   const calculateTotal = (netUnitCost) => {
-    const baseValue =
-      productUnitOperator === '/'
-        ? (netUnitCost * qty) / productUnitOperationValue
-        : productUnitOperationValue * netUnitCost * qty;
+    const baseValue = netUnitCost - discount;
+    // productUnitOperator === '/'
+    //   ? (netUnitCost * qty) / productUnitOperationValue
+    //   : productUnitOperationValue * netUnitCost * qty;
 
     if (taxData?.tax_method === 'Inclusive') {
-      return Math.round((baseValue - discount + tax).toFixed(2));
+      return Math.round(((baseValue + tax) * qty).toFixed(2));
     } else {
-      return parseFloat((baseValue + tax - discount).toFixed(2));
+      return parseFloat((baseValue * qty + tax).toFixed(2));
     }
   };
 
@@ -195,89 +194,3 @@ export function updateFormValues(
 
   setFormValue('tax_id', formProductList.tax_id?.[id] ?? taxData?.id);
 }
-
-// export const updateStateWithProductData = (products, setFormValues) => {
-//   const updatedQty = {};
-//   const updatedPurchaseUnitId = {};
-//   const updatedProductCost = {};
-//   const updatedDiscount = {};
-//   const updatedTaxRate = {};
-//   const updatedTax = {};
-//   const updatedTotal = {};
-//   const updatedRecieved = {};
-//   const updatedTaxId = {};
-
-//   const updatedOperator = {};
-//   const updatedOperationValue = {};
-
-//   products.forEach((item) => {
-//     updatedQty[item.product_id.toString()] = item.qty;
-//     updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
-//     updatedProductCost[item.product_id.toString()] = item.net_unit_cost;
-//     updatedDiscount[item.product_id.toString()] = item.discount;
-//     updatedTaxRate[item.product_id.toString()] = item.tax_rate;
-//     updatedTax[item.product_id.toString()] = item.tax;
-//     updatedTotal[item.product_id.toString()] = item.total;
-//     updatedRecieved[item.product_id.toString()] = item.recieved;
-//     updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
-
-//     updatedOperator[item.product_id.toString()] =
-//       item.products?.purchase_units?.operator;
-//     updatedOperationValue[item.product_id.toString()] =
-//       item.products?.purchase_units?.operation_value;
-//   });
-
-//   setFormValues((prevFormValues) => ({
-//     ...prevFormValues,
-//     product_list: {
-//       ...prevFormValues.product_list,
-//       qty: {
-//         ...prevFormValues.product_list.qty,
-//         ...updatedQty,
-//       },
-//       purchase_unit_id: {
-//         ...prevFormValues.product_list.purchase_unit_id,
-//         ...updatedPurchaseUnitId,
-//       },
-//       net_unit_cost: {
-//         ...prevFormValues.product_list.net_unit_cost,
-//         ...updatedProductCost,
-//       },
-//       discount: {
-//         ...prevFormValues.product_list.discount,
-//         ...updatedDiscount,
-//       },
-//       tax_rate: {
-//         ...prevFormValues.product_list.tax_rate,
-//         ...updatedTaxRate,
-//       },
-//       tax: {
-//         ...prevFormValues.product_list.tax,
-//         ...updatedTax,
-//       },
-//       total: {
-//         ...prevFormValues.product_list.total,
-//         ...updatedTotal,
-//       },
-//       recieved: {
-//         ...prevFormValues.product_list.recieved,
-//         ...updatedRecieved,
-//       },
-//       tax_id: {
-//         ...prevFormValues.product_list.tax_id,
-//         ...updatedTaxId,
-//       },
-//     },
-//     units: {
-//       ...prevFormValues.units,
-//       operator: {
-//         ...prevFormValues.units.operator,
-//         ...updatedOperator,
-//       },
-//       operation_value: {
-//         ...prevFormValues.units.operation_value,
-//         ...updatedOperationValue,
-//       },
-//     },
-//   }));
-// };

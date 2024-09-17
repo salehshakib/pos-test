@@ -21,6 +21,7 @@ import {
   onDelete,
   onQuantityChange,
 } from '../../../utilities/lib/productTable/counters';
+import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
 import { updateFormValues } from '../../../utilities/lib/updateFormValues/updateFormValues';
 import CustomForm from '../../Shared/Form/CustomForm';
 import CustomInput from '../../Shared/Input/CustomInput';
@@ -399,9 +400,18 @@ export const TransferProductTable = ({
 
       console.log(product);
 
+      const price = calculateUnitCost(
+        purchase_units,
+        unit_cost,
+        formValues?.units,
+        id
+      );
+
+      console.log(price);
+
       updateFormValues(
         id,
-        calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+        calculateOriginalPrice(price, taxes?.rate, tax_method),
         purchase_units,
         taxes,
         formValues
@@ -430,6 +440,8 @@ export const TransferProductTable = ({
         setFormValues,
       };
     }) ?? [];
+
+  console.log(formValues);
 
   const { totalQuantity, totalPrice, totalTax } = calculateTotals(formValues);
 

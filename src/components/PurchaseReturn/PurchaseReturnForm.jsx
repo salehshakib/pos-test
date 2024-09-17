@@ -120,8 +120,6 @@ export const PurchaseReturnForm = ({
   const tax_rate = Form.useWatch('tax_rate', form) ?? 0;
   const deleteRows = Form.useWatch('delete', form);
 
-  console.log(formValues?.product_list);
-
   const updatedProductList = updateProductList(
     {
       delete: deleteRows,
@@ -206,11 +204,11 @@ export const PurchaseReturnForm = ({
               },
               total: {
                 ...prevFormValues.product_list.total,
-                [item.product_id.toString()]: item.total.toString(),
+                [item.product_id.toString()]: item.total?.toString(),
               },
               tax_id: {
                 ...prevFormValues.product_list.tax_id,
-                [item.product_id.toString()]: item.products?.tax_id.toString(),
+                [item.product_id.toString()]: item.products?.tax_id?.toString(),
               },
 
               max_return: {
@@ -229,7 +227,7 @@ export const PurchaseReturnForm = ({
             purchase_unit_id: item?.products?.purchase_unit_id,
             buying_price: item?.products?.buying_price,
             purchase_units: item?.products?.purchase_units,
-            taxes: item?.products?.taxes,
+            taxes: item?.tax_rate,
           },
         ]);
 
@@ -247,11 +245,6 @@ export const PurchaseReturnForm = ({
       setPurchaseExists(true);
     }
     if (error) {
-      // message.error(
-      //   error?.data?.message ??
-      //     "Purchase Reference doesnot exist or Purchase Return is Pending"
-      // );
-
       openNotification(
         'error',
         error?.data?.message ??

@@ -7,7 +7,7 @@ import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
 import { showCurrency } from '../../../utilities/lib/currency';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { onDelete } from '../../../utilities/lib/productTable/counters';
-import { setFormValuesId } from '../../../utilities/lib/updateFormValues/updateFormValues';
+import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductTable } from '../../Shared/ProductControllerComponent/ProductTable';
@@ -144,6 +144,83 @@ const columns = [
   },
 ];
 
+function setFormValuesId(
+  id,
+  sale_unit_id,
+  unit_cost,
+  sale_units,
+  formValues,
+  productUnits,
+  taxes
+) {
+  const sanitizeIntValue = (value) => {
+    const number = parseInt(value);
+    return isNaN(number) ? 0 : number;
+  };
+
+  const sanitizeFloatValue = (value) => {
+    const number = parseFloat(value);
+    return isNaN(number) ? 0 : number;
+  };
+
+  if (id) {
+    // Quantity
+    const qty = sanitizeIntValue(formValues.product_list.qty?.[id] || 1);
+    formValues.product_list.qty[id] = qty;
+
+    // Net Unit Cost
+    const netUnitCost =
+      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
+      sanitizeFloatValue(unit_cost) ||
+      0;
+    formValues.product_list.net_unit_cost[id] = netUnitCost;
+
+    // Discount
+    const discount = sanitizeFloatValue(
+      formValues.product_list.discount?.[id] ?? 0
+    );
+    formValues.product_list.discount[id] = discount;
+
+    // Tax Rate
+    const taxRate = sanitizeFloatValue(
+      formValues.product_list.tax_rate?.[id] ?? parseFloat(taxes) ?? 0
+    );
+    formValues.product_list.tax_rate[id] = taxRate;
+
+    // Purchase Unit Operator and Operation Value
+    // const purchaseUnitsOperationValue = sanitizeFloatValue(
+    //   sale_units?.operation_value ?? 1
+    // );
+    // const purchaseUnitsOperator = sale_units?.operator ?? '*';
+
+    // Calculate Tax
+    const baseValue = netUnitCost - discount;
+    let taxAmount = (taxRate * baseValue * qty) / 100;
+
+    // If operator logic is needed for tax calculation (e.g., '/', '*')
+    // if (purchaseUnitsOperator === '/') {
+    //   taxAmount = taxAmount / purchaseUnitsOperationValue;
+    // } else if (purchaseUnitsOperator === '*') {
+    //   taxAmount = taxAmount * purchaseUnitsOperationValue;
+    // }
+
+    // Ensure tax is rounded to two decimal places
+    formValues.product_list.tax[id] = sanitizeFloatValue(taxAmount.toFixed(2));
+
+    // Total Calculation
+    let total = baseValue * qty + taxAmount; // Base value + tax
+
+    // Ensure total is properly sanitized and rounded
+    formValues.product_list.total[id] = sanitizeFloatValue(total.toFixed(2));
+
+    // Set purchase unit id
+    formValues.product_list.sale_unit_id[id] =
+      formValues.product_list.sale_unit_id?.[id] ?? sale_unit_id;
+
+    // Set tax id if present
+  }
+}
+
 export const ReturnProductTable = ({
   formValues,
   setFormValues,
@@ -232,10 +309,12 @@ export const ReturnProductTable = ({
       tax_method,
     } = product ?? {};
 
+    const price = calculateUnitCost(sale_units, unit_cost);
+
     setFormValuesId(
       id,
       sale_unit_id,
-      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+      calculateOriginalPrice(price, taxes?.rate, tax_method),
       sale_units,
       formValues,
       productUnits,

@@ -61,48 +61,7 @@ const TransferDateComponent = () => {
   );
 };
 
-const TransferForm = ({
-  // formValues,
-  // setFormValues,
-  // products,
-  // setProducts,
-  // productUnits,
-  // setProductUnits,
-  data,
-  ...props
-}) => {
-  // const form = props.form;
-
-  // const shipping_cost = Form.useWatch('shipping_cost', form);
-
-  // const [totalItems, setTotalItems] = useState(0);
-  // const [totalQty, setTotalQty] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [grandTotal, setGrandTotal] = useState(0);
-
-  // useEffect(() => {
-  //   const calculatedTotalItems =
-  //     Object.keys(formValues.product_list?.qty).length ?? 0;
-
-  //   const calculatedTotalQty = Object.values(
-  //     formValues.product_list?.qty
-  //   ).reduce((acc, cur) => acc + (parseFloat(cur) || 0), 0);
-
-  //   const calculatedTotalPrice = calculateTotalPrice(formValues.product_list);
-
-  //   const calculatedGrandTotal = calculateGrandTotal(
-  //     calculatedTotalPrice,
-  //     0,
-  //     0,
-  //     shipping_cost
-  //   );
-
-  //   setTotalItems(calculatedTotalItems);
-  //   setTotalQty(calculatedTotalQty);
-  //   setTotalPrice(calculatedTotalPrice);
-  //   setGrandTotal(calculatedGrandTotal);
-  // }, [formValues, shipping_cost, products]);
-
+const TransferForm = ({ data, ...props }) => {
   const productsRef = useRef(null);
 
   const handleProducts = useCallback((submitFunction) => {

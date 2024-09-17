@@ -19,7 +19,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  console.log(result);
+  // console.log(result);
 
   if (result?.error && result?.error?.status === 408) {
     // Dispatch the logout action

@@ -27,6 +27,7 @@ import { BrandComponent } from './overview/BrandComponent';
 import { CategoryComponent } from './overview/CategoryComponent';
 import { TaxComponent } from './overview/TaxComponent';
 import UnitComponent from './overview/UnitComponent';
+import { VariantComponent } from './overview/VariantComponent';
 
 const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
@@ -245,6 +246,36 @@ const PromotionalPriceComponent = () => {
   );
 };
 
+const IMEIComponent = () => {
+  const form = Form.useFormInstance();
+  const has_imei = Form.useWatch('has_imei_serial', form);
+  const productType = Form.useWatch('type', form);
+
+  if (productType === 'Standard')
+    return (
+      <Row {...rowLayout}>
+        <Col {...fullColLayout}>
+          <CustomCheckbox
+            label=" This product has IMEI or Serial numbers"
+            name="has_imei_serial"
+          />
+        </Col>
+
+        {has_imei && (
+          <Col {...fullColLayout}>
+            <CustomInput
+              label="IMEI Serial Number"
+              type={'text'}
+              required={true}
+              name={'imei_number'}
+            />
+          </Col>
+        )}
+      </Row>
+    );
+  else return null;
+};
+
 const ProductForm = ({ data, ...props }) => {
   const comboProductSubmitRef = useRef(null);
   const initialStockSubmitRef = useRef(null);
@@ -354,17 +385,6 @@ const ProductForm = ({ data, ...props }) => {
           onCustomSubmit={handleInitialProduct}
           data={data}
         />
-
-        {/* <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="Featured Product"
-            name="has_featured"
-            subLabel="(It will be displayed on POS)"
-          />
-        </Col>
-        <Col {...fullColLayout}>
-          <CustomCheckbox label="Embeded Barcode" name="embedded_barcode" />
-        </Col> */}
       </Row>
 
       <Row {...rowLayout} justify={'center'} align={'middle'}>
@@ -388,7 +408,7 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      {/* <VarientComponent /> */}
+      <VariantComponent />
 
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
@@ -403,6 +423,8 @@ const ProductForm = ({ data, ...props }) => {
           data={data}
         />
       </Row>
+
+      <IMEIComponent />
 
       <Row {...rowLayout}>
         <ExpireComponent />

@@ -25,7 +25,9 @@ function calculateLeaveDays(leaveStartDate, leaveEndDate) {
   const dayDifference = timeDifference / (1000 * 3600 * 24);
 
   if (dayDifference === 0) {
-    return 'half day';
+    return '1 Day';
+  } else if (dayDifference < 0) {
+    return 'Half Day';
   }
 
   return dayDifference + ' Days';
@@ -110,6 +112,8 @@ export const LeaveTable = ({
         name: employees?.name,
         leaveDuration: leave_duration,
         leaveType: leave_types?.name,
+        leaveStartDate: leave_start_date,
+        leaveEndDate: leave_end_date,
         days: calculateLeaveDays(leave_start_date, leave_end_date),
         handleEdit,
         handleDeleteModal,

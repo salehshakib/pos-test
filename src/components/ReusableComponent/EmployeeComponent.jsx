@@ -1,5 +1,6 @@
 import { Form } from 'antd';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useGetAllEmployeeQuery } from '../../redux/services/hrm/employee/employeeApi';
 import {
@@ -12,6 +13,7 @@ import CustomSelect from '../Shared/Select/CustomSelect';
 export const EmployeeComponent = ({ name = 'employee_id' }) => {
   const form = Form.useFormInstance();
   const departmentId = Form.useWatch('department_id', form);
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const params = useGlobalParams({
     params: {
@@ -31,10 +33,10 @@ export const EmployeeComponent = ({ name = 'employee_id' }) => {
   }));
 
   useEffect(() => {
-    if (departmentId) {
+    if (departmentId && !isEditDrawerOpen) {
       form.resetFields([name]);
     }
-  }, [departmentId, form, name]);
+  }, [departmentId, form, isEditDrawerOpen, name]);
 
   return (
     <CustomSelect

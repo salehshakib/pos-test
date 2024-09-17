@@ -42,7 +42,8 @@ export const LeaveEdit = ({ id, setId }) => {
     const postData = {
       ...values,
       leave_end_date:
-        values?.leave_type === 'Half Day' || values?.leave_type === 'Single Day'
+        values?.leave_duration === 'half-day' ||
+        values?.leave_duration === 'single-day'
           ? values?.leave_start_date
           : values?.leave_end_date,
       is_send_email: values?.is_send_email == true ? '1' : '0',

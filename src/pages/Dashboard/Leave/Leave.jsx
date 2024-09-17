@@ -34,9 +34,32 @@ const columns = [
     title: 'Leave Type',
     dataIndex: 'leaveType',
     key: 'leaveType',
+    align: 'center',
     render: (leaveType) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {leaveType}
+      </span>
+    ),
+  },
+  {
+    title: 'Leave Start',
+    dataIndex: 'leaveStartDate',
+    key: 'leaveStartDate',
+    align: 'center',
+    render: (leaveStartDate) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {leaveStartDate}
+      </span>
+    ),
+  },
+  {
+    title: 'Leave End',
+    dataIndex: 'leaveEndDate',
+    key: 'leaveEndDate',
+    align: 'center',
+    render: (leaveEndDate) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {leaveEndDate}
       </span>
     ),
   },

@@ -12,8 +12,8 @@ export const returnPaths = [
     element: <PurchaseReturn />,
   },
   {
-    name: 'Sale Return',
-    path: 'sale-return',
+    name: 'Sell Return',
+    path: 'sell-return',
     icon: TbTruckReturn,
     element: <SaleReturn />,
   },

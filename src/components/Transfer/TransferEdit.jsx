@@ -105,13 +105,13 @@ const TransferEdit = ({ id, setId }) => {
       _method: 'PUT',
     };
 
-    if (attachment.length > 0) {
+    if (attachment?.length > 0) {
       postObj.attachment = attachment?.[0].originFileObj;
     }
 
     let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
 
-    if (deleteAttachmentIds.length > 0) {
+    if (deleteAttachmentIds?.length > 0) {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 

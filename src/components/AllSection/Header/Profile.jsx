@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { logout, useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { openNotification } from '../../../utilities/lib/openToaster';
+import Translate from '../../Shared/Translate/Translate';
 import { CloseCashRegister } from './overview/CloseCashRegister';
 import { Notification } from './overview/Notification';
 import { PosComponent } from './overview/PosComponent';
@@ -68,6 +69,10 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-6">
+        <Translate />
       </div>
 
       <div className="flex w-full justify-end pt-3">

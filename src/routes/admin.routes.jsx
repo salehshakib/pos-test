@@ -58,8 +58,8 @@ export const adminPaths = [
     // children: purchasePaths,
   },
   {
-    name: 'Sells',
-    path: 'sells',
+    name: 'Sales',
+    path: 'sales',
     icon: TfiShoppingCart,
     children: salePaths,
   },

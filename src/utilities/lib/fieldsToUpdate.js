@@ -20,40 +20,46 @@ export const fieldsToUpdate = (details) => {
       switch (true) {
         // Group attachments by label
         case key.includes('attachments'): {
-          const groupedAttachments = value.reduce((acc, attachment) => {
-            const { label, id, url } = attachment;
-            if (!acc[label]) {
-              acc[label] = [];
-            }
-            acc[label].push({ uid: id, url });
-            return acc;
-          }, {});
+          // Ensure value is an array, otherwise fallback to an empty array
+          if (Array.isArray(value)) {
+            const groupedAttachments = value.reduce((acc, attachment) => {
+              const { label, id, url } = attachment;
+              if (!acc[label]) {
+                acc[label] = [];
+              }
+              acc[label].push({ uid: id, url });
+              return acc;
+            }, {});
 
-          return Object.keys(groupedAttachments).map((label) => ({
-            name: label,
-            value: groupedAttachments[label],
-            errors: '',
-          }));
+            return Object.keys(groupedAttachments).map((label) => ({
+              name: label,
+              value: groupedAttachments[label],
+              errors: '',
+            }));
+          } else {
+            // If value is not an array, skip this case and return nothing
+            return [];
+          }
         }
 
         // Handle date fields or keys with '_at'
         case key.includes('date') || key.includes('_at'):
-          value = dayjs(value, 'YYYY-MM-DD');
+          value = value ? dayjs(value, 'YYYY-MM-DD') : null;
           break;
 
         // Handle phone number formatting
         case key.includes('phone'):
-          value = value?.toString()?.slice(0);
+          value = value ? value.toString().slice(0) : '';
           break;
 
         // Handle fields with '_id'
         case key.includes('_id'):
-          value = value?.toString();
+          value = value ? value.toString() : '';
           break;
 
         // Handle boolean fields except 'staff_id'
         case BOOLEAN_KEYS.includes(key) && key !== 'staff_id':
-          value = value.toString() === '1' ? true : false;
+          value = value?.toString() === '1' ? true : false;
           break;
 
         default:

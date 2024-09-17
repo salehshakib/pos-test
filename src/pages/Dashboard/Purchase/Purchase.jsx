@@ -18,7 +18,7 @@ import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: 'Date',
+    title: 'Purchased Date',
     dataIndex: 'date',
     key: 'date',
     align: 'center',

@@ -29,6 +29,7 @@ import {
   onDelete,
   onQuantityChange,
 } from '../../../utilities/lib/productTable/counters';
+import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
 import { updateFormValues } from '../../../utilities/lib/updateFormValues/updateFormValues';
 import { ProductFormComponent } from '../../ReusableComponent/ProductDetailsUpdateForm';
 import CustomForm from '../../Shared/Form/CustomForm';
@@ -659,9 +660,16 @@ export const CustomPosProductsComponent = forwardRef(
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 
+      const price = calculateUnitCost(
+        sale_units,
+        unit_cost,
+        formValues?.units,
+        id
+      );
+
       updateFormValues(
         id,
-        calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+        calculateOriginalPrice(price, taxes?.rate, tax_method),
         sale_units,
         taxes,
         formValues

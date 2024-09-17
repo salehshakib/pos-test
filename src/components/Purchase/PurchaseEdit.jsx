@@ -46,15 +46,15 @@ export const PurchaseEdit = ({ id, setId }) => {
 
       const newFieldData = [
         ...fieldData,
-        data?.attachments?.length > 0 && {
-          name: 'attachment',
-          value: [
-            {
-              url: data?.attachments?.[0]?.url,
-            },
-          ],
-          erros: '',
-        },
+        // data?.attachments?.length > 0 && {
+        //   name: 'attachment',
+        //   value: [
+        //     {
+        //       url: data?.attachments?.[0]?.url,
+        //     },
+        //   ],
+        //   erros: '',
+        // },
       ];
 
       setFields(newFieldData);
@@ -193,6 +193,8 @@ export const PurchaseEdit = ({ id, setId }) => {
     }
   };
 
+  console.log(data);
+
   return (
     <CustomDrawer
       title={'Edit Purchase'}
@@ -200,15 +202,13 @@ export const PurchaseEdit = ({ id, setId }) => {
       isLoading={isFetching}
       width={1400}
     >
-      {!isFetching && (
-        <PurchaseForm
-          handleSubmit={handleUpdate}
-          isLoading={isLoading}
-          fields={fields}
-          form={form}
-          data={data}
-        />
-      )}
+      <PurchaseForm
+        handleSubmit={handleUpdate}
+        isLoading={isLoading}
+        fields={fields}
+        form={form}
+        data={data}
+      />
     </CustomDrawer>
   );
 };

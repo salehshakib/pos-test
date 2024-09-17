@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { useEffect } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -7,6 +8,7 @@ import { calculateOriginalPrice } from '../../../utilities/lib/calculatePrice';
 import { showCurrency } from '../../../utilities/lib/currency';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { onDelete } from '../../../utilities/lib/productTable/counters';
+import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductTable } from '../../Shared/ProductControllerComponent/ProductTable';
@@ -150,8 +152,6 @@ function setFormValuesId(
   purchase_units,
   formValues,
   productUnits,
-  tax_id,
-  // eslint-disable-next-line no-unused-vars
   taxes
 ) {
   const sanitizeIntValue = (value) => {
@@ -165,53 +165,60 @@ function setFormValuesId(
   };
 
   if (id) {
-    formValues.product_list.qty[id] = sanitizeIntValue(
-      formValues.product_list.qty?.[id] || 1
-    );
+    // Quantity
+    const qty = sanitizeIntValue(formValues.product_list.qty?.[id] || 1);
+    formValues.product_list.qty[id] = qty;
 
-    formValues.product_list.net_unit_cost[id] =
+    // Net Unit Cost
+    const netUnitCost =
       sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
       sanitizeFloatValue(unit_cost) ||
-      '0';
+      0;
+    formValues.product_list.net_unit_cost[id] = netUnitCost;
 
-    formValues.product_list.discount[id] = sanitizeFloatValue(
+    // Discount
+    const discount = sanitizeFloatValue(
       formValues.product_list.discount?.[id] ?? 0
     );
+    formValues.product_list.discount[id] = discount;
 
-    formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
+    // Tax Rate
+    const taxRate = sanitizeFloatValue(
+      formValues.product_list.tax_rate?.[id] ?? parseFloat(taxes) ?? 0
     );
+    formValues.product_list.tax_rate[id] = taxRate;
 
-    formValues.product_list.tax[id] = sanitizeFloatValue(
-      (
-        (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-          sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
-          sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
-          sanitizeIntValue(formValues.product_list.qty?.[id])) /
-        100
-      ).toFixed(2)
-    );
+    // Purchase Unit Operator and Operation Value
+    // const purchaseUnitsOperationValue = sanitizeFloatValue(
+    //   purchase_units?.operation_value ?? 1
+    // );
+    // const purchaseUnitsOperator = purchase_units?.operator ?? '*';
 
-    const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
+    // Calculate Tax
+    const baseValue = netUnitCost - discount;
+    let taxAmount = (taxRate * baseValue * qty) / 100;
 
-    productUnits.purchase_units[id] =
-      sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
-      purchaseUnitsOperationValue;
+    // If operator logic is needed for tax calculation (e.g., '/', '*')
+    // if (purchaseUnitsOperator === '/') {
+    //   taxAmount = taxAmount / purchaseUnitsOperationValue;
+    // } else if (purchaseUnitsOperator === '*') {
+    //   taxAmount = taxAmount * purchaseUnitsOperationValue;
+    // }
 
-    formValues.product_list.total[id] =
-      sanitizeIntValue(productUnits.purchase_units?.[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty?.[id]) -
-      sanitizeFloatValue(formValues.product_list.discount?.[id]) +
-      sanitizeFloatValue(formValues.product_list.tax?.[id]);
+    // Ensure tax is rounded to two decimal places
+    formValues.product_list.tax[id] = sanitizeFloatValue(taxAmount.toFixed(2));
 
+    // Total Calculation
+    let total = baseValue * qty + taxAmount; // Base value + tax
+
+    // Ensure total is properly sanitized and rounded
+    formValues.product_list.total[id] = sanitizeFloatValue(total.toFixed(2));
+
+    // Set purchase unit id
     formValues.product_list.purchase_unit_id[id] =
       formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
 
-    if (formValues?.product_list?.tax_id) {
-      formValues.product_list.tax_id[id] =
-        formValues.product_list.tax_id?.[id] ?? tax_id;
-    }
+    // Set tax id if present
   }
 }
 
@@ -229,7 +236,9 @@ export const ReturnProductTable = ({
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
         // message.error("Maximum quantity reached");
-        return openNotification('info', 'Maximum quantity reached');
+        openNotification('info', 'Maximum quantity reached');
+
+        return prevFormValues;
       }
 
       const newQty = Math.min(
@@ -304,15 +313,16 @@ export const ReturnProductTable = ({
       tax_method,
     } = product ?? {};
 
+    const price = calculateUnitCost(purchase_units, unit_cost);
+
     setFormValuesId(
       id,
       purchase_unit_id,
-      calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
+      calculateOriginalPrice(price, taxes?.rate, tax_method),
       purchase_units,
       formValues,
       productUnits,
-      taxes,
-      tax_method
+      taxes
     );
 
     return {
@@ -339,7 +349,9 @@ export const ReturnProductTable = ({
     };
   });
 
-  form.setFieldsValue(formValues);
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [form, formValues]);
 
   return <ProductTable columns={columns} dataSource={dataSource} />;
 };

@@ -13,6 +13,7 @@ import {
   onDelete,
   onQuantityChange,
 } from '../../../utilities/lib/productTable/counters';
+import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 import CustomSelect from '../../Shared/Select/CustomSelect';
@@ -175,18 +176,31 @@ export const AdjustmentProductTable = ({
 
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku, buying_price: unit_cost } = product ?? {};
+      const {
+        id,
+        name,
+        sku,
+        buying_price: unit_cost,
+        purchase_units,
+      } = product ?? {};
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
       formValues.product_list.action[id] =
         formValues.product_list.action[id] ?? 'Addition';
 
+      const price = calculateUnitCost(
+        purchase_units,
+        unit_cost,
+        formValues?.units,
+        id
+      );
+
       return {
         id,
         name,
         sku,
-        unitCost: showCurrency(unit_cost, currency),
+        unitCost: showCurrency(price, currency),
         action: true,
         delete: true,
         incrementCounter,

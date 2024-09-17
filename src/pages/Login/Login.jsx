@@ -40,7 +40,8 @@ const Login = () => {
       openNotification('success', 'Logged in successfully!');
       navigate(`/dashboard`);
     } catch (error) {
-      openNotification('error', 'Invalid credentials. Please try again!');
+      console.error(error);
+      // openNotification('error', 'Invalid credentials. Please try again!');
     }
   };
 

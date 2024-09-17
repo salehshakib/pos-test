@@ -29,7 +29,7 @@ export const openNotification = (type, message) => {
           </div>
           <div className="ml-3 flex-1">
             <span className={colorClass}>{typeText}</span>
-            <div className="mt-1 text-sm text-gray-500  overflow-hidden truncate w-[19rem]">
+            <div className="mt-1 text-sm text-gray-500  overflow-hidden  w-[19rem]">
               {message ?? 'No Message is provided. Task Completed Successfully'}
             </div>
           </div>

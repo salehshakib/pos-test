@@ -16,8 +16,10 @@ export const WarehouseTransferComponent = ({
   warehouseRef,
 }) => {
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const warehouseFrom = Form.useWatch('from_warehouse_id', form);
+  const warehouseTo = Form.useWatch('to_warehouse_id', form);
   const user = useSelector(useCurrentUser);
   const warehouseId = user?.warehouse_id;
 
@@ -33,10 +35,10 @@ export const WarehouseTransferComponent = ({
   }));
 
   useEffect(() => {
-    if (warehouseId) {
+    if (warehouseId && !warehouseFrom) {
       form.setFieldValue('from_warehouse_id', warehouseId.toString());
     }
-  }, [warehouseId, form]);
+  }, [warehouseId, form, warehouseFrom]);
 
   const warehouseToOptions = data?.results?.warehouse?.map((warehouse) => ({
     value: warehouse.id?.toString(),
@@ -45,8 +47,10 @@ export const WarehouseTransferComponent = ({
   }));
 
   useEffect(() => {
-    form.resetFields(['to_warehouse_id']);
-  }, [warehouseFrom, form]);
+    if (!isEditDrawerOpen || warehouseFrom === warehouseTo) {
+      form.resetFields(['to_warehouse_id']);
+    }
+  }, [warehouseFrom, form, isEditDrawerOpen, warehouseTo]);
 
   const handleChange = () => {
     if (warehouseRef && warehouseRef.current) {

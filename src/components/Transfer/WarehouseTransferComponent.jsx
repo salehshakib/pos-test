@@ -47,7 +47,7 @@ export const WarehouseTransferComponent = ({
   }));
 
   useEffect(() => {
-    if (!isEditDrawerOpen || warehouseFrom === warehouseTo) {
+    if (!isEditDrawerOpen && warehouseFrom === warehouseTo) {
       form.resetFields(['to_warehouse_id']);
     }
   }, [warehouseFrom, form, isEditDrawerOpen, warehouseTo]);

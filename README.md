@@ -1,4 +1,4 @@
-# POS Inventory
+# POS Inventory - Vistock
 
 ## Description
 

@@ -49,13 +49,13 @@ export const reportPaths = [
   },
 
   {
-    name: 'Sale Report',
+    name: 'Sell Report',
     path: 'sale',
     icon: TbReportAnalytics,
     element: <SaleReport />,
   },
   {
-    name: 'Sale Calender',
+    name: 'Sell Calender',
     path: 'sale-calender',
     icon: IoCalendarNumberOutline,
     element: <SaleCalender />,

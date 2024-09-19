@@ -162,7 +162,7 @@ export const WarehouseReport = () => {
               children: (
                 <PurchaseReturnTable
                   {...props}
-                  summary={'warehouse,purchasereturn'}
+                  summary={'warehouse,purchase-return'}
                 />
               ),
             },
@@ -170,7 +170,7 @@ export const WarehouseReport = () => {
               label: 'Sale Return',
               key: 'salereturn',
               children: (
-                <SaleReturnTable {...props} summary={'warehouse,salereturn'} />
+                <SaleReturnTable {...props} summary={'warehouse,sale-return'} />
               ),
             },
             {

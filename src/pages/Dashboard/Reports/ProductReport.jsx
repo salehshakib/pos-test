@@ -226,7 +226,7 @@ export const ProductReport = () => {
                   children: (
                     <PurchaseReturnTable
                       {...props}
-                      summary={'product,purchasereturn'}
+                      summary={'product,purchase-return'}
                     />
                   ),
                 },
@@ -236,7 +236,7 @@ export const ProductReport = () => {
                   children: (
                     <SaleReturnTable
                       {...props}
-                      summary={'product,salereturn'}
+                      summary={'product,sale-return'}
                     />
                   ),
                 },

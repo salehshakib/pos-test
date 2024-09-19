@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCreateCustomerGroupMutation } from '../../redux/services/customerGroup/customerGroupApi';
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
-import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import CustomerGroupForm from './CustomerGroupForm';
 
@@ -29,7 +28,6 @@ const CustomerGroupCreate = () => {
     appendToFormData(postData, formData);
 
     const { data, error } = await createCustomerGroup({
-      data: formData,
       data: formData,
     });
 

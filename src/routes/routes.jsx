@@ -1,30 +1,40 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import Login from "../pages/Login/Login";
-import { routeGenerator } from "../utilities/lib/routesGenerator";
-import { adminPaths } from "./admin.routes";
-import PrivateRoute from "./PrivateRoute";
+import { createBrowserRouter } from 'react-router-dom';
+
+import App from '../App';
+import { PettyCash } from '../pages/Dashboard/PettyCash/PettyCash';
+import Login from '../pages/Login/Login';
+import Pos from '../Pos';
+import { routeGenerator } from '../utilities/lib/routesGenerator';
+import { adminPaths } from './admin.routes';
+import PosRoute from './PosRoute';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <PrivateRoute>
         <App />
       </PrivateRoute>
     ),
+    children: [
+      ...routeGenerator(adminPaths),
+      {
+        path: 'petty-cash',
+        element: <PettyCash />,
+      },
+    ],
   },
   {
-    path: "/",
+    path: '/pos',
     element: (
-      <PrivateRoute>
-        <App />
-      </PrivateRoute>
+      <PosRoute>
+        <Pos />
+      </PosRoute>
     ),
-    children: routeGenerator(adminPaths),
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
 ]);

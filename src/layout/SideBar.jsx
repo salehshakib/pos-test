@@ -1,9 +1,12 @@
-import { Layout, Menu } from "antd";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../redux/services/auth/authSlice";
-import { adminPaths } from "../routes/admin.routes";
-import { sidebarItemsGenerator } from "../utilities/lib/sidebarItemsGenerator";
+import { Layout, Menu } from 'antd';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import logo from '../assets/data/defaultLogo';
+import { adminPaths } from '../routes/admin.routes';
+import { useMenuItems } from '../utilities/lib/getPermission';
+import { sidebarItemsGenerator } from '../utilities/lib/sidebarItemsGenerator';
+
 const { Sider } = Layout;
 
 const getLevelKeys = (items1) => {
@@ -23,23 +26,71 @@ const getLevelKeys = (items1) => {
 };
 
 const SideBar = ({ collapsed, setCollapsed }) => {
-  const userData = useSelector(useCurrentUser);
-  const menu = userData?.roles?.menu;
+  const navigate = useNavigate();
+
+  const menuItems = useMenuItems(adminPaths);
+
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
 
-  // sidemenu by filtered paths
+  const { pathname } = useLocation();
 
-  const filteredPaths = adminPaths.filter((item) => {
-    return menu?.some(
-      (menuItem) => menuItem?.name.toLowerCase() === item.name.toLowerCase()
-    );
+  useEffect(() => {
+    if (pathname === '/') {
+      navigate('/dashboard');
+    }
+    if (pathname === '/dashboard') {
+      setStateOpenKeys(['Dashboard']);
+      setSelectedKeys(['Dashboard']);
+    }
+
+    if (pathname.includes('/stock-request')) {
+      setStateOpenKeys(['Inventory']);
+      setSelectedKeys(['Stock Request']);
+    }
+
+    if (pathname.includes('/transfer')) {
+      setStateOpenKeys(['Inventory']);
+      setSelectedKeys(['Transfer']);
+    }
+
+    if (pathname.includes('/pos') && !pathname.includes('pos-settings')) {
+      setCollapsed(true);
+    }
+  }, [navigate, pathname, setCollapsed]);
+
+  const filteredPaths = [];
+
+  Object.keys(menuItems).forEach((key) => {
+    adminPaths.forEach((item) => {
+      if (key.toLowerCase().includes(item.path)) {
+        if (item.children && menuItems[key].length) {
+          const modifiedMenuItems = menuItems[key].map((subItem) =>
+            subItem.toLowerCase().replace(/\s+/g, '-')
+          );
+
+          const filteredChildren = item.children.filter((child) =>
+            modifiedMenuItems.includes(child.path)
+          );
+
+          if (filteredChildren.length > 0) {
+            filteredPaths.push({
+              ...item,
+              children: filteredChildren,
+            });
+          } else {
+            filteredPaths.push(item);
+          }
+        } else {
+          filteredPaths.push(item);
+        }
+      }
+    });
   });
 
-  // console.log(filteredPaths);
+  // const sidebarItems = sidebarItemsGenerator(filteredPaths);
 
-  const sidebarItems = sidebarItemsGenerator(
-    userData?.is_admin ? filteredPaths : adminPaths
-  );
+  const sidebarItems = sidebarItemsGenerator(adminPaths);
 
   const levelKeys = getLevelKeys(sidebarItems);
 
@@ -63,36 +114,39 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   };
 
   return (
-    <div className="absolute lg:relative z-50 lg:z-0 min-h-fit ">
-      <Sider
-        className=" border border-r-2 border-gray-200 h-full"
+    <Sider
+      className="h-full overflow-x-auto bg-white pb-10 pt-1 "
+      // theme="dark"
+      width={240}
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={(value) => setCollapsed(value)}
+      style={{
+        boxShadow:
+          '4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)',
+      }}
+      breakpoint={`${pathname.includes('/pos') && !pathname.includes('pos-settings') ? '' : 'lg'}`}
+      collapsedWidth={`${pathname.includes('/pos') && !pathname.includes('pos-settings') ? 0 : 70}`}
+    >
+      {pathname.includes('/pos') && !pathname.includes('pos-settings') && (
+        <div className="w-full">
+          <img src={logo} alt="" className="mx-auto h-16 w-32 object-cover" />
+        </div>
+      )}
+
+      <Menu
         theme="light"
-        width={220}
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{
-          minHeight: "100vh",
-          boxShadow:
-            "4px 0 4px -1px rgb(0 0 0 / 0.1), 2px 0 2px -2px rgb(0 0 0 / 0.1)",
-        }}
-        breakpoint="lg"
-        collapsedWidth="70"
-      >
-        <Menu
-          theme="light"
-          mode="inline"
-          className="h-[90vh] overflow-auto"
-          style={{
-            borderRight: 0,
-          }}
-          items={sidebarItems}
-          openKeys={stateOpenKeys}
-          onOpenChange={onOpenChange}
-        />
-      </Sider>
-    </div>
+        mode="inline"
+        className="h-full w-full"
+        defaultSelectedKeys={['Dashboard']}
+        items={sidebarItems}
+        onOpenChange={onOpenChange}
+        selectedKeys={selectedKeys}
+        onSelect={({ key }) => setSelectedKeys([key])}
+        openKeys={stateOpenKeys}
+      />
+    </Sider>
   );
 };
 

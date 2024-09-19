@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button } from 'antd';
 
 const CustomButton = ({ isLoading = false, btnContent }) => {
   return (
@@ -6,7 +6,7 @@ const CustomButton = ({ isLoading = false, btnContent }) => {
       key={btnContent}
       htmlType="submit"
       loading={isLoading}
-      className="font-bold w-full pt-2 pb-8 bg-secondary hover:bg-posPurple"
+      className="hover:bg-posPurple bg-secondary w-full pb-8 pt-2 font-bold"
       type="primary"
     >
       {btnContent}

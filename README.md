@@ -1,4 +1,4 @@
-# POS Inventory
+# POS Inventory - Vistock Main
 
 ## Description
 
@@ -11,5 +11,5 @@ Provide step by step series of examples and explanations about how to get a deve
 ```bash
 git clone <repo-url>
 cd <project-name>
-npm install
+yarn
 ```

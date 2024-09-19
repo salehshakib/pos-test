@@ -1,74 +1,98 @@
-import { Button, Layout } from "antd";
-import { Footer } from "antd/es/layout/layout";
-import { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Outlet } from "react-router-dom";
-import Logo from "../components/AllSection/Header/Logo";
-import Profile from "../components/AllSection/Header/Profile";
-import SideBar from "./SideBar";
-import { mode } from "../utilities/configs/base_url";
-const { Header, Content } = Layout;
+import { Button, Layout, Tag } from 'antd';
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
+
+import Logo from '../components/AllSection/Header/Logo';
+import Profile from '../components/AllSection/Header/Profile';
+import { GlobalUtilityStyle } from '../container/Styled';
+import { isDev, mode } from '../utilities/configs/base_url';
+import SideBar from './SideBar';
+
+const { Header, Content, Footer } = Layout;
+
 const MainLayout = () => {
+  const { pathname } = useLocation();
+
+  const dashboardStyle = pathname.includes('/dashboard')
+    ? {}
+    : { backgroundColor: 'white', borderRadius: '8px' };
+
   const [collapsed, setCollapsed] = useState(false);
 
+  const { developedBy, hyperLink } = useSelector((state) => state.developer);
+
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Header className="bg-white flex justify-between items-center px-5  border border-b-2">
-        <div className="flex items-center gap-6 text-2xl">
-          <Button
-            className="p-0 border border-none rounded-full flex items-center justify-center text-[20px]"
-            type="text"
-            icon={<RxHamburgerMenu />}
-            onClick={() => setCollapsed(!collapsed)}
-          ></Button>
-          <Logo />
+    <GlobalUtilityStyle>
+      <div className="relative">
+        <Header className="fixed top-0 z-50 flex w-full items-center justify-between bg-white px-5 shadow-md">
+          <div className="flex items-center gap-6 text-2xl">
+            <Button
+              className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
+              type="text"
+              icon={<GiHamburgerMenu />}
+              onClick={() => setCollapsed(!collapsed)}
+            />
+            <Logo />
+          </div>
+          <div className="hidden lg:block">
+            {mode === 'local' && (
+              <Tag color="processing" className="font-semibold">
+                {mode.toUpperCase()} MODE
+              </Tag>
+            )}
+            {isDev.toLowerCase() === 'true' && (
+              <Tag color="purple" className="font-semibold">
+                DEV MODE
+              </Tag>
+            )}
+          </div>
+          <Profile />
+        </Header>
+
+        <div
+          // max-h-[100vh] overflow-hidden
+          className="flex pt-16 
+        "
+        >
+          <div className="sticky left-0 top-[4rem] z-40 h-[calc(100vh-4rem)]">
+            <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+          </div>
+
+          <Layout className="flex w-48 flex-col ">
+            <Content
+              style={{
+                margin: '16px',
+                marginBottom: 0,
+                ...dashboardStyle,
+              }}
+              className={`${pathname.includes('/dashboard') ? '' : 'shadow-md'} flex-grow overflow-auto `}
+            >
+              <GlobalUtilityStyle>
+                <Outlet />
+              </GlobalUtilityStyle>
+            </Content>
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '16px',
+              }}
+            >
+              POS Inventory ©{new Date().getFullYear()} Created by{' '}
+              <a
+                href={`http://${hyperLink}`}
+                className="primary-text font-semibold hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {developedBy ?? 'Vitasoft Solutions'}
+              </a>
+            </div>
+          </Layout>
         </div>
-        {mode === "local" && (
-          <span className="text-xs bg-white p-2 rounded-lg font-bold text-gray-500">
-            {mode.toUpperCase()} MODE
-          </span>
-        )}
-        <Profile />
-      </Header>
-
-      <Layout
-        style={{
-          minHeight: "100vh",
-        }}
-        className=""
-      >
-        <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-
-        <Layout className="ml-[4.3rem] lg:ml-0">
-          <Content
-            style={{
-              // margin: "0px 8px",
-              marginLeft: "8px",
-              backgroundColor: "white",
-            }}
-            className="min-h-90vh "
-          >
-            <Outlet />
-          </Content>
-          <Footer
-            style={{
-              textAlign: "center",
-              // position: "absolute",
-              // left: 0,
-              // bottom: 0,
-              // width: "100%",
-            }}
-          >
-            POS Inventory ©{new Date().getFullYear()} Created by Vitasoft
-            Solutions
-          </Footer>
-        </Layout>
-      </Layout>
-    </Layout>
+      </div>
+    </GlobalUtilityStyle>
   );
 };
 export default MainLayout;

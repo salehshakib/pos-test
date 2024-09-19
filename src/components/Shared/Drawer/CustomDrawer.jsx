@@ -1,18 +1,22 @@
-import { Drawer, Spin } from "antd";
-import { useDispatch } from "react-redux";
+import { Drawer, Spin } from 'antd';
+import { useDispatch } from 'react-redux';
+
 import {
   closeCreateDrawer,
   closeEditDrawer,
-} from "../../../redux/services/drawer/drawerSlice";
+} from '../../../redux/services/drawer/drawerSlice';
 
 const CustomDrawer = ({
   title,
-  placement = "right",
+  placement = 'right',
   children,
   open,
   isLoading = false,
+  onClose,
+  width = 900,
 }) => {
   const dispatch = useDispatch();
+
   const handleCloseDrawer = () => {
     dispatch(closeCreateDrawer());
     dispatch(closeEditDrawer());
@@ -23,16 +27,16 @@ const CustomDrawer = ({
       key={title}
       title={title}
       open={open}
-      width={800}
+      width={width}
       placement={placement}
       closable={true}
-      onClose={handleCloseDrawer}
+      onClose={onClose ?? handleCloseDrawer}
       maskClosable
       destroyOnClose
     >
-      <div className="relative w-full h-full ">
+      <div className="relative h-full w-full">
         {isLoading ? (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
             <Spin size="default" />
           </div>
         ) : (

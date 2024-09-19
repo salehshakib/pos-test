@@ -1,27 +1,251 @@
-import dayjs from "dayjs";
+// import dayjs from 'dayjs';
+
+// import { BOOLEAN_KEYS } from '../../assets/data/booleanKeys';
+
+// const IGNORED_KEYS = [
+//   'updated_at',
+//   'deleted_at',
+//   'created_at',
+//   'is_active',
+//   'expired_at',
+//   'id',
+// ];
+
+// export const fieldsToUpdate = (details) => {
+//   const fieldsToUpdate = Object.keys(details)
+//     .filter((key) => !IGNORED_KEYS.includes(key))
+//     .map((key) => {
+//       let value = details[key];
+
+//       switch (true) {
+//         // Group attachments by label
+//         case key.includes('attachments'): {
+//           // Ensure value is an array, otherwise fallback to an empty array
+//           if (Array.isArray(value)) {
+//             const groupedAttachments = value.reduce((acc, attachment) => {
+//               const { label, id, url } = attachment;
+//               if (!acc[label]) {
+//                 acc[label] = [];
+//               }
+//               acc[label].push({ uid: id, url });
+//               return acc;
+//             }, {});
+
+//             return Object.keys(groupedAttachments).map((label) => ({
+//               name: label,
+//               value: groupedAttachments[label],
+//               errors: '',
+//             }));
+//           } else {
+//             // If value is not an array, skip this case and return nothing
+//             return [];
+//           }
+//         }
+
+//         // Handle date fields or keys with '_at'
+//         case key.includes('date') || key.includes('_at'):
+//           value = value ? dayjs(value, 'YYYY-MM-DD') : null;
+//           break;
+
+//         // Handle phone number formatting
+//         case key.includes('phone'):
+//           value = value ? value.toString().slice(0) : '';
+//           break;
+
+//         // Handle fields with '_id'
+//         case key.includes('_id'):
+//           value = value ? value.toString() : '';
+//           break;
+
+//         // Handle boolean fields except 'staff_id'
+//         case BOOLEAN_KEYS.includes(key) && key !== 'staff_id':
+//           value = value?.toString() === '1' ? true : false;
+//           break;
+
+//         default:
+//           break;
+//       }
+
+//       return {
+//         name: key,
+//         value: value,
+//         errors: '',
+//       };
+//     })
+//     .flat(); // Flatten the array to merge any nested arrays
+
+//   return fieldsToUpdate;
+// };
+
+// export const updateFieldValues = (fieldData, newFieldData) => {
+//   return fieldData.map((field) => {
+//     const newField = newFieldData.find(
+//       (newField) => newField.name === field.name
+//     );
+//     return newField || field;
+//   });
+// };
+
+// import dayjs from 'dayjs';
+
+// import { BOOLEAN_KEYS } from '../../assets/data/booleanKeys';
+
+// const IGNORED_KEYS = [
+//   'updated_at',
+//   'deleted_at',
+//   'created_at',
+//   'is_active',
+//   'expired_at',
+//   'id',
+// ];
+
+// export const fieldsToUpdate = (details) => {
+//   const fieldsToUpdate = Object.keys(details)
+//     .filter((key) => !IGNORED_KEYS.includes(key))
+//     .map((key) => {
+//       let value = details[key];
+
+//       switch (true) {
+//         // Group attachments by label
+//         case key.includes('attachments'): {
+//           const groupedAttachments = value.reduce((acc, attachment) => {
+//             const { label, id, url } = attachment;
+//             if (!acc[label]) {
+//               acc[label] = [];
+//             }
+//             acc[label].push({ uid: id, url });
+//             return acc;
+//           }, {});
+
+//           return Object.keys(groupedAttachments).map((label) => ({
+//             name: label,
+//             value: groupedAttachments[label],
+//             errors: '',
+//           }));
+//         }
+
+//         // Handle date fields or keys with '_at'
+//         case key.includes('date') || key.includes('_at'):
+//           value = dayjs(value, 'YYYY-MM-DD');
+//           break;
+
+//         // Handle phone number formatting
+//         case key.includes('phone'):
+//           value = value?.toString()?.slice(0);
+//           break;
+
+//         // Handle fields with '_id'
+//         case key.includes('_id'):
+//           value = value?.toString();
+//           break;
+
+//         // Handle boolean fields except 'staff_id'
+//         case BOOLEAN_KEYS.includes(key) && key !== 'staff_id':
+//           console.log({ key, value });
+//           console.log(value.toString());
+//           value = value.toString() === '1' ? true : false;
+
+//           console.log(value);
+//           break;
+
+//         default:
+//           break;
+//       }
+
+//       if (key.includes('_id')) {
+//         value = value?.toString();
+//       }
+
+//       return {
+//         name: key,
+//         value: value,
+//         errors: '',
+//       };
+//     })
+//     .flat(); // Flatten the array to merge any nested arrays
+
+//   return fieldsToUpdate;
+// };
+
+// export const updateFieldValues = (fieldData, newFieldData) => {
+//   return fieldData.map((field) => {
+//     const newField = newFieldData.find(
+//       (newField) => newField.name === field.name
+//     );
+//     return newField || field;
+//   });
+// };
+
+import dayjs from 'dayjs';
+
+import { BOOLEAN_KEYS } from '../../assets/data/booleanKeys';
+
+const IGNORED_KEYS = [
+  'updated_at',
+  'deleted_at',
+  'created_at',
+  'is_active',
+  'expired_at',
+  'id',
+];
 
 export const fieldsToUpdate = (details) => {
-  const fieldsToUpdate = Object.keys(details)
-    .filter(
-      (key) =>
-        !key.includes("updated_at") &&
-        !key.includes("deleted_at") &&
-        !key.includes("created_at") &&
-        !key.includes("is_active") &&
-        key !== "id"
-    )
+  return Object.keys(details)
+    .filter((key) => !IGNORED_KEYS.includes(key))
     .map((key) => {
       let value = details[key];
-      if (key.includes("date")) {
-        value = dayjs(value, "YYYY-MM-DD").toDate();
+
+      if (key.includes('attachments')) {
+        // Group attachments by label
+        const groupedAttachments = value.reduce((acc, { label, id, url }) => {
+          acc[label] = acc[label] || [];
+          acc[label].push({ uid: id, url });
+          return acc;
+        }, {});
+
+        return Object.keys(groupedAttachments).map((label) => ({
+          name: label,
+          value: groupedAttachments[label],
+          errors: '',
+        }));
+      }
+
+      // Handle date fields or keys with '_at'
+      if (key.includes('date') || key.includes('_at')) {
+        value = dayjs(value, 'YYYY-MM-DD');
+      }
+
+      // Handle phone number formatting
+      if (key.includes('phone')) {
+        value = value?.toString()?.slice(0);
+      }
+
+      // Handle fields with '_id'
+      if (key.includes('_id')) {
+        value = value?.toString();
+      }
+
+      // Handle boolean fields except 'staff_id'
+      if (BOOLEAN_KEYS.includes(key) && key !== 'staff_id') {
+        value = value.toString() === '1';
       }
 
       return {
         name: key,
-        value: value,
-        errors: "",
+        value,
+        errors: '',
       };
-    });
+    })
+    .flat(); // Flatten any nested arrays from the attachment handling
+};
 
-  return fieldsToUpdate;
+export const updateFieldValues = (fieldData, newFieldData) => {
+  const fieldMap = new Map(
+    newFieldData.map(({ name, value, errors }) => [name, { value, errors }])
+  );
+
+  return fieldData.map((field) => ({
+    ...field,
+    ...(fieldMap.get(field.name) || {}),
+  }));
 };

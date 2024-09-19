@@ -1,11 +1,20 @@
-import { Modal } from "antd";
-import { FaInfoCircle } from "react-icons/fa";
+import { Button, Modal } from 'antd';
+import { FaInfoCircle } from 'react-icons/fa';
+
+import { GlobalUtilityStyle } from '../../../container/Styled';
+
+const props = {
+  footer: null,
+  centered: true,
+  maskClosable: true,
+};
 
 const StatusModal = ({
+  text,
   statusModal,
-  setStatusModal,
-  handleStatusUpdate,
-  isStatusUpdating,
+  hideModal,
+  handleStatus,
+  isLoading,
 }) => {
   return (
     <Modal
@@ -13,22 +22,25 @@ const StatusModal = ({
         <div className="flex items-center gap-3">
           <FaInfoCircle
             style={{
-              fontSize: "20px",
+              fontSize: '20px',
             }}
           />
           <span>Status Update</span>
         </div>
       }
       open={statusModal}
-      okText="Yes"
-      cancelText="No"
-      onOk={handleStatusUpdate}
-      onCancel={() => setStatusModal(false)}
-      confirmLoading={isStatusUpdating}
-      centered
-      maskClosable
+      onCancel={hideModal}
+      {...props}
     >
-      Do you want to update your status?
+      <GlobalUtilityStyle>
+        <span>{text ?? 'Do you want to update your status?'}</span>
+        <div className="flex w-full items-center justify-end gap-3">
+          <Button onClick={hideModal}>No</Button>
+          <Button type="primary" onClick={handleStatus} loading={isLoading}>
+            Yes
+          </Button>
+        </div>
+      </GlobalUtilityStyle>
     </Modal>
   );
 };

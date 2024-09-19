@@ -1,109 +1,134 @@
-import { CATEGORY } from "../../../utilities/configs/Api";
-import { openNotification } from "../../../utilities/lib/notification";
-import { verifyToken } from "../../../utilities/lib/verifyToken";
-import { baseApi } from "../../api/baseApi";
+import { CATEGORY } from '../../../utilities/apiEndpoints/inventory.api';
+import { openNotification } from '../../../utilities/lib/openToaster';
+import { verifyToken } from '../../../utilities/lib/verifyToken';
+import { baseApi } from '../../api/baseApi';
 
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query({
+    getAllCategory: build.query({
       query: ({ params }) => {
         return {
           url: `/${CATEGORY}`,
-          method: "GET",
+          method: 'GET',
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: CATEGORY, params },
+        { type: CATEGORY, ...params },
         CATEGORY,
       ],
     }),
     getCategoryDetails: build.query({
-      query: ({ id }) => {
+      query: ({ id, params }) => {
         return {
           url: `${CATEGORY}/show/${id}`,
-          method: "GET",
+          method: 'GET',
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: [CATEGORY],
+      providesTags: (result, error, { id }) => [{ type: CATEGORY, id }],
     }),
     createCategory: build.mutation({
       query: ({ data }) => {
         return {
           url: `/${CATEGORY}/store`,
-          method: "POST",
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [{ type: CATEGORY }] : [];
       },
     }),
     updateCategory: build.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/${CATEGORY}/update/${data?.id}`,
-          method: "POST",
+          url: `/${CATEGORY}/update/${id}`,
+          method: 'POST',
           body: data,
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [{ type: CATEGORY }] : [];
       },
     }),
     updateCategoryStatus: build.mutation({
       query: (id) => {
         return {
           url: `/${CATEGORY}/status/${id}`,
-          method: "POST",
+          method: 'POST',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [{ type: CATEGORY }] : [];
       },
     }),
     deleteCategory: build.mutation({
       query: (id) => {
         return {
           url: `/${CATEGORY}/delete/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       transformResponse: (response) => {
         if (response?.success) {
-          openNotification("success", response?.message);
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
           return response;
         }
       },
       invalidatesTags: (result) => {
-        return result ? [CATEGORY] : [];
+        return result ? [{ type: CATEGORY }] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetCategoriesQuery,
+  useGetAllCategoryQuery,
   useGetCategoryDetailsQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,

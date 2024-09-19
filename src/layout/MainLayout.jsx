@@ -51,7 +51,11 @@ const MainLayout = () => {
           <Profile />
         </Header>
 
-        <div className="flex pt-16 max-h-[100vh] overflow-hidden">
+        <div
+          // max-h-[100vh] overflow-hidden
+          className="flex pt-16 
+        "
+        >
           <div className="left-0 top-[4rem] z-40 min-h-[calc(100vh-4rem)]">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
@@ -69,7 +73,7 @@ const MainLayout = () => {
                 <Outlet />
               </GlobalUtilityStyle>
             </Content>
-            <Footer
+            <div
               style={{
                 textAlign: 'center',
                 padding: '16px',
@@ -84,7 +88,7 @@ const MainLayout = () => {
               >
                 {developedBy ?? 'Vitasoft Solutions'}
               </a>
-            </Footer>
+            </div>
           </Layout>
         </div>
       </div>

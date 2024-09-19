@@ -10,10 +10,7 @@ import {
 } from '../../redux/services/hrm/attendence/attendenceApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { AttendanceForm } from './AttendanceForm';
 
@@ -37,6 +34,7 @@ export const AttendanceEdit = ({ id, setId }) => {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldValue = [
+        ...fieldData,
         {
           name: 'check_in',
           value: dayjs(data?.check_in, 'HH:mm:ss'),
@@ -49,9 +47,7 @@ export const AttendanceEdit = ({ id, setId }) => {
         },
       ];
 
-      const newFieldData = updateFieldValues(fieldData, updateFieldValue);
-
-      setFields(newFieldData);
+      setFields(updateFieldValue);
     } else {
       setFields([]);
     }

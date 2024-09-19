@@ -7,10 +7,7 @@ import CustomInput from '../../../components/Shared/Input/CustomInput';
 import { colLayout, rowLayout } from '../../../layout/FormLayout';
 import { useUpdateHrmSettingMutation } from '../../../redux/services/settings/hrmSettings/hrmSettingsApi';
 import { appendToFormData } from '../../../utilities/lib/appendFormData';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
 
 export const HrmSettingForm = ({ data }) => {
   const [form] = Form.useForm();
@@ -40,7 +37,9 @@ export const HrmSettingForm = ({ data }) => {
   useEffect(() => {
     if (data) {
       const fieldData = fieldsToUpdate(data);
+
       const updateFieldData = [
+        ...fieldData,
         {
           name: 'start_time',
           value: dayjs(
@@ -59,9 +58,7 @@ export const HrmSettingForm = ({ data }) => {
         },
       ];
 
-      const newFieldData = updateFieldValues(fieldData, updateFieldData);
-
-      setFields(newFieldData);
+      setFields(updateFieldData);
     }
   }, [data]);
 

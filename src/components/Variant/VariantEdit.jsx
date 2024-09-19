@@ -44,7 +44,7 @@ export const VariantEdit = ({ id, setId }) => {
         {
           name: 'options',
           value: data?.variant_options?.map((item) => item?.name?.toString()),
-          erros: '',
+          errors: '',
         },
       ];
 

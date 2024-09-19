@@ -4,9 +4,11 @@ export const incrementCounter = (id, setFormValues, stock) => {
   setFormValues((prevFormValues) => {
     const currentQty = prevFormValues.product_list.qty[id] ?? 0;
 
-    if (Number(currentQty) + 1 > stock) {
-      openNotification('info', `Cannot add more than stock quantity`);
-      return prevFormValues;
+    if (stock) {
+      if (Number(currentQty) + 1 > parseInt(stock)) {
+        openNotification('info', `Cannot add more than stock quantity`);
+        return prevFormValues;
+      }
     }
 
     const newQty = stock

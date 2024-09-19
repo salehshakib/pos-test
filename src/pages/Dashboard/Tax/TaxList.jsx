@@ -41,7 +41,7 @@ const TaxList = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Vat"
+      pageTitle="VAT"
       columns={columns}
       selectedRows={selectedRows}
       debounce={debounce}

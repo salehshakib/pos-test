@@ -104,7 +104,7 @@ export const SaleReport = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Sale Report"
+      pageTitle="Sell Report"
       columns={columns}
       popoverWidth={400}
       debounce={debounce}

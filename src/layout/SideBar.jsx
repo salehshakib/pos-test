@@ -54,7 +54,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
       setSelectedKeys(['Transfer']);
     }
 
-    if (pathname.includes('/pos')) {
+    if (pathname.includes('/pos') && !pathname.includes('pos-settings')) {
       setCollapsed(true);
     }
   }, [navigate, pathname, setCollapsed]);

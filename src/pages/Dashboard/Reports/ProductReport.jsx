@@ -360,14 +360,14 @@ export const ProductReport = () => {
                     </span>
                     <PurchaseReturnTable
                       {...props}
-                      summary={'product,purchasereturn'}
+                      summary={'product,purchase-return'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
                       Sell Return Table
                     </span>
                     <SaleReturnTable
                       {...props}
-                      summary={'product,salereturn'}
+                      summary={'product,sale-return'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
                       Expense Table

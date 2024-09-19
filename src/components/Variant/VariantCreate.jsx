@@ -2,34 +2,29 @@ import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCreateCustomerGroupMutation } from '../../redux/services/customerGroup/customerGroupApi';
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
-import { appendToFormData } from '../../utilities/lib/appendFormData';
+import { useCreateVariantsMutation } from '../../redux/services/variant/variantApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
-import CustomerGroupForm from './CustomerGroupForm';
+import { VariantForm } from './VariantForm';
 
-const CustomerGroupCreate = () => {
+export const VariantCreate = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
-
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [createCustomerGroup, { isLoading }] = useCreateCustomerGroupMutation();
+  const [createVariants, { isLoading }] = useCreateVariantsMutation();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
-    const postData = {
-      ...values,
-      percentage: values?.percentage ? values.percentage.toString() : '0',
-    };
-    appendToFormData(postData, formData);
+    const postObj = values;
 
-    const { data, error } = await createCustomerGroup({
-      data: formData,
+    appendToFormData(postObj, formData);
+
+    const { data, error } = await createVariants({
       data: formData,
     });
 
@@ -47,8 +42,8 @@ const CustomerGroupCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Customer Group'} open={isCreateDrawerOpen}>
-      <CustomerGroupForm
+    <CustomDrawer title={'Create Variant'} open={isCreateDrawerOpen}>
+      <VariantForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -57,5 +52,3 @@ const CustomerGroupCreate = () => {
     </CustomDrawer>
   );
 };
-
-export default CustomerGroupCreate;

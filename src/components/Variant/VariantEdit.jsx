@@ -1,20 +1,19 @@
 import { Form } from 'antd';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
-  useGetAttendenceDetailsQuery,
-  useUpdateAttendenceMutation,
-} from '../../redux/services/hrm/attendence/attendenceApi';
+  useGetVariantsDetailsQuery,
+  useUpdateVariantsMutation,
+} from '../../redux/services/variant/variantApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
-import { AttendanceForm } from './AttendanceForm';
+import { VariantForm } from './VariantForm';
 
-export const AttendanceEdit = ({ id, setId }) => {
+export const VariantEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -22,32 +21,34 @@ export const AttendanceEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetAttendenceDetailsQuery(
-    { id },
+  const { data, isFetching } = useGetVariantsDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
     { skip: !id }
   );
+  const [updateVariants, { isLoading }] = useUpdateVariantsMutation();
 
-  const [updateAttendence, { isLoading }] = useUpdateAttendenceMutation();
+  console.log(data);
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const updateFieldValue = [
+      const newFieldData = [
         ...fieldData,
         {
-          name: 'check_in',
-          value: dayjs(data?.check_in, 'HH:mm:ss'),
-          errors: '',
-        },
-        {
-          name: 'check_out',
-          value: dayjs(data?.check_out, 'HH:mm:ss'),
+          name: 'options',
+          value: data?.variant_options?.map((item) => item?.name?.toString()),
           errors: '',
         },
       ];
 
-      setFields(updateFieldValue);
+      setFields(newFieldData);
     } else {
       setFields([]);
     }
@@ -56,20 +57,11 @@ export const AttendanceEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
-    const timeString = values?.hours ?? '00:00:00';
-    const [hours] = timeString.split(':').map(Number);
+    const postObj = { ...values, _method: 'PUT' };
 
-    const postData = {
-      ...values,
-      check_in: values.check_in.format('HH:mm:ss'),
-      check_out: values.check_out.format('HH:mm:ss'),
-      hours: hours,
-      _method: 'PUT',
-    };
+    appendToFormData(postObj, formData);
 
-    appendToFormData(postData, formData);
-
-    const { data, error } = await updateAttendence({
+    const { data, error } = await updateVariants({
       id,
       data: formData,
     });
@@ -88,11 +80,11 @@ export const AttendanceEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={'Edit Attendance'}
+      title={'Edit Variant'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <AttendanceForm
+      <VariantForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}

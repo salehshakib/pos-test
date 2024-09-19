@@ -11,10 +11,7 @@ import {
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import { staffIdGenerator } from '../../utilities/lib/staffIdGenerator';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import EmployeeForm from './EmployeeForm';
@@ -44,6 +41,7 @@ const EmployeeEdit = ({ id, setId }) => {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldValue = [
+        ...fieldData,
         {
           name: 'staff_id',
           value: data?.staff_id.slice(8),
@@ -51,9 +49,7 @@ const EmployeeEdit = ({ id, setId }) => {
         },
       ];
 
-      const newFieldData = updateFieldValues(fieldData, updateFieldValue);
-
-      setFields(newFieldData);
+      setFields(updateFieldValue);
     } else {
       setFields([]);
     }

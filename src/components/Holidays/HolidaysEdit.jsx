@@ -22,7 +22,16 @@ export const HolidaysEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetHolidayDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetHolidayDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !id }
+  );
 
   const [updateHoliday, { isLoading }] = useUpdateHolidayMutation();
 
@@ -30,11 +39,28 @@ export const HolidaysEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const newFields = [
+        ...fieldData,
+        {
+          name: 'all_departments',
+          value: false,
+          errors: '',
+        },
+        {
+          name: 'department_ids',
+          value:
+            data?.department_ids?.map((item) => item?.id?.toString()) ?? [],
+          errors: '',
+        },
+      ];
+
+      setFields(newFields);
     } else {
       setFields([]);
     }
   }, [data, setFields, isEditDrawerOpen]);
+
+  console.log(fields);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

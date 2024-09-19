@@ -52,7 +52,7 @@ export const SaleCalender = () => {
 
   return (
     <ReportContainer
-      pageTitle="Sale Calender"
+      pageTitle="Sell Calender"
       onWarehouseChange={onWarehouseChange}
     >
       <CustomCalender onChange={onChange} data={data?.results?.sale} />

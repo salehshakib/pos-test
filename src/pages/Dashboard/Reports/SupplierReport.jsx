@@ -234,17 +234,14 @@ export const SupplierReport = () => {
                   label: 'Purchase',
                   key: 'purchase',
                   children: (
-                    <PurchaseTable {...props} summary={'supplier, purchase'} />
+                    <PurchaseTable {...props} summary={'supplier,purchase'} />
                   ),
                 },
                 {
                   label: 'Quotation',
                   key: 'quotation',
                   children: (
-                    <QuotationTable
-                      {...props}
-                      summary={'supplier, quotation'}
-                    />
+                    <QuotationTable {...props} summary={'supplier,quotation'} />
                   ),
                 },
                 {
@@ -253,7 +250,7 @@ export const SupplierReport = () => {
                   children: (
                     <PurchaseReturnTable
                       {...props}
-                      summary={'supplier, purchasereturn'}
+                      summary={'supplier,purchase-return'}
                     />
                   ),
                 },
@@ -263,7 +260,7 @@ export const SupplierReport = () => {
                   children: (
                     <SaleReturnTable
                       {...props}
-                      summary={'supplier, salereturn'}
+                      summary={'supplier,sale-return'}
                     />
                   ),
                 },

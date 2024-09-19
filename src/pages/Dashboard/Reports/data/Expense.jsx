@@ -1,15 +1,15 @@
 export const columns = [
-  {
-    title: 'Reference Id',
-    dataIndex: 'reference',
-    key: 'reference',
-    align: 'center',
-    render: (reference) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {reference}
-      </span>
-    ),
-  },
+  // {
+  //   title: 'Reference Id',
+  //   dataIndex: 'reference',
+  //   key: 'reference',
+  //   align: 'center',
+  //   render: (reference) => (
+  //     <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+  //       {reference}
+  //     </span>
+  //   ),
+  // },
   {
     title: 'Warehouse',
     dataIndex: 'warehouse',

@@ -46,7 +46,7 @@ const Categoryedit = ({ id, setId }) => {
                 url: defaultUser,
               },
             ],
-            erros: '',
+            errors: '',
           },
         ];
       }

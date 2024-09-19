@@ -31,6 +31,17 @@ const columns = [
     ),
   },
   {
+    title: 'Leave Referrence',
+    dataIndex: 'referrence',
+    key: 'referrence',
+    align: 'center',
+    render: (referrence) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {referrence}
+      </span>
+    ),
+  },
+  {
     title: 'Leave Type',
     dataIndex: 'leaveType',
     key: 'leaveType',
@@ -38,6 +49,17 @@ const columns = [
     render: (leaveType) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {leaveType}
+      </span>
+    ),
+  },
+  {
+    title: 'Leave Duration',
+    dataIndex: 'leaveDuration',
+    key: 'leaveDuration',
+    align: 'center',
+    render: (leaveDuration) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {leaveDuration}
       </span>
     ),
   },
@@ -63,17 +85,7 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: 'Leave Duration',
-    dataIndex: 'leaveDuration',
-    key: 'leaveDuration',
-    align: 'center',
-    render: (leaveDuration) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {leaveDuration}
-      </span>
-    ),
-  },
+
   {
     title: 'Days',
     dataIndex: 'days',

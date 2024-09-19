@@ -99,7 +99,7 @@ export const PayrollForm = (props) => {
           <CustomDatepicker name="date" label="Date" required={true} />
         </Col>
         <Col {...colLayout}>
-          <DepartmentComponent name="department_ids" />
+          <DepartmentComponent name="department_id" />
         </Col>
         <Col {...colLayout}>
           <EmployeeComponent />

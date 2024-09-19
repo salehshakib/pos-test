@@ -7,10 +7,7 @@ import { useGetAnnouncementDetailsQuery } from '../../redux/services/hrm/announc
 import { useUpdateLeaveTypeMutation } from '../../redux/services/settings/leaveType/leaveTypeApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
-import {
-  fieldsToUpdate,
-  updateFieldValues,
-} from '../../utilities/lib/fieldsToUpdate';
+import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { AnnouncementForm } from './AnnouncementForm';
 
@@ -39,21 +36,20 @@ export const AnnouncementEdit = ({ id, setId }) => {
       const fieldData = fieldsToUpdate(data);
 
       const updateFieldData = [
+        ...fieldData,
+        {
+          name: 'all_departments',
+          value: false,
+          errors: '',
+        },
         {
           name: 'department_ids',
           value: data?.departments?.map((item) => item?.id?.toString()),
-          erros: '',
-        },
-        {
-          name: 'is_send_email',
-          value: data?.is_send_email.toString() === '1' ? true : false,
-          erros: '',
+          errors: '',
         },
       ];
 
-      const newFieldData = updateFieldValues(fieldData, updateFieldData);
-
-      setFields(newFieldData);
+      setFields(updateFieldData);
     } else {
       setFields([]);
     }

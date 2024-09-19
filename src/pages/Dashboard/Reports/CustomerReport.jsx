@@ -19,8 +19,6 @@ import {
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
-import { PurchaseReturnTable } from './components/PurchaseReturnTable';
-import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
 import { SaleTable } from './components/SaleTable';
 
@@ -233,27 +231,7 @@ export const CustomerReport = () => {
                 {
                   label: 'Sale',
                   key: 'sale',
-                  children: <SaleTable {...props} summary={'customer, sale'} />,
-                },
-                {
-                  label: 'Quotation',
-                  key: 'quotation',
-                  children: (
-                    <QuotationTable
-                      {...props}
-                      summary={'customer, quotation'}
-                    />
-                  ),
-                },
-                {
-                  label: 'Purchase Return',
-                  key: 'purchasereturn',
-                  children: (
-                    <PurchaseReturnTable
-                      {...props}
-                      summary={'customer, purchasereturn'}
-                    />
-                  ),
+                  children: <SaleTable {...props} summary={'customer,sale'} />,
                 },
                 {
                   label: 'Sale Return',
@@ -261,7 +239,7 @@ export const CustomerReport = () => {
                   children: (
                     <SaleReturnTable
                       {...props}
-                      summary={'customer, salereturn'}
+                      summary={'customer,sale-return'}
                     />
                   ),
                 },

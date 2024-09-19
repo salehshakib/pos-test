@@ -40,9 +40,9 @@ export const PayrollEdit = ({ id, setId }) => {
 
     const postData = {
       ...values,
-      is_send_email: values?.is_send_email == true ? '1' : '0',
-      bonus: Number(values?.bonus).toFixed(2),
-      loan: Number(values?.loan).toFixed(2),
+      is_send_email: values?.is_send_email === true ? '1' : '0',
+      bonus: values?.bonus ? Number(values?.bonus).toFixed(2) : '0',
+      loan: values?.loan ? Number(values?.loan).toFixed(2) : '0',
       salary: Number(values?.salary).toFixed(2),
       _method: 'PUT',
     };
@@ -68,7 +68,7 @@ export const PayrollEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={'Edit Brand'}
+      title={'Edit Payroll'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

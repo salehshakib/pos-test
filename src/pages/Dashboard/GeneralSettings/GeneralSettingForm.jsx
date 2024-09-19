@@ -27,7 +27,7 @@ const GeneralSettingForm = ({ data }) => {
         {
           name: 'date_format',
           value: data?.date_format,
-          erros: '',
+          errors: '',
         },
         {
           name: 'logo',
@@ -36,7 +36,7 @@ const GeneralSettingForm = ({ data }) => {
               url: data?.attachments?.[0]?.url ?? logo,
             },
           ],
-          erros: '',
+          errors: '',
         },
       ];
       setFields(newFieldData);

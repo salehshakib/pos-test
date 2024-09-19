@@ -7,6 +7,7 @@ import {
   useUpdateCustomerGroupMutation,
 } from '../../redux/services/customerGroup/customerGroupApi';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -37,6 +38,16 @@ export const CustomerGroupEdit = ({ id, setId }) => {
   }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
+    const formData = new FormData();
+
+    const postData = {
+      ...values,
+      percentage: values?.percentage ? values?.percentage.toString() : '0',
+      _method: 'PUT',
+    };
+
+    appendToFormData(postData, formData);
+
     const { data, error } = await updateCustomerGroup({
       id,
       data: {

@@ -33,7 +33,7 @@ const MainLayout = () => {
               type="text"
               icon={<GiHamburgerMenu />}
               onClick={() => setCollapsed(!collapsed)}
-            ></Button>
+            />
             <Logo />
           </div>
           <div className="hidden lg:block">
@@ -51,19 +51,19 @@ const MainLayout = () => {
           <Profile />
         </Header>
 
-        <div className="flex pt-16">
-          <div className="left-0 top-[4rem] z-40 h-[calc(100vh-4rem)]">
+        <div className="flex pt-16 max-h-[100vh] overflow-hidden">
+          <div className="left-0 top-[4rem] z-40 min-h-[calc(100vh-4rem)]">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <Layout className="flex w-48 flex-col">
+          <Layout className="flex w-48 flex-col ">
             <Content
               style={{
                 margin: '16px',
                 marginBottom: 0,
                 ...dashboardStyle,
               }}
-              className={`${pathname.includes('/dashboard') ? '' : 'shadow-md'} flex-grow overflow-auto`}
+              className={`${pathname.includes('/dashboard') ? '' : 'shadow-md'} flex-grow overflow-auto `}
             >
               <GlobalUtilityStyle>
                 <Outlet />

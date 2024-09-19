@@ -56,7 +56,7 @@ const MainLayout = () => {
           className="flex pt-16 
         "
         >
-          <div className="left-0 top-[4rem] z-40 min-h-[calc(100vh-4rem)]">
+          <div className="sticky left-0 top-[4rem] z-40 h-[calc(100vh-4rem)]">
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 

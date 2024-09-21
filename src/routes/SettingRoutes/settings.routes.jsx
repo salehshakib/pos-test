@@ -64,7 +64,7 @@ export const settingPaths = [
     element: <GiftCardType />,
   },
   {
-    name: 'Vat',
+    name: 'VAT',
     path: 'tax',
     icon: TbReceiptTax,
     element: <TaxList />,
@@ -76,13 +76,13 @@ export const settingPaths = [
     element: <LeaveType />,
   },
   {
-    name: 'Hrm Settings',
+    name: 'HRM Settings',
     path: 'hrm-settings',
     icon: MdTimeToLeave,
     element: <HrmSettings />,
   },
   {
-    name: 'Pos Settings',
+    name: 'POS Settings',
     path: 'pos-settings',
     icon: MdPointOfSale,
     element: <PosSetting />,

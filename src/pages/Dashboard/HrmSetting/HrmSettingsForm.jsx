@@ -18,7 +18,14 @@ export const HrmSettingForm = ({ data }) => {
 
   useEffect(() => {
     if (startTime && endTime) {
-      const timeDiff = endTime.diff(startTime, 'second');
+      // Check if endTime is before startTime
+      let timeDiff = endTime.diff(startTime, 'second');
+
+      // If endTime is earlier than startTime, assume endTime is the next day
+      if (timeDiff < 0) {
+        // Add 24 hours (in seconds) to the difference
+        timeDiff = endTime.add(1, 'day').diff(startTime, 'second');
+      }
 
       const hours = Math.floor(timeDiff / 3600);
       const minutes = Math.floor((timeDiff % 3600) / 60);

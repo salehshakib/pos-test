@@ -27,6 +27,7 @@ const CustomInput = (props) => {
 
     //for mb-0
     customStyle = false,
+    isReadOnly = false,
   } = props;
 
   const commonProps = {
@@ -34,6 +35,7 @@ const CustomInput = (props) => {
     size,
     prefix,
     value,
+    readOnly: isReadOnly,
   };
 
   const renderInputComponent = () => {

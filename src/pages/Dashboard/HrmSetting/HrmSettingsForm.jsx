@@ -148,6 +148,7 @@ export const HrmSettingForm = ({ data }) => {
               label="Office Hours"
               type="text"
               name={'office_hours'}
+              isReadOnly={true}
             />
           </Col>
         </Row>

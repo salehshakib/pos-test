@@ -18,7 +18,7 @@ const CompanySetting = () => {
   return (
     <div>
       <Divider orientation="left" orientationMargin={0}>
-        Compnay Settings
+        Company Settings
       </Divider>
       <Row {...rowLayout}>
         <Col {...colLayout}>

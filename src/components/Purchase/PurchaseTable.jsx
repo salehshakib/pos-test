@@ -144,7 +144,7 @@ export const PurchaseTable = ({
         created_at={false}
       />
 
-      <PurchaseEdit id={editId} editId={setEditId} />
+      <PurchaseEdit id={editId} setId={setEditId} />
 
       {detailsId && (
         <PurchaseDetails

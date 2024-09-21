@@ -211,7 +211,10 @@ export const fieldsToUpdate = (details) => {
       }
 
       // Handle date fields or keys with '_at'
-      if (key.includes('date') || key.includes('_at')) {
+      if (
+        (key.includes('date') || key.includes('_at')) &&
+        !key.includes('need_attachment')
+      ) {
         value = dayjs(value, 'YYYY-MM-DD');
       }
 

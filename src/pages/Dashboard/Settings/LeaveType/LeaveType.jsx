@@ -27,7 +27,7 @@ const columns = [
 
     render: (attachmentable) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {attachmentable === 1 ? 'Needed' : "Don't Needed"}
+        {attachmentable.toString() === '1' ? 'Needed' : "Don't Needed"}
       </span>
     ),
   },

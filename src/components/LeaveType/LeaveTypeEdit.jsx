@@ -7,6 +7,7 @@ import {
   useGetLeaveTypeDetailsQuery,
   useUpdateLeaveTypeMutation,
 } from '../../redux/services/settings/leaveType/leaveTypeApi';
+import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -38,9 +39,19 @@ export const LeaveTypeEdit = ({ id, setId }) => {
   }, [data, setFields, isEditDrawerOpen]);
 
   const handleUpdate = async (values) => {
+    const formData = new FormData();
+
+    const postData = {
+      ...values,
+      need_attachment: values?.need_attachment ? '1' : '0',
+      _method: 'PUT',
+    };
+
+    appendToFormData(postData, formData);
+
     const { data, error } = await updateLeaveType({
       id,
-      data: { ...values, _method: 'PUT' },
+      data: formData,
     });
 
     if (data?.success) {

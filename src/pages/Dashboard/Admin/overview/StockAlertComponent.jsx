@@ -80,7 +80,9 @@ const columns = [
     render: (stock, record) => (
       <span
         className={`"text-xs text-dark dark:text-white87" font-medium md:text-sm ${
-          record?.stock < record?.minQty ? 'text-red-500' : ''
+          parseInt(record?.stock) < parseInt(record?.minQty)
+            ? 'text-red-500'
+            : ''
         }`}
       >
         {stock}

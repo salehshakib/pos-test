@@ -11,3 +11,5 @@ export const BOOLEAN_KEYS = [
   'is_send_email',
   'all_departments',
 ];
+
+export const TIME_KEYS = ['leave_start_time', 'leave_end_time'];

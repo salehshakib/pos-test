@@ -28,28 +28,33 @@ export const LeaveEdit = ({ id, setId }) => {
   const [updateLeave, { isLoading }] = useUpdateLeaveMutation();
 
   useEffect(() => {
-    if (data) {
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const newFieldData = [
-        ...fieldData,
-        {
-          name: 'leave_start_time',
-          value: dayjs(data?.leave_start_date, 'HH:mm:ss'),
-          errors: '',
-        },
-        {
-          name: 'leave_end_time',
-          value: dayjs(data?.leave_end_time, 'HH:mm:ss'),
-          errors: '',
-        },
-      ];
+      console.log(data);
+      console.log(fieldData);
 
-      setFields(newFieldData);
+      // const newFieldData = [
+      //   ...fieldData,
+      //   {
+      //     name: 'leave_start_time',
+      //     value: dayjs(data?.leave_start_date, 'hh:mm:ss'),
+      //     errors: '',
+      //   },
+      //   {
+      //     name: 'leave_end_time',
+      //     value: dayjs(data?.leave_end_time, 'hh:mm:ss'),
+      //     errors: '',
+      //   },
+      // ];
+
+      setFields(fieldData);
     } else {
       setFields([]);
     }
-  }, [data, setFields]);
+  }, [data, setFields, isEditDrawerOpen]);
+
+  console.log(fields);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
@@ -71,12 +76,12 @@ export const LeaveEdit = ({ id, setId }) => {
 
     if (values?.leave_start_time) {
       postData.leave_start_time = dayjs(values?.leave_start_time).format(
-        'hh:mm:ss'
+        'HH:mm:ss'
       );
     }
     if (values?.leave_end_time) {
       postData.leave_end_time = dayjs(values?.leave_end_time).format(
-        'hh:mm:ss'
+        'HH:mm:ss'
       );
     }
 

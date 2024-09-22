@@ -36,12 +36,12 @@ export const LeaveCreate = () => {
 
     if (values?.leave_start_time) {
       postData.leave_start_time = dayjs(values?.leave_start_time).format(
-        'hh:mm:ss'
+        'HH:mm:ss'
       );
     }
     if (values?.leave_end_time) {
       postData.leave_end_time = dayjs(values?.leave_end_time).format(
-        'hh:mm:ss'
+        'HH:mm:ss'
       );
     }
 

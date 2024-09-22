@@ -13,7 +13,7 @@ import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import {
   calculateLeaveDays,
   formatTimeTo12Hour,
-} from '../../utilities/lib/leave/leaveHourCalculation';
+} from '../../utilities/lib/leave/leaveCalculation';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';

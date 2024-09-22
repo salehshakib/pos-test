@@ -27,7 +27,10 @@ export const Notification = () => {
   const warehouseId = user?.warehouse_id;
 
   const { data, refetch, isLoading } = useGetAllNotificationQuery({
-    id: warehouseId,
+    params: {
+      warehouse_id: warehouseId,
+      user_id: user.id,
+    },
   });
 
   useEffect(() => {

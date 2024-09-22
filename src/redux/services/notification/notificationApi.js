@@ -9,8 +9,9 @@ import { baseApi } from '../../api/baseApi';
 const notificationApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllNotification: build.query({
-      query: ({ id }) => ({
-        url: `/${NOTIFICATION}/${id}`,
+      query: ({ params }) => ({
+        url: `/${NOTIFICATION}`,
+        params: params,
         method: 'GET',
       }),
       transformResponse: (response) => verifyToken(response.data),

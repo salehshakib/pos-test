@@ -30,6 +30,7 @@ const PurchaseReturnCreate = () => {
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
+      purchase_id: {},
       product_id: {},
       purchase_unit_id: {},
       net_unit_cost: {},
@@ -55,6 +56,7 @@ const PurchaseReturnCreate = () => {
       setFormValues({
         product_list: {
           qty: {},
+          purchase_id: {},
           product_id: {},
           purchase_unit_id: {},
           net_unit_cost: {},
@@ -96,7 +98,6 @@ const PurchaseReturnCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -160,8 +161,8 @@ const PurchaseReturnCreate = () => {
       setFormValues({
         product_list: {
           qty: {},
-
           product_id: {},
+          purchase_id: {},
           purchase_unit_id: {},
           net_unit_cost: {},
           discount: {},

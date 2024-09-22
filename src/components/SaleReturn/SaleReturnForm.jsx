@@ -173,6 +173,7 @@ export const SaleReturnForm = ({
     if (data?.data) {
       setSaleData(data?.data);
       data?.data?.sale_products?.map((item) => {
+        console.log(item);
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,

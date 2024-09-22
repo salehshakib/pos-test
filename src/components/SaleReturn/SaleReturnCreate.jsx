@@ -29,6 +29,7 @@ const SaleReturnCreate = () => {
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
+      sale_id: {},
       product_id: {},
       sale_unit_id: {},
       net_unit_price: {},
@@ -49,13 +50,12 @@ const SaleReturnCreate = () => {
 
   const [saleData, setSaleData] = useState();
 
-  // const [summary, setSummary] = useState({});
-
   useEffect(() => {
     if (!isCreateDrawerOpen) {
       setFormValues({
         product_list: {
           qty: {},
+          sale_id: {},
           product_id: {},
           sale_unit_id: {},
           net_unit_price: {},
@@ -95,14 +95,16 @@ const SaleReturnCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
-      return openNotification('info', 'Please add atleast one product');
+      openNotification('info', 'Please add atleast one product');
+      return;
     }
 
     const totalPrice = calculateTotalPrice(updatedList);
-    const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
+    const orderTax = calculateTotalTax(
+      totalPrice,
+      values.tax_rate,
+      values?.discount
+    );
 
     const totalQty =
       Object.values(updatedList?.qty).reduce(
@@ -115,13 +117,6 @@ const SaleReturnCreate = () => {
         (acc, cur) => acc + parseFloat(cur),
         0
       ) ?? 0;
-
-    // setSummary({
-    //   totalItems: productListArray?.length,
-    //   totalQty: totalQty,
-    //   totalPrice: totalPrice,
-    //   grandTotal: calculateGrandTotal(totalPrice, orderTax),
-    // });
 
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
@@ -162,6 +157,7 @@ const SaleReturnCreate = () => {
         product_list: {
           qty: {},
           product_id: {},
+          sale_id: {},
           sale_unit_id: {},
           net_unit_price: {},
           discount: {},
@@ -201,7 +197,6 @@ const SaleReturnCreate = () => {
         products={products}
         setProducts={setProducts}
         setSaleData={setSaleData}
-        // summary={summary}
       />
     </CustomDrawer>
   );

@@ -74,6 +74,8 @@ export const HolidaysEdit = ({ id, setId }) => {
     }
   }, [data, setFields, isEditDrawerOpen, departmentLength]);
 
+  console.log(fields);
+
   const handleUpdate = async (values) => {
     const formData = new FormData();
 

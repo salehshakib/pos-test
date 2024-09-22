@@ -27,6 +27,7 @@ const AllDepartmentsComponent = () => {
 const DepartmentComponent = () => {
   const { data, isFetching } = useGetDepartmentsQuery({});
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const isAllSelected = Form.useWatch('all_departments', form);
 
@@ -36,15 +37,17 @@ const DepartmentComponent = () => {
   }));
 
   useEffect(() => {
-    if (isAllSelected && options) {
-      form.setFieldValue(
-        'department_ids',
-        options?.map((item) => item.value)
-      );
-    } else {
-      form.setFieldValue('department_ids', []);
+    if (!isEditDrawerOpen) {
+      if (isAllSelected && options) {
+        form.setFieldValue(
+          'department_ids',
+          options?.map((item) => item.value)
+        );
+      } else {
+        form.setFieldValue('department_ids', []);
+      }
     }
-  }, [form, isAllSelected, options]);
+  }, [form, isAllSelected, options, isEditDrawerOpen]);
 
   return isAllSelected ? (
     <>

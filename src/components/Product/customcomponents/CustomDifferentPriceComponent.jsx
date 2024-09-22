@@ -1,7 +1,9 @@
-import { Form } from 'antd';
+import { Col } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { fullColLayout } from '../../../layout/FormLayout';
+import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import { DifferentPriceComponent } from '../overview/DifferentPriceComponent';
 
 const updateStateWithProductData = (productPrices, setFormValues) => {
@@ -21,8 +23,6 @@ const updateStateWithProductData = (productPrices, setFormValues) => {
 };
 
 export const CustomDifferentPriceComponent = ({ onCustomSubmit, data }) => {
-  const form = Form.useFormInstance();
-  const hasDifferentPrice = Form.useWatch('has_different_price', form);
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const [formValues, setFormValues] = useState({
@@ -59,15 +59,17 @@ export const CustomDifferentPriceComponent = ({ onCustomSubmit, data }) => {
     }
   }, [data, isEditDrawerOpen]);
 
-  if (hasDifferentPrice)
-    return (
+  return (
+    <>
+      <Col {...fullColLayout} className="pt-3">
+        <WarehouseComponent />
+      </Col>
       <DifferentPriceComponent
         formValues={formValues}
         setFormValues={setFormValues}
         priceWarehouses={priceWarehouses}
         setPriceWarehouses={setPriceWarehouses}
       />
-    );
-
-  return null;
+    </>
+  );
 };

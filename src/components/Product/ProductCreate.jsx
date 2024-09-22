@@ -1,4 +1,4 @@
-import { Button, Form, message, Steps } from 'antd';
+import { Button, Form, message } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -241,19 +241,13 @@ const ProductCreate = () => {
     },
   ];
 
-  const items = steps.map((item) => ({
-    key: item.title,
-    title: item.title,
-  }));
-
   return (
     <CustomDrawer
-      title={'Create Product'}
+      title={current === '0' ? 'Create Product' : 'Product Stock & Price'}
       open={isCreateDrawerOpen}
       width={1400}
     >
-      <Steps current={current} items={items} />
-      <div className="pt-10">{steps[current].content}</div>
+      <div className="">{steps[current].content}</div>
       <div className="flex justify-end pb-48">
         {current > 0 && (
           <Button

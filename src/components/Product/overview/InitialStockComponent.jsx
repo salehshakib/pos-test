@@ -5,7 +5,6 @@ import { MdDelete } from 'react-icons/md';
 
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
-import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
 const columns = [
   {

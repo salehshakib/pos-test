@@ -4,10 +4,15 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
+import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
 import {
   useGetHolidayDetailsQuery,
   useUpdateHolidayMutation,
 } from '../../redux/services/hrm/holiday/holidayApi';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
@@ -21,6 +26,14 @@ export const HolidaysEdit = ({ id, setId }) => {
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data: departmentData } = useGetDepartmentsQuery({ params });
+
+  const departmentLength = departmentData?.results?.department?.length;
 
   const { data, isFetching } = useGetHolidayDetailsQuery(
     {
@@ -43,13 +56,14 @@ export const HolidaysEdit = ({ id, setId }) => {
         ...fieldData,
         {
           name: 'all_departments',
-          value: false,
+          value: data?.holiday_departments.length === departmentLength,
           errors: '',
         },
         {
           name: 'department_ids',
           value:
-            data?.department_ids?.map((item) => item?.id?.toString()) ?? [],
+            data?.holiday_departments?.map((item) => item?.id?.toString()) ??
+            [],
           errors: '',
         },
       ];
@@ -58,9 +72,7 @@ export const HolidaysEdit = ({ id, setId }) => {
     } else {
       setFields([]);
     }
-  }, [data, setFields, isEditDrawerOpen]);
-
-  console.log(fields);
+  }, [data, setFields, isEditDrawerOpen, departmentLength]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

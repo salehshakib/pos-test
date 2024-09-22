@@ -1,4 +1,7 @@
-import { ADJUSTMENT } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  ADJUSTMENT,
+  PRODUCT,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -53,7 +56,7 @@ const adjustmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ADJUSTMENT }] : [];
+        return result ? [{ type: ADJUSTMENT }, { type: PRODUCT }] : [];
       },
     }),
 
@@ -78,7 +81,7 @@ const adjustmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ADJUSTMENT }] : [];
+        return result ? [{ type: ADJUSTMENT }, { type: PRODUCT }] : [];
       },
     }),
 

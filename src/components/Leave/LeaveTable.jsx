@@ -10,86 +10,15 @@ import {
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import {
+  calculateLeaveDays,
+  formatTimeTo12Hour,
+} from '../../utilities/lib/leave/leaveHourCalculation';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { LeaveDetails } from './LeaveDetails';
 import { LeaveEdit } from './LeaveEdit';
-
-function calculateLeaveDays(
-  leaveStartDate,
-  leaveEndDate,
-  leaveDuration,
-  leaveStartTime,
-  leaveEndTime
-) {
-  const startDate = new Date(leaveStartDate);
-  const endDate = new Date(leaveEndDate);
-
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-    return 'Invalid date(s)';
-  }
-
-  // Calculate day difference between start and end dates
-  const timeDifference = endDate.getTime() - startDate.getTime();
-  const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-  // Handle leave in hours
-  if (leaveDuration === 'hours') {
-    const startTime = parseTime(leaveStartTime);
-    const endTime = parseTime(leaveEndTime);
-
-    if (!startTime || !endTime) {
-      return 'Invalid time(s)';
-    }
-
-    const timeDiffInHours =
-      (endTime.getTime() - startTime.getTime()) / (1000 * 3600);
-    return timeDiffInHours + ' Hours';
-  }
-
-  // Handle half-day leave
-  if (leaveDuration === 'half-day') {
-    return 'Half Day';
-  }
-
-  // Handle full-day leave
-  if (dayDifference < 2) {
-    return 'One Day';
-  }
-
-  return dayDifference + ' Days';
-}
-
-// Helper function to parse time in 'HH:mm:ss' format
-function parseTime(timeString) {
-  const [hours, minutes, seconds] = timeString.split(':').map(Number);
-
-  if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-    return null; // Invalid time string
-  }
-
-  const time = new Date();
-  time.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds to current day
-  return time;
-}
-
-function formatTimeTo12Hour(timeString) {
-  const [hours, minutes, seconds] = timeString.split(':').map(Number);
-
-  if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-    return 'Invalid time';
-  }
-
-  // Determine AM/PM and adjust hours for 12-hour format
-  const period = hours >= 12 ? 'PM' : 'AM';
-  let adjustedHours = hours % 12 || 12; // Convert 0 to 12 for midnight and handle 12-hour format
-
-  // Format minutes (don't need seconds for this display)
-  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-
-  return `${adjustedHours}:${formattedMinutes} ${period}`;
-}
 
 export const LeaveTable = ({
   newColumns,

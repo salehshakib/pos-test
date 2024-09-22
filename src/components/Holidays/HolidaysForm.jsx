@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
@@ -12,10 +13,11 @@ import CustomSelect from '../Shared/Select/CustomSelect';
 
 const AllDepartmentsComponent = () => {
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   useEffect(() => {
-    form.setFieldValue('all_departments', true);
-  }, [form]);
+    if (!isEditDrawerOpen) form.setFieldValue('all_departments', true);
+  }, [form, isEditDrawerOpen]);
 
   return (
     <CustomCheckbox label="For All Departments" name={'all_departments'} />

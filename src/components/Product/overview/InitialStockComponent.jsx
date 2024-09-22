@@ -4,9 +4,23 @@ import { FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
+import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 import { WarehouseController } from '../../WarehouseController/WarehouseController';
 
 const columns = [
+  {
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    width: 120,
+    render: (warehouse) => (
+      <div className={`flex items-center gap-2`}>
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+          {warehouse}
+        </span>
+      </div>
+    ),
+  },
   {
     title: 'Name',
     dataIndex: 'name',
@@ -185,11 +199,19 @@ export const InitialStockComponent = ({
   }, [form, formValues, initialWarehouses]);
 
   return (
-    <WarehouseController
-      warehouses={initialWarehouses}
-      setWarehouses={setInitialWarehouses}
+    // <WarehouseController
+    //   warehouses={initialWarehouses}
+    //   setWarehouses={setInitialWarehouses}
+    //   columns={columns}
+    //   dataSource={dataSource}
+    // />
+    <ProductController
       columns={columns}
       dataSource={dataSource}
+      products={[]}
+      setProducts={() => {
+        console.log('value');
+      }}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Button, Form, message, Steps } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,7 @@ import { openNotification } from '../../utilities/lib/openToaster';
 import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
+import { ProductStockForm } from './ProductStockForm';
 
 const ProductCreate = () => {
   const dispatch = useDispatch();
@@ -206,26 +207,78 @@ const ProductCreate = () => {
     }
   };
 
+  const [current, setCurrent] = useState(0);
+
+  const next = () => {
+    setCurrent(current + 1);
+  };
+
+  const prev = () => {
+    setCurrent(current - 1);
+  };
+
+  const handleStockSubmit = (values, { formValues }) => {
+    console.log(formValues);
+  };
+
+  const steps = [
+    {
+      title: 'Create Product',
+      content: (
+        <ProductForm
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          fields={errorFields}
+          form={form}
+        />
+      ),
+    },
+    {
+      title: 'Product Stock & Price',
+      content: (
+        <ProductStockForm handleSubmit={handleStockSubmit} form={form} />
+      ),
+    },
+  ];
+
+  const items = steps.map((item) => ({
+    key: item.title,
+    title: item.title,
+  }));
+
   return (
     <CustomDrawer
       title={'Create Product'}
       open={isCreateDrawerOpen}
       width={1400}
     >
-      <ProductForm
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-        fields={errorFields}
-        form={form}
-        // formValues={formValues}
-        // setFormValues={setFormValues}
-        // products={products}
-        // setProducts={setProducts}
-        // initialWarehouses={initialWarehouses}
-        // setInitialWarehouses={setInitialWarehouses}
-        // priceWarehouses={priceWarehouses}
-        // setPriceWarehouses={setPriceWarehouses}
-      />
+      <Steps current={current} items={items} />
+      <div className="pt-10">{steps[current].content}</div>
+      <div className="flex justify-end pb-48">
+        {current > 0 && (
+          <Button
+            style={{
+              margin: '0 8px',
+            }}
+            onClick={() => prev()}
+          >
+            Previous
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button
+            type="primary"
+            onClick={() => message.success('Processing complete!')}
+          >
+            Done
+          </Button>
+        )}
+        {current < steps.length - 1 && (
+          <Button type="primary" onClick={() => next()}>
+            Next
+          </Button>
+        )}
+      </div>
     </CustomDrawer>
   );
 };

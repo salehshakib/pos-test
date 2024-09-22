@@ -3,8 +3,15 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
-import { useGetAnnouncementDetailsQuery } from '../../redux/services/hrm/announcement/announcementApi';
-import { useUpdateLeaveTypeMutation } from '../../redux/services/settings/leaveType/leaveTypeApi';
+import {
+  useGetAnnouncementDetailsQuery,
+  useUpdateAnnouncementMutation,
+} from '../../redux/services/hrm/announcement/announcementApi';
+import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
@@ -19,17 +26,26 @@ export const AnnouncementEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
+  const { data: departmentData } = useGetDepartmentsQuery({ params });
+
+  const departmentLength = departmentData?.results?.department?.length;
+
   const { data, isFetching } = useGetAnnouncementDetailsQuery(
     {
       id,
       params: {
+        parent: 1,
         child: 1,
       },
     },
     { skip: !id }
   );
 
-  const [updateLeaveType, { isLoading }] = useUpdateLeaveTypeMutation();
+  const [updateLeaveType, { isLoading }] = useUpdateAnnouncementMutation();
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
@@ -39,12 +55,14 @@ export const AnnouncementEdit = ({ id, setId }) => {
         ...fieldData,
         {
           name: 'all_departments',
-          value: false,
+          value: data?.announcement_departments?.length === departmentLength,
           errors: '',
         },
         {
           name: 'department_ids',
-          value: data?.departments?.map((item) => item?.id?.toString()),
+          value: data?.announcement_departments?.map((item) =>
+            item?.id?.toString()
+          ),
           errors: '',
         },
       ];
@@ -53,7 +71,7 @@ export const AnnouncementEdit = ({ id, setId }) => {
     } else {
       setFields([]);
     }
-  }, [data, setFields, isEditDrawerOpen]);
+  }, [data, setFields, isEditDrawerOpen, departmentLength]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

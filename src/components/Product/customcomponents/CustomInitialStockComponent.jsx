@@ -1,7 +1,9 @@
-import { Form } from 'antd';
+import { Col, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { fullColLayout } from '../../../layout/FormLayout';
+import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import { InitialStockComponent } from '../overview/InitialStockComponent';
 
 const updateStateWithProductData = (productQties, setFormValues) => {
@@ -32,6 +34,7 @@ export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
   });
 
   const [initialWarehouses, setInitialWarehouses] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   const handleCustomSubmit = useCallback(() => {
     return formValues;
@@ -61,12 +64,17 @@ export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
 
   if (hasStock)
     return (
-      <InitialStockComponent
-        initialWarehouses={initialWarehouses}
-        setInitialWarehouses={setInitialWarehouses}
-        formValues={formValues}
-        setFormValues={setFormValues}
-      />
+      <>
+        <Col {...fullColLayout} className="pt-3">
+          <WarehouseComponent />
+        </Col>
+        <InitialStockComponent
+          initialWarehouses={initialWarehouses}
+          setInitialWarehouses={setInitialWarehouses}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
+      </>
     );
 
   return null;

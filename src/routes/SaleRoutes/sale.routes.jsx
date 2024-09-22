@@ -11,7 +11,7 @@ import SaleList from '../../pages/Dashboard/Sale/SaleList/SaleList';
 export const salePaths = [
   {
     name: 'Sell',
-    path: 'sell',
+    path: 'sale',
     icon: FaShoppingBasket,
     element: <SaleList />,
   },

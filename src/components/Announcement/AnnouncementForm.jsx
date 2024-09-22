@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { fullColLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useGetDepartmentsQuery } from '../../redux/services/hrm/department/departmentApi';
@@ -50,6 +51,7 @@ const DateComponent = () => {
 const DepartmentComponent = () => {
   const { data, isFetching } = useGetDepartmentsQuery({});
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const isAllSelected = Form.useWatch('all_departments', form);
 
@@ -59,15 +61,17 @@ const DepartmentComponent = () => {
   }));
 
   useEffect(() => {
-    if (isAllSelected && options) {
-      form.setFieldValue(
-        'department_ids',
-        options?.map((item) => item.value)
-      );
-    } else {
-      form.setFieldValue('department_ids', []);
+    if (!isEditDrawerOpen) {
+      if (isAllSelected && options) {
+        form.setFieldValue(
+          'department_ids',
+          options?.map((item) => item.value)
+        );
+      } else {
+        form.setFieldValue('department_ids', []);
+      }
     }
-  }, [form, isAllSelected, options]);
+  }, [form, isAllSelected, options, isEditDrawerOpen]);
 
   return isAllSelected ? (
     <>
@@ -87,10 +91,11 @@ const DepartmentComponent = () => {
 
 const AllDepartmentsComponent = () => {
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   useEffect(() => {
-    form.setFieldValue('all_departments', true);
-  }, [form]);
+    if (!isEditDrawerOpen) form.setFieldValue('all_departments', true);
+  }, [form, isEditDrawerOpen]);
 
   return (
     <CustomCheckbox label="For All Departments" name={'all_departments'} />

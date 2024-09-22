@@ -20,8 +20,6 @@ import CustomInputButton from '../Shared/Input/CustomInputButton';
 import CustomSelect from '../Shared/Select/CustomSelect';
 import RichTextEditor from '../Shared/TextEditor/RichTextEditor';
 import CustomUploader from '../Shared/Upload/CustomUploader';
-import { CustomDifferentPriceComponent } from './customcomponents/CustomDifferentPriceComponent';
-import { CustomInititalStockComponent } from './customcomponents/CustomInitialStockComponent';
 import { CustomProductComponent } from './customcomponents/CustomProductComponent';
 import { BrandComponent } from './overview/BrandComponent';
 import { CategoryComponent } from './overview/CategoryComponent';
@@ -278,38 +276,38 @@ const IMEIComponent = () => {
 
 const ProductForm = ({ data, ...props }) => {
   const comboProductSubmitRef = useRef(null);
-  const initialStockSubmitRef = useRef(null);
-  const diffPriceSubmitRef = useRef(null);
+  // const initialStockSubmitRef = useRef(null);
+  // const diffPriceSubmitRef = useRef(null);
 
   const handleComboProduct = useCallback((submitFunction) => {
     comboProductSubmitRef.current = submitFunction;
   }, []);
 
-  const handleInitialProduct = useCallback((submitFunction) => {
-    initialStockSubmitRef.current = submitFunction;
-  }, []);
+  // const handleInitialProduct = useCallback((submitFunction) => {
+  //   initialStockSubmitRef.current = submitFunction;
+  // }, []);
 
-  const handlediffPriceProduct = useCallback((submitFunction) => {
-    diffPriceSubmitRef.current = submitFunction;
-  }, []);
+  // const handlediffPriceProduct = useCallback((submitFunction) => {
+  //   diffPriceSubmitRef.current = submitFunction;
+  // }, []);
 
   const handleSubmit = (values) => {
     const comboData = comboProductSubmitRef.current
       ? comboProductSubmitRef.current()
       : null;
 
-    const initialData = initialStockSubmitRef.current
-      ? initialStockSubmitRef.current()
-      : null;
+    // const initialData = initialStockSubmitRef.current
+    //   ? initialStockSubmitRef.current()
+    //   : null;
 
-    const diffPriceData = diffPriceSubmitRef.current
-      ? diffPriceSubmitRef.current()
-      : null;
+    // const diffPriceData = diffPriceSubmitRef.current
+    //   ? diffPriceSubmitRef.current()
+    //   : null;
 
     const formValues = {
       product_list: comboData.product_list,
-      qty_list: initialData.qty_list,
-      price_list: diffPriceData.price_list,
+      // qty_list: initialData.qty_list,
+      // price_list: diffPriceData.price_list,
     };
 
     props.handleSubmit(values, { formValues });
@@ -376,7 +374,7 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      <Row {...rowLayout}>
+      {/* <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomCheckbox label="Initial Stock" name="has_stock" />
         </Col>
@@ -385,7 +383,7 @@ const ProductForm = ({ data, ...props }) => {
           onCustomSubmit={handleInitialProduct}
           data={data}
         />
-      </Row>
+      </Row> */}
 
       <Row {...rowLayout} justify={'center'} align={'middle'}>
         <Col xs={24}>
@@ -410,7 +408,7 @@ const ProductForm = ({ data, ...props }) => {
 
       <VariantComponent />
 
-      <Row {...rowLayout}>
+      {/* <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label="This product has different price for different warehouse"
@@ -422,7 +420,7 @@ const ProductForm = ({ data, ...props }) => {
           onCustomSubmit={handlediffPriceProduct}
           data={data}
         />
-      </Row>
+      </Row> */}
 
       <IMEIComponent />
 

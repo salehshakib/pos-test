@@ -21,17 +21,17 @@ const columns = [
       </span>
     ),
   },
-  {
-    title: 'Departments',
-    dataIndex: 'departments',
-    key: 'departments',
-    width: 300,
-    render: (departments) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {departments?.mp((item) => item?.name)}
-      </span>
-    ),
-  },
+  // {
+  //   title: 'Departments',
+  //   dataIndex: 'departments',
+  //   key: 'departments',
+  //   width: 300,
+  //   render: (departments) => (
+  //     <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+  //       {departments?.mp((item) => item?.name)}
+  //     </span>
+  //   ),
+  // },
   {
     title: 'Start Date',
     dataIndex: 'startDate',

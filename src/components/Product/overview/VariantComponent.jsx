@@ -9,7 +9,7 @@ export const VariantComponent = () => {
   const has_variant = Form.useWatch('has_variant', form);
   const productType = Form.useWatch('type', form);
 
-  if (productType !== 'Standard')
+  if (productType === 'Standard')
     return (
       <Row {...rowLayout}>
         <Col {...fullColLayout}>

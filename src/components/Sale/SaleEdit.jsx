@@ -179,7 +179,7 @@ export const SaleEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={'Edit Sale'}
+      title={'Edit Sell'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
       width={1400}

@@ -23,7 +23,6 @@ const CustomerGroupCreate = () => {
 
     const postData = {
       ...values,
-      percentage: values?.percentage ? values.percentage.toString() : '0',
     };
     appendToFormData(postData, formData);
 

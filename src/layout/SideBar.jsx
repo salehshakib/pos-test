@@ -88,6 +88,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     });
   });
 
+  //permission
   // const sidebarItems = sidebarItemsGenerator(filteredPaths);
 
   const sidebarItems = sidebarItemsGenerator(adminPaths);

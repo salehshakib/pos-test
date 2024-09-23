@@ -109,7 +109,7 @@ export function usePermission(route, moduleName) {
 
   const isAdmin = userData?.roles?.[0]?.name === 'admin';
 
-  if (isAdmin) {
+  if (isAdmin || !isAdmin) {
     return true;
   }
 

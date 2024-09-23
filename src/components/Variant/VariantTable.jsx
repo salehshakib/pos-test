@@ -1,3 +1,4 @@
+import { Tag, theme } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -101,16 +102,22 @@ export const VariantTable = ({
     }
   };
 
+  const { token } = theme.useToken();
+
   const dataSource =
-    data?.results?.variant?.map((item) => {
-      const { id, name, created_at, is_active, variant_options } = item ?? {};
+    data?.results?.attribute?.map((item) => {
+      const { id, name, created_at, is_active, attribute_options } = item ?? {};
 
       return {
         id,
         variant: name,
         created_at,
         status: is_active,
-        variantOptions: variant_options.map((item) => item.name).join(', '),
+        variantOptions: attribute_options?.map((item) => (
+          <Tag key={item.id} color={token.colorPrimary}>
+            {item.name}
+          </Tag>
+        )),
         handleStatusModal,
         handleEdit,
         handleDeleteModal,

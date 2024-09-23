@@ -55,7 +55,6 @@ export const adminPaths = [
     path: 'purchase',
     icon: FiShoppingBag,
     element: <Purchase />,
-    // children: purchasePaths,
   },
   {
     name: 'Sales',
@@ -75,32 +74,12 @@ export const adminPaths = [
     icon: TbFilePercent,
     children: generatorPaths,
   },
-  // {
-  //   name: "Transfer",
-  //   path: "transfer",
-  //   icon: TbTransferIn,
-  //   element: <TransferList />,
-  //   // children: transferPaths,
-  // },
   {
     name: 'Return',
     path: 'return',
     icon: TbTruckReturn,
     children: returnPaths,
   },
-  // {
-  //   name: "Accounting",
-  //   path: "accounting",
-  //   icon: IoCardOutline,
-  //   // children: [
-  //   //   {
-  //   //     name: "Sub Accounting",
-  //   //     path: "sub-accounting",
-  //   //     icon: TbDashboard,
-  //   //     element: <Accounting />,
-  //   //   },
-  //   // ],
-  // },
   {
     name: 'HRM',
     path: 'hrm',
@@ -125,19 +104,6 @@ export const adminPaths = [
     icon: MdOutlineMailLock,
     children: emailPaths,
   },
-  // {
-  //   name: "Documents",
-  //   path: "documents",
-  //   icon: IoDocumentTextOutline,
-  //   element: <Documents />,
-  // },
-
-  // {
-  //   name: "AddOns",
-  //   path: "addons",
-  //   icon: VscDiffAdded,
-  //   element: <AddOns />,
-  // },
   {
     name: 'Settings',
     path: 'settings',

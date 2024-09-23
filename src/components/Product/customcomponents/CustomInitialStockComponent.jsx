@@ -1,4 +1,4 @@
-import { Col, Form } from 'antd';
+import { Col } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -23,8 +23,6 @@ const updateStateWithProductData = (productQties, setFormValues) => {
 };
 
 export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
-  const form = Form.useFormInstance();
-  const hasStock = Form.useWatch('has_stock', form);
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const [formValues, setFormValues] = useState({
@@ -62,20 +60,17 @@ export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
     }
   }, [data, isEditDrawerOpen]);
 
-  if (hasStock)
-    return (
-      <>
-        <Col {...fullColLayout} className="pt-3">
-          <WarehouseComponent />
-        </Col>
-        <InitialStockComponent
-          initialWarehouses={initialWarehouses}
-          setInitialWarehouses={setInitialWarehouses}
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
-      </>
-    );
-
-  return null;
+  return (
+    <>
+      <Col {...fullColLayout} className="pt-3">
+        <WarehouseComponent />
+      </Col>
+      <InitialStockComponent
+        initialWarehouses={initialWarehouses}
+        setInitialWarehouses={setInitialWarehouses}
+        formValues={formValues}
+        setFormValues={setFormValues}
+      />
+    </>
+  );
 };

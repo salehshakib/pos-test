@@ -34,9 +34,8 @@ const SaleReturnEdit = ({ id, setId }) => {
   const [formValues, setFormValues] = useState({
     product_list: {
       qty: {},
-      sale_id: {},
       product_id: {},
-      // recieved: {},
+      sale_id: {},
       sale_unit_id: {},
       net_unit_price: {},
       discount: {},
@@ -206,14 +205,16 @@ const SaleReturnEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
-      // return;
-
-      return openNotification('info', 'Please add atleast one product');
+      openNotification('info', 'Please add atleast one product');
+      return;
     }
 
     const totalPrice = calculateTotalPrice(updatedList);
-    const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
+    const orderTax = calculateTotalTax(
+      totalPrice,
+      values.tax_rate,
+      values?.discount
+    );
 
     const totalQty =
       Object.values(updatedList?.qty).reduce(
@@ -261,10 +262,8 @@ const SaleReturnEdit = ({ id, setId }) => {
     }
 
     if (productListArray.length === 0) {
-      // message.error("Please add at least one product");
-      // return;
-
-      return openNotification('info', 'Please add atleast one product');
+      openNotification('info', 'Please add atleast one product');
+      return;
     }
 
     appendToFormData(postData, formData);
@@ -307,7 +306,6 @@ const SaleReturnEdit = ({ id, setId }) => {
         setProducts={setProducts}
         setSaleData={setSaleData}
         referenceId={referenceId}
-        // summary={summary}
       />
     </CustomDrawer>
   );

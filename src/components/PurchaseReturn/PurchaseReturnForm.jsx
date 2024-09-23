@@ -111,7 +111,6 @@ export const PurchaseReturnForm = ({
   ...props
 }) => {
   const { form } = props;
-  // const { message } = App.useApp();
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [purchaseExists, setPurchaseExists] = useState(false);
@@ -169,6 +168,7 @@ export const PurchaseReturnForm = ({
       setSaleData(data?.data);
 
       data?.data?.purchase_products?.map((item) => {
+        console.log(item);
         setFormValues((prevFormValues) => {
           return {
             ...prevFormValues,

@@ -1,8 +1,7 @@
-import { Col, Row } from 'antd';
+import { Row, Tabs } from 'antd';
 import { useCallback, useRef } from 'react';
 
-import { fullColLayout, rowLayout } from '../../layout/FormLayout';
-import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
+import { rowLayout } from '../../layout/FormLayout';
 import CustomForm from '../Shared/Form/CustomForm';
 import { CustomDifferentPriceComponent } from './customcomponents/CustomDifferentPriceComponent';
 import { CustomInititalStockComponent } from './customcomponents/CustomInitialStockComponent';
@@ -44,30 +43,36 @@ export const ProductStockForm = ({ data, ...props }) => {
 
   return (
     <CustomForm {...props} handleSubmit={handleSubmit}>
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox label="Initial Stock" name="has_stock" />
-        </Col>
-
-        <CustomInititalStockComponent
-          onCustomSubmit={handleInitialProduct}
-          data={data}
-        />
-      </Row>
-
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="This product has different price for different warehouse"
-            name="has_different_price"
-          />
-        </Col>
-
-        <CustomDifferentPriceComponent
-          onCustomSubmit={handlediffPriceProduct}
-          data={data}
-        />
-      </Row>
+      <Tabs
+        defaultActiveKey="stock"
+        className="-mt-4"
+        items={[
+          {
+            key: 'stock',
+            label: 'Initial Stock',
+            children: (
+              <Row {...rowLayout}>
+                <CustomInititalStockComponent
+                  onCustomSubmit={handleInitialProduct}
+                  data={data}
+                />
+              </Row>
+            ),
+          },
+          {
+            key: 'price',
+            label: 'Different Price',
+            children: (
+              <Row {...rowLayout}>
+                <CustomDifferentPriceComponent
+                  onCustomSubmit={handlediffPriceProduct}
+                  data={data}
+                />
+              </Row>
+            ),
+          },
+        ]}
+      />
     </CustomForm>
   );
 };

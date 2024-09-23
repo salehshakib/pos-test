@@ -35,6 +35,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
     product_list: {
       qty: {},
       product_id: {},
+      purchase_id: {},
       purchase_unit_id: {},
       net_unit_cost: {},
       discount: {},
@@ -74,6 +75,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
         product_list: {
           qty: {},
           product_id: {},
+          purchase_id: {},
           purchase_unit_id: {},
           net_unit_cost: {},
           discount: {},
@@ -190,6 +192,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
           .map((product_id) => ({
             product_id: parseInt(product_id),
             qty: updatedList.qty[product_id],
+            purchase_id: updatedList.purchase_id[product_id],
             purchase_unit_id: updatedList.purchase_unit_id[product_id],
             net_unit_cost: decimalConverter(
               updatedList.net_unit_cost[product_id]
@@ -202,7 +205,6 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      // message.info("Please add atleast one product");
       openNotification('info', 'Please add atleast one product');
       return;
     }
@@ -261,7 +263,6 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       postData.deleteAttachmentIds = deleteAttachmentIds;
     }
     if (productListArray.length === 0) {
-      // message.error("Please add at least one product");
       openNotification('error', 'Please add at least one product');
       return;
     }

@@ -3,9 +3,22 @@ import { useEffect } from 'react';
 import { MdDelete } from 'react-icons/md';
 
 import CustomInput from '../../Shared/Input/CustomInput';
-import { WarehouseController } from '../../WarehouseController/WarehouseController';
+import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 
 const columns = [
+  {
+    title: 'Warehouse',
+    dataIndex: 'warehouse',
+    key: 'warehouse',
+    width: 120,
+    render: (warehouse) => (
+      <div className={`flex items-center gap-2`}>
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+          {warehouse}
+        </span>
+      </div>
+    ),
+  },
   {
     title: 'Name',
     dataIndex: 'name',
@@ -150,11 +163,15 @@ export const DifferentPriceComponent = ({
   }, [form, formValues, priceWarehouses]);
 
   return (
-    <WarehouseController
-      warehouses={priceWarehouses}
-      setWarehouses={setPriceWarehouses}
+    <ProductController
+      // warehouses={priceWarehouses}
+      // setWarehouses={setPriceWarehouses}
       columns={columns}
       dataSource={dataSource}
+      products={[]}
+      setProducts={() => {
+        console.log('value');
+      }}
     />
   );
 };

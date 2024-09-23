@@ -82,7 +82,7 @@ const CustomerGroupTable = ({
       return {
         id,
         name: name,
-        percentage: percentage + ' percent',
+        percentage: percentage ?? '0' + ' percent',
         created_at,
         handleEdit,
         handleDeleteModal,

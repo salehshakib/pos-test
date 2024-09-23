@@ -1,4 +1,7 @@
-import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  PRODUCT,
+  PRODUCT_VARIANTS,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -17,6 +20,21 @@ const productApi = baseApi.injectEndpoints({
       providesTags: (result, error, { params }) => [
         { type: PRODUCT, ...params },
         PRODUCT,
+      ],
+    }),
+
+    getAllProductVariants: build.query({
+      query: ({ params }) => {
+        return {
+          url: `/${PRODUCT_VARIANTS}`,
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { params }) => [
+        { type: PRODUCT_VARIANTS, ...params },
+        PRODUCT_VARIANTS,
       ],
     }),
 
@@ -134,6 +152,7 @@ const productApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllProductsQuery,
+  useGetAllProductVariantsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

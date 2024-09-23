@@ -45,7 +45,7 @@ export const SaleCreate = () => {
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             qty: product_list.qty[product_id],
             sale_unit_id: product_list.sale_unit_id[product_id],
             net_unit_price: decimalConverter(

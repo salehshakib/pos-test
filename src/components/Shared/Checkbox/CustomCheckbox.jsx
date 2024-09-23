@@ -27,7 +27,7 @@ const CustomCheckbox = (props) => {
         noStyle
       >
         {mode === 'single' && !onChange && (
-          <Checkbox className="my-1" required={required}>
+          <Checkbox className="my-2" required={required}>
             <span>{label}</span>
             <span className="px-2 text-sm text-gray-500">{subLabel}</span>
           </Checkbox>

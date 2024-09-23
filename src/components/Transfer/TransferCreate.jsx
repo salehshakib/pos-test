@@ -22,49 +22,6 @@ const TransferCreate = () => {
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     qty: {},
-  //     purchase_unit_id: {},
-  //     net_unit_cost: {},
-  //     tax_rate: {},
-  //     tax: {},
-  //     total: {},
-  //     tax_id: {},
-  //   },
-  // });
-
-  // const [products, setProducts] = useState([]);
-
-  // const [productUnits, setProductUnits] = useState({
-  //   purchase_units: {},
-  //   tax_rate: {},
-  // });
-
-  // const warehouseId = Form.useWatch('from_warehouse_id', form);
-  // useEffect(() => {
-  //   if (warehouseId) {
-  //     setFormValues({
-  //       product_list: {
-  //         qty: {},
-  //         purchase_unit_id: {},
-  //         net_unit_cost: {},
-  //         tax_rate: {},
-  //         tax: {},
-  //         total: {},
-  //         tax_id: {},
-  //       },
-  //     });
-
-  //     setProducts([]);
-
-  //     setProductUnits({
-  //       purchase_units: {},
-  //       tax_rate: {},
-  //     });
-  //   }
-  // }, [warehouseId]);
-
   const [createTransfer, { isLoading }] = useCreateTransferMutation();
 
   const handleSubmit = async (values, { formValues }) => {
@@ -78,7 +35,7 @@ const TransferCreate = () => {
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             qty: product_list.qty[product_id],
             purchase_unit_id: product_list.purchase_unit_id[product_id],
             net_unit_cost: decimalConverter(
@@ -138,27 +95,6 @@ const TransferCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-
-      // setFormValues({
-      //   product_list: {
-      //     product_id: {},
-      //     qty: {},
-      //     purchase_unit_id: {},
-      //     net_unit_cost: {},
-      //     tax_rate: {},
-      //     tax: {},
-      //     total: {},
-
-      //     tax_id: {},
-      //   },
-      // });
-
-      // setProducts([]);
-
-      // setProductUnits({
-      //   purchase_units: {},
-      //   tax_rate: {},
-      // });
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -181,12 +117,6 @@ const TransferCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        // formValues={formValues}
-        // setFormValues={setFormValues}
-        // products={products}
-        // setProducts={setProducts}
-        // productUnits={productUnits}
-        // setProductUnits={setProductUnits}
       />
     </CustomDrawer>
   );

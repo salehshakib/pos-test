@@ -130,6 +130,7 @@ const CustomSelect = ({
   size = 'large',
 
   customStyle = false, // for mb-0
+  value,
 }) => {
   const filterOption = (input, option) =>
     (option?.label ?? '').toLocaleLowerCase().includes(input.toLowerCase());
@@ -157,6 +158,7 @@ const CustomSelect = ({
     defaultActiveFirstOption: true,
     onSelect,
     suffixIcon: <FaAngleDown color="black" />,
+    value,
   };
 
   return (

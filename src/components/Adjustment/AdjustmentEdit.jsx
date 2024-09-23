@@ -128,7 +128,7 @@ const AdjustmentEdit = ({ id, setId }) => {
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => {
             return {
-              product_id: parseInt(product_id),
+              product_variant_id: parseInt(product_id),
               qty: product_list.qty[product_id],
               action: product_list.action[product_id],
             };

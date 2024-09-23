@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
-import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
+import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
 import { openNotification } from '../../../utilities/lib/openToaster';
@@ -66,7 +66,7 @@ export const SearchProduct = ({ setProducts }) => {
     isRelationalParams: !isIgnore,
   });
 
-  const { data, isFetching } = useGetAllProductsQuery(
+  const { data, isFetching } = useGetAllProductVariantsQuery(
     {
       params,
     },
@@ -90,7 +90,7 @@ export const SearchProduct = ({ setProducts }) => {
           label: loadingContent,
         },
       ]
-    : (data?.results?.product?.map((product) => ({
+    : (data?.results?.productvariant?.map((product) => ({
         value: product.id.toString(),
         label: `${product.name} (SKU: ${product.sku})`,
         product: product,

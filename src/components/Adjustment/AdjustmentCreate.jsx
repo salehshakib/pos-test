@@ -31,32 +31,17 @@ const AdjustmentCreate = () => {
 
     const formData = new FormData();
 
-    // const productListArray = Object.keys(product_list?.qty).map(
-    //   (product_id) => {
-    //     return {
-    //       product_id: parseInt(product_id),
-    //       qty: product_list?.qty[product_id],
-    //       action: product_list?.action[product_id],
-    //     };
-    //   }
-    // );
-
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             qty: product_list.qty[product_id],
             action: product_list.action[product_id],
           }))
       : [];
 
     const postObj = {
-      // attachment:
-      //   attachment?.length > 0
-      //     ? attachment?.map((file) => file.originFileObj)
-      //     : [],
-
       warehouse_id: parseInt(warehouse_id),
       product_list: JSON.stringify(productListArray),
       note,

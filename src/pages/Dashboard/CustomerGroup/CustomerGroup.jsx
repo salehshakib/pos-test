@@ -19,13 +19,13 @@ const columns = [
     ),
   },
   {
-    title: 'Percentage (%)',
-    dataIndex: 'percentage',
-    key: 'percentage',
+    title: 'Customer Count',
+    dataIndex: 'count',
+    key: 'count',
     align: 'center',
-    render: (percentage) => (
+    render: (count) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {percentage}
+        {count}
       </span>
     ),
   },

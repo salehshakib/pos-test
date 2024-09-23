@@ -21,7 +21,15 @@ export const PayrollEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetPayrollDetailsQuery({ id }, { skip: !id });
+  const { data, isFetching } = useGetPayrollDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+      },
+    },
+    { skip: !id }
+  );
 
   const [updatePayroll, { isLoading }] = useUpdatePayrollMutation();
 
@@ -29,7 +37,16 @@ export const PayrollEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const updateFieldValue = [
+        ...fieldData,
+        {
+          name: 'department_id',
+          value: data?.employees?.departments?.id.toString(),
+          errors: '',
+        },
+      ];
+
+      setFields(updateFieldValue);
     } else {
       setFields([]);
     }

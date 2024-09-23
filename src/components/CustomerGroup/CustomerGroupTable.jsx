@@ -77,12 +77,12 @@ const CustomerGroupTable = ({
 
   const dataSource =
     data?.results?.customergroup?.map((item) => {
-      const { id, name, created_at, percentage } = item ?? {};
+      const { id, name, created_at, count } = item ?? {};
 
       return {
         id,
         name: name,
-        percentage: percentage ?? '0' + ' percent',
+        count: count ?? '0',
         created_at,
         handleEdit,
         handleDeleteModal,

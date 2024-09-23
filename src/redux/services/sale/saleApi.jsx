@@ -39,9 +39,14 @@ const saleApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response) => {
+      transformResponse: async (response) => {
         if (response?.success) {
           openNotification('success', response?.message);
+
+          await fetch(`/${SALE}/sale_invoice`, {
+            method: 'GET',
+          });
+
           return response;
         }
       },

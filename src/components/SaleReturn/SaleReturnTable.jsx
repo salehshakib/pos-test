@@ -92,11 +92,13 @@ const SaleReturnTable = ({
         cashiers,
         sale_return_at,
         grand_total,
+        sale,
       } = item ?? {};
 
       return {
         id,
         referenceNo: reference_id,
+        saleReference: sale?.reference_id,
         warehouse: warehouses?.name,
         cashier: cashiers?.name,
         date: formatDate(sale_return_at, format),

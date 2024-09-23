@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -26,53 +26,9 @@ const SaleReturnCreate = () => {
 
   const [createSaleReturn, { isLoading }] = useCreateSaleReturnMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      sale_id: {},
-      product_id: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
 
-      max_return: {},
-    },
-  });
-
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-  });
-
-  const [products, setProducts] = useState([]);
-
-  const [saleData, setSaleData] = useState();
-
-  useEffect(() => {
-    if (!isCreateDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_id: {},
-          product_id: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProductUnits({ sale_units: {} });
-
-      setProducts([]);
-      form.resetFields();
-    }
-  }, [form, isCreateDrawerOpen]);
-
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { sellData, formValues }) => {
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();
@@ -118,19 +74,21 @@ const SaleReturnCreate = () => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(totalPrice, values.tax_rate);
+
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
-      sale_id: saleData?.id,
-      petty_cash_id: saleData?.petty_cash_id,
-      warehouse_id: saleData?.warehouse_id,
-      cashier_id: saleData?.cashier_id,
+      sale_id: sellData?.id,
+      petty_cash_id: pettyCashId,
+      warehouse_id: sellData?.warehouse_id,
+      cashier_id: sellData?.cashier_id,
       item: productListArray?.length,
       total_qty: decimalConverter(totalQty),
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax_rate: decimalConverter(values?.tax_rate),
       tax: decimalConverter(orderTax),
-      grand_total: calculateGrandTotal(totalPrice, orderTax),
+      grand_total: grandTotal,
       return_payment_type: values?.payment_type,
       return_amount: decimalConverter(totalPrice),
       return_note: values?.return_note,
@@ -152,23 +110,6 @@ const SaleReturnCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-
-      setFormValues({
-        product_list: {
-          qty: {},
-          product_id: {},
-          sale_id: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProductUnits({ sale_units: {} });
-
-      setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -190,13 +131,6 @@ const SaleReturnCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-        products={products}
-        setProducts={setProducts}
-        setSaleData={setSaleData}
       />
     </CustomDrawer>
   );

@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -27,55 +27,7 @@ const PurchaseReturnCreate = () => {
   const [createPurchaseReturn, { isLoading }] =
     useCreatePurchaseReturnMutation();
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      purchase_id: {},
-      product_id: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      max_return: {},
-    },
-  });
-
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-  });
-
-  const [products, setProducts] = useState([]);
-
-  const [saleData, setSaleData] = useState();
-
-  useEffect(() => {
-    if (!isCreateDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          purchase_id: {},
-          product_id: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          max_return: {},
-        },
-      });
-      setProductUnits({ purchase_units: {} });
-
-      setProducts([]);
-      form.resetFields();
-    }
-  }, [form, isCreateDrawerOpen]);
-
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { purchaseData, formValues }) => {
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();
@@ -98,7 +50,7 @@ const PurchaseReturnCreate = () => {
       : [];
 
     if (productListArray.length === 0) {
-      openNotification('info', 'Please add atleast one product');
+      openNotification('info', 'Please select atleast one product');
       return;
     }
 
@@ -121,21 +73,23 @@ const PurchaseReturnCreate = () => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(totalPrice, values.tax_rate);
+
     const postData = {
       purchase_return_at: dayjs(values?.purchase_return_at).format(
         'YYYY-MM-DD'
       ),
-      purchase_id: saleData?.id,
-      petty_cash_id: saleData?.petty_cash_id,
-      warehouse_id: saleData?.warehouse_id,
-      cashier_id: saleData?.cashier_id,
+      purchase_id: purchaseData?.id,
+      petty_cash_id: purchaseData?.petty_cash_id,
+      warehouse_id: purchaseData?.warehouse_id,
+      cashier_id: purchaseData?.cashier_id,
       item: productListArray?.length,
       total_qty: decimalConverter(totalQty),
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax_rate: decimalConverter(values?.tax_rate),
       tax: decimalConverter(orderTax),
-      grand_total: calculateGrandTotal(totalPrice, orderTax),
+      grand_total: grandTotal,
       return_payment_type: values?.payment_type,
       return_amount: decimalConverter(totalPrice),
       return_note: values?.return_note,
@@ -157,23 +111,6 @@ const PurchaseReturnCreate = () => {
     if (data?.success) {
       dispatch(closeCreateDrawer());
       form.resetFields();
-
-      setFormValues({
-        product_list: {
-          qty: {},
-          product_id: {},
-          purchase_id: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-        },
-      });
-      setProductUnits({ purchase_units: {} });
-
-      setProducts([]);
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -195,13 +132,6 @@ const PurchaseReturnCreate = () => {
         isLoading={isLoading}
         fields={errorFields}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-        products={products}
-        setProducts={setProducts}
-        setSaleData={setSaleData}
       />
     </CustomDrawer>
   );

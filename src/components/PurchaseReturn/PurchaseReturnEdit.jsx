@@ -31,30 +31,6 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      product_id: {},
-      purchase_id: {},
-      purchase_unit_id: {},
-      net_unit_cost: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      max_return: {},
-    },
-  });
-
-  const [productUnits, setProductUnits] = useState({
-    purchase_units: {},
-  });
-
-  const [products, setProducts] = useState([]);
-  const [saleData, setSaleData] = useState();
-  const [referenceId, setReferenceId] = useState(null);
-
   const { data, isFetching } = useGetPurchaseReturnDetailsQuery(
     {
       id,
@@ -70,118 +46,15 @@ const PurchaseReturnEdit = ({ id, setId }) => {
     useUpdatePurchaseReturnMutation();
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          product_id: {},
-          purchase_id: {},
-          purchase_unit_id: {},
-          net_unit_cost: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          max_return: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        purchase_units: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
-
-      data?.purchase_return_products?.forEach((product) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            product_id: {
-              ...prevFormValues.product_list.product_id,
-              [product.product_id.toString()]: product.product_id,
-            },
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [product.product_id.toString()]: product.qty,
-            },
-            purchase_unit_id: {
-              ...prevFormValues.product_list.purchase_unit_id,
-              [product.product_id.toString()]: product.purchase_unit_id,
-            },
-            net_unit_cost: {
-              ...prevFormValues.product_list.net_unit_cost,
-              [product.product_id.toString()]: product.net_unit_cost,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [product.product_id.toString()]: product.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [product.product_id.toString()]: product.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [product.product_id.toString()]: product.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [product.product_id.toString()]: product.total,
-            },
-            tax_id: {
-              ...prevFormValues.product_list.tax_id,
-              [product.product_id.toString()]: product.products?.tax_id,
-            },
-
-            max_return: {
-              ...prevFormValues.product_list.max_return,
-              [product.product_id.toString()]: product.qty,
-            },
-          },
-        }));
-
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: product.product_id,
-            name: product.products?.name,
-            sku: product.products?.sku,
-            buying_price: product.products?.buying_price,
-            purchase_unit_id: product.purchase_unit_id,
-            purchase_units: product.products?.purchase_units,
-            tax_id: product.products?.tax_id,
-            taxes: product.taxes,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          purchase_units: {
-            ...prevProductUnits.purchase_units,
-            [product?.product_id.toString()]:
-              product?.products?.purchase_units?.operation_value ?? 1,
-          },
-        }));
-      });
-
-      setReferenceId(data?.reference_id);
-
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { purchaseData, formValues }) => {
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();
@@ -192,7 +65,6 @@ const PurchaseReturnEdit = ({ id, setId }) => {
           .map((product_id) => ({
             product_id: parseInt(product_id),
             qty: updatedList.qty[product_id],
-            purchase_id: updatedList.purchase_id[product_id],
             purchase_unit_id: updatedList.purchase_unit_id[product_id],
             net_unit_cost: decimalConverter(
               updatedList.net_unit_cost[product_id]
@@ -205,7 +77,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       : [];
 
     if (productListArray.length === 0) {
-      openNotification('info', 'Please add atleast one product');
+      openNotification('info', 'Please select atleast one product');
       return;
     }
 
@@ -228,21 +100,23 @@ const PurchaseReturnEdit = ({ id, setId }) => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(totalPrice, values.tax_rate);
+
     const postData = {
       purchase_return_at: dayjs(values?.purchase_return_at).format(
         'YYYY-MM-DD'
       ),
-      purchase_id: saleData?.id,
-      petty_cash_id: saleData?.petty_cash_id,
-      warehouse_id: saleData?.warehouse_id,
-      cashier_id: saleData?.cashier_id,
+      purchase_id: purchaseData?.id,
+      petty_cash_id: purchaseData?.petty_cash_id,
+      warehouse_id: purchaseData?.warehouse_id,
+      cashier_id: purchaseData?.cashier_id,
       item: productListArray?.length,
       total_qty: decimalConverter(totalQty),
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax_rate: decimalConverter(values?.tax_rate),
       tax: decimalConverter(orderTax),
-      grand_total: calculateGrandTotal(totalPrice, orderTax),
+      grand_total: grandTotal,
       return_payment_type: values?.payment_type,
       return_amount: decimalConverter(totalPrice),
       return_note: values?.return_note,
@@ -261,10 +135,6 @@ const PurchaseReturnEdit = ({ id, setId }) => {
 
     if (deleteAttachmentIds?.length > 0) {
       postData.deleteAttachmentIds = deleteAttachmentIds;
-    }
-    if (productListArray.length === 0) {
-      openNotification('error', 'Please add at least one product');
-      return;
     }
 
     appendToFormData(postData, formData);
@@ -296,16 +166,8 @@ const PurchaseReturnEdit = ({ id, setId }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
-        id={id}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-        products={products}
-        setProducts={setProducts}
-        setSaleData={setSaleData}
-        referenceId={referenceId}
+        data={data}
       />
     </CustomDrawer>
   );

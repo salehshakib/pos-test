@@ -13,7 +13,7 @@ export const returnPaths = [
   },
   {
     name: 'Sell Return',
-    path: 'sell-return',
+    path: 'sale-return',
     icon: TbTruckReturn,
     element: <SaleReturn />,
   },

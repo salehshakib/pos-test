@@ -31,32 +31,6 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const [formValues, setFormValues] = useState({
-    product_list: {
-      qty: {},
-      product_id: {},
-      sale_id: {},
-      sale_unit_id: {},
-      net_unit_price: {},
-      discount: {},
-      tax_rate: {},
-      tax: {},
-      total: {},
-
-      max_return: {},
-    },
-  });
-
-  const [productUnits, setProductUnits] = useState({
-    sale_units: {},
-  });
-
-  const [products, setProducts] = useState([]);
-  const [saleData, setSaleData] = useState();
-  const [referenceId, setReferenceId] = useState(null);
-
-  // const [summary, setSummary] = useState({});
-
   const { data, isFetching } = useGetSaleReturnDetailsQuery(
     {
       id,
@@ -71,117 +45,15 @@ const SaleReturnEdit = ({ id, setId }) => {
   const [updateSaleReturn, { isLoading }] = useUpdateSaleReturnMutation();
 
   useEffect(() => {
-    if (!isEditDrawerOpen) {
-      setFormValues({
-        product_list: {
-          qty: {},
-          sale_id: {},
-          product_id: {},
-          sale_unit_id: {},
-          net_unit_price: {},
-          discount: {},
-          tax_rate: {},
-          tax: {},
-          total: {},
-
-          max_return: {},
-        },
-      });
-
-      setProducts([]);
-
-      setProductUnits({
-        sale_units: {},
-      });
-    }
-  }, [isEditDrawerOpen]);
-
-  useEffect(() => {
-    if (data && isEditDrawerOpen && !isFetching) {
-      form.resetFields();
-      data?.sale_return_products?.forEach((product) => {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          product_list: {
-            ...prevFormValues.product_list,
-            product_id: {
-              ...prevFormValues.product_list.product_id,
-              [product.product_id.toString()]: product.product_id,
-            },
-            qty: {
-              ...prevFormValues.product_list.qty,
-              [product.product_id.toString()]: product.qty,
-            },
-            sale_unit_id: {
-              ...prevFormValues.product_list.sale_unit_id,
-              [product.product_id.toString()]: product.sale_unit_id,
-            },
-            net_unit_price: {
-              ...prevFormValues.product_list.net_unit_price,
-              [product.product_id.toString()]: product.net_unit_price,
-            },
-            discount: {
-              ...prevFormValues.product_list.discount,
-              [product.product_id.toString()]: product.discount,
-            },
-            tax_rate: {
-              ...prevFormValues.product_list.tax_rate,
-              [product.product_id.toString()]: product.tax_rate,
-            },
-            tax: {
-              ...prevFormValues.product_list.tax,
-              [product.product_id.toString()]: product.tax,
-            },
-            total: {
-              ...prevFormValues.product_list.total,
-              [product.product_id.toString()]: product.total,
-            },
-            tax_id: {
-              ...prevFormValues.product_list.tax_id,
-              [product.product_id.toString()]: product.products?.tax_id,
-            },
-
-            max_return: {
-              ...prevFormValues.product_list.max_return,
-              [product.product_id.toString()]: product.qty,
-            },
-          },
-        }));
-
-        setProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            id: product.product_id,
-            name: product.products?.name,
-            sku: product.products?.sku,
-            buying_price: product.products?.buying_price,
-            sale_unit_id: product.sale_unit_id,
-            sale_units: product.products?.sale_units,
-            tax_id: product.products?.tax_id,
-            taxes: product.taxes,
-          },
-        ]);
-
-        setProductUnits((prevProductUnits) => ({
-          ...prevProductUnits,
-
-          sale_units: {
-            ...prevProductUnits.sale_units,
-            [product?.product_id.toString()]:
-              product?.products?.sale_units?.operation_value ?? 1,
-          },
-        }));
-      });
-
-      setReferenceId(data?.reference_id);
-
+    if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
       setFields(fieldData);
+    } else {
+      setFields([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isEditDrawerOpen, setFields]);
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async (values, { sellData, formValues }) => {
     const updatedList = updateProductList(values, formValues.product_list);
 
     const formData = new FormData();
@@ -192,7 +64,6 @@ const SaleReturnEdit = ({ id, setId }) => {
           .map((product_id) => ({
             product_id: parseInt(product_id),
             qty: updatedList.qty[product_id],
-            sale_id: updatedList.sale_id[product_id],
             sale_unit_id: updatedList.sale_unit_id[product_id],
             net_unit_price: decimalConverter(
               updatedList.net_unit_price[product_id]
@@ -228,19 +99,21 @@ const SaleReturnEdit = ({ id, setId }) => {
         0
       ) ?? 0;
 
+    const grandTotal = calculateGrandTotal(totalPrice, values.tax_rate);
+
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
-      sale_id: saleData?.id,
-      petty_cash_id: saleData?.petty_cash_id,
-      warehouse_id: saleData?.warehouse_id,
-      cashier_id: saleData?.cashier_id,
+      sale_id: sellData?.id,
+      petty_cash_id: sellData?.petty_cash_id,
+      warehouse_id: sellData?.warehouse_id,
+      cashier_id: sellData?.cashier_id,
       item: productListArray?.length,
       total_qty: decimalConverter(totalQty),
       total_tax: decimalConverter(totalTax),
       total_price: decimalConverter(totalPrice),
       tax_rate: decimalConverter(values?.tax_rate),
       tax: decimalConverter(orderTax),
-      grand_total: calculateGrandTotal(totalPrice, orderTax),
+      grand_total: grandTotal,
       return_payment_type: values?.payment_type,
       return_amount: decimalConverter(totalPrice),
       return_note: values?.return_note,
@@ -251,7 +124,7 @@ const SaleReturnEdit = ({ id, setId }) => {
 
     const { attachment } = values;
 
-    if (attachment?.length > 0) {
+    if (attachment?.[0].originFileObj) {
       postData.attachment = attachment?.[0].originFileObj;
     }
 
@@ -259,11 +132,6 @@ const SaleReturnEdit = ({ id, setId }) => {
 
     if (deleteAttachmentIds?.length > 0) {
       postData.deleteAttachmentIds = deleteAttachmentIds;
-    }
-
-    if (productListArray.length === 0) {
-      openNotification('info', 'Please add atleast one product');
-      return;
     }
 
     appendToFormData(postData, formData);
@@ -296,16 +164,8 @@ const SaleReturnEdit = ({ id, setId }) => {
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
-        id={id}
         form={form}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        productUnits={productUnits}
-        setProductUnits={setProductUnits}
-        products={products}
-        setProducts={setProducts}
-        setSaleData={setSaleData}
-        referenceId={referenceId}
+        data={data}
       />
     </CustomDrawer>
   );

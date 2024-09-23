@@ -88,11 +88,13 @@ const PurchaseReturnTable = ({
         suppliers,
         purchase_return_at,
         grand_total,
+        purchase,
       } = item ?? {};
 
       return {
         id,
         referenceNo: reference_id,
+        purchaseReference: purchase?.reference_id,
         warehouse: warehouses?.name,
         supplier: suppliers?.name,
         created_at: purchase_return_at,
@@ -121,7 +123,6 @@ const PurchaseReturnTable = ({
         isLoading={isLoading}
         isRowSelection={true}
         status={false}
-        // created_at={false}
       />
 
       <PurchaseReturnEdit id={editId} setId={setEditId} />

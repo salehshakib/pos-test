@@ -55,13 +55,18 @@ export const TransactionSummary = ({ formValues }) => {
           !pathname.includes('inventory/transfer') ? (taxRate ?? 0) : undefined
         }
         discount={
-          !pathname.includes('inventory/transfer')
+          !pathname.includes('inventory/transfer') &&
+          !['/return/purchase-return', '/return/sale-return'].includes(pathname) // Check for return or purchase-return
             ? discountType === 'Percentage'
               ? percentDiscount
               : (discount ?? 0)
             : undefined
         }
-        shippingCost={shipping_cost ?? 0}
+        shippingCost={
+          !['/return/purchase-return', '/return/sale-return'].includes(pathname) // Check for return or purchase-return
+            ? (shipping_cost ?? 0)
+            : undefined
+        }
         grandTotal={grandTotal}
       />
     </Col>

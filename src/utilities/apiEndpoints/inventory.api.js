@@ -15,3 +15,4 @@ export const SALE_RETURN = 'inventory/sale-return';
 export const PURCHASE_RETURN = 'inventory/purchase-return';
 export const VARIANT = 'inventory/attribute';
 export const VARIANT_OPTIONS = 'inventory/attribute/options';
+export const STOCK_MANAGE = 'inventory/product/stock-manage';

@@ -1,6 +1,7 @@
 import {
   PRODUCT,
   PRODUCT_VARIANTS,
+  STOCK_MANAGE,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
@@ -54,6 +55,30 @@ const productApi = baseApi.injectEndpoints({
       query: ({ formData }) => {
         return {
           url: `/${PRODUCT}/store`,
+          method: 'POST',
+          body: formData,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: PRODUCT }] : [];
+      },
+    }),
+    createStockManage: build.mutation({
+      query: ({ formData, id }) => {
+        return {
+          url: `/${STOCK_MANAGE}/store/${id}`,
           method: 'POST',
           body: formData,
         };
@@ -158,4 +183,5 @@ export const {
   useUpdateProductMutation,
   useUpdateProductStatusMutation,
   useDeleteProductMutation,
+  useCreateStockManageMutation,
 } = productApi;

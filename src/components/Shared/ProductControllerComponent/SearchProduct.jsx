@@ -21,7 +21,7 @@ const ignorePaths = [
   'invoice',
 ];
 
-export const SearchProduct = ({ setProducts }) => {
+export const SearchProduct = ({ setProducts, productId }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
 
@@ -66,6 +66,10 @@ export const SearchProduct = ({ setProducts }) => {
     isRelationalParams: !isIgnore,
   });
 
+  if (productId) {
+    params.product_id = productId;
+  }
+
   const { data, isFetching } = useGetAllProductVariantsQuery(
     {
       params,
@@ -93,7 +97,7 @@ export const SearchProduct = ({ setProducts }) => {
     : (data?.results?.productvariant?.map((product) => ({
         value: product.id.toString(),
         label: `${product.name} (SKU: ${product.sku})`,
-        product: product,
+        product: { ...product, warehouse_id: warehouseId },
       })) ?? []);
 
   const onSelect = (_, option) => {
@@ -118,17 +122,21 @@ export const SearchProduct = ({ setProducts }) => {
 
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
-        return product?.id.toString() === option?.product?.id.toString();
+        return (
+          product?.id.toString() === option?.product?.id?.toString() &&
+          product?.warehouse_id.toString() ===
+            option?.product?.warehouse_id?.toString()
+        );
       });
 
       if (!productExists) {
         return [...prevProducts, option.product];
       }
 
-      // message.warning("Product already exists in the list");
       openNotification('warning', 'Product already exists in the list');
       return prevProducts;
     });
+
     setValue(null);
   };
 
@@ -146,7 +154,7 @@ export const SearchProduct = ({ setProducts }) => {
         onSearch={debounce}
         value={value}
         onChange={onChange}
-        placeholder="Search Product"
+        placeholder="Search Product Varients"
         suffixIcon={<FaSearch />}
         allowClear={true}
       />

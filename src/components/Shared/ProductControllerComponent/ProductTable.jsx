@@ -10,7 +10,6 @@ export const ProductTable = ({
   tableStyle,
 }) => {
   const tableStyleProps = {
-    // bordered: true,
     scroll: {
       x: 1000,
       y: 350,

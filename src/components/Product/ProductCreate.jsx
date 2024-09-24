@@ -1,9 +1,12 @@
-import { Button, Form, message } from 'antd';
+import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
-import { useCreateProductMutation } from '../../redux/services/product/productApi';
+import {
+  useCreateProductMutation,
+  useCreateStockManageMutation,
+} from '../../redux/services/product/productApi';
 import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
@@ -33,13 +36,15 @@ const getVariantIdsByCombinedName = (variantData, combinedName) => {
 
 const ProductCreate = () => {
   const dispatch = useDispatch();
-
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+  const [productId, setProductId] = useState(null);
 
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [createStockManage, { isLoading: isStockManageLoading }] =
+    useCreateStockManageMutation();
 
   const params = useGlobalParams({});
 
@@ -80,8 +85,6 @@ const ProductCreate = () => {
 
       details,
     } = values ?? {};
-
-    const { product_list, qty_list, price_list } = formValues;
 
     const postObj = {
       name,
@@ -141,65 +144,27 @@ const ProductCreate = () => {
     }
 
     if (type === 'Combo') {
-      const productListArray = product_list?.qty
-        ? Object.keys(product_list.qty)
-            .filter((product_id) => product_list.qty[product_id] !== undefined)
+      const productListArray = formValues.stock_list?.qty
+        ? Object.keys(formValues.stock_list.qty)
+            .filter(
+              (product_id) =>
+                formValues.stock_list.qty[product_id] !== undefined
+            )
             .map((product_id) => ({
               combo_product_id: parseInt(product_id),
-              qty: product_list.qty[product_id],
-              price: product_list.amount[product_id],
+              qty: formValues.stock_list.qty[product_id],
+              price: formValues.stock_list.amount[product_id],
             }))
         : [];
 
       if (productListArray.length > 0) {
-        postObj.product_list = JSON.stringify(productListArray);
+        postObj.formValues.stock_list = JSON.stringify(productListArray);
       }
     }
 
     if (values.attach_file?.[0].originFileObj) {
       postObj.attach_file = values.attach_file?.[0].originFileObj;
     }
-
-    // if (has_stock) {
-    //   const qtyListArray = qty_list?.qty
-    //     ? Object.keys(qty_list.qty).map((warehouseId) => {
-    //         return {
-    //           warehouse_id: parseInt(warehouseId, 10),
-    //           qty: parseInt(qty_list.qty[warehouseId], 10),
-    //         };
-    //       })
-    //     : [];
-
-    //   if (qtyListArray.length) {
-    //     const qty = qtyListArray.reduce(
-    //       (sum, item) => parseInt(sum) + parseInt(item.qty),
-    //       0
-    //     );
-
-    //     postObj.qty = qty.toString();
-    //     postObj.qty_list = JSON.stringify(qtyListArray);
-    //   } else {
-    //     return openNotification('info', 'Please add atleast one warehouse');
-    //   }
-    // }
-
-    // if (has_different_price) {
-    //   const priceListArray = price_list?.price
-    //     ? Object.keys(price_list.price).map((warehouseId) => {
-    //         return {
-    //           warehouse_id: parseInt(warehouseId, 10),
-    //           price: parseFloat(price_list.price[warehouseId]),
-    //         };
-    //       })
-    //     : [];
-
-    //   if (priceListArray.length) {
-    //     postObj.price_list = JSON.stringify(priceListArray);
-    //   } else {
-    //     // return message.error("Please add price");
-    //     return openNotification('info', 'Please add atleast one warehouse');
-    //   }
-    // }
 
     if (has_variant) {
       const variantOptions = variantData.selectedRowData.map((item) => {
@@ -227,7 +192,8 @@ const ProductCreate = () => {
     const { data, error } = await createProduct({ formData });
 
     if (data?.success) {
-      dispatch(closeCreateDrawer());
+      setProductId(data?.data?.id);
+      setCurrent(1);
       form.resetFields();
     }
 
@@ -243,16 +209,57 @@ const ProductCreate = () => {
 
   const [current, setCurrent] = useState(0);
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
+  const handleStockSubmit = async (values, { formValues }) => {
+    const stockListArray = formValues.stock_list?.qty
+      ? Object.keys(formValues.stock_list.qty)
+          .filter(
+            (product_id) => formValues.stock_list.qty[product_id] !== undefined
+          )
+          .map((product_id) => ({
+            product_variant_id: parseInt(product_id),
+            qty: formValues.stock_list.qty[product_id],
+            warehouse_id: formValues.stock_list.warehouse_id[product_id],
+          }))
+      : [];
 
-  const prev = () => {
-    setCurrent(current - 1);
-  };
+    const priceListArray = formValues.price_list?.price
+      ? Object.keys(formValues.price_list.price)
+          .filter(
+            (product_id) =>
+              formValues.price_list.price[product_id] !== undefined
+          )
+          .map((product_id) => ({
+            product_variant_id: parseInt(product_id),
+            price: formValues.price_list.price[product_id],
+            warehouse_id: formValues.price_list.warehouse_id[product_id],
+          }))
+      : [];
 
-  const handleStockSubmit = (values, { formValues }) => {
-    console.log(formValues);
+    const formData = new FormData();
+
+    const postObj = {
+      stock_list: JSON.stringify(stockListArray),
+      price_list: JSON.stringify(priceListArray),
+    };
+
+    appendToFormData(postObj, formData);
+
+    const { data, error } = await createStockManage({
+      formData,
+      id: productId,
+    });
+
+    if (data?.success) {
+      dispatch(closeCreateDrawer());
+      form.resetFields();
+    }
+    if (error) {
+      const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
+        name: fieldName,
+        errors: error?.data?.errors[fieldName],
+      }));
+      setErrorFields(errorFields);
+    }
   };
 
   const steps = [
@@ -270,7 +277,16 @@ const ProductCreate = () => {
     {
       title: 'Product Stock & Price',
       content: (
-        <ProductStockForm handleSubmit={handleStockSubmit} form={form} />
+        <ProductStockForm
+          productId={productId}
+          isLoading={isStockManageLoading}
+          handleSubmit={handleStockSubmit}
+          form={form}
+          onClose={() => {
+            setCurrent(0);
+            dispatch(closeCreateDrawer());
+          }}
+        />
       ),
     },
   ];
@@ -282,31 +298,6 @@ const ProductCreate = () => {
       width={1400}
     >
       <div className="">{steps[current].content}</div>
-      <div className="flex justify-end pb-48">
-        {current > 0 && (
-          <Button
-            style={{
-              margin: '0 8px',
-            }}
-            onClick={() => prev()}
-          >
-            Previous
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => message.success('Processing complete!')}
-          >
-            Done
-          </Button>
-        )}
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-      </div>
     </CustomDrawer>
   );
 };

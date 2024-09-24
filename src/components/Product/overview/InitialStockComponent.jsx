@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
 import { CustomQuantityInput } from '../../Shared/Input/CustomQuantityInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 
@@ -54,8 +55,8 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            // name={["qty_list", "qty", record?.id]}
-            value={record?.formValues?.qty_list.qty?.[record?.id] ?? 0}
+            // name={["stock_list", "qty", record?.id]}
+            value={record?.formValues?.stock_list.qty?.[record?.id] ?? 0}
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -101,23 +102,24 @@ const columns = [
 export const InitialStockComponent = ({
   formValues,
   setFormValues,
-  initialWarehouses,
-  setInitialWarehouses,
+  products,
+  setProducts,
+  productId,
 }) => {
   const form = Form.useFormInstance();
 
   const incrementCounter = (id) => {
     setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.qty_list.qty[id] ?? 1;
+      const currentQty = prevFormValues.stock_list.qty[id] ?? 1;
 
       const newQty = Number(currentQty) + 1;
 
       return {
         ...prevFormValues,
-        qty_list: {
-          ...prevFormValues.qty_list,
+        stock_list: {
+          ...prevFormValues.stock_list,
           qty: {
-            ...prevFormValues.qty_list.qty,
+            ...prevFormValues.stock_list.qty,
             [id]: newQty,
           },
         },
@@ -127,15 +129,15 @@ export const InitialStockComponent = ({
 
   const decrementCounter = (id) => {
     setFormValues((prevFormValues) => {
-      const currentQty = prevFormValues.qty_list.qty[id] || 1;
+      const currentQty = prevFormValues.stock_list.qty[id] || 1;
       const newQty = Math.max(Number(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
-        qty_list: {
-          ...prevFormValues.qty_list,
+        stock_list: {
+          ...prevFormValues.stock_list,
           qty: {
-            ...prevFormValues.qty_list.qty,
+            ...prevFormValues.stock_list.qty,
             [id]: newQty,
           },
         },
@@ -146,10 +148,10 @@ export const InitialStockComponent = ({
   const onQuantityChange = (id, value) => {
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
-      qty_list: {
-        ...prevFormValues.qty_list,
+      stock_list: {
+        ...prevFormValues.stock_list,
         qty: {
-          ...prevFormValues.qty_list.qty,
+          ...prevFormValues.stock_list.qty,
           [id]: parseInt(value, 10) || 0,
         },
       },
@@ -157,32 +159,42 @@ export const InitialStockComponent = ({
   };
 
   const onDelete = (id) => {
-    setInitialWarehouses((prevWarehouse) =>
-      prevWarehouse.filter((warehouse) => warehouse.id !== id)
+    setProducts((prevProduct) =>
+      prevProduct.filter((product) => product.id !== id)
     );
 
     setFormValues((prevFormValues) => {
-      const updatedQtyList = { ...prevFormValues.qty_list.qty };
+      const updatedQtyList = { ...prevFormValues.stock_list.qty };
       delete updatedQtyList[id];
 
       return {
         ...prevFormValues,
-        qty_list: {
-          ...prevFormValues.qty_list,
+        stock_list: {
+          ...prevFormValues.stock_list,
           qty: updatedQtyList,
         },
       };
     });
   };
 
-  const dataSource =
-    initialWarehouses?.map((warehouse) => {
-      const { id, name } = warehouse;
+  const { data } = useGetWarehousesQuery({});
 
-      formValues.qty_list.qty[id] = formValues.qty_list.qty[id] ?? 1;
+  const dataSource =
+    products?.map((product) => {
+      const { id, name, warehouse_id } = product;
+
+      const warehouse = data?.results?.warehouse?.find(
+        (warehouse) => warehouse.id.toString() === warehouse_id.toString()
+      )?.name;
+
+      formValues.stock_list.qty[id] = formValues.stock_list.qty[id] ?? 1;
+
+      formValues.stock_list.warehouse_id[id] =
+        formValues.stock_list.warehouse_id[id] ?? warehouse_id;
 
       return {
         id,
+        warehouse,
         name,
         delete: true,
         incrementCounter,
@@ -195,22 +207,15 @@ export const InitialStockComponent = ({
 
   useEffect(() => {
     form.setFieldsValue(formValues);
-  }, [form, formValues, initialWarehouses]);
+  }, [form, formValues, products]);
 
   return (
-    // <WarehouseController
-    //   warehouses={initialWarehouses}
-    //   setWarehouses={setInitialWarehouses}
-    //   columns={columns}
-    //   dataSource={dataSource}
-    // />
     <ProductController
+      productId={productId}
       columns={columns}
       dataSource={dataSource}
-      products={[]}
-      setProducts={() => {
-        console.log('value');
-      }}
+      products={products}
+      setProducts={setProducts}
     />
   );
 };

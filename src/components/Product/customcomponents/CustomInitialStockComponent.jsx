@@ -6,33 +6,34 @@ import { fullColLayout } from '../../../layout/FormLayout';
 import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import { InitialStockComponent } from '../overview/InitialStockComponent';
 
-const updateStateWithProductData = (productQties, setFormValues) => {
-  const qtyList = {};
-
-  productQties.forEach((item) => {
-    qtyList[item.warehouse_id.toString()] = item.qty;
-  });
+const updateStateWithProductData = (setFormValues) => {
+  const stock_list = {};
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
     qty_list: {
       ...prevFormValues.qty_list,
-      qty: qtyList,
+      qty: stock_list,
     },
   }));
 };
 
-export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
+export const CustomInititalStockComponent = ({
+  onCustomSubmit,
+  data,
+  productId,
+}) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const [formValues, setFormValues] = useState({
-    qty_list: {
+    stock_list: {
       qty: {},
+      product_variant_id: {},
+      warehouse_id: {},
     },
   });
 
-  const [initialWarehouses, setInitialWarehouses] = useState([]);
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const handleCustomSubmit = useCallback(() => {
     return formValues;
@@ -43,18 +44,12 @@ export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
   useEffect(() => {
     if (data && isEditDrawerOpen) {
       updateStateWithProductData(data?.product_qties, setFormValues);
-
-      const initialWarehousesList = data?.product_qties?.map((item) => ({
-        id: item.warehouse_id,
-        name: item?.warehouses?.name ?? 'Not Specified',
-      }));
-
-      setInitialWarehouses(initialWarehousesList);
     } else {
-      setInitialWarehouses([]);
       setFormValues({
-        qty_list: {
+        stock_list: {
           qty: {},
+          product_variant_id: {},
+          warehouse_id: {},
         },
       });
     }
@@ -66,8 +61,9 @@ export const CustomInititalStockComponent = ({ onCustomSubmit, data }) => {
         <WarehouseComponent />
       </Col>
       <InitialStockComponent
-        initialWarehouses={initialWarehouses}
-        setInitialWarehouses={setInitialWarehouses}
+        productId={productId}
+        products={products}
+        setProducts={setProducts}
         formValues={formValues}
         setFormValues={setFormValues}
       />

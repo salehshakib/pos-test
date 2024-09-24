@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import { useEffect } from 'react';
 import { MdDelete } from 'react-icons/md';
 
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
 import CustomInput from '../../Shared/Input/CustomInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 
@@ -81,8 +82,9 @@ const columns = [
 export const DifferentPriceComponent = ({
   formValues,
   setFormValues,
-  priceWarehouses,
-  setPriceWarehouses,
+  products,
+  setProducts,
+  productId,
 }) => {
   const form = Form.useFormInstance();
 
@@ -136,20 +138,29 @@ export const DifferentPriceComponent = ({
   };
 
   const onDelete = (id) => {
-    setPriceWarehouses((prevWarehouse) =>
+    setProducts((prevWarehouse) =>
       prevWarehouse.filter((warehouse) => warehouse.id !== id)
     );
   };
 
+  const { data } = useGetWarehousesQuery({});
+
   const dataSource =
-    priceWarehouses?.map((warehouse) => {
-      const { id, name } = warehouse;
+    products?.map((product) => {
+      const { id, name, warehouse_id } = product;
+
+      const warehouse = data?.results?.warehouse?.find(
+        (warehouse) => warehouse.id.toString() === warehouse_id.toString()
+      )?.name;
 
       formValues.price_list.price[id] = formValues.price_list.price[id] ?? 0;
+      formValues.price_list.warehouse_id[id] =
+        formValues.price_list.warehouse_id[id] ?? warehouse_id;
 
       return {
         id,
         name,
+        warehouse,
         delete: true,
         incrementCounter,
         decrementCounter,
@@ -160,18 +171,15 @@ export const DifferentPriceComponent = ({
 
   useEffect(() => {
     form.setFieldsValue(formValues);
-  }, [form, formValues, priceWarehouses]);
+  }, [form, formValues]);
 
   return (
     <ProductController
-      // warehouses={priceWarehouses}
-      // setWarehouses={setPriceWarehouses}
+      productId={productId}
       columns={columns}
       dataSource={dataSource}
-      products={[]}
-      setProducts={() => {
-        console.log('value');
-      }}
+      products={products}
+      setProducts={setProducts}
     />
   );
 };

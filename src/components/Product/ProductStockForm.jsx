@@ -33,8 +33,7 @@ export const ProductStockForm = ({ data, ...props }) => {
       : null;
 
     const formValues = {
-      //   product_list: comboData.product_list,
-      qty_list: initialData.qty_list,
+      stock_list: initialData.stock_list,
       price_list: diffPriceData.price_list,
     };
 
@@ -53,6 +52,7 @@ export const ProductStockForm = ({ data, ...props }) => {
             children: (
               <Row {...rowLayout}>
                 <CustomInititalStockComponent
+                  productId={props.productId}
                   onCustomSubmit={handleInitialProduct}
                   data={data}
                 />
@@ -65,6 +65,7 @@ export const ProductStockForm = ({ data, ...props }) => {
             children: (
               <Row {...rowLayout}>
                 <CustomDifferentPriceComponent
+                  productId={props.productId}
                   onCustomSubmit={handlediffPriceProduct}
                   data={data}
                 />

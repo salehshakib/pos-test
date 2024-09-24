@@ -14,9 +14,11 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useGetAllVariantsQuery } from '../../../redux/services/variant/variantApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import { generateRandomCode } from '../../../utilities/lib/generateCode';
+import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
 import CustomSelect from '../../Shared/Select/CustomSelect';
-import CustomTable from '../../Shared/Table/CustomTable';
+import ProductVariantOption from './variant/ProductVariantOptions';
 
 const updateVariantOptions = (
   dataSource,
@@ -35,16 +37,38 @@ const updateVariantOptions = (
 
 const generateCombinationsFromVariantAttributes = (
   dataSource,
-  variantAttributes
+  variantAttributes,
+  buying_price,
+  selling_price
 ) => {
+  // Return an empty array if dataSource or variantAttributes is empty
+  if (
+    !dataSource.length ||
+    Object.keys(variantAttributes).length === 0 ||
+    Object.values(variantAttributes).every((values) => values.length === 0)
+  ) {
+    return [];
+  }
+
   // Create an ordered array of attribute ids from dataSource
   const orderedAttributeIds = dataSource.map((item) => item.id);
+  console.log(dataSource);
+  const orderedAttributesOptions = dataSource.map((item) => item.options);
+
+  console.log(orderedAttributesOptions);
   const combinations = [];
 
   const combine = (index, current) => {
     // If the current combination is the same length as the ordered attribute ids, add to results
     if (index === orderedAttributeIds.length) {
-      combinations.push(current.join('-'));
+      const combinationName = current.join(' ');
+      combinations.push({
+        name: combinationName,
+        cost: buying_price, // Set cost for the combination
+        price: selling_price, // Set price for the combination
+        sku: generateRandomCode(6), // Generate a random SKU
+        variant_options: orderedAttributesOptions,
+      });
       return;
     }
 
@@ -225,7 +249,7 @@ const VariantAttributeTable = ({
   );
 };
 
-const VariantAttributes = () => {
+const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const params = useGlobalParams({
     isRelationalParams: true,
   });
@@ -258,42 +282,19 @@ const VariantAttributes = () => {
     setDataSource(selected);
   };
 
-  console.log(dataSource, variantAttributes);
+  const mainForm = Form.useFormInstance();
 
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (name) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {name}
-        </span>
-      ),
-    },
-    {
-      title: 'SKU',
-      dataIndex: 'sku',
-      key: 'sku',
-      // render: (sku) => (
-      //   <div className="flex items-center">
-      //     <span className="text-[14px] text-lg font-semibold underline">
-    },
-  ];
+  const { buying_price, selling_price } = mainForm.getFieldsValue([
+    'buying_price',
+    'selling_price',
+  ]);
 
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,
-    variantAttributes
+    variantAttributes,
+    buying_price,
+    selling_price
   );
-
-  // console.log(first)
-
-  const variantDatasource = combination.map((item) => {
-    return {
-      key: item,
-      name: item,
-    };
-  });
 
   return (
     <>
@@ -315,41 +316,56 @@ const VariantAttributes = () => {
         setVariantAttributes={setVariantAttributes}
       />
 
-      <CustomTable
-        title={'Product Variant Options'}
-        pagination={false}
-        dataSource={variantDatasource}
-        columns={columns}
-        status={false}
-        created_at={false}
+      <ProductVariantOption
+        combination={combination}
+        onCustomSubmit={onCustomSubmit}
+        data={editData}
       />
     </>
   );
 };
 
-export const VariantComponent = () => {
+export const VariantComponent = ({ onCustomSubmit, data }) => {
   const form = Form.useFormInstance();
 
   const has_variant = Form.useWatch('has_variant', form);
   const productType = Form.useWatch('type', form);
 
-  useEffect(() => {
-    if (!has_variant) {
+  const onChange = (e) => {
+    const { checked } = e.target;
+    if (!checked) {
       form.setFieldValue('attribute_ids', []);
     }
-  }, [has_variant, form]);
+
+    if (checked) {
+      if (!form.getFieldValue('buying_price')) {
+        form.setFieldValue('has_variant', false);
+        openNotification('info', 'Please enter buying price');
+        return;
+      }
+      if (!form.getFieldValue('selling_price')) {
+        form.setFieldValue('has_variant', false);
+        openNotification('info', 'Please enter selling price');
+        return;
+      }
+    }
+  };
 
   if (productType === 'Standard')
     return (
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <CustomCheckbox label="This Product has varient" name="has_variant" />
+          <CustomCheckbox
+            label="This Product has varient"
+            name="has_variant"
+            onChange={onChange}
+          />
         </Col>
 
         {has_variant && (
           <>
             <Col {...fullColLayout}>
-              <VariantAttributes />
+              <VariantAttributes onCustomSubmit={onCustomSubmit} data={data} />
             </Col>
           </>
         )}

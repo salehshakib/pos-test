@@ -279,8 +279,14 @@ const ProductForm = ({ data, ...props }) => {
   // const initialStockSubmitRef = useRef(null);
   // const diffPriceSubmitRef = useRef(null);
 
+  const variantProductRef = useRef(null);
+
   const handleComboProduct = useCallback((submitFunction) => {
     comboProductSubmitRef.current = submitFunction;
+  }, []);
+
+  const handleVariantProduct = useCallback((submitFunction) => {
+    variantProductRef.current = submitFunction;
   }, []);
 
   // const handleInitialProduct = useCallback((submitFunction) => {
@@ -294,6 +300,10 @@ const ProductForm = ({ data, ...props }) => {
   const handleSubmit = (values) => {
     const comboData = comboProductSubmitRef.current
       ? comboProductSubmitRef.current()
+      : null;
+
+    const variantData = variantProductRef.current
+      ? variantProductRef.current()
       : null;
 
     // const initialData = initialStockSubmitRef.current
@@ -310,7 +320,7 @@ const ProductForm = ({ data, ...props }) => {
       // price_list: diffPriceData.price_list,
     };
 
-    props.handleSubmit(values, { formValues });
+    props.handleSubmit(values, { variantData, formValues });
   };
 
   return (
@@ -406,7 +416,7 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      <VariantComponent />
+      <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
 
       {/* <Row {...rowLayout}>
         <Col {...fullColLayout}>

@@ -42,7 +42,7 @@ export const VariantCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Variant'} open={isCreateDrawerOpen}>
+    <CustomDrawer title={'Create Attribute'} open={isCreateDrawerOpen}>
       <VariantForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}

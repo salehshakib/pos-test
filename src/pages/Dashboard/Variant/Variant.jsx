@@ -9,7 +9,7 @@ import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
-    title: 'Variant',
+    title: 'Attibute',
     dataIndex: 'variant',
     key: 'variant',
     render: (variant) => (
@@ -19,7 +19,7 @@ const columns = [
     ),
   },
   {
-    title: 'Variant Options',
+    title: 'Attribute Options',
     dataIndex: 'variantOptions',
     key: 'variantOptions',
     render: (variantOptions) => (
@@ -39,7 +39,7 @@ export const Variant = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Variant"
+      pageTitle="Attribute"
       columns={columns}
       selectedRows={selectedRows}
       debounce={debounce}

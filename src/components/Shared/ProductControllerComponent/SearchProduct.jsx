@@ -71,7 +71,7 @@ export const SearchProduct = ({ setProducts }) => {
       params,
     },
     {
-      skip: !warehouseId && !warehouseIdFrom && isIgnore,
+      skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
     }
   );
 
@@ -105,7 +105,7 @@ export const SearchProduct = ({ setProducts }) => {
     }
 
     const stock = getWarehouseQuantity(
-      option?.product?.product_qties,
+      option?.product_va?.product_qties,
       warehouseId ?? warehouseIdFrom
     );
 

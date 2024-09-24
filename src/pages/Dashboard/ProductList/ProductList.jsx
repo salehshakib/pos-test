@@ -126,14 +126,14 @@ const columns = [
     ),
   },
   {
-    title: 'Unit',
-    dataIndex: 'unit',
-    key: 'unit',
+    title: 'Has Variant',
+    dataIndex: 'hasVariant',
+    key: 'hasVariant',
     align: 'center',
     width: 100,
-    render: (unit) => (
+    render: (hasVariant) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {unit}
+        {hasVariant}
       </span>
     ),
   },

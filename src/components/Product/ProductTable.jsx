@@ -120,6 +120,7 @@ const ProductTable = ({
         brands,
         units,
         attachments,
+        has_variant,
       } = item ?? {};
 
       return {
@@ -134,8 +135,9 @@ const ProductTable = ({
         unit: units?.base_unit ?? 'N/A',
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
-        created_at,
+        hasVariant: has_variant.toString() === '1' ? 'Yes' : 'No',
         status: is_active,
+        created_at,
         handleStatusModal,
         handleDetailsModal,
         handleEdit,

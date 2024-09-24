@@ -136,14 +136,14 @@ export const CustomTransferProductComponent = forwardRef(
         updateStateWithProductData(data?.transfer_products, setFormValues);
 
         const transferProducts = data?.transfer_products?.map((product) => ({
-          id: product.product_id,
-          name: product.products?.name,
-          sku: product.products?.sku,
-          buying_price: product.products?.buying_price,
+          id: product.product_variant_id,
+          name: product.product_variants?.name,
+          sku: product.product_variants?.sku,
+          buying_price: product.product_variants?.buying_price,
           purchase_unit_id_unit_id: product.purchase_unit_id_unit_id,
-          purchase_units: product.products?.purchase_units,
-          tax_id: product.products?.tax_id,
-          taxes: product?.products.taxes,
+          purchase_units: product.product_variants?.purchase_units,
+          tax_id: product.product_variants?.tax_id,
+          taxes: product?.product_variants.taxes,
         }));
 
         setProducts(transferProducts);

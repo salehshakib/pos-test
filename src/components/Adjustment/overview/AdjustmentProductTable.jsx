@@ -184,8 +184,6 @@ export const AdjustmentProductTable = ({
         purchase_units,
       } = product ?? {};
 
-      console.log(product);
-
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
       formValues.product_list.action[id] =

@@ -31,8 +31,6 @@ const AdjustmentCreate = () => {
 
     const formData = new FormData();
 
-    console.log(product_list);
-
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)

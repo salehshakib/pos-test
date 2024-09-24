@@ -52,10 +52,8 @@ const generateCombinationsFromVariantAttributes = (
 
   // Create an ordered array of attribute ids from dataSource
   const orderedAttributeIds = dataSource.map((item) => item.id);
-  console.log(dataSource);
   const orderedAttributesOptions = dataSource.map((item) => item.options);
 
-  console.log(orderedAttributesOptions);
   const combinations = [];
 
   const combine = (index, current) => {

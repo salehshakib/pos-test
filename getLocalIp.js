@@ -1,6 +1,6 @@
 // getLocalIp.js
-import os from 'os';
 import { exec } from 'child_process';
+import os from 'os';
 
 // Get local network interfaces
 const interfaces = os.networkInterfaces();
@@ -18,7 +18,6 @@ for (const name of Object.keys(interfaces)) {
 
 // Start the Vite dev server with the dynamically obtained IP address
 const command = `vite --host ${localIp} --port 3000`;
-console.log(`Starting Vite with IP: ${localIp} --port 3000`);
 
 exec(command, (error, stdout, stderr) => {
   if (error) {
@@ -29,5 +28,4 @@ exec(command, (error, stdout, stderr) => {
     console.error(`Vite stderr: ${stderr}`);
     return;
   }
-  console.log(stdout);
 });

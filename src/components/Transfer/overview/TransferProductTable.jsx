@@ -396,8 +396,6 @@ export const TransferProductTable = ({
         tax_method,
       } = product ?? {};
 
-      console.log(product);
-
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 
       const price = calculateUnitCost(

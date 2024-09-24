@@ -41,7 +41,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
   const baseParams = {
-    warehouse_id:
+    product_warehouse_id:
       pathname.includes('transfer') || pathname.includes('stock-request')
         ? warehouseIdFrom
         : warehouseId,

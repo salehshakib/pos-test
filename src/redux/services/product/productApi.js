@@ -78,7 +78,7 @@ const productApi = baseApi.injectEndpoints({
     createStockManage: build.mutation({
       query: ({ formData, id }) => {
         return {
-          url: `/${STOCK_MANAGE}/store/${id}`,
+          url: `/${STOCK_MANAGE}/${id}`,
           method: 'POST',
           body: formData,
         };

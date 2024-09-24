@@ -235,6 +235,12 @@ const ProductCreate = () => {
           }))
       : [];
 
+    if (stockListArray.length === 0 && priceListArray.length === 0) {
+      dispatch(closeCreateDrawer());
+      form.resetFields();
+      return;
+    }
+
     const formData = new FormData();
 
     const postObj = {

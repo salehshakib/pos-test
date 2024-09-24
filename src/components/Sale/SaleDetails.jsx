@@ -107,10 +107,11 @@ export const SaleDetails = ({ id, ...props }) => {
   const dataSource = data?.sale_products?.map((item) => {
     return {
       id: item?.id,
-      product_name:
-        item?.products?.name ??
-        'Unknown Product' +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      product_name: item?.product_variants?.name
+        ? `${item.product_variants.name}${
+            item?.product_variants?.sku ? ` (${item.product_variants.sku})` : ''
+          }`
+        : 'Unknown Product',
 
       qty: item.qty ?? 'Unknown Quantity',
       price: showCurrency(item?.net_unit_price, currency) ?? 'Unknown Price',

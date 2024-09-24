@@ -177,8 +177,8 @@ const ProductCreate = () => {
             name: name + ' ' + item.name,
             sku: sku + '-' + item.sku,
             iemi_number: item.iemi,
-            price: item.price.toString(),
-            cost: item.cost.toString(),
+            selling_price: item.price.toString(),
+            buying_price: item.cost.toString(),
             attribute_option_ids: variantOptions[index],
           };
         }

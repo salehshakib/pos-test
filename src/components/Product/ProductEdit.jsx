@@ -138,11 +138,11 @@ const ProductListEdit = ({ id, setId }) => {
         //   value: ecommerce_sync === "1" ? true : false,
         //   errors: "",
         // },
-        // {
-        //   name: "has_featured",
-        //   value: has_featured === "1" ? true : false,
-        //   errors: "",
-        // },
+        {
+          name: 'has_variant',
+          value: has_variant.toString() === '1' ? true : false,
+          errors: '',
+        },
         // {
         //   name: "embedded_barcode",
         //   value: embedded_barcode === "1" ? true : false,

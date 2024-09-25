@@ -160,7 +160,9 @@ export const InitialStockComponent = ({
 
   const onDelete = (id) => {
     setProducts((prevProduct) =>
-      prevProduct.filter((product) => product.id !== id)
+      prevProduct.filter(
+        (product) => product.id + '-' + product.warehouse_id !== id
+      )
     );
 
     setFormValues((prevFormValues) => {
@@ -183,17 +185,19 @@ export const InitialStockComponent = ({
     products?.map((product) => {
       const { id, name, warehouse_id } = product;
 
+      const uid = id + '-' + warehouse_id;
+
       const warehouse = data?.results?.warehouse?.find(
         (warehouse) => warehouse.id.toString() === warehouse_id.toString()
       )?.name;
 
-      formValues.stock_list.qty[id] = formValues.stock_list.qty[id] ?? 1;
+      formValues.stock_list.qty[uid] = formValues.stock_list.qty[uid] ?? 1;
 
-      formValues.stock_list.warehouse_id[id] =
-        formValues.stock_list.warehouse_id[id] ?? warehouse_id;
+      formValues.stock_list.warehouse_id[uid] =
+        formValues.stock_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
-        id,
+        id: uid,
         warehouse,
         name,
         delete: true,

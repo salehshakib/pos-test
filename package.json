@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-saleh": "node getLocalIp.js",
+    "dev-local": "node getLocalIp.js",
+    "dev-saleh": "vite --host 192.168.1.14 --port 3000",
     "preview": "vite preview",
     "build": "vite build",
     "lint": "eslint */**/*.{js,ts,tsx,jsx}",

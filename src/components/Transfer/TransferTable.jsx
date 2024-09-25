@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
-import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteTransferMutation,
@@ -20,7 +19,6 @@ import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { StockTransfer } from './StockTransfer';
 import { TransferDetails } from './TransferDetails';
-import TransferEdit from './TransferEdit';
 
 const TransferTable = ({
   newColumns,
@@ -28,9 +26,9 @@ const TransferTable = ({
   keyword,
   searchParams,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [editId, setEditId] = useState(undefined);
+  // const [editId, setEditId] = useState(undefined);
   const currency = useSelector(useCurrency);
 
   const [detailsId, setDetailsId] = useState(undefined);
@@ -63,10 +61,10 @@ const TransferTable = ({
   const [deleteTransfer, { isLoading: isDeleting }] =
     useDeleteTransferMutation();
 
-  const handleEdit = (id) => {
-    setEditId(id);
-    dispatch(openEditDrawer());
-  };
+  // const handleEdit = (id) => {
+  //   setEditId(id);
+  //   dispatch(openEditDrawer());
+  // };
 
   const handleDetailsModal = (id) => {
     setDetailsId(id);
@@ -111,7 +109,7 @@ const TransferTable = ({
       product_tax: showCurrency(total_tax, currency),
       grand_total: showCurrency(grand_total, currency),
       status,
-      handleEdit,
+      // handleEdit,
       handleDeleteModal,
       handleDetailsModal,
     };
@@ -138,7 +136,7 @@ const TransferTable = ({
         created_at={false}
       />
 
-      <TransferEdit id={editId} setId={setEditId} />
+      {/* <TransferEdit id={editId} setId={setEditId} /> */}
 
       {detailsId && (
         <TransferDetails

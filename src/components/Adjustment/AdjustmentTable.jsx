@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useDeleteAdjustmentMutation,
   useGetAllAdjustmentQuery,
 } from '../../redux/services/adjustment/adjustmentApi';
-import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
@@ -14,7 +12,6 @@ import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import AdjustmentDetails from './AdjustmentDetails';
-import AdjustmentEdit from './AdjustmentEdit';
 
 const AdjustmentTable = ({
   newColumns,
@@ -22,9 +19,9 @@ const AdjustmentTable = ({
   keyword,
   searchParams,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [editId, setEditId] = useState(undefined);
+  // const [editId, setEditId] = useState(undefined);
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -61,10 +58,10 @@ const AdjustmentTable = ({
     setDetailsModal(true);
   };
 
-  const handleEdit = (id) => {
-    setEditId(id);
-    dispatch(openEditDrawer());
-  };
+  // const handleEdit = (id) => {
+  //   setEditId(id);
+  //   dispatch(openEditDrawer());
+  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);
@@ -90,7 +87,6 @@ const AdjustmentTable = ({
         created_at,
         note: note ?? 'N/A',
         handleDetailsModal,
-        handleEdit,
         handleDeleteModal,
       };
     }) ?? [];
@@ -115,7 +111,7 @@ const AdjustmentTable = ({
         status={false}
       />
 
-      <AdjustmentEdit id={editId} setId={setEditId} />
+      {/* <AdjustmentEdit id={editId} setId={setEditId} /> */}
 
       {detailsId && (
         <AdjustmentDetails

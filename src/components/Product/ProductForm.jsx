@@ -141,7 +141,7 @@ const AlertComponent = () => {
         <CustomInput
           label="Alert Quantity"
           type={'number'}
-          // required={true}
+          required={true}
           name={'alert_qty'}
         />
       </Col>

@@ -139,6 +139,69 @@ const columns = [
   },
 ];
 
+const expandColumns = [
+  {
+    title: 'Img',
+    dataIndex: 'img',
+    key: 'img',
+    // fixed: 'left',
+    align: 'center',
+    width: 70,
+    render: (img) => (
+      <div className="mx-auto h-8 w-8 overflow-hidden rounded-md">
+        <img
+          src={img ?? defaultUser}
+          alt="defaultUser"
+          className="h-full w-full object-cover"
+        />
+      </div>
+    ),
+  },
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (name) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {name}
+      </span>
+    ),
+  },
+  {
+    title: 'SKU',
+    dataIndex: 'sku',
+    key: 'sku',
+    align: 'center',
+    render: (sku) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {sku}
+      </span>
+    ),
+  },
+  {
+    title: 'Cost',
+    dataIndex: 'cost',
+    key: 'cost',
+    align: 'right',
+    render: (cost) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {cost}
+      </span>
+    ),
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    align: 'right',
+    render: (price) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {price}
+      </span>
+    ),
+  },
+];
+
 const SearchComponent = () => {
   return (
     <Row {...rowLayout}>
@@ -181,6 +244,7 @@ const ProductList = () => {
         keyword={keyword}
         setSelectedRows={setSelectedRows}
         searchParams={searchParams}
+        expandColumns={expandColumns}
       />
     </GlobalContainer>
   );

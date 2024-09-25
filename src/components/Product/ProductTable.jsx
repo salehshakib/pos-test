@@ -25,6 +25,7 @@ const ProductTable = ({
   setSelectedRows,
   keyword,
   searchParams,
+  expandColumns,
 }) => {
   const dispatch = useDispatch();
 
@@ -146,9 +147,49 @@ const ProductTable = ({
     }) ?? [];
 
   const hideModal = () => {
-    // setStatusModal(false);
+    setStatusModal(false);
     setDetailsModal(false);
     setDeleteModal(false);
+  };
+
+  const expandedRowRender = (record) => {
+    if (record.hasVariant !== 'Yes') return null;
+
+    // Handle variant data source here if needed
+    const expandedData =
+      data?.results?.product
+        ?.find((product) => product.id === record.id)
+        ?.variants?.map((variant) => ({
+          id: variant.id,
+          name: variant.name,
+          sku: variant.sku,
+          cost: showCurrency(variant.buying_price, currency),
+          price: showCurrency(variant.selling_price, currency),
+          created_at: variant.created_at,
+          status: record.status,
+          handleDetailsModal: record.handleDetailsModal,
+          handleDeleteModal: record.handleDeleteModal,
+        })) ?? [];
+
+    return (
+      <CustomTable
+        columns={expandColumns}
+        dataSource={expandedData}
+        showPaging={false}
+        status={false}
+        tableStyleProps={{
+          bordered: true,
+          // backgroundColor: 'red',
+          // scroll: {
+          //   x: '1000',
+          //   y: '300',
+          // },
+          scroll: {
+            x: 'min-content',
+          },
+        }}
+      />
+    );
   };
 
   return (
@@ -163,6 +204,12 @@ const ProductTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        // expendedRowRender={expandedRowRender}
+        expandable={{
+          expandedRowRender,
+          rowExpandable: (record) => record.hasVariant === 'Yes',
+          // fixed: 'left', // Show expandable icon only for rows with variants
+        }}
       />
 
       <ProductEdit id={editId} setId={setEditId} />

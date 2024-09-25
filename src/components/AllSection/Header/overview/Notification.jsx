@@ -128,7 +128,7 @@ export const Notification = () => {
       trigger="click"
       placement="bottomRight"
       overlayClassName="rounded-md shadow-xl "
-      overlayStyle={{ width: 330 }}
+      overlayStyle={{ width: 350 }}
       overlayInnerStyle={{
         maxHeight: '85vh',
         overflowY: 'auto',

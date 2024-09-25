@@ -50,6 +50,8 @@ export const StockCountDetails = ({ id, ...props }) => {
 
   const details = useDetailsLayout(data, true);
 
+  console.log(data);
+
   const title = () => (
     <span className="-ml-2 text-base font-semibold text-black">
       Stock Request Products

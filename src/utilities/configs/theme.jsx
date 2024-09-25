@@ -5,7 +5,7 @@ export function theme({ primaryColor, secondaryColor }) {
       colorPrimary: primaryColor,
       colorBorder: secondaryColor,
       colorPrimaryBorder: secondaryColor,
-      // colorTextDisabled: "#fff",
+      borderRadius: 0,
     },
     components: {
       Input: {
@@ -23,20 +23,14 @@ export function theme({ primaryColor, secondaryColor }) {
         headerSplitColor: primaryColor,
         stickyScrollBarBg: secondaryColor,
         stickyScrollBarBorderRadius: '0 0 10px 10px',
-        // borderColor: secondaryColor,
       },
       Menu: {
         itemHoverBg: secondaryColor,
         itemHoverColor: primaryColor,
       },
-
       Segmented: {
         trackBg: 'white',
         itemSelectedBg: secondaryColor,
-        // itemHoverBg: primaryColor,
-        // itemSelectedColor: "white",
-        // itemHoverColor: "white",
-        // itemActiveBg: primaryColor,
       },
     },
   };

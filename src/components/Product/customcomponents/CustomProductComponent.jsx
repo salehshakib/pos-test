@@ -8,10 +8,12 @@ const updateStateWithProductData = (comboProducts, setFormValues) => {
   const updatedQty = {};
   const updatedAmount = {};
 
-  comboProducts.forEach((item) => {
-    updatedQty[item.combo_product_id.toString()] = item.qty;
-    updatedAmount[item.combo_product_id.toString()] = item.price;
-  });
+  if (comboProducts.length) {
+    comboProducts.forEach((item) => {
+      updatedQty[item.combo_product_id.toString()] = item.qty;
+      updatedAmount[item.combo_product_id.toString()] = item.price;
+    });
+  }
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
@@ -51,15 +53,17 @@ export const CustomProductComponent = ({ onCustomSubmit, data }) => {
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      updateStateWithProductData(data?.product_combos, setFormValues);
+      if (data?.type === 'Combo') {
+        updateStateWithProductData(data?.product_combos, setFormValues);
 
-      const productCombos = data?.product_combos?.map((item) => ({
-        id: item?.combo_product_id,
-        name: item?.products?.name ?? 'Not Specified',
-        sku: item?.products?.sku ?? 'Not Specified',
-      }));
+        const productCombos = data?.product_combos?.map((item) => ({
+          id: item?.combo_product_id,
+          name: item?.products?.name ?? 'Not Specified',
+          sku: item?.products?.sku ?? 'Not Specified',
+        }));
 
-      setProducts(productCombos);
+        setProducts(productCombos);
+      }
     } else {
       setProducts([]);
       setFormValues({

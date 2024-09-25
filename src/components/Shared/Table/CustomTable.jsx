@@ -177,19 +177,19 @@ const CustomTable = ({
   };
 
   const idColumn = [
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'id',
-    //   key: 'id',
-    //   // fixed: 'left',
-    //   align: 'center',
-    //   width: 60,
-    //   render: (id) => (
-    //     <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-    //       {id}
-    //     </span>
-    //   ),
-    // },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      // fixed: 'left',
+      align: 'center',
+      width: 60,
+      render: (id) => (
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+          {id}
+        </span>
+      ),
+    },
   ];
 
   const baseColumns = [...idColumn, ...columns];
@@ -394,7 +394,6 @@ const CustomTable = ({
       dataSource={dataSource}
       expandable={{
         ...expandable,
-        fixed: false,
       }}
     />
   );

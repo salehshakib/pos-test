@@ -349,6 +349,8 @@ export const VariantComponent = ({ onCustomSubmit, data }) => {
     }
   };
 
+  console.log(data);
+
   if (productType === 'Standard')
     return (
       <Row {...rowLayout}>

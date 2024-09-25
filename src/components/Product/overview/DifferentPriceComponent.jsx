@@ -46,7 +46,8 @@ const columns = [
       ) : (
         <CustomInput
           type={'number'}
-          name={['price_list', 'price', record?.id]}
+          // name={['price_list', 'price', record?.id]}
+          value={record.formValues.price_list.price[record?.id]}
           placeholder="price"
           noStyle={true}
           onChange={(value) => record.onUnitPriceChange(record.id, value)}
@@ -139,8 +140,22 @@ export const DifferentPriceComponent = ({
 
   const onDelete = (id) => {
     setProducts((prevWarehouse) =>
-      prevWarehouse.filter((warehouse) => warehouse.id !== id)
+      prevWarehouse.filter(
+        (product) => product.id + '-' + product.warehouse_id !== id
+      )
     );
+    setFormValues((prevFormValues) => {
+      const updatedQtyList = { ...prevFormValues.price_list.qty };
+      delete updatedQtyList[id];
+
+      return {
+        ...prevFormValues,
+        price_list: {
+          ...prevFormValues.price_list,
+          price: updatedQtyList,
+        },
+      };
+    });
   };
 
   const { data } = useGetWarehousesQuery({});
@@ -149,16 +164,18 @@ export const DifferentPriceComponent = ({
     products?.map((product) => {
       const { id, name, warehouse_id } = product;
 
+      const uid = id + '-' + warehouse_id;
+
       const warehouse = data?.results?.warehouse?.find(
         (warehouse) => warehouse.id.toString() === warehouse_id.toString()
       )?.name;
 
-      formValues.price_list.price[id] = formValues.price_list.price[id] ?? 0;
-      formValues.price_list.warehouse_id[id] =
-        formValues.price_list.warehouse_id[id] ?? warehouse_id;
+      formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
+      formValues.price_list.warehouse_id[uid] =
+        formValues.price_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
-        id,
+        id: uid,
         name,
         warehouse,
         delete: true,

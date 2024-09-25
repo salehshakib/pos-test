@@ -51,9 +51,8 @@ export const SearchProduct = ({ setProducts, productId }) => {
     baseParams.warehouse_id =
       pathname.includes('transfer') || pathname.includes('stock-request')
         ? warehouseIdFrom
-        : (warehouseId ?? user.warehouse_id),
-    
-  };
+        : (warehouseId ?? user.warehouse_id);
+  }
 
   if (!keyword) {
     baseParams.page = 1;

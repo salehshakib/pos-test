@@ -36,6 +36,7 @@ const WarehouseForm = (props) => {
             type={'email'}
             name={'email'}
             placeholder={'Email Address'}
+            required={true}
           />
         </Col>
         <Col {...colLayout}>

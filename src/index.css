@@ -236,3 +236,16 @@ iframe.goog-te-banner-frame.skiptranslate {
 .sc-braxZu .fjeAGZ {
   padding: 0px !important;
 }
+
+.ant-table-wrapper .ant-table.ant-table-small .ant-table-expanded-row-fixed {
+  margin: 0 !important;
+  padding: 0px 8px !important;
+}
+
+.ant-table-wrapper tr.ant-table-expanded-row > td {
+  /* background: var(--firstColor) !important; */
+}
+
+.ant-table-expanded-row .ant-table-cell {
+  padding: 8px 0px !important;
+}

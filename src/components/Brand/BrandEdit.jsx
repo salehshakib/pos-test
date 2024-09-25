@@ -47,24 +47,21 @@ export const BrandEdit = ({ id, setId }) => {
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
-    const formData = new FormData();
-
-    const postData = {
-      ...values,
-      _method: 'PUT',
-    };
-
-    let deleteAttachmentIds = getMissingUids(fields, values, 'logo');
-
-    if (deleteAttachmentIds.length > 0) {
-      postData.deleteAttachmentIds = deleteAttachmentIds;
-    }
+    const postObj = { ...values, _method: 'PUT' };
 
     if (values?.logo?.length > 0) {
-      postData.logo = values?.logo?.[0]?.originFileObj;
+      postObj.logo = values?.logo?.[0]?.originFileObj;
     }
 
-    appendToFormData(postData, formData);
+    let deleteLogoIds = getMissingUids(fields, values, 'logo');
+
+    if (deleteLogoIds.length > 0) {
+      postObj.deletelogoIds = deleteLogoIds;
+    }
+
+    const formData = new FormData();
+
+    appendToFormData(postObj, formData);
 
     const { data, error } = await updateBrand({
       id,

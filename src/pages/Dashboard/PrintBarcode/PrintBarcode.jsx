@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import { toast } from 'sonner';
 
+import { WarehouseComponent } from '../../../components/ReusableComponent/WarehouseComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
 import CustomModal from '../../../components/Shared/Modal/CustomModal';
 import { useCurrentUser } from '../../../redux/services/auth/authSlice';
@@ -105,6 +106,10 @@ const PrintBarcode = () => {
     >
       <div className="mx-auto mt-10 max-w-7xl">
         <CustomForm form={form} submitBtn={false}>
+          {user?.roles[0]?.name?.toLowerCase() === 'admin' && (
+            <WarehouseComponent />
+          )}
+
           <ProductSelect
             formValues={formValues}
             setFormValues={setFormValues}

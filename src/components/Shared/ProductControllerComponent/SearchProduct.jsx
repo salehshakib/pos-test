@@ -1,10 +1,12 @@
 import { AutoComplete, Col, Form, Spin } from 'antd';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
@@ -24,6 +26,7 @@ const ignorePaths = [
 export const SearchProduct = ({ setProducts, productId }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
+  const user = useSelector(useCurrentUser);
 
   const form = Form.useFormInstance();
   const { pathname } = useLocation();
@@ -44,11 +47,11 @@ export const SearchProduct = ({ setProducts, productId }) => {
     need_qty: 1,
   };
 
-  if (warehouseId || warehouseIdFrom) {
+  if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
     baseParams.warehouse_id =
       pathname.includes('transfer') || pathname.includes('stock-request')
         ? warehouseIdFrom
-        : warehouseId;
+        : (warehouseId ?? user.warehouse_id);
   }
 
   if (!keyword) {

@@ -41,11 +41,15 @@ export const SearchProduct = ({ setProducts, productId }) => {
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
   const baseParams = {
-    product_warehouse_id:
+    need_qty: 1,
+  };
+
+  if (warehouseId || warehouseIdFrom) {
+    baseParams.warehouse_id =
       pathname.includes('transfer') || pathname.includes('stock-request')
         ? warehouseIdFrom
-        : warehouseId,
-  };
+        : warehouseId;
+  }
 
   if (!keyword) {
     baseParams.page = 1;
@@ -73,10 +77,10 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const { data, isFetching } = useGetAllProductVariantsQuery(
     {
       params,
-    },
-    {
-      skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
     }
+    // {
+    //   skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
+    // }
   );
 
   const loadingContent = (
@@ -95,7 +99,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
         },
       ]
     : (data?.results?.productvariant?.map((product) => ({
-        value: product.id.toString(),
+        value: product?.id?.toString(),
         label: `${product.name} (SKU: ${product.sku})`,
         product: { ...product, warehouse_id: warehouseId },
       })) ?? []);

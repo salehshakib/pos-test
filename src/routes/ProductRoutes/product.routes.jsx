@@ -17,8 +17,8 @@ export const productPaths = [
     element: <ProductList />,
   },
   {
-    name: 'Variant',
-    path: 'variant',
+    name: 'Attribute',
+    path: 'attribute',
     icon: MdOutlineMergeType,
     element: <Variant />,
   },

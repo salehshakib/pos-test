@@ -17,33 +17,37 @@ const updateStateWithProductData = (
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-
   const updatedTaxId = {};
-
   const updatedOperator = {};
   const updatedOperationValue = {};
 
+  // Loop through each product and populate updated fields
   purchaseProducts.forEach((item) => {
-    updatedQty[item.product_id.toString()] = item.qty;
-    updatedPurchaseUnitId[item.product_id.toString()] = item.purchase_unit_id;
-    updatedProductCost[item.product_id.toString()] = item.net_unit_cost;
-    updatedDiscount[item.product_id.toString()] = item.discount;
-    updatedTaxRate[item.product_id.toString()] = item.tax_rate;
-    updatedTax[item.product_id.toString()] = item.tax;
-    updatedTotal[item.product_id.toString()] = item.total;
+    const productId = item.product_variants.id.toString();
 
-    updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
+    updatedQty[productId] = item.qty;
+    updatedPurchaseUnitId[productId] = item.product_variants.purchase_unit_id;
+    updatedProductCost[productId] = item.product_variants.net_unit_cost;
+    updatedDiscount[productId] = item.product_variants.discount;
+    updatedTaxRate[productId] = item.product_variants.tax_rate;
+    updatedTax[productId] = item.product_variants.tax;
+    updatedTotal[productId] = item.product_variants.total;
 
-    updatedOperator[item.product_id.toString()] =
-      item.products?.purchase_units?.operator;
-    updatedOperationValue[item.product_id.toString()] =
-      item.products?.purchase_units?.operation_value;
+    // Optional chaining for safe access
+    updatedTaxId[productId] = item.product_variants.products?.tax_id;
 
+    updatedOperator[productId] =
+      item.product_variants.products?.purchase_units?.operator;
+    updatedOperationValue[productId] =
+      item.product_variants.products?.purchase_units?.operation_value;
+
+    // Handle max quantity if purchase is true
     if (purchase) {
-      updatedMaxQty[item.product_id.toString()] = purchase.total_qty;
+      updatedMaxQty[productId] = purchase.total_qty; // Ensure this is defined correctly in purchase
     }
   });
 
+  // Update the state using the setFormValues callback
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
     product_list: {
@@ -76,12 +80,10 @@ const updateStateWithProductData = (
         ...prevFormValues.product_list.total,
         ...updatedTotal,
       },
-
       tax_id: {
         ...prevFormValues.product_list.tax_id,
         ...updatedTaxId,
       },
-
       max_return: {
         ...prevFormValues.product_list.max_return,
         ...(purchase ? updatedMaxQty : updatedQty),
@@ -166,14 +168,14 @@ export const CustomPurchaseReturnProductForm = ({
       updateStateWithProductData(data?.purchase_products, setFormValues);
 
       const purchaseProducts = data?.purchase_products?.map((product) => ({
-        id: product.product_id,
-        name: product.products?.name,
-        sku: product.products?.sku,
-        buying_price: product.products?.buying_price,
-        purchase_unit_id: product.purchase_unit_id,
-        purchase_units: product.products?.purchase_units,
-        tax_id: product.products?.tax_id,
-        taxes: product?.products.taxes,
+        id: product?.product_variants?.id,
+        name: product?.product_variants?.products?.name,
+        sku: product?.product_variants?.products?.sku,
+        buying_price: product?.product_variants?.products?.buying_price,
+        purchase_unit_id: product?.product_variants?.purchase_unit_id,
+        purchase_units: product?.product_variants?.products?.purchase_units,
+        tax_id: product?.product_variants?.products?.tax_id,
+        taxes: product?.product_variants?.products.taxes,
         purchaseQty: product?.qty,
       }));
 
@@ -187,14 +189,14 @@ export const CustomPurchaseReturnProductForm = ({
 
       const purchaseProducts = data?.purchase_return_products?.map(
         (product) => ({
-          id: product.product_id,
-          name: product.products?.name,
-          sku: product.products?.sku,
-          buying_price: product.products?.buying_price,
-          purchase_unit_id: product.purchase_unit_id,
-          purchase_units: product.products?.purchase_units,
-          tax_id: product.products?.tax_id,
-          taxes: product?.products.taxes,
+          id: product?.product_variants?.id,
+          name: product?.product_variants?.products?.name,
+          sku: product?.product_variants?.products?.sku,
+          buying_price: product?.product_variants?.products?.buying_price,
+          purchase_unit_id: product?.product_variants?.purchase_unit_id,
+          purchase_units: product?.product_variants?.products?.purchase_units,
+          tax_id: product?.product_variants?.products?.tax_id,
+          taxes: product?.product_variants?.products.taxes,
           purchaseQty: product?.qty,
         })
       );

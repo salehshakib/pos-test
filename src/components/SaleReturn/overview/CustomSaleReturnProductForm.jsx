@@ -161,19 +161,19 @@ export const CustomSaleReturnProductForm = ({
 
       updateStateWithProductData(data?.sale_products, setFormValues);
 
-      const purchaseProducts = data?.sale_products?.map((product) => ({
-        id: product.product_id,
-        name: product.products?.name,
-        sku: product.products?.sku,
-        buying_price: product.products?.buying_price,
-        sale_unit_id: product.sale_unit_id,
-        purchase_units: product.products?.purchase_units,
-        tax_id: product.products?.tax_id,
-        taxes: product?.products.taxes,
-        soldQty: product.qty,
+      const saleProducts = data?.sale_products?.map((product) => ({
+        id: product?.product_variants?.id,
+        name: product?.product_variants?.products?.name,
+        sku: product?.product_variants?.products?.sku,
+        buying_price: product?.product_variants?.products?.buying_price,
+        sale_unit_id: product?.product_variants?.sale_unit_id,
+        purchase_units: product?.product_variants?.products?.purchase_units,
+        tax_id: product?.product_variants?.products?.tax_id,
+        taxes: product?.product_variants?.products.taxes,
+        soldQty: product?.qty,
       }));
 
-      setProducts(purchaseProducts);
+      setProducts(saleProducts);
     } else if (data && isEditDrawerOpen) {
       updateStateWithProductData(
         data?.sale_return_products,
@@ -181,19 +181,19 @@ export const CustomSaleReturnProductForm = ({
         data?.sale
       );
 
-      const purchaseProducts = data?.sale_return_products?.map((product) => ({
-        id: product.product_id,
-        name: product.products?.name,
-        sku: product.products?.sku,
-        buying_price: product.products?.buying_price,
-        sale_unit_id: product.sale_unit_id,
-        purchase_units: product.products?.purchase_units,
-        tax_id: product.products?.tax_id,
-        taxes: product?.products.taxes,
-        soldQty: product.qty,
+      const saleProducts = data?.sale_return_products?.map((product) => ({
+        id: product?.product_variants?.id,
+        name: product?.product_variants?.products?.name,
+        sku: product?.product_variants?.products?.sku,
+        buying_price: product?.product_variants?.products?.buying_price,
+        sale_unit_id: product?.product_variants?.sale_unit_id,
+        purchase_units: product?.product_variants?.products?.purchase_units,
+        tax_id: product?.product_variants?.products?.tax_id,
+        taxes: product?.product_variants?.products.taxes,
+        soldQty: product?.qty,
       }));
 
-      setProducts(purchaseProducts);
+      setProducts(saleProducts);
     } else {
       resetFormAndProducts();
     }

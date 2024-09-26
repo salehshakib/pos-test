@@ -42,6 +42,17 @@ const expandColumns = [
     ),
   },
   {
+    title: 'Quantity',
+    dataIndex: 'qty',
+    key: 'qty',
+    align: 'center',
+    render: (qty) => (
+      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        {qty}
+      </span>
+    ),
+  },
+  {
     title: 'Cost',
     dataIndex: 'cost',
     key: 'cost',
@@ -68,6 +79,8 @@ const expandColumns = [
 export const expandedRowRender = (record, data, currency) => {
   if (record.hasVariant !== 'Yes') return null;
 
+  console.log(data.results.product);
+
   // Handle variant data source here if needed
   const expandedData =
     data?.results?.product
@@ -76,6 +89,7 @@ export const expandedRowRender = (record, data, currency) => {
         id: variant.id,
         name: variant.name,
         sku: variant.sku,
+        quantity: variant.qty,
         cost: showCurrency(variant.buying_price, currency),
         price: showCurrency(variant.selling_price, currency),
         created_at: variant.created_at,

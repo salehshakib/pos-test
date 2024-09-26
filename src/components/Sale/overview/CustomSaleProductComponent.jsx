@@ -11,81 +11,79 @@ import { TransactionSummary } from '../../ReusableComponent/TransactionSummary';
 import { SaleProductTable } from './SaleProductTable';
 
 const updateStateWithProductData = (saleProducts, setFormValues) => {
-  const updatedQty = {};
-  const updatedSaleUnitId = {};
-  const updatedProductCost = {};
-  const updatedDiscount = {};
-  const updatedTaxRate = {};
-  const updatedTax = {};
-  const updatedTotal = {};
-  const updatedTaxId = {};
+  // Fields that need to be updated in product_list
+  const fieldsToUpdate = [
+    { key: 'qty', value: 'qty' },
+    { key: 'sale_unit_id', value: 'product_variants.sale_unit_id' },
+    { key: 'net_unit_price', value: 'product_variants.net_unit_price' },
+    { key: 'discount', value: 'product_variants.discount' },
+    { key: 'tax_rate', value: 'product_variants.tax_rate' },
+    { key: 'tax', value: 'product_variants.tax' },
+    { key: 'total', value: 'product_variants.total' },
+    { key: 'tax_id', value: 'product_variants.products.tax_id' },
+  ];
 
-  const updatedOperator = {};
-  const updatedOperationValue = {};
+  // Fields that need to be updated in units
+  const unitsToUpdate = [
+    { key: 'operator', value: 'product_variants.products.sale_units.operator' },
+    {
+      key: 'operation_value',
+      value: 'product_variants.products.sale_units.operation_value',
+    },
+  ];
 
-  saleProducts.forEach((item) => {
-    updatedQty[item.product_id.toString()] = item.qty;
-    updatedSaleUnitId[item.product_id.toString()] = item.sale_unit_id;
-    updatedProductCost[item.product_id.toString()] = item.net_unit_price;
-    updatedDiscount[item.product_id.toString()] = item.discount;
-    updatedTaxRate[item.product_id.toString()] = item.tax_rate;
-    updatedTax[item.product_id.toString()] = item.tax;
-    updatedTotal[item.product_id.toString()] = item.total;
-    updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
+  // Initialize objects to store updated fields
+  const updatedFields = {};
+  const updatedUnits = {};
 
-    updatedOperator[item.product_id.toString()] =
-      item.products?.sale_units?.operator;
-    updatedOperationValue[item.product_id.toString()] =
-      item.products?.sale_units?.operation_value;
+  // Initialize keys for all fields
+  fieldsToUpdate.forEach(({ key }) => {
+    updatedFields[key] = {};
   });
 
+  unitsToUpdate.forEach(({ key }) => {
+    updatedUnits[key] = {};
+  });
+
+  // Populate the updated fields from saleProducts
+  saleProducts.forEach((item) => {
+    const productId = item.product_variants.id.toString();
+
+    fieldsToUpdate.forEach(({ key, value }) => {
+      updatedFields[key][productId] = value
+        .split('.')
+        .reduce((acc, curr) => acc?.[curr], item);
+    });
+
+    unitsToUpdate.forEach(({ key, value }) => {
+      updatedUnits[key][productId] = value
+        .split('.')
+        .reduce((acc, curr) => acc?.[curr], item);
+    });
+  });
+
+  // Update the state using the setFormValues callback
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
     product_list: {
       ...prevFormValues.product_list,
-      qty: {
-        ...prevFormValues.product_list.qty,
-        ...updatedQty,
-      },
-      sale_unit_id: {
-        ...prevFormValues.product_list.sale_unit_id,
-        ...updatedSaleUnitId,
-      },
-      net_unit_price: {
-        ...prevFormValues.product_list.net_unit_price,
-        ...updatedProductCost,
-      },
-      discount: {
-        ...prevFormValues.product_list.discount,
-        ...updatedDiscount,
-      },
-      tax_rate: {
-        ...prevFormValues.product_list.tax_rate,
-        ...updatedTaxRate,
-      },
-      tax: {
-        ...prevFormValues.product_list.tax,
-        ...updatedTax,
-      },
-      total: {
-        ...prevFormValues.product_list.total,
-        ...updatedTotal,
-      },
-      tax_id: {
-        ...prevFormValues.product_list.tax_id,
-        ...updatedTaxId,
-      },
+      ...Object.keys(updatedFields).reduce((acc, key) => {
+        acc[key] = {
+          ...prevFormValues.product_list[key],
+          ...updatedFields[key],
+        };
+        return acc;
+      }, {}),
     },
     units: {
       ...prevFormValues.units,
-      operator: {
-        ...prevFormValues.units.operator,
-        ...updatedOperator,
-      },
-      operation_value: {
-        ...prevFormValues.units.operation_value,
-        ...updatedOperationValue,
-      },
+      ...Object.keys(updatedUnits).reduce((acc, key) => {
+        acc[key] = {
+          ...prevFormValues.units[key],
+          ...updatedUnits[key],
+        };
+        return acc;
+      }, {}),
     },
   }));
 };
@@ -146,15 +144,15 @@ export const CustomSaleProductComponent = forwardRef(
         updateStateWithProductData(data?.sale_products, setFormValues);
 
         const saleProducts = data?.sale_products?.map((product) => ({
-          id: product.product_id,
-          name: product.products?.name,
-          sku: product.products?.sku,
-          selling_price: product.products?.selling_price,
-          sale_unit_id: product.sale_unit_id,
-          sale_units: product.products?.sale_units,
-          tax_id: product.products?.tax_id,
-          taxes: product?.products.taxes,
-          product_qties: product?.products?.product_qties,
+          id: product?.product_variants?.id,
+          name: product?.product_variants?.products?.name,
+          sku: product?.product_variants?.products?.sku,
+          selling_price: product?.product_variants?.products?.selling_price,
+          sale_unit_id: product?.product_variants?.sale_unit_id,
+          sale_units: product?.product_variants?.products?.sale_units,
+          tax_id: product?.product_variants?.products?.tax_id,
+          taxes: product?.product_variants?.products.taxes,
+          product_qties: product?.product_variants?.products?.product_qties,
         }));
 
         setProducts(saleProducts);

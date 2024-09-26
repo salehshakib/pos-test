@@ -43,9 +43,11 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const isIgnore =
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
-  const baseParams = {
-    need_qty: 1,
-  };
+  const baseParams = {};
+
+  if (!pathname.includes('/products/product')) {
+    baseParams.need_qty = 1;
+  }
 
   if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
     baseParams.warehouse_id =

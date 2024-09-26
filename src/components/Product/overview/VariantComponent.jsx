@@ -13,7 +13,10 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useGetAllVariantsQuery } from '../../../redux/services/variant/variantApi';
-import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../../utilities/hooks/useParams';
 import { generateRandomCode } from '../../../utilities/lib/generateCode';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
@@ -23,29 +26,29 @@ import ProductVariantOption from './variant/ProductVariantOptions';
 const updateVariantOptions = (
   dataSource,
   variantOptions,
-  variantAttributes
+  variantAttributesName
 ) => {
   const validIds = dataSource.map((item) => item.id.toString());
 
   Object.keys(variantOptions).forEach((id) => {
     if (!validIds.includes(id.toString())) {
       variantOptions[id] = [];
-      variantAttributes[id] = [];
+      variantAttributesName[id] = [];
     }
   });
 };
 
 const generateCombinationsFromVariantAttributes = (
   dataSource,
-  variantAttributes,
+  variantAttributesName,
   buying_price,
   selling_price
 ) => {
-  // Return an empty array if dataSource or variantAttributes is empty
+  // Return an empty array if dataSource or variantAttributesName is empty
   if (
     !dataSource.length ||
-    Object.keys(variantAttributes).length === 0 ||
-    Object.values(variantAttributes).every((values) => values.length === 0)
+    Object.keys(variantAttributesName).length === 0 ||
+    Object.values(variantAttributesName).every((values) => values.length === 0)
   ) {
     return [];
   }
@@ -71,7 +74,7 @@ const generateCombinationsFromVariantAttributes = (
     }
 
     const key = orderedAttributeIds[index];
-    const values = variantAttributes[key]; // Get values for the current key
+    const values = variantAttributesName[key]; // Get values for the current key
 
     // Check if there are values for the current key
     if (values && values.length > 0) {
@@ -94,9 +97,9 @@ const VariantAttributeTable = ({
   dataSource,
   setDataSource,
   variantOptions,
-  variantAttributes,
+  variantAttributesName,
   setVariantOptions,
-  setVariantAttributes,
+  setVariantAttributesName,
 }) => {
   const RowContext = React.createContext({});
   const onSelect = (value, option, id) => {
@@ -105,14 +108,14 @@ const VariantAttributeTable = ({
       [id]: value,
     }));
 
-    setVariantAttributes((prev) => ({
+    setVariantAttributesName((prev) => ({
       ...prev,
       [id]: option.map((item) => item.label),
     }));
   };
 
   useEffect(() => {
-    updateVariantOptions(dataSource, variantOptions, variantAttributes);
+    updateVariantOptions(dataSource, variantOptions, variantAttributesName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource]);
 
@@ -250,6 +253,7 @@ const VariantAttributeTable = ({
 const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const params = useGlobalParams({
     isRelationalParams: true,
+    selectValue: DEFAULT_SELECT_VALUES,
   });
 
   const { data, isLoading } = useGetAllVariantsQuery({ params });
@@ -264,7 +268,10 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const [dataSource, setDataSource] = useState([]);
 
   const [variantOptions, setVariantOptions] = useState({});
-  const [variantAttributes, setVariantAttributes] = useState({});
+  const [variantAttributesName, setVariantAttributesName] = useState({});
+
+  console.log(variantOptions);
+  console.log(variantAttributesName);
 
   console.log(editData?.variants);
 
@@ -309,6 +316,40 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     return Object.values(attributesMap).reverse();
   }
 
+  function extractAttributeValues(attributeData) {
+    const attributeValues = {};
+    const attributeIds = {};
+
+    attributeData.forEach((product) => {
+      product.product_variant_attribute_options.forEach((variant) => {
+        const attributeId = variant.attribute_option.attribute_id;
+        const attributeName = variant.attribute_option.name;
+        const optionId = variant.attribute_option.id.toString(); // Store as a string
+
+        // Collect attribute names
+        if (!attributeValues[attributeId]) {
+          attributeValues[attributeId] = [];
+        }
+        if (!attributeValues[attributeId].includes(attributeName)) {
+          attributeValues[attributeId].push(attributeName);
+        }
+
+        // Collect unique option IDs
+        if (!attributeIds[attributeId]) {
+          attributeIds[attributeId] = new Set(); // Use a Set to avoid duplicates
+        }
+        attributeIds[attributeId].add(optionId); // Add option ID to the Set
+      });
+    });
+
+    // Convert Sets back to arrays
+    for (const key in attributeIds) {
+      attributeIds[key] = Array.from(attributeIds[key]);
+    }
+
+    return { attributeValues, attributeIds };
+  }
+
   const onSelect = (value, option) => {
     const selected =
       option.map((item) => {
@@ -326,6 +367,18 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   useEffect(() => {
     if (editData) {
       const options = formatVariantsData(editData.variants);
+
+      console.log(editData?.variants);
+
+      const result = extractAttributeValues(editData?.variants);
+
+      // console.log(availableOptions);
+      // console.log(selectedLabels);
+
+      console.log(result);
+
+      setVariantOptions(result.attributeIds);
+      setVariantAttributesName(result.attributeValues);
 
       setDataSource(options);
     }
@@ -345,7 +398,7 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,
-    variantAttributes,
+    variantAttributesName,
     buying_price,
     selling_price
   );
@@ -366,8 +419,8 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
         setDataSource={setDataSource}
         variantOptions={variantOptions}
         setVariantOptions={setVariantOptions}
-        variantAttributes={variantAttributes}
-        setVariantAttributes={setVariantAttributes}
+        variantAttributesName={variantAttributesName}
+        setVariantAttributesName={setVariantAttributesName}
       />
 
       <ProductVariantOption

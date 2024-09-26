@@ -210,7 +210,7 @@ const ProductCreate = () => {
   const [current, setCurrent] = useState(0);
 
   const handleStockSubmit = async (values, { formValues }) => {
-    const stockListArray = formValues.stock_list?.qty
+    const stockListArray = formValues?.stock_list?.qty
       ? Object.keys(formValues.stock_list.qty)
           .filter(
             (product_id) => formValues.stock_list.qty[product_id] !== undefined
@@ -222,7 +222,7 @@ const ProductCreate = () => {
           }))
       : [];
 
-    const priceListArray = formValues.price_list?.price
+    const priceListArray = formValues?.price_list?.price
       ? Object.keys(formValues.price_list.price)
           .filter(
             (product_id) =>

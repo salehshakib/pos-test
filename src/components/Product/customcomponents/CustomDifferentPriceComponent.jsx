@@ -22,16 +22,22 @@ const updateStateWithProductData = (productPrices, setFormValues) => {
   }));
 };
 
-export const CustomDifferentPriceComponent = ({ onCustomSubmit, data }) => {
+export const CustomDifferentPriceComponent = ({
+  onCustomSubmit,
+  data,
+  productId,
+}) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const [formValues, setFormValues] = useState({
     price_list: {
       price: {},
+      product_variant_id: {},
+      warehouse_id: {},
     },
   });
 
-  const [priceWarehouses, setPriceWarehouses] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const handleCustomSubmit = useCallback(() => {
     return formValues;
@@ -42,18 +48,12 @@ export const CustomDifferentPriceComponent = ({ onCustomSubmit, data }) => {
   useEffect(() => {
     if (data && isEditDrawerOpen) {
       updateStateWithProductData(data?.product_prices, setFormValues);
-
-      const priceWarehouseList = data?.product_prices?.map((item) => ({
-        id: item.warehouse_id,
-        name: item?.warehouses?.name ?? 'Not Specified',
-      }));
-
-      setPriceWarehouses(priceWarehouseList);
     } else {
-      setPriceWarehouses([]);
       setFormValues({
         price_list: {
           price: {},
+          product_variant_id: {},
+          warehouse_id: {},
         },
       });
     }
@@ -65,10 +65,11 @@ export const CustomDifferentPriceComponent = ({ onCustomSubmit, data }) => {
         <WarehouseComponent />
       </Col>
       <DifferentPriceComponent
+        productId={productId}
         formValues={formValues}
         setFormValues={setFormValues}
-        priceWarehouses={priceWarehouses}
-        setPriceWarehouses={setPriceWarehouses}
+        products={products}
+        setProducts={setProducts}
       />
     </>
   );

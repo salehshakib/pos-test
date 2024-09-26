@@ -90,34 +90,6 @@ const CustomProductTable = ({
       columns={columns}
       dataSource={dataSource}
       pagination={showPaging ? { ...paginationProps } : false}
-      // summary={() => {
-      //   return (
-      //     <Table.Summary fixed="bottom">
-      //       <Table.Summary.Row>
-      //         <Table.Summary.Cell index={1} colSpan={3}>
-      //           <Text className="font-bold" type="">
-      //             Total
-      //           </Text>
-      //         </Table.Summary.Cell>
-
-      //         <Table.Summary.Cell index={2} align="center">
-      //           <Text type="" className="font-bold">
-      //             {qty}
-      //           </Text>
-      //         </Table.Summary.Cell>
-      //         <Table.Summary.Cell index={3} align="center">
-      //           <Text type="" className="font-bold">
-      //             {subTotal}
-      //           </Text>
-      //         </Table.Summary.Cell>
-      //       </Table.Summary.Row>
-      //     </Table.Summary>
-      //   );
-      // }}
-      // sticky={{
-      //   // offsetHeader: 440,
-      //   offsetScroll: 400,
-      // }}
     />
   );
 };

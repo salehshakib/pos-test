@@ -63,7 +63,7 @@ const PurchaseReturnEdit = ({ id, setId }) => {
       ? Object.keys(updatedList.qty)
           .filter((product_id) => updatedList.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             qty: updatedList.qty[product_id],
             purchase_unit_id: updatedList.purchase_unit_id[product_id],
             net_unit_cost: decimalConverter(

@@ -31,9 +31,6 @@ export const LeaveEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      console.log(data);
-      console.log(fieldData);
-
       // const newFieldData = [
       //   ...fieldData,
       //   {
@@ -53,8 +50,6 @@ export const LeaveEdit = ({ id, setId }) => {
       setFields([]);
     }
   }, [data, setFields, isEditDrawerOpen]);
-
-  console.log(fields);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();

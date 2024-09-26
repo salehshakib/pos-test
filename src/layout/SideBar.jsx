@@ -2,8 +2,8 @@ import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import logo from '../assets/data/defaultLogo';
 import { adminPaths } from '../routes/admin.routes';
+import { useSiteLogo } from '../utilities/hooks/useSiteLogo';
 import { useMenuItems } from '../utilities/lib/getPermission';
 import { sidebarItemsGenerator } from '../utilities/lib/sidebarItemsGenerator';
 
@@ -27,6 +27,7 @@ const getLevelKeys = (items1) => {
 
 const SideBar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
+  const logo = useSiteLogo();
 
   const menuItems = useMenuItems(adminPaths);
 

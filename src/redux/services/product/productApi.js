@@ -1,4 +1,8 @@
-import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  PRODUCT,
+  PRODUCT_VARIANTS,
+  STOCK_MANAGE,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -20,6 +24,21 @@ const productApi = baseApi.injectEndpoints({
       ],
     }),
 
+    getAllProductVariants: build.query({
+      query: ({ params }) => {
+        return {
+          url: `/${PRODUCT_VARIANTS}`,
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { params }) => [
+        { type: PRODUCT_VARIANTS, ...params },
+        PRODUCT_VARIANTS,
+      ],
+    }),
+
     getProductDetails: build.query({
       query: ({ id, params }) => {
         return {
@@ -36,6 +55,30 @@ const productApi = baseApi.injectEndpoints({
       query: ({ formData }) => {
         return {
           url: `/${PRODUCT}/store`,
+          method: 'POST',
+          body: formData,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: PRODUCT }] : [];
+      },
+    }),
+    createStockManage: build.mutation({
+      query: ({ formData, id }) => {
+        return {
+          url: `/${STOCK_MANAGE}/${id}`,
           method: 'POST',
           body: formData,
         };
@@ -134,9 +177,11 @@ const productApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllProductsQuery,
+  useGetAllProductVariantsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useUpdateProductStatusMutation,
   useDeleteProductMutation,
+  useCreateStockManageMutation,
 } = productApi;

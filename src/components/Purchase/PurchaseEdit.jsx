@@ -72,7 +72,7 @@ export const PurchaseEdit = ({ id, setId }) => {
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             qty: product_list.qty[product_id],
             recieved: product_list.recieved[product_id],
             purchase_unit_id: product_list.purchase_unit_id[product_id],

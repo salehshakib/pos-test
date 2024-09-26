@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import { toast } from 'sonner';
 
+import { WarehouseComponent } from '../../../components/ReusableComponent/WarehouseComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
 import CustomModal from '../../../components/Shared/Modal/CustomModal';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../utilities/lib/currency';
 import ProductSelect from './ProductSelect';
@@ -29,6 +31,8 @@ const PrintBarcode = () => {
   const [showDiscount, setShowDiscount] = useState(false);
   const [labelSize, setLabelSize] = useState({ width: 2, height: 70 });
 
+  const user = useSelector(useCurrentUser);
+
   const generateBarcode = () => {
     if (products?.length <= 0) {
       toast?.info('Please Select a Product!');
@@ -37,10 +41,15 @@ const PrintBarcode = () => {
 
     const generatedBarcodes = products?.map((product) => {
       const quantity = formValues?.product_list?.qty[product?.id] || 0;
+      const productPrice = product?.product_prices?.find(
+        (item) => item?.warehouse_id === user?.warehouse_id
+      );
       return {
         name: product.name,
         sku: product.sku,
-        selling_price: product?.selling_price,
+        selling_price: productPrice?.price
+          ? productPrice?.price
+          : product?.selling_price,
         symbology: product?.symbology,
         promotion_price: product?.promotion_price,
         quantity,
@@ -97,6 +106,10 @@ const PrintBarcode = () => {
     >
       <div className="mx-auto mt-10 max-w-7xl">
         <CustomForm form={form} submitBtn={false}>
+          {user?.roles[0]?.name?.toLowerCase() === 'admin' && (
+            <WarehouseComponent />
+          )}
+
           <ProductSelect
             formValues={formValues}
             setFormValues={setFormValues}

@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { fullColLayout, rowLayout } from '../../layout/FormLayout';
 import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
@@ -16,13 +17,14 @@ const AdjustmentForm = ({
   ...props
 }) => {
   const warehouseId = Form.useWatch('warehouse_id', props.form);
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   useEffect(() => {
-    if (warehouseId) {
+    if (warehouseId && !isEditDrawerOpen) {
       setFormValues({ product_list: { qty: {}, action: {} } });
       setProducts([]);
     }
-  }, [setFormValues, setProducts, warehouseId]);
+  }, [setFormValues, setProducts, warehouseId, isEditDrawerOpen]);
 
   return (
     <CustomForm {...props}>

@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import { useEffect } from 'react';
 import { MdDelete } from 'react-icons/md';
 
+import { useGetWarehousesQuery } from '../../../redux/services/warehouse/warehouseApi';
 import CustomInput from '../../Shared/Input/CustomInput';
 import { ProductController } from '../../Shared/ProductControllerComponent/ProductController';
 
@@ -45,7 +46,8 @@ const columns = [
       ) : (
         <CustomInput
           type={'number'}
-          name={['price_list', 'price', record?.id]}
+          // name={['price_list', 'price', record?.id]}
+          value={record.formValues.price_list.price[record?.id]}
           placeholder="price"
           noStyle={true}
           onChange={(value) => record.onUnitPriceChange(record.id, value)}
@@ -81,8 +83,9 @@ const columns = [
 export const DifferentPriceComponent = ({
   formValues,
   setFormValues,
-  priceWarehouses,
-  setPriceWarehouses,
+  products,
+  setProducts,
+  productId,
 }) => {
   const form = Form.useFormInstance();
 
@@ -136,20 +139,45 @@ export const DifferentPriceComponent = ({
   };
 
   const onDelete = (id) => {
-    setPriceWarehouses((prevWarehouse) =>
-      prevWarehouse.filter((warehouse) => warehouse.id !== id)
+    setProducts((prevWarehouse) =>
+      prevWarehouse.filter(
+        (product) => product.id + '-' + product.warehouse_id !== id
+      )
     );
-  };
-
-  const dataSource =
-    priceWarehouses?.map((warehouse) => {
-      const { id, name } = warehouse;
-
-      formValues.price_list.price[id] = formValues.price_list.price[id] ?? 0;
+    setFormValues((prevFormValues) => {
+      const updatedQtyList = { ...prevFormValues.price_list.qty };
+      delete updatedQtyList[id];
 
       return {
-        id,
+        ...prevFormValues,
+        price_list: {
+          ...prevFormValues.price_list,
+          price: updatedQtyList,
+        },
+      };
+    });
+  };
+
+  const { data } = useGetWarehousesQuery({});
+
+  const dataSource =
+    products?.map((product) => {
+      const { id, name, warehouse_id } = product;
+
+      const uid = id + '-' + warehouse_id;
+
+      const warehouse = data?.results?.warehouse?.find(
+        (warehouse) => warehouse.id.toString() === warehouse_id.toString()
+      )?.name;
+
+      formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
+      formValues.price_list.warehouse_id[uid] =
+        formValues.price_list.warehouse_id[uid] ?? warehouse_id;
+
+      return {
+        id: uid,
         name,
+        warehouse,
         delete: true,
         incrementCounter,
         decrementCounter,
@@ -160,18 +188,15 @@ export const DifferentPriceComponent = ({
 
   useEffect(() => {
     form.setFieldsValue(formValues);
-  }, [form, formValues, priceWarehouses]);
+  }, [form, formValues]);
 
   return (
     <ProductController
-      // warehouses={priceWarehouses}
-      // setWarehouses={setPriceWarehouses}
+      productId={productId}
       columns={columns}
       dataSource={dataSource}
-      products={[]}
-      setProducts={() => {
-        console.log('value');
-      }}
+      products={products}
+      setProducts={setProducts}
     />
   );
 };

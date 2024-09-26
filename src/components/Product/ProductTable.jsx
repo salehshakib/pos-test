@@ -19,6 +19,7 @@ import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { ProductDetails } from './ProductDetails';
 import ProductEdit from './ProductEdit';
+import { expandedRowRender } from './ProductVariantTable';
 
 const ProductTable = ({
   newColumns,
@@ -81,6 +82,9 @@ const ProductTable = ({
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
+  // deleteVariant
+  // const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+
   const handleDetailsModal = (id) => {
     setDetailsId(id);
     setDetailsModal(true);
@@ -94,6 +98,22 @@ const ProductTable = ({
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
+  };
+
+  const [deleteVariantId, setDeleteVariantId] = useState(undefined);
+
+  const handleDeleteVariantModal = (id) => {
+    setDeleteVariantId(id);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteVariant = async () => {
+    const { data } = await deleteProduct(deleteVariantId);
+    if (data?.success) {
+      setDeleteModal(false);
+      setDeleteVariantId(undefined);
+      // removeDeleteId(setSelectedRows, deleteId);
+    }
   };
 
   const handleDelete = async () => {
@@ -120,6 +140,7 @@ const ProductTable = ({
         brands,
         units,
         attachments,
+        has_variant,
       } = item ?? {};
 
       return {
@@ -134,17 +155,19 @@ const ProductTable = ({
         unit: units?.base_unit ?? 'N/A',
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
-        created_at,
+        hasVariant: has_variant.toString() === '1' ? 'Yes' : 'No',
         status: is_active,
+        created_at,
         handleStatusModal,
         handleDetailsModal,
         handleEdit,
         handleDeleteModal,
+        handleDeleteVariantModal,
       };
     }) ?? [];
 
   const hideModal = () => {
-    // setStatusModal(false);
+    setStatusModal(false);
     setDetailsModal(false);
     setDeleteModal(false);
   };
@@ -161,6 +184,11 @@ const ProductTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
+        expandable={{
+          expandedRowRender: (record) =>
+            expandedRowRender(record, data, currency),
+          rowExpandable: (record) => record.hasVariant === 'Yes',
+        }}
       />
 
       <ProductEdit id={editId} setId={setEditId} />
@@ -183,7 +211,7 @@ const ProductTable = ({
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
-        handleDelete={handleDelete}
+        handleDelete={deleteVariantId ? handleDeleteVariant : handleDelete}
         isLoading={isDeleting}
       />
     </GlobalUtilityStyle>

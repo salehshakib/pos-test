@@ -33,8 +33,6 @@ export const VariantEdit = ({ id, setId }) => {
   );
   const [updateVariants, { isLoading }] = useUpdateVariantsMutation();
 
-  console.log(data);
-
   useEffect(() => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
@@ -43,7 +41,7 @@ export const VariantEdit = ({ id, setId }) => {
         ...fieldData,
         {
           name: 'options',
-          value: data?.variant_options?.map((item) => item?.name?.toString()),
+          value: data?.attribute_options?.map((item) => item?.name?.toString()),
           errors: '',
         },
       ];
@@ -80,7 +78,7 @@ export const VariantEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={'Edit Variant'}
+      title={'Edit Attribute'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >

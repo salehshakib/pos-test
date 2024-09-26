@@ -65,7 +65,7 @@ const StockRequestCreate = () => {
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => ({
-            product_id: parseInt(product_id),
+            product_variant_id: parseInt(product_id),
             alert_qty: product_list.min_qty[product_id],
             need_qty: product_list.qty[product_id],
           }))

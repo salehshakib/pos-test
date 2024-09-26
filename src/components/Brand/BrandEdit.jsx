@@ -28,43 +28,48 @@ export const BrandEdit = ({ id, setId }) => {
   const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
   useEffect(() => {
-    if (!data || !isEditDrawerOpen) {
+    if (data && isEditDrawerOpen) {
+      const fieldData = fieldsToUpdate(data);
+
+      let newFieldData = fieldData;
+
+      if (data?.attachments?.length === 0) {
+        newFieldData = [
+          ...fieldData,
+          {
+            name: 'attachment',
+            value: [
+              {
+                url: defaultUser,
+              },
+            ],
+            errors: '',
+          },
+        ];
+      }
+
+      setFields(newFieldData);
+    } else {
       setFields([]);
-      return;
     }
-
-    const fieldData = fieldsToUpdate(data);
-    const logoField = {
-      name: 'logo',
-      value:
-        data?.attachments?.length > 0
-          ? [{ url: data?.attachments[0]?.url }]
-          : [{ url: defaultUser }],
-      errors: '',
-    };
-
-    setFields([...fieldData, logoField]);
   }, [data, isEditDrawerOpen, setFields]);
 
   const handleUpdate = async (values) => {
-    const formData = new FormData();
+    const postObj = { ...values, _method: 'PUT' };
 
-    const postData = {
-      ...values,
-      _method: 'PUT',
-    };
+    if (values?.attachment?.length > 0) {
+      postObj.attachment = values?.attachment?.[0]?.originFileObj;
+    }
 
-    let deleteAttachmentIds = getMissingUids(fields, values, 'logo');
+    let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
 
     if (deleteAttachmentIds.length > 0) {
-      postData.deleteAttachmentIds = deleteAttachmentIds;
+      postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    if (values?.logo?.length > 0) {
-      postData.logo = values?.logo?.[0]?.originFileObj;
-    }
+    const formData = new FormData();
 
-    appendToFormData(postData, formData);
+    appendToFormData(postObj, formData);
 
     const { data, error } = await updateBrand({
       id,

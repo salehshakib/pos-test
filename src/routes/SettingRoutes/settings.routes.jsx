@@ -17,7 +17,6 @@ import PosSetting from '../../pages/Dashboard/PosSetting/PosSetting';
 import { Roles } from '../../pages/Dashboard/Roles/Roles';
 import { LeaveType } from '../../pages/Dashboard/Settings/LeaveType/LeaveType';
 import TaxList from '../../pages/Dashboard/Tax/TaxList';
-import Types from '../../pages/Dashboard/Type/Types';
 import UnitList from '../../pages/Dashboard/Unit/UnitList';
 
 export const settingPaths = [
@@ -45,12 +44,12 @@ export const settingPaths = [
     icon: FaPeopleGroup,
     element: <CustomerGroup />,
   },
-  {
-    name: 'Types',
-    path: 'type',
-    icon: LuClipboardType,
-    element: <Types />,
-  },
+  // {
+  //   name: 'Types',
+  //   path: 'type',
+  //   icon: LuClipboardType,
+  //   element: <Types />,
+  // },
   {
     name: 'Unit',
     path: 'unit',

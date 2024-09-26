@@ -1,10 +1,10 @@
 import { Table, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 
-import logo from '../../../../assets/data/defaultLogo';
 import { tableProps } from '../../../../layout/TableLayout';
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { useSiteLogo } from '../../../../utilities/hooks/useSiteLogo';
 import { showCurrency } from '../../../../utilities/lib/currency';
 import { formatDate } from '../../../../utilities/lib/dateFormat';
 
@@ -87,10 +87,11 @@ const Invoice = ({ data, type }) => {
     return {
       id: item?.id,
       sl_no: index + 1,
-      product_name:
-        item?.products?.name ??
-        'Unknown Product' +
-          (item?.products?.sku ? ` (${item?.products?.sku})` : ''),
+      product_name: item?.product_variants?.name
+        ? `${item.product_variants.name}${
+            item?.product_variants?.sku ? ` (${item.product_variants.sku})` : ''
+          }`
+        : 'Unknown Product',
       qty: item.qty ?? 'Unknown Quantity',
       discount: showCurrency(item?.discount, currency) ?? 'Unknown Discount',
       tax: showCurrency(item?.tax, currency) ?? 'Unknown VAT',
@@ -167,6 +168,8 @@ const Invoice = ({ data, type }) => {
   };
 
   const format = useFormatDate();
+
+  const logo = useSiteLogo();
 
   return (
     <div

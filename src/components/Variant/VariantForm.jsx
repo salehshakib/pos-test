@@ -20,7 +20,7 @@ const VariantOptions = () => {
   return (
     <Col {...fullColLayout} className="mb-2">
       <CustomSelect
-        label={'Variant Options'}
+        label={'Attribute Options'}
         mode="tags"
         options={options}
         name={'options'}
@@ -36,7 +36,7 @@ export const VariantForm = (props) => {
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomInput
-            label="Variant Name"
+            label="Attribute Name"
             type={'text'}
             required={true}
             name={'name'}

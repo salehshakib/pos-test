@@ -56,11 +56,11 @@ const AdjustmentEdit = ({ id, setId }) => {
             ...prevFormValues.product_list,
             qty: {
               ...prevFormValues.product_list.qty,
-              [item?.product_id.toString()]: item?.qty,
+              [item?.product_variant_id.toString()]: item?.qty,
             },
             action: {
               ...prevFormValues.product_list.action,
-              [item?.product_id.toString()]: item?.action,
+              [item?.product_variant_id.toString()]: item?.action,
             },
           },
         }));
@@ -68,13 +68,13 @@ const AdjustmentEdit = ({ id, setId }) => {
         setProducts((prevProducts) => [
           ...prevProducts,
           {
-            id: item?.product_id,
-            sku: item?.products?.sku,
-            name: item?.products?.name,
+            id: item?.product_variant_id,
+            sku: item?.product_variants?.sku,
+            name: item?.product_variants?.name,
             qty: item?.qty,
             action: item?.action,
 
-            buying_price: item?.products?.buying_price,
+            buying_price: item?.product_variants?.buying_price,
           },
         ]);
       });
@@ -128,7 +128,7 @@ const AdjustmentEdit = ({ id, setId }) => {
           .filter((product_id) => product_list.qty[product_id] !== undefined)
           .map((product_id) => {
             return {
-              product_id: parseInt(product_id),
+              product_variant_id: parseInt(product_id),
               qty: product_list.qty[product_id],
               action: product_list.action[product_id],
             };

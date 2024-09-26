@@ -44,14 +44,6 @@ const StockCountTable = ({
   );
   const total = data?.meta?.total;
 
-  // const [deleteStockCount, { isLoading: isDeleting }] =
-  //   useDeleteStockCountMutation();
-
-  // const handleDeleteModal = (id) => {
-  //   setDeleteId(id);
-  //   setDeleteModal(true);
-  // };
-
   const handleFileDownload = (id, format) => {
     handleDownload(id, format);
   };

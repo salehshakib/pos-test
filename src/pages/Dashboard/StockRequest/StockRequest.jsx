@@ -33,6 +33,7 @@ const columns = [
     dataIndex: 'reqQty',
     key: 'reqQty',
     align: 'center',
+    width: 150,
     render: (reqQty) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {reqQty ?? 'N/A'}

@@ -13,15 +13,6 @@ export const StockRequestForm = ({
   setProducts,
   ...props
 }) => {
-  // const warehouseId = Form.useWatch("warehouse_id", props.form);
-
-  // useEffect(() => {
-  //   if (warehouseId) {
-  //     setFormValues({ product_list: { qty: {}, min_qty: {} } });
-  //     setProducts([]);
-  //   }
-  // }, [setFormValues, setProducts, warehouseId]);
-
   return (
     <CustomForm {...props}>
       <Row {...rowLayout}>

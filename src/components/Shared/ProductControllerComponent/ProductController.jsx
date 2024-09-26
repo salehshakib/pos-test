@@ -8,10 +8,15 @@ export const ProductController = ({
   dataSource,
   styleProps,
   tableStyle,
+  productId,
 }) => {
   return (
     <>
-      <SearchProduct products={products} setProducts={setProducts} />
+      <SearchProduct
+        productId={productId}
+        products={products}
+        setProducts={setProducts}
+      />
       <ProductTable
         columns={columns}
         dataSource={dataSource}

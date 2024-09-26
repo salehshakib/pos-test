@@ -54,6 +54,7 @@ const CustomTable = ({
   action = true,
   title,
   hideOnSinglePage = false,
+  expandable,
 }) => {
   const globalLoading = useGlobalLoader();
   const route = window.location.pathname.substring(1);
@@ -120,15 +121,11 @@ const CustomTable = ({
     ].filter(Boolean);
 
   const tableProps = {
-    title: () => (
-      <span className="text-[14px] text-lg font-semibold underline">
-        {title}
-      </span>
-    ),
     loading: isLoading || globalLoading,
     size: 'small',
     style: {
       width: '100%',
+      ...tableStyleProps?.style,
     },
     rowKey: (record) => record?.id,
     rowSelection: isRowSelection
@@ -142,10 +139,25 @@ const CustomTable = ({
     }),
     scroll: {
       x: 'max-content',
+      ...tableStyleProps?.scroll,
     },
 
     ...tableStyleProps,
   };
+
+  if (title) {
+    tableProps.title = () => (
+      <span className="text-[14px] text-lg font-semibold underline">
+        {title}
+      </span>
+    );
+  }
+
+  if (expandable) {
+    tableProps.expandable = expandable;
+  }
+
+  // if(pagination) {
 
   const paginationProps = {
     size: 'default',
@@ -380,6 +392,9 @@ const CustomTable = ({
       pagination={showPaging ? { ...paginationProps } : false}
       columns={newColumns}
       dataSource={dataSource}
+      expandable={{
+        ...expandable,
+      }}
     />
   );
 };

@@ -141,7 +141,7 @@ const AlertComponent = () => {
         <CustomInput
           label="Alert Quantity"
           type={'number'}
-          // required={true}
+          required={true}
           name={'alert_qty'}
         />
       </Col>
@@ -276,41 +276,31 @@ const IMEIComponent = () => {
 
 const ProductForm = ({ data, ...props }) => {
   const comboProductSubmitRef = useRef(null);
-  // const initialStockSubmitRef = useRef(null);
-  // const diffPriceSubmitRef = useRef(null);
+
+  const variantProductRef = useRef(null);
 
   const handleComboProduct = useCallback((submitFunction) => {
     comboProductSubmitRef.current = submitFunction;
   }, []);
 
-  // const handleInitialProduct = useCallback((submitFunction) => {
-  //   initialStockSubmitRef.current = submitFunction;
-  // }, []);
-
-  // const handlediffPriceProduct = useCallback((submitFunction) => {
-  //   diffPriceSubmitRef.current = submitFunction;
-  // }, []);
+  const handleVariantProduct = useCallback((submitFunction) => {
+    variantProductRef.current = submitFunction;
+  }, []);
 
   const handleSubmit = (values) => {
     const comboData = comboProductSubmitRef.current
       ? comboProductSubmitRef.current()
       : null;
 
-    // const initialData = initialStockSubmitRef.current
-    //   ? initialStockSubmitRef.current()
-    //   : null;
-
-    // const diffPriceData = diffPriceSubmitRef.current
-    //   ? diffPriceSubmitRef.current()
-    //   : null;
+    const variantData = variantProductRef.current
+      ? variantProductRef.current()
+      : null;
 
     const formValues = {
       product_list: comboData.product_list,
-      // qty_list: initialData.qty_list,
-      // price_list: diffPriceData.price_list,
     };
 
-    props.handleSubmit(values, { formValues });
+    props.handleSubmit(values, { variantData, formValues });
   };
 
   return (
@@ -374,17 +364,6 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      {/* <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox label="Initial Stock" name="has_stock" />
-        </Col>
-
-        <CustomInititalStockComponent
-          onCustomSubmit={handleInitialProduct}
-          data={data}
-        />
-      </Row> */}
-
       <Row {...rowLayout} justify={'center'} align={'middle'}>
         <Col xs={24}>
           <CustomUploader
@@ -406,21 +385,7 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      <VariantComponent />
-
-      {/* <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <CustomCheckbox
-            label="This product has different price for different warehouse"
-            name="has_different_price"
-          />
-        </Col>
-
-        <CustomDifferentPriceComponent
-          onCustomSubmit={handlediffPriceProduct}
-          data={data}
-        />
-      </Row> */}
+      <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
 
       <IMEIComponent />
 

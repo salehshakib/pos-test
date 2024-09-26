@@ -19,6 +19,22 @@ import { calculateById } from '../../utilities/lib/updateFormValues/calculateByI
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 
+function getUniqueAttributeIds(variants) {
+  const attributeIds = new Set();
+
+  // Iterate over each variant
+  variants.forEach((variant) => {
+    // Iterate over each product_variant_attribute_options
+    variant.product_variant_attribute_options.forEach((option) => {
+      // Add the attribute_id to the set to avoid duplicates
+      attributeIds.add(option.attribute_option.attribute_id.toString());
+    });
+  });
+
+  // Convert the set to an array to get unique attribute_ids
+  return Array.from(attributeIds);
+}
+
 const ProductListEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
@@ -138,11 +154,16 @@ const ProductListEdit = ({ id, setId }) => {
         //   value: ecommerce_sync === "1" ? true : false,
         //   errors: "",
         // },
-        // {
-        //   name: "has_featured",
-        //   value: has_featured === "1" ? true : false,
-        //   errors: "",
-        // },
+        {
+          name: 'has_variant',
+          value: has_variant.toString() === '1' ? true : false,
+          errors: '',
+        },
+        {
+          name: 'attribute_ids',
+          value: getUniqueAttributeIds(data?.variants),
+          errors: '',
+        },
         // {
         //   name: "embedded_barcode",
         //   value: embedded_barcode === "1" ? true : false,

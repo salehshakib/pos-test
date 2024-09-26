@@ -1,7 +1,6 @@
 import { Button, Form } from 'antd';
 import { useEffect, useState } from 'react';
 
-import logo from '../../../assets/data/defaultLogo';
 import ColorSettingComponent from '../../../components/Settings/GeneralSettings/ColorSetting';
 import CompanySetting from '../../../components/Settings/GeneralSettings/CompanySetting';
 import CurrencySettingComponent from '../../../components/Settings/GeneralSettings/CurrencySetting';
@@ -9,12 +8,14 @@ import StaffSetting from '../../../components/Settings/GeneralSettings/StaffSett
 import TimeSetting from '../../../components/Settings/GeneralSettings/TimeSetting';
 import CustomLogoUploader from '../../../components/Shared/Upload/CustomLogoUploader';
 import { useUpdateGeneralSettingsMutation } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { useSiteLogo } from '../../../utilities/hooks/useSiteLogo';
 import { getMissingUids } from '../../../utilities/lib/deletedImageIds';
 import { fieldsToUpdate } from '../../../utilities/lib/fieldsToUpdate';
 
 const GeneralSettingForm = ({ data }) => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
+  const logo = useSiteLogo();
 
   const [updateGeneralSettings, { isLoading }] =
     useUpdateGeneralSettingsMutation();

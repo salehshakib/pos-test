@@ -179,11 +179,12 @@ export const RequestProductTable = ({
         sku,
         buying_price: unit_cost,
         product_qties,
+        products,
       } = product ?? {};
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
       formValues.product_list.min_qty[id] =
-        formValues.product_list.min_qty[id] ?? product.products.alert_qty;
+        formValues?.product_list?.min_qty[id] ?? product?.products?.alert_qty;
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 
@@ -194,7 +195,7 @@ export const RequestProductTable = ({
         unitCost: showCurrency(unit_cost, currency),
         action: true,
         delete: true,
-        minQty: product.products.alert_qty ?? 'N/A',
+        minQty: product?.products?.alert_qty ?? 'N/A',
         stock,
         incrementCounter,
         decrementCounter,
@@ -226,7 +227,9 @@ export const RequestProductTable = ({
   //     action: false,
   //   });
 
-  form.setFieldsValue(formValues);
+  useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [form, formValues]);
 
   const tableStyle = {
     summary: () => {

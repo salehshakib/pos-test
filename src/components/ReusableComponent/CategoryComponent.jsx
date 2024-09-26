@@ -8,6 +8,7 @@ import CustomSelect from '../Shared/Select/CustomSelect';
 export const CategoryComponent = ({
   name = 'category_id',
   mode = 'single',
+  required = 'false',
 }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -29,6 +30,7 @@ export const CategoryComponent = ({
       options={options}
       isLoading={isFetching}
       mode={mode}
+      required={required}
     />
   );
 };

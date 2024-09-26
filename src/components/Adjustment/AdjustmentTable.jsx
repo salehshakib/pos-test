@@ -36,8 +36,8 @@ const AdjustmentTable = ({
     params: {
       ...pagination,
       ...searchParams,
-      parent: 1,
     },
+    isRelationalParams: true,
     keyword,
   });
 
@@ -57,11 +57,6 @@ const AdjustmentTable = ({
     setDetailsId(id);
     setDetailsModal(true);
   };
-
-  // const handleEdit = (id) => {
-  //   setEditId(id);
-  //   dispatch(openEditDrawer());
-  // };
 
   const handleDeleteModal = (id) => {
     setDeleteId(id);

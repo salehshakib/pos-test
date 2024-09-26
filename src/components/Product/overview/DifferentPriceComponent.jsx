@@ -167,10 +167,11 @@ export const DifferentPriceComponent = ({
       const uid = id + '-' + warehouse_id;
 
       const warehouse = data?.results?.warehouse?.find(
-        (warehouse) => warehouse.id.toString() === warehouse_id.toString()
+        (warehouse) => warehouse?.id.toString() === warehouse_id?.toString()
       )?.name;
 
       formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
+
       formValues.price_list.warehouse_id[uid] =
         formValues.price_list.warehouse_id[uid] ?? warehouse_id;
 
@@ -183,6 +184,8 @@ export const DifferentPriceComponent = ({
         decrementCounter,
         onUnitPriceChange,
         onDelete,
+        formValues,
+        setFormValues,
       };
     }) ?? [];
 

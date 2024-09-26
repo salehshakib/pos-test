@@ -6,6 +6,7 @@ import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteTransferMutation,
   useGetAllTransferQuery,
+  useUpdateTransferStatusMutation,
 } from '../../redux/services/transfer/transferApi';
 import { useFormatDate } from '../../utilities/hooks/useFormatDate';
 import { usePagination } from '../../utilities/hooks/usePagination';
@@ -16,6 +17,7 @@ import { formatDate } from '../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
 import DeleteModal from '../Shared/Modal/DeleteModal';
+import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { StockTransfer } from './StockTransfer';
 import { TransferDetails } from './TransferDetails';
@@ -33,6 +35,9 @@ const TransferTable = ({
 
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
+
+  const [statusId, setStatusId] = useState(undefined);
+  const [statusModal, setStatusModal] = useState(false);
 
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -58,6 +63,9 @@ const TransferTable = ({
 
   const total = data?.meta?.total;
 
+  const [updateTransferStatus, { isLoading: isStatusUpdating }] =
+    useUpdateTransferStatusMutation();
+
   const [deleteTransfer, { isLoading: isDeleting }] =
     useDeleteTransferMutation();
 
@@ -69,6 +77,20 @@ const TransferTable = ({
   const handleDetailsModal = (id) => {
     setDetailsId(id);
     setDetailsModal(true);
+  };
+
+  const handleStatusModal = (id) => {
+    setStatusId(id);
+    setStatusModal(true);
+  };
+
+  const handleStatus = async () => {
+    const { data } = await updateTransferStatus(statusId);
+
+    if (data?.success) {
+      setStatusId(undefined);
+      setStatusModal(false);
+    }
   };
 
   const handleDeleteModal = (id) => {
@@ -95,12 +117,14 @@ const TransferTable = ({
       total_cost,
       total_tax,
       grand_total,
+      total_qty,
       status,
     } = transfer ?? {};
 
     return {
       key: id,
       id,
+      qty: total_qty,
       reference: reference_id,
       warehouse_from: from_warehouses?.name,
       warehouse_to: to_warehouses?.name,
@@ -110,6 +134,7 @@ const TransferTable = ({
       grand_total: showCurrency(grand_total, currency),
       status,
       // handleEdit,
+      handleStatusModal,
       handleDeleteModal,
       handleDetailsModal,
     };
@@ -117,6 +142,7 @@ const TransferTable = ({
 
   const hideModal = () => {
     setDetailsModal(false);
+    setStatusModal(false);
     setDeleteModal(false);
   };
 
@@ -145,6 +171,13 @@ const TransferTable = ({
           hideModal={hideModal}
         />
       )}
+
+      <StatusModal
+        statusModal={statusModal}
+        hideModal={hideModal}
+        handleStatus={handleStatus}
+        isLoading={isStatusUpdating}
+      />
 
       <DeleteModal
         deleteModal={deleteModal}

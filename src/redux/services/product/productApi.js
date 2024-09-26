@@ -100,6 +100,31 @@ const productApi = baseApi.injectEndpoints({
       },
     }),
 
+    updateStockManage: build.mutation({
+      query: ({ formData, id }) => {
+        return {
+          url: `/${STOCK_MANAGE}/update/${id}`,
+          method: 'POST',
+          body: formData,
+        };
+      },
+      transformResponse: (response) => {
+        if (response?.success) {
+          openNotification('success', response?.message);
+          return response;
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response?.data?.success === false) {
+          openNotification('error', response?.data?.message);
+          return response;
+        }
+      },
+      invalidatesTags: (result) => {
+        return result ? [{ type: PRODUCT }] : [];
+      },
+    }),
+
     updateProduct: build.mutation({
       query: ({ id, formData }) => {
         return {
@@ -184,4 +209,5 @@ export const {
   useUpdateProductStatusMutation,
   useDeleteProductMutation,
   useCreateStockManageMutation,
+  useUpdateStockManageMutation,
 } = productApi;

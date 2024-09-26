@@ -7,7 +7,6 @@ import { CustomDifferentPriceComponent } from './customcomponents/CustomDifferen
 import { CustomInititalStockComponent } from './customcomponents/CustomInitialStockComponent';
 
 export const ProductStockForm = ({ data, ...props }) => {
-  //   const comboProductSubmitRef = useRef(null);
   const initialStockSubmitRef = useRef(null);
   const diffPriceSubmitRef = useRef(null);
 
@@ -20,10 +19,6 @@ export const ProductStockForm = ({ data, ...props }) => {
   }, []);
 
   const handleSubmit = (values) => {
-    // const comboData = comboProductSubmitRef.current
-    //   ? comboProductSubmitRef.current()
-    //   : null;
-
     const initialData = initialStockSubmitRef.current
       ? initialStockSubmitRef.current()
       : null;

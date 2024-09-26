@@ -37,6 +37,7 @@ const CustomInputButton = (props) => {
               style={{
                 allowClear: true,
               }}
+              autoComplete="off"
             />
           </Form.Item>
           <Button

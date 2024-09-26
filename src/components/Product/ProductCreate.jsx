@@ -8,7 +8,10 @@ import {
   useCreateStockManageMutation,
 } from '../../redux/services/product/productApi';
 import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
-import { useGlobalParams } from '../../utilities/hooks/useParams';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -16,13 +19,10 @@ import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
 const getVariantIdsByCombinedName = (variantData, combinedName) => {
-  // Split the combined name into its components
   const names = combinedName.split(' '); // e.g., ['2kg', 'Whte']
   const ids = [];
 
-  // Iterate through each part of the name
   names.forEach((name) => {
-    // Look through each option group to find the matching name
     for (const optionGroup of variantData) {
       const found = optionGroup.find((option) => option.name === name);
       if (found) {
@@ -46,7 +46,9 @@ const ProductCreate = () => {
   const [createStockManage, { isLoading: isStockManageLoading }] =
     useCreateStockManageMutation();
 
-  const params = useGlobalParams({});
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
 
   const { data } = useGetAllUnitQuery({
     params,
@@ -162,10 +164,6 @@ const ProductCreate = () => {
       }
     }
 
-    if (values.attach_file?.[0].originFileObj) {
-      postObj.attach_file = values.attach_file?.[0].originFileObj;
-    }
-
     if (has_variant) {
       const variantOptions = variantData.selectedRowData.map((item) => {
         return getVariantIdsByCombinedName(item.variant_options, item.name);
@@ -185,6 +183,10 @@ const ProductCreate = () => {
       );
 
       postObj.variant_list = JSON.stringify(variantListArray);
+    }
+
+    if (values.attach_file?.[0].originFileObj) {
+      postObj.attach_file = values.attach_file?.[0].originFileObj;
     }
 
     appendToFormData(postObj, formData);
@@ -215,11 +217,15 @@ const ProductCreate = () => {
           .filter(
             (product_id) => formValues.stock_list.qty[product_id] !== undefined
           )
-          .map((product_id) => ({
-            product_variant_id: parseInt(product_id),
-            qty: formValues.stock_list.qty[product_id],
-            warehouse_id: formValues.stock_list.warehouse_id[product_id],
-          }))
+          .map((product_id) => {
+            const [id] = product_id.split('-');
+
+            return {
+              product_variant_id: parseInt(id),
+              qty: formValues.stock_list.qty[product_id],
+              warehouse_id: formValues.stock_list.warehouse_id[product_id],
+            };
+          })
       : [];
 
     const priceListArray = formValues?.price_list?.price
@@ -228,11 +234,15 @@ const ProductCreate = () => {
             (product_id) =>
               formValues.price_list.price[product_id] !== undefined
           )
-          .map((product_id) => ({
-            product_variant_id: parseInt(product_id),
-            price: formValues.price_list.price[product_id],
-            warehouse_id: formValues.price_list.warehouse_id[product_id],
-          }))
+          .map((product_id) => {
+            const [id] = product_id.split('-'); // Get the first value
+
+            return {
+              product_variant_id: parseInt(id), // Use the split value
+              price: formValues.price_list.price[product_id],
+              warehouse_id: formValues.price_list.warehouse_id[product_id],
+            };
+          })
       : [];
 
     if (stockListArray.length === 0 && priceListArray.length === 0) {
@@ -257,6 +267,7 @@ const ProductCreate = () => {
 
     if (data?.success) {
       dispatch(closeCreateDrawer());
+      setCurrent(0);
       form.resetFields();
     }
     if (error) {
@@ -289,8 +300,8 @@ const ProductCreate = () => {
           handleSubmit={handleStockSubmit}
           form={form}
           onClose={() => {
-            setCurrent(0);
             dispatch(closeCreateDrawer());
+            setCurrent(0);
           }}
         />
       ),

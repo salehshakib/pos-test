@@ -6,14 +6,18 @@ import { fullColLayout } from '../../../layout/FormLayout';
 import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import { InitialStockComponent } from '../overview/InitialStockComponent';
 
-const updateStateWithProductData = (setFormValues) => {
-  const stock_list = {};
+const updateStateWithProductData = (productQties, setFormValues) => {
+  const stockList = {};
+
+  productQties.forEach((item) => {
+    stockList[`${item.id}-${item.warehouse_id}`] = item.qty;
+  });
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
     qty_list: {
       ...prevFormValues.qty_list,
-      qty: stock_list,
+      qty: stockList,
     },
   }));
 };
@@ -43,7 +47,8 @@ export const CustomInititalStockComponent = ({
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      updateStateWithProductData(data?.product_qties, setFormValues);
+      console.log(data);
+      // updateStateWithProductData(data?.variants?.product_qties, setFormValues);
     } else {
       setFormValues({
         stock_list: {

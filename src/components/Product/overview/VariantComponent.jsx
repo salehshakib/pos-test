@@ -372,11 +372,6 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
       const result = extractAttributeValues(editData?.variants);
 
-      // console.log(availableOptions);
-      // console.log(selectedLabels);
-
-      console.log(result);
-
       setVariantOptions(result.attributeIds);
       setVariantAttributesName(result.attributeValues);
 

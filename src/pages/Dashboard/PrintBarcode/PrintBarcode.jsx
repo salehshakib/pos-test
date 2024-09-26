@@ -39,10 +39,13 @@ const PrintBarcode = () => {
       return;
     }
 
+    console.log(products);
+
     const generatedBarcodes = products?.map((product) => {
       const quantity = formValues?.product_list?.qty[product?.id] || 0;
       const productPrice = product?.product_prices?.find(
-        (item) => item?.warehouse_id === user?.warehouse_id
+        (item) =>
+          item?.warehouse_id.toString() === product?.warehouse_id.toString()
       );
       return {
         name: product.name,
@@ -145,17 +148,22 @@ const PrintBarcode = () => {
               openModal={codeModal}
               hideModal={hideModal}
               onCancel={hideModal}
+              width={'auto'}
             >
-              <div className="flex flex-col items-center justify-center py-10">
-                <div className="flex items-center gap-4 py-10">
-                  <Button className="px-20" size="large" onClick={handlePrint}>
-                    Print
-                  </Button>
-                </div>
-                <div ref={componentRef}>
-                  {barcodes?.map((barcode, index) => (
-                    <div key={index}>
-                      <div className="grid grid-cols-1 gap-x-10">
+              <div className="mx-10">
+                <div className="flex flex-col items-center justify-center py-10">
+                  <div className="flex items-center gap-4">
+                    <Button
+                      className="px-20"
+                      size="large"
+                      onClick={handlePrint}
+                    >
+                      Print
+                    </Button>
+                  </div>
+                  <div ref={componentRef} className="flex flex-col gap-2">
+                    {barcodes?.map((barcode, index) => (
+                      <div key={index} className="grid grid-cols-1 gap-5">
                         {[...Array(barcode?.quantity)]?.map((_, i) => (
                           <div
                             key={i}
@@ -194,8 +202,8 @@ const PrintBarcode = () => {
                           </div>
                         ))}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </CustomModal>

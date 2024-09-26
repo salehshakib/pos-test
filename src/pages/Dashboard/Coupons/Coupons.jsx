@@ -37,6 +37,7 @@ const columns = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 'amount',
+    align: 'right',
     render: (amount) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {amount}
@@ -47,6 +48,7 @@ const columns = [
     title: 'Minimum Amount',
     dataIndex: 'minimumAmount',
     key: 'minimumAmount',
+    align: 'right',
     render: (minimumAmount) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
         {minimumAmount}

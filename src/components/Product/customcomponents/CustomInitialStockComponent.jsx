@@ -6,17 +6,26 @@ import { fullColLayout } from '../../../layout/FormLayout';
 import { WarehouseComponent } from '../../ReusableComponent/WarehouseComponent';
 import { InitialStockComponent } from '../overview/InitialStockComponent';
 
-const updateStateWithProductData = (productQties, setFormValues) => {
+const updateStateWithProductData = (productVariantQties, setFormValues) => {
   const stockList = {};
 
-  productQties.forEach((item) => {
-    stockList[`${item.id}-${item.warehouse_id}`] = item.qty;
+  console.log(productVariantQties);
+  productVariantQties.forEach((item) => {
+    item.product_qties.map((product) => {
+      stockList[`${item.id}-${product.warehouse_id}`] = product.qty;
+    });
   });
+
+  // console.log(stockList);
+  // setFormValues((prevFormValues) => ({
+  //   ...prevFormValues,
+  //   stock_list: stock,
+  // }));
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
-    qty_list: {
-      ...prevFormValues.qty_list,
+    stock_list: {
+      ...prevFormValues.stock_list,
       qty: stockList,
     },
   }));
@@ -47,8 +56,24 @@ export const CustomInititalStockComponent = ({
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      console.log(data);
-      // updateStateWithProductData(data?.variants?.product_qties, setFormValues);
+      updateStateWithProductData(data?.variants, setFormValues);
+
+      const productVariants =
+        data?.variants?.flatMap((item) => {
+          return item.product_qties.map((product) => {
+            const uid = `${item.id}-${product.warehouse_id}`; // Assuming you meant warehouse_id instead of warehouse
+            return {
+              id: uid,
+              warehouse_id: product.warehouse_id, // Correcting to use warehouse_id
+              name: item.name,
+            };
+          });
+        }) || []; // Ensures that if data or variants are undefined, it returns an empty array
+
+      // Example usage
+      console.log(productVariants);
+
+      setProducts(productVariants);
     } else {
       setFormValues({
         stock_list: {
@@ -59,6 +84,8 @@ export const CustomInititalStockComponent = ({
       });
     }
   }, [data, isEditDrawerOpen]);
+
+  console.log(products);
 
   return (
     <>

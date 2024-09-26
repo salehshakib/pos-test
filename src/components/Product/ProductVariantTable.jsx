@@ -34,6 +34,7 @@ const expandColumns = [
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
+    width: 130,
     align: 'center',
     render: (sku) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
@@ -42,9 +43,28 @@ const expandColumns = [
     ),
   },
   {
+    title: 'IEMI',
+    dataIndex: 'iemi',
+    key: 'iemi',
+    width: 130,
+    align: 'center',
+    render: (iemi) => {
+      const isValid = iemi
+        ? !(iemi === '' || iemi?.trim().length === 0)
+        : false;
+
+      return (
+        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+          {isValid ? iemi : 'N/A'}
+        </span>
+      );
+    },
+  },
+  {
     title: 'Quantity',
     dataIndex: 'qty',
     key: 'qty',
+    width: 100,
     align: 'center',
     render: (qty) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
@@ -56,6 +76,7 @@ const expandColumns = [
     title: 'Cost',
     dataIndex: 'cost',
     key: 'cost',
+    width: 130,
     align: 'right',
     render: (cost) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
@@ -67,6 +88,7 @@ const expandColumns = [
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
+    width: 130,
     align: 'right',
     render: (price) => (
       <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
@@ -89,7 +111,8 @@ export const expandedRowRender = (record, data, currency) => {
         id: variant.id,
         name: variant.name,
         sku: variant.sku,
-        quantity: variant.qty,
+        iemi: variant.imei_number,
+        qty: variant.qty,
         cost: showCurrency(variant.buying_price, currency),
         price: showCurrency(variant.selling_price, currency),
         created_at: variant.created_at,

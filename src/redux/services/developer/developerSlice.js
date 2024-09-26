@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import logo from '../../../assets/data/defaultLogo';
+import { SITE_LOGO } from '../../../assets/data/defaultLogo';
 
 const initialState = {
   developedBy: null,
   hyperLink: null,
-  logo: logo,
+  logo: SITE_LOGO,
   company: null,
 
   dateFormat: 'DD-MM-YYYY',

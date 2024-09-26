@@ -19,13 +19,13 @@ import StatusModal from '../Shared/Modal/StatusModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { ProductDetails } from './ProductDetails';
 import ProductEdit from './ProductEdit';
+import { expandedRowRender } from './ProductVariantTable';
 
 const ProductTable = ({
   newColumns,
   setSelectedRows,
   keyword,
   searchParams,
-  expandColumns,
 }) => {
   const dispatch = useDispatch();
 
@@ -82,6 +82,9 @@ const ProductTable = ({
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
+  // deleteVariant
+  // const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+
   const handleDetailsModal = (id) => {
     setDetailsId(id);
     setDetailsModal(true);
@@ -95,6 +98,22 @@ const ProductTable = ({
   const handleDeleteModal = (id) => {
     setDeleteId(id);
     setDeleteModal(true);
+  };
+
+  const [deleteVariantId, setDeleteVariantId] = useState(undefined);
+
+  const handleDeleteVariantModal = (id) => {
+    setDeleteVariantId(id);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteVariant = async () => {
+    const { data } = await deleteProduct(deleteVariantId);
+    if (data?.success) {
+      setDeleteModal(false);
+      setDeleteVariantId(undefined);
+      // removeDeleteId(setSelectedRows, deleteId);
+    }
   };
 
   const handleDelete = async () => {
@@ -143,6 +162,7 @@ const ProductTable = ({
         handleDetailsModal,
         handleEdit,
         handleDeleteModal,
+        handleDeleteVariantModal,
       };
     }) ?? [];
 
@@ -150,46 +170,6 @@ const ProductTable = ({
     setStatusModal(false);
     setDetailsModal(false);
     setDeleteModal(false);
-  };
-
-  const expandedRowRender = (record) => {
-    if (record.hasVariant !== 'Yes') return null;
-
-    // Handle variant data source here if needed
-    const expandedData =
-      data?.results?.product
-        ?.find((product) => product.id === record.id)
-        ?.variants?.map((variant) => ({
-          id: variant.id,
-          name: variant.name,
-          sku: variant.sku,
-          cost: showCurrency(variant.buying_price, currency),
-          price: showCurrency(variant.selling_price, currency),
-          created_at: variant.created_at,
-          status: record.status,
-          handleDetailsModal: record.handleDetailsModal,
-          handleDeleteModal: record.handleDeleteModal,
-        })) ?? [];
-
-    return (
-      <CustomTable
-        columns={expandColumns}
-        dataSource={expandedData}
-        showPaging={false}
-        status={false}
-        tableStyleProps={{
-          bordered: true,
-          // backgroundColor: 'red',
-          // scroll: {
-          //   x: '1000',
-          //   y: '300',
-          // },
-          scroll: {
-            x: 'min-content',
-          },
-        }}
-      />
-    );
   };
 
   return (
@@ -204,11 +184,10 @@ const ProductTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         isRowSelection={true}
-        // expendedRowRender={expandedRowRender}
         expandable={{
-          expandedRowRender,
+          expandedRowRender: (record) =>
+            expandedRowRender(record, data, currency),
           rowExpandable: (record) => record.hasVariant === 'Yes',
-          // fixed: 'left', // Show expandable icon only for rows with variants
         }}
       />
 
@@ -232,7 +211,7 @@ const ProductTable = ({
       <DeleteModal
         deleteModal={deleteModal}
         hideModal={hideModal}
-        handleDelete={handleDelete}
+        handleDelete={deleteVariantId ? handleDeleteVariant : handleDelete}
         isLoading={isDeleting}
       />
     </GlobalUtilityStyle>

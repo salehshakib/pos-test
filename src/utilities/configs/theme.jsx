@@ -5,7 +5,7 @@ export function theme({ primaryColor, secondaryColor }) {
       colorPrimary: primaryColor,
       colorBorder: secondaryColor,
       colorPrimaryBorder: secondaryColor,
-      borderRadius: 0,
+      // borderRadius: 0,
     },
     components: {
       Input: {

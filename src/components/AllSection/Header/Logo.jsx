@@ -1,12 +1,11 @@
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getLogo } from '../../../redux/services/developer/developerSlice';
+import { useSiteLogo } from '../../../utilities/hooks/useSiteLogo';
 
 const Logo = () => {
   const navigate = useNavigate();
-  const logo = useSelector(getLogo);
 
+  const logo = useSiteLogo();
   return (
     <div
       className="primary-text flex items-center justify-center font-bold hover:cursor-pointer"

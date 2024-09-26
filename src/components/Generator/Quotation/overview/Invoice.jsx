@@ -1,10 +1,10 @@
 import { Table, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 
-import logo from '../../../../assets/data/defaultLogo';
 import { tableProps } from '../../../../layout/TableLayout';
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { useFormatDate } from '../../../../utilities/hooks/useFormatDate';
+import { useSiteLogo } from '../../../../utilities/hooks/useSiteLogo';
 import { showCurrency } from '../../../../utilities/lib/currency';
 import { formatDate } from '../../../../utilities/lib/dateFormat';
 
@@ -168,6 +168,8 @@ const Invoice = ({ data, type }) => {
   };
 
   const format = useFormatDate();
+
+  const logo = useSiteLogo();
 
   return (
     <div

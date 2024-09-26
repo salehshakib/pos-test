@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-import logo from '../../assets/data/defaultLogo';
+import { SITE_LOGO } from '../../assets/data/defaultLogo';
 
 const typeToColor = {
   success: 'text-green-600',
@@ -25,7 +25,11 @@ export const openNotification = (type, message) => {
       <div className="w-96 flex-1 p-4">
         <div className="flex items-start">
           <div className="flex-shrink-0 pt-0.5">
-            <img className="h-10 w-10 rounded-full" src={logo} alt="Logo" />
+            <img
+              className="h-10 w-10 rounded-full"
+              src={SITE_LOGO}
+              alt="Logo"
+            />
           </div>
           <div className="ml-3 flex-1">
             <span className={colorClass}>{typeText}</span>

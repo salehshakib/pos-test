@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from 'styled-components';
 
-import logo from '../assets/data/defaultLogo';
+import { SITE_LOGO } from '../assets/data/defaultLogo';
 import {
   setCompany,
   setDateFormat,
@@ -80,7 +80,7 @@ export const ProviderConfig = ({ children }) => {
       dispatch(setPrimaryColor(data.primary_color));
       dispatch(setSecondaryColor(data.secendary_color));
 
-      dispatch(setLogo(data?.attachments?.[0]?.url ?? logo));
+      dispatch(setLogo(data?.attachments?.[0]?.url ?? SITE_LOGO));
 
       dispatch(
         setCurrency({

@@ -266,6 +266,49 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const [variantOptions, setVariantOptions] = useState({});
   const [variantAttributes, setVariantAttributes] = useState({});
 
+  console.log(editData?.variants);
+
+  console.log(options);
+
+  function formatVariantsData(variants) {
+    // Extract unique attribute IDs and corresponding attributes and options
+    const attributesMap = {};
+
+    variants.forEach((variant) => {
+      variant.product_variant_attribute_options.forEach((option) => {
+        const { attribute_id, attribute } = option.attribute_option;
+
+        if (!attributesMap[attribute_id]) {
+          attributesMap[attribute_id] = {
+            key: attribute_id.toString(),
+            id: attribute_id.toString(),
+            name: attribute.name,
+            options: [],
+          };
+        }
+
+        // Check if the option already exists in the options array
+        if (
+          !attributesMap[attribute_id].options.some(
+            (opt) => opt.id === option.attribute_option.id
+          )
+        ) {
+          // Add attribute option in the new format
+          attributesMap[attribute_id].options.push({
+            id: option.attribute_option.id,
+            attribute_id: attribute_id,
+            name: option.attribute_option.name,
+            created_at: option.attribute_option.created_at,
+            updated_at: option.attribute_option.updated_at,
+            deleted_at: option.attribute_option.deleted_at,
+          });
+        }
+      });
+    });
+
+    return Object.values(attributesMap).reverse();
+  }
+
   const onSelect = (value, option) => {
     const selected =
       option.map((item) => {
@@ -279,6 +322,19 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
     setDataSource(selected);
   };
+
+  useEffect(() => {
+    if (editData) {
+      const options = formatVariantsData(editData.variants);
+
+      setDataSource(options);
+    }
+  }, [editData]);
+
+  const form = Form.useFormInstance();
+  // const attributeIds = Form.useWatch('attribute_ids', form);
+
+  // console.log(attributeIds);
 
   const mainForm = Form.useFormInstance();
 
@@ -348,8 +404,6 @@ export const VariantComponent = ({ onCustomSubmit, data }) => {
       }
     }
   };
-
-  console.log(data);
 
   if (productType === 'Standard')
     return (

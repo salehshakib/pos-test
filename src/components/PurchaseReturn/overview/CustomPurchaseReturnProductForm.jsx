@@ -23,23 +23,23 @@ const updateStateWithProductData = (
 
   // Loop through each product and populate updated fields
   purchaseProducts.forEach((item) => {
-    const productId = item.product_variants.id.toString();
+    const productId = item?.product_variants.id.toString();
 
-    updatedQty[productId] = item.qty;
-    updatedPurchaseUnitId[productId] = item.product_variants.purchase_unit_id;
-    updatedProductCost[productId] = item.product_variants.net_unit_cost;
-    updatedDiscount[productId] = item.product_variants.discount;
-    updatedTaxRate[productId] = item.product_variants.tax_rate;
-    updatedTax[productId] = item.product_variants.tax;
-    updatedTotal[productId] = item.product_variants.total;
+    updatedQty[productId] = item?.qty;
+    updatedPurchaseUnitId[productId] = item?.product_variants?.purchase_unit_id;
+    updatedProductCost[productId] = item?.product_variants?.net_unit_cost;
+    updatedDiscount[productId] = item?.product_variants?.discount;
+    updatedTaxRate[productId] = item?.product_variants?.tax_rate;
+    updatedTax[productId] = item?.product_variants?.tax;
+    updatedTotal[productId] = item?.product_variants?.total;
 
     // Optional chaining for safe access
-    updatedTaxId[productId] = item.product_variants.products?.tax_id;
+    updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
 
     updatedOperator[productId] =
-      item.product_variants.products?.purchase_units?.operator;
+      item?.product_variants?.products?.purchase_units?.operator;
     updatedOperationValue[productId] =
-      item.product_variants.products?.purchase_units?.operation_value;
+      item?.product_variants?.products?.purchase_units?.operation_value;
 
     // Handle max quantity if purchase is true
     if (purchase) {

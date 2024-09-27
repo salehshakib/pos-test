@@ -18,7 +18,7 @@ const ignorePaths = [
   'products',
   'transfer',
   'adjustment',
-  // 'purchase',
+  'purchase',
   'quotation',
   'invoice',
 ];
@@ -66,7 +66,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
     baseParams.parent = 1;
     baseParams.child = 1;
     baseParams.need_qty = 1;
-    baseParams.need_price = 1;
+    // baseParams.need_price = 1;
   }
 
   const params = useGlobalParams({
@@ -118,12 +118,13 @@ export const SearchProduct = ({ setProducts, productId }) => {
     }
 
     const stock = getWarehouseQuantity(
-      option?.product_va?.product_qties,
+      option?.product?.product_qties,
       warehouseId ?? warehouseIdFrom
     );
 
-    if (!stock && isIgnore) {
-      // message.error("Product is out of stock");
+    console.log(stock);
+
+    if (!stock && ignorePaths.includes(pathname)) {
       openNotification('warning', 'Product is out of stock');
       setValue(null);
       return;

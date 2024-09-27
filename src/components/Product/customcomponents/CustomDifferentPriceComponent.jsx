@@ -10,7 +10,7 @@ const updateStateWithProductData = (productPrices, setFormValues) => {
   const priceList = {};
 
   productPrices.forEach((item) => {
-    priceList[item.warehouse_id.toString()] = item.price;
+    priceList[`${item.id}-${item.warehouse_id}`] = item.price;
   });
 
   setFormValues((prevFormValues) => ({
@@ -47,7 +47,8 @@ export const CustomDifferentPriceComponent = ({
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
-      updateStateWithProductData(data?.product_prices, setFormValues);
+      console.log(data?.variants);
+      // updateStateWithProductData(data?.variants?.product_prices, setFormValues);
     } else {
       setFormValues({
         price_list: {

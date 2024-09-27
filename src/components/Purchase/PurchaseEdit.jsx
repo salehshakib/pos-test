@@ -67,7 +67,6 @@ export const PurchaseEdit = ({ id, setId }) => {
     const formData = new FormData();
 
     const { product_list } = formValues;
-
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)
           .filter((product_id) => product_list.qty[product_id] !== undefined)

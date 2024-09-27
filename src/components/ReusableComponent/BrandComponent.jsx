@@ -5,7 +5,11 @@ import {
 } from '../../utilities/hooks/useParams';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
-export const BrandComponent = ({ name = 'brand_id', mode = 'single' }) => {
+export const BrandComponent = ({
+  name = 'brand_id',
+  mode = 'single',
+  required = 'false',
+}) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -26,6 +30,7 @@ export const BrandComponent = ({ name = 'brand_id', mode = 'single' }) => {
       options={options}
       isLoading={isFetching}
       mode={mode}
+      required={required}
     />
   );
 };

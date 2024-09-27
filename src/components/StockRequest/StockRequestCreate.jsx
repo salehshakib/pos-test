@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { setLoading } from '../../redux/services/loader/loaderSlice';
-import { useGetAllProductsQuery } from '../../redux/services/product/productApi';
+import { useGetAllProductVariantsQuery } from '../../redux/services/product/productApi';
 import { useCreateStockRequestMutation } from '../../redux/services/stockRequest/stockRequestApi';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
@@ -29,13 +29,16 @@ const StockRequestCreate = () => {
 
   const params = useGlobalParams({
     params: {
-      warehouse_ids: [warehouseId],
-      need_alert_qty: 1,
+      warehouse_id: warehouseId,
+      need_qty: 1,
+      parent: 1,
+      child: 1,
+      // need_alert_qty: 1,
       // child: 1,
     },
   });
 
-  const { data, isLoading: isLoadingProducts } = useGetAllProductsQuery(
+  const { data, isLoading: isLoadingProducts } = useGetAllProductVariantsQuery(
     { params },
     { skip: !warehouseId }
   );
@@ -48,7 +51,7 @@ const StockRequestCreate = () => {
 
   useEffect(() => {
     if (data) {
-      const list = data?.results?.product;
+      const list = data?.results?.productvariant;
 
       setProducts(list);
     }

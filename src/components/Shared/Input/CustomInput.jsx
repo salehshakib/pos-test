@@ -36,6 +36,7 @@ const CustomInput = (props) => {
     prefix,
     value,
     readOnly: isReadOnly,
+    autoComplete: 'off',
   };
 
   const renderInputComponent = () => {

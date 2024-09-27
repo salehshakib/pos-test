@@ -3,7 +3,12 @@ import { useState } from 'react';
 import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IoIosLock } from 'react-icons/io';
-import { MdDelete, MdEditSquare, MdFileDownload } from 'react-icons/md';
+import {
+  MdDelete,
+  MdEditDocument,
+  MdEditSquare,
+  MdFileDownload,
+} from 'react-icons/md';
 import { TbListDetails } from 'react-icons/tb';
 import { useLocation } from 'react-router-dom';
 
@@ -99,6 +104,18 @@ const CustomTable = ({
         onClick: () => record?.handleEdit(record?.id),
         disabled: !record.handleEdit,
       },
+      record?.handleEditStockAndPrice &&
+        isEditPermitted && {
+          key: 'editStockAndPrice',
+          icon: <MdEditDocument size={20} />,
+          label: (
+            <div className="flex items-center justify-start gap-3">
+              Edit Stock & Price
+            </div>
+          ),
+          onClick: () => record?.handleEditStockAndPrice(record?.id),
+          disabled: !record.handleEdit,
+        },
       record?.handleChangePermission && {
         key: 'permission',
         icon: <IoIosLock size={20} />,

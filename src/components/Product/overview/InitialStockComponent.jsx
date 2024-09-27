@@ -188,8 +188,10 @@ export const InitialStockComponent = ({
       const uid = id + '-' + warehouse_id;
 
       const warehouse = data?.results?.warehouse?.find(
-        (warehouse) => warehouse.id.toString() === warehouse_id.toString()
+        (warehouse) => warehouse?.id.toString() === warehouse_id?.toString()
       )?.name;
+
+      console.log(formValues);
 
       formValues.stock_list.qty[uid] = formValues.stock_list.qty[uid] ?? 1;
 
@@ -206,6 +208,7 @@ export const InitialStockComponent = ({
         onQuantityChange,
         onDelete,
         formValues,
+        setFormValues,
       };
     }) ?? [];
 

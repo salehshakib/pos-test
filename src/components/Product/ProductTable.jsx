@@ -124,6 +124,13 @@ const ProductTable = ({
     }
   };
 
+  const [current, setCurrent] = useState(0);
+
+  const handleEditStockAndPrice = (id) => {
+    setCurrent(1);
+    handleEdit(id);
+  };
+
   const dataSource =
     data?.results?.product?.map((item) => {
       const {
@@ -161,6 +168,7 @@ const ProductTable = ({
         handleStatusModal,
         handleDetailsModal,
         handleEdit,
+        handleEditStockAndPrice,
         handleDeleteModal,
         handleDeleteVariantModal,
       };
@@ -191,7 +199,12 @@ const ProductTable = ({
         }}
       />
 
-      <ProductEdit id={editId} setId={setEditId} />
+      <ProductEdit
+        id={editId}
+        setId={setEditId}
+        current={current}
+        setCurrent={setCurrent}
+      />
 
       {detailsId && (
         <ProductDetails

@@ -362,7 +362,7 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     }
   }, [editData]);
 
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
   // const attributeIds = Form.useWatch('attribute_ids', form);
 
   // console.log(attributeIds);

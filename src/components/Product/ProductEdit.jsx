@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
-  useCreateStockManageMutation,
   useGetProductDetailsQuery,
   useUpdateProductMutation,
   useUpdateStockManageMutation,
@@ -256,12 +255,21 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       has_promotion: has_promotion ? '1' : '0',
       has_expired_date: has_expired_date ? '1' : '0',
       details,
-
-      attachments:
-        values.attachments?.length > 0
-          ? values.attachments?.map((file) => file.originFileObj)
-          : [],
+      _method: 'PUT',
+      // attachments:
+      //   values.attachments?.length > 0
+      //     ? values.attachments?.map((file) => file.originFileObj)
+      //     : [],
     };
+
+    if (
+      values?.attachments?.length &&
+      values?.attachments?.[0]?.originFileObj
+    ) {
+      postObj.attachments = values?.attachments?.map(
+        (file) => file.originFileObj
+      );
+    }
 
     if (has_promotion) {
       postObj.promotion_price = parseInt(promotion?.promotion_price);
@@ -346,9 +354,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
   };
 
-  const [createStockManage, { isLoading: isUpdateLoading }] =
-    useCreateStockManageMutation();
-
   const handleStockUpdate = async (values, { formValues }) => {
     const stockListArray = formValues?.stock_list?.qty
       ? Object.keys(formValues.stock_list.qty)
@@ -392,7 +397,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const postObj = {
-      // _method: 'PUT',
+      _method: 'PUT',
     };
 
     if (stockListArray.length) {
@@ -405,24 +410,22 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
 
     appendToFormData(postObj, formData);
 
-    console.log(postObj);
+    const { data, error } = await updateStockManage({
+      formData,
+      id: id,
+    });
 
-    // const { data, error } = await createStockManage({
-    //   formData,
-    //   id: id,
-    // });
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+      setCurrent(0);
+    }
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeEditDrawer());
-    //   setCurrent(0);
-    // }
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
 
-    // if (error) {
-    //   const errorFields = errorFieldsUpdate(fields, error);
-
-    //   setFields(errorFields);
-    // }
+      setFields(errorFields);
+    }
   };
 
   const steps = [
@@ -448,7 +451,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           form={form}
           onClose={() => {
             dispatch(closeEditDrawer());
-            setCurrent(0);
+            setCurrent(undefined);
           }}
           data={data}
         />
@@ -463,14 +466,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       isLoading={isFetching}
       width={1400}
     >
-      {/* <ProductForm
-        handleSubmit={handleUpdate}
-        isLoading={isLoading}
-        fields={fields}
-        form={form}
-        data={data}
-      /> */}
-      <div className="">{steps[current].content}</div>
+      <div>{steps?.[current]?.content}</div>
     </CustomDrawer>
   );
 };

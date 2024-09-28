@@ -661,18 +661,17 @@ export const CustomPosProductsComponent = forwardRef(
         taxes,
         tax_method,
         product_qties,
-        warehouse_id,
       } = product ?? {};
 
       function getWarehousePrice(product_prices, warehouse_id) {
-        const warehouse = product_prices.find(
-          (item) => item.warehouse_id.toString() === warehouse_id.toString()
+        const warehouse = product_prices?.find(
+          (item) => item?.warehouse_id?.toString() === warehouse_id?.toString()
         );
 
-        return warehouse ? warehouse.price : product.selling_price;
+        return warehouse ? warehouse?.price : product?.selling_price;
       }
 
-      const unit_cost = getWarehousePrice(product_prices, warehouse_id);
+      const unit_cost = getWarehousePrice(product_prices, warehouseId);
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 

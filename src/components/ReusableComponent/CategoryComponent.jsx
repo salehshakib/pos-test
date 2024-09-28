@@ -8,7 +8,7 @@ import CustomSelect from '../Shared/Select/CustomSelect';
 export const CategoryComponent = ({
   name = 'category_id',
   mode = 'single',
-  required = 'false',
+  required = false,
 }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,

@@ -79,23 +79,14 @@ const baseColumns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(
-                  record?.id,
-                  record.setFormValues,
-                  record.stock
-                )
+                record.decrementCounter(record?.id, record.setFormValues)
               }
             />
           </div>
           <CustomQuantityInput
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(
-                record.id,
-                value,
-                record.setFormValues,
-                record.stock
-              )
+              record.onQuantityChange(record.id, value, record.setFormValues)
             }
             value={record?.formValues.product_list.qty?.[record?.id] ?? 0}
           />
@@ -105,11 +96,7 @@ const baseColumns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(
-                  record?.id,
-                  record.setFormValues,
-                  record.stock
-                )
+                record.incrementCounter(record?.id, record.setFormValues)
               }
               className=""
             />

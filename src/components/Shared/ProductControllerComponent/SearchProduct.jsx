@@ -132,7 +132,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
       const productExists = prevProducts.some((product) => {
         return (
           product?.id.toString() === option?.product?.id?.toString() &&
-          product?.warehouse_id.toString() ===
+          product?.warehouse_id?.toString() ===
             option?.product?.warehouse_id?.toString()
         );
       });

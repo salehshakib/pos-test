@@ -24,6 +24,8 @@ const expandColumns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 350,
+
     render: (name) => (
       <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
@@ -67,7 +69,7 @@ const expandColumns = [
     ),
   },
   {
-    title: 'Cost',
+    title: 'Buying Cost',
     dataIndex: 'cost',
     key: 'cost',
     width: 130,
@@ -77,7 +79,7 @@ const expandColumns = [
     ),
   },
   {
-    title: 'Price',
+    title: 'Selling Price',
     dataIndex: 'price',
     key: 'price',
     width: 130,

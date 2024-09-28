@@ -97,7 +97,6 @@ const columns = [
       </span>
     ),
   },
-
   {
     title: 'Buying Cost',
     dataIndex: 'cost',

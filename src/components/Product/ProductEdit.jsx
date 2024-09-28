@@ -446,7 +446,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           form={form}
           onClose={() => {
             dispatch(closeEditDrawer());
-            setCurrent(0);
+            setCurrent(undefined);
           }}
           data={data}
         />
@@ -461,14 +461,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       isLoading={isFetching}
       width={1400}
     >
-      {/* <ProductForm
-        handleSubmit={handleUpdate}
-        isLoading={isLoading}
-        fields={fields}
-        form={form}
-        data={data}
-      /> */}
-      <div className="">{steps[current].content}</div>
+      <div>{steps?.[current]?.content}</div>
     </CustomDrawer>
   );
 };

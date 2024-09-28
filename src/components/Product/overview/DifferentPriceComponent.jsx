@@ -145,14 +145,14 @@ export const DifferentPriceComponent = ({
       )
     );
     setFormValues((prevFormValues) => {
-      const updatedQtyList = { ...prevFormValues.price_list.qty };
-      delete updatedQtyList[id];
+      const updatedPriceList = { ...prevFormValues.price_list.price };
+      delete updatedPriceList[id];
 
       return {
         ...prevFormValues,
         price_list: {
           ...prevFormValues.price_list,
-          price: updatedQtyList,
+          price: updatedPriceList,
         },
       };
     });

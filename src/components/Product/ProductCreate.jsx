@@ -306,7 +306,7 @@ const ProductCreate = () => {
           form={form}
           onClose={() => {
             dispatch(closeCreateDrawer());
-            setCurrent(0);
+            setCurrent(undefined);
           }}
         />
       ),
@@ -319,7 +319,7 @@ const ProductCreate = () => {
       open={isCreateDrawerOpen}
       width={1400}
     >
-      <div className="">{steps[current].content}</div>
+      <div>{steps?.[current]?.content}</div>
     </CustomDrawer>
   );
 };

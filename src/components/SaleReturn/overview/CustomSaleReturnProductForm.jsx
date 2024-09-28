@@ -19,8 +19,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedOperator = {};
   const updatedOperationValue = {};
 
-  const updatedReturnedQty = {};
-
   purchaseProducts.forEach((item) => {
     const productId = item?.product_variants.id.toString();
 
@@ -126,8 +124,6 @@ export const CustomSaleReturnProductForm = ({
       returned_qty: {},
       tax_id: {},
       max_return: {},
-
-      returned_qty: {},
     },
     units: {
       operator: {},
@@ -151,8 +147,6 @@ export const CustomSaleReturnProductForm = ({
         returned_qty: {},
         tax_id: {},
         max_return: {},
-
-        returned_qty: {},
       },
       units: {
         operator: {},

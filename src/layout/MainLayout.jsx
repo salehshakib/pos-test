@@ -10,7 +10,7 @@ import { GlobalUtilityStyle } from '../container/Styled';
 import { isDev, mode } from '../utilities/configs/base_url';
 import SideBar from './SideBar';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const { pathname } = useLocation();

@@ -29,6 +29,7 @@ export const SaleEdit = ({ id, setId }) => {
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
 
   const { data, isFetching } = useGetSaleDetailsQuery(
     {
@@ -140,7 +141,7 @@ export const SaleEdit = ({ id, setId }) => {
       ),
       grand_total: grandTotal,
       product_list: JSON.stringify(productListArray),
-      // petty_cash_id: 8,
+      petty_cash_id: pettyCashId,
       _method: 'PUT',
     };
 

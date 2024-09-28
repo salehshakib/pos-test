@@ -79,7 +79,6 @@ const SaleReturnCreate = () => {
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
       sale_id: sellData?.id,
-      petty_cash_id: pettyCashId,
       warehouse_id: sellData?.warehouse_id,
       cashier_id: sellData?.cashier_id,
       item: productListArray?.length,
@@ -94,6 +93,7 @@ const SaleReturnCreate = () => {
       return_note: values?.return_note,
       staff_note: values?.staff_note,
       product_list: JSON.stringify(productListArray),
+      petty_cash_id: pettyCashId,
     };
 
     const { attachment } = values;

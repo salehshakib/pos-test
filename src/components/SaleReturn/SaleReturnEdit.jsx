@@ -31,6 +31,8 @@ const SaleReturnEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
+  // const { pettyCashId } = useSelector((state) => state.pettyCash);
+
   const { data, isFetching } = useGetSaleReturnDetailsQuery(
     {
       id,
@@ -104,7 +106,6 @@ const SaleReturnEdit = ({ id, setId }) => {
     const postData = {
       sale_return_at: dayjs(values?.sale_return_at).format('YYYY-MM-DD'),
       sale_id: sellData?.id,
-      petty_cash_id: sellData?.petty_cash_id,
       warehouse_id: sellData?.warehouse_id,
       cashier_id: sellData?.cashier_id,
       item: productListArray?.length,
@@ -119,6 +120,7 @@ const SaleReturnEdit = ({ id, setId }) => {
       return_note: values?.return_note,
       staff_note: values?.staff_note,
       product_list: JSON.stringify(productListArray),
+      petty_cash_id: sellData?.petty_cash_id,
       _method: 'PUT',
     };
 

@@ -189,49 +189,56 @@ export const PaymentTypeComponent = ({
           <Col {...fullColLayout}>
             <div className="grid grid-cols-7 gap-3 pb-5">
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(10)}
               >
                 10
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(20)}
               >
                 20
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(50)}
               >
                 50
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(100)}
               >
                 100
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(200)}
               >
                 200
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(500)}
               >
                 500
               </Button>
               <Button
-                type="primary flex justify-center items-center"
+                type="primary"
+                className=" flex justify-center items-center"
                 icon={<BsCash />}
                 onClick={() => handleQuickCash(1000)}
               >

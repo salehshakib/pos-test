@@ -26,6 +26,8 @@ export const SaleCreate = () => {
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
+
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 
@@ -118,8 +120,7 @@ export const SaleCreate = () => {
       grand_total: decimalConverter(grandTotal),
 
       product_list: JSON.stringify(productListArray),
-      // petty_cash_id: user?.petty_cash_id,
-      // petty_cash_id: 8,
+      petty_cash_id: pettyCashId,
     };
 
     if (paid_amount) {

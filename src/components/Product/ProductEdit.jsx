@@ -392,7 +392,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const postObj = {
-      // _method: 'PUT',
+      _method: 'PUT',
     };
 
     if (stockListArray.length) {
@@ -405,24 +405,22 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
 
     appendToFormData(postObj, formData);
 
-    console.log(postObj);
+    const { data, error } = await updateStockManage({
+      formData,
+      id: id,
+    });
 
-    // const { data, error } = await createStockManage({
-    //   formData,
-    //   id: id,
-    // });
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+      setCurrent(0);
+    }
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeEditDrawer());
-    //   setCurrent(0);
-    // }
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
 
-    // if (error) {
-    //   const errorFields = errorFieldsUpdate(fields, error);
-
-    //   setFields(errorFields);
-    // }
+      setFields(errorFields);
+    }
   };
 
   const steps = [

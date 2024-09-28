@@ -24,6 +24,8 @@ const expandColumns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 350,
+
     render: (name) => (
       <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),

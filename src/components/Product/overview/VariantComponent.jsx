@@ -138,6 +138,7 @@ const VariantAttributeTable = ({
       key: 'options',
       align: 'center',
       render: (options, record) => {
+        console.log(options);
         const attribute_options = options.map((item) => {
           return {
             value: item.id.toString(),
@@ -363,6 +364,8 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
     setDataSource(selected);
   };
+
+  console.log(dataSource);
 
   useEffect(() => {
     if (editData) {

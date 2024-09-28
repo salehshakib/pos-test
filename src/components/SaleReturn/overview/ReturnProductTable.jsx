@@ -233,7 +233,7 @@ export const ReturnProductTable = ({
       id,
       name,
       sku,
-      buying_price: unit_cost,
+      selling_price: unit_cost,
       sale_units,
       taxes,
       tax_method,

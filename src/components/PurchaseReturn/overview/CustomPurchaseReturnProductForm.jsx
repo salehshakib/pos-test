@@ -17,9 +17,12 @@ const updateStateWithProductData = (
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
+
   const updatedTaxId = {};
+
   const updatedOperator = {};
   const updatedOperationValue = {};
+
   const updatedReturnedQty = {};
 
   // Loop through each product and populate updated fields
@@ -33,6 +36,7 @@ const updateStateWithProductData = (
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
+
     updatedReturnedQty[productId] = item?.returned_qty;
 
     // Optional chaining for safe access
@@ -126,9 +130,11 @@ export const CustomPurchaseReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-      returned_qty: {},
+
       tax_id: {},
       max_return: {},
+
+      returned_qty: {},
     },
     units: {
       operator: {},
@@ -149,9 +155,11 @@ export const CustomPurchaseReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-        returned_qty: {},
+
         tax_id: {},
         max_return: {},
+
+        returned_qty: {},
       },
       units: {
         operator: {},
@@ -168,7 +176,7 @@ export const CustomPurchaseReturnProductForm = ({
   }, [handleCustomSubmit, onCustomSubmit]);
 
   useEffect(() => {
-    if (purchaseData) {
+    if (purchaseData?.purchase_products) {
       const data = purchaseData;
 
       updateStateWithProductData(data?.purchase_products, setFormValues);
@@ -182,8 +190,9 @@ export const CustomPurchaseReturnProductForm = ({
         purchase_units: product?.product_variants?.products?.purchase_units,
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
-        returned_qty: product?.product_variants?.returned_qty,
         purchaseQty: product?.qty,
+
+        returned_qty: product?.product_variants?.returned_qty,
       }));
 
       setProducts(purchaseProducts);
@@ -204,8 +213,9 @@ export const CustomPurchaseReturnProductForm = ({
           purchase_units: product?.product_variants?.products?.purchase_units,
           tax_id: product?.product_variants?.products?.tax_id,
           taxes: product?.product_variants?.products.taxes,
-          returned_qty: product?.product_variants?.returned_qty,
           purchaseQty: product?.qty,
+
+          returned_qty: product?.product_variants?.returned_qty,
         })
       );
 

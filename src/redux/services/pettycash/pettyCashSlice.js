@@ -15,6 +15,7 @@ const pettyCashSlice = createSlice({
     },
     clearPettyCash: (state) => {
       state.pettyCash = 'Close';
+      state.pettyCashId = undefined;
     },
   },
 });

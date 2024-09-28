@@ -253,10 +253,15 @@ const ProductCreate = () => {
 
     const formData = new FormData();
 
-    const postObj = {
-      stock_list: JSON.stringify(stockListArray),
-      price_list: JSON.stringify(priceListArray),
-    };
+    const postObj = {};
+
+    if (stockListArray.length) {
+      postObj.stock_list = JSON.stringify(stockListArray);
+    }
+
+    if (priceListArray.length) {
+      postObj.price_list = JSON.stringify(priceListArray);
+    }
 
     appendToFormData(postObj, formData);
 

@@ -391,6 +391,9 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     'selling_price',
   ]);
 
+  console.log(dataSource);
+  console.log(variantAttributesName);
+
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,
     variantAttributesName,

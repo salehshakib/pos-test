@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
+  useCreateStockManageMutation,
   useGetProductDetailsQuery,
   useUpdateProductMutation,
   useUpdateStockManageMutation,
@@ -345,6 +346,9 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
   };
 
+  const [createStockManage, { isLoading: isUpdateLoading }] =
+    useCreateStockManageMutation();
+
   const handleStockUpdate = async (values, { formValues }) => {
     const stockListArray = formValues?.stock_list?.qty
       ? Object.keys(formValues.stock_list.qty)
@@ -388,14 +392,20 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const postObj = {
-      stock_list: JSON.stringify(stockListArray),
-      price_list: JSON.stringify(priceListArray),
-      _method: 'PUT',
+      // _method: 'PUT',
     };
+
+    if (stockListArray.length) {
+      postObj.stock_list = JSON.stringify(stockListArray);
+    }
+
+    if (priceListArray.length) {
+      postObj.price_list = JSON.stringify(priceListArray);
+    }
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await updateStockManage({
+    const { data, error } = await createStockManage({
       formData,
       id: id,
     });

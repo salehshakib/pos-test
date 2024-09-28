@@ -405,22 +405,24 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await createStockManage({
-      formData,
-      id: id,
-    });
+    console.log(postObj);
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeEditDrawer());
-      setCurrent(0);
-    }
+    // const { data, error } = await createStockManage({
+    //   formData,
+    //   id: id,
+    // });
 
-    if (error) {
-      const errorFields = errorFieldsUpdate(fields, error);
+    // if (data?.success) {
+    //   setId(undefined);
+    //   dispatch(closeEditDrawer());
+    //   setCurrent(0);
+    // }
 
-      setFields(errorFields);
-    }
+    // if (error) {
+    //   const errorFields = errorFieldsUpdate(fields, error);
+
+    //   setFields(errorFields);
+    // }
   };
 
   const steps = [

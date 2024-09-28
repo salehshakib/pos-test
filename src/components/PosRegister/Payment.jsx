@@ -7,6 +7,7 @@ import { GoHistory } from 'react-icons/go';
 import { HiOutlineBanknotes } from 'react-icons/hi2';
 import { IoRocketOutline } from 'react-icons/io5';
 import { MdCardGiftcard } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 import { mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
@@ -26,6 +27,7 @@ import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const [paymentForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
 
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
@@ -131,7 +133,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
-      // petty_cash_id: 8,
+      petty_cash_id: pettyCashId,
       warehouse_id,
       cashier_id,
       customer_id,

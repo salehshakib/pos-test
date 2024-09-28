@@ -160,6 +160,8 @@ export const DifferentPriceComponent = ({
 
   const { data } = useGetWarehousesQuery({});
 
+  console.log(products);
+
   const dataSource =
     products?.map((product) => {
       const { id, name, warehouse_id } = product;
@@ -171,9 +173,6 @@ export const DifferentPriceComponent = ({
       )?.name;
 
       formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
-
-      formValues.price_list.warehouse_id[uid] =
-        formValues.price_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
         id: uid,

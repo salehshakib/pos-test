@@ -92,6 +92,7 @@ const ProductTable = ({
 
   const handleEdit = (id) => {
     setEditId(id);
+    setCurrent(0);
     dispatch(openEditDrawer());
   };
 

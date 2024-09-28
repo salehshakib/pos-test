@@ -450,12 +450,23 @@ export const SaleProductTable = ({
       id,
       name,
       sku,
-      selling_price: unit_cost,
+      product_prices,
       sale_units,
       taxes,
       tax_method,
       product_qties,
+      warehouse_id,
     } = product ?? {};
+
+    function getWarehousePrice(product_prices, warehouse_id) {
+      const warehouse = product_prices.find(
+        (item) => item.warehouse_id.toString() === warehouse_id.toString()
+      );
+
+      return warehouse ? warehouse.price : product.selling_price;
+    }
+
+    const unit_cost = getWarehousePrice(product_prices, warehouse_id);
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 

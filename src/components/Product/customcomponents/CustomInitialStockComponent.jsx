@@ -9,18 +9,11 @@ import { InitialStockComponent } from '../overview/InitialStockComponent';
 const updateStateWithProductData = (productVariantQties, setFormValues) => {
   const stockList = {};
 
-  console.log(productVariantQties);
   productVariantQties.forEach((item) => {
     item.product_qties.map((product) => {
       stockList[`${item.id}-${product.warehouse_id}`] = product.qty;
     });
   });
-
-  // console.log(stockList);
-  // setFormValues((prevFormValues) => ({
-  //   ...prevFormValues,
-  //   stock_list: stock,
-  // }));
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
@@ -41,8 +34,6 @@ export const CustomInititalStockComponent = ({
   const [formValues, setFormValues] = useState({
     stock_list: {
       qty: {},
-      product_variant_id: {},
-      warehouse_id: {},
     },
   });
 
@@ -61,31 +52,24 @@ export const CustomInititalStockComponent = ({
       const productVariants =
         data?.variants?.flatMap((item) => {
           return item.product_qties.map((product) => {
-            const uid = `${item.id}-${product.warehouse_id}`; // Assuming you meant warehouse_id instead of warehouse
             return {
-              id: uid,
-              warehouse_id: product.warehouse_id, // Correcting to use warehouse_id
+              id: item.id,
+              warehouse_id: product.warehouse_id,
               name: item.name,
             };
           });
-        }) || []; // Ensures that if data or variants are undefined, it returns an empty array
-
-      // Example usage
-      console.log(productVariants);
+        }) || [];
 
       setProducts(productVariants);
     } else {
       setFormValues({
         stock_list: {
           qty: {},
-          product_variant_id: {},
-          warehouse_id: {},
         },
       });
+      setProducts([]);
     }
   }, [data, isEditDrawerOpen]);
-
-  console.log(products);
 
   return (
     <>

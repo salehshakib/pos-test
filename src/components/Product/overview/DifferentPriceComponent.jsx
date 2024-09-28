@@ -172,9 +172,6 @@ export const DifferentPriceComponent = ({
 
       formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
 
-      formValues.price_list.warehouse_id[uid] =
-        formValues.price_list.warehouse_id[uid] ?? warehouse_id;
-
       return {
         id: uid,
         name,

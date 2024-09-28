@@ -126,11 +126,12 @@ const ProductSelect = ({
   const dataSource =
     products?.map((product) => {
       const { id, name, sku } = product;
+      const uid = `${id}-${sku}`;
 
-      formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
+      formValues.product_list.qty[uid] = formValues.product_list.qty[uid] ?? 1;
 
       return {
-        id,
+        id: uid,
         name,
         sku,
         delete: true,

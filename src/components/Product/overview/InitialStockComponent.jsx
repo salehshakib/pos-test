@@ -191,12 +191,7 @@ export const InitialStockComponent = ({
         (warehouse) => warehouse?.id.toString() === warehouse_id?.toString()
       )?.name;
 
-      console.log(formValues);
-
       formValues.stock_list.qty[uid] = formValues.stock_list.qty[uid] ?? 1;
-
-      formValues.stock_list.warehouse_id[uid] =
-        formValues.stock_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
         id: uid,

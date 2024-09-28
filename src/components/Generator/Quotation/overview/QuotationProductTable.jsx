@@ -23,8 +23,7 @@ export const QuotationProductTable = ({
   setFormValues,
   products,
   setProducts,
-  // productUnits,
-  // setProductUnits,
+  type = 'quotation',
 }) => {
   const form = Form.useFormInstance();
   const currency = useSelector(useCurrency);
@@ -44,15 +43,21 @@ export const QuotationProductTable = ({
   };
 
   const dataSource = products?.map((product) => {
-    const {
-      id,
-      name,
-      sku,
-      buying_price: unit_cost,
-      taxes,
-      sale_units,
-      tax_method,
-    } = product ?? {};
+    const { id, name, sku, taxes, sale_units, tax_method, warehouse_id } =
+      product ?? {};
+
+    function getWarehousePrice(product_prices, warehouse_id) {
+      const warehouse = product_prices.find(
+        (item) => item.warehouse_id.toString() === warehouse_id.toString()
+      );
+
+      return warehouse ? warehouse.price : product.selling_price; // Returns the price or null if not found
+    }
+
+    const unit_cost =
+      type === 'invoice'
+        ? getWarehousePrice(product.product_prices, warehouse_id)
+        : product?.buying_price;
 
     const price = calculateUnitCost(
       sale_units,
@@ -92,35 +97,6 @@ export const QuotationProductTable = ({
       setFormValues,
     };
   });
-
-  // const [totalQuantity, setTotalQuantity] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [totalTax, setTotalTax] = useState(0);
-  // const [totalDiscount, setTotalDiscount] = useState(0);
-
-  // useEffect(() => {
-  //   const { totalQuantity, totalPrice, totalTax, totalDiscount } =
-  //     calculateTotals(formValues);
-
-  //   setTotalQuantity(totalQuantity);
-  //   setTotalPrice(totalPrice);
-  //   setTotalTax(totalTax);
-  //   setTotalDiscount(totalDiscount);
-  // }, [formValues, products]);
-
-  // // products?.length > 0 &&
-  // //   dataSource.push({
-  // //     id: "",
-  // //     name: "Total",
-  // //     unitCost: "",
-  // //     quantity: totalQuantity,
-  // //     subTotal: totalPrice,
-  // //     tax: totalTax,
-  // //     discount: totalDiscount,
-  // //     action: false,
-  // //   });
-
-  // form.setFieldsValue(formValues);
 
   const { totalQuantity, totalPrice, totalTax, totalDiscount } =
     calculateTotals(formValues);

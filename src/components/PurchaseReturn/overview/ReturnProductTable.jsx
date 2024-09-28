@@ -109,8 +109,12 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            // name={["product_list", "qty", record?.id]}
-            value={record.formValues.product_list.qty[record?.id] || 0}
+            value={
+              parseInt(record.formValues.product_list.qty[record.id]) -
+                parseInt(
+                  record.formValues.product_list.returned_qty[record.id]
+                ) || 0
+            }
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -180,6 +184,13 @@ export const ReturnProductTable = ({
 
       if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
         openNotification('info', "Can't add more than purchased quantity");
+        return prevFormValues;
+      }
+
+      if (
+        currentQty === parseInt(formValues?.product_list?.returned_qty?.[id])
+      ) {
+        openNotification('info', "Can't add more than sold quantity");
         return prevFormValues;
       }
 
@@ -290,7 +301,9 @@ export const ReturnProductTable = ({
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
-      qty: formValues.product_list.qty[id],
+      qty:
+        parseInt(formValues.product_list.qty[id]) -
+        parseInt(formValues.product_list.returned_qty[id]),
       incrementCounter,
       decrementCounter,
       onQuantityChange,

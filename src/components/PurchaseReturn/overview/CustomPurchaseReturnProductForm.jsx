@@ -183,7 +183,7 @@ export const CustomPurchaseReturnProductForm = ({
 
       const purchaseProducts = data?.purchase_products?.map((product) => ({
         id: product?.product_variants?.id,
-        name: product?.product_variants?.products?.name,
+        name: product?.product_variants?.name,
         sku: product?.product_variants?.products?.sku,
         buying_price: product?.product_variants?.products?.buying_price,
         purchase_unit_id: product?.product_variants?.purchase_unit_id,

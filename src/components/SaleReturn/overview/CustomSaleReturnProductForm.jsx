@@ -29,7 +29,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
-
     updatedReturnedQty[productId] = item?.returned_qty;
 
     // Optional chaining for safe access
@@ -54,8 +53,8 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
       },
-      returend_qty: {
-        ...prevFormValues.product_list.returend_qty,
+      returned_qty: {
+        ...prevFormValues.product_list.returned_qty,
         ...updatedReturnedQty,
       },
       sale_unit_id: {
@@ -124,7 +123,7 @@ export const CustomSaleReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-
+      returned_qty: {},
       tax_id: {},
       max_return: {},
     },
@@ -147,9 +146,9 @@ export const CustomSaleReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-
         tax_id: {},
         max_return: {},
+        returned_qty: {},
       },
       units: {
         operator: {},
@@ -173,7 +172,7 @@ export const CustomSaleReturnProductForm = ({
 
       const saleProducts = data?.sale_products?.map((product) => ({
         id: product?.product_variants?.id,
-        name: product?.product_variants?.products?.name,
+        name: product?.product_variants?.name,
         sku: product?.product_variants?.products?.sku,
         selling_price: product?.product_variants?.products?.selling_price,
         sale_unit_id: product?.product_variants?.sale_unit_id,
@@ -181,6 +180,7 @@ export const CustomSaleReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+        returned_qty: product.returned_qty,
       }));
 
       setProducts(saleProducts);
@@ -193,7 +193,7 @@ export const CustomSaleReturnProductForm = ({
 
       const saleProducts = data?.sale_return_products?.map((product) => ({
         id: product?.product_variants?.id,
-        name: product?.product_variants?.products?.name,
+        name: product?.product_variants?.name,
         sku: product?.product_variants?.products?.sku,
         selling_price: product?.product_variants?.products?.selling_price,
         sale_unit_id: product?.product_variants?.sale_unit_id,
@@ -201,7 +201,6 @@ export const CustomSaleReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
-
         returned_qty: product.returned_qty,
       }));
 

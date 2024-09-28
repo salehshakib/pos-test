@@ -20,6 +20,7 @@ const updateStateWithProductData = (
   const updatedTaxId = {};
   const updatedOperator = {};
   const updatedOperationValue = {};
+  const updatedReturnedQty = {};
 
   // Loop through each product and populate updated fields
   purchaseProducts.forEach((item) => {
@@ -32,6 +33,7 @@ const updateStateWithProductData = (
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
+    updatedReturnedQty[productId] = item?.returned_qty;
 
     // Optional chaining for safe access
     updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
@@ -55,6 +57,10 @@ const updateStateWithProductData = (
       qty: {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
+      },
+      returend_qty: {
+        ...prevFormValues.product_list.returend_qty,
+        ...updatedReturnedQty,
       },
       purchase_unit_id: {
         ...prevFormValues.product_list.purchase_unit_id,
@@ -120,7 +126,7 @@ export const CustomPurchaseReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-
+      returned_qty: {},
       tax_id: {},
       max_return: {},
     },
@@ -143,7 +149,7 @@ export const CustomPurchaseReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-
+        returned_qty: {},
         tax_id: {},
         max_return: {},
       },
@@ -176,6 +182,7 @@ export const CustomPurchaseReturnProductForm = ({
         purchase_units: product?.product_variants?.products?.purchase_units,
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
+        returned_qty: product?.product_variants?.returned_qty,
         purchaseQty: product?.qty,
       }));
 
@@ -197,6 +204,7 @@ export const CustomPurchaseReturnProductForm = ({
           purchase_units: product?.product_variants?.products?.purchase_units,
           tax_id: product?.product_variants?.products?.tax_id,
           taxes: product?.product_variants?.products.taxes,
+          returned_qty: product?.product_variants?.returned_qty,
           purchaseQty: product?.qty,
         })
       );

@@ -537,6 +537,8 @@ export const CustomPosProductsComponent = forwardRef(
     const currency = useSelector(useCurrency);
     const [additionalForm] = Form.useForm();
 
+    // console.log(warehouseId)
+
     const [formValues, setFormValues] = useState({
       product_list: {
         qty: {},
@@ -632,6 +634,10 @@ export const CustomPosProductsComponent = forwardRef(
     const form = Form.useFormInstance();
     const warehouseId = Form.useWatch('warehouse_id', form);
 
+    useEffect(() => {
+      resetFields();
+    }, [warehouseId]);
+
     const [productEditModal, setProductEditModal] = useState(false);
     const [productId, setProductId] = useState(undefined);
     const [productName, setProductName] = useState(null);
@@ -651,12 +657,24 @@ export const CustomPosProductsComponent = forwardRef(
         id,
         name,
         sku,
-        selling_price: unit_cost,
+        // selling_price: unit_cost,
+        product_prices,
         sale_units,
         taxes,
         tax_method,
         product_qties,
+        warehouse_id,
       } = product ?? {};
+
+      function getWarehousePrice(product_prices, warehouse_id) {
+        const warehouse = product_prices.find(
+          (item) => item.warehouse_id.toString() === warehouse_id.toString()
+        );
+
+        return warehouse ? warehouse.price : product.selling_price;
+      }
+
+      const unit_cost = getWarehousePrice(product_prices, warehouse_id);
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 

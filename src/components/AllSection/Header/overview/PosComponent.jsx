@@ -33,6 +33,8 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const user = useSelector(useCurrentUser);
 
+  console.log(pettyCashId);
+
   const handleSubmit = async (values) => {
     if (pettyCashId) {
       const { data, error } = await updatePettyCash({
@@ -165,8 +167,12 @@ export const PosComponent = () => {
       } else {
         dispatch(clearPettyCash());
       }
+    } else {
+      dispatch(clearPettyCash());
     }
   }, [pettyCashData?.data, dispatch, pettyCash?.data?.status]);
+
+  console.log(pettyCash);
 
   const [open, setOpen] = useState(false);
 

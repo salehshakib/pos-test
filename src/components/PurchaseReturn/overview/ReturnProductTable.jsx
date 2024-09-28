@@ -79,7 +79,7 @@ const columns = [
     dataIndex: 'returned_qty',
     key: 'returned_qty',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (returned_qty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {returned_qty ?? 0}
@@ -185,7 +185,8 @@ export const ReturnProductTable = ({
 
       const newQty = Math.min(
         Number(currentQty) + 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
 
       return {
@@ -207,7 +208,8 @@ export const ReturnProductTable = ({
 
       const newQty = Math.min(
         Number(currentQty) - 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
 
       return {
@@ -226,7 +228,10 @@ export const ReturnProductTable = ({
   const onQuantityChange = (id, value) => {
     const qty = Math.min(
       parseInt(value),
-      parseInt(formValues?.product_list?.max_return?.[id])
+      parseInt(
+        formValues?.product_list?.max_return?.[id] -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
+      )
     );
 
     setFormValues((prevFormValues) => ({

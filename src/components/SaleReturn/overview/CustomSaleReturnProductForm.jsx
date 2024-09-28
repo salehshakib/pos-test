@@ -13,7 +13,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-
+  const updatedReturnedQty = {};
   const updatedTaxId = {};
 
   const updatedOperator = {};
@@ -29,7 +29,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
-
+    updatedReturnedQty[productId] = item?.returned_qty;
     updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
 
     updatedOperator[productId] =
@@ -49,6 +49,10 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
       qty: {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
+      },
+      returend_qty: {
+        ...prevFormValues.product_list.returend_qty,
+        ...updatedReturnedQty,
       },
       sale_unit_id: {
         ...prevFormValues.product_list.sale_unit_id,
@@ -116,7 +120,7 @@ export const CustomSaleReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-
+      returned_qty: {},
       tax_id: {},
       max_return: {},
     },
@@ -139,7 +143,7 @@ export const CustomSaleReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-
+        returned_qty: {},
         tax_id: {},
         max_return: {},
       },
@@ -173,6 +177,7 @@ export const CustomSaleReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+        returned_qty: product?.returned_qty,
       }));
 
       setProducts(saleProducts);
@@ -193,6 +198,7 @@ export const CustomSaleReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+        returned_qty: product?.returned_qty,
       }));
 
       setProducts(saleProducts);

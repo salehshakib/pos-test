@@ -49,8 +49,8 @@ const FileStatusComponent = ({ form }) => {
 
   return (
     <CustomSelect
-      label="File Status"
-      placeholder={'File Status'}
+      label="Status"
+      placeholder={'Status'}
       options={options}
       name={'status'}
     />

@@ -37,7 +37,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
+      <span className="text-dark text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -47,7 +47,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (sku) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
+      <span className="text-dark text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {

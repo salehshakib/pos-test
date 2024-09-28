@@ -69,7 +69,7 @@ const expandColumns = [
     ),
   },
   {
-    title: 'Cost',
+    title: 'Buying Cost',
     dataIndex: 'cost',
     key: 'cost',
     width: 130,
@@ -79,7 +79,7 @@ const expandColumns = [
     ),
   },
   {
-    title: 'Price',
+    title: 'Selling Price',
     dataIndex: 'price',
     key: 'price',
     width: 130,

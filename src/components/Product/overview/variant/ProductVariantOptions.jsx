@@ -82,19 +82,7 @@ const ProductVariantOption = ({
       ),
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      align: 'right',
-      editable: true,
-      render: (price) => (
-        <span className="text-dark   text-xs md:text-sm">
-          {showCurrency(price, currency)}
-        </span>
-      ),
-    },
-    {
-      title: 'Cost',
+      title: 'Buying Cost',
       dataIndex: 'cost',
       key: 'cost',
       align: 'right',
@@ -105,6 +93,19 @@ const ProductVariantOption = ({
         </span>
       ),
     },
+    {
+      title: 'Selling Price',
+      dataIndex: 'price',
+      key: 'price',
+      align: 'right',
+      editable: true,
+      render: (price) => (
+        <span className="text-dark   text-xs md:text-sm">
+          {showCurrency(price, currency)}
+        </span>
+      ),
+    },
+
     {
       title: 'Action',
       dataIndex: 'action',
@@ -159,7 +160,7 @@ const ProductVariantOption = ({
     };
   });
 
-  console.log(editData.variants);
+  console.log(editData?.variants);
 
   // Memoize variantDatasource for performance
   const variantDatasource = useMemo(

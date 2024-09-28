@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
-  useCreateStockManageMutation,
   useGetProductDetailsQuery,
   useUpdateProductMutation,
   useUpdateStockManageMutation,
@@ -256,12 +255,21 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       has_promotion: has_promotion ? '1' : '0',
       has_expired_date: has_expired_date ? '1' : '0',
       details,
-
-      attachments:
-        values.attachments?.length > 0
-          ? values.attachments?.map((file) => file.originFileObj)
-          : [],
+      _method: 'PUT',
+      // attachments:
+      //   values.attachments?.length > 0
+      //     ? values.attachments?.map((file) => file.originFileObj)
+      //     : [],
     };
+
+    if (
+      values?.attachments?.length &&
+      values?.attachments?.[0]?.originFileObj
+    ) {
+      postObj.attachments = values?.attachments?.map(
+        (file) => file.originFileObj
+      );
+    }
 
     if (has_promotion) {
       postObj.promotion_price = parseInt(promotion?.promotion_price);
@@ -345,9 +353,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       setFields(errorFields);
     }
   };
-
-  const [createStockManage, { isLoading: isUpdateLoading }] =
-    useCreateStockManageMutation();
 
   const handleStockUpdate = async (values, { formValues }) => {
     const stockListArray = formValues?.stock_list?.qty

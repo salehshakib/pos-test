@@ -8,7 +8,6 @@ import { ProductController } from '../../../components/Shared/ProductControllerC
 import {
   decrementCounter,
   incrementCounter,
-  onDelete,
   onQuantityChange,
 } from '../../../utilities/lib/productTable/counters';
 
@@ -121,10 +120,52 @@ const ProductSelect = ({
 }) => {
   const form = Form.useFormInstance();
 
+  const onDelete = (id, setProducts, setFormValues) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter(
+        (product) => product.id + '-' + product.warehouse_id !== id
+      )
+    );
+
+    setFormValues((prevFormValues) => {
+      const { product_list } = prevFormValues;
+
+      const updatedProductList = Object.keys(product_list).reduce(
+        (acc, key) => {
+          // eslint-disable-next-line no-unused-vars
+          const { [id]: _, ...rest } = product_list[key];
+          acc[key] = rest;
+          return acc;
+        },
+        {}
+      );
+
+      let updatedUnitList;
+
+      if (prevFormValues.units) {
+        updatedUnitList = Object.keys(prevFormValues.units).reduce(
+          (acc, key) => {
+            // eslint-disable-next-line no-unused-vars
+            const { [id]: _, ...rest } = prevFormValues.units[key];
+            acc[key] = rest;
+            return acc;
+          },
+          {}
+        );
+      }
+
+      return {
+        ...prevFormValues,
+        product_list: updatedProductList,
+        units: updatedUnitList,
+      };
+    });
+  };
+
   const dataSource =
     products?.map((product) => {
-      const { id, name, sku } = product;
-      const uid = `${id}-${sku}`;
+      const { id, name, sku, warehouse_id } = product;
+      const uid = `${id}-${warehouse_id}`;
 
       formValues.product_list.qty[uid] = formValues.product_list.qty[uid] ?? 1;
 

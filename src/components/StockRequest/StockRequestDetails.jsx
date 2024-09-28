@@ -75,8 +75,8 @@ export const StockRequestDetails = ({ id, ...props }) => {
 
   const requestProducts = data?.stock_request_products?.map((item) => {
     return {
-      name: item?.products?.name ?? 'Unknown Product',
-      sku: item?.products?.sku ?? 'Unknown Quantity',
+      name: item?.product_variants?.name ?? 'Unknown Product',
+      sku: item?.product_variants?.sku ?? 'Unknown Quantity',
       alertQty: item?.alert_qty ?? 'Unknown Quantity',
       reqQty: item?.need_qty ?? 'Unknown Quantity',
     };

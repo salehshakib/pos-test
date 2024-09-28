@@ -114,9 +114,9 @@ const StockCountTable = ({
         reference: reference_id,
         type: type,
         created_at,
-        warehouse: warehouses?.map((item) => item?.name).join(' '),
-        category: categories?.map((item) => item?.name).join(' '),
-        brand: brands?.map((item) => item?.name).join(' '),
+        warehouse: warehouses?.map((item) => item?.name).join(', '),
+        category: categories?.map((item) => item?.name).join(', '),
+        brand: brands?.map((item) => item?.name).join(', '),
         handleDetailsModal,
         handleFileDownload,
       };

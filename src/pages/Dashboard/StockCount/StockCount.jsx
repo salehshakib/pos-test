@@ -24,7 +24,7 @@ const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">
+      <span className="text-dark text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -34,8 +34,8 @@ const columns = [
     dataIndex: 'category',
     key: 'category',
     render: (category) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">
-        {category ?? 'N/A'}
+      <span className="text-dark text-xs font-medium md:text-sm">
+        {category?.length === 0 ? 'All Categories' : category}
       </span>
     ),
   },
@@ -44,8 +44,8 @@ const columns = [
     dataIndex: 'brand',
     key: 'brand',
     render: (brand) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">
-        {brand ?? 'N/A'}
+      <span className="text-dark text-xs font-medium md:text-sm">
+        {brand?.length === 0 ? 'All Brands' : brand}
       </span>
     ),
   },

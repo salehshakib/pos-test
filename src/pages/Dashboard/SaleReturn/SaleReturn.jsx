@@ -29,7 +29,7 @@ const columns = [
     ),
   },
   {
-    title: 'Sale Reference',
+    title: 'Sell Reference',
     dataIndex: 'saleReference',
     key: 'saleReference',
     align: 'center',
@@ -99,7 +99,7 @@ const SaleReturn = () => {
 
   return (
     <GlobalContainer
-      pageTitle="Sale Return"
+      pageTitle="Sell Return"
       columns={columns}
       selectedRows={selectedRows}
       debounce={debounce}

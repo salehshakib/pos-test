@@ -93,7 +93,7 @@ export const PurchaseReturnDetails = ({ id, ...props }) => {
           }`
         : 'Unknown Product',
       qty: item.qty ?? 'Unknown Quantity',
-      price: item.net_unit_price ?? 'Unknown Price',
+      price: item.total ?? 'Unknown Price',
     };
   });
 

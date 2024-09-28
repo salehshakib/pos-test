@@ -17,7 +17,7 @@ const columns = [
     key: 'cardNo',
     align: 'center',
     render: (cardNo) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {cardNo}
       </span>
     ),
@@ -27,7 +27,7 @@ const columns = [
     dataIndex: 'createdBy',
     key: 'createdBy',
     render: (createdBy) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {createdBy}
       </span>
     ),
@@ -37,7 +37,7 @@ const columns = [
     dataIndex: 'customer',
     key: 'customer',
     render: (customer) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {customer}
       </span>
     ),
@@ -48,7 +48,7 @@ const columns = [
     dataIndex: 'amount',
     key: 'amount',
     render: (amount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {amount}
       </span>
     ),
@@ -58,7 +58,7 @@ const columns = [
     dataIndex: 'expense',
     key: 'expense',
     render: (expense) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {expense}
       </span>
     ),
@@ -68,7 +68,7 @@ const columns = [
     dataIndex: 'balance',
     key: 'balance',
     render: (balance) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {balance}
       </span>
     ),

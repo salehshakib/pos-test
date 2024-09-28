@@ -165,6 +165,8 @@ export const PosComponent = () => {
       } else {
         dispatch(clearPettyCash());
       }
+    } else {
+      dispatch(clearPettyCash());
     }
   }, [pettyCashData?.data, dispatch, pettyCash?.data?.status]);
 

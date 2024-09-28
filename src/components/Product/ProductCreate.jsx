@@ -218,12 +218,12 @@ const ProductCreate = () => {
             (product_id) => formValues.stock_list.qty[product_id] !== undefined
           )
           .map((product_id) => {
-            const [id] = product_id.split('-');
+            const [id, warehouse_id] = product_id.split('-');
 
             return {
               product_variant_id: parseInt(id),
               qty: formValues.stock_list.qty[product_id],
-              warehouse_id: formValues.stock_list.warehouse_id[product_id],
+              warehouse_id,
             };
           })
       : [];
@@ -235,12 +235,12 @@ const ProductCreate = () => {
               formValues.price_list.price[product_id] !== undefined
           )
           .map((product_id) => {
-            const [id] = product_id.split('-'); // Get the first value
+            const [id, warehouse_id] = product_id.split('-'); // Get the first value
 
             return {
               product_variant_id: parseInt(id), // Use the split value
               price: formValues.price_list.price[product_id],
-              warehouse_id: formValues.price_list.warehouse_id[product_id],
+              warehouse_id,
             };
           })
       : [];
@@ -253,10 +253,15 @@ const ProductCreate = () => {
 
     const formData = new FormData();
 
-    const postObj = {
-      stock_list: JSON.stringify(stockListArray),
-      price_list: JSON.stringify(priceListArray),
-    };
+    const postObj = {};
+
+    if (stockListArray.length) {
+      postObj.stock_list = JSON.stringify(stockListArray);
+    }
+
+    if (priceListArray.length) {
+      postObj.price_list = JSON.stringify(priceListArray);
+    }
 
     appendToFormData(postObj, formData);
 
@@ -301,7 +306,7 @@ const ProductCreate = () => {
           form={form}
           onClose={() => {
             dispatch(closeCreateDrawer());
-            setCurrent(0);
+            setCurrent(undefined);
           }}
         />
       ),
@@ -314,7 +319,7 @@ const ProductCreate = () => {
       open={isCreateDrawerOpen}
       width={1400}
     >
-      <div className="">{steps[current].content}</div>
+      <div>{steps?.[current]?.content}</div>
     </CustomDrawer>
   );
 };

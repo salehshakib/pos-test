@@ -1,7 +1,7 @@
 import { Col, Form, Modal, Row } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { colLayout, mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useGetAllTaxQuery } from '../../redux/services/tax/taxApi';
 import { useGetAllUnitQuery } from '../../redux/services/unit/unitApi';
 import {
@@ -112,7 +112,7 @@ export const ProductFormComponent = ({
   useEffect(() => {
     if (productId) {
       productForm.setFieldsValue({
-        quantity: formValues?.product_list?.qty[productId],
+        // quantity: formValues?.product_list?.qty[productId],
         unit_discount: formValues?.product_list?.discount[productId],
         unit_price: formValues?.product_list?.net_unit_price[productId],
         sale_unit_id: {
@@ -135,10 +135,10 @@ export const ProductFormComponent = ({
         ...prevFormValues,
         product_list: {
           ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue('quantity'),
-          },
+          // qty: {
+          //   ...prevFormValues.product_list.qty,
+          //   [productId]: productForm.getFieldValue('quantity'),
+          // },
           sale_unit_id: {
             ...prevFormValues.product_list.sale_unit_id,
             [productId]: productForm.getFieldValue(['sale_unit_id', productId]),
@@ -159,16 +159,6 @@ export const ProductFormComponent = ({
             ...prevFormValues.product_list.tax_id,
             [productId]: productForm.getFieldValue(['tax_id', productId]),
           },
-          // tax: {
-          //   ...prevFormValues.product_list.tax,
-          //   [productId]: parseFloat(
-          //     (parseInt(productUnits.sale_units[productId]) *
-          //       parseFloat(productUnits.tax_rate[productId]) *
-          //       parseInt(productForm.getFieldValue('quantity')) *
-          //       parseInt(productForm.getFieldValue('unit_price'))) /
-          //       100
-          //   ).toFixed(2),
-          // },
         },
         units: {
           ...prevFormValues.units,
@@ -199,22 +189,22 @@ export const ProductFormComponent = ({
     >
       <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          {/* <Col {...colLayout}>
             <CustomInput
               label="Quantity"
               type={'number'}
               name={'quantity'}
               placeholder={'Enter product name'}
             />
-          </Col>
-          <Col {...colLayout}>
+          </Col> */}
+          <Col {...mdColLayout}>
             <CustomInput
               label="Unit Price"
               type={'number'}
               name={'unit_price'}
             />
           </Col>
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <ProductUnitComponent
               productId={productId}
               setFormUpdateValues={setFormUpdateValues}

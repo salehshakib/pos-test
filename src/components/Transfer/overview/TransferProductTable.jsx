@@ -4,7 +4,7 @@ import { FaEdit, FaMinus, FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
-import { colLayout, rowLayout } from '../../../layout/FormLayout';
+import { mdColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
 import {
@@ -43,7 +43,7 @@ const columns = [
           record?.handleProductEdit(record?.id, record?.name);
         }}
       >
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
         {name !== 'Total' && <FaEdit className="primary-text" />}
@@ -57,9 +57,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -69,7 +67,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (stock) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {stock}
       </span>
     ),
@@ -81,7 +79,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),
@@ -94,7 +92,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -148,9 +146,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -160,7 +156,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),
@@ -256,7 +252,7 @@ const ProductFormComponent = ({
   useEffect(() => {
     if (productId) {
       productForm.setFieldsValue({
-        quantity: formValues?.product_list?.qty[productId],
+        // quantity: formValues?.product_list?.qty[productId],
         unit_price: formValues?.product_list?.net_unit_cost[productId],
         purchase_unit_id: {
           [productId]:
@@ -277,10 +273,10 @@ const ProductFormComponent = ({
         ...prevFormValues,
         product_list: {
           ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue('quantity'),
-          },
+          // qty: {
+          //   ...prevFormValues.product_list.qty,
+          //   [productId]: productForm.getFieldValue('quantity'),
+          // },
           purchase_unit_id: {
             ...prevFormValues.product_list.purchase_unit_id,
             [productId]: productForm.getFieldValue([
@@ -331,22 +327,22 @@ const ProductFormComponent = ({
     >
       <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          {/* <Col {...colLayout}>
             <CustomInput
               label="Quantity"
               type={'number'}
               name={'quantity'}
               placeholder={'Enter product name'}
             />
-          </Col>
-          <Col {...colLayout}>
+          </Col> */}
+          <Col {...mdColLayout}>
             <CustomInput
               label="Unit Price"
               type={'number'}
               name={'unit_price'}
             />
           </Col>
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <ProductUnitComponent
               setFormUpdateValues={setFormUpdateValues}
               productId={productId}

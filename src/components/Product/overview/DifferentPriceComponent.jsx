@@ -14,7 +14,7 @@ const columns = [
     width: 120,
     render: (warehouse) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {warehouse}
         </span>
       </div>
@@ -26,7 +26,7 @@ const columns = [
     key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
       </div>
@@ -40,7 +40,7 @@ const columns = [
     width: 140,
     render: (unitPrice, record) => {
       return unitPrice > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {unitPrice}
         </span>
       ) : (
@@ -145,20 +145,22 @@ export const DifferentPriceComponent = ({
       )
     );
     setFormValues((prevFormValues) => {
-      const updatedQtyList = { ...prevFormValues.price_list.qty };
-      delete updatedQtyList[id];
+      const updatedPriceList = { ...prevFormValues.price_list.price };
+      delete updatedPriceList[id];
 
       return {
         ...prevFormValues,
         price_list: {
           ...prevFormValues.price_list,
-          price: updatedQtyList,
+          price: updatedPriceList,
         },
       };
     });
   };
 
   const { data } = useGetWarehousesQuery({});
+
+  console.log(products);
 
   const dataSource =
     products?.map((product) => {
@@ -171,9 +173,6 @@ export const DifferentPriceComponent = ({
       )?.name;
 
       formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
-
-      formValues.price_list.warehouse_id[uid] =
-        formValues.price_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
         id: uid,

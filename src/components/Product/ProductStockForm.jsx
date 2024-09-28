@@ -28,12 +28,14 @@ export const ProductStockForm = ({ data, ...props }) => {
       : null;
 
     const formValues = {
-      stock_list: initialData.stock_list,
-      price_list: diffPriceData.price_list,
+      stock_list: initialData?.stock_list,
+      price_list: diffPriceData?.price_list,
     };
 
     props.handleSubmit(values, { formValues });
   };
+
+  console.log(data);
 
   return (
     <CustomForm {...props} handleSubmit={handleSubmit}>

@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { productImage } from '../../../assets/data/productImage';
 import { GlobalUtilityStyle } from '../../../container/Styled';
-import { useGetAllProductsQuery } from '../../../redux/services/product/productApi';
+import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
@@ -42,7 +42,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
     ],
   });
 
-  const { data, isLoading } = useGetAllProductsQuery(
+  const { data, isLoading } = useGetAllProductVariantsQuery(
     {
       params,
     },
@@ -53,7 +53,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
 
   const [newData, setNewData] = useState([]);
 
-  const products = data?.results?.product;
+  const products = data?.results?.productvariant;
   const total = data?.meta?.total || 0;
 
   const loadMoreData = useCallback(() => {

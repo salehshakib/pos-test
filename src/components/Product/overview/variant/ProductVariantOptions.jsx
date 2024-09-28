@@ -59,9 +59,7 @@ const ProductVariantOption = ({
       key: 'name',
       editable: true,
       render: (name) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {name}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{name}</span>
       ),
     },
     {
@@ -69,10 +67,9 @@ const ProductVariantOption = ({
       dataIndex: 'sku',
       key: 'sku',
       editable: true,
+      width: 150,
       render: (sku) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {sku}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{sku}</span>
       ),
     },
     {
@@ -81,33 +78,34 @@ const ProductVariantOption = ({
       key: 'iemi',
       editable: true,
       render: (iemi) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {iemi}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{iemi}</span>
       ),
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      editable: true,
-      render: (price) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {showCurrency(price, currency)}
-        </span>
-      ),
-    },
-    {
-      title: 'Cost',
+      title: 'Buying Cost',
       dataIndex: 'cost',
       key: 'cost',
+      align: 'right',
       editable: true,
       render: (cost) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
+        <span className="text-dark   text-xs md:text-sm">
           {showCurrency(cost, currency)}
         </span>
       ),
     },
+    {
+      title: 'Selling Price',
+      dataIndex: 'price',
+      key: 'price',
+      align: 'right',
+      editable: true,
+      render: (price) => (
+        <span className="text-dark   text-xs md:text-sm">
+          {showCurrency(price, currency)}
+        </span>
+      ),
+    },
+
     {
       title: 'Action',
       dataIndex: 'action',
@@ -161,6 +159,8 @@ const ProductVariantOption = ({
       }),
     };
   });
+
+  console.log(editData?.variants);
 
   // Memoize variantDatasource for performance
   const variantDatasource = useMemo(

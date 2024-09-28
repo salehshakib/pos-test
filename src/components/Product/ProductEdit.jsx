@@ -255,12 +255,21 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       has_promotion: has_promotion ? '1' : '0',
       has_expired_date: has_expired_date ? '1' : '0',
       details,
-
-      attachments:
-        values.attachments?.length > 0
-          ? values.attachments?.map((file) => file.originFileObj)
-          : [],
+      _method: 'PUT',
+      // attachments:
+      //   values.attachments?.length > 0
+      //     ? values.attachments?.map((file) => file.originFileObj)
+      //     : [],
     };
+
+    if (
+      values?.attachments?.length &&
+      values?.attachments?.[0]?.originFileObj
+    ) {
+      postObj.attachments = values?.attachments?.map(
+        (file) => file.originFileObj
+      );
+    }
 
     if (has_promotion) {
       postObj.promotion_price = parseInt(promotion?.promotion_price);
@@ -352,12 +361,12 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
             (product_id) => formValues.stock_list.qty[product_id] !== undefined
           )
           .map((product_id) => {
-            const [id] = product_id.split('-');
+            const [id, warehouse_id] = product_id.split('-');
 
             return {
               product_variant_id: parseInt(id),
               qty: formValues.stock_list.qty[product_id],
-              warehouse_id: formValues.stock_list.warehouse_id[product_id],
+              warehouse_id,
             };
           })
       : [];
@@ -369,12 +378,12 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
               formValues.price_list.price[product_id] !== undefined
           )
           .map((product_id) => {
-            const [id] = product_id.split('-'); // Get the first value
+            const [id, warehouse_id] = product_id.split('-'); // Get the first value
 
             return {
               product_variant_id: parseInt(id), // Use the split value
               price: formValues.price_list.price[product_id],
-              warehouse_id: formValues.price_list.warehouse_id[product_id],
+              warehouse_id,
             };
           })
       : [];
@@ -388,9 +397,16 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const postObj = {
-      stock_list: JSON.stringify(stockListArray),
-      price_list: JSON.stringify(priceListArray),
+      _method: 'PUT',
     };
+
+    if (stockListArray.length) {
+      postObj.stock_list = JSON.stringify(stockListArray);
+    }
+
+    if (priceListArray.length) {
+      postObj.price_list = JSON.stringify(priceListArray);
+    }
 
     appendToFormData(postObj, formData);
 
@@ -435,7 +451,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           form={form}
           onClose={() => {
             dispatch(closeEditDrawer());
-            setCurrent(0);
+            setCurrent(undefined);
           }}
           data={data}
         />
@@ -450,14 +466,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       isLoading={isFetching}
       width={1400}
     >
-      {/* <ProductForm
-        handleSubmit={handleUpdate}
-        isLoading={isLoading}
-        fields={fields}
-        form={form}
-        data={data}
-      /> */}
-      <div className="">{steps[current].content}</div>
+      <div>{steps?.[current]?.content}</div>
     </CustomDrawer>
   );
 };

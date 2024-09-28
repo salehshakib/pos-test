@@ -28,7 +28,7 @@ const updateVariantOptions = (
   variantOptions,
   variantAttributesName
 ) => {
-  const validIds = dataSource.map((item) => item.id.toString());
+  const validIds = dataSource.map((item) => item?.id?.toString());
 
   Object.keys(variantOptions).forEach((id) => {
     if (!validIds.includes(id.toString())) {
@@ -138,7 +138,8 @@ const VariantAttributeTable = ({
       key: 'options',
       align: 'center',
       render: (options, record) => {
-        const attribute_options = options.map((item) => {
+        console.log(options);
+        const attribute_options = options?.map((item) => {
           return {
             value: item.id.toString(),
             label: item.name,
@@ -270,15 +271,9 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const [variantOptions, setVariantOptions] = useState({});
   const [variantAttributesName, setVariantAttributesName] = useState({});
 
-  console.log(variantOptions);
-  console.log(variantAttributesName);
-
-  console.log(editData?.variants);
-
-  console.log(options);
+  const attributes = data?.results?.attribute;
 
   function formatVariantsData(variants) {
-    // Extract unique attribute IDs and corresponding attributes and options
     const attributesMap = {};
 
     variants.forEach((variant) => {
@@ -290,25 +285,9 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
             key: attribute_id.toString(),
             id: attribute_id.toString(),
             name: attribute.name,
-            options: [],
+            options: attributes.find((item) => item.id === attribute_id)
+              .attribute_options,
           };
-        }
-
-        // Check if the option already exists in the options array
-        if (
-          !attributesMap[attribute_id].options.some(
-            (opt) => opt.id === option.attribute_option.id
-          )
-        ) {
-          // Add attribute option in the new format
-          attributesMap[attribute_id].options.push({
-            id: option.attribute_option.id,
-            attribute_id: attribute_id,
-            name: option.attribute_option.name,
-            created_at: option.attribute_option.created_at,
-            updated_at: option.attribute_option.updated_at,
-            deleted_at: option.attribute_option.deleted_at,
-          });
         }
       });
     });
@@ -364,9 +343,13 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     setDataSource(selected);
   };
 
+  console.log(dataSource);
+
   useEffect(() => {
     if (editData) {
       const options = formatVariantsData(editData.variants);
+
+      console.log(options);
 
       console.log(editData?.variants);
 
@@ -379,7 +362,7 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     }
   }, [editData]);
 
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
   // const attributeIds = Form.useWatch('attribute_ids', form);
 
   // console.log(attributeIds);
@@ -390,6 +373,9 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     'buying_price',
     'selling_price',
   ]);
+
+  console.log(dataSource);
+  console.log(variantAttributesName);
 
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,

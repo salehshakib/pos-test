@@ -38,12 +38,10 @@ const columns = [
     key: 'name',
     render: (name, record) => (
       <div className="flex cursor-pointer flex-col">
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="dark:text-white60 primary-text text-xs">
-          {record?.email}
-        </span>
+        <span className=" 60 primary-text text-xs">{record?.email}</span>
       </div>
     ),
   },
@@ -54,7 +52,7 @@ const columns = [
     key: 'checkIn',
     align: 'center',
     render: (checkIn) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {checkIn}
       </span>
     ),
@@ -66,7 +64,7 @@ const columns = [
     key: 'checkOut',
     align: 'center',
     render: (checkOut) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {checkOut}
       </span>
     ),
@@ -78,9 +76,7 @@ const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {date}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{date}</span>
     ),
   },
 ];

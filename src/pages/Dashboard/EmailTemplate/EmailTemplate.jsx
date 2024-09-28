@@ -13,9 +13,7 @@ const columns = [
     dataIndex: 'act',
     key: 'act',
     render: (act) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {act}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{act}</span>
     ),
   },
   {
@@ -23,9 +21,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -33,7 +29,7 @@ const columns = [
     dataIndex: 'subject',
     key: 'subject',
     render: (subject) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subject}
       </span>
     ),

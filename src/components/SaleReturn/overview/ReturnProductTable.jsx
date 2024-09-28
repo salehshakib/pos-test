@@ -37,9 +37,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -47,11 +45,9 @@ const columns = [
     dataIndex: 'sku',
     key: 'sku',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -61,7 +57,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -73,8 +69,20 @@ const columns = [
     align: 'center',
     width: 100,
     render: (soldQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {soldQty ?? 0}
+      </span>
+    ),
+  },
+  {
+    title: 'Returned Qty',
+    dataIndex: 'returned_qty',
+    key: 'returned_qty',
+    align: 'center',
+    width: 150,
+    render: (returned_qty) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {returned_qty ?? 0}
       </span>
     ),
   },
@@ -86,7 +94,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -100,7 +108,12 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            value={record.formValues.product_list.qty[record?.id] || 0}
+            value={
+              parseInt(record.formValues.product_list.qty[record.id]) -
+                parseInt(
+                  record.formValues.product_list.returned_qty[record.id]
+                ) || 0
+            }
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -124,7 +137,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -136,9 +149,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -148,7 +159,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),
@@ -175,9 +186,17 @@ export const ReturnProductTable = ({
         return prevFormValues;
       }
 
+      if (
+        currentQty === parseInt(formValues?.product_list?.returned_qty?.[id])
+      ) {
+        openNotification('info', "Can't add more than sold quantity");
+        return prevFormValues;
+      }
+
       const newQty = Math.min(
         Number(currentQty) + 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
 
       return {
@@ -198,9 +217,9 @@ export const ReturnProductTable = ({
       const currentQty = prevFormValues.product_list.qty[id] || 1;
       const newQty = Math.min(
         Number(currentQty) - 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
-
       return {
         ...prevFormValues,
         product_list: {
@@ -217,7 +236,10 @@ export const ReturnProductTable = ({
   const onQuantityChange = (id, value) => {
     const qty = Math.min(
       parseInt(value),
-      parseInt(formValues?.product_list?.max_return?.[id])
+      parseInt(
+        formValues?.product_list?.max_return?.[id] -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
+      )
     );
 
     setFormValues((prevFormValues) => ({
@@ -239,11 +261,12 @@ export const ReturnProductTable = ({
       id,
       name,
       sku,
-      buying_price: unit_cost,
+      selling_price: unit_cost,
       sale_units,
       taxes,
       tax_method,
       soldQty,
+      returned_qty,
     } = product ?? {};
 
     const price = calculateUnitCost(
@@ -271,10 +294,13 @@ export const ReturnProductTable = ({
       ),
       soldQty,
       delete: true,
+      returned_qty,
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
-      qty: formValues.product_list.qty[id],
+      qty:
+        parseInt(formValues.product_list.qty[id]) -
+        parseInt(formValues.product_list.returned_qty[id]),
       incrementCounter,
       decrementCounter,
       onQuantityChange,

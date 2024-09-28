@@ -91,6 +91,7 @@ const ProductTable = ({
   };
 
   const handleEdit = (id) => {
+    setCurrent(0);
     setEditId(id);
     dispatch(openEditDrawer());
   };
@@ -128,7 +129,8 @@ const ProductTable = ({
 
   const handleEditStockAndPrice = (id) => {
     setCurrent(1);
-    handleEdit(id);
+    setEditId(id);
+    dispatch(openEditDrawer());
   };
 
   const dataSource =

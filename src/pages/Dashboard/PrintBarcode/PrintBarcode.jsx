@@ -42,7 +42,9 @@ const PrintBarcode = () => {
     console.log(products);
 
     const generatedBarcodes = products?.map((product) => {
-      const quantity = formValues?.product_list?.qty[product?.id] || 0;
+      const uid = `${product?.id}-${product?.warehouse_id}`;
+      console.log(uid);
+      const quantity = formValues?.product_list?.qty[uid] || 0;
       const productPrice = product?.product_prices?.find(
         (item) =>
           item?.warehouse_id.toString() === product?.warehouse_id.toString()

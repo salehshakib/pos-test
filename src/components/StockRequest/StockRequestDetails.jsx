@@ -13,9 +13,7 @@ const productReqTable = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -23,11 +21,10 @@ const productReqTable = [
     title: 'Sku',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -36,7 +33,7 @@ const productReqTable = [
     dataIndex: 'alertQty',
     key: 'alertQty',
     render: (alertQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {alertQty}
       </span>
     ),
@@ -46,7 +43,7 @@ const productReqTable = [
     dataIndex: 'reqQty',
     key: 'reqQty',
     render: (reqQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reqQty}
       </span>
     ),
@@ -78,8 +75,8 @@ export const StockRequestDetails = ({ id, ...props }) => {
 
   const requestProducts = data?.stock_request_products?.map((item) => {
     return {
-      name: item?.products?.name ?? 'Unknown Product',
-      sku: item?.products?.sku ?? 'Unknown Quantity',
+      name: item?.product_variants?.name ?? 'Unknown Product',
+      sku: item?.product_variants?.sku ?? 'Unknown Quantity',
       alertQty: item?.alert_qty ?? 'Unknown Quantity',
       reqQty: item?.need_qty ?? 'Unknown Quantity',
     };

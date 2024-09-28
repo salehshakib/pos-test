@@ -15,7 +15,7 @@ const columns = [
     width: 120,
     render: (warehouse) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {warehouse}
         </span>
       </div>
@@ -27,7 +27,7 @@ const columns = [
     key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
       </div>
@@ -41,7 +41,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -181,6 +181,8 @@ export const InitialStockComponent = ({
 
   const { data } = useGetWarehousesQuery({});
 
+  console.log(products);
+
   const dataSource =
     products?.map((product) => {
       const { id, name, warehouse_id } = product;
@@ -191,12 +193,7 @@ export const InitialStockComponent = ({
         (warehouse) => warehouse?.id.toString() === warehouse_id?.toString()
       )?.name;
 
-      console.log(formValues);
-
       formValues.stock_list.qty[uid] = formValues.stock_list.qty[uid] ?? 1;
-
-      formValues.stock_list.warehouse_id[uid] =
-        formValues.stock_list.warehouse_id[uid] ?? warehouse_id;
 
       return {
         id: uid,

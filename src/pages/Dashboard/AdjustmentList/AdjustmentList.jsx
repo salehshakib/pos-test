@@ -18,7 +18,7 @@ const columns = [
     width: 150,
     align: 'center',
     render: (reference) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -28,7 +28,7 @@ const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -38,7 +38,7 @@ const columns = [
     dataIndex: 'note',
     key: 'note',
     render: (note) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {note ?? 'N/A'}
       </span>
     ),

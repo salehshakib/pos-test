@@ -13,8 +13,8 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-
   const updatedTaxId = {};
+  const updatedReturnedQty = {};
 
   const updatedOperator = {};
   const updatedOperationValue = {};
@@ -29,7 +29,9 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
+    updatedReturnedQty[productId] = item?.returned_qty;
 
+    // Optional chaining for safe access
     updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
 
     updatedOperator[productId] =
@@ -37,6 +39,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
     updatedOperationValue[productId] =
       item?.product_variants?.products?.purchase_units?.operation_value;
 
+    // Handle max quantity if purchase is true
     if (sale) {
       updatedMaxQty[productId] = sale.total_qty;
     }
@@ -49,6 +52,10 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
       qty: {
         ...prevFormValues.product_list.qty,
         ...updatedQty,
+      },
+      returned_qty: {
+        ...prevFormValues.product_list.returned_qty,
+        ...updatedReturnedQty,
       },
       sale_unit_id: {
         ...prevFormValues.product_list.sale_unit_id,
@@ -116,7 +123,7 @@ export const CustomSaleReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-
+      returned_qty: {},
       tax_id: {},
       max_return: {},
     },
@@ -139,9 +146,9 @@ export const CustomSaleReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-
         tax_id: {},
         max_return: {},
+        returned_qty: {},
       },
       units: {
         operator: {},
@@ -158,21 +165,22 @@ export const CustomSaleReturnProductForm = ({
   }, [handleCustomSubmit, onCustomSubmit]);
 
   useEffect(() => {
-    if (sellData) {
+    if (sellData?.sale_products) {
       const data = sellData;
 
       updateStateWithProductData(data?.sale_products, setFormValues);
 
       const saleProducts = data?.sale_products?.map((product) => ({
         id: product?.product_variants?.id,
-        name: product?.product_variants?.products?.name,
+        name: product?.product_variants?.name,
         sku: product?.product_variants?.products?.sku,
-        buying_price: product?.product_variants?.products?.buying_price,
+        selling_price: product?.product_variants?.products?.selling_price,
         sale_unit_id: product?.product_variants?.sale_unit_id,
-        purchase_units: product?.product_variants?.products?.purchase_units,
+        sale_units: product?.product_variants?.products?.sale_units,
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+        returned_qty: product.returned_qty,
       }));
 
       setProducts(saleProducts);
@@ -185,14 +193,15 @@ export const CustomSaleReturnProductForm = ({
 
       const saleProducts = data?.sale_return_products?.map((product) => ({
         id: product?.product_variants?.id,
-        name: product?.product_variants?.products?.name,
+        name: product?.product_variants?.name,
         sku: product?.product_variants?.products?.sku,
-        buying_price: product?.product_variants?.products?.buying_price,
+        selling_price: product?.product_variants?.products?.selling_price,
         sale_unit_id: product?.product_variants?.sale_unit_id,
-        purchase_units: product?.product_variants?.products?.purchase_units,
+        sale_units: product?.product_variants?.products?.sale_units,
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+        returned_qty: product.returned_qty,
       }));
 
       setProducts(saleProducts);

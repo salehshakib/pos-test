@@ -2,7 +2,7 @@ import { Col, Form, Modal, Row, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { colLayout, mdColLayout, rowLayout } from '../../../layout/FormLayout';
+import { mdColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
 import { useGetAllUnitQuery } from '../../../redux/services/unit/unitApi';
@@ -123,7 +123,7 @@ const ProductFormComponent = ({
   useEffect(() => {
     if (productId) {
       productForm.setFieldsValue({
-        quantity: formValues?.product_list?.qty[productId],
+        // quantity: formValues?.product_list?.qty[productId],
         unit_discount: formValues?.product_list?.discount[productId],
         unit_price: formValues?.product_list?.net_unit_cost[productId],
         purchase_unit_id: {
@@ -147,10 +147,10 @@ const ProductFormComponent = ({
         ...prevFormValues,
         product_list: {
           ...prevFormValues.product_list,
-          qty: {
-            ...prevFormValues.product_list.qty,
-            [productId]: productForm.getFieldValue('quantity'),
-          },
+          // qty: {
+          //   ...prevFormValues.product_list.qty,
+          //   [productId]: productForm.getFieldValue('quantity'),
+          // },
           purchase_unit_id: {
             ...prevFormValues.product_list.purchase_unit_id,
             [productId]: productForm.getFieldValue([
@@ -204,22 +204,22 @@ const ProductFormComponent = ({
     >
       <CustomForm submitBtn={false} form={productForm}>
         <Row {...rowLayout}>
-          <Col {...colLayout}>
+          {/* <Col {...colLayout}>
             <CustomInput
               label="Quantity"
               type={'number'}
               name={'quantity'}
               placeholder={'Enter product name'}
             />
-          </Col>
-          <Col {...colLayout}>
+          </Col> */}
+          <Col {...mdColLayout}>
             <CustomInput
               label="Unit Price"
               type={'number'}
               name={'unit_price'}
             />
           </Col>
-          <Col {...colLayout}>
+          <Col {...mdColLayout}>
             <ProductUnitComponent
               productId={productId}
               setFormUpdateValues={setFormUpdateValues}
@@ -331,8 +331,6 @@ export const PurchaseProductTable = ({
       tax_method,
       product_qties,
     } = product ?? {};
-
-    console.log(product);
 
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 

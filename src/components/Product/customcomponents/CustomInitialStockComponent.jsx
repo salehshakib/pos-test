@@ -9,18 +9,11 @@ import { InitialStockComponent } from '../overview/InitialStockComponent';
 const updateStateWithProductData = (productVariantQties, setFormValues) => {
   const stockList = {};
 
-  console.log(productVariantQties);
   productVariantQties.forEach((item) => {
     item.product_qties.map((product) => {
       stockList[`${item.id}-${product.warehouse_id}`] = product.qty;
     });
   });
-
-  // console.log(stockList);
-  // setFormValues((prevFormValues) => ({
-  //   ...prevFormValues,
-  //   stock_list: stock,
-  // }));
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
@@ -41,8 +34,6 @@ export const CustomInititalStockComponent = ({
   const [formValues, setFormValues] = useState({
     stock_list: {
       qty: {},
-      product_variant_id: {},
-      warehouse_id: {},
     },
   });
 
@@ -58,34 +49,50 @@ export const CustomInititalStockComponent = ({
     if (data && isEditDrawerOpen) {
       updateStateWithProductData(data?.variants, setFormValues);
 
-      const productVariants =
-        data?.variants?.flatMap((item) => {
-          return item.product_qties.map((product) => {
-            const uid = `${item.id}-${product.warehouse_id}`; // Assuming you meant warehouse_id instead of warehouse
-            return {
-              id: uid,
-              warehouse_id: product.warehouse_id, // Correcting to use warehouse_id
-              name: item.name,
-            };
-          });
-        }) || []; // Ensures that if data or variants are undefined, it returns an empty array
+      // const productVariants =
+      //   data?.variants?.flatMap((item) => {
+      //     return item.product_qties.map((product) => {
+      //       return {
+      //         id: item.id,
+      //         warehouse_id: product.warehouse_id,
+      //         name: item.name,
+      //       };
+      //     });
+      //   }) || [];
 
-      // Example usage
-      console.log(productVariants);
+      const productVariants =
+        data?.variants
+          ?.flatMap((item) => {
+            return item.product_qties.map((product) => {
+              // Check if the product has matching product_prices based on warehouse_id
+              const hasProductPrice = item.product_qties.some(
+                (price) => price.warehouse_id === product.warehouse_id
+              );
+
+              // Only include the product if there's a matching product price
+              if (hasProductPrice) {
+                return {
+                  id: item.id,
+                  warehouse_id: product.warehouse_id,
+                  name: item.name,
+                };
+              }
+
+              return null; // Exclude if no matching product_prices
+            });
+          })
+          .filter(Boolean) || [];
 
       setProducts(productVariants);
     } else {
       setFormValues({
         stock_list: {
           qty: {},
-          product_variant_id: {},
-          warehouse_id: {},
         },
       });
+      setProducts([]);
     }
   }, [data, isEditDrawerOpen]);
-
-  console.log(products);
 
   return (
     <>

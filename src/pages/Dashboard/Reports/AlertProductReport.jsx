@@ -17,9 +17,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -27,11 +25,9 @@ const columns = [
     dataIndex: 'sku',
     key: 'sku',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -40,7 +36,7 @@ const columns = [
     key: 'warehouse',
     align: 'center',
     render: (warehouse) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouse}
       </span>
     ),
@@ -52,7 +48,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (minQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {minQty}
       </span>
     ),
@@ -65,11 +61,11 @@ const columns = [
     width: 100,
     render: (stock, record) =>
       stock > record ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {stock}
         </span>
       ) : (
-        <span className="dark:text-white87 text-xs font-medium text-red-600 md:text-sm">
+        <span className="  text-xs font-medium text-red-600 md:text-sm">
           {stock}
         </span>
       ),
@@ -81,7 +77,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),

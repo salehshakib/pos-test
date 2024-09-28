@@ -18,7 +18,7 @@ const baseColumns = [
           record?.handleProductEdit(record?.id, record?.name);
         }}
       >
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
         {name !== 'Total' && <FaEdit className="primary-text" />}
@@ -30,11 +30,9 @@ const baseColumns = [
     dataIndex: 'sku',
     key: 'sku',
     align: 'center',
-    width: 80,
+    width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -44,7 +42,7 @@ const baseColumns = [
     align: 'center',
     width: 60,
     render: (stock) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {stock}
       </span>
     ),
@@ -56,7 +54,7 @@ const baseColumns = [
     align: 'center',
     width: 120,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -70,7 +68,7 @@ const baseColumns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -81,23 +79,14 @@ const baseColumns = [
               icon={<FaMinus />}
               type="primary"
               onClick={() =>
-                record.decrementCounter(
-                  record?.id,
-                  record.setFormValues,
-                  record.stock
-                )
+                record.decrementCounter(record?.id, record.setFormValues)
               }
             />
           </div>
           <CustomQuantityInput
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(
-                record.id,
-                value,
-                record.setFormValues,
-                record.stock
-              )
+              record.onQuantityChange(record.id, value, record.setFormValues)
             }
             value={record?.formValues.product_list.qty?.[record?.id] ?? 0}
           />
@@ -107,11 +96,7 @@ const baseColumns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(
-                  record?.id,
-                  record.setFormValues,
-                  record.stock
-                )
+                record.incrementCounter(record?.id, record.setFormValues)
               }
               className=""
             />
@@ -131,7 +116,7 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -143,9 +128,7 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -155,7 +138,7 @@ export const columns = [
     align: 'center',
     width: 120,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),
@@ -201,7 +184,7 @@ export const partialColumns = [
     width: 140,
     render: (received, record) => {
       return received > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {received}
         </span>
       ) : (
@@ -239,7 +222,7 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         ${discount}
       </span>
     ),
@@ -251,9 +234,7 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -263,7 +244,7 @@ export const partialColumns = [
     align: 'center',
     width: 100,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         ${subTotal}
       </span>
     ),

@@ -147,7 +147,7 @@ export const CustomInvoiceProductComponent = forwardRef(
           id: product.product_id,
           name: product.products?.name,
           sku: product.products?.sku,
-          buying_price: product.products?.buying_price,
+          buying_price: product.products?.selling_price,
           sale_unit_id: product.sale_unit_id,
           sale_units: product.products?.sale_units,
           tax_id: product.products?.tax_id,
@@ -171,6 +171,7 @@ export const CustomInvoiceProductComponent = forwardRef(
           setFormValues={setFormValues}
           products={products}
           setProducts={setProducts}
+          type="invoice"
         />
         {children}
         <TransactionSummary formValues={formValues} />

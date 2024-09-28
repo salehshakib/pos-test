@@ -55,7 +55,7 @@ const columns = [
           record?.handleProductEdit(record?.id, record?.name);
         }}
       >
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
         {name !== 'Total' && <FaEdit className="primary-text" />}
@@ -67,11 +67,9 @@ const columns = [
     dataIndex: 'sku',
     key: 'sku',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -81,7 +79,7 @@ const columns = [
     align: 'center',
     width: 60,
     render: (stock) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {stock ?? 0}
       </span>
     ),
@@ -93,7 +91,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -106,7 +104,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -160,7 +158,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),
@@ -537,6 +535,8 @@ export const CustomPosProductsComponent = forwardRef(
     const currency = useSelector(useCurrency);
     const [additionalForm] = Form.useForm();
 
+    // console.log(warehouseId)
+
     const [formValues, setFormValues] = useState({
       product_list: {
         qty: {},
@@ -632,6 +632,10 @@ export const CustomPosProductsComponent = forwardRef(
     const form = Form.useFormInstance();
     const warehouseId = Form.useWatch('warehouse_id', form);
 
+    useEffect(() => {
+      resetFields();
+    }, [warehouseId]);
+
     const [productEditModal, setProductEditModal] = useState(false);
     const [productId, setProductId] = useState(undefined);
     const [productName, setProductName] = useState(null);
@@ -651,12 +655,23 @@ export const CustomPosProductsComponent = forwardRef(
         id,
         name,
         sku,
-        selling_price: unit_cost,
+        // selling_price: unit_cost,
+        product_prices,
         sale_units,
         taxes,
         tax_method,
         product_qties,
       } = product ?? {};
+
+      function getWarehousePrice(product_prices, warehouse_id) {
+        const warehouse = product_prices?.find(
+          (item) => item?.warehouse_id?.toString() === warehouse_id?.toString()
+        );
+
+        return warehouse ? warehouse?.price : product?.selling_price;
+      }
+
+      const unit_cost = getWarehousePrice(product_prices, warehouseId);
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
 

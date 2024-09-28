@@ -181,6 +181,8 @@ export const InitialStockComponent = ({
 
   const { data } = useGetWarehousesQuery({});
 
+  console.log(products);
+
   const dataSource =
     products?.map((product) => {
       const { id, name, warehouse_id } = product;

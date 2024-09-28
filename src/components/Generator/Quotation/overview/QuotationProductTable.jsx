@@ -51,7 +51,7 @@ export const QuotationProductTable = ({
         (item) => item.warehouse_id.toString() === warehouse_id.toString()
       );
 
-      return warehouse ? warehouse.price : product.selling_price; // Returns the price or null if not found
+      return warehouse ? warehouse.price : product.selling_price;
     }
 
     const unit_cost =

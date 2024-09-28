@@ -192,7 +192,7 @@ export const CustomPurchaseReturnProductForm = ({
         taxes: product?.product_variants?.products.taxes,
         purchaseQty: product?.qty,
 
-        returned_qty: product?.product_variants?.returned_qty,
+        returned_qty: product?.returned_qty,
       }));
 
       setProducts(purchaseProducts);

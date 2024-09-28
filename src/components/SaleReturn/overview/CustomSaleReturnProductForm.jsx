@@ -13,7 +13,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-  const updatedReturnedQty = {};
   const updatedTaxId = {};
 
   const updatedOperator = {};
@@ -126,7 +125,7 @@ export const CustomSaleReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-      returned_qty: {},
+
       tax_id: {},
       max_return: {},
 
@@ -151,7 +150,7 @@ export const CustomSaleReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-        returned_qty: {},
+
         tax_id: {},
         max_return: {},
 
@@ -210,7 +209,7 @@ export const CustomSaleReturnProductForm = ({
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
 
-        returned_qty: product?.product_variants?.returned_qty,
+        returned_qty: product.returned_qty,
       }));
 
       setProducts(saleProducts);

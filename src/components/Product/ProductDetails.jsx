@@ -5,6 +5,7 @@ import { detailsLayout } from '../../layout/DescriptionLayout';
 import { tableProps } from '../../layout/TableLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useGetProductDetailsQuery } from '../../redux/services/product/productApi';
+import { useGetWarehousesQuery } from '../../redux/services/warehouse/warehouseApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
@@ -12,14 +13,23 @@ import CustomModal from '../Shared/Modal/CustomModal';
 
 const productQtyColumn = [
   {
+    title: 'Varient Name',
+    dataIndex: 'varient_name',
+    key: 'varient_name',
+    render: (name) => (
+      <span className="text-dark   text-xs md:text-sm">{name}</span>
+    ),
+  },
+  {
     //name
-    title: 'Name',
+    title: 'Warehouse Name',
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
       <span className="text-dark   text-xs md:text-sm">{name}</span>
     ),
   },
+
   {
     title: 'Quantity',
     dataIndex: 'qty',
@@ -33,8 +43,15 @@ const productQtyColumn = [
 
 const priceQtyColumn = [
   {
-    //name
-    title: 'Name',
+    title: 'Varient Name',
+    dataIndex: 'varient_name',
+    key: 'varient_name',
+    render: (name) => (
+      <span className="text-dark   text-xs md:text-sm">{name}</span>
+    ),
+  },
+  {
+    title: 'Warehouse Name',
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
@@ -45,7 +62,7 @@ const priceQtyColumn = [
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
-    align: 'right',
+    align: 'center',
     render: (price) => (
       <span className="text-dark   text-xs md:text-sm">{price}</span>
     ),
@@ -53,6 +70,8 @@ const priceQtyColumn = [
 ];
 
 export const ProductDetails = ({ id, ...props }) => {
+  const { data: warehouses } = useGetWarehousesQuery({});
+
   const { data, isFetching } = useGetProductDetailsQuery(
     {
       id,
@@ -93,19 +112,29 @@ export const ProductDetails = ({ id, ...props }) => {
     qty_list: data?.qty_list,
   });
 
+  const currency = useSelector(useCurrency);
+
   const qtyTitle = () => (
     <span className="-ml-2 text-base font-semibold text-black">
       Warehouse Inventory List
     </span>
   );
 
-  const qtyDataSource = data?.product_qties?.map((item) => {
-    return {
-      id: item?.warehouses?.id,
-      name: item?.warehouses?.name ?? 'Unknown Warehouse',
-      qty: item?.qty ?? 'Unknown Quantity',
-    };
-  });
+  const qtyDataSource = data?.variants?.flatMap((qtyItem) =>
+    qtyItem?.product_qties?.map((item) => {
+      const warehouseName = warehouses?.results?.warehouse?.find(
+        (warehouse) => warehouse?.id === item?.warehouse_id
+      )?.name;
+      const varientName = qtyItem?.name ?? 'Unknown Varient';
+
+      return {
+        id: item?.id,
+        varient_name: varientName,
+        name: warehouseName ?? 'Unknown Warehouse',
+        qty: item?.qty ?? 'Unknown Quantity',
+      };
+    })
+  );
 
   const featuresInfo = useDetailsLayout({
     has_featured: data?.has_featured,
@@ -146,15 +175,22 @@ export const ProductDetails = ({ id, ...props }) => {
     </span>
   );
 
-  const currency = useSelector(useCurrency);
+  const priceDataSource = data?.variants?.flatMap((priceItem) =>
+    priceItem?.product_prices?.map((item) => {
+      const warehouseName = warehouses?.results?.warehouse?.find(
+        (warehouse) => warehouse?.id === item?.warehouse_id
+      )?.name;
 
-  const priceDataSource = data?.product_prices?.map((item) => {
-    return {
-      id: item?.warehouses?.id,
-      name: item?.warehouses?.name ?? 'Unknown Warehouse',
-      price: showCurrency(item?.price, currency) ?? 'Unknown Quantity',
-    };
-  });
+      const varientName = priceItem?.name ?? 'Unknown Varient';
+
+      return {
+        id: item?.id,
+        varient_name: varientName,
+        name: warehouseName ?? 'Unknown Warehouse',
+        price: showCurrency(item?.price, currency) ?? 'Unknown Quantity',
+      };
+    })
+  );
 
   return (
     <CustomModal {...props}>

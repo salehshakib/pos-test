@@ -16,9 +16,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   // {
@@ -27,7 +25,7 @@ const columns = [
   //   key: 'departments',
   //   width: 300,
   //   render: (departments) => (
-  //     <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+  //     <span className="text-dark   text-xs font-medium md:text-sm">
   //       {departments?.mp((item) => item?.name)}
   //     </span>
   //   ),
@@ -37,7 +35,7 @@ const columns = [
     dataIndex: 'startDate',
     key: 'startDate',
     render: (startDate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {startDate}
       </span>
     ),
@@ -47,7 +45,7 @@ const columns = [
     dataIndex: 'endDate',
     key: 'endDate',
     render: (endDate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {endDate}
       </span>
     ),
@@ -58,7 +56,7 @@ const columns = [
     key: 'description',
     width: 300,
     render: (description) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {description ?? 'N/A'}
       </span>
     ),

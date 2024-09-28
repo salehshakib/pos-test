@@ -31,9 +31,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -41,11 +39,10 @@ const columns = [
     title: 'Sku',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -55,7 +52,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {quantity}
       </span>
     ),
@@ -66,7 +63,7 @@ const columns = [
     key: 'total',
     align: 'right',
     render: (total, record) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {showCurrency(total, record?.currency)}
       </span>
     ),

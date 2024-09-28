@@ -25,21 +25,17 @@ const expandColumns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
-    width: 130,
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -54,7 +50,7 @@ const expandColumns = [
         : false;
 
       return (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {isValid ? iemi : 'N/A'}
         </span>
       );
@@ -67,9 +63,7 @@ const expandColumns = [
     width: 100,
     align: 'center',
     render: (qty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {qty}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{qty}</span>
     ),
   },
   {
@@ -79,9 +73,7 @@ const expandColumns = [
     width: 130,
     align: 'right',
     render: (cost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {cost}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{cost}</span>
     ),
   },
   {
@@ -91,7 +83,7 @@ const expandColumns = [
     width: 130,
     align: 'right',
     render: (price) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {price}
       </span>
     ),

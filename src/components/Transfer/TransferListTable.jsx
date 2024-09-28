@@ -11,9 +11,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -22,9 +20,7 @@ const columns = [
     key: 'code',
     align: 'center',
     render: (code) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {code}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{code}</span>
     ),
   },
   {
@@ -33,7 +29,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {quantity}
       </span>
     ),
@@ -44,7 +40,7 @@ const columns = [
     key: 'batch_no',
     align: 'center',
     render: (batch_no) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {batch_no}
       </span>
     ),
@@ -55,7 +51,7 @@ const columns = [
     key: 'expireddate',
     align: 'center',
     render: (expireddate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {expireddate}
       </span>
     ),
@@ -66,7 +62,7 @@ const columns = [
     key: 'net_unit_code',
     align: 'center',
     render: (net_unit_code) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {net_unit_code}
       </span>
     ),
@@ -77,7 +73,7 @@ const columns = [
     key: 'discount',
     align: 'center',
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -88,9 +84,7 @@ const columns = [
     key: 'tax',
     align: 'center',
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -99,7 +93,7 @@ const columns = [
     key: 'sub_total',
     align: 'center',
     render: (sub_total) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {sub_total}
       </span>
     ),

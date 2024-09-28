@@ -21,12 +21,10 @@ const columns = [
     key: 'name',
     render: (name, record) => (
       <div className="flex cursor-pointer flex-col">
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="dark:text-white60 primary-text text-xs">
-          {record?.email}
-        </span>
+        <span className=" 60 primary-text text-xs">{record?.email}</span>
       </div>
     ),
   },
@@ -36,7 +34,7 @@ const columns = [
     key: 'referrence',
     align: 'center',
     render: (referrence) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {referrence}
       </span>
     ),
@@ -47,7 +45,7 @@ const columns = [
     key: 'leaveType',
     align: 'center',
     render: (leaveType) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {leaveType}
       </span>
     ),
@@ -58,7 +56,7 @@ const columns = [
     key: 'leaveDuration',
     align: 'center',
     render: (leaveDuration) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {leaveDuration}
       </span>
     ),
@@ -69,7 +67,7 @@ const columns = [
     key: 'leaveStartDate',
     align: 'center',
     render: (leaveStartDate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {leaveStartDate}
       </span>
     ),
@@ -80,7 +78,7 @@ const columns = [
     key: 'leaveEndDate',
     align: 'center',
     render: (leaveEndDate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {leaveEndDate}
       </span>
     ),
@@ -92,9 +90,7 @@ const columns = [
     key: 'days',
     align: 'center',
     render: (days) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {days}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{days}</span>
     ),
   },
 ];

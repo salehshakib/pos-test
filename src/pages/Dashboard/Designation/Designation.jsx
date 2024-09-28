@@ -13,9 +13,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
   {
@@ -23,9 +21,7 @@ const columns = [
     dataIndex: 'department',
     key: 'department',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
 ];

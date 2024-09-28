@@ -14,9 +14,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -27,7 +25,7 @@ const columns = [
     width: 200,
     render: (quantity, record) => {
       return quantity >= 0 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -48,7 +46,7 @@ const columns = [
     width: 200,
     render: (unitPrice, record) => {
       return unitPrice >= 0 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {unitPrice}
         </span>
       ) : (

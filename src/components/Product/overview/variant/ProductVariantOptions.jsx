@@ -59,9 +59,7 @@ const ProductVariantOption = ({
       key: 'name',
       editable: true,
       render: (name) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {name}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{name}</span>
       ),
     },
     {
@@ -69,10 +67,9 @@ const ProductVariantOption = ({
       dataIndex: 'sku',
       key: 'sku',
       editable: true,
+      width: 150,
       render: (sku) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {sku}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{sku}</span>
       ),
     },
     {
@@ -81,9 +78,7 @@ const ProductVariantOption = ({
       key: 'iemi',
       editable: true,
       render: (iemi) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
-          {iemi}
-        </span>
+        <span className="text-dark   text-xs md:text-sm">{iemi}</span>
       ),
     },
     {
@@ -92,7 +87,7 @@ const ProductVariantOption = ({
       key: 'price',
       editable: true,
       render: (price) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
+        <span className="text-dark   text-xs md:text-sm">
           {showCurrency(price, currency)}
         </span>
       ),
@@ -103,7 +98,7 @@ const ProductVariantOption = ({
       key: 'cost',
       editable: true,
       render: (cost) => (
-        <span className="text-dark dark:text-white87 text-xs md:text-sm">
+        <span className="text-dark   text-xs md:text-sm">
           {showCurrency(cost, currency)}
         </span>
       ),

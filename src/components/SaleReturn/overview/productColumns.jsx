@@ -20,25 +20,22 @@ export const columns = [
       //     record?.handleProductEdit(record?.id, record?.name);
       //   }}
       // >
-      //   <span className="text-xs font-medium md:text-sm text-dark dark:text-white87">
+      //   <span className="text-xs font-medium md:text-sm text-dark  ">
       //     {name}
       //   </span>
       //   {name !== "Total" && <FaEdit className="primary-text" />}
       // </div>
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -47,7 +44,7 @@ export const columns = [
     key: 'unitCost',
     align: 'center',
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost}
       </span>
     ),
@@ -61,7 +58,7 @@ export const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -98,7 +95,7 @@ export const columns = [
     key: 'discount',
     align: 'center',
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         ${discount}
       </span>
     ),
@@ -109,9 +106,7 @@ export const columns = [
     key: 'tax',
     align: 'center',
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -120,7 +115,7 @@ export const columns = [
     key: 'subTotal',
     align: 'center',
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         ${subTotal}
       </span>
     ),

@@ -13,9 +13,7 @@ const productReqTable = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -23,11 +21,10 @@ const productReqTable = [
     title: 'Sku',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -36,7 +33,7 @@ const productReqTable = [
     dataIndex: 'alertQty',
     key: 'alertQty',
     render: (alertQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {alertQty}
       </span>
     ),
@@ -46,7 +43,7 @@ const productReqTable = [
     dataIndex: 'reqQty',
     key: 'reqQty',
     render: (reqQty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reqQty}
       </span>
     ),

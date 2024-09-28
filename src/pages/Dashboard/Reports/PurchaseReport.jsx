@@ -17,7 +17,7 @@ const columns = [
     dataIndex: 'product',
     key: 'product',
     render: (product) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {product}
       </span>
     ),
@@ -27,9 +27,7 @@ const columns = [
     dataIndex: 'purchasedQty',
     key: 'purchasedQty',
     render: (qty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {qty}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{qty}</span>
     ),
   },
   {
@@ -37,7 +35,7 @@ const columns = [
     dataIndex: 'purchaseAmount',
     key: 'purchaseAmount',
     render: (amount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {amount}
       </span>
     ),
@@ -48,7 +46,7 @@ const columns = [
     key: 'warehouse',
     align: 'center',
     render: (warehouse) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouse}
       </span>
     ),
@@ -60,7 +58,7 @@ const columns = [
     key: 'purchasedAt',
     align: 'center',
     render: (purchasedAt) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {purchasedAt}
       </span>
     ),

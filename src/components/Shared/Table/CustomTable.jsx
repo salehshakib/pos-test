@@ -202,9 +202,7 @@ const CustomTable = ({
       align: 'center',
       width: 60,
       render: (id) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-          {id}
-        </span>
+        <span className="text-dark   text-xs font-medium md:text-sm">{id}</span>
       ),
     },
   ];
@@ -265,7 +263,7 @@ const CustomTable = ({
     align: 'center',
     width: '100px',
     render: (created_at) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {formatDate(created_at, format)}
       </span>
     ),

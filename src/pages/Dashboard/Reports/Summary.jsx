@@ -24,7 +24,7 @@ const columns = [
     key: 'totalPurchase',
     align: 'center',
     render: (totalPurchase) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {totalPurchase}
       </span>
     ),
@@ -35,7 +35,7 @@ const columns = [
     key: 'paidAmount',
     align: 'right',
     render: (paidAmount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {paidAmount}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     align: 'right',
     key: 'shippingCost',
     render: (shippingCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {shippingCost}
       </span>
     ),
@@ -58,9 +58,7 @@ const columns = [
     align: 'right',
     key: 'tax',
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -69,7 +67,7 @@ const columns = [
     align: 'right',
     key: 'discount',
     render: (discount) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {discount}
       </span>
     ),
@@ -80,7 +78,7 @@ const columns = [
     align: 'right',
     key: 'grandTotal',
     render: (grandTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),
@@ -150,7 +148,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
       key: 'totalPurchase',
       align: 'center',
       render: (totalPurchase) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {totalPurchase}
         </span>
       ),
@@ -161,7 +159,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
       align: 'right',
       key: 'tax',
       render: (tax) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {tax}
         </span>
       ),
@@ -173,7 +171,7 @@ const PurchaseReturnSummaryTable = ({ data }) => {
       align: 'right',
       key: 'grandTotal',
       render: (grandTotal) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {grandTotal}
         </span>
       ),
@@ -211,7 +209,7 @@ const SaleReturnSummaryTable = ({ data }) => {
       key: 'totalPurchase',
       align: 'center',
       render: (totalPurchase) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {totalPurchase}
         </span>
       ),
@@ -222,7 +220,7 @@ const SaleReturnSummaryTable = ({ data }) => {
       align: 'right',
       key: 'tax',
       render: (tax) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {tax}
         </span>
       ),
@@ -234,7 +232,7 @@ const SaleReturnSummaryTable = ({ data }) => {
       align: 'right',
       key: 'grandTotal',
       render: (grandTotal) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {grandTotal}
         </span>
       ),
@@ -272,7 +270,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'payment_recieved_number',
       align: 'center',
       render: (payment_recieved_number) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {payment_recieved_number}
         </span>
       ),
@@ -283,7 +281,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'card',
       align: 'center',
       render: (card) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {card}
         </span>
       ),
@@ -294,7 +292,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'cheque',
       align: 'center',
       render: (cheque) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {cheque}
         </span>
       ),
@@ -305,7 +303,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'giftCard',
       align: 'center',
       render: (giftCard) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {giftCard}
         </span>
       ),
@@ -316,7 +314,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'cash',
       align: 'center',
       render: (cash) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {cash}
         </span>
       ),
@@ -327,7 +325,7 @@ const PaymentReceivedSummaryTable = ({ data }) => {
       key: 'payment_recieved',
       align: 'right',
       render: (payment_recieved) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {payment_recieved}
         </span>
       ),
@@ -368,7 +366,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       key: 'payment_sent_number',
       align: 'center',
       render: (payment_sent_number) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {payment_sent_number}
         </span>
       ),
@@ -379,7 +377,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       key: 'card',
       align: 'center',
       render: (card) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {card}
         </span>
       ),
@@ -390,7 +388,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       key: 'cheque',
       align: 'center',
       render: (cheque) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {cheque}
         </span>
       ),
@@ -401,7 +399,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       key: 'cash',
       align: 'center',
       render: (cash) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {cash}
         </span>
       ),
@@ -412,7 +410,7 @@ const PaymentSentSummaryTable = ({ data }) => {
       key: 'payment_sent',
       align: 'right',
       render: (payment_sent) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {payment_sent}
         </span>
       ),
@@ -452,7 +450,7 @@ const ExpenseSummaryTable = ({ data }) => {
       key: 'expense',
       align: 'center',
       render: (expense) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {expense}
         </span>
       ),
@@ -464,7 +462,7 @@ const ExpenseSummaryTable = ({ data }) => {
       align: 'right',
       key: 'totalExpenses',
       render: (totalExpenses) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {totalExpenses}
         </span>
       ),
@@ -501,7 +499,7 @@ const PayrollSummaryTable = ({ data }) => {
       key: 'payroll',
       align: 'center',
       render: (payroll) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {payroll}
         </span>
       ),
@@ -513,7 +511,7 @@ const PayrollSummaryTable = ({ data }) => {
       align: 'right',
       key: 'totalPayroll',
       render: (totalPayroll) => (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {totalPayroll}
         </span>
       ),

@@ -14,9 +14,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -26,7 +24,7 @@ const columns = [
     key: 'value',
     align: 'center',
     render: (value) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {value}
       </span>
     ),
@@ -38,7 +36,7 @@ const columns = [
     key: 'discount_plan',
     align: 'center',
     render: (discountPlan) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {discountPlan}
       </span>
     ),
@@ -50,7 +48,7 @@ const columns = [
     key: 'validity',
     align: 'center',
     render: (validity) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {validity}
       </span>
     ),
@@ -62,9 +60,7 @@ const columns = [
     key: 'days',
     align: 'center',
     render: (days) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {days}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{days}</span>
     ),
   },
   {
@@ -74,7 +70,7 @@ const columns = [
     key: 'products',
     align: 'center',
     render: (products) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {products}
       </span>
     ),

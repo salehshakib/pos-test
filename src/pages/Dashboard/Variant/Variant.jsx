@@ -13,7 +13,7 @@ const columns = [
     dataIndex: 'variant',
     key: 'variant',
     render: (variant) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {variant}
       </span>
     ),
@@ -23,7 +23,7 @@ const columns = [
     dataIndex: 'variantOptions',
     key: 'variantOptions',
     render: (variantOptions) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {variantOptions}
       </span>
     ),

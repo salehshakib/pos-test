@@ -50,9 +50,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -60,11 +58,9 @@ const columns = [
     dataIndex: 'sku',
     key: 'sku',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -74,7 +70,7 @@ const columns = [
     align: 'right',
     width: 100,
     render: (unitCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
       </span>
     ),
@@ -86,7 +82,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (stock) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {stock ?? 0}
       </span>
     ),
@@ -99,7 +95,7 @@ const columns = [
     width: 100,
     render: (requestedStock, record) => (
       <span
-        className={`text-dark dark:text-white87 text-xs font-medium md:text-sm ${record?.stock < record?.requestedStock ? 'text-red-500' : ''}`}
+        className={`text-dark   text-xs font-medium md:text-sm ${record?.stock < record?.requestedStock ? 'text-red-500' : ''}`}
       >
         {requestedStock ?? 0}
       </span>
@@ -112,9 +108,7 @@ const columns = [
     align: 'right',
     width: 100,
     render: (tax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {tax}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{tax}</span>
     ),
   },
   {
@@ -124,7 +118,7 @@ const columns = [
     align: 'right',
     width: 150,
     render: (subTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {subTotal}
       </span>
     ),

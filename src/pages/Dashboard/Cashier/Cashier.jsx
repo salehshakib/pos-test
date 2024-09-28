@@ -15,10 +15,10 @@ const columns = [
     fixed: 'left',
     render: ({ name, email }) => (
       <div className="flex cursor-pointer flex-col">
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="dark:text-white60 primary-text text-xs">{email}</span>
+        <span className=" 60 primary-text text-xs">{email}</span>
       </div>
     ),
   },
@@ -27,7 +27,7 @@ const columns = [
     dataIndex: 'companyName',
     key: 'companyName',
     render: (companyName) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {companyName}
       </span>
     ),
@@ -37,7 +37,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     render: (phone) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {'+880 ' + phone}
       </span>
     ),
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'vatNumber',
     key: 'vatNumber',
     render: (vatNumber) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {vatNumber ?? 'N/A'}
       </span>
     ),

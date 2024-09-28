@@ -75,6 +75,18 @@ const columns = [
     ),
   },
   {
+    title: 'Returned Qty',
+    dataIndex: 'returned_qty',
+    key: 'returned_qty',
+    align: 'center',
+    width: 150,
+    render: (returned_qty) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {returned_qty ?? 0}
+      </span>
+    ),
+  },
+  {
     title: 'Quantity',
     dataIndex: 'quantity',
     key: 'quantity',
@@ -171,7 +183,8 @@ export const ReturnProductTable = ({
 
       const newQty = Math.min(
         Number(currentQty) + 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
 
       return {
@@ -192,9 +205,9 @@ export const ReturnProductTable = ({
       const currentQty = prevFormValues.product_list.qty[id] || 1;
       const newQty = Math.min(
         Number(currentQty) - 1,
-        parseInt(formValues?.product_list?.max_return?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id]) -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
       );
-
       return {
         ...prevFormValues,
         product_list: {
@@ -211,7 +224,10 @@ export const ReturnProductTable = ({
   const onQuantityChange = (id, value) => {
     const qty = Math.min(
       parseInt(value),
-      parseInt(formValues?.product_list?.max_return?.[id])
+      parseInt(
+        formValues?.product_list?.max_return?.[id] -
+          parseInt(formValues?.product_list?.returned_qty?.[id])
+      )
     );
 
     setFormValues((prevFormValues) => ({
@@ -238,6 +254,7 @@ export const ReturnProductTable = ({
       taxes,
       tax_method,
       soldQty,
+      returned_qty,
     } = product ?? {};
 
     const price = calculateUnitCost(
@@ -265,6 +282,7 @@ export const ReturnProductTable = ({
       ),
       soldQty,
       delete: true,
+      returned_qty,
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),

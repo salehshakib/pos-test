@@ -25,6 +25,10 @@ const options = [
     value: 'Send',
     label: 'Send',
   },
+  {
+    value: 'Transfared',
+    label: 'Transfared',
+  },
 ];
 
 const FileStatusComponent = () => {
@@ -36,8 +40,8 @@ const FileStatusComponent = () => {
 
   return (
     <CustomSelect
-      label="File Status"
-      placeholder={'File Status'}
+      label="Status"
+      placeholder={'Status'}
       options={options}
       name={'status'}
     />

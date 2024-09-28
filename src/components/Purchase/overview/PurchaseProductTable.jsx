@@ -332,8 +332,6 @@ export const PurchaseProductTable = ({
       product_qties,
     } = product ?? {};
 
-    console.log(product);
-
     const stock = getWarehouseQuantity(product_qties, warehouseId);
 
     const price = calculateUnitCost(

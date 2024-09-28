@@ -122,8 +122,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    console.log(stock);
-
     if (!stock && ignorePaths.includes(pathname)) {
       openNotification('warning', 'Product is out of stock');
       setValue(null);

@@ -74,6 +74,18 @@ const columns = [
       </span>
     ),
   },
+  {
+    title: 'Returned Qty',
+    dataIndex: 'returned_qty',
+    key: 'returned_qty',
+    align: 'center',
+    width: 100,
+    render: (returned_qty) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {returned_qty ?? 0}
+      </span>
+    ),
+  },
 
   {
     title: 'Quantity',
@@ -241,6 +253,7 @@ export const ReturnProductTable = ({
       taxes,
       tax_method,
       purchaseQty,
+      returned_qty,
     } = product ?? {};
 
     const price = calculateUnitCost(
@@ -267,6 +280,7 @@ export const ReturnProductTable = ({
         currency
       ),
       purchaseQty,
+      returned_qty,
       delete: true,
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),

@@ -14,9 +14,7 @@ const columns = [
     align: 'center',
     width: 150,
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -26,7 +24,7 @@ const columns = [
     align: 'center',
     render: (qty, record) => {
       return qty >= 0 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {qty}
         </span>
       ) : (

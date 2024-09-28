@@ -14,9 +14,7 @@ const columns = [
     key: 'name',
     align: 'center',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
 
@@ -26,9 +24,7 @@ const columns = [
     key: 'code',
     align: 'center',
     render: (code) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {code}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{code}</span>
     ),
   },
   {
@@ -37,7 +33,7 @@ const columns = [
     key: 'exchangeRate',
     align: 'center',
     render: (exchangeRate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {exchangeRate}
       </span>
     ),

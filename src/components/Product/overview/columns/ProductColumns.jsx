@@ -20,7 +20,7 @@ export const columns = [
           record?.handleProductEdit(record?.id, record?.name);
         }}
       >
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
         {name !== 'Total' && <FaEdit className="primary-text" />}
@@ -31,11 +31,10 @@ export const columns = [
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -46,7 +45,7 @@ export const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -85,7 +84,7 @@ export const columns = [
     width: 200,
     render: (unitPrice, record) => {
       return unitPrice >= 0 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {unitPrice}
         </span>
       ) : (

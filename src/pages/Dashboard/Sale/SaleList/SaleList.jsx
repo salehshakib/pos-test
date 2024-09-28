@@ -25,9 +25,7 @@ const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {date}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{date}</span>
     ),
   },
   {
@@ -36,7 +34,7 @@ const columns = [
     key: 'reference',
     align: 'center',
     render: (reference) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -46,7 +44,7 @@ const columns = [
     dataIndex: 'customer',
     key: 'customer',
     render: (customer) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {customer ?? 'N/A'}
       </span>
     ),
@@ -56,7 +54,7 @@ const columns = [
     dataIndex: 'cashier',
     key: 'cashier',
     render: (biller) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {biller}
       </span>
     ),
@@ -67,7 +65,7 @@ const columns = [
     key: 'saleStatus',
     align: 'center',
     render: (saleStatus) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {saleStatus ?? 'N/A'}
       </span>
     ),
@@ -78,7 +76,7 @@ const columns = [
     key: 'paymentStatus',
     align: 'center',
     render: (paymentStatus) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {paymentStatus ?? 'N/A'}
       </span>
     ),
@@ -89,7 +87,7 @@ const columns = [
     align: 'right',
     key: 'grandTotal',
     render: (grandTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),
@@ -100,9 +98,7 @@ const columns = [
     align: 'right',
     key: 'paid',
     render: (paid) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {paid}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{paid}</span>
     ),
   },
   {
@@ -111,9 +107,7 @@ const columns = [
     align: 'right',
     key: 'due',
     render: (due) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {due}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{due}</span>
     ),
   },
 ];

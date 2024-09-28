@@ -61,9 +61,7 @@ const columns = [
     fixed: 'left',
     width: 250,
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -73,7 +71,7 @@ const columns = [
     key: 'action',
     align: 'left',
     render: (role, record) => (
-      <span className="text-dark dark:text-white87 grid grid-cols-2 text-xs font-medium md:grid-cols-3 md:text-sm lg:grid-cols-6">
+      <span className="text-dark   grid grid-cols-2 text-xs font-medium md:grid-cols-3 md:text-sm lg:grid-cols-6">
         {role?.map((action, index) => {
           const label = action?.name?.split('.')[1];
           const isLongLabel = label && label.length > 15;

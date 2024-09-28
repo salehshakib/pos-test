@@ -17,7 +17,7 @@ const columns = [
     key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
       </div>
@@ -30,9 +30,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -43,7 +41,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (
@@ -89,7 +87,7 @@ const columns = [
     width: 200,
     render: (unitPrice, record) => {
       return unitPrice > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {unitPrice}
         </span>
       ) : (
@@ -110,9 +108,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (unit) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {unit}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{unit}</span>
     ),
   },
   {

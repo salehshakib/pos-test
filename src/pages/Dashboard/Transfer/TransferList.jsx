@@ -17,9 +17,7 @@ const columns = [
     key: 'date',
     align: 'center',
     render: (date) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {date}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{date}</span>
     ),
   },
   {
@@ -28,7 +26,7 @@ const columns = [
     key: 'reference',
     align: 'center',
     render: (reference) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -38,7 +36,7 @@ const columns = [
     dataIndex: 'warehouse_from',
     key: 'warehouse_from',
     render: (warehouseFrom) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouseFrom ?? 'N/A'}
       </span>
     ),
@@ -48,7 +46,7 @@ const columns = [
     dataIndex: 'warehouse_to',
     key: 'warehouse_to',
     render: (warehouseTo) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouseTo ?? 'N/A'}
       </span>
     ),
@@ -58,9 +56,7 @@ const columns = [
     dataIndex: 'qty',
     key: 'qty',
     render: (qty) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {qty}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{qty}</span>
     ),
   },
   {
@@ -68,7 +64,7 @@ const columns = [
     dataIndex: 'product_cost',
     key: 'product_cost',
     render: (productCost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {productCost}
       </span>
     ),
@@ -78,7 +74,7 @@ const columns = [
     dataIndex: 'product_tax',
     key: 'product_tax',
     render: (productTax) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {productTax}
       </span>
     ),
@@ -88,7 +84,7 @@ const columns = [
     dataIndex: 'grand_total',
     key: 'grand_total',
     render: (grandTotal) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {grandTotal}
       </span>
     ),

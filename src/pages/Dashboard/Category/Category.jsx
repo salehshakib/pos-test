@@ -34,7 +34,7 @@ const columns = [
     dataIndex: 'category',
     key: 'category',
     render: (category) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {category}
       </span>
     ),
@@ -44,7 +44,7 @@ const columns = [
     dataIndex: 'parentCategory',
     key: 'parentCategory',
     render: (parentCategory) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {parentCategory}
       </span>
     ),

@@ -15,7 +15,7 @@ const columns = [
     width: 120,
     render: (warehouse) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {warehouse}
         </span>
       </div>
@@ -27,7 +27,7 @@ const columns = [
     key: 'name',
     render: (name) => (
       <div className={`flex items-center gap-2`}>
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
       </div>
@@ -41,7 +41,7 @@ const columns = [
     width: 180,
     render: (quantity, record) => {
       return quantity > -1 ? (
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {quantity}
         </span>
       ) : (

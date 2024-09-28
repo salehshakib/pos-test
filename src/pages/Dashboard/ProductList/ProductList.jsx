@@ -44,20 +44,17 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -66,9 +63,7 @@ const columns = [
     key: 'type',
     align: 'center',
     render: (type) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {type}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{type}</span>
     ),
   },
   {
@@ -76,7 +71,7 @@ const columns = [
     dataIndex: 'brand',
     key: 'brand',
     render: (brand) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {brand ?? 'N/A'}
       </span>
     ),
@@ -86,7 +81,7 @@ const columns = [
     dataIndex: 'category',
     key: 'category',
     render: (category) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {category ?? 'N/A'}
       </span>
     ),
@@ -97,7 +92,7 @@ const columns = [
     key: 'quantity',
     align: 'center',
     render: (quantity) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {quantity ?? 0}
       </span>
     ),
@@ -109,9 +104,7 @@ const columns = [
     key: 'cost',
     align: 'right',
     render: (cost) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {cost}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{cost}</span>
     ),
   },
   {
@@ -120,7 +113,7 @@ const columns = [
     key: 'price',
     align: 'right',
     render: (price) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {price}
       </span>
     ),
@@ -132,7 +125,7 @@ const columns = [
     align: 'center',
     width: 100,
     render: (hasVariant) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {hasVariant}
       </span>
     ),

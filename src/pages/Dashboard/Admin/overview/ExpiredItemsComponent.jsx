@@ -15,9 +15,7 @@ const columns = [
     key: 'slNo',
     align: 'center',
     render: (slNo) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {slNo}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{slNo}</span>
     ),
   },
   {
@@ -26,9 +24,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
   {
@@ -36,11 +32,10 @@ const columns = [
     title: 'SKU',
     dataIndex: 'sku',
     key: 'sku',
+    width: 150,
     align: 'center',
     render: (sku) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {sku}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{sku}</span>
     ),
   },
   {
@@ -50,7 +45,7 @@ const columns = [
     key: 'expireDate',
     align: 'center',
     render: (expireDate) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {expireDate}
       </span>
     ),

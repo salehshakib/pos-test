@@ -17,9 +17,7 @@ const productQtyColumn = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs md:text-sm">{name}</span>
     ),
   },
   {
@@ -28,9 +26,7 @@ const productQtyColumn = [
     key: 'qty',
     align: 'center',
     render: (qty) => (
-      <span className="text-dark dark:text-white87 text-xs md:text-sm">
-        {qty}
-      </span>
+      <span className="text-dark   text-xs md:text-sm">{qty}</span>
     ),
   },
 ];
@@ -42,9 +38,7 @@ const priceQtyColumn = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs md:text-sm">{name}</span>
     ),
   },
   {
@@ -53,9 +47,7 @@ const priceQtyColumn = [
     key: 'price',
     align: 'right',
     render: (price) => (
-      <span className="text-dark dark:text-white87 text-xs md:text-sm">
-        {price}
-      </span>
+      <span className="text-dark   text-xs md:text-sm">{price}</span>
     ),
   },
 ];

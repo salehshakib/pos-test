@@ -13,9 +13,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (name) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {name}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
   },
 
@@ -26,7 +24,7 @@ const columns = [
     align: 'center',
 
     render: (attachmentable) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {attachmentable.toString() === '1' ? 'Needed' : "Don't Needed"}
       </span>
     ),

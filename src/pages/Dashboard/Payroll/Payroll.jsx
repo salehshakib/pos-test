@@ -21,12 +21,10 @@ const columns = [
     key: 'name',
     render: (name, record) => (
       <div className="flex cursor-pointer flex-col">
-        <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+        <span className="text-dark   text-xs font-medium md:text-sm">
           {name}
         </span>
-        <span className="dark:text-white60 primary-text text-xs">
-          {record?.email}
-        </span>
+        <span className=" 60 primary-text text-xs">{record?.email}</span>
       </div>
     ),
   },
@@ -36,9 +34,7 @@ const columns = [
     dataIndex: 'department',
     key: 'department',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
   {
@@ -46,9 +42,7 @@ const columns = [
     dataIndex: 'paymentType',
     key: 'paymentType',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
   {
@@ -57,9 +51,7 @@ const columns = [
     key: 'salary',
     align: 'right',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
   {
@@ -69,9 +61,7 @@ const columns = [
     align: 'right',
 
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
   {
@@ -80,9 +70,7 @@ const columns = [
     key: 'loan',
     align: 'right',
     render: (text) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {text}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{text}</span>
     ),
   },
 ];

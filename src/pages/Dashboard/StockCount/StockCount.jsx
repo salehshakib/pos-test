@@ -14,7 +14,7 @@ const columns = [
     key: 'reference',
     align: 'center',
     render: (reference) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {reference}
       </span>
     ),
@@ -24,7 +24,7 @@ const columns = [
     dataIndex: 'warehouse',
     key: 'warehouse',
     render: (warehouse) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {warehouse ?? 'N/A'}
       </span>
     ),
@@ -34,7 +34,7 @@ const columns = [
     dataIndex: 'category',
     key: 'category',
     render: (category) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {category ?? 'N/A'}
       </span>
     ),
@@ -44,7 +44,7 @@ const columns = [
     dataIndex: 'brand',
     key: 'brand',
     render: (brand) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
+      <span className="text-dark   text-xs font-medium md:text-sm">
         {brand ?? 'N/A'}
       </span>
     ),
@@ -55,9 +55,7 @@ const columns = [
     key: 'type',
     align: 'center',
     render: (type) => (
-      <span className="text-dark dark:text-white87 text-xs font-medium md:text-sm">
-        {type}
-      </span>
+      <span className="text-dark   text-xs font-medium md:text-sm">{type}</span>
     ),
   },
 ];

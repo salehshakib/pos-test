@@ -13,8 +13,8 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedTaxRate = {};
   const updatedTax = {};
   const updatedTotal = {};
-  const updatedReturnedQty = {};
   const updatedTaxId = {};
+  const updatedReturnedQty = {};
 
   const updatedOperator = {};
   const updatedOperationValue = {};
@@ -30,6 +30,9 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
 
+    updatedReturnedQty[productId] = item?.returned_qty;
+
+    // Optional chaining for safe access
     updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
 
     updatedOperator[productId] =
@@ -121,7 +124,7 @@ export const CustomSaleReturnProductForm = ({
       tax_rate: {},
       tax: {},
       total: {},
-      returned_qty: {},
+
       tax_id: {},
       max_return: {},
     },
@@ -144,7 +147,7 @@ export const CustomSaleReturnProductForm = ({
         tax_rate: {},
         tax: {},
         total: {},
-        returned_qty: {},
+
         tax_id: {},
         max_return: {},
       },
@@ -198,6 +201,8 @@ export const CustomSaleReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         soldQty: product?.qty,
+
+        returned_qty: product.returned_qty,
       }));
 
       setProducts(saleProducts);

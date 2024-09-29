@@ -116,7 +116,7 @@ const TransferTable = ({
   const handleStatus = async (values) => {
     const statusData = {
       action_id: statusId,
-      transfer_status: values.status,
+      status: values.status,
       for: 'Transfer',
     };
 

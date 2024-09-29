@@ -85,11 +85,11 @@ const transferApi = baseApi.injectEndpoints({
     }),
 
     updateTransferStatus: build.mutation({
-      query: ({ statusData }) => {
+      query: (payload) => {
         return {
           url: `/${WAREHOUSE}/response`,
           method: 'POST',
-          body: statusData,
+          body: payload,
         };
       },
       transformResponse: (response) => {

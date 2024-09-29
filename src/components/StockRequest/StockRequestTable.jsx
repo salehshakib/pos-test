@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
   useGetAllStockRequestQuery,
-  useResponseStockRequestMutation,
+  useUpdateStockRequestStatusMutation,
 } from '../../redux/services/stockRequest/stockRequestApi';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
@@ -48,6 +48,8 @@ const StockRequestTable = ({
         id,
         reference_id,
         created_at,
+        status,
+        transfer_status,
         from_warehouses,
         to_warehouses,
         stock_request_products,
@@ -60,6 +62,8 @@ const StockRequestTable = ({
       return {
         id,
         reference: reference_id,
+        status,
+        transfer_status,
         fromWarehouse: from_warehouses?.name,
         toWarehouse: to_warehouses?.name,
         created_at,
@@ -82,19 +86,25 @@ const StockRequestTable = ({
     }
   };
 
-  const [responseStockRequest] = useResponseStockRequestMutation();
+  const [updateStockRequestStatus] = useUpdateStockRequestStatusMutation();
 
   const [acceptLoading, setAcceptLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
+  const [transferLoading, setTransferLoading] = useState(false);
   const [acceptAndTransferLoading, setAcceptAndTransferLoading] =
     useState(false);
 
   const handleAccept = async () => {
     setAcceptLoading(true);
-    const { data } = await responseStockRequest({
-      request_id: detailsId,
+
+    const statusData = {
+      action_id: detailsId,
       status: 'Accepted',
-    });
+      transfer_status: 'Pending',
+      for: 'StockRequest',
+    };
+
+    const { data } = await updateStockRequestStatus(statusData);
 
     if (data?.success) {
       hideModal();
@@ -106,10 +116,14 @@ const StockRequestTable = ({
   const handleAcceptAndTransfer = async () => {
     setAcceptAndTransferLoading(true);
 
-    const { data } = await responseStockRequest({
-      request_id: detailsId,
+    const statusData = {
+      action_id: detailsId,
       status: 'Accepted',
-    });
+      transfer_status: 'Transferred',
+      for: 'StockRequest',
+    };
+
+    const { data } = await updateStockRequestStatus(statusData);
 
     setAcceptAndTransferLoading(false);
 
@@ -125,19 +139,38 @@ const StockRequestTable = ({
   };
 
   const handleTransfer = async () => {
-    navigate('/inventory/transfer', {
-      state: {
-        id: detailsId,
-      },
-    });
+    setTransferLoading(true);
+    const statusData = {
+      action_id: detailsId,
+      status: 'Accepted',
+      transfer_status: 'Transferred',
+      for: 'StockRequest',
+    };
+
+    const { data } = await updateStockRequestStatus(statusData);
+
+    setTransferLoading(false);
+    if (data?.success) {
+      hideModal();
+      navigate('/inventory/transfer', {
+        state: {
+          id: detailsId,
+        },
+      });
+    }
   };
 
   const handleReject = async () => {
     setRejectLoading(true);
-    const { data } = await responseStockRequest({
-      request_id: detailsId,
+
+    const statusData = {
+      action_id: detailsId,
       status: 'Rejected',
-    });
+      transfer_status: 'Pending',
+      for: 'StockRequest',
+    };
+
+    const { data } = await updateStockRequestStatus(statusData);
 
     if (data?.success) {
       hideModal();
@@ -185,6 +218,7 @@ const StockRequestTable = ({
           acceptLoading={acceptLoading}
           rejectLoading={rejectLoading}
           acceptAndTransferLoading={acceptAndTransferLoading}
+          transferLoading={transferLoading}
         />
       )}
     </GlobalUtilityStyle>

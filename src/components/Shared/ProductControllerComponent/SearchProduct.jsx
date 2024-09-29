@@ -65,7 +65,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
   if (isIgnore) {
     baseParams.parent = 1;
     baseParams.child = 1;
-    baseParams.need_qty = 1;
+    // baseParams.need_qty = 1;
     // baseParams.need_price = 1;
   }
 

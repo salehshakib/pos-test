@@ -44,62 +44,70 @@ const columns = [
     title: 'Transfer Status',
     dataIndex: 'transfer_status',
     key: 'transfer_status',
-    width: '150px',
+    width: 125,
     align: 'center',
     render: (status, record) => {
       return record?.handleStatusModal ? (
-        <button
-          className={`p-0 ${
-            status?.toString() === 'Pending'
-              ? 'bg-[#FEF2F2] text-[#EF4444]'
-              : 'bg-[#DCFCE7] text-[#16A34A]'
-          } w-[80px] rounded shadow-md`}
-        >
-          <span className="w-full px-2 text-xs font-medium text-center">
-            {status}
-          </span>
-        </button>
+        <div className="flex justify-center items-center w-full">
+          <button
+            className={`p-0 ${
+              status?.toString() === 'Pending'
+                ? 'bg-[#FEF2F2] text-[#EF4444]'
+                : 'bg-[#DCFCE7] text-[#16A34A]'
+            } w-[80px] rounded shadow-md`}
+          >
+            <span className="w-full px-2 text-xs font-medium text-center">
+              {status}
+            </span>
+          </button>
+        </div>
       ) : (
-        <div
-          className={`p-0 ${
-            status?.toString() === 'Pending'
-              ? 'bg-[#FEF2F2] text-[#EF4444]'
-              : 'bg-[#DCFCE7] text-[#16A34A]'
-          } w-[80px] rounded shadow-md`}
-        >
-          <span className="w-full px-2 text-xs font-medium text-center">
-            {status}
-          </span>
+        <div className="flex justify-center items-center w-full">
+          <div
+            className={`p-0 ${
+              status?.toString() === 'Pending'
+                ? 'bg-[#FEF2F2] text-[#EF4444]'
+                : 'bg-[#DCFCE7] text-[#16A34A]'
+            } w-[80px] rounded shadow-md`}
+          >
+            <span className="w-full px-2 text-xs font-medium text-center">
+              {status}
+            </span>
+          </div>
         </div>
       );
     },
   },
   {
-    title: 'Status',
+    title: 'Request Status',
     dataIndex: 'status',
     key: 'status',
-    width: '100px',
+    width: 120,
     align: 'center',
     render: (status, record) => {
       return record?.handleStatusModal ? (
-        <button
-          className={`p-0 ${
-            status?.toString() === 'Pending'
-              ? 'bg-[#FEF2F2] text-[#EF4444]'
-              : 'bg-[#DCFCE7] text-[#16A34A]'
-          } w-[80px] rounded shadow-md`}
-        >
-          <span className="w-full px-2 text-xs font-medium">{status}</span>
-        </button>
+        <div className="flex justify-center items-center w-full">
+          <button
+            className={`p-0 ${
+              status?.toString() === 'Pending'
+                ? 'bg-[#FEF2F2] text-[#EF4444]'
+                : 'bg-[#DCFCE7] text-[#16A34A]'
+            } w-[80px] rounded shadow-md`}
+          >
+            <span className="w-full px-2 text-xs font-medium">{status}</span>
+          </button>
+        </div>
       ) : (
-        <div
-          className={`p-0 ${
-            status?.toString() === 'Pending'
-              ? 'bg-[#FEF2F2] text-[#EF4444]'
-              : 'bg-[#DCFCE7] text-[#16A34A]'
-          } w-[80px] rounded shadow-md`}
-        >
-          <span className="w-full px-2 text-xs font-medium">{status}</span>
+        <div className="flex justify-center items-center w-full">
+          <div
+            className={`p-0 ${
+              status?.toString() === 'Pending'
+                ? 'bg-[#FEF2F2] text-[#EF4444]'
+                : 'bg-[#DCFCE7] text-[#16A34A]'
+            } w-[80px] rounded shadow-md`}
+          >
+            <span className="w-full px-2 text-xs font-medium">{status}</span>
+          </div>
         </div>
       );
     },

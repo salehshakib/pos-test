@@ -31,8 +31,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         'cashier_id',
         'customer_id',
         'reference_number',
-        'currency',
-        'exchange_rate',
       ]);
 
       const fieldNames = {

@@ -51,7 +51,6 @@ const PaymentType = () => {
 
 const PurchaseReturnDateComponent = () => {
   const form = Form.useFormInstance();
-
   useEffect(() => {
     form.setFieldValue('purchase_return_at', dayjs(new Date()));
   }, [form]);
@@ -147,7 +146,7 @@ export const PurchaseReturnForm = ({ data, ...props }) => {
               </Col>
 
               <Col {...colLayout}>
-                <PurchaseReturnDateComponent />
+                <PurchaseReturnDateComponent props={props.form} />
               </Col>
 
               <Col {...colLayout}>

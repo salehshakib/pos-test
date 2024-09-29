@@ -194,6 +194,9 @@ const ProductCreate = () => {
       );
 
       postObj.variant_list = JSON.stringify(variantListArray);
+      if (variantListArray.length === 0) {
+        postObj.has_variant = '0';
+      }
     }
 
     if (values.attach_file?.[0].originFileObj) {

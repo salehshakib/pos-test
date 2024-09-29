@@ -1,5 +1,5 @@
 import { Form, Input, Table, Typography } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FcCancel } from 'react-icons/fc';
 import { IoIosSave } from 'react-icons/io';
 import { useSelector } from 'react-redux';
@@ -13,8 +13,6 @@ const EditableCell = ({
   dataIndex,
   title,
   inputType,
-  record,
-  index,
   children,
   ...restProps
 }) => {
@@ -38,11 +36,7 @@ const EditableCell = ({
 };
 
 // Main component
-const ProductVariantOption = ({
-  combination,
-  onCustomSubmit,
-  data: editData,
-}) => {
+const ProductVariantOption = ({ combination, onCustomSubmit }) => {
   const [variantForm] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
@@ -51,7 +45,6 @@ const ProductVariantOption = ({
 
   const currency = useSelector(useCurrency);
 
-  // Define columns and memoize for performance
   const columns = [
     {
       title: 'Name',
@@ -138,7 +131,6 @@ const ProductVariantOption = ({
       },
     },
   ];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) return col;
@@ -157,10 +149,9 @@ const ProductVariantOption = ({
     };
   });
 
-  // Memoize variantDatasource for performance
-  const variantDatasource = useMemo(
-    () =>
-      combination.map((item, index) => {
+  useEffect(() => {
+    const variantDatasource =
+      combination?.map((item, index) => {
         return {
           key: item.name,
           name: item.name,
@@ -170,26 +161,15 @@ const ProductVariantOption = ({
           cost: data?.[index]?.cost ?? item?.cost,
           variant_options: item.variant_options,
         };
-      }),
-    [combination]
-  );
+      }) ?? [];
 
-  useEffect(() => {
-    if (variantDatasource.length) {
-      setData(variantDatasource);
+    setData(variantDatasource);
 
-      // Initialize selected rows and selected row data
-      const initialSelectedKeys = variantDatasource.map((item) => item.key);
-      setIsSelected(initialSelectedKeys);
-      setSelectedRowData(variantDatasource); // Set the selected rows data based on the initial selection
-    }
-  }, [variantDatasource]);
-
-  useEffect(() => {
-    if (variantDatasource.length) {
-      setData(variantDatasource);
-    }
-  }, [variantDatasource]);
+    const initialSelectedKeys = variantDatasource.map((item) => item.key);
+    setIsSelected(initialSelectedKeys);
+    setSelectedRowData(variantDatasource);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [combination]);
 
   // Editing handlers
   const edit = (record) => {

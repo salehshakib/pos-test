@@ -52,6 +52,8 @@ const PaymentType = () => {
 const PurchaseReturnDateComponent = () => {
   const form = Form.useFormInstance();
 
+  console.log(Form.useWatch('purchase_return_at', form));
+
   useEffect(() => {
     form.setFieldValue('purchase_return_at', dayjs(new Date()));
   }, [form]);

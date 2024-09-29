@@ -169,6 +169,8 @@ const ProductCreate = () => {
         return getVariantIdsByCombinedName(item.variant_options, item.name);
       });
 
+      console.log(variantData);
+
       const variantListArray = variantData?.selectedRowData.map(
         (item, index) => {
           return {

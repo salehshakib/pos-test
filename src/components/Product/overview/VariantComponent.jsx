@@ -276,16 +276,16 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   function formatVariantsData(variants) {
     const attributesMap = {};
 
-    variants.forEach((variant) => {
-      variant.product_variant_attribute_options.forEach((option) => {
+    variants?.forEach((variant) => {
+      variant?.product_variant_attribute_options?.forEach((option) => {
         const { attribute_id, attribute } = option.attribute_option;
 
-        if (!attributesMap[attribute_id]) {
+        if (!attributesMap?.[attribute_id]) {
           attributesMap[attribute_id] = {
             key: attribute_id.toString(),
             id: attribute_id.toString(),
             name: attribute.name,
-            options: attributes.find((item) => item.id === attribute_id)
+            options: attributes?.find((item) => item.id === attribute_id)
               .attribute_options,
           };
         }
@@ -343,11 +343,11 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     setDataSource(selected);
   };
 
-  console.log(dataSource);
+  console.log(editData);
 
   useEffect(() => {
     if (editData) {
-      const options = formatVariantsData(editData.variants);
+      const options = formatVariantsData(editData?.variants);
 
       console.log(options);
 

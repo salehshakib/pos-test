@@ -178,9 +178,10 @@ const ProductVariantOption = ({
     if (variantDatasource.length) {
       setData(variantDatasource);
 
-      // Initialize with selected keys
+      // Initialize selected rows and selected row data
       const initialSelectedKeys = variantDatasource.map((item) => item.key);
       setIsSelected(initialSelectedKeys);
+      setSelectedRowData(variantDatasource); // Set the selected rows data based on the initial selection
     }
   }, [variantDatasource]);
 

@@ -111,10 +111,7 @@ const ProductVariantOption = ({
       dataIndex: 'action',
       render: (_, record) => {
         const editable = isEditing(record);
-        const selected = isSelected.includes(record.key);
-        if (selected) {
-          return null;
-        } else {
+        {
           return editable ? (
             <span className="flex items-center gap-3">
               <IoIosSave
@@ -160,8 +157,6 @@ const ProductVariantOption = ({
     };
   });
 
-  console.log(editData?.variants);
-
   // Memoize variantDatasource for performance
   const variantDatasource = useMemo(
     () =>
@@ -178,6 +173,16 @@ const ProductVariantOption = ({
       }),
     [combination]
   );
+
+  useEffect(() => {
+    if (variantDatasource.length) {
+      setData(variantDatasource);
+
+      // Initialize with selected keys
+      const initialSelectedKeys = variantDatasource.map((item) => item.key);
+      setIsSelected(initialSelectedKeys);
+    }
+  }, [variantDatasource]);
 
   useEffect(() => {
     if (variantDatasource.length) {
@@ -223,6 +228,7 @@ const ProductVariantOption = ({
 
   // Row selection
   const rowSelection = {
+    selectedRowKeys: isSelected, // Pre-select the rows
     onChange: (selectedRowKeys, selectedRows) => {
       setIsSelected(selectedRowKeys);
       setSelectedRowData(selectedRows);

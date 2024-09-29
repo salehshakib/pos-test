@@ -143,8 +143,6 @@ export const CustomSaleProductComponent = forwardRef(
       if (data && isEditDrawerOpen) {
         updateStateWithProductData(data?.sale_products, setFormValues);
 
-        console.log(data?.sale_products);
-
         const saleProducts = data?.sale_products?.map((product) => ({
           id: product?.product_variants?.id,
           name: product?.product_variants?.products?.name,

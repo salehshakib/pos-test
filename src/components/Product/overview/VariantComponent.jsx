@@ -57,6 +57,8 @@ const generateCombinationsFromVariantAttributes = (
   const orderedAttributeIds = dataSource.map((item) => item.id);
   const orderedAttributesOptions = dataSource.map((item) => item.options);
 
+  console.log(dataSource);
+
   const combinations = [];
 
   const combine = (index, current) => {
@@ -92,6 +94,60 @@ const generateCombinationsFromVariantAttributes = (
   combine(0, []);
   return combinations;
 };
+
+function formatVariantsData(variants, attributes) {
+  const attributesMap = {};
+
+  variants?.forEach((variant) => {
+    variant?.product_variant_attribute_options?.forEach((option) => {
+      const { attribute_id, attribute } = option.attribute_option;
+
+      if (!attributesMap?.[attribute_id]) {
+        attributesMap[attribute_id] = {
+          key: attribute_id.toString(),
+          id: attribute_id.toString(),
+          name: attribute.name,
+          options: attributes?.find(
+            (item) => item.id.toString() === attribute_id.toString()
+          ).attribute_options,
+        };
+      }
+    });
+  });
+
+  return Object.values(attributesMap).reverse();
+}
+
+function extractAttributeValues(attributeData) {
+  const attributeValues = {};
+  const attributeIds = {};
+
+  attributeData.forEach((product) => {
+    product.product_variant_attribute_options.forEach((variant) => {
+      const attributeId = variant.attribute_option.attribute_id;
+      const attributeName = variant.attribute_option.name;
+      const optionId = variant.attribute_option.id.toString();
+      if (!attributeValues[attributeId]) {
+        attributeValues[attributeId] = [];
+      }
+      if (!attributeValues[attributeId].includes(attributeName)) {
+        attributeValues[attributeId].push(attributeName);
+      }
+
+      if (!attributeIds[attributeId]) {
+        attributeIds[attributeId] = new Set();
+      }
+      attributeIds[attributeId].add(optionId);
+    });
+  });
+
+  // Convert Sets back to arrays
+  for (const key in attributeIds) {
+    attributeIds[key] = Array.from(attributeIds[key]);
+  }
+
+  return { attributeValues, attributeIds };
+}
 
 const VariantAttributeTable = ({
   dataSource,
@@ -138,7 +194,6 @@ const VariantAttributeTable = ({
       key: 'options',
       align: 'center',
       render: (options, record) => {
-        console.log(options);
         const attribute_options = options?.map((item) => {
           return {
             value: item.id.toString(),
@@ -271,64 +326,6 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const [variantOptions, setVariantOptions] = useState({});
   const [variantAttributesName, setVariantAttributesName] = useState({});
 
-  const attributes = data?.results?.attribute;
-
-  function formatVariantsData(variants) {
-    const attributesMap = {};
-
-    variants.forEach((variant) => {
-      variant.product_variant_attribute_options.forEach((option) => {
-        const { attribute_id, attribute } = option.attribute_option;
-
-        if (!attributesMap[attribute_id]) {
-          attributesMap[attribute_id] = {
-            key: attribute_id.toString(),
-            id: attribute_id.toString(),
-            name: attribute.name,
-            options: attributes.find((item) => item.id === attribute_id)
-              .attribute_options,
-          };
-        }
-      });
-    });
-
-    return Object.values(attributesMap).reverse();
-  }
-
-  function extractAttributeValues(attributeData) {
-    const attributeValues = {};
-    const attributeIds = {};
-
-    attributeData.forEach((product) => {
-      product.product_variant_attribute_options.forEach((variant) => {
-        const attributeId = variant.attribute_option.attribute_id;
-        const attributeName = variant.attribute_option.name;
-        const optionId = variant.attribute_option.id.toString(); // Store as a string
-
-        // Collect attribute names
-        if (!attributeValues[attributeId]) {
-          attributeValues[attributeId] = [];
-        }
-        if (!attributeValues[attributeId].includes(attributeName)) {
-          attributeValues[attributeId].push(attributeName);
-        }
-
-        // Collect unique option IDs
-        if (!attributeIds[attributeId]) {
-          attributeIds[attributeId] = new Set(); // Use a Set to avoid duplicates
-        }
-        attributeIds[attributeId].add(optionId); // Add option ID to the Set
-      });
-    });
-
-    // Convert Sets back to arrays
-    for (const key in attributeIds) {
-      attributeIds[key] = Array.from(attributeIds[key]);
-    }
-
-    return { attributeValues, attributeIds };
-  }
-
   const onSelect = (value, option) => {
     const selected =
       option.map((item) => {
@@ -343,15 +340,11 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     setDataSource(selected);
   };
 
-  console.log(dataSource);
+  const attributes = data?.results?.attribute;
 
   useEffect(() => {
-    if (editData) {
-      const options = formatVariantsData(editData.variants);
-
-      console.log(options);
-
-      console.log(editData?.variants);
+    if (editData && attributes) {
+      const options = formatVariantsData(editData?.variants, attributes);
 
       const result = extractAttributeValues(editData?.variants);
 
@@ -360,12 +353,7 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
       setDataSource(options);
     }
-  }, [editData]);
-
-  // const form = Form.useFormInstance();
-  // const attributeIds = Form.useWatch('attribute_ids', form);
-
-  // console.log(attributeIds);
+  }, [editData, attributes]);
 
   const mainForm = Form.useFormInstance();
 
@@ -373,9 +361,6 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     'buying_price',
     'selling_price',
   ]);
-
-  console.log(dataSource);
-  console.log(variantAttributesName);
 
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,

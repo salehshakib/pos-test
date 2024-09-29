@@ -1,4 +1,5 @@
 import { Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
@@ -141,6 +142,7 @@ export const SaleReturnForm = ({ data, ...props }) => {
                   label="Return Date"
                   required={true}
                   name={'sale_return_at'}
+                  initialValue={dayjs(new Date())}
                 />
               </Col>
 

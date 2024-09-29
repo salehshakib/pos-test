@@ -1,5 +1,5 @@
 import { Form, Input, Table, Typography } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FcCancel } from 'react-icons/fc';
 import { IoIosSave } from 'react-icons/io';
 import { useSelector } from 'react-redux';
@@ -13,8 +13,6 @@ const EditableCell = ({
   dataIndex,
   title,
   inputType,
-  record,
-  index,
   children,
   ...restProps
 }) => {
@@ -37,6 +35,62 @@ const EditableCell = ({
   );
 };
 
+function formatProductData(data, productName) {
+  console.log(productName);
+
+  return (
+    data
+      // .filter((item) => item.name.includes(productName))
+      .map((item) => {
+        return {
+          key: item.name.split(productName)[1].trim(),
+          name: item.name.split(productName)[1].trim(),
+          sku: item.sku,
+          iemi: item.imei_number ?? '',
+          price: item.selling_price,
+          cost: item.buying_price,
+          variant_options: item.product_variant_attribute_options.reduce(
+            (acc, option) => {
+              const attribute = option.attribute_option.attribute;
+              const existingAttr = acc.find(
+                (attr) => attr.attribute_id === attribute.id
+              );
+
+              if (existingAttr) {
+                existingAttr.options.push({
+                  id: option.attribute_option.id,
+                  attribute_id: option.attribute_option.attribute_id,
+                  name: option.attribute_option.name,
+                  created_at: option.attribute_option.created_at,
+                  updated_at: option.attribute_option.updated_at,
+                  deleted_at: option.attribute_option.deleted_at,
+                });
+              } else {
+                acc.push({
+                  attribute_id: attribute.id,
+                  attribute_name: attribute.name,
+                  options: [
+                    {
+                      id: option.attribute_option.id,
+                      attribute_id: option.attribute_option.attribute_id,
+                      name: option.attribute_option.name,
+                      created_at: option.attribute_option.created_at,
+                      updated_at: option.attribute_option.updated_at,
+                      deleted_at: option.attribute_option.deleted_at,
+                    },
+                  ],
+                });
+              }
+
+              return acc;
+            },
+            []
+          ),
+        };
+      })
+  );
+}
+
 // Main component
 const ProductVariantOption = ({
   combination,
@@ -51,7 +105,6 @@ const ProductVariantOption = ({
 
   const currency = useSelector(useCurrency);
 
-  // Define columns and memoize for performance
   const columns = [
     {
       title: 'Name',
@@ -111,10 +164,7 @@ const ProductVariantOption = ({
       dataIndex: 'action',
       render: (_, record) => {
         const editable = isEditing(record);
-        const selected = isSelected.includes(record.key);
-        if (selected) {
-          return null;
-        } else {
+        {
           return editable ? (
             <span className="flex items-center gap-3">
               <IoIosSave
@@ -141,7 +191,6 @@ const ProductVariantOption = ({
       },
     },
   ];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) return col;
@@ -160,12 +209,10 @@ const ProductVariantOption = ({
     };
   });
 
-  console.log(editData?.variants);
-
-  // Memoize variantDatasource for performance
-  const variantDatasource = useMemo(
-    () =>
-      combination.map((item, index) => {
+  useEffect(() => {
+    const variantDatasource =
+      combination?.map((item, index) => {
+        console.log(item);
         return {
           key: item.name,
           name: item.name,
@@ -175,15 +222,64 @@ const ProductVariantOption = ({
           cost: data?.[index]?.cost ?? item?.cost,
           variant_options: item.variant_options,
         };
-      }),
-    [combination]
-  );
+      }) ?? [];
+
+    setData(variantDatasource);
+
+    const initialSelectedKeys = variantDatasource.map((item) => item.key);
+    setIsSelected(initialSelectedKeys);
+    setSelectedRowData(variantDatasource);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [combination]);
 
   useEffect(() => {
-    if (variantDatasource.length) {
-      setData(variantDatasource);
+    if (editData) {
+      // variant_options: [
+      //   [
+      //     {
+      //       id: 3,
+      //       attribute_id: 2,
+      //       name: 'ARO 3',
+      //       created_at: '2024-09-28T19:50:34.000000Z',
+      //       updated_at: '2024-09-28T19:50:34.000000Z',
+      //       deleted_at: null
+      //     },
+      //     {
+      //       id: 4,
+      //       attribute_id: 2,
+      //       name: 'ARO 4',
+      //       created_at: '2024-09-28T19:50:34.000000Z',
+      //       updated_at: '2024-09-28T19:50:34.000000Z',
+      //       deleted_at: null
+      //     }
+      //   ],
+      //   [
+      //     {
+      //       id: 1,
+      //       attribute_id: 1,
+      //       name: 'ARO 1',
+      //       created_at: '2024-09-28T19:50:04.000000Z',
+      //       updated_at: '2024-09-28T19:50:04.000000Z',
+      //       deleted_at: null
+      //     },
+      //     {
+      //       id: 2,
+      //       attribute_id: 1,
+      //       name: 'ARO 2',
+      //       created_at: '2024-09-28T19:50:04.000000Z',
+      //       updated_at: '2024-09-28T19:50:04.000000Z',
+      //       deleted_at: null
+      //     }
+      //   ]
+      // ]
+      console.log(editData?.variants);
+      console.log(editData);
+
+      const data = formatProductData(editData.variants, editData.name);
+      console.log(data);
+      // const variantDatasource =
     }
-  }, [variantDatasource]);
+  }, [editData]);
 
   // Editing handlers
   const edit = (record) => {
@@ -223,6 +319,7 @@ const ProductVariantOption = ({
 
   // Row selection
   const rowSelection = {
+    selectedRowKeys: isSelected, // Pre-select the rows
     onChange: (selectedRowKeys, selectedRows) => {
       setIsSelected(selectedRowKeys);
       setSelectedRowData(selectedRows);

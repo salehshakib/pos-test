@@ -23,7 +23,7 @@ export const CustomSelectButton = (props) => {
   } = props;
 
   const filterOption = (input, option) =>
-    (option?.label ?? '').toLocaleLowerCase().includes(input);
+    (option?.label ?? '').toLowerCase().includes(input);
 
   const filterSort = (optionA, optionB) =>
     (optionA?.label ?? '')

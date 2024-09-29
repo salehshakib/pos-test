@@ -40,7 +40,7 @@ export const PurchaseCreate = () => {
           .map((product_id) => ({
             product_variant_id: parseInt(product_id),
             qty: product_list.qty[product_id],
-            recieved: product_list.recieved[product_id],
+            received: product_list.recieved[product_id],
             purchase_unit_id: product_list.purchase_unit_id[product_id],
             net_unit_cost: decimalConverter(
               product_list.net_unit_cost[product_id]

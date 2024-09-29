@@ -31,8 +31,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         'cashier_id',
         'customer_id',
         'reference_number',
-        'currency',
-        'exchange_rate',
       ]);
 
       const fieldNames = {
@@ -94,7 +92,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
       <div className="grow overflow-auto bg-[#F5F5F5]">
         <div className="lg:grid h-[95vh] grid-cols-6">
           <div className="col-span-4 relative">
-            <div className="fixed z-50 flex w-full items-center justify-between bg-white px-5 shadow-md lg:hidden">
+            <div className="fixed z-50 flex w-full items-center justify-between bg-white px-5  shadow-md lg:hidden">
               <div className="flex items-center gap-6 text-2xl">
                 <Button
                   className="flex items-center justify-center rounded-full border border-none p-0 text-[20px]"
@@ -169,7 +167,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         style={{
           textAlign: 'center',
         }}
-        className="absolute bottom-0 z-50 w-full py-2 bg-white"
+        className="absolute bottom-0 z-40 w-full py-2 bg-white"
       >
         <Payment
           handleSubmit={handleFormValues}

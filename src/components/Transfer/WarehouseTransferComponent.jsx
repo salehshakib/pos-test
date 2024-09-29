@@ -62,8 +62,8 @@ export const WarehouseTransferComponent = ({
     <>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
         <CustomSelect
-          label="Warehouse (From)"
-          placeholder={'Warehouse (From)'}
+          label="Warehouse (Request From)"
+          placeholder={'Warehouse (Request From)'}
           showSearch={true}
           isLoading={isLoading}
           options={warehouseFromOptions}
@@ -74,8 +74,8 @@ export const WarehouseTransferComponent = ({
       </Col>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
         <CustomSelect
-          label="Warehouse (To)"
-          placeholder={'Warehouse (To)'}
+          label="Warehouse (Request To)"
+          placeholder={'Warehouse (Request To)'}
           showSearch={true}
           isLoading={isLoading}
           options={warehouseToOptions}

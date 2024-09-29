@@ -95,8 +95,6 @@ const expandColumns = [
 export const expandedRowRender = (record, data, currency) => {
   if (record.hasVariant !== 'Yes') return null;
 
-  console.log(data.results.product);
-
   // Handle variant data source here if needed
   const expandedData =
     data?.results?.product
@@ -106,7 +104,10 @@ export const expandedRowRender = (record, data, currency) => {
         name: variant.name,
         sku: variant.sku,
         iemi: variant.imei_number,
-        qty: variant.qty,
+        qty:
+          variant?.product_qties?.length === 0
+            ? variant?.qty
+            : variant?.product_qties?.map((item) => item?.qty),
         cost: showCurrency(variant.buying_price, currency),
         price: showCurrency(variant.selling_price, currency),
         created_at: variant.created_at,

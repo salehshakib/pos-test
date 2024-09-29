@@ -29,12 +29,11 @@ const StockRequestCreate = () => {
 
   const params = useGlobalParams({
     params: {
-      warehouse_id: warehouseId,
-      need_qty: 1,
+      warehouse_ids: [warehouseId],
+      // need_qty: 1,
       parent: 1,
       child: 1,
-      // need_alert_qty: 1,
-      // child: 1,
+      need_alert_qty: 1,
     },
   });
 

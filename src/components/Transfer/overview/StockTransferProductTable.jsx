@@ -268,73 +268,6 @@ export const StockTransferProductTable = ({
     });
   };
 
-  // const incrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-
-  //     if (currentQty === parseInt(formValues?.product_list?.max_return?.[id])) {
-  //       // message.error("Maximum quantity reached");
-  //       return openNotification("info", "Maximum quantity reached");
-  //     }
-
-  //     const newQty = Math.min(
-  //       Number(currentQty) + 1,
-  //       parseInt(formValues?.product_list?.max_return?.[id])
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const decrementCounter = (id) => {
-  //   setFormValues((prevFormValues) => {
-  //     const currentQty = prevFormValues.product_list.qty[id] || 1;
-
-  //     const newQty = Math.min(
-  //       Number(currentQty) - 1,
-  //       parseInt(formValues?.product_list?.max_return?.[id])
-  //     );
-
-  //     return {
-  //       ...prevFormValues,
-  //       product_list: {
-  //         ...prevFormValues.product_list,
-  //         qty: {
-  //           ...prevFormValues.product_list.qty,
-  //           [id]: newQty,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  // const onQuantityChange = (id, value) => {
-  //   const qty = Math.min(
-  //     parseInt(value),
-  //     parseInt(formValues?.product_list?.max_return?.[id])
-  //   );
-
-  //   setFormValues((prevFormValues) => ({
-  //     ...prevFormValues,
-  //     product_list: {
-  //       ...prevFormValues.product_list,
-  //       qty: {
-  //         ...prevFormValues.product_list.qty,
-  //         [id]: qty || 0,
-  //       },
-  //     },
-  //   }));
-  // };
-
   const currency = useSelector(useCurrency);
 
   const dataSource = products?.map((item) => {
@@ -343,15 +276,12 @@ export const StockTransferProductTable = ({
 
     const {
       id,
-      name,
-      sku,
       buying_price: unit_cost,
       purchase_unit_id,
       purchase_units,
       tax_id,
       taxes,
       tax_method,
-      product_qties,
     } = products ?? {};
 
     setFormValuesId(
@@ -367,27 +297,26 @@ export const StockTransferProductTable = ({
     );
 
     return {
-      id,
-      name,
-      sku,
+      id: item?.id,
+      name: item?.product_variants?.name,
+      sku: item?.product_variants?.sku,
       unitCost: showCurrency(
-        formValues.product_list.net_unit_cost[id],
+        parseInt(item?.product_variants?.buying_price),
         currency
       ),
       delete: true,
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
-      // qty: formValues.product_list.qty[id],
-      // incrementCounter,
-      // decrementCounter,
-      // onQuantityChange,
       onDelete,
       products,
       setProducts,
       formValues,
       setFormValues,
       updateProductList,
-      stock: getWarehouseQuantity(product_qties, warehouseId),
+      stock: getWarehouseQuantity(
+        item?.product_variants?.product_qties,
+        warehouseId
+      ),
       requestedStock: item?.need_qty,
       form,
     };

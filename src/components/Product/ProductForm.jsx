@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 
 import { barcodeOptions } from '../../assets/data/barcode';
 import { taxTypeOptions } from '../../assets/data/taxType';
@@ -303,6 +304,8 @@ const ProductForm = ({ data, ...props }) => {
     props.handleSubmit(values, { variantData, formValues });
   };
 
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
   return (
     <CustomForm {...props} handleSubmit={handleSubmit}>
       <Row {...rowLayout}>
@@ -385,7 +388,22 @@ const ProductForm = ({ data, ...props }) => {
         </Col>
       </Row>
 
-      <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
+      {/* {isEditDrawerOpen && data?.has_variant.toString() === '1' && (
+        
+      )} */}
+
+      {isEditDrawerOpen ? (
+        <>
+          {data?.has_variant.toString() === '1' ? (
+            <VariantComponent
+              onCustomSubmit={handleVariantProduct}
+              data={data}
+            />
+          ) : null}
+        </>
+      ) : (
+        <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
+      )}
 
       <IMEIComponent />
 

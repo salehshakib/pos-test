@@ -15,7 +15,7 @@ export const Filter = ({ form, setProducts }) => {
           style={{
             borderRadius: '8px',
           }}
-          className="m-4 grow bg-gray-200 shadow-md"
+          className="my-4 grow bg-gray-200 shadow-md"
         >
           <PosProducts
             form={form}

@@ -25,9 +25,8 @@ const updateStateWithProductData = (
 
   const updatedReturnedQty = {};
 
-  // Loop through each product and populate updated fields
   purchaseProducts.forEach((item) => {
-    const productId = item?.product_variants.id.toString();
+    const productId = item?.product_variants?.id.toString();
 
     updatedQty[productId] = item?.qty - item.returned_qty;
     updatedPurchaseUnitId[productId] = item?.product_variants?.purchase_unit_id;
@@ -49,8 +48,21 @@ const updateStateWithProductData = (
 
     // Handle max quantity if purchase is true
     if (purchase) {
+      updatedQty[productId] = item?.qty;
+
       updatedMaxQty[productId] =
-        parseInt(purchase.total_qty) - parseInt(item.returned_qty); // Ensure this is defined correctly in purchase
+        parseInt(
+          purchase.purchase_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).qty
+        ) -
+        parseInt(
+          purchase.purchase_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).returned_qty
+        );
     }
   });
 
@@ -204,18 +216,29 @@ export const CustomPurchaseReturnProductForm = ({
       );
 
       const purchaseProducts = data?.purchase_return_products?.map(
-        (product) => ({
-          id: product?.product_variants?.id,
-          name: product?.product_variants?.products?.name,
-          sku: product?.product_variants?.products?.sku,
-          buying_price: product?.product_variants?.products?.buying_price,
-          purchase_unit_id: product?.product_variants?.purchase_unit_id,
-          purchase_units: product?.product_variants?.products?.purchase_units,
-          tax_id: product?.product_variants?.products?.tax_id,
-          taxes: product?.product_variants?.products.taxes,
-          purchaseQty: product?.qty,
-          returned_qty: product?.returned_qty,
-        })
+        (returnProduct) => {
+          const matchedPurchaseProduct =
+            data?.purchase?.purchase_products?.find(
+              (purchaseProduct) =>
+                purchaseProduct?.purchase_unit_id ===
+                returnProduct?.product_variants?.purchase_unit_id
+            );
+
+          return {
+            id: returnProduct?.product_variants?.id,
+            name: returnProduct?.product_variants?.products?.name,
+            sku: returnProduct?.product_variants?.products?.sku,
+            buying_price:
+              returnProduct?.product_variants?.products?.buying_price,
+            purchase_unit_id: returnProduct?.product_variants?.purchase_unit_id,
+            purchase_units:
+              returnProduct?.product_variants?.products?.purchase_units,
+            tax_id: returnProduct?.product_variants?.products?.tax_id,
+            taxes: returnProduct?.product_variants?.products?.taxes,
+            purchaseQty: matchedPurchaseProduct?.qty,
+            returned_qty: matchedPurchaseProduct?.returned_qty,
+          };
+        }
       );
 
       setProducts(purchaseProducts);

@@ -15,7 +15,6 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   const updatedTotal = {};
   const updatedTaxId = {};
   const updatedReturnedQty = {};
-
   const updatedOperator = {};
   const updatedOperationValue = {};
 
@@ -42,8 +41,33 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
 
     // Handle max quantity if purchase is true
     if (sale) {
+      updatedQty[productId] =
+        parseInt(
+          sale.sale_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).qty
+        ) -
+        parseInt(
+          sale.sale_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).returned_qty
+        );
+
       updatedMaxQty[productId] =
-        parseInt(sale.total_qty) - parseInt(item.returned_qty);
+        parseInt(
+          sale.sale_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).qty
+        ) -
+        parseInt(
+          sale.sale_products.find(
+            (item) =>
+              item.product_variant_id.toString() === productId.toString()
+          ).returned_qty
+        );
     }
   });
 
@@ -184,7 +208,7 @@ export const CustomSaleReturnProductForm = ({
         sale_unit_id: product?.product_variants?.sale_unit_id,
         sale_units: product?.product_variants?.products?.sale_units,
         tax_id: product?.product_variants?.products?.tax_id,
-        taxes: product?.product_variants?.products.taxes,
+        taxes: product?.product_variants?.products?.taxes,
         soldQty: product?.qty,
         returned_qty: product.returned_qty,
       }));
@@ -197,18 +221,26 @@ export const CustomSaleReturnProductForm = ({
         data?.sale
       );
 
-      const saleProducts = data?.sale_return_products?.map((product) => ({
-        id: product?.product_variants?.id,
-        name: product?.product_variants?.name,
-        sku: product?.product_variants?.products?.sku,
-        selling_price: product?.product_variants?.products?.selling_price,
-        sale_unit_id: product?.product_variants?.sale_unit_id,
-        sale_units: product?.product_variants?.products?.sale_units,
-        tax_id: product?.product_variants?.products?.tax_id,
-        taxes: product?.product_variants?.products.taxes,
-        soldQty: product?.qty,
-        returned_qty: product.returned_qty,
-      }));
+      const saleProducts = data?.sale_return_products?.map((returnProduct) => {
+        const matchedSaleProduct = data?.sale?.sale_products?.find(
+          (saleProduct) =>
+            saleProduct?.sale_unit_id ===
+            returnProduct?.product_variants?.sale_unit_id
+        );
+
+        return {
+          id: returnProduct?.product_variants?.id,
+          name: returnProduct?.product_variants?.name,
+          sku: returnProduct?.product_variants?.sku,
+          buying_price: returnProduct?.product_variants?.buying_price,
+          sale_unit_id: returnProduct?.product_variants?.sale_unit_id,
+          purchase_units: returnProduct?.product_variants?.purchase_units,
+          tax_id: returnProduct?.product_variants?.tax_id,
+          taxes: returnProduct?.product_variants?.taxes,
+          soldQty: matchedSaleProduct?.qty,
+          returned_qty: matchedSaleProduct?.returned_qty,
+        };
+      });
 
       setProducts(saleProducts);
     } else {

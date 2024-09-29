@@ -35,7 +35,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
   ];
 
   const updatedFields = {};
-  fieldsToUpdate.forEach(({ key, value }) => {
+  fieldsToUpdate.forEach(({ key }) => {
     updatedFields[key] = {};
   });
 
@@ -45,7 +45,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues) => {
   });
 
   purchaseProducts.forEach((item) => {
-    const productId = item.product_variants.id.toString();
+    const productId = item?.product_variants?.id.toString();
 
     fieldsToUpdate.forEach(({ key, value }) => {
       updatedFields[key][productId] = value
@@ -149,7 +149,7 @@ export const CustomPurchaseProductComponent = forwardRef(
           purchase_unit_id: product?.product_variants?.purchase_unit_id,
           purchase_units: product?.product_variants?.products?.purchase_units,
           tax_id: product?.product_variants?.products?.tax_id,
-          taxes: product?.product_variants?.products.taxes,
+          taxes: product?.product_variants?.products?.taxes,
           product_qties: product?.product_variants?.products?.product_qties,
         }));
 

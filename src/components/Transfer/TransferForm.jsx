@@ -26,8 +26,8 @@ const options = [
     label: 'Send',
   },
   {
-    value: 'Transfared',
-    label: 'Transfared',
+    value: 'Transferred',
+    label: 'Transferred',
   },
 ];
 

@@ -1,5 +1,8 @@
 // Import necessary dependencies
-import { TRANSFER } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  TRANSFER,
+  WAREHOUSE,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -82,10 +85,11 @@ const transferApi = baseApi.injectEndpoints({
     }),
 
     updateTransferStatus: build.mutation({
-      query: (id) => {
+      query: ({ statusData }) => {
         return {
-          url: `/${TRANSFER}/status/${id}`,
+          url: `/${WAREHOUSE}/response`,
           method: 'POST',
+          body: statusData,
         };
       },
       transformResponse: (response) => {

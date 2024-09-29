@@ -1,4 +1,6 @@
+import { Modal } from 'antd';
 import { useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
@@ -16,11 +18,38 @@ import { showCurrency } from '../../utilities/lib/currency';
 import { formatDate } from '../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import CustomForm from '../Shared/Form/CustomForm';
 import DeleteModal from '../Shared/Modal/DeleteModal';
-import StatusModal from '../Shared/Modal/StatusModal';
+import CustomSelect from '../Shared/Select/CustomSelect';
 import CustomTable from '../Shared/Table/CustomTable';
 import { StockTransfer } from './StockTransfer';
 import { TransferDetails } from './TransferDetails';
+
+const options = [
+  {
+    value: 'Pending',
+    label: 'Pending',
+  },
+  {
+    value: 'Send',
+    label: 'Send',
+  },
+  {
+    value: 'Transferred',
+    label: 'Transferred',
+  },
+];
+
+const FileStatusComponent = () => {
+  return (
+    <CustomSelect
+      label="Status"
+      placeholder={'Status'}
+      options={options}
+      name={'status'}
+    />
+  );
+};
 
 const TransferTable = ({
   newColumns,
@@ -84,8 +113,14 @@ const TransferTable = ({
     setStatusModal(true);
   };
 
-  const handleStatus = async () => {
-    const { data } = await updateTransferStatus(statusId);
+  const handleStatus = async (values) => {
+    const statusData = {
+      action_id: statusId,
+      transfer_status: values.status,
+      for: 'Transfer',
+    };
+
+    const { data } = await updateTransferStatus(statusData);
 
     if (data?.success) {
       setStatusId(undefined);
@@ -172,12 +207,33 @@ const TransferTable = ({
         />
       )}
 
-      <StatusModal
-        statusModal={statusModal}
-        hideModal={hideModal}
-        handleStatus={handleStatus}
-        isLoading={isStatusUpdating}
-      />
+      <Modal
+        title={
+          <div className="flex items-center gap-3">
+            <FaInfoCircle
+              style={{
+                fontSize: '20px',
+              }}
+            />
+            <span>Status Update</span>
+          </div>
+        }
+        open={statusModal}
+        onCancel={hideModal}
+        footer={null}
+        centered
+      >
+        <GlobalUtilityStyle>
+          <div className="my-10 -mb-11">
+            <CustomForm
+              handleSubmit={handleStatus}
+              isLoading={isStatusUpdating}
+            >
+              <FileStatusComponent />
+            </CustomForm>
+          </div>
+        </GlobalUtilityStyle>
+      </Modal>
 
       <DeleteModal
         deleteModal={deleteModal}

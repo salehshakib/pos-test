@@ -186,17 +186,9 @@ export const ReturnProductTable = ({
         return prevFormValues;
       }
 
-      if (
-        currentQty === parseInt(formValues?.product_list?.returned_qty?.[id])
-      ) {
-        openNotification('info', "Can't add more than sold quantity");
-        return prevFormValues;
-      }
-
       const newQty = Math.min(
         Number(currentQty) + 1,
-        parseInt(formValues?.product_list?.max_return?.[id]) -
-          parseInt(formValues?.product_list?.returned_qty?.[id])
+        parseInt(formValues?.product_list?.max_return?.[id])
       );
 
       return {
@@ -216,11 +208,7 @@ export const ReturnProductTable = ({
     setFormValues((prevFormValues) => {
       const currentQty = prevFormValues.product_list.qty[id] || 1;
 
-      const newQty = Math.min(
-        Number(currentQty) - 1,
-        parseInt(formValues?.product_list?.max_return?.[id]) -
-          parseInt(formValues?.product_list?.returned_qty?.[id])
-      );
+      const newQty = Math.max(Number(currentQty) - 1, 0);
 
       return {
         ...prevFormValues,
@@ -238,10 +226,7 @@ export const ReturnProductTable = ({
   const onQuantityChange = (id, value) => {
     const qty = Math.min(
       parseInt(value),
-      parseInt(
-        formValues?.product_list?.max_return?.[id] -
-          parseInt(formValues?.product_list?.returned_qty?.[id])
-      )
+      parseInt(formValues?.product_list?.max_return?.[id])
     );
 
     setFormValues((prevFormValues) => ({

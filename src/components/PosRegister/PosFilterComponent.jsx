@@ -112,7 +112,7 @@ const PosFilterComponent = ({ setParams }) => {
   const color = token.colorPrimary;
 
   return (
-    <div className="grid grid-cols-2 gap-3 px-4 pt-5">
+    <div className="grid grid-cols-2 gap-3 pr-1 pt-5">
       <CategoryFilterComponent setParams={setParams} color={color} />
       <BrandFilterComponent setParams={setParams} color={color} />
     </div>

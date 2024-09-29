@@ -19,17 +19,26 @@ import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
 const getVariantIdsByCombinedName = (variantData, combinedName) => {
-  const names = combinedName.split(' '); // e.g., ['2kg', 'Whte']
+  // Step 1: Split the combined name based on a two-part structure
+  // Assuming the structure is like "ARO 6 ARO 3", split into two parts using regex
+  const nameRegex = /[A-Z]+\s*\d+/g; // This matches sequences like "ARO 6"
+  const names = combinedName.match(nameRegex); // ['ARO 6', 'ARO 3']
+
   const ids = [];
 
-  names.forEach((name) => {
-    for (const optionGroup of variantData) {
-      const found = optionGroup.find((option) => option.name === name);
-      if (found) {
-        ids.push(found.id); // Collect the ID if found
+  if (names) {
+    names.forEach((name) => {
+      for (const optionGroup of variantData) {
+        // Step 2: Look for a match in the variant data for the full name (ARO 6, ARO 3)
+        const found = optionGroup.find(
+          (option) => `${option.name}` === name.trim()
+        );
+        if (found) {
+          ids.push(found.id); // Collect the ID if found
+        }
       }
-    }
-  });
+    });
+  }
 
   return ids; // Return the collected IDs
 };

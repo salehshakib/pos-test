@@ -158,18 +158,7 @@ const RegisterForm = ({ products, setProducts }) => {
             />
           </Col>
 
-          <Col span={6}>
-            <WarehouseComponent label={false} size="default" />
-          </Col>
-          <Col span={6}>
-            <CashierComponent label={false} required={true} size="default" />
-          </Col>
-
-          <Col span={8}>
-            <CustomerComponent size="default" />
-          </Col>
-
-          <Col span={12}>
+          <Col span={20}>
             <CustomInput
               type={'text'}
               placeholder={'Reference Number'}
@@ -178,7 +167,29 @@ const RegisterForm = ({ products, setProducts }) => {
               customStyle={true}
             />
           </Col>
-          <Col span={12}>
+
+          <Col span={8}>
+            <WarehouseComponent
+              label={false}
+              //  size="default"
+            />
+          </Col>
+          <Col span={8}>
+            <CashierComponent
+              label={false}
+              required={true}
+              // size="default"
+            />
+          </Col>
+
+          <Col span={8}>
+            <CustomerComponent
+            // size="default"
+            />
+          </Col>
+
+          {/* currency, exchange_rate */}
+          {/* <Col span={12}>
             <Row gutter={5}>
               <Col span={14}>
                 <CurrencyComponent size="default" />
@@ -187,7 +198,7 @@ const RegisterForm = ({ products, setProducts }) => {
                 <CurrencyExchangeComponent size="default" />
               </Col>
             </Row>
-          </Col>
+          </Col> */}
           <SearchProduct products={products} setProducts={setProducts} />
         </Row>
       </div>
@@ -210,7 +221,7 @@ export const PosRegister = ({
         layout="vertical"
         autoComplete="on"
         scrollToFirstError
-        className="h-[93vh]"
+        className="h-[95vh]"
         noStyle
       >
         <div className="flex h-full flex-col p-4">

@@ -140,7 +140,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
   }
 
   return (
-    <GlobalUtilityStyle className="flex h-full flex-col overflow-auto p-3 pb-0">
+    <GlobalUtilityStyle className="flex h-full flex-col overflow-auto  pb-0">
       <div className="grow">
         <div className="overflow-auto" id="scrollable">
           <InfiniteScroll
@@ -159,7 +159,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
             scrollableTarget="scrollable"
           >
-            <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-4">
+            <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-3">
               {products &&
                 newData.map((product) => {
                   const stock = getWarehouseQuantity(
@@ -174,7 +174,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
                           count={stock}
                           overflowCount={99}
                           className="w-full"
-                          offset={[-13, 5]}
+                          offset={[-13, 7]}
                         >
                           <Card
                             bordered

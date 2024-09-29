@@ -29,15 +29,13 @@ const updateStateWithProductData = (
   purchaseProducts.forEach((item) => {
     const productId = item?.product_variants.id.toString();
 
-    updatedQty[productId] = item?.qty;
+    updatedQty[productId] = item?.qty - item.returned_qty;
     updatedPurchaseUnitId[productId] = item?.product_variants?.purchase_unit_id;
     updatedProductCost[productId] = item?.product_variants?.net_unit_cost;
     updatedDiscount[productId] = item?.product_variants?.discount;
     updatedTaxRate[productId] = item?.product_variants?.tax_rate;
     updatedTax[productId] = item?.product_variants?.tax;
     updatedTotal[productId] = item?.product_variants?.total;
-
-    updatedReturnedQty[productId] = item?.returned_qty;
 
     // Optional chaining for safe access
     updatedTaxId[productId] = item?.product_variants?.products?.tax_id;
@@ -47,9 +45,12 @@ const updateStateWithProductData = (
     updatedOperationValue[productId] =
       item?.product_variants?.products?.purchase_units?.operation_value;
 
+    updatedReturnedQty[productId] = item?.returned_qty;
+
     // Handle max quantity if purchase is true
     if (purchase) {
-      updatedMaxQty[productId] = purchase.total_qty; // Ensure this is defined correctly in purchase
+      updatedMaxQty[productId] =
+        parseInt(purchase.total_qty) - parseInt(item.returned_qty); // Ensure this is defined correctly in purchase
     }
   });
 

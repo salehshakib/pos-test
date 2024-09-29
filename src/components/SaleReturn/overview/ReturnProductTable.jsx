@@ -35,6 +35,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 150,
     align: 'center',
     render: (name) => (
       <span className="text-dark text-xs font-medium md:text-sm">{name}</span>
@@ -55,7 +56,7 @@ const columns = [
     dataIndex: 'unitCost',
     key: 'unitCost',
     align: 'center',
-    width: 100,
+    width: 120,
     render: (unitCost) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
@@ -67,7 +68,7 @@ const columns = [
     dataIndex: 'soldQty',
     key: 'soldQty',
     align: 'center',
-    width: 100,
+    width: 120,
     render: (soldQty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {soldQty ?? 0}
@@ -83,6 +84,18 @@ const columns = [
     render: (returned_qty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {returned_qty ?? 0}
+      </span>
+    ),
+  },
+  {
+    title: 'Available Qty',
+    dataIndex: 'availableQty',
+    key: 'availableQty',
+    align: 'center',
+    width: 120,
+    render: (availableQty) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {availableQty ?? 0}
       </span>
     ),
   },
@@ -108,12 +121,7 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            value={
-              parseInt(record.formValues.product_list.qty[record.id]) -
-                parseInt(
-                  record.formValues.product_list.returned_qty[record.id]
-                ) || 0
-            }
+            value={parseInt(record.formValues.product_list.qty[record.id]) || 0}
             noStyle={true}
             onChange={(value) => record.onQuantityChange(record.id, value)}
           />
@@ -280,14 +288,12 @@ export const ReturnProductTable = ({
         currency
       ),
       soldQty,
-      delete: true,
       returned_qty,
+      availableQty: soldQty - returned_qty,
+      delete: true,
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
-      qty:
-        parseInt(formValues.product_list.qty[id]) -
-        parseInt(formValues.product_list.returned_qty[id]),
       incrementCounter,
       decrementCounter,
       onQuantityChange,

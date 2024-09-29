@@ -124,16 +124,6 @@ const TransferForm = ({ data, ...props }) => {
           </CustomTransferProductComponent>
         </Row>
       </CustomForm>
-
-      {/* <TotalRow
-        totalItems={totalItems}
-        totalQty={totalQty}
-        totalPrice={totalPrice}
-        // taxRate={tax_rate}
-        // discount={discount}
-        shippingCost={shipping_cost ?? 0}
-        grandTotal={grandTotal}
-      /> */}
     </>
   );
 };

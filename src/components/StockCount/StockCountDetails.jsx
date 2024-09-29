@@ -54,8 +54,8 @@ export const StockCountDetails = ({ id, ...props }) => {
     return {
       id: item?.pid,
       pid: item?.pid,
-      product_name: item?.product
-        ? item?.product + ` (${item?.sku})`
+      product_name: item?.variant
+        ? item?.variant + ` (${item?.sku})`
         : 'Unknown Product',
       qty: item.quantity ?? 'Unknown Quantity',
     };

@@ -64,7 +64,6 @@ export const StockTransfer = () => {
       tax_rate: {},
       tax: {},
       total: {},
-
       tax_id: {},
     },
   });

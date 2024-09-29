@@ -10,6 +10,7 @@ import { MdCardGiftcard } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
 import { mdColLayout, rowLayout } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
 import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
@@ -39,6 +40,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
   const [grandTotal, setGrandTotal] = useState(0);
 
+  const currency = useSelector(useCurrency);
+
   const showModal = (type) => {
     setPaymentType(type);
 
@@ -60,15 +63,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
     const { discount, shipping_cost, tax_rate } = formValues.order ?? {};
     const { paid_amount } = values ?? {};
-    const {
-      sale_at,
-      warehouse_id,
-      cashier_id,
-      customer_id,
-      reference_number,
-      currency,
-      exchange_rate,
-    } = data ?? {};
+    const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
+      data ?? {};
 
     const { product_list } = formValues;
 
@@ -139,8 +135,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
       customer_id,
       reference_number,
       payment_status: 'Paid',
-      currency,
-      exchange_rate,
+      currency: currency?.name,
+      exchange_rate: 1,
     };
 
     if (paid_amount) {
@@ -241,39 +237,41 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         width={800}
         footer={null}
       >
-        <CustomForm
-          form={paymentForm}
-          layout="vertical"
-          autoComplete="on"
-          scrollToFirstError
-          handleSubmit={onSubmit}
-          onClose={hideModal}
-          btnStyle={false}
-          isLoading={isLoading}
-          fields={errorFields}
-        >
-          <Row {...rowLayout}>
-            <PaymentTypeComponent
-              paymentType={paymentType}
-              grandTotal={grandTotal}
-            />
+        <div className="pr-3">
+          <CustomForm
+            form={paymentForm}
+            layout="vertical"
+            autoComplete="on"
+            scrollToFirstError
+            handleSubmit={onSubmit}
+            onClose={hideModal}
+            btnStyle={false}
+            isLoading={isLoading}
+            fields={errorFields}
+          >
+            <Row {...rowLayout}>
+              <PaymentTypeComponent
+                paymentType={paymentType}
+                grandTotal={grandTotal}
+              />
 
-            <Col {...mdColLayout}>
-              <CustomInput
-                type={'textarea'}
-                name="sale_note"
-                label="Sale Note"
-              />
-            </Col>
-            <Col {...mdColLayout}>
-              <CustomInput
-                type={'textarea'}
-                name="staff_note"
-                label="Staff Note"
-              />
-            </Col>
-          </Row>
-        </CustomForm>
+              <Col {...mdColLayout}>
+                <CustomInput
+                  type={'textarea'}
+                  name="sale_note"
+                  label="Sale Note"
+                />
+              </Col>
+              <Col {...mdColLayout}>
+                <CustomInput
+                  type={'textarea'}
+                  name="staff_note"
+                  label="Staff Note"
+                />
+              </Col>
+            </Row>
+          </CustomForm>
+        </div>
       </CustomModal>
     </>
   );

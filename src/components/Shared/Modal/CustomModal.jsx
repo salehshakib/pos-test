@@ -100,9 +100,11 @@ const CustomModal = (props) => {
                 <Button
                   type="primary"
                   onClick={props.onTransfer}
+                  loading={props.transferLoading}
                   disabled={
                     props.rejectLoading ||
                     props.acceptLoading ||
+                    props.transferLoading ||
                     props.acceptAndTransferLoading
                   }
                 >

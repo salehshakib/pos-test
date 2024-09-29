@@ -1,5 +1,8 @@
 // Import necessary dependencies
-import { STOCK_REQUEST } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  STOCK_REQUEST,
+  WAREHOUSE,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -101,10 +104,11 @@ const stockRequestApi = baseApi.injectEndpoints({
     }),
 
     updateStockRequestStatus: build.mutation({
-      query: (id) => {
+      query: (payload) => {
         return {
-          url: `/${STOCK_REQUEST}/status/${id}`,
+          url: `/${WAREHOUSE}/response/`,
           method: 'POST',
+          body: payload,
         };
       },
       transformResponse: (response) => {

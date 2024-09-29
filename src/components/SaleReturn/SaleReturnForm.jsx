@@ -1,4 +1,5 @@
 import { Col, Form, Row } from 'antd';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
@@ -52,6 +53,22 @@ const PaymentType = () => {
       label="Payment Type"
       options={options}
       name={'payment_type'}
+    />
+  );
+};
+
+const SaleReturnDateComponent = () => {
+  const form = Form.useFormInstance();
+
+  useEffect(() => {
+    form.setFieldValue('sale_return_at', dayjs(new Date()));
+  }, [form]);
+
+  return (
+    <CustomDatepicker
+      label="Return Date"
+      required={true}
+      name={'sale_return_at'}
     />
   );
 };
@@ -137,11 +154,7 @@ export const SaleReturnForm = ({ data, ...props }) => {
               </Col>
 
               <Col {...colLayout}>
-                <CustomDatepicker
-                  label="Return Date"
-                  required={true}
-                  name={'sale_return_at'}
-                />
+                <SaleReturnDateComponent />
               </Col>
 
               <Col {...colLayout}>

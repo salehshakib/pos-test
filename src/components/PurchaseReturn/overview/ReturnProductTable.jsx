@@ -36,6 +36,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 150,
     render: (name) => (
       <span className="text-dark   text-xs font-medium md:text-sm">{name}</span>
     ),
@@ -55,7 +56,7 @@ const columns = [
     dataIndex: 'unitCost',
     key: 'unitCost',
     align: 'center',
-    width: 100,
+    width: 120,
     render: (unitCost) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {unitCost ?? 0}
@@ -67,7 +68,7 @@ const columns = [
     dataIndex: 'purchaseQty',
     key: 'purchaseQty',
     align: 'center',
-    width: 100,
+    width: 120,
     render: (purchaseQty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {purchaseQty ?? 0}
@@ -112,7 +113,7 @@ const columns = [
             value={
               parseInt(record.formValues.product_list.qty[record.id]) -
                 parseInt(
-                  record.formValues.product_list.returned_qty[record.id]
+                  record.formValues?.product_list?.returned_qty?.[record.id]
                 ) || 0
             }
             noStyle={true}
@@ -190,7 +191,7 @@ export const ReturnProductTable = ({
       if (
         currentQty === parseInt(formValues?.product_list?.returned_qty?.[id])
       ) {
-        openNotification('info', "Can't add more than sold quantity");
+        openNotification('info', "Can't add more than purchased quantity");
         return prevFormValues;
       }
 

@@ -62,8 +62,8 @@ const updateStateWithProductData = (
         ...prevFormValues.product_list.qty,
         ...updatedQty,
       },
-      returend_qty: {
-        ...prevFormValues.product_list.returend_qty,
+      returned_qty: {
+        ...prevFormValues.product_list.returned_qty,
         ...updatedReturnedQty,
       },
       purchase_unit_id: {
@@ -191,7 +191,6 @@ export const CustomPurchaseReturnProductForm = ({
         tax_id: product?.product_variants?.products?.tax_id,
         taxes: product?.product_variants?.products.taxes,
         purchaseQty: product?.qty,
-
         returned_qty: product?.returned_qty,
       }));
 
@@ -214,6 +213,7 @@ export const CustomPurchaseReturnProductForm = ({
           tax_id: product?.product_variants?.products?.tax_id,
           taxes: product?.product_variants?.products.taxes,
           purchaseQty: product?.qty,
+          returned_qty: product?.returned_qty,
         })
       );
 

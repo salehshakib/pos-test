@@ -236,7 +236,7 @@ export const SaleProductTable = ({
     } = product ?? {};
 
     function getWarehousePrice(product_prices, warehouse_id) {
-      const warehouse = product_prices.find(
+      const warehouse = product_prices?.find(
         (item) => item.warehouse_id.toString() === warehouse_id.toString()
       );
 

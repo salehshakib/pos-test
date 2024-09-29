@@ -57,22 +57,6 @@ const PaymentType = () => {
   );
 };
 
-const SaleReturnDateComponent = () => {
-  const form = Form.useFormInstance();
-
-  useEffect(() => {
-    form.setFieldValue('sale_return_at', dayjs(new Date()));
-  }, [form]);
-
-  return (
-    <CustomDatepicker
-      label="Return Date"
-      required={true}
-      name={'sale_return_at'}
-    />
-  );
-};
-
 export const SaleReturnForm = ({ data, ...props }) => {
   const productsRef = useRef(null);
 
@@ -154,7 +138,12 @@ export const SaleReturnForm = ({ data, ...props }) => {
               </Col>
 
               <Col {...colLayout}>
-                <SaleReturnDateComponent />
+                <CustomDatepicker
+                  label="Return Date"
+                  required={true}
+                  name={'sale_return_at'}
+                  initialValue={dayjs(new Date())}
+                />
               </Col>
 
               <Col {...colLayout}>

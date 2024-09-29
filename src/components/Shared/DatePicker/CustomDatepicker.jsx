@@ -37,7 +37,7 @@ const CustomDatepicker = ({
   onChange,
   value,
   size = 'large',
-
+  initialValue,
   //for mb-0
   customStyle = false,
   presets = false,
@@ -117,6 +117,7 @@ const CustomDatepicker = ({
           },
         ]}
         className={customStyle && 'mb-0'}
+        initialValue={initialValue ?? null}
       >
         {renderPicker()}
       </Form.Item>

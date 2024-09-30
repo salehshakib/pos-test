@@ -31,8 +31,6 @@ const CustomModal = (props) => {
     modalProps.footer = null;
   }
 
-  console.log(transferStatus, requestStatus);
-
   return (
     <GlobalUtilityStyle>
       <Modal

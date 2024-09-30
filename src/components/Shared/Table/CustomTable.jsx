@@ -8,6 +8,7 @@ import {
   MdEditDocument,
   MdEditSquare,
   MdFileDownload,
+  MdPrint,
 } from 'react-icons/md';
 import { TbListDetails } from 'react-icons/tb';
 import { useLocation } from 'react-router-dom';
@@ -134,6 +135,15 @@ const CustomTable = ({
         ),
         onClick: () => record?.handleDeleteModal(record?.id),
         disabled: !record.handleDeleteModal,
+      },
+      route === 'sales/sale' && {
+        key: 'print',
+        icon: <MdPrint size={20} />,
+        label: (
+          <div className="flex items-center justify-start gap-3">Print</div>
+        ),
+        onClick: () => record?.handlePrintModal(record?.id),
+        disabled: !record.handlePrintModal,
       },
     ].filter(Boolean);
 
@@ -356,22 +366,6 @@ const CustomTable = ({
                 </button>
               </Dropdown>
             )}
-            {/* {record?.handleFileDownload && (
-              <button
-                onClick={() => record?.handleFileDownload(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdFileDownload className="text-lg md:text-xl" />
-              </button>
-            )}
-            {record?.handleFileDownload && (
-              <button
-                onClick={() => record?.handleFileDownload(record?.id)}
-                className="primary-bg p-1 rounded-xl text-white hover:scale-110 duration-300"
-              >
-                <MdFileDownload className="text-lg md:text-xl" />
-              </button>
-            )} */}
 
             {record?.handleDeleteModal && isDeletePermitted && (
               <button

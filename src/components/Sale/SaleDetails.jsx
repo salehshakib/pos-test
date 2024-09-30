@@ -1,5 +1,4 @@
-import { Button, Modal, Spin, Table } from 'antd';
-import { useState } from 'react';
+import { Spin, Table } from 'antd';
 import { useSelector } from 'react-redux';
 
 import { tableProps } from '../../layout/TableLayout';
@@ -8,7 +7,6 @@ import { useGetSaleDetailsQuery } from '../../redux/services/sale/saleApi';
 import { useDetailsLayout } from '../../utilities/hooks/useDetailsLayout';
 import { showCurrency } from '../../utilities/lib/currency';
 import { CustomDescription } from '../Shared/Description/CustomDescription';
-import SellInvoice from '../Shared/Invoice/SellInvoice';
 import CustomModal from '../Shared/Modal/CustomModal';
 
 const columns = [
@@ -52,8 +50,6 @@ export const SaleDetails = ({ id, ...props }) => {
     },
     { skip: !id }
   );
-
-  const [print, setPrint] = useState(false);
 
   const currency = useSelector(useCurrency);
 
@@ -122,7 +118,6 @@ export const SaleDetails = ({ id, ...props }) => {
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (
         <div className="space-y-5 pb-5 pr-3 pt-3">
-          <Button onClick={() => setPrint(true)}>Print</Button>
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Customer Info" items={customerInfo} />
           <CustomDescription title="Sale Info" items={saleStatus} />
@@ -136,17 +131,6 @@ export const SaleDetails = ({ id, ...props }) => {
           <CustomDescription title="Attachments" items={attachments} />
           <CustomDescription title="Additional Info" items={additionalInfo} />
         </div>
-      )}
-      {print && (
-        <Modal
-          open={print}
-          onCancel={() => setPrint(false)}
-          footer={null}
-          width={1000}
-          destroyOnClose
-        >
-          <SellInvoice invoice={data} />
-        </Modal>
       )}
     </CustomModal>
   );

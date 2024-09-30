@@ -128,7 +128,7 @@ export const SupplierReport = () => {
   }, [segment]);
 
   const summaryType = {
-    supplier_ids: [
+    supplier_id: [
       searchParams?.supplier_ids ? searchParams?.supplier_ids : data?.id,
     ],
   };

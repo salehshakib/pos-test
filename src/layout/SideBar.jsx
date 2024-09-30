@@ -93,9 +93,6 @@ const SideBar = ({ collapsed, setCollapsed }) => {
 
   const userData = useSelector(useCurrentUser);
   const isAdmin = userData?.roles?.[0]?.name === 'Admin';
-  console.log(userData);
-
-  console.log(isAdmin);
 
   //permission
   const sidebarItems = sidebarItemsGenerator(

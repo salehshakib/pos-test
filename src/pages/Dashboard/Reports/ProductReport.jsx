@@ -20,7 +20,7 @@ import CustomSelect from '../../../components/Shared/Select/CustomSelect';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
 import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import {
-  useGetAllProductsQuery,
+  useGetAllProductVariantsQuery,
   useGetProductDetailsQuery,
 } from '../../../redux/services/product/productApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
@@ -57,9 +57,9 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllProductsQuery({ params });
+  const { data, isLoading } = useGetAllProductVariantsQuery({ params });
 
-  const options = data?.results?.product?.map((product) => ({
+  const options = data?.results?.productvariant?.map((product) => ({
     value: product?.id?.toString(),
     label: product?.name,
   }));
@@ -71,7 +71,7 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
 
   return (
     <CustomModal
-      title="Select Product"
+      title="Select Product Variant"
       openModal={open}
       hideModal={hideModal}
       showCloseButton={false}
@@ -86,7 +86,7 @@ const SupplierModal = ({ setSupplierId, open, setOpen }) => {
           <Col {...fullColLayout}>
             <CustomSelect
               // label="Supplier"
-              placeholder={'Product'}
+              placeholder={'Product Variant'}
               options={options}
               isLoading={isLoading}
               required={true}

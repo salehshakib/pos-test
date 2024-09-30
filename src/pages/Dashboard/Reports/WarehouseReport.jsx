@@ -61,8 +61,10 @@ export const WarehouseReport = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segment]);
 
+  console.log(searchParams.warehouseId);
+
   const summaryType = {
-    warehouse_ids: searchParams?.warehouse_ids
+    warehouse_id: searchParams?.warehouse_ids
       ? searchParams?.warehouse_ids
       : user?.warehouse_id,
   };

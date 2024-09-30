@@ -1,4 +1,4 @@
-import { Row } from 'antd';
+import { Modal, Row } from 'antd';
 import { useState } from 'react';
 
 import {
@@ -12,8 +12,10 @@ import {
 } from '../../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import { SaleCreate } from '../../../../components/Sale/SaleCreate';
 import { SaleTable } from '../../../../components/Sale/SaleTable';
+import SellInvoice from '../../../../components/Shared/Invoice/SellInvoice';
 import GlobalContainer from '../../../../container/GlobalContainer/GlobalContainer';
 import { rowLayout } from '../../../../layout/FormLayout';
+import { useGetSaleDetailsQuery } from '../../../../redux/services/sale/saleApi';
 import { SALE } from '../../../../utilities/apiEndpoints/inventory.api';
 import { useCustomDebounce } from '../../../../utilities/hooks/useDebounce';
 import { useFilterParams } from '../../../../utilities/hooks/useParams';
@@ -130,6 +132,19 @@ const SaleList = () => {
   const [newColumns, setNewColumns] = useState(columns);
   const [selectedRows, setSelectedRows] = useState([]);
 
+  const [id, setId] = useState(null);
+
+  const { data: saleData, isFetching } = useGetSaleDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !id }
+  );
+
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
@@ -145,14 +160,31 @@ const SaleList = () => {
       searchFilterContent={<SearchComponent />}
       api={SALE}
     >
-      <SaleCreate />
+      <SaleCreate setId={setId} />
 
-      <SaleTable
-        newColumns={newColumns}
-        keyword={keyword}
-        setSelectedRows={setSelectedRows}
-        searchParams={searchParams}
-      />
+      {isFetching ? (
+        <div className="text-center text-2xl font-bold">
+          Generating Invoice...
+        </div>
+      ) : (
+        <SaleTable
+          newColumns={newColumns}
+          keyword={keyword}
+          setSelectedRows={setSelectedRows}
+          searchParams={searchParams}
+        />
+      )}
+      {saleData && (
+        <Modal
+          open={id}
+          onCancel={() => setId(null)}
+          footer={null}
+          width={1000}
+          destroyOnClose
+        >
+          <SellInvoice invoice={saleData} />
+        </Modal>
+      )}
     </GlobalContainer>
   );
 };

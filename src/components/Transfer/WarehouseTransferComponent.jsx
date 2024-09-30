@@ -62,8 +62,8 @@ export const WarehouseTransferComponent = ({
     <>
       <Col {...(fullLayout ? mdColLayout : largeLayout)}>
         <CustomSelect
-          label="Warehouse (Request From)"
-          placeholder={'Warehouse (Request From)'}
+          label="Warehouse (From)"
+          placeholder={'Warehouse (From)'}
           showSearch={true}
           isLoading={isLoading}
           options={warehouseFromOptions}

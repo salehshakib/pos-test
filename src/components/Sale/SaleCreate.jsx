@@ -16,7 +16,7 @@ import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { SaleForm } from './SaleForm';
 
-export const SaleCreate = () => {
+export const SaleCreate = ({ setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -137,9 +137,11 @@ export const SaleCreate = () => {
       data: formData,
     });
     if (data?.success) {
+      setId(data?.data?.id);
       dispatch(closeCreateDrawer());
       form.resetFields();
     }
+
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
         name: fieldName,

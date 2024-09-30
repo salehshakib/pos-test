@@ -1,7 +1,9 @@
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useCurrentUser } from '../redux/services/auth/authSlice';
 import { adminPaths } from '../routes/admin.routes';
 import { useSiteLogo } from '../utilities/hooks/useSiteLogo';
 import { useMenuItems } from '../utilities/lib/getPermission';
@@ -89,10 +91,18 @@ const SideBar = ({ collapsed, setCollapsed }) => {
     });
   });
 
-  //permission
-  // const sidebarItems = sidebarItemsGenerator(filteredPaths);
+  const userData = useSelector(useCurrentUser);
+  const isAdmin = userData?.roles?.[0]?.name === 'Admin';
+  console.log(userData);
 
-  const sidebarItems = sidebarItemsGenerator(adminPaths);
+  console.log(isAdmin);
+
+  //permission
+  const sidebarItems = sidebarItemsGenerator(
+    isAdmin ? adminPaths : filteredPaths
+  );
+
+  // const sidebarItems = sidebarItemsGenerator(adminPaths);
 
   const levelKeys = getLevelKeys(sidebarItems);
 

@@ -35,9 +35,7 @@ const EditableCell = ({
   );
 };
 
-function formatProductData(data, productName) {
-  console.log(productName);
-
+function formatProductData(data, productName, sku) {
   return (
     data
       // .filter((item) => item.name.includes(productName))
@@ -45,7 +43,7 @@ function formatProductData(data, productName) {
         return {
           key: item.name.split(productName)[1].trim(),
           name: item.name.split(productName)[1].trim(),
-          sku: item.sku,
+          sku: item.sku.split(sku + '-')[1].trim(),
           iemi: item.imei_number ?? '',
           price: item.selling_price,
           cost: item.buying_price,
@@ -209,26 +207,33 @@ const ProductVariantOption = ({
     };
   });
 
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
   useEffect(() => {
-    const variantDatasource =
-      combination?.map((item, index) => {
-        console.log(item);
-        return {
-          key: item.name,
-          name: item.name,
-          sku: data?.[index]?.sku ?? item.sku,
-          iemi: data?.[index]?.iemi ?? '',
-          price: data?.[index]?.price ?? item?.price,
-          cost: data?.[index]?.cost ?? item?.cost,
-          variant_options: item.variant_options,
-        };
-      }) ?? [];
+    if (!editData && !isEditDrawerOpen) {
+      const variantDatasource =
+        combination?.map((item, index) => {
+          console.log(item);
+          return {
+            key: item.name,
+            name: item.name,
+            sku: data?.[index]?.sku ?? item.sku,
+            iemi: data?.[index]?.iemi ?? '',
+            price: data?.[index]?.price ?? item?.price,
+            cost: data?.[index]?.cost ?? item?.cost,
+            variant_options: item.variant_options,
+          };
+        }) ?? [];
 
-    setData(variantDatasource);
+      setData(variantDatasource);
 
-    const initialSelectedKeys = variantDatasource.map((item) => item.key);
-    setIsSelected(initialSelectedKeys);
-    setSelectedRowData(variantDatasource);
+      const initialSelectedKeys = variantDatasource.map((item) => item.key);
+      setIsSelected(initialSelectedKeys);
+      setSelectedRowData(variantDatasource);
+    }
+    //  else {
+
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [combination]);
 
@@ -275,8 +280,18 @@ const ProductVariantOption = ({
       console.log(editData?.variants);
       console.log(editData);
 
-      const data = formatProductData(editData.variants, editData.name);
+      const data = formatProductData(
+        editData.variants,
+        editData.name,
+        editData?.sku
+      );
       console.log(data);
+
+      setData(data);
+
+      const initialSelectedKeys = data.map((item) => item.key);
+      setIsSelected(initialSelectedKeys);
+      setSelectedRowData(data);
       // const variantDatasource =
     }
   }, [editData]);
@@ -302,6 +317,8 @@ const ProductVariantOption = ({
           const item = newData[index];
           newData.splice(index, 1, { ...item, ...row });
           setData(newData);
+          console.log(newData);
+          setSelectedRowData(newData);
           setEditingKey('');
         } else {
           newData.push(row);

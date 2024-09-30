@@ -6,7 +6,7 @@ import {
 import { useUrlIndexPermission } from '../../../utilities/lib/getPermission';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
-export const CashierComponent = ({ required = true }) => {
+export const CashierComponent = ({ required = true, label = 'Cashier' }) => {
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
@@ -25,7 +25,7 @@ export const CashierComponent = ({ required = true }) => {
   }));
   return (
     <CustomSelect
-      label="Cashier"
+      label={label}
       options={options}
       isLoading={isLoading}
       name="cashier_id"

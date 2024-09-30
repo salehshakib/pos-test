@@ -119,7 +119,7 @@ const StockRequestTable = ({
     const statusData = {
       action_id: detailsId,
       status: 'Accepted',
-      transfer_status: 'Transferred',
+      transfer_status: 'Pending',
       for: 'StockRequest',
     };
 
@@ -139,25 +139,25 @@ const StockRequestTable = ({
   };
 
   const handleTransfer = async () => {
-    setTransferLoading(true);
-    const statusData = {
-      action_id: detailsId,
-      status: 'Accepted',
-      transfer_status: 'Transferred',
-      for: 'StockRequest',
-    };
+    // setTransferLoading(true);
+    // const statusData = {
+    //   action_id: detailsId,
+    //   status: 'Accepted',
+    //   transfer_status: 'Pending',
+    //   for: 'StockRequest',
+    // };
 
-    const { data } = await updateStockRequestStatus(statusData);
+    // const { data } = await updateStockRequestStatus(statusData);
 
-    setTransferLoading(false);
-    if (data?.success) {
-      hideModal();
-      navigate('/inventory/transfer', {
-        state: {
-          id: detailsId,
-        },
-      });
-    }
+    // setTransferLoading(false);
+    // if (data?.success) {
+    hideModal();
+    navigate('/inventory/transfer', {
+      state: {
+        id: detailsId,
+      },
+    });
+    // }
   };
 
   const handleReject = async () => {

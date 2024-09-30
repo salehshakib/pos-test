@@ -32,6 +32,7 @@ const productReqTable = [
     title: 'Alert Qty',
     dataIndex: 'alertQty',
     key: 'alertQty',
+    align: 'center',
     render: (alertQty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {alertQty}
@@ -42,6 +43,7 @@ const productReqTable = [
     title: 'Request Qty',
     dataIndex: 'reqQty',
     key: 'reqQty',
+    align: 'center',
     render: (reqQty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {reqQty}
@@ -83,7 +85,11 @@ export const StockRequestDetails = ({ id, ...props }) => {
   });
 
   return (
-    <CustomModal {...props} status={data?.status}>
+    <CustomModal
+      {...props}
+      transferStatus={data?.transfer_status}
+      requestStatus={data?.status}
+    >
       {isFetching ? (
         <Spin className="my-10 flex w-full items-center justify-center" />
       ) : (

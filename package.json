@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev-local": "cross-env USE_LOCAL_IP=true vite",
     "dev-saleh": "cross-env USE_LOCAL_IP=true vite",
-    "dev-mahabub": "vite --host 192.168.1.7 --port 3000",
+    "dev-mahabub": "vite --host 192.168.1.11 --port 3000",
     "preview": "vite preview",
     "build": "vite build",
     "lint": "eslint */**/*.{js,ts,tsx,jsx}",

@@ -145,8 +145,8 @@ export const CustomSaleProductComponent = forwardRef(
 
         const saleProducts = data?.sale_products?.map((product) => ({
           id: product?.product_variants?.id,
-          name: product?.product_variants?.products?.name,
-          sku: product?.product_variants?.products?.sku,
+          name: product?.product_variants?.name,
+          sku: product?.product_variants?.sku,
           selling_price: product?.product_variants?.products?.selling_price,
           sale_unit_id: product?.product_variants?.sale_unit_id,
           sale_units: product?.product_variants?.products?.sale_units,

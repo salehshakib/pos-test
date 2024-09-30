@@ -79,8 +79,8 @@ export const StockTransfer = () => {
   useEffect(() => {
     if (data) {
       form.setFieldsValue({
-        from_warehouse_id: data.from_warehouse_id,
-        to_warehouse_id: data.to_warehouse_id,
+        from_warehouse_id: data.to_warehouse_id,
+        to_warehouse_id: data.from_warehouse_id,
       });
 
       const { stock_request_products } = data ?? {};
@@ -122,23 +122,22 @@ export const StockTransfer = () => {
     const orderTax = calculateTotalTax(totalPrice, values.tax_rate);
 
     const totalQty =
-      Object.values(formValues.product_list?.qty).reduce(
+      Object.values(product_list?.qty).reduce(
         (acc, cur) => acc + parseInt(cur),
         0
       ) ?? 0;
 
-    const totalTax =
-      Object.values(formValues.product_list?.tax).reduce(
-        (acc, cur) => acc + parseFloat(cur),
-        0
-      ) ?? 0;
+    const totalTax = Object.values(product_list?.tax).reduce((acc, cur) => {
+      const parsedValue = parseFloat(cur);
+      return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+    }, 0);
 
     const postObj = {
       ...values,
       shipping_cost: decimalConverter(shipping_cost),
       item: productListArray.length,
       total_qty: totalQty,
-      total_tax: decimalConverter(totalTax),
+      total_tax: decimalConverter(totalTax) ?? 0,
       total_cost: decimalConverter(totalPrice),
       tax: decimalConverter(orderTax),
       change: decimalConverter(

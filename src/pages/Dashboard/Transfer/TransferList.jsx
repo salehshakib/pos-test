@@ -55,6 +55,7 @@ const columns = [
     title: 'Quantity',
     dataIndex: 'qty',
     key: 'qty',
+    align: 'center',
     render: (qty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">{qty}</span>
     ),
@@ -63,6 +64,7 @@ const columns = [
     title: 'Product Cost',
     dataIndex: 'product_cost',
     key: 'product_cost',
+    align: 'right',
     render: (productCost) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {productCost}
@@ -72,6 +74,7 @@ const columns = [
   {
     title: 'Product VAT',
     dataIndex: 'product_tax',
+    align: 'right',
     key: 'product_tax',
     render: (productTax) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
@@ -82,6 +85,7 @@ const columns = [
   {
     title: 'Grand Total',
     dataIndex: 'grand_total',
+    align: 'right',
     key: 'grand_total',
     render: (grandTotal) => (
       <span className="text-dark   text-xs font-medium md:text-sm">

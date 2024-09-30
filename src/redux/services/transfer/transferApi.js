@@ -1,5 +1,6 @@
 // Import necessary dependencies
 import {
+  STOCK_REQUEST,
   TRANSFER,
   WAREHOUSE,
 } from '../../../utilities/apiEndpoints/inventory.api';
@@ -80,7 +81,7 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: TRANSFER }] : [];
+        return result ? [{ type: TRANSFER }, { type: STOCK_REQUEST }] : [];
       },
     }),
 

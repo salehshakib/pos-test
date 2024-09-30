@@ -6,6 +6,7 @@ import { showCurrency } from '../../../utilities/lib/currency';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { onDelete } from '../../../utilities/lib/productTable/counters';
+import { updateFormValues } from '../../../utilities/lib/updateFormValues/updateFormValues';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
 import { ProductTable } from '../../Shared/ProductControllerComponent/ProductTable';
 
@@ -23,7 +24,12 @@ const columns = [
         const productId = id.split('_')[1];
 
         if (parseInt(record?.requestedStock) <= parseInt(record?.stock)) {
-          record.updateProductList(productId, checked, record.stock);
+          record.updateProductList(
+            record.id,
+            checked,
+            record.requestedStock,
+            record.total
+          );
         } else {
           record.form.setFieldValue(['delete', record?.id], false);
           return openNotification(
@@ -125,77 +131,77 @@ const columns = [
   },
 ];
 
-function setFormValuesId(
-  id,
-  purchase_unit_id,
-  unit_cost,
-  purchase_units,
-  formValues,
-  productUnits,
-  tax_id,
-  // eslint-disable-next-line no-unused-vars
-  taxes
-) {
-  const sanitizeIntValue = (value) => {
-    const number = parseInt(value);
-    return isNaN(number) ? 0 : number;
-  };
+// function setFormValuesId(
+//   id,
+//   purchase_unit_id,
+//   unit_cost,
+//   purchase_units,
+//   formValues,
+//   productUnits,
+//   tax_id,
+//   // eslint-disable-next-line no-unused-vars
+//   taxes
+// ) {
+//   const sanitizeIntValue = (value) => {
+//     const number = parseInt(value);
+//     return isNaN(number) ? 0 : number;
+//   };
 
-  const sanitizeFloatValue = (value) => {
-    const number = parseFloat(value);
-    return isNaN(number) ? 0 : number;
-  };
+//   const sanitizeFloatValue = (value) => {
+//     const number = parseFloat(value);
+//     return isNaN(number) ? 0 : number;
+//   };
 
-  if (id) {
-    formValues.product_list.qty[id] = sanitizeIntValue(
-      formValues.product_list.qty?.[id] || 1
-    );
+//   if (id) {
+//     formValues.product_list.qty[id] = sanitizeIntValue(
+//       formValues.product_list.qty?.[id] || 1
+//     );
 
-    formValues.product_list.net_unit_cost[id] =
-      sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
-      sanitizeFloatValue(unit_cost) ||
-      '0';
+//     formValues.product_list.net_unit_cost[id] =
+//       sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) ||
+//       sanitizeFloatValue(unit_cost) ||
+//       '0';
 
-    // formValues.product_list.discount[id] = sanitizeFloatValue(
-    //   formValues.product_list.discount?.[id] ?? 0
-    // );
+//     // formValues.product_list.discount[id] = sanitizeFloatValue(
+//     //   formValues.product_list.discount?.[id] ?? 0
+//     // );
 
-    formValues.product_list.tax_rate[id] = sanitizeIntValue(
-      formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
-    );
+//     formValues.product_list.tax_rate[id] = sanitizeIntValue(
+//       formValues.product_list.tax_rate?.[id] ?? taxes?.rate ?? 0
+//     );
 
-    formValues.product_list.tax[id] = sanitizeFloatValue(
-      (
-        (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
-          sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
-          sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
-          sanitizeIntValue(formValues.product_list.qty?.[id])) /
-        100
-      ).toFixed(2)
-    );
+//     formValues.product_list.tax[id] = sanitizeFloatValue(
+//       (
+//         (sanitizeIntValue(productUnits.purchase_units?.[id] ?? 1) *
+//           sanitizeFloatValue(formValues.product_list.tax_rate?.[id]) *
+//           sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id]) *
+//           sanitizeIntValue(formValues.product_list.qty?.[id])) /
+//         100
+//       ).toFixed(2)
+//     );
 
-    const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
+//     const purchaseUnitsOperationValue = purchase_units?.operation_value ?? 1;
 
-    productUnits.purchase_units[id] =
-      sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
-      purchaseUnitsOperationValue;
+//     productUnits.purchase_units[id] =
+//       sanitizeIntValue(productUnits?.purchase_units?.[id]) ||
+//       purchaseUnitsOperationValue;
 
-    formValues.product_list.total[id] =
-      sanitizeIntValue(productUnits.purchase_units?.[id]) *
-        sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
-        sanitizeIntValue(formValues.product_list.qty?.[id]) -
-      //   sanitizeFloatValue(formValues.product_list.discount?.[id]) +
-      sanitizeFloatValue(formValues.product_list.tax?.[id]);
+//     formValues.product_list.total[id] =
+//       sanitizeIntValue(productUnits.purchase_units?.[id]) *
+//         sanitizeFloatValue(formValues.product_list.net_unit_cost?.[id] ?? 0) *
+//         sanitizeIntValue(formValues.product_list.qty?.[id]) -
+//       //   sanitizeFloatValue(formValues.product_list.discount?.[id]) +
+//       sanitizeFloatValue(formValues.product_list.tax?.[id]);
 
-    formValues.product_list.purchase_unit_id[id] =
-      formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
+//     formValues.product_list.purchase_unit_id[id] =
+//       formValues.product_list.purchase_unit_id?.[id] ?? purchase_unit_id;
 
-    if (formValues?.product_list?.tax_id) {
-      formValues.product_list.tax_id[id] =
-        formValues.product_list.tax_id?.[id] ?? tax_id;
-    }
-  }
-}
+//     if (formValues?.product_list?.tax_id) {
+//       formValues.product_list.tax_id[id] =
+//         formValues.product_list.tax_id?.[id] ?? tax_id;
+//     }
+//   }
+// }
 
 export const StockTransferProductTable = ({
   formValues,
@@ -206,7 +212,7 @@ export const StockTransferProductTable = ({
   form,
   setUpdatedProductList,
 }) => {
-  const updateProductList = (productId, isChecked, qty) => {
+  const updateProductList = (productId, isChecked, qty, total) => {
     setUpdatedProductList((prevList) => {
       if (isChecked) {
         return {
@@ -237,7 +243,7 @@ export const StockTransferProductTable = ({
             },
             total: {
               ...prevList.product_list?.total,
-              [productId]: formValues.product_list?.total?.[productId],
+              [productId]: total,
             },
             tax_id: {
               ...prevList.product_list?.tax_id,
@@ -271,33 +277,28 @@ export const StockTransferProductTable = ({
   const currency = useSelector(useCurrency);
 
   const dataSource = products?.map((item) => {
-    const { products } = item;
+    const { product_variants } = item;
+
     const warehouseId = form.getFieldValue('from_warehouse_id');
 
     const {
       id,
       buying_price: unit_cost,
-      purchase_unit_id,
       purchase_units,
-      tax_id,
       taxes,
       tax_method,
-    } = products ?? {};
+    } = product_variants ?? {};
 
-    setFormValuesId(
+    updateFormValues(
       id,
-      purchase_unit_id,
       calculateOriginalPrice(unit_cost, taxes?.rate, tax_method),
       purchase_units,
-      formValues,
-      productUnits,
-      tax_id,
       taxes,
-      tax_method
+      formValues
     );
 
     return {
-      id: item?.id,
+      id: id,
       name: item?.product_variants?.name,
       sku: item?.product_variants?.sku,
       unitCost: showCurrency(
@@ -307,6 +308,8 @@ export const StockTransferProductTable = ({
       delete: true,
       tax: showCurrency(formValues.product_list.tax[id], currency),
       subTotal: showCurrency(formValues.product_list.total[id], currency),
+      total: formValues.product_list.total[id],
+      purchase_unit_id: formValues.product_list.purchase_unit_id[id],
       onDelete,
       products,
       setProducts,

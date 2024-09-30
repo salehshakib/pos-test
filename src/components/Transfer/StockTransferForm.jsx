@@ -28,21 +28,20 @@ import { StockTransferProductTable } from './overview/StockTransferProductTable'
 
 const options = [
   {
-    value: 'Sent',
+    value: 'Pending',
+    label: 'Pending',
+  },
+  {
+    value: 'Send',
     label: 'Send',
+  },
+  {
+    value: 'Transferred',
+    label: 'Transferred',
   },
 ];
 
-// const useSetFieldValue = (field, value) => {
-//   const form = Form.useFormInstance();
-//   useEffect(() => {
-//     form.setFieldValue(field, value);
-//   }, [form, field, value]);
-// };
-
 const FileStatusComponent = ({ form }) => {
-  // useSetFieldValue('status', options[0].value);
-
   useEffect(() => {
     form.setFieldValue('status', options[0].value);
   }, [form]);
@@ -58,8 +57,6 @@ const FileStatusComponent = ({ form }) => {
 };
 
 const TransferDateComponent = ({ form }) => {
-  // useSetFieldValue('date', getCurrentDate);
-
   useEffect(() => {
     form.setFieldValue('date', getCurrentDate);
   }, [form]);
@@ -173,6 +170,8 @@ export const StockTransferForm = ({
 
   useEffect(() => {
     if (!updatedProductList?.product_list) return;
+
+    console.log(updatedProductList);
 
     const calculatedTotalItems =
       Object.keys(updatedProductList?.product_list?.qty).length ?? 0;

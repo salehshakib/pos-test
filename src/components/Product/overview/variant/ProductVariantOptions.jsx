@@ -67,7 +67,7 @@ function formatProductData(data, productName) {
                 });
               } else {
                 acc.push({
-                  attribute_id: attribute.id,
+                  attribute_id: attribute?.id,
                   attribute_name: attribute.name,
                   options: [
                     {

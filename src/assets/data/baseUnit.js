@@ -6,34 +6,10 @@ export const baseUnit = [
   {
     name: 'piece',
     symbol: 'pc',
-    // subunits: [
-    //   {
-    //     name: "piece",
-    //     symbol: "pc",
-    //   },
-    //   {
-    //     name: "dozen",
-    //     symbol: "dz",
-    //   },
-    //   {
-    //     name: "carton",
-    //     symbol: "crt",
-    //   },
-    // ],
   },
   {
     name: 'kilogram',
     symbol: 'kg',
-    // subunits: [
-    //   {
-    //     name: "gram",
-    //     symbol: "g",
-    //   },
-    //   {
-    //     name: "kilogram",
-    //     symbol: "kg",
-    //   },
-    // ],
   },
   {
     name: 'second',

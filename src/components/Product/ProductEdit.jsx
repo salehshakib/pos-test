@@ -36,29 +36,18 @@ function getUniqueAttributeIds(variants) {
   return Array.from(attributeIds);
 }
 
-const getVariantIdsByCombinedName = (variantData, combinedName) => {
-  // Step 1: Split the combined name based on a two-part structure
-  // Assuming the structure is like "ARO 6 ARO 3", split into two parts using regex
-  const nameRegex = /[A-Z]+\s*\d+/g; // This matches sequences like "ARO 6"
-  const names = combinedName.match(nameRegex); // ['ARO 6', 'ARO 3']
-
+const getVariantIdsByCombinedName = (itemData, name) => {
   const ids = [];
 
-  if (names) {
-    names.forEach((name) => {
-      for (const optionGroup of variantData) {
-        // Step 2: Look for a match in the variant data for the full name (ARO 6, ARO 3)
-        const found = optionGroup?.find(
-          (option) => `${option.name}` === name.trim()
-        );
-        if (found) {
-          ids.push(found.id); // Collect the ID if found
-        }
+  itemData.forEach((item) => {
+    item.map((option) => {
+      if (name.includes(option.name)) {
+        ids.push(option.id);
       }
     });
-  }
+  });
 
-  return ids; // Return the collected IDs
+  return ids;
 };
 
 const ProductListEdit = ({ id, setId, current, setCurrent }) => {

@@ -37,9 +37,21 @@ const columns = [
     ),
   },
   {
+    title: 'Opening Balance',
+    dataIndex: 'opening_balance',
+    key: 'opening_balance',
+    align: 'right',
+    render: (opening_balance) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {opening_balance}
+      </span>
+    ),
+  },
+  {
     title: 'Cash in Hand',
     dataIndex: 'cash_in_hand',
     key: 'cash_in_hand',
+    align: 'right',
     render: (cash_in_hand) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {cash_in_hand}

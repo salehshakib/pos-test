@@ -169,6 +169,7 @@ export const RequestProductTable = ({
 
   const dataSource =
     products?.map((product) => {
+      console.log(product);
       const {
         id,
         name,
@@ -183,6 +184,8 @@ export const RequestProductTable = ({
         formValues?.product_list?.min_qty[id] ?? product?.products?.alert_qty;
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
+
+      console.log({ product_qties, stock, warehouseId });
 
       return {
         id,

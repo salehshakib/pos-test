@@ -82,6 +82,10 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const { data, isFetching } = useGetAllProductVariantsQuery(
     {
       params,
+    },
+    {
+      skip: !(warehouseId || warehouseIdFrom),
+      // &&!pathname.includes('stock-request'),
     }
     // {
     //   skip: !(warehouseId || warehouseIdFrom) && !isIgnore,

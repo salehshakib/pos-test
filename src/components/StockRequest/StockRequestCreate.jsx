@@ -1,12 +1,9 @@
 import { Form } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
-import { setLoading } from '../../redux/services/loader/loaderSlice';
-import { useGetAllProductVariantsQuery } from '../../redux/services/product/productApi';
 import { useCreateStockRequestMutation } from '../../redux/services/stockRequest/stockRequestApi';
-import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { StockRequestForm } from './StockRequestForm';
@@ -25,36 +22,35 @@ const StockRequestCreate = () => {
     product_list: { qty: {}, min_qty: {} },
   });
 
-  const warehouseId = Form.useWatch('from_warehouse_id', form);
+  // const warehouseId = Form.useWatch('from_warehouse_id', form);
 
-  const params = useGlobalParams({
-    params: {
-      warehouse_ids: [warehouseId],
-      // need_qty: 1,
-      parent: 1,
-      child: 1,
-      need_alert_qty: 1,
-    },
-  });
+  // const params = useGlobalParams({
+  //   params: {
+  //     warehouse_ids: [warehouseId],
+  //     parent: 1,
+  //     child: 1,
+  //     need_alert_qty: 1,
+  //   },
+  // });
 
-  const { data, isLoading: isLoadingProducts } = useGetAllProductVariantsQuery(
-    { params },
-    { skip: !warehouseId }
-  );
+  // const { data, isLoading: isLoadingProducts } = useGetAllProductVariantsQuery(
+  //   { params },
+  //   { skip: !warehouseId }
+  // );
 
-  useEffect(() => {
-    dispatch(setLoading(isLoadingProducts));
-  }, [dispatch, isLoadingProducts]);
+  // useEffect(() => {
+  //   dispatch(setLoading(isLoadingProducts));
+  // }, [dispatch, isLoadingProducts]);
 
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    if (data) {
-      const list = data?.results?.productvariant;
+  // useEffect(() => {
+  //   if (data) {
+  //     const list = data?.results?.productvariant;
 
-      setProducts(list);
-    }
-  }, [data, warehouseId]);
+  //     setProducts(list);
+  //   }
+  // }, [data, warehouseId]);
 
   const handleSubmit = async (values) => {
     const { from_warehouse_id, to_warehouse_id, note } = values;
@@ -115,7 +111,7 @@ const StockRequestCreate = () => {
         setFormValues={setFormValues}
         products={products}
         setProducts={setProducts}
-        isLoadingProducts={isLoadingProducts}
+        // isLoadingProducts={isLoadingProducts}
       />
     </CustomDrawer>
   );

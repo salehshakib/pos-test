@@ -107,7 +107,10 @@ export const expandedRowRender = (record, data, currency) => {
         qty:
           variant?.product_qties?.length === 0
             ? variant?.qty
-            : variant?.product_qties?.map((item) => item?.qty),
+            : variant?.product_qties?.reduce(
+                (total, item) => total + item.qty,
+                0
+              ),
         cost: showCurrency(variant.buying_price, currency),
         price: showCurrency(variant.selling_price, currency),
         created_at: variant.created_at,

@@ -37,8 +37,10 @@ export const CustomQuantityInput = (props) => {
           prefix={prefix}
           suffix={suffix}
           onChange={onChange}
+          onWheel={(e) => e.target.blur()}
+          min={1}
           controls={false}
-          changeOnWheel={false}
+          // changeOnWheel={false}
           value={value}
         />
       </Form.Item>

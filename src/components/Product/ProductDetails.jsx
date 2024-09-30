@@ -62,7 +62,7 @@ const priceQtyColumn = [
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
-    align: 'center',
+    align: 'right',
     render: (price) => (
       <span className="text-dark   text-xs md:text-sm">{price}</span>
     ),
@@ -71,6 +71,7 @@ const priceQtyColumn = [
 
 export const ProductDetails = ({ id, ...props }) => {
   const { data: warehouses } = useGetWarehousesQuery({});
+  const currency = useSelector(useCurrency);
 
   const { data, isFetching } = useGetProductDetailsQuery(
     {
@@ -99,8 +100,8 @@ export const ProductDetails = ({ id, ...props }) => {
   });
 
   const pricingInfo = useDetailsLayout({
-    buying_price: data?.buying_price,
-    selling_price: data?.selling_price,
+    buying_price: showCurrency(data?.buying_price, currency),
+    selling_price: showCurrency(data?.selling_price, currency),
     profit: data?.profit,
   });
 
@@ -111,8 +112,6 @@ export const ProductDetails = ({ id, ...props }) => {
     daily_sale_qty: data?.daily_sale_qty,
     qty_list: data?.qty_list,
   });
-
-  const currency = useSelector(useCurrency);
 
   const qtyTitle = () => (
     <span className="-ml-2 text-base font-semibold text-black">
@@ -201,13 +200,16 @@ export const ProductDetails = ({ id, ...props }) => {
           <CustomDescription title="Basic Info" items={basicInfo} />
           <CustomDescription title="Category & Units" items={categoryInfo} />
           <CustomDescription title="Inventory Info" items={inventoryInfo} />
+
+          <CustomDescription title="Pricing Info" items={pricingInfo} />
+
           <Table
             {...tableProps}
             title={qtyTitle}
             columns={productQtyColumn}
             dataSource={qtyDataSource}
           />
-          <CustomDescription title="Pricing Info" items={pricingInfo} />
+
           <Table
             {...tableProps}
             title={priceTitle}

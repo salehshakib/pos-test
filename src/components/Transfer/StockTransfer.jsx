@@ -77,10 +77,11 @@ export const StockTransfer = () => {
   const [updatedProductList, setUpdatedProductList] = useState({});
 
   useEffect(() => {
+    console.log(data);
     if (data) {
       form.setFieldsValue({
-        from_warehouse_id: data.from_warehouse_id,
-        to_warehouse_id: data.to_warehouse_id,
+        from_warehouse_id: data.to_warehouse_id,
+        to_warehouse_id: data.from_warehouse_id,
       });
 
       const { stock_request_products } = data ?? {};
@@ -135,6 +136,8 @@ export const StockTransfer = () => {
 
     const postObj = {
       ...values,
+      from_warehouse_id: values.to_warehouse_id,
+      to_warehouse_id: values.from_warehouse_id,
       shipping_cost: decimalConverter(shipping_cost),
       item: productListArray.length,
       total_qty: totalQty,

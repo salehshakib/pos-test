@@ -6,6 +6,7 @@ import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteProductMutation,
+  useDeleteProductVariantMutation,
   useGetAllProductsQuery,
   useUpdateProductStatusMutation,
 } from '../../redux/services/product/productApi';
@@ -81,6 +82,8 @@ const ProductTable = ({
   };
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+  const [deleteProductVariant, { isLoading: isVariantDeleting }] =
+    useDeleteProductVariantMutation();
 
   // deleteVariant
   // const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
@@ -109,11 +112,10 @@ const ProductTable = ({
   };
 
   const handleDeleteVariant = async () => {
-    const { data } = await deleteProduct(deleteVariantId);
+    const { data } = await deleteProductVariant(deleteVariantId);
     if (data?.success) {
       setDeleteModal(false);
       setDeleteVariantId(undefined);
-      // removeDeleteId(setSelectedRows, deleteId);
     }
   };
 
@@ -227,7 +229,7 @@ const ProductTable = ({
         deleteModal={deleteModal}
         hideModal={hideModal}
         handleDelete={deleteVariantId ? handleDeleteVariant : handleDelete}
-        isLoading={isDeleting}
+        isLoading={deleteVariantId ? isVariantDeleting : isDeleting}
       />
     </GlobalUtilityStyle>
   );

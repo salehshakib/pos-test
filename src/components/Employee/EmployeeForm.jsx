@@ -112,7 +112,7 @@ const RoleComponent = () => {
       </Col>
 
       <Col {...mdColLayout}>
-        <CashierComponent required={false} />
+        <CashierComponent label="Cash Counter Cashier" required={false} />
       </Col>
     </>
   );

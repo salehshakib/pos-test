@@ -6,6 +6,7 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from 'styled-components';
 
 import { SITE_LOGO } from '../assets/data/defaultLogo';
+import { logout } from '../redux/services/auth/authSlice';
 import {
   setCompany,
   setDateFormat,
@@ -28,6 +29,7 @@ import { useMenuItems } from '../utilities/lib/getPermission';
 
 const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 10000); // 5 seconds
@@ -93,6 +95,8 @@ export const ProviderConfig = ({ children }) => {
 
       dispatch(setDigits(data?.decimal_point));
       dispatch(setDateFormat(data?.date_format));
+    } else {
+      dispatch(logout());
     }
   }, [data, dispatch]);
 

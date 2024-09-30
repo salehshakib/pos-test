@@ -125,7 +125,7 @@ export const CustomerReport = () => {
   }, [segment]);
 
   const summaryType = {
-    customer_ids: [
+    customer_id: [
       searchParams?.customer_ids ? searchParams?.customer_ids : data?.id,
     ],
   };

@@ -305,12 +305,13 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
 
     if (has_variant) {
+      console.log(variantData);
       // console.log()
       const variantOptions = variantData.selectedRowData.map((item) => {
         return getVariantIdsByCombinedName(item.variant_options, item.name);
       });
 
-      console.log(variantData);
+      console.log(variantData.selectedRowData);
 
       const variantListArray = variantData?.selectedRowData.map(
         (item, index) => {

@@ -106,7 +106,7 @@ function formatVariantsData(variants, attributes) {
         attributesMap[attribute_id] = {
           key: attribute_id.toString(),
           id: attribute_id.toString(),
-          name: attribute.name,
+          name: attribute?.name,
           options: attributes?.find(
             (item) => item.id.toString() === attribute_id.toString()
           ).attribute_options,
@@ -115,7 +115,7 @@ function formatVariantsData(variants, attributes) {
     });
   });
 
-  return Object.values(attributesMap).reverse();
+  return Object.values(attributesMap);
 }
 
 function extractAttributeValues(attributeData) {
@@ -344,9 +344,16 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   useEffect(() => {
     if (editData && attributes) {
+      console.log(attributes);
+
+      console.log(editData?.variants);
       const options = formatVariantsData(editData?.variants, attributes);
 
       const result = extractAttributeValues(editData?.variants);
+
+      console.log(result);
+
+      console.log(options);
 
       setVariantOptions(result.attributeIds);
       setVariantAttributesName(result.attributeValues);

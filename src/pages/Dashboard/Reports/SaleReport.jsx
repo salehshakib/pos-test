@@ -1,6 +1,7 @@
-import { Row } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Modal, Row } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
 
 import { SaleReportTable } from '../../../components/Report/SaleReportTable';
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
@@ -100,6 +101,15 @@ export const SaleReport = () => {
     sale_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
+  const printRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: 'Sale Details',
+  });
+
+  const [openPrint, setOpenPrint] = useState(false);
+
   return (
     <GlobalContainer
       pageTitle="Sell Report"
@@ -110,12 +120,42 @@ export const SaleReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchComponent />}
+      setOpenPrint={setOpenPrint}
     >
       <SaleReportTable
         newColumns={columns}
         searchParams={defaultParams}
         keyword={keyword}
       />
+      {openPrint && (
+        <Modal
+          title={
+            <div className="flex items-center gap-4 mb-10">
+              <h2>Print Report</h2>
+              <Button
+                key={'print'}
+                type="primary"
+                onClick={handlePrint}
+                className="px-12 py-4"
+              >
+                Print
+              </Button>
+            </div>
+          }
+          open={openPrint}
+          onCancel={() => setOpenPrint(false)}
+          footer={null}
+          width={1100}
+        >
+          <div ref={printRef} className="p-10">
+            <SaleReportTable
+              newColumns={columns}
+              searchParams={defaultParams}
+              keyword={keyword}
+            />
+          </div>
+        </Modal>
+      )}
     </GlobalContainer>
   );
 };

@@ -15,7 +15,8 @@ const CustomModal = (props) => {
     loading,
     onOk,
     notification = false,
-    status,
+    transferStatus,
+    requestStatus,
     handlePrint,
     handleDownload,
   } = props ?? {};
@@ -53,7 +54,7 @@ const CustomModal = (props) => {
             {children}
           </div>
           {notification &&
-            (status === 'Pending' ? (
+            (transferStatus === 'Pending' && requestStatus === 'Pending' ? (
               <div className="mt-5 flex w-full items-center justify-end gap-3 shadow-sm">
                 <Button
                   type=""
@@ -92,7 +93,7 @@ const CustomModal = (props) => {
                   Accept & Transfer
                 </Button>
               </div>
-            ) : status === 'Accepted' ? (
+            ) : transferStatus === 'Pending' && requestStatus === 'Accepted' ? (
               <div className="mt-5 flex w-full items-center justify-end gap-3">
                 <Button type="primary" onClick={hideModal}>
                   Close

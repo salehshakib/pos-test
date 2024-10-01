@@ -1,3 +1,4 @@
+import { Modal } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,6 +8,7 @@ import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   useDeleteSaleMutation,
   useGetAllSaleQuery,
+  useGetSaleDetailsQuery,
 } from '../../redux/services/sale/saleApi';
 import { useFormatDate } from '../../utilities/hooks/useFormatDate';
 import { usePagination } from '../../utilities/hooks/usePagination';
@@ -15,6 +17,7 @@ import { showCurrency } from '../../utilities/lib/currency';
 import { formatDate } from '../../utilities/lib/dateFormat';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import SellInvoice from '../Shared/Invoice/SellInvoice';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
 import { SaleDetails } from './SaleDetails';
@@ -34,6 +37,9 @@ export const SaleTable = ({
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
+  const [print, setPrint] = useState(false);
+  const [printId, setPrintId] = useState(undefined);
+
   const [deleteId, setDeleteId] = useState(undefined);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -51,6 +57,22 @@ export const SaleTable = ({
     {
       skip: !useUrlIndexPermission('sale'),
     }
+  );
+
+  const handlePrintModal = (id) => {
+    setPrintId(id);
+    setPrint(true);
+  };
+
+  const { data: saleData, isFetching } = useGetSaleDetailsQuery(
+    {
+      id: printId,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !printId }
   );
 
   const total = data?.meta?.total;
@@ -111,6 +133,7 @@ export const SaleTable = ({
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
+        handlePrintModal,
       };
     }) ?? [];
 
@@ -143,6 +166,19 @@ export const SaleTable = ({
           openModal={detailsModal}
           hideModal={hideModal}
         />
+      )}
+
+      {print && printId && (
+        <Modal
+          open={print}
+          onCancel={() => setPrint(false)}
+          footer={null}
+          width={1000}
+          loading={isFetching}
+          destroyOnClose
+        >
+          <SellInvoice invoice={saleData} />
+        </Modal>
       )}
 
       <DeleteModal

@@ -9,7 +9,7 @@ export const useInvoice = () => {
   const { data } = useGetGeneralSettingsQuery(params);
 
   return {
-    a4_invoice: cleanHtmlData(data?.pos_setting?.a4_invoice),
-    thermal_invoice: cleanHtmlData(data?.pos_setting?.thermal_invoice),
+    a4_invoice: cleanHtmlData(data?.pos_setting[0]?.a4_invoice),
+    thermal_invoice: cleanHtmlData(data?.pos_setting[0]?.thermal_invoice),
   };
 };

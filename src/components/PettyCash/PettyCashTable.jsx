@@ -66,6 +66,7 @@ export const PettyCashTable = ({
         reference_id,
         warehouses,
         opening_balance,
+        closeing_balance,
         status,
       } = item ?? {};
 
@@ -77,7 +78,8 @@ export const PettyCashTable = ({
         open_at: date,
         closes_at: status === 'Open' ? 'N/A' : date,
         warehouse: warehouses?.name,
-        cash_in_hand: showCurrency(opening_balance, currency),
+        opening_balance: showCurrency(opening_balance, currency),
+        cash_in_hand: showCurrency(closeing_balance, currency),
         status: status === 'Open' ? '1' : '0',
         handleDeleteModal,
       };

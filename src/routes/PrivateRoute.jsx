@@ -11,7 +11,6 @@ function PrivateRoute({ children }) {
     dispatch(logout());
     return <Navigate to={'/login'} replace={true} />;
   }
-
   return children;
 }
 

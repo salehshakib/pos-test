@@ -30,8 +30,8 @@ const LoadingComponent = ({ data, primaryColor, isLoading: isDataLoading }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 10000); // 5 seconds
-    return () => clearTimeout(timer); // Cleanup timer on unmount
+    const timer = setTimeout(() => setIsLoading(false), 10000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (isLoading || (isDataLoading && !data)) {

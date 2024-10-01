@@ -181,8 +181,6 @@ export const InitialStockComponent = ({
 
   const { data } = useGetWarehousesQuery({});
 
-  console.log(products);
-
   const dataSource =
     products?.map((product) => {
       const { id, name, warehouse_id } = product;
@@ -213,6 +211,13 @@ export const InitialStockComponent = ({
     form.setFieldsValue(formValues);
   }, [form, formValues, products]);
 
+  const tableStyle = {
+    scroll: {
+      x: 1000,
+      y: '50vh',
+    },
+  };
+
   return (
     <ProductController
       productId={productId}
@@ -220,6 +225,7 @@ export const InitialStockComponent = ({
       dataSource={dataSource}
       products={products}
       setProducts={setProducts}
+      tableStyle={tableStyle}
     />
   );
 };

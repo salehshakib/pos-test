@@ -1,4 +1,5 @@
 import { Skeleton, theme } from 'antd';
+import { PiWarehouse } from 'react-icons/pi';
 
 import warehouseLogo from '../../assets/data/warehouseLogo';
 import {
@@ -14,8 +15,14 @@ const SingleNotificationComponent = ({ item, handleReadNotification }) => {
       onClick={() => handleReadNotification(item)}
       className="rounded-lg p-2 duration-300 hover:cursor-pointer hover:bg-[#f5f5f5] hover:shadow-md"
     >
-      <div className="flex w-full items-start gap-2">
-        <img src={warehouseLogo} className="w-12 rounded-full shadow-md" />
+      <div className="flex w-full items-center gap-2">
+        {/* <img src={warehouseLogo} className="w-12 rounded-full shadow-md" /> */}
+        <div
+          className="border rounded-full p-2"
+          style={{ borderColor: token.colorPrimary }}
+        >
+          <PiWarehouse size={28} />
+        </div>
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-1 font-medium">
             <div>{item?.data?.message}</div>

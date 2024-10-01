@@ -8,7 +8,12 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import BrandForm from './BrandForm';
 
-const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
+const BrandCreate = ({
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+  setFetchData,
+}) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -35,6 +40,7 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
     if (data?.success) {
       if (subDrawer && isSubDrawerOpen) {
+        setFetchData(true);
         handleCloseSubDrawer();
         subForm.resetFields();
       } else {
@@ -65,6 +71,7 @@ const BrandCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
         fields={errorFields}
         form={subDrawer ? subForm : form}
         onClose={subDrawer && handleCloseSubDrawer}
+        // type={subDrawer && 'Brand'}
       />
     </CustomDrawer>
   );

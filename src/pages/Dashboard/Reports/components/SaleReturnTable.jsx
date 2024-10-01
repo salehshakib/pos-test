@@ -22,6 +22,8 @@ export const SaleReturnTable = ({
   setSummaryData,
   searchParams,
   segment,
+  showPaging,
+  action = true,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -34,7 +36,7 @@ export const SaleReturnTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       sale_return_daterange:
@@ -107,6 +109,8 @@ export const SaleReturnTable = ({
         // isRowSelection={true}
         status={false}
         created_at={false}
+        action={action}
+        showPaging={showPaging}
       />
 
       {detailsId && (

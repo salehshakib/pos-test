@@ -10,6 +10,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Button, Col, Form, Row, Table } from 'antd';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 
 import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import { useGetAllVariantsQuery } from '../../../redux/services/variant/variantApi';
@@ -21,6 +22,8 @@ import { generateRandomCode } from '../../../utilities/lib/generateCode';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomCheckbox from '../../Shared/Checkbox/CustomCheckbox';
 import CustomSelect from '../../Shared/Select/CustomSelect';
+import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
+import { VariantCreate } from '../../Variant/VariantCreate';
 import ProductVariantOption from './variant/ProductVariantOptions';
 
 const updateVariantOptions = (
@@ -115,9 +118,39 @@ function formatVariantsData(variants, attributes) {
     });
   });
 
-  return Object.values(attributesMap);
+  return Object.values(attributesMap).reverse();
 }
 
+// function extractAttributeValues(attributeData) {
+//   const attributeValues = {};
+//   const attributeIds = {};
+
+//   attributeData.forEach((product) => {
+//     product.product_variant_attribute_options.forEach((variant) => {
+//       const attributeId = variant.attribute_option.attribute_id;
+//       const attributeName = variant.attribute_option.name;
+//       const optionId = variant.attribute_option.id.toString();
+//       if (!attributeValues[attributeId]) {
+//         attributeValues[attributeId] = [];
+//       }
+//       if (!attributeValues[attributeId].includes(attributeName)) {
+//         attributeValues[attributeId].push(attributeName);
+//       }
+
+//       if (!attributeIds[attributeId]) {
+//         attributeIds[attributeId] = new Set();
+//       }
+//       attributeIds[attributeId].add(optionId);
+//     });
+//   });
+
+//   // Convert Sets back to arrays
+//   for (const key in attributeIds) {
+//     attributeIds[key] = Array.from(attributeIds[key]);
+//   }
+
+//   return { attributeValues, attributeIds };
+// }
 function extractAttributeValues(attributeData) {
   const attributeValues = {};
   const attributeIds = {};
@@ -127,6 +160,8 @@ function extractAttributeValues(attributeData) {
       const attributeId = variant.attribute_option.attribute_id;
       const attributeName = variant.attribute_option.name;
       const optionId = variant.attribute_option.id.toString();
+
+      // Add attribute value to the values object
       if (!attributeValues[attributeId]) {
         attributeValues[attributeId] = [];
       }
@@ -134,17 +169,15 @@ function extractAttributeValues(attributeData) {
         attributeValues[attributeId].push(attributeName);
       }
 
+      // Add attribute option ID to the IDs object
       if (!attributeIds[attributeId]) {
-        attributeIds[attributeId] = new Set();
+        attributeIds[attributeId] = [];
       }
-      attributeIds[attributeId].add(optionId);
+      if (!attributeIds[attributeId].includes(optionId)) {
+        attributeIds[attributeId].push(optionId);
+      }
     });
   });
-
-  // Convert Sets back to arrays
-  for (const key in attributeIds) {
-    attributeIds[key] = Array.from(attributeIds[key]);
-  }
 
   return { attributeValues, attributeIds };
 }
@@ -306,6 +339,40 @@ const VariantAttributeTable = ({
   );
 };
 
+const CreateVariantAttribute = ({ options, isLoading, onSelect }) => {
+  const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
+
+  const handleOpenSubDrawer = () => {
+    setIsSubDrawerOpen(true);
+  };
+
+  const handleCloseSubDrawer = () => {
+    setIsSubDrawerOpen(false);
+  };
+
+  return (
+    <>
+      <CustomSelectButton
+        label={'Variant Attributes'}
+        options={options}
+        icon={<FaPlus className="text-xl" />}
+        onClick={handleOpenSubDrawer}
+        isLoading={isLoading}
+        name={'attribute_ids'}
+        mode="multiple"
+        onChange={(value, option) => onSelect(value, option)}
+        required={'true'}
+      />
+
+      <VariantCreate
+        subDrawer={true}
+        isSubDrawerOpen={isSubDrawerOpen}
+        handleCloseSubDrawer={handleCloseSubDrawer}
+      />
+    </>
+  );
+};
+
 const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const params = useGlobalParams({
     isRelationalParams: true,
@@ -378,13 +445,10 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   return (
     <>
-      <CustomSelect
-        label={'Variant Attributes'}
+      <CreateVariantAttribute
         options={options}
         isLoading={isLoading}
-        name={'attribute_ids'}
-        mode="multiple"
-        onChange={(value, option) => onSelect(value, option)}
+        onSelect={onSelect}
       />
 
       <VariantAttributeTable

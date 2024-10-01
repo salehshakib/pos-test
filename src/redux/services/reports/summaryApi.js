@@ -1,5 +1,5 @@
 // Import necessary dependencies
-import { PRODUCT } from '../../../utilities/apiEndpoints/inventory.api';
+import { PRODUCT_VARIANTS } from '../../../utilities/apiEndpoints/inventory.api';
 import { COUNTER, SUMMARY } from '../../../utilities/apiEndpoints/report.api';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -21,14 +21,14 @@ const summaryApi = baseApi.injectEndpoints({
 
     getAlertReport: build.query({
       query: ({ params }) => ({
-        url: `/${PRODUCT}`,
+        url: `/${PRODUCT_VARIANTS}`,
         method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, err, { params }) => [
-        { type: PRODUCT, ...params },
-        PRODUCT,
+        { type: PRODUCT_VARIANTS, ...params },
+        PRODUCT_VARIANTS,
       ],
     }),
 

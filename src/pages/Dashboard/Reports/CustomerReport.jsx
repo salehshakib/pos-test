@@ -1,5 +1,16 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
-import { useEffect, useState } from 'react';
+import {
+  Button,
+  Col,
+  Descriptions,
+  Empty,
+  Form,
+  Modal,
+  Row,
+  Spin,
+  Tabs,
+} from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 import { CustomerFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
@@ -178,6 +189,15 @@ export const CustomerReport = () => {
     segment,
   };
 
+  const printRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: 'Customer Details',
+  });
+
+  const [openPrint, setOpenPrint] = useState(false);
+
   return (
     <GlobalContainer
       pageTitle="Customer Report"
@@ -187,6 +207,7 @@ export const CustomerReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchFilterComponent />}
+      setOpenPrint={setOpenPrint}
     >
       {!customerId ? (
         <>
@@ -207,7 +228,7 @@ export const CustomerReport = () => {
                 <Spin className="flex h-full w-full items-center justify-center py-5" />
               ) : (
                 <Descriptions
-                  title="Supplier Details"
+                  title="Customer Details"
                   layout=""
                   items={customerItems}
                 />
@@ -250,6 +271,72 @@ export const CustomerReport = () => {
           )}
         </>
       )}
+
+      <Modal
+        title={
+          <div className="flex items-center gap-4 mb-10">
+            <h2>Print Report</h2>
+            <Button
+              key={'print'}
+              type="primary"
+              onClick={handlePrint}
+              className="px-12 py-4"
+            >
+              Print
+            </Button>
+          </div>
+        }
+        open={openPrint}
+        onCancel={() => setOpenPrint(false)}
+        footer={null}
+        width={1100}
+      >
+        {customerId && (
+          <>
+            <div ref={printRef} className="p-10">
+              <div className="mb-5 grid w-full grid-cols-1">
+                <div className="rounded-md border p-4 shadow-sm">
+                  {isFetching ? (
+                    <Spin className="flex h-full w-full items-center justify-center py-5" />
+                  ) : (
+                    <Descriptions
+                      title="Customer Details"
+                      layout=""
+                      items={customerItems}
+                    />
+                  )}
+                </div>
+              </div>
+              {isFetching ? (
+                <Spin className="flex h-full w-full items-center justify-center py-10" />
+              ) : data ? (
+                <div className="flex flex-col justify-center items-center">
+                  <span className="text-center font-bold text-xl mt-4">
+                    Sell Table
+                  </span>
+                  <SaleTable
+                    {...props}
+                    summary={'customer,sale'}
+                    showPaging={false}
+                    action={false}
+                  />
+                  <span className="text-center font-bold text-xl mt-4">
+                    Sell Return Table
+                  </span>
+                  <SaleReturnTable
+                    {...props}
+                    summary={'customer,sale-return'}
+                    showPaging={false}
+                    action={false}
+                  />
+                </div>
+              ) : (
+                <Empty />
+              )}
+            </div>
+          </>
+        )}
+      </Modal>
     </GlobalContainer>
   );
 };

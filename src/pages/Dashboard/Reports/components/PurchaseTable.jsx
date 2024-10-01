@@ -22,7 +22,8 @@ export const PurchaseTable = ({
   setSummaryData,
   searchParams,
   segment,
-  pagination: isPagination,
+  showPaging,
+  action = true,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -35,7 +36,7 @@ export const PurchaseTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...(isPagination ? pagination : {}),
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       purchase_daterange:
@@ -113,12 +114,13 @@ export const PurchaseTable = ({
         pagination={pagination}
         updatePage={updatePage}
         updatePageSize={updatePageSize}
+        showPaging={showPaging}
         // setSelectedRows={setSelectedRows}
         isLoading={isLoading}
         // isRowSelection={true}
         status={false}
         created_at={false}
-        // action={false}
+        action={action}
       />
 
       {detailsId && (

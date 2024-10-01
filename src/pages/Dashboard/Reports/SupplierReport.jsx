@@ -1,5 +1,16 @@
-import { Button, Col, Descriptions, Empty, Form, Row, Spin, Tabs } from 'antd';
-import { useEffect, useState } from 'react';
+import {
+  Button,
+  Col,
+  Descriptions,
+  Empty,
+  Form,
+  Modal,
+  Row,
+  Spin,
+  Tabs,
+} from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 import { SupplierFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
 import CustomForm from '../../../components/Shared/Form/CustomForm';
@@ -181,6 +192,15 @@ export const SupplierReport = () => {
     segment,
   };
 
+  const printRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: 'Supplier Details',
+  });
+
+  const [openPrint, setOpenPrint] = useState(false);
+
   return (
     <GlobalContainer
       pageTitle="Supplier Report"
@@ -190,6 +210,7 @@ export const SupplierReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchFilterComponent />}
+      setOpenPrint={setOpenPrint}
     >
       {!supplierId ? (
         <>
@@ -210,7 +231,7 @@ export const SupplierReport = () => {
                 <Spin className="flex h-full w-full items-center justify-center py-5" />
               ) : (
                 <Descriptions
-                  title="Customer Details"
+                  title="Supplier Details"
                   layout=""
                   items={supplierItems}
                 />
@@ -271,6 +292,90 @@ export const SupplierReport = () => {
           )}
         </>
       )}
+
+      <Modal
+        title={
+          <div className="flex items-center gap-4 mb-10">
+            <h2>Print Report</h2>
+            <Button
+              key={'print'}
+              type="primary"
+              onClick={handlePrint}
+              className="px-12 py-4"
+            >
+              Print
+            </Button>
+          </div>
+        }
+        open={openPrint}
+        onCancel={() => setOpenPrint(false)}
+        footer={null}
+        width={1100}
+      >
+        {supplierId && (
+          <>
+            <div ref={printRef} className="p-10">
+              <div className="mb-5 grid w-full grid-cols-1">
+                <div className="rounded-md border p-4 shadow-sm">
+                  {isFetching ? (
+                    <Spin className="flex h-full w-full items-center justify-center py-5" />
+                  ) : (
+                    <Descriptions
+                      title="Supplier Details"
+                      layout=""
+                      items={supplierItems}
+                    />
+                  )}
+                </div>
+              </div>
+              {isFetching ? (
+                <Spin className="flex h-full w-full items-center justify-center py-10" />
+              ) : data ? (
+                <div className="flex flex-col justify-center items-center">
+                  <span className="text-center font-bold text-xl mt-4">
+                    Purchase Table
+                  </span>
+                  <PurchaseTable
+                    {...props}
+                    summary={'supplier,purchase'}
+                    action={false}
+                    showPaging={false}
+                  />
+                  <span className="text-center font-bold text-xl mt-4">
+                    Quoation Table
+                  </span>
+                  <QuotationTable
+                    {...props}
+                    summary={'supplier,quotation'}
+                    action={false}
+                    showPaging={false}
+                  />
+                  <span className="text-center font-bold text-xl mt-4">
+                    Puchase Return Table
+                  </span>
+                  <PurchaseReturnTable
+                    {...props}
+                    summary={'supplier,purchase-return'}
+                    action={false}
+                    showPaging={false}
+                  />
+                  <span className="text-center font-bold text-xl mt-4">
+                    Sale Return Table
+                  </span>
+                  <SaleReturnTable
+                    {...props}
+                    summary={'supplier,sale-return'}
+                    action={false}
+                    showPaging={false}
+                  />
+                </div>
+              ) : (
+                <Empty />
+              )}
+            </div>
+          </>
+        )}
+      </Modal>
     </GlobalContainer>
   );
 };

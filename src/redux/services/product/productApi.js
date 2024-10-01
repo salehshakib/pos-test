@@ -51,6 +51,18 @@ const productApi = baseApi.injectEndpoints({
       providesTags: (result, error, { id }) => [{ type: PRODUCT, id }],
     }),
 
+    getProductVariantDetails: build.query({
+      query: ({ id, params }) => {
+        return {
+          url: `${PRODUCT}/variants/show/${id}`,
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (response) => verifyToken(response.data),
+      providesTags: (result, error, { id }) => [{ type: PRODUCT, id }],
+    }),
+
     createProduct: build.mutation({
       query: ({ formData }) => {
         return {
@@ -234,4 +246,5 @@ export const {
   useCreateStockManageMutation,
   useUpdateStockManageMutation,
   useDeleteProductVariantMutation,
+  useGetProductVariantDetailsQuery,
 } = productApi;

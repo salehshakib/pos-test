@@ -20,6 +20,8 @@ export const QuotationTable = ({
   setSummaryData,
   searchParams,
   segment,
+  showPaging,
+  action = true,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -32,7 +34,7 @@ export const QuotationTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       created_daterange:
@@ -105,6 +107,8 @@ export const QuotationTable = ({
         updatePageSize={updatePageSize}
         isLoading={isLoading}
         status={false}
+        showPaging={showPaging}
+        action={action}
       />
 
       {detailsId && (

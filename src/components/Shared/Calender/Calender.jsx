@@ -105,16 +105,6 @@ const CustomCalender = ({ onChange, data }) => {
           return (
             <li key={item.id}>
               <Badge status={item.type} text={item.content} />
-              {/* <div className="flex flex-wrap gap-1">
-                <span className="font-semibold">Products:</span>
-                {item.products.map((productItem) => {
-                  return (
-                    <span key={productItem.id}>
-                      {productItem?.products?.name}
-                    </span>
-                  );
-                })}
-              </div> */}
             </li>
           );
         })}
@@ -139,10 +129,10 @@ const CustomCalender = ({ onChange, data }) => {
       const products = purchase_products || sale_products;
 
       return (
-        products?.map((productItem, index) => ({
-          id: `${item?.id}-${productItem?.products?.id}`,
-          name: productItem?.products?.name,
-          sku: productItem?.products?.sku,
+        products?.map((productItem) => ({
+          id: `${item?.id}-${productItem?.product_variants?.id}`,
+          name: productItem?.product_variants?.name,
+          sku: productItem?.product_variants?.sku,
           quantity: productItem?.qty,
           total: productItem?.total,
           currency,

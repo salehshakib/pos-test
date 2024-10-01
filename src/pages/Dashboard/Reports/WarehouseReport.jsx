@@ -108,7 +108,7 @@ export const WarehouseReport = () => {
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
-    documentTitle: 'Product Details',
+    documentTitle: 'Warehouse Details',
   });
 
   const [openPrint, setOpenPrint] = useState(false);
@@ -122,6 +122,7 @@ export const WarehouseReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchFilterComponent />}
+      setOpenPrint={setOpenPrint}
     >
       <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="rounded-md border p-4 shadow-sm">
@@ -198,26 +199,26 @@ export const WarehouseReport = () => {
         <Empty />
       )}
 
-      <Modal
-        title={
-          <div className="flex items-center gap-4 mb-10">
-            <h2>Print Report</h2>
-            <Button
-              key={'print'}
-              type="primary"
-              onClick={handlePrint}
-              className="px-12 py-4"
-            >
-              Print
-            </Button>
-          </div>
-        }
-        open={openPrint}
-        onCancel={() => setOpenPrint(false)}
-        footer={null}
-        width={1100}
-      >
-        {data && (
+      {openPrint && (
+        <Modal
+          title={
+            <div className="flex items-center gap-4 mb-10">
+              <h2>Print Report</h2>
+              <Button
+                key={'print'}
+                type="primary"
+                onClick={handlePrint}
+                className="px-12 py-4"
+              >
+                Print
+              </Button>
+            </div>
+          }
+          open={openPrint}
+          onCancel={() => setOpenPrint(false)}
+          footer={null}
+          width={1100}
+        >
           <>
             <div ref={printRef} className="p-10">
               <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
@@ -292,8 +293,8 @@ export const WarehouseReport = () => {
               )}
             </div>
           </>
-        )}
-      </Modal>
+        </Modal>
+      )}
     </GlobalContainer>
   );
 };

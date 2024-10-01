@@ -48,11 +48,6 @@ const persistedPosReducer = persistReducer(persistConfig, posSlice);
 const persistedDeveloperReducer = persistReducer(persistConfig, developerSlice);
 const persistedUserProfile = persistReducer(persistConfig, userProfileSlice);
 
-// const persistedPaginationReducer = persistReducer(
-//   persistConfig,
-//   paginationSlice
-// );
-
 const persistedCashRegister = persistReducer(persistConfig, cashRegisterSlice);
 
 const persistePettyCash = persistReducer(persistConfig, pettyCashSlice);
@@ -73,7 +68,6 @@ export const store = configureStore({
     pettyCash: persistePettyCash,
     drawer: drawerSlice,
     product: productSlice,
-
     userProfile: persistedUserProfile,
   },
   middleware: (getDefaultMiddleware) =>

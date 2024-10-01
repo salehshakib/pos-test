@@ -29,7 +29,7 @@ export const Notification = () => {
   const { data, refetch, isLoading } = useGetAllNotificationQuery({
     params: {
       warehouse_id: warehouseId,
-      user_id: user.id,
+      user_id: user?.id,
     },
   });
 

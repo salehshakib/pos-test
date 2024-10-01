@@ -209,11 +209,20 @@ const ProductVariantOption = ({
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
+  function findNonMatchingItems(data, combination) {
+    // Create a Set of data names for faster lookup
+    const dataNames = new Set(data?.map((item) => item?.name));
+
+    // Filter the combination array to find non-matching items
+    return combination.filter(
+      (combinationItem) => !dataNames.has(combinationItem.name)
+    );
+  }
+
   useEffect(() => {
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
         combination?.map((item, index) => {
-          console.log(item);
           return {
             key: item.name,
             name: item.name,
@@ -230,71 +239,96 @@ const ProductVariantOption = ({
       const initialSelectedKeys = variantDatasource.map((item) => item.key);
       setIsSelected(initialSelectedKeys);
       setSelectedRowData(variantDatasource);
-    }
-    //  else {
+    } else {
+      console.log(combination);
 
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [combination]);
-
-  useEffect(() => {
-    if (editData) {
-      // variant_options: [
-      //   [
-      //     {
-      //       id: 3,
-      //       attribute_id: 2,
-      //       name: 'ARO 3',
-      //       created_at: '2024-09-28T19:50:34.000000Z',
-      //       updated_at: '2024-09-28T19:50:34.000000Z',
-      //       deleted_at: null
-      //     },
-      //     {
-      //       id: 4,
-      //       attribute_id: 2,
-      //       name: 'ARO 4',
-      //       created_at: '2024-09-28T19:50:34.000000Z',
-      //       updated_at: '2024-09-28T19:50:34.000000Z',
-      //       deleted_at: null
-      //     }
-      //   ],
-      //   [
-      //     {
-      //       id: 1,
-      //       attribute_id: 1,
-      //       name: 'ARO 1',
-      //       created_at: '2024-09-28T19:50:04.000000Z',
-      //       updated_at: '2024-09-28T19:50:04.000000Z',
-      //       deleted_at: null
-      //     },
-      //     {
-      //       id: 2,
-      //       attribute_id: 1,
-      //       name: 'ARO 2',
-      //       created_at: '2024-09-28T19:50:04.000000Z',
-      //       updated_at: '2024-09-28T19:50:04.000000Z',
-      //       deleted_at: null
-      //     }
-      //   ]
-      // ]
       console.log(editData?.variants);
       console.log(editData);
 
-      const data = formatProductData(
+      const formattedData = formatProductData(
         editData.variants,
         editData.name,
         editData?.sku
       );
-      console.log(data);
 
-      setData(data);
+      console.log(formattedData);
+
+      const variantDatasource =
+        combination?.map((item, index) => {
+          return {
+            key: item.name,
+            name: item.name,
+            sku: data?.[index]?.sku ?? item.sku,
+            iemi: data?.[index]?.iemi ?? '',
+            price: data?.[index]?.price ?? item?.price,
+            cost: data?.[index]?.cost ?? item?.cost,
+            variant_options: item.variant_options,
+          };
+        }) ?? [];
+
+      const nonMatchingItems = findNonMatchingItems(
+        formattedData,
+        variantDatasource
+      );
+
+      console.log(nonMatchingItems);
+
+      const newData = [...formattedData, ...nonMatchingItems];
+
+      setData(newData);
+      // setData({ ...data, variants: [...data.variants, ...nonMatchingItems] });
 
       const initialSelectedKeys = data.map((item) => item.key);
       setIsSelected(initialSelectedKeys);
       setSelectedRowData(data);
-      // const variantDatasource =
     }
-  }, [editData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [combination, editData, isEditDrawerOpen]);
+
+  // useEffect(() => {
+  //   if (editData) {
+  //     // variant_options: [
+  //     //   [
+  //     //     {
+  //     //       id: 3,
+  //     //       attribute_id: 2,
+  //     //       name: 'ARO 3',
+  //     //       created_at: '2024-09-28T19:50:34.000000Z',
+  //     //       updated_at: '2024-09-28T19:50:34.000000Z',
+  //     //       deleted_at: null
+  //     //     },
+  //     //     {
+  //     //       id: 4,
+  //     //       attribute_id: 2,
+  //     //       name: 'ARO 4',
+  //     //       created_at: '2024-09-28T19:50:34.000000Z',
+  //     //       updated_at: '2024-09-28T19:50:34.000000Z',
+  //     //       deleted_at: null
+  //     //     }
+  //     //   ],
+  //     //   [
+  //     //     {
+  //     //       id: 1,
+  //     //       attribute_id: 1,
+  //     //       name: 'ARO 1',
+  //     //       created_at: '2024-09-28T19:50:04.000000Z',
+  //     //       updated_at: '2024-09-28T19:50:04.000000Z',
+  //     //       deleted_at: null
+  //     //     },
+  //     //     {
+  //     //       id: 2,
+  //     //       attribute_id: 1,
+  //     //       name: 'ARO 2',
+  //     //       created_at: '2024-09-28T19:50:04.000000Z',
+  //     //       updated_at: '2024-09-28T19:50:04.000000Z',
+  //     //       deleted_at: null
+  //     //     }
+  //     //   ]
+  //     // ]
+
+  //     // const variantDatasource =
+  //   }
+  // }, [editData]);
 
   // Editing handlers
   const edit = (record) => {

@@ -8,10 +8,16 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { VariantForm } from './VariantForm';
 
-export const VariantCreate = () => {
+export const VariantCreate = ({
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+}) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
+
   const [errorFields, setErrorFields] = useState([]);
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
@@ -29,8 +35,13 @@ export const VariantCreate = () => {
     });
 
     if (data?.success) {
-      dispatch(closeCreateDrawer());
-      form.resetFields();
+      if (subDrawer && isSubDrawerOpen) {
+        handleCloseSubDrawer();
+        subForm.resetFields();
+      } else {
+        dispatch(closeCreateDrawer());
+        form.resetFields();
+      }
     }
     if (error) {
       const errorFields = Object.keys(error?.data?.errors).map((fieldName) => ({
@@ -42,12 +53,17 @@ export const VariantCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Attribute'} open={isCreateDrawerOpen}>
+    <CustomDrawer
+      title={'Create Attribute'}
+      open={subDrawer ? isSubDrawerOpen : isCreateDrawerOpen}
+      onClose={subDrawer && handleCloseSubDrawer}
+    >
       <VariantForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
-        form={form}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

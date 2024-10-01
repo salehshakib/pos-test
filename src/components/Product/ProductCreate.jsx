@@ -167,10 +167,6 @@ const ProductCreate = () => {
         return getVariantIdsByCombinedName(item.variant_options, item.name);
       });
 
-      console.log(variantData);
-
-      console.log(variantOptions);
-
       const variantListArray = variantData?.selectedRowData.map(
         (item, index) => {
           return {
@@ -253,6 +249,7 @@ const ProductCreate = () => {
     if (stockListArray.length === 0 && priceListArray.length === 0) {
       dispatch(closeCreateDrawer());
       form.resetFields();
+      setCurrent(0);
       return;
     }
 

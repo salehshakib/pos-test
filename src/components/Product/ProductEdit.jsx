@@ -36,6 +36,21 @@ function getUniqueAttributeIds(variants) {
   return Array.from(attributeIds);
 }
 
+// const getVariantIdsByCombinedName = (itemData, name) => {
+//   const ids = [];
+
+//   console.log(itemData);
+
+//   itemData.forEach((item) => {
+//     item.options.forEach((option) => {
+//       if (name.includes(option.name)) {
+//         ids.push(option.id);
+//       }
+//     });
+//   });
+
+//   return ids;
+// };
 const getVariantIdsByCombinedName = (itemData, name) => {
   const ids = [];
 
@@ -339,21 +354,21 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    appendToFormData(postObj, formData);
+    // appendToFormData(postObj, formData);
 
-    const { data, error } = await updateProduct({ id, formData });
+    // const { data, error } = await updateProduct({ id, formData });
 
-    if (data?.success) {
-      setId(undefined);
-      dispatch(closeEditDrawer());
-      setCurrent(0);
-    }
+    // if (data?.success) {
+    //   setId(undefined);
+    //   dispatch(closeEditDrawer());
+    //   setCurrent(0);
+    // }
 
-    if (error) {
-      const errorFields = errorFieldsUpdate(fields, error);
+    // if (error) {
+    //   const errorFields = errorFieldsUpdate(fields, error);
 
-      setFields(errorFields);
-    }
+    //   setFields(errorFields);
+    // }
   };
 
   const handleStockUpdate = async (values, { formValues }) => {

@@ -20,6 +20,7 @@ export const CustomSelectButton = (props) => {
     //for mb-0
     size = 'large',
     customStyle,
+    onChange,
   } = props;
 
   const filterOption = (input, option) =>
@@ -77,6 +78,7 @@ export const CustomSelectButton = (props) => {
               />
             ) : (
               <Select
+                onChange={onChange}
                 placeholder={`Select ${placeholder ?? label}`}
                 className="custom-selector mt-1"
                 size="large"

@@ -1,24 +1,42 @@
-import { useState } from 'react';
+import { Form } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 import { useGetAllCategoryQuery } from '../../../redux/services/category/categoryApi';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../../utilities/hooks/useParams';
 import CategoryCreate from '../../Category/CategoryCreate';
 import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 
 export const CategoryComponent = () => {
+  const form = Form.useFormInstance();
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+
   const { data, isLoading } = useGetAllCategoryQuery({
-    params: {
-      selectValue: ['id', 'name'],
-    },
+    params,
   });
-  const options = data?.results?.category?.map((item) => {
-    return {
-      value: item.id?.toString(),
-      label: item.name,
-    };
-  });
+
+  const options = useMemo(() => {
+    if (data?.results?.category) {
+      return data.results.category.map((item) => ({
+        value: item.id?.toString(),
+        label: item.name,
+      }));
+    }
+    return [];
+  }, [data]);
+
+  useEffect(() => {
+    if (options.length) {
+      form.setFieldValue('category_id', options[0].value);
+    }
+  }, [form, options]);
 
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);

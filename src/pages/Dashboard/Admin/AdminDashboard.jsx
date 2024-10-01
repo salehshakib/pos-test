@@ -231,6 +231,8 @@ const CashStatistic = ({ data }) => {
           <DashboardCard
             title={'Petty Cash'}
             icon={<SlWallet {...iconProps} />}
+            data={data?.petty_cash}
+            currency={currency}
           />
           <DashboardCard
             title={'Total Expense'}

@@ -21,7 +21,7 @@ import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer'
 import { fullColLayout, rowLayout } from '../../../layout/FormLayout';
 import {
   useGetAllProductVariantsQuery,
-  useGetProductDetailsQuery,
+  useGetProductVariantDetailsQuery,
 } from '../../../redux/services/product/productApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import { useDetailsLayout } from '../../../utilities/hooks/useDetailsLayout';
@@ -114,9 +114,13 @@ export const ProductReport = () => {
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
-  const { data, isFetching } = useGetProductDetailsQuery(
+  const { data, isFetching } = useGetProductVariantDetailsQuery(
     {
       id: productId,
+      params: {
+        parent: 1,
+        child: 1,
+      },
     },
     { skip: !productId }
   );
@@ -204,7 +208,7 @@ export const ProductReport = () => {
                       <div>{data?.type}</div>
                     </Descriptions.Item>
                     <Descriptions.Item label="Details" key={4} span={24}>
-                      <div>{parse(data?.details)}</div>
+                      <div>{data?.details && parse(data?.details)}</div>
                     </Descriptions.Item>
                   </Descriptions>
                 )}

@@ -44,12 +44,11 @@ export const SaleReportTable = ({
     data?.results?.sale?.flatMap((item, index) => {
       const { sale_products, grand_total, sale_at, total_qty, warehouses } =
         item ?? {};
-
       const date = formatDate(sale_at, format);
 
-      return sale_products?.map(({ products }, i) => ({
-        id: `${i}-${index + 1}`, // Ensure unique IDs for each entry
-        product: products?.name,
+      return sale_products?.map((item) => ({
+        id: `${item?.id}-${index + 1}`,
+        product: item?.product_variants?.name,
         warehouse: warehouses?.name,
         soldQty: total_qty,
         saleAt: date,

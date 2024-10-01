@@ -1,4 +1,4 @@
-import { Modal, Row } from 'antd';
+import { Modal, Row, Spin } from 'antd';
 import { useState } from 'react';
 
 import {
@@ -163,8 +163,8 @@ const SaleList = () => {
       <SaleCreate setId={setId} />
 
       {isFetching ? (
-        <div className="text-center text-2xl font-bold">
-          Generating Invoice...
+        <div className="flex items-center justify-center">
+          <Spin />
         </div>
       ) : (
         <SaleTable

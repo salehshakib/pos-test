@@ -22,6 +22,8 @@ export const SaleTable = ({
   setSummaryData,
   searchParams,
   segment,
+  showPaging,
+  action = true,
 }) => {
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
@@ -33,7 +35,7 @@ export const SaleTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       sale_daterange: searchParams?.created_daterange ?? getDateRange(segment),
@@ -110,12 +112,11 @@ export const SaleTable = ({
         pagination={pagination}
         updatePage={updatePage}
         updatePageSize={updatePageSize}
-        // setSelectedRows={setSelectedRows}
+        showPaging={showPaging}
         isLoading={isLoading}
-        // isRowSelection={true}
-        // action={false}
         created_at={false}
         status={false}
+        action={action}
       />
       {detailsId && (
         <SaleDetails

@@ -134,7 +134,7 @@ export const StockAlertComponent = () => {
   const currency = useSelector(useCurrency);
 
   const dataSource =
-    data?.results?.product?.flatMap((item, index) => {
+    data?.results?.productvariant?.flatMap((item, index) => {
       const {
         name,
         alert_qty,

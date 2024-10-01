@@ -20,6 +20,8 @@ export const ExpenseTable = ({
   setSummaryData,
   searchParams,
   segment,
+  showPaging,
+  action = true,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -32,7 +34,7 @@ export const ExpenseTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       created_daterange:
@@ -106,6 +108,8 @@ export const ExpenseTable = ({
         isLoading={isLoading}
         //   isRowSelection={true}
         status={false}
+        showPaging={showPaging}
+        action={action}
       />
 
       {detailsId && (

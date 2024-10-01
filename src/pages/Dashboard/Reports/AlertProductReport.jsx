@@ -1,6 +1,7 @@
-import { Row } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Modal, Row } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
 
 import { AlertProductTable } from '../../../components/Report/AlertProductTable';
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
@@ -119,6 +120,15 @@ export const AlertProductReport = () => {
     created_daterange: searchParams?.created_daterange ?? getDateRange(segment),
   };
 
+  const printRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: 'Alert Product Details',
+  });
+
+  const [openPrint, setOpenPrint] = useState(false);
+
   return (
     <GlobalContainer
       pageTitle="Alert Product Report"
@@ -129,12 +139,43 @@ export const AlertProductReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchComponent />}
+      setOpenPrint={setOpenPrint}
     >
       <AlertProductTable
         newColumns={columns}
         keyword={keyword}
         searchParams={defaultParams}
       />
+
+      <Modal
+        title={
+          <div className="flex items-center gap-4 mb-10">
+            <h2>Print Report</h2>
+            <Button
+              key={'print'}
+              type="primary"
+              onClick={handlePrint}
+              className="px-12 py-4"
+            >
+              Print
+            </Button>
+          </div>
+        }
+        open={openPrint}
+        onCancel={() => setOpenPrint(false)}
+        footer={null}
+        width={1100}
+      >
+        <div ref={printRef} className="p-10">
+          <AlertProductTable
+            newColumns={columns}
+            searchParams={defaultParams}
+            keyword={keyword}
+            showPaging={false}
+            action={false}
+          />
+        </div>
+      </Modal>
     </GlobalContainer>
   );
 };

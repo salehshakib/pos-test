@@ -302,7 +302,7 @@ export const ProductReport = () => {
           {productId && (
             <>
               <div ref={printRef} className="p-10">
-                <div className="mb-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+                <div className="mb-5 grid w-full grid-cols-1">
                   <div className="rounded-md border p-4 shadow-sm">
                     {isFetching ? (
                       <Spin className="flex h-full w-full items-center justify-center py-5" />
@@ -323,13 +323,6 @@ export const ProductReport = () => {
                       </Descriptions>
                     )}
                   </div>
-                  <div className="rounded-md border p-4 shadow-sm">
-                    {isFetching || loading ? (
-                      <Spin className="flex h-full w-full items-center justify-center" />
-                    ) : (
-                      <Descriptions title="Summary" items={summaryDetails} />
-                    )}
-                  </div>
                 </div>
                 {isFetching ? (
                   <Spin className="flex h-full w-full items-center justify-center py-10" />
@@ -340,7 +333,7 @@ export const ProductReport = () => {
                     </span>
                     <SaleTable
                       {...props}
-                      pagination={false}
+                      showPaging={false}
                       summary={'product,sale'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
@@ -348,19 +341,24 @@ export const ProductReport = () => {
                     </span>
                     <PurchaseTable
                       {...props}
-                      pagination={false}
+                      showPaging={false}
                       summary={'product,purchase'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
                       Quotation Table
                     </span>
-                    <QuotationTable {...props} summary={'product,quotation'} />
+                    <QuotationTable
+                      {...props}
+                      summary={'product,quotation'}
+                      showPaging={false}
+                    />
                     <span className="text-center font-bold text-xl mt-4">
                       Purchase Return Table
                     </span>
                     <PurchaseReturnTable
                       {...props}
                       summary={'product,purchase-return'}
+                      showPaging={false}
                     />
                     <span className="text-center font-bold text-xl mt-4">
                       Sell Return Table
@@ -368,11 +366,16 @@ export const ProductReport = () => {
                     <SaleReturnTable
                       {...props}
                       summary={'product,sale-return'}
+                      showPaging={false}
                     />
                     <span className="text-center font-bold text-xl mt-4">
                       Expense Table
                     </span>
-                    <ExpenseTable {...props} summary={'product,expense'} />
+                    <ExpenseTable
+                      {...props}
+                      summary={'product,expense'}
+                      showPaging={false}
+                    />
                   </div>
                 ) : (
                   <Empty />

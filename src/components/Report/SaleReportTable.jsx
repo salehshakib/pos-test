@@ -15,13 +15,15 @@ export const SaleReportTable = ({
   setSelectedRows,
   keyword,
   searchParams,
+  action = true,
+  showPaging,
 }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
     isDefaultParams: false,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...searchParams,
       child: 1,
       parent: 1,
@@ -69,7 +71,8 @@ export const SaleReportTable = ({
         isRowSelection={false}
         status={false}
         created_at={false}
-        action={false}
+        showPaging={showPaging}
+        action={action}
       />
     </GlobalUtilityStyle>
   );

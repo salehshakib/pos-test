@@ -22,6 +22,8 @@ export const PurchaseReturnTable = ({
   setSummaryData,
   searchParams,
   segment,
+  showPaging,
+  action = true,
 }) => {
   const currency = useSelector(useCurrency);
   const [detailsId, setDetailsId] = useState(undefined);
@@ -33,7 +35,7 @@ export const PurchaseReturnTable = ({
     isDefaultParams: false,
     isRelationalParams: true,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...summaryType,
       summary,
       purchase_return_daterange:
@@ -101,11 +103,11 @@ export const PurchaseReturnTable = ({
         pagination={pagination}
         updatePage={updatePage}
         updatePageSize={updatePageSize}
-        //   setSelectedRows={setSelectedRows}
         isLoading={isLoading}
-        //   isRowSelection={true}
         status={false}
         created_at={false}
+        showPaging={showPaging}
+        action={action}
       />
 
       {detailsId && (

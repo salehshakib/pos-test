@@ -13,13 +13,15 @@ export const AlertProductTable = ({
   setSelectedRows,
   keyword,
   searchParams,
+  showPaging,
+  action = true,
 }) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
     isDefaultParams: false,
     params: {
-      ...pagination,
+      ...(showPaging ? pagination : {}),
       ...searchParams,
       child: 1,
       need_alert_qty: 1,
@@ -76,8 +78,9 @@ export const AlertProductTable = ({
         setSelectedRows={setSelectedRows}
         isLoading={isFetching}
         status={false}
-        action={false}
         created_at={false}
+        showPaging={showPaging}
+        action={action}
       />
     </GlobalUtilityStyle>
   );

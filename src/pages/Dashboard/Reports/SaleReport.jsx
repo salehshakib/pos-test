@@ -152,6 +152,8 @@ export const SaleReport = () => {
               newColumns={columns}
               searchParams={defaultParams}
               keyword={keyword}
+              actions={false}
+              showPaging={false}
             />
           </div>
         </Modal>

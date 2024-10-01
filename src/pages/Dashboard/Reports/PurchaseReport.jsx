@@ -121,6 +121,7 @@ export const PurchaseReport = () => {
       segment={segment}
       onSegmentChange={onSegmentChange}
       searchFilterContent={<SearchComponent />}
+      setOpenPrint={setOpenPrint}
     >
       <PurchaseReportTable
         newColumns={columns}
@@ -152,6 +153,8 @@ export const PurchaseReport = () => {
               newColumns={columns}
               searchParams={defaultParams}
               keyword={keyword}
+              showPaging={false}
+              action={false}
             />
           </div>
         </Modal>

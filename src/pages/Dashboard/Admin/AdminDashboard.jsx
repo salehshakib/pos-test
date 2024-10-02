@@ -184,46 +184,46 @@ const CashStatistic = ({ data }) => {
           <DashboardCard
             title={'Total Purchase'}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={data?.purchase}
+            data={data?.total_purchase}
           />
           <DashboardCard
             title={'Total Sales'}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={data?.sale}
+            data={data?.total_sale}
           />
           <DashboardCard
             title={'Total Purchase Returned'}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={data?.purchase_return}
+            data={data?.total_purchase_return}
           />
           <DashboardCard
             title={'Total Sale Returned'}
             icon={<MdOutlineNumbers {...iconProps} />}
-            data={data?.sale_return}
+            data={data?.total_sale_return}
           />
           <DashboardCard
             title={'Total Purchase Amount'}
             icon={<FaMoneyBillWave {...iconProps} />}
             currency={currency}
-            data={data?.total_purchase}
+            data={data?.purchase}
           />
           <DashboardCard
             title={'Total Purchase Due'}
             icon={<MdPaid {...iconProps} />}
             currency={currency}
-            data={0}
+            data={data?.purchase_due}
           />
 
           <DashboardCard
             title={'Total Sales Amount'}
             icon={<FaMoneyBillWave {...iconProps} />}
             currency={currency}
-            data={data?.total_sale}
+            data={data?.sale}
           />
           <DashboardCard
             title={'Total Sales Due'}
             icon={<MdPaid {...iconProps} />}
-            data={0}
+            data={data?.sale_due}
             currency={currency}
           />
         </div>
@@ -237,6 +237,8 @@ const CashStatistic = ({ data }) => {
           <DashboardCard
             title={'Total Expense'}
             icon={<SlWallet {...iconProps} />}
+            data={data?.expense}
+            currency={currency}
           />
         </div>
       </div>

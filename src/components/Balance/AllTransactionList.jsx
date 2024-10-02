@@ -1,9 +1,11 @@
-import { Descriptions, Table } from 'antd';
+import { Button, Descriptions, Modal, Table } from 'antd';
 import dayjs from 'dayjs';
 
 import { useGetAllBalanceDepositQuery } from '../../redux/services/balanceDeposit/balanceDepositApi';
 import { useGetAllBalanceWithdrawQuery } from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
+import { showCurrency } from '../../utilities/lib/currency';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import CustomPrintTable from '../Shared/Table/CustomPrintTable';
 
 const columns = [
   {
@@ -47,7 +49,14 @@ const columns = [
   },
 ];
 
-const AllTransactionList = ({ data }) => {
+const AllTransactionList = ({
+  data,
+  currency,
+  printRef,
+  open,
+  setOpen,
+  handlePrint,
+}) => {
   const { data: withdrawData, isFetching } = useGetAllBalanceWithdrawQuery(
     {},
     {
@@ -100,7 +109,7 @@ const AllTransactionList = ({ data }) => {
       <div className="space-y-10 my-10 mx-10">
         <Descriptions bordered className="max-w-xl mx-auto">
           <Descriptions.Item label="Total Balance" span={6}>
-            {data?.amount}
+            {showCurrency(data?.amount ?? 0, currency)}
           </Descriptions.Item>
           <Descriptions.Item label="Total Deposit" span={6}>
             {dayjs(data?.last_deposit).format('DD-MM-YYYY')}
@@ -115,6 +124,16 @@ const AllTransactionList = ({ data }) => {
           loading={isFetching || isDepositFetching}
           pagination={false}
         />
+
+        <Modal
+          open={open}
+          onCancel={() => setOpen(false)}
+          footer={null}
+          width={1200}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <CustomPrintTable data={combinedDataSource} ref={printRef} />
+        </Modal>
       </div>
     </>
   );

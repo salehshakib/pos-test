@@ -1,12 +1,12 @@
-import { Button, Descriptions } from 'antd';
+import { Button, Descriptions, Modal } from 'antd';
 import dayjs from 'dayjs';
-import { useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
 
 import { useGetAllBalanceWithdrawQuery } from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
+import { showCurrency } from '../../utilities/lib/currency';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
+import CustomPrintTable from '../Shared/Table/CustomPrintTable';
 import CustomTable from '../Shared/Table/CustomTable';
 
 const columns = [
@@ -50,7 +50,14 @@ const columns = [
   },
 ];
 
-const BalanceWithdrawList = ({ data }) => {
+const BalanceWithdrawList = ({
+  data,
+  printRef,
+  currency,
+  open,
+  setOpen,
+  handlePrint,
+}) => {
   const { pagination, updatePage, updatePageSize } = usePagination();
 
   const params = useGlobalParams({
@@ -81,30 +88,12 @@ const BalanceWithdrawList = ({ data }) => {
       };
     }) ?? [];
 
-  const printRef = useRef();
-
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Balance Withdraw List',
-  });
-
   return (
     <>
-      <div className="flex justify-end mb-10">
-        <Button
-          key={'print'}
-          type="primary"
-          onClick={handlePrint}
-          className="px-12 py-4"
-        >
-          Print
-        </Button>
-      </div>
-
-      <div className="space-y-10 my-10 mx-10" ref={printRef}>
+      <div className="space-y-10 my-10 mx-10">
         <Descriptions bordered className="max-w-xl mx-auto">
           <Descriptions.Item label="Total Balance" span={6}>
-            {data?.amount}
+            {showCurrency(data?.amount ?? 0, currency)}
           </Descriptions.Item>
           <Descriptions.Item label="Total Deposit" span={6}>
             {dayjs(data?.last_deposit).format('DD-MM-YYYY')}
@@ -126,6 +115,16 @@ const BalanceWithdrawList = ({ data }) => {
           created_at={false}
           action={false}
         />
+
+        <Modal
+          open={open}
+          onCancel={() => setOpen(false)}
+          footer={null}
+          width={1200}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <CustomPrintTable data={dataSource} ref={printRef} />
+        </Modal>
       </div>
     </>
   );

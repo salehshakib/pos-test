@@ -14,7 +14,7 @@ const AccountForm = (props) => {
         <Col {...mdColLayout}>
           <CustomSelect
             name={'type'}
-            label={'Type'}
+            label={'Account Type'}
             placeholder="Type"
             required
             options={[
@@ -34,15 +34,25 @@ const AccountForm = (props) => {
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Name" type={'text'} name={'name'} required />
+          <CustomInput
+            label="Account Name"
+            type={'text'}
+            name={'name'}
+            required
+          />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Number" type={'text'} name={'number'} required />
+          <CustomInput
+            label="Account Number"
+            type={'text'}
+            name={'number'}
+            required
+          />
         </Col>
         {typeData === 'Bank' && (
           <Col {...mdColLayout}>
             <CustomInput
-              label="Branch"
+              label="Account Branch"
               type={'text'}
               name={'branch'}
               required

@@ -16,6 +16,7 @@ const AccountForm = (props) => {
             name={'type'}
             label={'Type'}
             placeholder="Type"
+            required
             options={[
               {
                 value: 'Bank',
@@ -33,14 +34,19 @@ const AccountForm = (props) => {
           />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Name" type={'text'} name={'name'} />
+          <CustomInput label="Name" type={'text'} name={'name'} required />
         </Col>
         <Col {...mdColLayout}>
-          <CustomInput label="Number" type={'text'} name={'number'} />
+          <CustomInput label="Number" type={'text'} name={'number'} required />
         </Col>
         {typeData === 'Bank' && (
           <Col {...mdColLayout}>
-            <CustomInput label="Branch" type={'text'} name={'branch'} />
+            <CustomInput
+              label="Branch"
+              type={'text'}
+              name={'branch'}
+              required
+            />
           </Col>
         )}
       </Row>

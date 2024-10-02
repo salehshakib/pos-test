@@ -34,16 +34,12 @@ export const BrandComponent = () => {
 
   const [fetchData, setFetchData] = useState(false);
 
-  console.log(options?.[0]);
-
-  console.log(fetchData);
   useEffect(() => {
     if (fetchData && !isFetching) {
-      console.log(fetchData);
       form.setFieldValue('brand_id', options[0].value);
       setFetchData(false);
     }
-  }, [form, fetchData, options]);
+  }, [form, fetchData, options, isFetching]);
 
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);
@@ -63,7 +59,6 @@ export const BrandComponent = () => {
         onClick={handleOpenSubDrawer}
         name={'brand_id'}
         isLoading={isLoading}
-        required={'true'}
       />
 
       <BrandCreate

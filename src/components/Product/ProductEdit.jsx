@@ -18,44 +18,19 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
+import { getUniqueAttributeIds } from '../../utilities/lib/product/variant';
 import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
-function getUniqueAttributeIds(variants) {
-  const attributeIds = new Set();
-
-  variants.forEach((variant) => {
-    variant.product_variant_attribute_options.forEach((option) => {
-      attributeIds.add(option.attribute_option.attribute_id.toString());
-    });
-  });
-
-  // Convert the set to an array to get unique attribute_ids
-  return Array.from(attributeIds);
-}
-
-// const getVariantIdsByCombinedName = (itemData, name) => {
-//   const ids = [];
-
-//   console.log(itemData);
-
-//   itemData.forEach((item) => {
-//     item.options.forEach((option) => {
-//       if (name.includes(option.name)) {
-//         ids.push(option.id);
-//       }
-//     });
-//   });
-
-//   return ids;
-// };
 const getVariantIdsByCombinedName = (itemData, name) => {
   const ids = [];
 
+  console.log(itemData);
+
   itemData.forEach((item) => {
-    item.map((option) => {
+    item.options.forEach((option) => {
       if (name.includes(option.name)) {
         ids.push(option.id);
       }
@@ -64,6 +39,20 @@ const getVariantIdsByCombinedName = (itemData, name) => {
 
   return ids;
 };
+
+// const getVariantIdsByCombinedName = (itemData, name) => {
+//   const ids = [];
+
+//   itemData.forEach((item) => {
+//     item.map((option) => {
+//       if (name.includes(option.name)) {
+//         ids.push(option.id);
+//       }
+//     });
+//   });
+
+//   return ids;
+// };
 
 const ProductListEdit = ({ id, setId, current, setCurrent }) => {
   const dispatch = useDispatch();
@@ -320,26 +309,18 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
 
     if (has_variant) {
-      console.log(variantData);
-      // console.log()
-      const variantOptions = variantData.selectedRowData.map((item) => {
-        return getVariantIdsByCombinedName(item.variant_options, item.name);
-      });
-
       console.log(variantData.selectedRowData);
 
-      const variantListArray = variantData?.selectedRowData.map(
-        (item, index) => {
-          return {
-            name: name + ' ' + item.name,
-            sku: sku + '-' + item.sku,
-            iemi_number: item.iemi,
-            selling_price: item.price.toString(),
-            buying_price: item.cost.toString(),
-            attribute_option_ids: variantOptions[index],
-          };
-        }
-      );
+      const variantListArray = variantData?.selectedRowData.map((item) => {
+        return {
+          name: name + ' ' + item.name,
+          sku: sku + '-' + item.sku,
+          iemi_number: item.iemi,
+          selling_price: item.price.toString(),
+          buying_price: item.cost.toString(),
+          attribute_option_ids: item.variant_attribute_ids,
+        };
+      });
 
       postObj.variant_list = JSON.stringify(variantListArray);
     }

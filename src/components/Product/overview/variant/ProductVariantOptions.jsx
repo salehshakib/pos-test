@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../../utilities/lib/currency';
+import { formatProductData } from '../../../../utilities/lib/product/variant';
 
 // Editable Cell component
 const EditableCell = ({
@@ -34,60 +35,6 @@ const EditableCell = ({
     </td>
   );
 };
-
-function formatProductData(data, productName, sku) {
-  return (
-    data
-      // .filter((item) => item.name.includes(productName))
-      .map((item) => {
-        return {
-          key: item.name.split(productName)[1].trim(),
-          name: item.name.split(productName)[1].trim(),
-          sku: item.sku.split(sku + '-')[1].trim(),
-          iemi: item.imei_number ?? '',
-          price: item.selling_price,
-          cost: item.buying_price,
-          variant_options: item.product_variant_attribute_options.reduce(
-            (acc, option) => {
-              const attribute = option.attribute_option.attribute;
-              const existingAttr = acc.find(
-                (attr) => attr.attribute_id === attribute.id
-              );
-
-              if (existingAttr) {
-                existingAttr.options.push({
-                  id: option.attribute_option.id,
-                  attribute_id: option.attribute_option.attribute_id,
-                  name: option.attribute_option.name,
-                  created_at: option.attribute_option.created_at,
-                  updated_at: option.attribute_option.updated_at,
-                  deleted_at: option.attribute_option.deleted_at,
-                });
-              } else {
-                acc.push({
-                  attribute_id: attribute?.id,
-                  attribute_name: attribute.name,
-                  options: [
-                    {
-                      id: option.attribute_option.id,
-                      attribute_id: option.attribute_option.attribute_id,
-                      name: option.attribute_option.name,
-                      created_at: option.attribute_option.created_at,
-                      updated_at: option.attribute_option.updated_at,
-                      deleted_at: option.attribute_option.deleted_at,
-                    },
-                  ],
-                });
-              }
-
-              return acc;
-            },
-            []
-          ),
-        };
-      })
-  );
-}
 
 // Main component
 const ProductVariantOption = ({
@@ -224,13 +171,13 @@ const ProductVariantOption = ({
       const variantDatasource =
         combination?.map((item, index) => {
           return {
-            key: item.name,
+            key: item.key,
             name: item.name,
             sku: data?.[index]?.sku ?? item.sku,
             iemi: data?.[index]?.iemi ?? '',
             price: data?.[index]?.price ?? item?.price,
             cost: data?.[index]?.cost ?? item?.cost,
-            variant_options: item.variant_options,
+            variant_attribute_ids: item.variant_attribute_ids,
           };
         }) ?? [];
 
@@ -255,6 +202,7 @@ const ProductVariantOption = ({
 
       const variantDatasource =
         combination?.map((item, index) => {
+          console.log(item.variant_options);
           return {
             key: item.name,
             name: item.name,
@@ -351,7 +299,6 @@ const ProductVariantOption = ({
           const item = newData[index];
           newData.splice(index, 1, { ...item, ...row });
           setData(newData);
-          console.log(newData);
           setSelectedRowData(newData);
           setEditingKey('');
         } else {
@@ -361,7 +308,7 @@ const ProductVariantOption = ({
         }
       });
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.error('Validate Failed:', errInfo);
     }
   };
 

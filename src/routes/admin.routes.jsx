@@ -2,12 +2,14 @@
 import { CiBoxes } from 'react-icons/ci';
 import { FiShoppingBag } from 'react-icons/fi';
 import { GoPeople } from 'react-icons/go';
+import { LuDatabaseBackup } from 'react-icons/lu';
 import {
   MdOutlineInventory2,
   MdOutlineMailLock,
   MdOutlineSettings,
   MdOutlineSpaceDashboard,
 } from 'react-icons/md';
+import { PiBroomFill } from 'react-icons/pi';
 import { SlWallet } from 'react-icons/sl';
 import {
   TbFilePercent,
@@ -109,5 +111,17 @@ export const adminPaths = [
     path: 'settings',
     icon: MdOutlineSettings,
     children: settingPaths,
+  },
+  {
+    name: 'Backup & Restore',
+    path: 'backup-restore',
+    icon: LuDatabaseBackup,
+    element: <></>,
+  },
+  {
+    name: 'Clear Cache',
+    path: 'clear-cache',
+    icon: PiBroomFill,
+    element: <></>,
   },
 ];

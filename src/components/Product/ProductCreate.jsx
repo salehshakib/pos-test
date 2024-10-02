@@ -18,20 +18,6 @@ import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
-const getVariantIdsByCombinedName = (itemData, name) => {
-  const ids = [];
-
-  itemData.forEach((item) => {
-    item.map((option) => {
-      if (name.includes(option.name)) {
-        ids.push(option.id);
-      }
-    });
-  });
-
-  return ids;
-};
-
 const ProductCreate = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -163,22 +149,16 @@ const ProductCreate = () => {
     }
 
     if (has_variant) {
-      const variantOptions = variantData.selectedRowData.map((item) => {
-        return getVariantIdsByCombinedName(item.variant_options, item.name);
+      const variantListArray = variantData?.selectedRowData.map((item) => {
+        return {
+          name: name + ' ' + item.name,
+          sku: sku + '-' + item.sku,
+          iemi_number: item.iemi,
+          selling_price: item.price.toString(),
+          buying_price: item.cost.toString(),
+          attribute_option_ids: item.variant_attribute_ids,
+        };
       });
-
-      const variantListArray = variantData?.selectedRowData.map(
-        (item, index) => {
-          return {
-            name: name + ' ' + item.name,
-            sku: sku + '-' + item.sku,
-            iemi_number: item.iemi,
-            selling_price: item.price.toString(),
-            buying_price: item.cost.toString(),
-            attribute_option_ids: variantOptions[index],
-          };
-        }
-      );
 
       postObj.variant_list = JSON.stringify(variantListArray);
       if (variantListArray.length === 0) {

@@ -1,5 +1,5 @@
 import { Col, Form } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 import { colLayout } from '../../../layout/FormLayout';
@@ -11,7 +11,7 @@ import {
 import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 import UnitCreate from '../../Unit/UnitCreate';
 
-const ProductUnit = ({ options = [], isLoading }) => {
+const ProductUnit = ({ options = [], isLoading, setFetchData }) => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const handleOpenSubDrawer = () => {
@@ -39,21 +39,13 @@ const ProductUnit = ({ options = [], isLoading }) => {
         subDrawer={true}
         isSubDrawerOpen={isSubDrawerOpen}
         handleCloseSubDrawer={handleCloseSubDrawer}
+        setFetchData={setFetchData}
       />
-
-      {/* <CustomSelect
-        label="Product Unit"
-        options={options}
-        isLoading={isLoading}
-        required={true}
-        name={'unit_id'}
-        showSearch={true}
-      /> */}
     </Col>
   );
 };
 
-const PurchaseUnit = ({ options = [], isLoading }) => {
+const PurchaseUnit = ({ options = [], isLoading, setFetchData }) => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const handleOpenSubDrawer = () => {
@@ -75,15 +67,6 @@ const PurchaseUnit = ({ options = [], isLoading }) => {
 
   return (
     <Col {...colLayout}>
-      {/* <CustomSelect
-        label="Puchase Unit"
-        options={options}
-        isLoading={isLoading}
-        required={true}
-        name={'purchase_unit_id'}
-        showSearch={true}
-      /> */}
-
       <CustomSelectButton
         label="Purchasing Unit"
         options={options}
@@ -99,12 +82,13 @@ const PurchaseUnit = ({ options = [], isLoading }) => {
         subDrawer={true}
         isSubDrawerOpen={isSubDrawerOpen}
         handleCloseSubDrawer={handleCloseSubDrawer}
+        setFetchData={setFetchData}
       />
     </Col>
   );
 };
 
-const SaleUnit = ({ options = [], isLoading }) => {
+const SaleUnit = ({ options = [], isLoading, setFetchData }) => {
   const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const handleOpenSubDrawer = () => {
@@ -141,6 +125,7 @@ const SaleUnit = ({ options = [], isLoading }) => {
         subDrawer={true}
         isSubDrawerOpen={isSubDrawerOpen}
         handleCloseSubDrawer={handleCloseSubDrawer}
+        setFetchData={setFetchData}
       />
     </Col>
   );
@@ -149,26 +134,53 @@ const SaleUnit = ({ options = [], isLoading }) => {
 const UnitComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
+  const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllUnitQuery({
+  const { data, isLoading, isFetching } = useGetAllUnitQuery({
     params,
   });
 
-  const options = data?.results?.unit.map((unit) => ({
-    value: unit.id.toString(),
-    label: unit.name,
-  }));
+  const options = useMemo(() => {
+    if (data?.results?.unit) {
+      return data.results.unit.map((item) => ({
+        value: item.id?.toString(),
+        label: item.name,
+      }));
+    }
+    return [];
+  }, [data]);
+
+  const [fetchData, setFetchData] = useState(false);
+
+  useEffect(() => {
+    if (fetchData && !isFetching) {
+      form.setFieldValue('brand_id', options[0].value);
+      setFetchData(false);
+    }
+  }, [form, fetchData, options, isFetching]);
 
   if (productType === 'Standard') {
     return (
       <>
-        <ProductUnit options={options} isLoading={isLoading} />
-        <PurchaseUnit options={options} isLoading={isLoading} />
-        <SaleUnit options={options} isLoading={isLoading} />
+        <ProductUnit
+          options={options}
+          isLoading={isLoading}
+          setFetchData={setFetchData}
+        />
+        <PurchaseUnit
+          options={options}
+          isLoading={isLoading}
+          setFetchData={setFetchData}
+        />
+        <SaleUnit
+          options={options}
+          isLoading={isLoading}
+          setFetchData={setFetchData}
+        />
       </>
     );
   }

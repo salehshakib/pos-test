@@ -1,0 +1,67 @@
+import { useState } from 'react';
+
+import AccountCreate from '../../../components/Account/AccountCreate';
+import { AccountTable } from '../../../components/Account/AccountTable';
+import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
+import { ACCOUNT } from '../../../utilities/apiEndpoints/account.api';
+import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFilterParams } from '../../../utilities/hooks/useParams';
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (name) => (
+      <span className="text-dark text-xs font-medium md:text-sm">{name}</span>
+    ),
+  },
+  {
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
+    render: (type) => (
+      <span className="text-dark text-xs font-medium md:text-sm">{type}</span>
+    ),
+  },
+  {
+    title: 'Number',
+    dataIndex: 'number',
+    key: 'number',
+    render: (number) => (
+      <span className="text-dark text-xs font-medium md:text-sm">{number}</span>
+    ),
+  },
+];
+
+const Account = () => {
+  const [newColumns, setNewColumns] = useState(columns);
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const { searchParams, setParams } = useFilterParams();
+  const { keyword, debounce } = useCustomDebounce();
+
+  return (
+    <GlobalContainer
+      pageTitle="Account"
+      columns={columns}
+      selectedRows={selectedRows}
+      debounce={debounce}
+      setSelectedRows={setSelectedRows}
+      setNewColumns={setNewColumns}
+      setParams={setParams}
+      api={ACCOUNT}
+    >
+      <AccountCreate />
+
+      <AccountTable
+        newColumns={newColumns}
+        keyword={keyword}
+        setSelectedRows={setSelectedRows}
+        searchParams={searchParams}
+      />
+    </GlobalContainer>
+  );
+};
+
+export default Account;

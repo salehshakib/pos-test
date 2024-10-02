@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from 'antd';
+import { Button, Col, Form, Modal, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { BsCash } from 'react-icons/bs';
@@ -11,7 +11,10 @@ import { useSelector } from 'react-redux';
 
 import { mdColLayout, rowLayout } from '../../layout/FormLayout';
 import { useCurrency } from '../../redux/services/pos/posSlice';
-import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
+import {
+  useCreateSaleMutation,
+  useGetSaleDetailsQuery,
+} from '../../redux/services/sale/saleApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
   calculateGrandTotal,
@@ -22,6 +25,7 @@ import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
 import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
+import SellInvoice from '../Shared/Invoice/SellInvoice';
 import CustomModal from '../Shared/Modal/CustomModal';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 
@@ -41,6 +45,19 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const [grandTotal, setGrandTotal] = useState(0);
 
   const currency = useSelector(useCurrency);
+
+  const [id, setId] = useState(null);
+
+  const { data: saleData, isFetching } = useGetSaleDetailsQuery(
+    {
+      id,
+      params: {
+        parent: 1,
+        child: 1,
+      },
+    },
+    { skip: !id }
+  );
 
   const showModal = (type) => {
     setPaymentType(type);
@@ -149,9 +166,9 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
     try {
       const { data, error } = await createSale({ data: formData });
       if (data?.success) {
+        setId(data?.data?.id);
         hideModal();
         paymentForm.resetFields();
-
         handleReset();
       }
 
@@ -273,6 +290,17 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
           </CustomForm>
         </div>
       </CustomModal>
+
+      <Modal
+        open={id}
+        onCancel={() => setId(null)}
+        footer={null}
+        width={1000}
+        destroyOnClose
+        loading={isFetching}
+      >
+        <SellInvoice invoice={saleData} />
+      </Modal>
     </>
   );
 };

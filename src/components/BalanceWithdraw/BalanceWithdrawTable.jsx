@@ -3,20 +3,20 @@ import { useDispatch } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
 import {
-  useDeleteBalanceDepositMutation,
-  useGetAllBalanceDepositQuery,
-} from '../../redux/services/balanceDeposit/balanceDepositApi';
+  useDeleteBalanceWithdrawMutation,
+  useGetAllBalanceWithdrawQuery,
+} from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
 import { removeDeleteId } from '../../utilities/lib/signleDeleteRow';
+import BalanceWithdrawDetails from '../BalanceWithdraw/BalanceWithdrawDetails';
 import DeleteModal from '../Shared/Modal/DeleteModal';
 import CustomTable from '../Shared/Table/CustomTable';
-import BalanceDepositDetails from './BalanceDepositDetails';
-import BalanceDepositEdit from './BalanceDepositEdit';
+import BalanceWithdrawEdit from './BalanceWithdrawEdit';
 
-export const BalanceDepositTable = ({
+export const BalanceWithdrawTable = ({
   newColumns,
   setSelectedRows,
   keyword,
@@ -40,7 +40,7 @@ export const BalanceDepositTable = ({
     keyword,
   });
 
-  const { data, isLoading } = useGetAllBalanceDepositQuery(
+  const { data, isLoading } = useGetAllBalanceWithdrawQuery(
     { params },
     {
       skip: !useUrlIndexPermission(),
@@ -50,7 +50,7 @@ export const BalanceDepositTable = ({
   const total = data?.meta?.total;
 
   const [deleteBalanceDeposit, { isLoading: isDeleting }] =
-    useDeleteBalanceDepositMutation();
+    useDeleteBalanceWithdrawMutation();
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -76,16 +76,16 @@ export const BalanceDepositTable = ({
   };
 
   const dataSource =
-    data?.results?.balancedeposit?.map((item) => {
-      const { id, deposited_by, amount, deposited_at, deposited_type } =
+    data?.results?.balancewithdrawal?.map((item) => {
+      const { id, withdrawal_by, amount, withdrawal_at, withdrawal_type } =
         item ?? {};
 
       return {
         id,
-        deposited_by,
+        withdrawal_by,
         amount,
-        deposited_at,
-        deposited_type,
+        withdrawal_at,
+        withdrawal_type,
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
@@ -113,10 +113,10 @@ export const BalanceDepositTable = ({
         created_at={false}
       />
 
-      <BalanceDepositEdit id={editId} setId={setEditId} />
+      <BalanceWithdrawEdit id={editId} setId={setEditId} />
 
       {detailsId && (
-        <BalanceDepositDetails
+        <BalanceWithdrawDetails
           id={detailsId}
           openModal={detailsModal}
           hideModal={hideModal}
@@ -128,10 +128,10 @@ export const BalanceDepositTable = ({
         hideModal={hideModal}
         handleDelete={handleDelete}
         isLoading={isDeleting}
-        item={'balance deposit'}
+        item={'balance withdraw'}
       />
     </GlobalUtilityStyle>
   );
 };
 
-export default BalanceDepositTable;
+export default BalanceWithdrawTable;

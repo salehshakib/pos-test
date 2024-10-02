@@ -2,13 +2,13 @@ import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCreateBalanceDepositMutation } from '../../redux/services/balanceDeposit/balanceDepositApi';
+import { useCreateBalanceWithdrawMutation } from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
-import BalanceDepositForm from './BalanceDepositForm';
+import BalanceWithdrawForm from './BalanceWithdrawForm';
 
-const BalanceDepositCreate = () => {
+const BalanceWithdrawCreate = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -17,14 +17,14 @@ const BalanceDepositCreate = () => {
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createBalanceDeposit, { isLoading }] =
-    useCreateBalanceDepositMutation();
+    useCreateBalanceWithdrawMutation();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
     const postData = {
       ...values,
-      deposited_at: values.deposited_at.format('YYYY-MM-DD'),
+      withdrawal_at: values.withdrawal_at.format('YYYY-MM-DD'),
       attachment: values?.attachment?.[0].originFileObj,
     };
 
@@ -50,8 +50,8 @@ const BalanceDepositCreate = () => {
   };
 
   return (
-    <CustomDrawer title={'Create Balance Deposit'} open={isCreateDrawerOpen}>
-      <BalanceDepositForm
+    <CustomDrawer title={'Create Balance Withdrawal'} open={isCreateDrawerOpen}>
+      <BalanceWithdrawForm
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         fields={errorFields}
@@ -61,4 +61,4 @@ const BalanceDepositCreate = () => {
   );
 };
 
-export default BalanceDepositCreate;
+export default BalanceWithdrawCreate;

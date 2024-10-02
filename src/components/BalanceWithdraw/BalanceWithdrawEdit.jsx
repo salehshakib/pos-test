@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import defaultUser from '../../assets/data/defaultUserImage';
 import {
-  useGetBalanceDepositDetailsQuery,
-  useUpdateBalanceDepositMutation,
-} from '../../redux/services/balanceDeposit/balanceDepositApi';
+  useGetBalanceWithdrawDetailsQuery,
+  useUpdateBalanceWithdrawMutation,
+} from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
 import { closeEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
-import BalanceDepositForm from './BalanceDepositForm';
+import BalanceWithdrawForm from './BalanceWithdrawForm';
 
-const BalanceDepositEdit = ({ id, setId }) => {
+const BalanceWithdrawEdit = ({ id, setId }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -23,13 +23,13 @@ const BalanceDepositEdit = ({ id, setId }) => {
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  const { data, isFetching } = useGetBalanceDepositDetailsQuery(
+  const { data, isFetching } = useGetBalanceWithdrawDetailsQuery(
     { id },
     { skip: !id }
   );
 
-  const [updateBalanceDeposit, { isLoading }] =
-    useUpdateBalanceDepositMutation();
+  const [updateBalanceWithdraw, { isLoading }] =
+    useUpdateBalanceWithdrawMutation();
 
   useEffect(() => {
     if (data && isEditDrawerOpen) {
@@ -61,7 +61,7 @@ const BalanceDepositEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const postObj = {
       ...values,
-      deposited_at: values.deposited_at.format('YYYY-MM-DD'),
+      withdrawal_at: values.withdrawal_at.format('YYYY-MM-DD'),
       _method: 'PUT',
     };
 
@@ -79,7 +79,7 @@ const BalanceDepositEdit = ({ id, setId }) => {
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await updateBalanceDeposit({
+    const { data, error } = await updateBalanceWithdraw({
       id,
       formData,
     });
@@ -98,11 +98,11 @@ const BalanceDepositEdit = ({ id, setId }) => {
 
   return (
     <CustomDrawer
-      title={'Edit Balance Deposit'}
+      title={'Edit Balance Withdrawal'}
       open={isEditDrawerOpen}
       isLoading={isFetching}
     >
-      <BalanceDepositForm
+      <BalanceWithdrawForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
@@ -112,4 +112,4 @@ const BalanceDepositEdit = ({ id, setId }) => {
   );
 };
 
-export default BalanceDepositEdit;
+export default BalanceWithdrawEdit;

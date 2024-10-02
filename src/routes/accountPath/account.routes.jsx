@@ -4,8 +4,8 @@ import { FaPeopleRoof } from 'react-icons/fa6';
 import { MdCoPresent } from 'react-icons/md';
 
 import Account from '../../pages/Dashboard/Account/Account';
-import { Attendance } from '../../pages/Dashboard/Attendance/Attendance';
 import BalanceDeposit from '../../pages/Dashboard/BalanceDeposit/BalanceDeposit';
+import BalanceWithdraw from '../../pages/Dashboard/BalanceWithdraw/BalanceWithdraw';
 import Designation from '../../pages/Dashboard/Designation/Designation';
 
 export const accountPaths = [
@@ -32,6 +32,6 @@ export const accountPaths = [
     name: 'Balance Withdrwal',
     path: 'balance-withdrawal',
     icon: MdCoPresent,
-    element: <Attendance />,
+    element: <BalanceWithdraw />,
   },
 ];

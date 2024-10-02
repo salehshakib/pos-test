@@ -154,6 +154,7 @@ const ProductCreate = () => {
           name: name + ' ' + item.name,
           sku: sku + '-' + item.sku,
           iemi_number: item.iemi,
+          qty: item.qty.toString(),
           selling_price: item.price.toString(),
           buying_price: item.cost.toString(),
           attribute_option_ids: item.variant_attribute_ids,

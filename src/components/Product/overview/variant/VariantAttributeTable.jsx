@@ -9,9 +9,10 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button, Table } from 'antd';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { updateVariantOptions } from '../../../../utilities/lib/product/variant';
+import CustomModal from '../../../Shared/Modal/CustomModal';
 import CustomSelect from '../../../Shared/Select/CustomSelect';
 
 export const VariantAttributeTable = ({
@@ -133,8 +134,34 @@ export const VariantAttributeTable = ({
     );
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const [dragEnd, setDragEnd] = useState({});
+
   const onDragEnd = ({ active, over }) => {
-    if (active.id !== over?.id) {
+    // if (active.id !== over?.id) {
+    //   setDataSource((prevState) => {
+    //     const activeIndex = prevState.findIndex(
+    //       (record) => record.key === active?.id
+    //     );
+    //     const overIndex = prevState.findIndex(
+    //       (record) => record.key === over?.id
+    //     );
+    //     return arrayMove(prevState, activeIndex, overIndex);
+    //   });
+    // }
+    setShowModal(true);
+    setDragEnd({ active, over });
+  };
+
+  const hideModal = () => {
+    setShowModal(false);
+  };
+
+  const handleDrag = () => {
+    const { active, over } = dragEnd;
+    setShowModal(false);
+    if (active?.id !== over?.id) {
       setDataSource((prevState) => {
         const activeIndex = prevState.findIndex(
           (record) => record.key === active?.id
@@ -148,25 +175,49 @@ export const VariantAttributeTable = ({
   };
 
   return (
-    <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
-      <SortableContext
-        items={dataSource.map((i) => i.key)}
-        strategy={verticalListSortingStrategy}
+    <>
+      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+        <SortableContext
+          items={dataSource.map((i) => i.key)}
+          strategy={verticalListSortingStrategy}
+        >
+          <Table
+            rowKey="key"
+            components={{
+              body: {
+                row: Row,
+              },
+            }}
+            size="small"
+            pagination={false}
+            columns={variantAttributeColumns}
+            dataSource={dataSource}
+            className="mb-5"
+          />
+        </SortableContext>
+      </DndContext>
+
+      <CustomModal
+        // title="If you want to change order, your data will be lost"
+        title={false}
+        openModal={showModal}
+        hideModal={hideModal}
+        width={650}
+        showCloseButton={false}
       >
-        <Table
-          rowKey="key"
-          components={{
-            body: {
-              row: Row,
-            },
-          }}
-          size="small"
-          pagination={false}
-          columns={variantAttributeColumns}
-          dataSource={dataSource}
-          className="mb-5"
-        />
-      </SortableContext>
-    </DndContext>
+        <span className="text-base text-center w-full">
+          If you change order, your data will be lost. Do you want to continue?
+        </span>
+
+        <div className="flex justify-end w-full items-center gap-3 pt-10">
+          <Button type="" onClick={hideModal}>
+            No
+          </Button>
+          <Button type="primary" onClick={handleDrag}>
+            Yes
+          </Button>
+        </div>
+      </CustomModal>
+    </>
   );
 };

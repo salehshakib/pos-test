@@ -1,12 +1,13 @@
-import { Form, Input, Table, Typography } from 'antd';
+import { Button, Form, Input, InputNumber, Table } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { FcCancel } from 'react-icons/fc';
-import { IoIosSave } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../../utilities/lib/currency';
-import { formatProductData } from '../../../../utilities/lib/product/variant';
+import {
+  findNonMatchingItems,
+  formatProductData,
+} from '../../../../utilities/lib/product/variant';
 
 // Editable Cell component
 const EditableCell = ({
@@ -18,7 +19,11 @@ const EditableCell = ({
   ...restProps
 }) => {
   const inputNode =
-    inputType === 'number' ? <Input type="number" /> : <Input />;
+    inputType === 'number' ? (
+      <InputNumber controls={false} changeOnWheel={false} width={'full'} />
+    ) : (
+      <Input />
+    );
   return (
     <td {...restProps}>
       {editing ? (
@@ -55,6 +60,7 @@ const ProductVariantOption = ({
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: 330,
       editable: true,
       render: (name) => (
         <span className="text-dark   text-xs md:text-sm">{name}</span>
@@ -65,7 +71,7 @@ const ProductVariantOption = ({
       dataIndex: 'sku',
       key: 'sku',
       editable: true,
-      width: 150,
+      width: 130,
       render: (sku) => (
         <span className="text-dark   text-xs md:text-sm">{sku}</span>
       ),
@@ -74,9 +80,21 @@ const ProductVariantOption = ({
       title: 'IEMI',
       dataIndex: 'iemi',
       key: 'iemi',
+      width: 130,
       editable: true,
       render: (iemi) => (
         <span className="text-dark   text-xs md:text-sm">{iemi}</span>
+      ),
+    },
+    {
+      title: 'Quantity',
+      dataIndex: 'qty',
+      key: 'qty',
+      align: 'center',
+      editable: true,
+      width: 100,
+      render: (qty) => (
+        <span className="text-dark   text-xs md:text-sm">{qty}</span>
       ),
     },
     {
@@ -85,6 +103,7 @@ const ProductVariantOption = ({
       key: 'cost',
       align: 'right',
       editable: true,
+      width: 150,
       render: (cost) => (
         <span className="text-dark   text-xs md:text-sm">
           {showCurrency(cost, currency)}
@@ -96,6 +115,7 @@ const ProductVariantOption = ({
       dataIndex: 'price',
       key: 'price',
       align: 'right',
+      width: 150,
       editable: true,
       render: (price) => (
         <span className="text-dark   text-xs md:text-sm">
@@ -107,30 +127,40 @@ const ProductVariantOption = ({
     {
       title: 'Action',
       dataIndex: 'action',
+      width: 130,
+      align: 'center',
       render: (_, record) => {
         const editable = isEditing(record);
         {
           return editable ? (
-            <span className="flex items-center gap-3">
-              <IoIosSave
+            <span className="flex items-center gap-2 justify-center font-bold">
+              {/* <FcCancel
                 size={20}
-                className="cursor-pointer "
-                onClick={() => save(record.key)}
-              />
-
-              <FcCancel
-                size={20}
-                className="cursor-pointer "
+                className="cursor-pointer text-white "
                 onClick={cancel}
-              />
+              /> */}
+              <Button size="small" onClick={cancel}>
+                Cancel
+              </Button>
+              <Button
+                size="small"
+                type="primary"
+                onClick={() => save(record.key)}
+              >
+                Save
+              </Button>
+              {/* <IoSaveOutline
+                size={20}
+                className="cursor-pointer"
+                onClick={() => save(record.key)}
+              /> */}
             </span>
           ) : (
-            <Typography.Link
-              disabled={editingKey !== ''}
-              onClick={() => edit(record)}
-            >
-              Edit
-            </Typography.Link>
+            <span className="flex items-center justify-center">
+              <Button size="small" onClick={() => edit(record)}>
+                Edit
+              </Button>
+            </span>
           );
         }
       },
@@ -144,7 +174,9 @@ const ProductVariantOption = ({
       onCell: (record) => ({
         record,
         inputType:
-          col.dataIndex === 'price' || col.dataIndex === 'cost'
+          col.dataIndex === 'price' ||
+          col.dataIndex === 'cost' ||
+          col.dataIndex === 'qty'
             ? 'number'
             : 'text',
         dataIndex: col.dataIndex,
@@ -156,27 +188,33 @@ const ProductVariantOption = ({
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  function findNonMatchingItems(data, combination) {
-    // Create a Set of data names for faster lookup
-    const dataNames = new Set(data?.map((item) => item?.name));
-
-    // Filter the combination array to find non-matching items
-    return combination.filter(
-      (combinationItem) => !dataNames.has(combinationItem.name)
-    );
-  }
-
   useEffect(() => {
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
-        combination?.map((item, index) => {
+        combination?.map((item) => {
+          // console.log(item.key);
+
+          // const reversedKey = item.key.split('-').reverse().join('-');
+
+          // console.log(reversedKey);
+
+          // const index = combination.findIndex((el) => el.key === reversedKey);
+
+          // console.log(index);
+
           return {
             key: item.key,
             name: item.name,
-            sku: data?.[index]?.sku ?? item.sku,
-            iemi: data?.[index]?.iemi ?? '',
-            price: data?.[index]?.price ?? item?.price,
-            cost: data?.[index]?.cost ?? item?.cost,
+            // sku: data?.[index]?.sku ?? item.sku,
+            // iemi: data?.[index]?.iemi ?? '',
+            // qty: data?.[index]?.qty ?? item.qty,
+            // price: data?.[index]?.price ?? item?.price,
+            // cost: data?.[index]?.cost ?? item?.cost,
+            sku: item.sku,
+            iemi: item.iemi,
+            qty: item.qty,
+            price: item.price,
+            cost: item.cost,
             variant_attribute_ids: item.variant_attribute_ids,
           };
         }) ?? [];
@@ -187,30 +225,23 @@ const ProductVariantOption = ({
       setIsSelected(initialSelectedKeys);
       setSelectedRowData(variantDatasource);
     } else {
-      console.log(combination);
-
-      console.log(editData?.variants);
-      console.log(editData);
-
       const formattedData = formatProductData(
         editData.variants,
         editData.name,
         editData?.sku
       );
 
-      console.log(formattedData);
-
       const variantDatasource =
-        combination?.map((item, index) => {
-          console.log(item.variant_options);
+        combination?.map((item) => {
           return {
-            key: item.name,
+            key: item.key,
             name: item.name,
-            sku: data?.[index]?.sku ?? item.sku,
-            iemi: data?.[index]?.iemi ?? '',
-            price: data?.[index]?.price ?? item?.price,
-            cost: data?.[index]?.cost ?? item?.cost,
-            variant_options: item.variant_options,
+            sku: item.sku,
+            iemi: item.iemi,
+            qty: item.qty,
+            price: item.price,
+            cost: item.cost,
+            variant_attribute_ids: item.variant_attribute_ids,
           };
         }) ?? [];
 
@@ -219,14 +250,11 @@ const ProductVariantOption = ({
         variantDatasource
       );
 
-      console.log(nonMatchingItems);
-
       const newData = [...formattedData, ...nonMatchingItems];
 
       setData(newData);
-      // setData({ ...data, variants: [...data.variants, ...nonMatchingItems] });
 
-      const initialSelectedKeys = data.map((item) => item.key);
+      const initialSelectedKeys = formattedData.map((item) => item.key);
       setIsSelected(initialSelectedKeys);
       setSelectedRowData(data);
     }
@@ -350,6 +378,9 @@ const ProductVariantOption = ({
           columns={mergedColumns}
           rowClassName="editable-row"
           rowSelection={rowSelection}
+          scroll={{
+            x: 'max-content',
+          }}
         />
       </Form>
     );

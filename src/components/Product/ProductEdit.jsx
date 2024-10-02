@@ -311,11 +311,13 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     if (has_variant) {
       console.log(variantData.selectedRowData);
 
+      // console.log(first)
       const variantListArray = variantData?.selectedRowData.map((item) => {
         return {
           name: name + ' ' + item.name,
           sku: sku + '-' + item.sku,
           iemi_number: item.iemi,
+          qty: item.qty?.toString() ?? 0,
           selling_price: item.price.toString(),
           buying_price: item.cost.toString(),
           attribute_option_ids: item.variant_attribute_ids,

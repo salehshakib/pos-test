@@ -56,21 +56,14 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   useEffect(() => {
     if (editData && attributes) {
-      console.log(attributes);
-
-      console.log(editData?.variants);
       const options = formatVariantsData(editData?.variants, attributes);
 
       const result = extractAttributeValues(editData?.variants);
 
-      console.log(result);
-
-      console.log(options);
+      setDataSource(options);
 
       setVariantOptions(result.attributeIds);
       setVariantAttributesName(result.attributeValues);
-
-      setDataSource(options);
     }
   }, [editData, attributes]);
 
@@ -81,17 +74,12 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     'selling_price',
   ]);
 
-  console.log(dataSource);
-  console.log(variantAttributesName);
-
   const combination = generateCombinationsFromVariantAttributes(
     dataSource,
     variantAttributesName,
     buying_price,
     selling_price
   );
-
-  console.log(combination);
 
   return (
     <>

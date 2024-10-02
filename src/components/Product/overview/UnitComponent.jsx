@@ -134,7 +134,6 @@ const SaleUnit = ({ options = [], isLoading, setFetchData }) => {
 const UnitComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
-  const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
 
   const params = useGlobalParams({
     selectValue: DEFAULT_SELECT_VALUES,
@@ -158,7 +157,9 @@ const UnitComponent = () => {
 
   useEffect(() => {
     if (fetchData && !isFetching) {
-      form.setFieldValue('brand_id', options[0].value);
+      form.setFieldValue('unit_id', options[0].value);
+      form.setFieldValue('purchase_unit_id', options[0].value);
+      form.setFieldValue('sale_unit_id', options[0].value);
       setFetchData(false);
     }
   }, [form, fetchData, options, isFetching]);

@@ -13,3 +13,5 @@ git clone <repo-url>
 cd <project-name>
 yarn
 ```
+
+## Usage

@@ -5,11 +5,15 @@ import { useReactToPrint } from 'react-to-print';
 
 import { AlertProductTable } from '../../../components/Report/AlertProductTable';
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import CustomPrintTable from '../../../components/Shared/Table/CustomPrintTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
 import { rowLayout } from '../../../layout/FormLayout';
 import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetAlertReportQuery } from '../../../redux/services/reports/summaryApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import { useFilterParams } from '../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../utilities/lib/currency';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
 
 const columns = [
@@ -129,6 +133,34 @@ export const AlertProductReport = () => {
 
   const [openPrint, setOpenPrint] = useState(false);
 
+  const { data } = useGetAlertReportQuery({}, {});
+
+  const currency = useSelector(useCurrency);
+
+  const dataSource =
+    data?.results?.product?.flatMap((item, index) => {
+      const {
+        name,
+        alert_qty,
+        sku,
+        product_qties,
+        product_prices,
+        selling_price: unit_cost,
+      } = item ?? {};
+
+      return product_qties.map((qty, i) => ({
+        id: `${index}-${i}`,
+        name,
+        sku,
+        minQty: alert_qty,
+        warehouse: qty.warehouses?.name ?? '',
+        stock: qty.qty ?? 0,
+        unitCost: product_prices?.length
+          ? showCurrency(product_prices?.[i].selling_price, currency)
+          : showCurrency(unit_cost, currency),
+      }));
+    }) ?? [];
+
   return (
     <GlobalContainer
       pageTitle="Alert Product Report"
@@ -167,13 +199,7 @@ export const AlertProductReport = () => {
         width={1100}
       >
         <div ref={printRef} className="p-10">
-          <AlertProductTable
-            newColumns={columns}
-            searchParams={defaultParams}
-            keyword={keyword}
-            showPaging={false}
-            action={false}
-          />
+          <CustomPrintTable data={dataSource} />
         </div>
       </Modal>
     </GlobalContainer>

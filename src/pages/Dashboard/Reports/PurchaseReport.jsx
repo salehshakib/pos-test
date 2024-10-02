@@ -5,11 +5,17 @@ import { useReactToPrint } from 'react-to-print';
 
 import { PurchaseReportTable } from '../../../components/Report/PurchaseReportTable';
 import { WarehouseFilter } from '../../../components/ReusableComponent/SearchFormComponents/SearchFormComponent';
+import CustomPrintTable from '../../../components/Shared/Table/CustomPrintTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
 import { rowLayout } from '../../../layout/FormLayout';
 import { useCurrentUser } from '../../../redux/services/auth/authSlice';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetAllPurchaseQuery } from '../../../redux/services/purchase/purchaseApi';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
+import { useFormatDate } from '../../../utilities/hooks/useFormatDate';
 import { useFilterParams } from '../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { formatDate } from '../../../utilities/lib/dateFormat';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
 
 const columns = [
@@ -111,6 +117,31 @@ export const PurchaseReport = () => {
 
   const [openPrint, setOpenPrint] = useState(false);
 
+  const { data } = useGetAllPurchaseQuery({ params: { child: 1, parent: 1 } });
+  const currency = useSelector(useCurrency);
+  const format = useFormatDate();
+
+  const dataSource =
+    data?.results?.purchase?.map((item, index) => {
+      const {
+        purchase_products,
+        grand_total,
+        purchase_at,
+        total_qty,
+        warehouses,
+      } = item ?? {};
+
+      const date = formatDate(purchase_at, format);
+
+      return purchase_products?.flatMap((item, i) => ({
+        id: `${i}-${index + 1}`,
+        product: item?.product_variants?.name,
+        warehouse: warehouses?.name,
+        purchased_qty: total_qty,
+        purchased_at: date,
+        purchase_amount: showCurrency(grand_total, currency),
+      }));
+    }) ?? [];
   return (
     <GlobalContainer
       pageTitle="Purchase Report"
@@ -131,7 +162,7 @@ export const PurchaseReport = () => {
       {openPrint && (
         <Modal
           title={
-            <div className="flex items-center gap-4 mb-10">
+            <div className="flex items-center gap-4">
               <h2>Print Report</h2>
               <Button
                 key={'print'}
@@ -148,14 +179,8 @@ export const PurchaseReport = () => {
           footer={null}
           width={1100}
         >
-          <div ref={printRef} className="p-10">
-            <PurchaseReportTable
-              newColumns={columns}
-              searchParams={defaultParams}
-              keyword={keyword}
-              showPaging={false}
-              action={false}
-            />
+          <div ref={printRef}>
+            <CustomPrintTable data={dataSource} />
           </div>
         </Modal>
       )}

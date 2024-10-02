@@ -146,7 +146,9 @@ export const ProductReport = () => {
   }, [segment]);
 
   const summaryType = {
-    product_id: searchParams?.product_id ? searchParams?.product_id : data?.id,
+    product_variant_id: searchParams?.product_id
+      ? searchParams?.product_id
+      : data?.id,
   };
 
   const props = {
@@ -230,13 +232,18 @@ export const ProductReport = () => {
                   {
                     label: 'Sale',
                     key: 'sale',
-                    children: <SaleTable {...props} summary={'product,sale'} />,
+                    children: (
+                      <SaleTable {...props} summary={'product-variant,sale'} />
+                    ),
                   },
                   {
                     label: 'Purchase',
                     key: 'purchase',
                     children: (
-                      <PurchaseTable {...props} summary={'product,purchase'} />
+                      <PurchaseTable
+                        {...props}
+                        summary={'product-variant,purchase'}
+                      />
                     ),
                   },
                   {
@@ -245,7 +252,7 @@ export const ProductReport = () => {
                     children: (
                       <QuotationTable
                         {...props}
-                        summary={'product,quotation'}
+                        summary={'product-variant,quotation'}
                       />
                     ),
                   },
@@ -255,7 +262,7 @@ export const ProductReport = () => {
                     children: (
                       <PurchaseReturnTable
                         {...props}
-                        summary={'product,purchasereturn'}
+                        summary={'product-variant,purchasereturn'}
                       />
                     ),
                   },
@@ -265,7 +272,7 @@ export const ProductReport = () => {
                     children: (
                       <SaleReturnTable
                         {...props}
-                        summary={'product,salereturn'}
+                        summary={'product-variant,salereturn'}
                       />
                     ),
                   },

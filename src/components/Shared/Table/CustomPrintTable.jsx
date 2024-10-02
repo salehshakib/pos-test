@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-const CustomPrintTable = forwardRef(({ data = [] }, ref) => {
+const CustomPrintTable = forwardRef(({ data = [[]] }, ref) => {
   const excludedFields = [
     'id',
     'user_id',
@@ -11,11 +11,13 @@ const CustomPrintTable = forwardRef(({ data = [] }, ref) => {
     'balance_id',
   ];
 
-  if (!data || data?.length === 0) {
-    return;
+  const combinedData = data.flat();
+
+  if (!combinedData || combinedData.length === 0) {
+    return <p>No Data Found</p>;
   }
 
-  const headers = Object.keys(data[0]).filter(
+  const headers = Object.keys(combinedData[0]).filter(
     (header) => !excludedFields.includes(header)
   );
 
@@ -28,38 +30,34 @@ const CustomPrintTable = forwardRef(({ data = [] }, ref) => {
   return (
     <div className="p-4">
       <div ref={ref}>
-        {!data || data?.length === 0 ? (
-          'No Data Found'
-        ) : (
-          <table className="min-w-full table-auto border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200">
-                {headers.map((header, index) => (
-                  <th
-                    key={index + 1}
-                    className="px-4 py-2 border border-gray-300 text-left"
+        <table className="min-w-full table-auto border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              {headers.map((header, index) => (
+                <th
+                  key={index}
+                  className="px-4 py-2 border border-gray-300 text-left"
+                >
+                  {formatHeader(header)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {combinedData.map((row, rowIndex) => (
+              <tr key={rowIndex} className="hover:bg-gray-100">
+                {headers.map((header, cellIndex) => (
+                  <td
+                    key={cellIndex}
+                    className="px-4 py-2 border border-gray-300"
                   >
-                    {formatHeader(header)}
-                  </th>
+                    {row[header]}
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {data.map((row, rowIndex) => (
-                <tr key={rowIndex} className="hover:bg-gray-100">
-                  {headers.map((header, cellIndex) => (
-                    <td
-                      key={cellIndex + 1}
-                      className="px-4 py-2 border border-gray-300"
-                    >
-                      {row[header]}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -4,9 +4,9 @@ import { FaPeopleRoof } from 'react-icons/fa6';
 import { MdCoPresent } from 'react-icons/md';
 
 import Account from '../../pages/Dashboard/Account/Account';
+import Balance from '../../pages/Dashboard/Balance/Balance';
 import BalanceDeposit from '../../pages/Dashboard/BalanceDeposit/BalanceDeposit';
 import BalanceWithdraw from '../../pages/Dashboard/BalanceWithdraw/BalanceWithdraw';
-import Designation from '../../pages/Dashboard/Designation/Designation';
 
 export const accountPaths = [
   {
@@ -19,7 +19,7 @@ export const accountPaths = [
     name: 'Balance',
     path: 'balance',
     icon: CiDesktop,
-    element: <Designation />,
+    element: <Balance />,
   },
   {
     name: 'Balance Deposit',

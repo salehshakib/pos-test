@@ -3,6 +3,7 @@ import { CiBoxes } from 'react-icons/ci';
 import { FiShoppingBag } from 'react-icons/fi';
 import { GoPeople } from 'react-icons/go';
 import {
+  MdAccountBalance,
   MdOutlineInventory2,
   MdOutlineMailLock,
   MdOutlineSettings,
@@ -19,6 +20,7 @@ import { TfiShoppingCart } from 'react-icons/tfi';
 
 import AdminDashboard from '../pages/Dashboard/Admin/AdminDashboard';
 import Purchase from '../pages/Dashboard/Purchase/Purchase';
+import { accountPaths } from './accountPath/account.routes';
 import { emailPaths } from './EmailManager/email.routes';
 import { expensePaths } from './ExpenseRoutes/expense.routes';
 import { generatorPaths } from './Generator/generator.routes';
@@ -85,6 +87,12 @@ export const adminPaths = [
     path: 'hrm',
     icon: TbUsersGroup,
     children: hrmPaths,
+  },
+  {
+    name: 'Accounts',
+    path: 'accounts',
+    icon: MdAccountBalance,
+    children: accountPaths,
   },
   {
     name: 'People',

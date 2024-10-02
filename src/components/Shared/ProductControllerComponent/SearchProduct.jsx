@@ -49,12 +49,12 @@ export const SearchProduct = ({ setProducts, productId }) => {
     baseParams.need_qty = 1;
   }
 
-  if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
-    baseParams.warehouse_id =
-      pathname.includes('transfer') || pathname.includes('stock-request')
-        ? warehouseIdFrom
-        : (warehouseId ?? user.warehouse_id);
-  }
+  // if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
+  //   baseParams.warehouse_id =
+  //     pathname.includes('transfer') || pathname.includes('stock-request')
+  //       ? warehouseIdFrom
+  //       : (warehouseId ?? user.warehouse_id);
+  // }
 
   if (!keyword) {
     baseParams.page = 1;
@@ -82,11 +82,11 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const { data, isFetching } = useGetAllProductVariantsQuery(
     {
       params,
-    },
-    {
-      skip: !(warehouseId || warehouseIdFrom),
-      // &&!pathname.includes('stock-request'),
     }
+    // {
+    // skip: !(warehouseId || warehouseIdFrom),
+    // &&!pathname.includes('stock-request'),
+    // }
     // {
     //   skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
     // }

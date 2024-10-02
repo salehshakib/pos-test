@@ -8,7 +8,12 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import UnitForm from './UnitForm';
 
-const UnitCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
+const UnitCreate = ({
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+  setFetchData,
+}) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -37,6 +42,8 @@ const UnitCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
 
     if (data?.success) {
       if (subDrawer && isSubDrawerOpen) {
+        setFetchData(true);
+
         handleCloseSubDrawer();
         subForm.resetFields();
       } else {

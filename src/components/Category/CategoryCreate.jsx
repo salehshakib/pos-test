@@ -12,6 +12,7 @@ const CategoryCreate = ({
   subDrawer,
   isSubDrawerOpen,
   handleCloseSubDrawer,
+  setFetchData,
 }) => {
   const dispatch = useDispatch();
 
@@ -37,7 +38,9 @@ const CategoryCreate = ({
     });
 
     if (data?.success) {
-      if (subDrawer) {
+      if (subDrawer && isSubDrawerOpen) {
+        setFetchData(true);
+
         handleCloseSubDrawer();
         subForm.resetFields();
       } else {

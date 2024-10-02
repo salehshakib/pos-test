@@ -373,24 +373,15 @@ const ProductForm = ({ data, ...props }) => {
             label={'Attachment'}
             name={'attachments'}
             multiple={true}
-            required={true}
             type="img"
           />
         </Col>
       </Row>
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
-          <RichTextEditor
-            label="Product Details"
-            name="details"
-            required={true}
-          />
+          <RichTextEditor label="Product Details" name="details" />
         </Col>
       </Row>
-
-      {/* {isEditDrawerOpen && data?.has_variant.toString() === '1' && (
-        
-      )} */}
 
       {isEditDrawerOpen ? (
         <>

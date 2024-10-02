@@ -1,6 +1,6 @@
 // Import necessary dependencies
 import {
-  VARIANT,
+  ATTRIBUTE,
   VARIANT_OPTIONS,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
@@ -11,14 +11,14 @@ const variantApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllVariants: build.query({
       query: ({ params }) => ({
-        url: `/${VARIANT}`,
+        url: `/${ATTRIBUTE}`,
         method: 'GET',
         params,
       }),
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: VARIANT, params },
-        VARIANT,
+        { type: ATTRIBUTE, params },
+        ATTRIBUTE,
       ],
     }),
 
@@ -38,19 +38,19 @@ const variantApi = baseApi.injectEndpoints({
     getVariantsDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${VARIANT}/show/${id}`,
+          url: `${ATTRIBUTE}/show/${id}`,
           method: 'GET',
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: VARIANT, id }],
+      providesTags: (result, error, { id }) => [{ type: ATTRIBUTE, id }],
     }),
 
     createVariants: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${VARIANT}/store`,
+          url: `/${ATTRIBUTE}/store`,
           method: 'POST',
           body: data,
         };
@@ -68,14 +68,14 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: VARIANT }, { type: VARIANT_OPTIONS }] : [];
+        return result ? [{ type: ATTRIBUTE }, { type: VARIANT_OPTIONS }] : [];
       },
     }),
 
     updateVariants: build.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/${VARIANT}/update/${id}`,
+          url: `/${ATTRIBUTE}/update/${id}`,
           method: 'POST',
           body: data,
         };
@@ -87,14 +87,14 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: VARIANT }] : [];
+        return result ? [{ type: ATTRIBUTE }] : [];
       },
     }),
 
     updateVariantsStatus: build.mutation({
       query: (id) => {
         return {
-          url: `/${VARIANT}/status/${id}`,
+          url: `/${ATTRIBUTE}/status/${id}`,
           method: 'POST',
         };
       },
@@ -105,14 +105,14 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: VARIANT }] : [];
+        return result ? [{ type: ATTRIBUTE }] : [];
       },
     }),
 
     deleteVariants: build.mutation({
       query: (id) => {
         return {
-          url: `/${VARIANT}/delete/${id}`,
+          url: `/${ATTRIBUTE}/delete/${id}`,
           method: 'DELETE',
         };
       },
@@ -123,7 +123,7 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: VARIANT }] : [];
+        return result ? [{ type: ATTRIBUTE }] : [];
       },
     }),
   }),

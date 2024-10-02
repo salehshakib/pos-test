@@ -18,7 +18,7 @@ export const CategoryComponent = () => {
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
-  const { data, isLoading } = useGetAllCategoryQuery({
+  const { data, isLoading, isFetching } = useGetAllCategoryQuery({
     params,
   });
 
@@ -32,11 +32,14 @@ export const CategoryComponent = () => {
     return [];
   }, [data]);
 
+  const [fetchData, setFetchData] = useState(false);
+
   useEffect(() => {
-    if (options.length) {
+    if (fetchData && !isFetching) {
       form.setFieldValue('category_id', options[0].value);
+      setFetchData(false);
     }
-  }, [form, options]);
+  }, [form, fetchData, options, isFetching]);
 
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);
@@ -63,6 +66,7 @@ export const CategoryComponent = () => {
         subDrawer={true}
         isSubDrawerOpen={isSubDrawerOpen}
         handleCloseSubDrawer={handleCloseSubDrawer}
+        setFetchData={setFetchData}
       />
     </>
   );

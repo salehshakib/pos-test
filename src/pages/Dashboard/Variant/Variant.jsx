@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { VariantCreate } from '../../../components/Variant/VariantCreate';
 import { VariantTable } from '../../../components/Variant/VariantTable';
 import GlobalContainer from '../../../container/GlobalContainer/GlobalContainer';
-import { VARIANT } from '../../../utilities/apiEndpoints/inventory.api';
+import { ATTRIBUTE } from '../../../utilities/apiEndpoints/inventory.api';
 import { useCustomDebounce } from '../../../utilities/hooks/useDebounce';
 import { useFilterParams } from '../../../utilities/hooks/useParams';
 
@@ -46,7 +46,7 @@ export const Variant = () => {
       setSelectedRows={setSelectedRows}
       setNewColumns={setNewColumns}
       setParams={setParams}
-      api={VARIANT}
+      api={ATTRIBUTE}
     >
       <VariantCreate />
 

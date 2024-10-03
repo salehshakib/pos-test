@@ -43,7 +43,14 @@ const ProductCreate = () => {
   const handleSubmit = async (values, { variantData, formValues }) => {
     const formData = new FormData();
 
+    console.log(values);
+
     const {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       type,
       sku,
@@ -73,6 +80,11 @@ const ProductCreate = () => {
     } = values ?? {};
 
     const postObj = {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       sku,
       type,
@@ -172,6 +184,8 @@ const ProductCreate = () => {
     }
 
     appendToFormData(postObj, formData);
+
+    console.log(values);
 
     const { data, error } = await createProduct({ formData });
 

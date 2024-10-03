@@ -22,15 +22,18 @@ const CustomInput = (props) => {
     addonBefore = '+880',
     size = 'large',
     maxlength = 2,
+    minLength = 2,
     min,
     max,
 
     //for mb-0
     customStyle = false,
     isReadOnly = false,
+    disabled = false,
   } = props;
 
   const commonProps = {
+    disabled,
     placeholder: `Enter ${placeholder ?? label}`,
     size,
     prefix,
@@ -49,7 +52,7 @@ const CustomInput = (props) => {
             {...commonProps}
             className="mt-1 border-2"
             allowClear={true}
-            autoSize={{ minRows: maxlength, maxRows: 30 }}
+            autoSize={{ minRows: minLength, maxRows: 30 }}
             showCount
           />
         );

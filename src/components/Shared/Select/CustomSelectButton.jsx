@@ -77,6 +77,7 @@ export const CustomSelectButton = (props) => {
                 }}
                 allowClear={true}
                 value={value}
+                onChange={onChange}
               />
             ) : (
               <Select

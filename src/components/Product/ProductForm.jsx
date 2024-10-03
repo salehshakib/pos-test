@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
-import { barcodeOptions } from '../../assets/data/barcode';
 import { taxTypeOptions } from '../../assets/data/taxType';
 import {
   colLayout,
@@ -11,6 +10,8 @@ import {
   mdColLayout,
   rowLayout,
 } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetPosSettingsQuery } from '../../redux/services/settings/generalSettings/generalSettingsApi';
 import { disabledDate } from '../../utilities/lib/currentDate';
 import { generateRandomCode } from '../../utilities/lib/generateCode';
 import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
@@ -32,17 +33,27 @@ const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
 
-  const options = [
-    { value: 'Standard', label: 'Standard' },
-    { value: 'Combo', label: 'Combo' },
-    { value: 'Service', label: 'Service' },
-  ];
+  const params = {
+    child: 1,
+  };
+
+  const { data } = useGetPosSettingsQuery(params);
+
+  const options = data?.product_type
+    ? JSON.parse(data?.product_type)?.map((item) => {
+        return {
+          value: item,
+          label: item,
+        };
+      })
+    : [];
 
   useEffect(() => {
     if (!productType) {
-      form.setFieldValue('type', 'Standard');
+      form.setFieldValue('type', options?.[0]?.value);
     }
-  }, [form, productType]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, productType, data]);
 
   return (
     <CustomSelect
@@ -78,19 +89,28 @@ const ProductCodeComponent = () => {
 
 const BarCodeComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch('type', form);
+
+  const params = {
+    child: 1,
+  };
+
+  const { data } = useGetPosSettingsQuery(params);
+
+  const options = data?.symbology
+    ? [{ value: data?.symbology, label: data?.symbology }]
+    : [];
 
   useEffect(() => {
-    if (!productType) {
-      form.setFieldValue('symbology', barcodeOptions[0].value);
+    if (data) {
+      form.setFieldValue('symbology', data?.symbology);
     }
-  }, [form, productType]);
+  }, [form, data]);
 
   return (
     <CustomSelect
       label="Barcode Symbology"
-      options={barcodeOptions}
       required={true}
+      options={options}
       name={'symbology'}
     />
   );
@@ -307,7 +327,99 @@ const IMEIComponent = () => {
   else return null;
 };
 
+const ProductPurchaseAmount = () => {
+  const currency = useSelector(useCurrency);
+
+  return (
+    <Col {...colLayout}>
+      <CustomInput
+        label="Product Purchase Amount"
+        type={'number_with_money'}
+        suffix={currency?.name}
+        disabled={true}
+        name={'buying_price'}
+      />
+    </Col>
+  );
+};
+const ProductSellingAmount = () => {
+  const currency = useSelector(useCurrency);
+  const form = Form.useFormInstance();
+
+  const profit_margin = Form.useWatch('profit_margin', form);
+  const buyingPrice = Form.useWatch('buying_price', form);
+
+  useEffect(() => {
+    if (profit_margin > 0) {
+      const sale_amount = buyingPrice + (buyingPrice * profit_margin) / 100;
+      form.setFieldValue('sale_amount', sale_amount);
+
+      const profitAmount = sale_amount - buyingPrice;
+      form.setFieldValue('profit_amount', profitAmount);
+    }
+  }, [profit_margin, form, buyingPrice]);
+
+  const onChange = (value) => {
+    const sale_amount = parseFloat(value);
+
+    if (!isNaN(sale_amount) && sale_amount > 0) {
+      const new_profit_margin =
+        ((sale_amount - buyingPrice) / buyingPrice) * 100;
+
+      form.setFieldValue('profit_margin', new_profit_margin.toFixed(2));
+    }
+
+    const profitAmount = sale_amount - buyingPrice;
+    form.setFieldValue('profit_amount', profitAmount);
+  };
+  return (
+    <>
+      <Col {...colLayout}>
+        <CustomInput
+          label="Profit Margin"
+          type={'number_with_percent'}
+          required={true}
+          name={'profit_margin'}
+          suffix={'%'}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Profit Amount"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          name={'profit_amount'}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Product Sell Amount"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          required={true}
+          name={'sale_amount'}
+          onChange={onChange}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Final Price"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          required={true}
+          name={'selling_price'}
+        />
+      </Col>
+    </>
+  );
+};
+
 const ProductForm = ({ data, ...props }) => {
+  const currency = useSelector(useCurrency);
+
   const comboProductSubmitRef = useRef(null);
 
   const variantProductRef = useRef(null);
@@ -387,14 +499,13 @@ const ProductForm = ({ data, ...props }) => {
           Pricing
         </Divider>
 
-        {/* <ProductCostComponent /> */}
-
         <Col {...colLayout}>
           <CustomInput
             label="Product Buying Cost"
-            type={'number'}
+            type={'number_with_money'}
+            suffix={currency?.name}
             required={true}
-            name={'buying_price'}
+            name={'product_price'}
           />
         </Col>
         <Col {...colLayout}>
@@ -404,48 +515,9 @@ const ProductForm = ({ data, ...props }) => {
           <TaxTypeComponent />
         </Col>
 
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Purchase Amount"
-            type={'number'}
-            name={'purchase_amount'}
-          />
-        </Col>
+        <ProductPurchaseAmount />
 
-        <Col {...colLayout}>
-          <CustomInput
-            label="Profit Margin"
-            type={'number_with_percent'}
-            required={true}
-            name={'profit_margin'}
-            suffix={'%'}
-          />
-        </Col>
-
-        <Col {...colLayout}>
-          <CustomInput
-            label="Profit Amount"
-            type={'number'}
-            name={'profit_amount'}
-          />
-        </Col>
-
-        <Col {...colLayout}>
-          <CustomInput
-            label="Product Sell Amount"
-            type={'number'}
-            required={true}
-            name={'sale_amount'}
-          />
-        </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Final Price"
-            type={'number'}
-            required={true}
-            name={'selling_price'}
-          />
-        </Col>
+        <ProductSellingAmount />
 
         <UnitComponent />
 
@@ -459,11 +531,6 @@ const ProductForm = ({ data, ...props }) => {
 
       <IMEIComponent />
 
-      {/* <Row {...rowLayout}>
-        <Divider orientation="left" orientationMargin={10}>
-          Product Expire
-        </Divider>
-        </Row> */}
       <ExpireComponent />
 
       <PromotionalPriceComponent />

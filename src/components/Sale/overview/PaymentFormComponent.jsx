@@ -9,6 +9,7 @@ import {
 } from '../../../layout/FormLayout';
 import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetPosSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../utilities/lib/currency';
 import { openNotification } from '../../../utilities/lib/openToaster';
@@ -18,32 +19,41 @@ import CustomSelect from '../../Shared/Select/CustomSelect';
 const PaymentType = () => {
   const form = Form.useFormInstance();
 
-  useEffect(() => {
-    form.setFieldValue('payment_type', 'Cash');
-  }, [form]);
+  const params = {
+    child: 1,
+  };
+  const { data } = useGetPosSettingsQuery(params);
 
   const options = [
-    {
-      value: 'Cash',
-      label: 'Cash',
-    },
-    {
-      value: 'Gift Card',
-      label: 'Gift Card',
-    },
-    {
-      value: 'Card',
-      label: 'Card',
-    },
-    {
-      value: 'Cheque',
-      label: 'Cheque',
-    },
-    // {
-    //   value: "Points",
-    //   label: "Points",
-    // },
-  ];
+    data?.cash_payment
+      ? {
+          value: 'Cash',
+          label: 'Cash',
+        }
+      : null,
+    data?.card_payment
+      ? {
+          value: 'Card',
+          label: 'Card',
+        }
+      : null,
+    data?.cheque_payment
+      ? {
+          value: 'Cheque',
+          label: 'Cheque',
+        }
+      : null,
+    data?.gift_card_payment
+      ? {
+          value: 'Gift Card',
+          label: 'Gift Card',
+        }
+      : null,
+  ].filter(Boolean);
+
+  useEffect(() => {
+    form.setFieldValue('payment_type', options?.[0].value);
+  }, [form, options]);
 
   return (
     <CustomSelect

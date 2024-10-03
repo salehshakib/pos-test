@@ -48,6 +48,11 @@ export const PosSettingForm = ({ data }) => {
           value: data?.gift_card_payment.toString() === '1' ? true : false,
           errors: '',
         },
+        {
+          name: 'product_type',
+          value: JSON.parse(data?.product_type),
+          errors: '',
+        },
       ];
 
       setFields(newFieldData);
@@ -74,6 +79,8 @@ export const PosSettingForm = ({ data }) => {
       gift_card_payment,
       is_send_email,
       need_keyboard,
+      product_type,
+      symbology,
     } = values;
 
     const postData = {
@@ -87,7 +94,8 @@ export const PosSettingForm = ({ data }) => {
       gift_card_payment: gift_card_payment ? '1' : '0',
       is_send_email: is_send_email ? '1' : '0',
       need_keyboard: need_keyboard ? '1' : '0',
-
+      product_type,
+      symbology,
       _method: 'PUT',
     };
 

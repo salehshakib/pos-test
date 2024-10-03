@@ -50,6 +50,18 @@ const columns = [
     ),
   },
   {
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
+    align: 'center',
+    width: 100,
+    render: (stock) => (
+      <span className="text-dark   text-xs font-medium md:text-sm">
+        {stock}
+      </span>
+    ),
+  },
+  {
     title: 'Quantity',
     dataIndex: 'quantity',
     key: 'quantity',
@@ -73,10 +85,16 @@ const columns = [
             />
           </div>
           <CustomQuantityInput
-            // name={["product_list", "qty", record?.id]}
             noStyle={true}
             onChange={(value) =>
-              record.onQuantityChange(record.id, value, record.setFormValues)
+              record.onQuantityChange(
+                record.id,
+                value,
+                record.setFormValues,
+                record.stock,
+                record.formValues.product_list.action[record.id],
+                true
+              )
             }
             value={record?.formValues.product_list.qty?.[record?.id] ?? 0}
           />
@@ -86,7 +104,13 @@ const columns = [
               icon={<FaPlus />}
               type="primary"
               onClick={() =>
-                record.incrementCounter(record?.id, record.setFormValues)
+                record.incrementCounter(
+                  record?.id,
+                  record.setFormValues,
+                  record.stock,
+                  record.formValues.product_list.action[record.id],
+                  true
+                )
               }
               className=""
             />
@@ -119,7 +143,12 @@ const columns = [
                 },
               ]}
               onChange={(value) =>
-                record.onActionChange(record.id, value, record.setFormValues)
+                record.onActionChange(
+                  record.id,
+                  value,
+                  record.setFormValues,
+                  record.stock
+                )
               }
               styleProps={{ width: '9rem' }}
               noStyle={true}
@@ -196,6 +225,7 @@ export const AdjustmentProductTable = ({
         id,
         name,
         sku,
+        stock: product?.qty,
         unitCost: showCurrency(price, currency),
         action: true,
         delete: true,
@@ -228,7 +258,7 @@ export const AdjustmentProductTable = ({
       return (
         <Table.Summary fixed="bottom">
           <Table.Summary.Row>
-            <Table.Summary.Cell index={1} colSpan={3}>
+            <Table.Summary.Cell index={1} colSpan={4}>
               <Typography.Text className="font-bold" type="">
                 Total
               </Typography.Text>

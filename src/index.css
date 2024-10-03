@@ -243,7 +243,7 @@ iframe.goog-te-banner-frame.skiptranslate {
 
 .ant-table-wrapper
   .ant-table.ant-table-small
-  .ant-table-expanded-row-fixed
+  .ant-table-expanded-row
   .ant-table-cell {
   background-color: var(--secondColor) !important;
 }

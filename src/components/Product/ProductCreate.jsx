@@ -186,8 +186,6 @@ const ProductCreate = () => {
 
     appendToFormData(postObj, formData);
 
-    console.log(values);
-
     const { data, error } = await createProduct({ formData });
 
     if (data?.success) {

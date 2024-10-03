@@ -87,7 +87,7 @@ const columns = [
     ),
   },
   {
-    title: 'Quantity',
+    title: 'Total Quantity',
     dataIndex: 'quantity',
     key: 'quantity',
     align: 'center',
@@ -114,18 +114,6 @@ const columns = [
     render: (price) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {price}
-      </span>
-    ),
-  },
-  {
-    title: 'Has Variant',
-    dataIndex: 'hasVariant',
-    key: 'hasVariant',
-    align: 'center',
-    width: 100,
-    render: (hasVariant) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">
-        {hasVariant}
       </span>
     ),
   },

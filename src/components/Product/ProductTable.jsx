@@ -144,15 +144,21 @@ const ProductTable = ({
         is_active,
         sku,
         type,
-        qty,
         buying_price: cost,
         selling_price: price,
         categories,
         brands,
         units,
         attachments,
-        has_variant,
+        variants,
       } = item ?? {};
+
+      const sumQty = variants?.reduce((totalQty, item) => {
+        const productQty = item?.product_qties?.reduce((acc, qtyItem) => {
+          return acc + (Number(qtyItem?.qty) || 0);
+        }, 0);
+        return totalQty + productQty;
+      }, 0);
 
       return {
         id,
@@ -162,11 +168,10 @@ const ProductTable = ({
         type,
         brand: brands?.name,
         category: categories?.name,
-        quantity: qty,
+        quantity: sumQty,
         unit: units?.base_unit ?? 'N/A',
         cost: showCurrency(cost, currency),
         price: showCurrency(price, currency),
-        hasVariant: has_variant.toString() === '1' ? 'Yes' : 'No',
         status: is_active,
         created_at,
         handleStatusModal,
@@ -199,7 +204,6 @@ const ProductTable = ({
         expandable={{
           expandedRowRender: (record) =>
             expandedRowRender(record, data, currency),
-          rowExpandable: (record) => record.hasVariant === 'Yes',
         }}
       />
 

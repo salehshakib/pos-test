@@ -17,7 +17,7 @@ const VariantOptions = () => {
   const { data, isLoading } = useGetAllVariantOptionsQuery({ params });
 
   const options =
-    data?.map((item) => {
+    data?.results?.attribute_option?.map((item) => {
       return {
         value: item?.name,
         label: item?.name,

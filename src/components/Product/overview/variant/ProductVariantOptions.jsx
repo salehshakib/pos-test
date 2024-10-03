@@ -134,11 +134,6 @@ const ProductVariantOption = ({
         {
           return editable ? (
             <span className="flex items-center gap-2 justify-center font-bold">
-              {/* <FcCancel
-                size={20}
-                className="cursor-pointer text-white "
-                onClick={cancel}
-              /> */}
               <Button size="small" onClick={cancel}>
                 Cancel
               </Button>
@@ -149,11 +144,6 @@ const ProductVariantOption = ({
               >
                 Save
               </Button>
-              {/* <IoSaveOutline
-                size={20}
-                className="cursor-pointer"
-                onClick={() => save(record.key)}
-              /> */}
             </span>
           ) : (
             <span className="flex items-center justify-center">
@@ -192,24 +182,10 @@ const ProductVariantOption = ({
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
         combination?.map((item) => {
-          // console.log(item.key);
-
-          // const reversedKey = item.key.split('-').reverse().join('-');
-
-          // console.log(reversedKey);
-
-          // const index = combination.findIndex((el) => el.key === reversedKey);
-
-          // console.log(index);
-
+          console.log(item);
           return {
             key: item.key,
             name: item.name,
-            // sku: data?.[index]?.sku ?? item.sku,
-            // iemi: data?.[index]?.iemi ?? '',
-            // qty: data?.[index]?.qty ?? item.qty,
-            // price: data?.[index]?.price ?? item?.price,
-            // cost: data?.[index]?.cost ?? item?.cost,
             sku: item.sku,
             iemi: item.iemi,
             qty: item.qty,
@@ -230,6 +206,8 @@ const ProductVariantOption = ({
         editData.name,
         editData?.sku
       );
+
+      console.log(editData?.variants);
 
       const variantDatasource =
         combination?.map((item) => {

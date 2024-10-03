@@ -43,8 +43,6 @@ const ProductCreate = () => {
   const handleSubmit = async (values, { variantData, formValues }) => {
     const formData = new FormData();
 
-    console.log(values);
-
     const {
       product_price,
       profit_margin,

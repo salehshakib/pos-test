@@ -168,10 +168,21 @@ const ProductVariantComponent = ({ data, handleVariantProduct }) => {
 const AlertComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
+  const hasVariant = Form.useWatch('has_variant', form);
 
   if (productType === 'Standard') {
     return (
       <>
+        {!hasVariant && (
+          <Col {...colLayout}>
+            <CustomInput
+              label="Quantity"
+              type={'number'}
+              required={true}
+              name={'qty'}
+            />
+          </Col>
+        )}
         <Col {...colLayout}>
           <CustomInput
             label="Daily Sale Objectives"
@@ -347,7 +358,7 @@ const ProductSellingAmount = () => {
   const form = Form.useFormInstance();
 
   const profit_margin = Form.useWatch('profit_margin', form);
-  const buyingPrice = Form.useWatch('buying_price', form);
+  const buyingPrice = Form.useWatch('product_price', form);
 
   useEffect(() => {
     if (profit_margin > 0) {
@@ -355,6 +366,11 @@ const ProductSellingAmount = () => {
       form.setFieldValue('sale_amount', sale_amount);
 
       const profitAmount = sale_amount - buyingPrice;
+      form.setFieldValue('profit_amount', profitAmount);
+    } else {
+      form.setFieldValue('sale_amount', buyingPrice);
+
+      const profitAmount = 0;
       form.setFieldValue('profit_amount', profitAmount);
     }
   }, [profit_margin, form, buyingPrice]);
@@ -372,6 +388,7 @@ const ProductSellingAmount = () => {
     const profitAmount = sale_amount - buyingPrice;
     form.setFieldValue('profit_amount', profitAmount);
   };
+
   return (
     <>
       <Col {...colLayout}>
@@ -390,6 +407,7 @@ const ProductSellingAmount = () => {
           type={'number_with_money'}
           suffix={currency?.name}
           name={'profit_amount'}
+          disabled={true}
         />
       </Col>
 

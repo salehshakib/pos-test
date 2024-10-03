@@ -1,6 +1,5 @@
 # POS Inventory - Vistock Main update
 
-
 ## Description
 
 This repo contains the code for the POS-Inventory.
@@ -16,3 +15,5 @@ yarn
 ```
 
 ## Usage
+
+install the dependencies

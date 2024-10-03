@@ -50,6 +50,7 @@ const ProductCreate = () => {
       profit_margin,
       profit_amount,
       sale_amount,
+      qty,
 
       name,
       type,
@@ -177,6 +178,8 @@ const ProductCreate = () => {
       if (variantListArray.length === 0) {
         postObj.has_variant = '0';
       }
+    } else {
+      postObj.qty = qty.toString();
     }
 
     if (values.attach_file?.[0].originFileObj) {

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
 import {
   decrementCounter,
   incrementCounter,
@@ -196,6 +197,7 @@ export const AdjustmentProductTable = ({
   setProducts,
 }) => {
   const form = Form.useFormInstance();
+  const warehouseId = Form.useWatch('warehouse_id', form);
 
   const currency = useSelector(useCurrency);
 
@@ -208,6 +210,8 @@ export const AdjustmentProductTable = ({
         buying_price: unit_cost,
         purchase_units,
       } = product ?? {};
+
+      const stock = getWarehouseQuantity(product?.product_qties, warehouseId);
 
       formValues.product_list.qty[id] = formValues.product_list.qty[id] ?? 1;
 
@@ -225,7 +229,7 @@ export const AdjustmentProductTable = ({
         id,
         name,
         sku,
-        stock: product?.qty,
+        stock,
         unitCost: showCurrency(price, currency),
         action: true,
         delete: true,

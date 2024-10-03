@@ -18,6 +18,7 @@ export const ExpenseEdit = ({ id, setId }) => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState([]);
 
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   const { data, isFetching } = useGetExpenseDetailsQuery({ id }, { skip: !id });
@@ -36,7 +37,7 @@ export const ExpenseEdit = ({ id, setId }) => {
   const handleUpdate = async (values) => {
     const { data, error } = await updateExpense({
       id,
-      data: { ...values, _method: 'PUT' },
+      data: { ...values, petty_cash_id: pettyCashId, _method: 'PUT' },
     });
 
     if (data?.success) {

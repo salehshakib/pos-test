@@ -1,6 +1,7 @@
 // Import necessary dependencies
 import {
   ATTRIBUTE,
+  TRANSFER,
   VARIANT_OPTIONS,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
@@ -18,7 +19,9 @@ const variantApi = baseApi.injectEndpoints({
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
         { type: ATTRIBUTE, params },
+        { type: TRANSFER, params },
         ATTRIBUTE,
+        TRANSFER,
       ],
     }),
 
@@ -44,7 +47,10 @@ const variantApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: ATTRIBUTE, id }],
+      providesTags: (result, error, { id }) => [
+        { type: ATTRIBUTE, id },
+        { type: TRANSFER },
+      ],
     }),
 
     createVariants: build.mutation({
@@ -68,7 +74,9 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ATTRIBUTE }, { type: VARIANT_OPTIONS }] : [];
+        return result
+          ? [{ type: ATTRIBUTE }, { type: VARIANT_OPTIONS }, { type: TRANSFER }]
+          : [];
       },
     }),
 
@@ -87,7 +95,7 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ATTRIBUTE }] : [];
+        return result ? [{ type: ATTRIBUTE }, { type: TRANSFER }] : [];
       },
     }),
 
@@ -123,7 +131,7 @@ const variantApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ATTRIBUTE }] : [];
+        return result ? [{ type: ATTRIBUTE }, { type: TRANSFER }] : [];
       },
     }),
   }),

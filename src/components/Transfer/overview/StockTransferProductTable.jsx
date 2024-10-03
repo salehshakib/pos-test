@@ -20,8 +20,7 @@ const columns = [
     fixed: 'left',
     render: (props, record) => {
       const onChange = (value) => {
-        const { id, checked } = value.target;
-        const productId = id.split('_')[1];
+        const { checked } = value.target;
 
         if (parseInt(record?.requestedStock) <= parseInt(record?.stock)) {
           record.updateProductList(
@@ -208,7 +207,6 @@ export const StockTransferProductTable = ({
   setFormValues,
   products,
   setProducts,
-  productUnits,
   form,
   setUpdatedProductList,
 }) => {

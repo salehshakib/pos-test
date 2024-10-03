@@ -49,7 +49,7 @@ export function formatVariantsData(variants, attributes) {
     });
   });
 
-  return Object.values(attributesMap);
+  return Object.values(attributesMap).reverse();
 }
 
 export function extractAttributeValues(attributeData) {

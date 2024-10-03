@@ -111,7 +111,7 @@ const CustomTable = ({
           icon: <MdEditDocument size={20} />,
           label: (
             <div className="flex items-center justify-start gap-3">
-              Edit Stock & Price
+              Edit Price
             </div>
           ),
           onClick: () => record?.handleEditStockAndPrice(record?.id),

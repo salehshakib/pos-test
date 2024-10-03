@@ -114,42 +114,13 @@ export const VariantAttributeTable = ({
         });
 
         return (
-          <>
-            {/* <CustomSelect
-              mode="multiple"
-              options={attribute_options}
-              placeholder="Attributes Options"
-              customStyle={true}
-              onChange={(value, option) => onSelect(value, option, record.id)}
-              value={variantOptions[record.id] ?? []}
-            /> */}
-
-            {/* <CustomSelectButton
-              mode="multiple"
-              options={attribute_options}
-              placeholder="Attributes Options"
-              icon={<FaEdit className="text-xl" />}
-              customStyle={true}
-              onClick={() => record.handleOpenSubDrawer(record.id)}
-              onChange={(value, option) => onSelect(value, option, record.id)}
-            />
-
-            <VariantEdit
-              id={record.id}
-              subDrawer={true}
-              isSubDrawerOpen={record.isSubDrawerOpen?.[record.id]}
-              handleCloseSubDrawer={() =>
-                record.handleCloseSubDrawer(record.id)
-              }
-            /> */}
-            <AttributeOptions
-              record={record}
-              options={attribute_options}
-              onSelect={onSelect}
-              setDataSource={setDataSource}
-              variantOptions={variantOptions}
-            />
-          </>
+          <AttributeOptions
+            record={record}
+            options={attribute_options}
+            onSelect={onSelect}
+            setDataSource={setDataSource}
+            variantOptions={variantOptions}
+          />
         );
       },
     },

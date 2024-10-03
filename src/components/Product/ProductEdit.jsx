@@ -115,9 +115,14 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
         has_stock,
         has_variant,
         has_different_price,
+        product_price,
+        profit_margin,
       } = data;
 
       const fieldData = fieldsToUpdate({
+        product_price,
+        profit_margin,
+
         name,
         sku,
         type,

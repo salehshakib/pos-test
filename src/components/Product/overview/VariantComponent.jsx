@@ -120,9 +120,9 @@ export const VariantComponent = ({ onCustomSubmit, data }) => {
     }
 
     if (checked) {
-      if (!form.getFieldValue('buying_price')) {
+      if (!form.getFieldValue('product_price')) {
         form.setFieldValue('has_variant', false);
-        openNotification('info', 'Please enter buying price');
+        openNotification('info', 'Please enter product price');
         return;
       }
       if (!form.getFieldValue('selling_price')) {

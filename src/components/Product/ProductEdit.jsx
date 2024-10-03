@@ -350,9 +350,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    console.log(data?.variants);
-    console.log(variantData);
-
     const deletedVariants = getIdsNotInSelectedRowData(
       variantData?.selectedRowData,
       data?.variants

@@ -1,7 +1,6 @@
 import { Skeleton, theme } from 'antd';
 import { PiWarehouse } from 'react-icons/pi';
 
-import warehouseLogo from '../../assets/data/warehouseLogo';
 import {
   categorizeNotificationsByDate,
   getHoursAgo,

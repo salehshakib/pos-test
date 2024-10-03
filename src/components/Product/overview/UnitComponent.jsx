@@ -1,4 +1,4 @@
-import { Col, Form } from 'antd';
+import { Col, Divider, Form } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
@@ -167,6 +167,9 @@ const UnitComponent = () => {
   if (productType === 'Standard') {
     return (
       <>
+        <Divider orientation="left" orientationMargin={10}>
+          Unit
+        </Divider>
         <ProductUnit
           options={options}
           isLoading={isLoading}

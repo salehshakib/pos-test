@@ -13,10 +13,19 @@ import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import { VariantForm } from './VariantForm';
 
-export const VariantEdit = ({ id, setId }) => {
+export const VariantEdit = ({
+  id,
+  setId,
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+  setDataSource,
+}) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+  const [subForm] = Form.useForm();
+
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
@@ -34,7 +43,7 @@ export const VariantEdit = ({ id, setId }) => {
   const [updateVariants, { isLoading }] = useUpdateVariantsMutation();
 
   useEffect(() => {
-    if (data && isEditDrawerOpen) {
+    if (data && (isEditDrawerOpen || isSubDrawerOpen)) {
       const fieldData = fieldsToUpdate(data);
 
       const newFieldData = [
@@ -50,12 +59,17 @@ export const VariantEdit = ({ id, setId }) => {
     } else {
       setFields([]);
     }
-  }, [data, setFields, isEditDrawerOpen]);
+  }, [data, setFields, isEditDrawerOpen, isSubDrawerOpen]);
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
 
     const postObj = { ...values, _method: 'PUT' };
+
+    if (subDrawer) {
+      postObj.parent = 1;
+      postObj.child = 1;
+    }
 
     appendToFormData(postObj, formData);
 
@@ -65,13 +79,30 @@ export const VariantEdit = ({ id, setId }) => {
     });
 
     if (data?.success) {
-      setId(undefined);
-      dispatch(closeEditDrawer());
+      if (subDrawer && isSubDrawerOpen) {
+        handleCloseSubDrawer();
+        setDataSource((prev) => {
+          const newDatasource = prev.map((item) => {
+            if (item.id.toString() === id.toString()) {
+              return {
+                ...item,
+                options: data?.data?.attribute_options,
+              };
+            }
+            return item;
+          });
+
+          return newDatasource;
+        });
+        subForm.resetFields();
+      } else {
+        setId(undefined);
+        dispatch(closeEditDrawer());
+      }
     }
 
     if (error) {
       const errorFields = errorFieldsUpdate(fields, error);
-
       setFields(errorFields);
     }
   };
@@ -79,14 +110,16 @@ export const VariantEdit = ({ id, setId }) => {
   return (
     <CustomDrawer
       title={'Edit Attribute'}
-      open={isEditDrawerOpen}
+      open={subDrawer ? isSubDrawerOpen : isEditDrawerOpen}
+      onClose={subDrawer && handleCloseSubDrawer}
       isLoading={isFetching}
     >
       <VariantForm
         handleSubmit={handleUpdate}
         isLoading={isLoading}
         fields={fields}
-        form={form}
+        form={subDrawer ? subForm : form}
+        onClose={subDrawer && handleCloseSubDrawer}
       />
     </CustomDrawer>
   );

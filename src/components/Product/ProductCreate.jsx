@@ -43,7 +43,14 @@ const ProductCreate = () => {
   const handleSubmit = async (values, { variantData, formValues }) => {
     const formData = new FormData();
 
+    console.log(values);
+
     const {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       type,
       sku,
@@ -73,6 +80,11 @@ const ProductCreate = () => {
     } = values ?? {};
 
     const postObj = {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       sku,
       type,
@@ -173,6 +185,8 @@ const ProductCreate = () => {
 
     appendToFormData(postObj, formData);
 
+    console.log(values);
+
     const { data, error } = await createProduct({ formData });
 
     if (data?.success) {
@@ -194,21 +208,21 @@ const ProductCreate = () => {
   const [current, setCurrent] = useState(0);
 
   const handleStockSubmit = async (values, { formValues }) => {
-    const stockListArray = formValues?.stock_list?.qty
-      ? Object.keys(formValues.stock_list.qty)
-          .filter(
-            (product_id) => formValues.stock_list.qty[product_id] !== undefined
-          )
-          .map((product_id) => {
-            const [id, warehouse_id] = product_id.split('-');
+    // const stockListArray = formValues?.stock_list?.qty
+    //   ? Object.keys(formValues.stock_list.qty)
+    //       .filter(
+    //         (product_id) => formValues.stock_list.qty[product_id] !== undefined
+    //       )
+    //       .map((product_id) => {
+    //         const [id, warehouse_id] = product_id.split('-');
 
-            return {
-              product_variant_id: parseInt(id),
-              qty: formValues.stock_list.qty[product_id],
-              warehouse_id,
-            };
-          })
-      : [];
+    //         return {
+    //           product_variant_id: parseInt(id),
+    //           qty: formValues.stock_list.qty[product_id],
+    //           warehouse_id,
+    //         };
+    //       })
+    //   : [];
 
     const priceListArray = formValues?.price_list?.price
       ? Object.keys(formValues.price_list.price)
@@ -227,20 +241,26 @@ const ProductCreate = () => {
           })
       : [];
 
-    if (stockListArray.length === 0 && priceListArray.length === 0) {
+    if (priceListArray.length === 0) {
       dispatch(closeCreateDrawer());
       form.resetFields();
       setCurrent(0);
       return;
     }
+    // if (stockListArray.length === 0 && priceListArray.length === 0) {
+    //   dispatch(closeCreateDrawer());
+    //   form.resetFields();
+    //   setCurrent(0);
+    //   return;
+    // }
 
     const formData = new FormData();
 
     const postObj = {};
 
-    if (stockListArray.length) {
-      postObj.stock_list = JSON.stringify(stockListArray);
-    }
+    // if (stockListArray.length) {
+    //   postObj.stock_list = JSON.stringify(stockListArray);
+    // }
 
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);

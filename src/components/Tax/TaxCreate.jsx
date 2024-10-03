@@ -7,7 +7,12 @@ import { useCreateTaxMutation } from '../../redux/services/tax/taxApi';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import TaxForm from './TaxForm';
 
-const TaxCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
+const TaxCreate = ({
+  subDrawer,
+  isSubDrawerOpen,
+  handleCloseSubDrawer,
+  setFetchData,
+}) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -25,6 +30,7 @@ const TaxCreate = ({ subDrawer, isSubDrawerOpen, handleCloseSubDrawer }) => {
     });
     if (data?.success) {
       if (subDrawer) {
+        setFetchData(true);
         handleCloseSubDrawer();
         subForm.resetFields();
       } else {

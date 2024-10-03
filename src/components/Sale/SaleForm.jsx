@@ -126,10 +126,6 @@ export const SaleForm = ({ data, ...props }) => {
             ref={warehouseSaleRef}
           >
             <Col {...largeLayout}>
-              <OrderTaxComponent />
-            </Col>
-
-            <Col {...largeLayout}>
               <CustomInput
                 label="Discount"
                 type={'number'}
@@ -140,6 +136,9 @@ export const SaleForm = ({ data, ...props }) => {
 
             <DiscountTypeComponent />
 
+            <Col {...largeLayout}>
+              <OrderTaxComponent />
+            </Col>
             <Col {...largeLayout}>
               <CustomInput
                 label="Shipping Cost"
@@ -192,16 +191,6 @@ export const SaleForm = ({ data, ...props }) => {
           </CustomSaleProductComponent>
         </Row>
       </CustomForm>
-
-      {/* <TotalRow
-        totalItems={totalItems}
-        totalQty={totalQty}
-        totalPrice={totalPrice}
-        taxRate={taxRate ?? 0}
-        discount={discount ?? 0}
-        shippingCost={shipping_cost ?? 0}
-        grandTotal={grandTotal}
-      /> */}
     </>
   );
 };

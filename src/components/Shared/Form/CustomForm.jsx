@@ -18,6 +18,8 @@ const FormButton = ({ loading, children, onClose, btnStyle }) => {
     dispatch(closeEditDrawer());
   };
 
+  // console.log(first)
+
   return (
     <div
       className={`flex w-full items-center justify-end gap-3 pt-5 ${btnStyle ? 'pb-20' : 'pb-2'}`}
@@ -65,7 +67,7 @@ const CustomForm = (props) => {
         autoComplete="on"
         onFinishFailed={onFinishFailed}
         onChange={onChange}
-        scrollToFirstError
+        scrollToFirstError={true}
       >
         {children}
 

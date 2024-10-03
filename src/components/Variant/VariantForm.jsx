@@ -2,12 +2,19 @@ import { Col, Row } from 'antd';
 
 import { fullColLayout, rowLayout } from '../../layout/FormLayout';
 import { useGetAllVariantOptionsQuery } from '../../redux/services/variant/variantApi';
+import {
+  DEFAULT_SELECT_VALUES,
+  useGlobalParams,
+} from '../../utilities/hooks/useParams';
 import CustomForm from '../Shared/Form/CustomForm';
 import CustomInput from '../Shared/Input/CustomInput';
 import CustomSelect from '../Shared/Select/CustomSelect';
 
 const VariantOptions = () => {
-  const { data, isLoading } = useGetAllVariantOptionsQuery({});
+  const params = useGlobalParams({
+    selectValue: DEFAULT_SELECT_VALUES,
+  });
+  const { data, isLoading } = useGetAllVariantOptionsQuery({ params });
 
   const options =
     data?.map((item) => {

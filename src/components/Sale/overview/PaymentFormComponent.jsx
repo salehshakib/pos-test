@@ -1,5 +1,6 @@
 import { Col, Form } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   colLayout,
@@ -7,38 +8,52 @@ import {
   mdColLayout,
 } from '../../../layout/FormLayout';
 import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
+import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGetPosSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
 const PaymentType = () => {
   const form = Form.useFormInstance();
 
-  useEffect(() => {
-    form.setFieldValue('payment_type', 'Cash');
-  }, [form]);
+  const params = {
+    child: 1,
+  };
+  const { data } = useGetPosSettingsQuery(params);
 
   const options = [
-    {
-      value: 'Cash',
-      label: 'Cash',
-    },
-    {
-      value: 'Gift Card',
-      label: 'Gift Card',
-    },
-    {
-      value: 'Card',
-      label: 'Card',
-    },
-    {
-      value: 'Cheque',
-      label: 'Cheque',
-    },
-    // {
-    //   value: "Points",
-    //   label: "Points",
-    // },
-  ];
+    data?.cash_payment
+      ? {
+          value: 'Cash',
+          label: 'Cash',
+        }
+      : null,
+    data?.card_payment
+      ? {
+          value: 'Card',
+          label: 'Card',
+        }
+      : null,
+    data?.cheque_payment
+      ? {
+          value: 'Cheque',
+          label: 'Cheque',
+        }
+      : null,
+    data?.gift_card_payment
+      ? {
+          value: 'Gift Card',
+          label: 'Gift Card',
+        }
+      : null,
+  ].filter(Boolean);
+
+  useEffect(() => {
+    form.setFieldValue('payment_type', options?.[0].value);
+  }, [form, options]);
 
   return (
     <CustomSelect
@@ -49,15 +64,35 @@ const PaymentType = () => {
   );
 };
 
-const GiftCardComponent = () => {
-  const { data, isFetching } = useGetAllGiftCardQuery({});
+const GiftCardComponent = ({ setGiftCard }) => {
+  const params = useGlobalParams({});
+  const { data, isFetching } = useGetAllGiftCardQuery({ params });
 
   const options = data?.results?.giftcard?.map((item) => {
     return {
-      value: item.id.toString(),
+      value: item.id.toString() + '-' + item.amount,
       label: item.card_no,
+      amount: item.amount,
     };
   });
+
+  const form = Form.useFormInstance();
+
+  const onSelect = (value, option) => {
+    const paidAmount = form.getFieldValue('paid_amount');
+    const payableAmount = parseFloat(paidAmount);
+
+    if (payableAmount < option.amount) {
+      openNotification(
+        'error',
+        'Can not use giftcard. Sell amount is less than giftcard amount'
+      );
+      form.resetFields(['gift_card_id']);
+      setGiftCard(undefined);
+    } else {
+      setGiftCard(option.amount);
+    }
+  };
 
   return (
     <Col {...fullColLayout}>
@@ -67,6 +102,7 @@ const GiftCardComponent = () => {
         name="gift_card_id"
         label="Gift Card Number"
         required={true}
+        onChange={(value, option) => onSelect(value, option)}
       />
     </Col>
   );
@@ -148,6 +184,7 @@ const ChequeComponent = () => {
 
 export const PaymentTypeComponent = () => {
   const form = Form.useFormInstance();
+  const currency = useSelector(useCurrency);
   const paymentStatus = Form.useWatch('payment_status', form);
 
   const receivedAmount = Form.useWatch('recieved_amount', form);
@@ -155,28 +192,17 @@ export const PaymentTypeComponent = () => {
 
   const paymentType = Form.useWatch('payment_type', form);
 
-  // const taxRate = Form.useWatch('tax_rate', form);
-  // const discount = Form.useWatch('discount', form);
-  // const shippingCost = Form.useWatch('shipping_cost', form);
-
-  // const calculatedGrandTotal = calculateGrandTotal(
-  //   calculatedTotalPrice,
-  //   tax_rate ?? 0,
-  //   discount,
-  //   shipping_cost
-  // );
-
-  // useEffect(() => {
-  //   if (paymentStatus === 'Paid') {
-  //     const tax_rate =form.getFieldValue('tax_rate') ?? 0
-
-  //     form.setFieldValue('paid_amount', grandTotal);
-  //   }
-  // }, [paidAmount, form, paymentStatus,  receivedAmount]);
-
   const change = Number(
     parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)
   ).toFixed(2);
+
+  useEffect(() => {
+    if (paymentType !== 'Gift Card') {
+      form.resetFields(['gift_card_id']);
+    }
+  }, [paymentType, form]);
+
+  const [giftCard, setGiftCard] = useState(undefined);
 
   return (
     (paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
@@ -211,10 +237,27 @@ export const PaymentTypeComponent = () => {
         </Col>
 
         {paymentStatus === 'Paid' && (
-          <Col {...fullColLayout}>
-            <div className="py-9 text-lg font-semibold">Change: {change}</div>
+          <Col {...(paymentType === 'Gift Card' ? mdColLayout : fullColLayout)}>
+            <div className="py-9 text-lg font-semibold">
+              Change: {showCurrency(change, currency)}
+            </div>
           </Col>
         )}
+
+        {paymentType === 'Gift Card' &&
+          (giftCard ? (
+            <Col {...mdColLayout}>
+              <div className="py-9 text-lg font-semibold">
+                Gift Card Amount: {showCurrency(giftCard, currency)}
+              </div>
+            </Col>
+          ) : (
+            <Col {...mdColLayout}>
+              <div className="py-9 text-lg font-semibold">
+                Gift Card Not Applied
+              </div>
+            </Col>
+          ))}
 
         {paymentStatus === 'Partial' && (
           <Col {...fullColLayout}>
@@ -224,7 +267,9 @@ export const PaymentTypeComponent = () => {
           </Col>
         )}
 
-        {paymentType === 'Gift Card' && <GiftCardComponent />}
+        {paymentType === 'Gift Card' && (
+          <GiftCardComponent setGiftCard={setGiftCard} />
+        )}
         {paymentType === 'Card' && <CardComponent />}
         {paymentType === 'Cheque' && <ChequeComponent />}
       </>

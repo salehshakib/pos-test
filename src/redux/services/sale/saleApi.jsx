@@ -2,6 +2,7 @@
 import {
   PRODUCT_VARIANTS,
   SALE,
+  STOCK_COUNT,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
@@ -55,7 +56,9 @@ const saleApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE }, { type: PRODUCT_VARIANTS }] : [];
+        return result
+          ? [{ type: SALE }, { type: PRODUCT_VARIANTS }, { type: STOCK_COUNT }]
+          : [];
       },
     }),
 
@@ -80,7 +83,9 @@ const saleApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE }, { type: PRODUCT_VARIANTS }] : [];
+        return result
+          ? [{ type: SALE }, { type: PRODUCT_VARIANTS }, { type: STOCK_COUNT }]
+          : [];
       },
     }),
 

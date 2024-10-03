@@ -76,6 +76,14 @@ const Profile = () => {
         </div>
       </div>
 
+      <Button
+        icon={<LuPackageSearch />}
+        onClick={() => setOpenInquiry(true)}
+        className="md:hidden w-full mt-4"
+      >
+        Inquiry
+      </Button>
+
       <div className="mt-6">
         <Translate />
       </div>
@@ -90,7 +98,11 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <Button icon={<LuPackageSearch />} onClick={() => setOpenInquiry(true)}>
+      <Button
+        onClick={() => setOpenInquiry(true)}
+        className="hidden md:flex items-center gap-1"
+      >
+        <LuPackageSearch className="text-lg" />
         Inquiry
       </Button>
 

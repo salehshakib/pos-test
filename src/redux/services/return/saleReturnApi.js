@@ -1,5 +1,9 @@
 // Import necessary dependencies
-import { SALE_RETURN } from '../../../utilities/apiEndpoints/inventory.api';
+import {
+  PRODUCT_VARIANTS,
+  SALE_RETURN,
+  STOCK_COUNT,
+} from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -52,7 +56,13 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE_RETURN }] : [];
+        return result
+          ? [
+              { type: SALE_RETURN },
+              { type: PRODUCT_VARIANTS },
+              { type: STOCK_COUNT },
+            ]
+          : [];
       },
     }),
 
@@ -77,7 +87,13 @@ const saleReturnApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: SALE_RETURN }] : [];
+        return result
+          ? [
+              { type: SALE_RETURN },
+              { type: PRODUCT_VARIANTS },
+              { type: STOCK_COUNT },
+            ]
+          : [];
       },
     }),
 

@@ -2,6 +2,7 @@ import {
   ADJUSTMENT,
   PRODUCT,
   PRODUCT_VARIANTS,
+  STOCK_COUNT,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
@@ -60,7 +61,7 @@ const adjustmentApi = baseApi.injectEndpoints({
         return result
           ? [
               { type: ADJUSTMENT },
-              { type: PRODUCT },
+              { type: STOCK_COUNT },
               { type: PRODUCT_VARIANTS },
             ]
           : [];
@@ -112,7 +113,13 @@ const adjustmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ADJUSTMENT }] : [];
+        return result
+          ? [
+              { type: ADJUSTMENT },
+              { type: STOCK_COUNT },
+              { type: PRODUCT_VARIANTS },
+            ]
+          : [];
       },
     }),
 

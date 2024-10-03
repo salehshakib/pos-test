@@ -77,8 +77,7 @@ const CustomInput = (props) => {
             className="mt-1 w-full border-2"
             min={0}
             onChange={onChange}
-            controls={false}
-            changeOnWheel={false}
+            onWheel={(e) => e.target.blur()}
             suffix={suffix}
             // addonAfter={suffix}
           />

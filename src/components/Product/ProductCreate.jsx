@@ -27,6 +27,8 @@ const ProductCreate = () => {
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [isPrice, setIsPrice] = useState(false);
+
   const [createStockManage, { isLoading: isStockManageLoading }] =
     useCreateStockManageMutation();
 
@@ -186,14 +188,18 @@ const ProductCreate = () => {
 
     appendToFormData(postObj, formData);
 
-    console.log(values);
-
     const { data, error } = await createProduct({ formData });
 
     if (data?.success) {
       setProductId(data?.data?.id);
-      setCurrent(1);
       form.resetFields();
+
+      if (isPrice) {
+        setCurrent(1);
+      } else {
+        setCurrent(0);
+        dispatch(closeCreateDrawer());
+      }
     }
 
     if (error) {
@@ -297,6 +303,7 @@ const ProductCreate = () => {
           isLoading={isLoading}
           fields={errorFields}
           form={form}
+          setIsPrice={setIsPrice}
         />
       ),
     },

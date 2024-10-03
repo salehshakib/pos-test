@@ -10,6 +10,26 @@ import { useFilterParams } from '../../../utilities/hooks/useParams';
 
 const columns = [
   {
+    title: 'Account Name',
+    dataIndex: 'account',
+    key: 'account',
+    render: (account) => (
+      <span className="text-dark text-xs font-medium md:text-sm">
+        {account}
+      </span>
+    ),
+  },
+  {
+    title: 'Account Type',
+    dataIndex: 'account_type',
+    key: 'account_type',
+    render: (account_type) => (
+      <span className="text-dark text-xs font-medium md:text-sm">
+        {account_type}
+      </span>
+    ),
+  },
+  {
     title: 'Deposited By',
     dataIndex: 'deposited_by',
     key: 'deposited_by',

@@ -24,18 +24,18 @@ const updateStateWithProductData = (quotationProducts, setFormValues) => {
   const updatedOperationValue = {};
 
   quotationProducts.forEach((item) => {
-    updatedQty[item.product_id.toString()] = item.qty;
-    updatedSaleUnitId[item.product_id.toString()] = item.sale_unit_id;
-    updatedProductPrice[item.product_id.toString()] = item.net_unit_price;
-    updatedDiscount[item.product_id.toString()] = item.discount;
-    updatedTaxRate[item.product_id.toString()] = item.tax_rate;
-    updatedTax[item.product_id.toString()] = item.tax;
-    updatedTotal[item.product_id.toString()] = item.total;
-    updatedTaxId[item.product_id.toString()] = item.products?.tax_id;
+    updatedQty[item.product_id?.toString()] = item.qty;
+    updatedSaleUnitId[item.product_id?.toString()] = item.sale_unit_id;
+    updatedProductPrice[item.product_id?.toString()] = item.net_unit_price;
+    updatedDiscount[item.product_id?.toString()] = item.discount;
+    updatedTaxRate[item.product_id?.toString()] = item.tax_rate;
+    updatedTax[item.product_id?.toString()] = item.tax;
+    updatedTotal[item.product_id?.toString()] = item.total;
+    updatedTaxId[item.product_id?.toString()] = item.products?.tax_id;
 
-    updatedOperator[item.product_id.toString()] =
+    updatedOperator[item.product_id?.toString()] =
       item.products?.sale_units?.operator;
-    updatedOperationValue[item.product_id.toString()] =
+    updatedOperationValue[item.product_id?.toString()] =
       item.products?.sale_units?.operation_value;
   });
 
@@ -147,11 +147,11 @@ export const CustomQuotationProductComponent = forwardRef(
           id: product.product_id,
           name: product.products?.name,
           sku: product.products?.sku,
-          buying_price: product.products?.buying_price,
+          selling_price: product.products?.selling_price,
           sale_unit_id: product.sale_unit_id,
           sale_units: product.products?.sale_units,
           tax_id: product.products?.tax_id,
-          taxes: product?.products.taxes,
+          taxes: product?.products?.taxes,
         }));
 
         setProducts(quotationProducts);

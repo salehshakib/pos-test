@@ -4,10 +4,6 @@ export const purchaseStatusOptions = [
     label: 'Received',
   },
   {
-    value: 'Partial',
-    label: 'Partial',
-  },
-  {
     value: 'Pending',
     label: 'Pending',
   },

@@ -27,6 +27,8 @@ const ProductCreate = () => {
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [isPrice, setIsPrice] = useState(false);
+
   const [createStockManage, { isLoading: isStockManageLoading }] =
     useCreateStockManageMutation();
 
@@ -44,6 +46,12 @@ const ProductCreate = () => {
     const formData = new FormData();
 
     const {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+      qty,
+
       name,
       type,
       sku,
@@ -73,6 +81,11 @@ const ProductCreate = () => {
     } = values ?? {};
 
     const postObj = {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       sku,
       type,
@@ -165,6 +178,8 @@ const ProductCreate = () => {
       if (variantListArray.length === 0) {
         postObj.has_variant = '0';
       }
+    } else {
+      postObj.qty = qty.toString();
     }
 
     if (values.attach_file?.[0].originFileObj) {
@@ -177,8 +192,14 @@ const ProductCreate = () => {
 
     if (data?.success) {
       setProductId(data?.data?.id);
-      setCurrent(1);
       form.resetFields();
+
+      if (isPrice) {
+        setCurrent(1);
+      } else {
+        setCurrent(0);
+        dispatch(closeCreateDrawer());
+      }
     }
 
     if (error) {
@@ -194,21 +215,21 @@ const ProductCreate = () => {
   const [current, setCurrent] = useState(0);
 
   const handleStockSubmit = async (values, { formValues }) => {
-    const stockListArray = formValues?.stock_list?.qty
-      ? Object.keys(formValues.stock_list.qty)
-          .filter(
-            (product_id) => formValues.stock_list.qty[product_id] !== undefined
-          )
-          .map((product_id) => {
-            const [id, warehouse_id] = product_id.split('-');
+    // const stockListArray = formValues?.stock_list?.qty
+    //   ? Object.keys(formValues.stock_list.qty)
+    //       .filter(
+    //         (product_id) => formValues.stock_list.qty[product_id] !== undefined
+    //       )
+    //       .map((product_id) => {
+    //         const [id, warehouse_id] = product_id.split('-');
 
-            return {
-              product_variant_id: parseInt(id),
-              qty: formValues.stock_list.qty[product_id],
-              warehouse_id,
-            };
-          })
-      : [];
+    //         return {
+    //           product_variant_id: parseInt(id),
+    //           qty: formValues.stock_list.qty[product_id],
+    //           warehouse_id,
+    //         };
+    //       })
+    //   : [];
 
     const priceListArray = formValues?.price_list?.price
       ? Object.keys(formValues.price_list.price)
@@ -227,20 +248,26 @@ const ProductCreate = () => {
           })
       : [];
 
-    if (stockListArray.length === 0 && priceListArray.length === 0) {
+    if (priceListArray.length === 0) {
       dispatch(closeCreateDrawer());
       form.resetFields();
       setCurrent(0);
       return;
     }
+    // if (stockListArray.length === 0 && priceListArray.length === 0) {
+    //   dispatch(closeCreateDrawer());
+    //   form.resetFields();
+    //   setCurrent(0);
+    //   return;
+    // }
 
     const formData = new FormData();
 
     const postObj = {};
 
-    if (stockListArray.length) {
-      postObj.stock_list = JSON.stringify(stockListArray);
-    }
+    // if (stockListArray.length) {
+    //   postObj.stock_list = JSON.stringify(stockListArray);
+    // }
 
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);
@@ -276,6 +303,7 @@ const ProductCreate = () => {
           isLoading={isLoading}
           fields={errorFields}
           form={form}
+          setIsPrice={setIsPrice}
         />
       ),
     },

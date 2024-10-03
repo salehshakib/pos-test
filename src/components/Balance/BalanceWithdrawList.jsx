@@ -2,7 +2,6 @@ import { Button, Descriptions, Modal } from 'antd';
 import dayjs from 'dayjs';
 
 import { useGetAllBalanceWithdrawQuery } from '../../redux/services/balanceWithdraw/balanceWithdrawApi';
-import { usePagination } from '../../utilities/hooks/usePagination';
 import { useGlobalParams } from '../../utilities/hooks/useParams';
 import { showCurrency } from '../../utilities/lib/currency';
 import { useUrlIndexPermission } from '../../utilities/lib/getPermission';
@@ -58,11 +57,9 @@ const BalanceWithdrawList = ({
   setOpen,
   handlePrint,
 }) => {
-  const { pagination, updatePage, updatePageSize } = usePagination();
-
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: { ...pagination },
+    params: {},
   });
 
   const { data: withdrawData, isFetching } = useGetAllBalanceWithdrawQuery(
@@ -71,8 +68,6 @@ const BalanceWithdrawList = ({
       skip: !useUrlIndexPermission(),
     }
   );
-
-  const total = withdrawData?.meta?.total;
 
   const dataSource =
     withdrawData?.results?.balancewithdrawal?.map((item) => {
@@ -106,14 +101,11 @@ const BalanceWithdrawList = ({
         <CustomTable
           columns={columns}
           dataSource={dataSource}
-          total={total}
-          pagination={pagination}
-          updatePage={updatePage}
-          updatePageSize={updatePageSize}
           isLoading={isFetching}
           status={false}
           created_at={false}
           action={false}
+          showPaging={false}
         />
 
         <Modal

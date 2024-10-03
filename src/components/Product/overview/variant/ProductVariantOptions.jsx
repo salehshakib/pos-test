@@ -2,8 +2,10 @@ import { Button, Form, Input, InputNumber, Table } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { WAREHOUSE_HEAD_OFFICE } from '../../../../assets/data/headoffice';
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../../utilities/lib/currency';
+import { getWarehouseQuantity } from '../../../../utilities/lib/getWarehouseQty';
 import {
   findNonMatchingItems,
   formatProductData,
@@ -134,11 +136,6 @@ const ProductVariantOption = ({
         {
           return editable ? (
             <span className="flex items-center gap-2 justify-center font-bold">
-              {/* <FcCancel
-                size={20}
-                className="cursor-pointer text-white "
-                onClick={cancel}
-              /> */}
               <Button size="small" onClick={cancel}>
                 Cancel
               </Button>
@@ -149,11 +146,6 @@ const ProductVariantOption = ({
               >
                 Save
               </Button>
-              {/* <IoSaveOutline
-                size={20}
-                className="cursor-pointer"
-                onClick={() => save(record.key)}
-              /> */}
             </span>
           ) : (
             <span className="flex items-center justify-center">
@@ -192,24 +184,9 @@ const ProductVariantOption = ({
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
         combination?.map((item) => {
-          // console.log(item.key);
-
-          // const reversedKey = item.key.split('-').reverse().join('-');
-
-          // console.log(reversedKey);
-
-          // const index = combination.findIndex((el) => el.key === reversedKey);
-
-          // console.log(index);
-
           return {
             key: item.key,
             name: item.name,
-            // sku: data?.[index]?.sku ?? item.sku,
-            // iemi: data?.[index]?.iemi ?? '',
-            // qty: data?.[index]?.qty ?? item.qty,
-            // price: data?.[index]?.price ?? item?.price,
-            // cost: data?.[index]?.cost ?? item?.cost,
             sku: item.sku,
             iemi: item.iemi,
             qty: item.qty,
@@ -231,6 +208,11 @@ const ProductVariantOption = ({
         editData?.sku
       );
 
+      const qty = getWarehouseQuantity(
+        editData?.variants?.product_qties,
+        WAREHOUSE_HEAD_OFFICE
+      );
+
       const variantDatasource =
         combination?.map((item) => {
           return {
@@ -238,7 +220,7 @@ const ProductVariantOption = ({
             name: item.name,
             sku: item.sku,
             iemi: item.iemi,
-            qty: item.qty,
+            qty: qty,
             price: item.price,
             cost: item.cost,
             variant_attribute_ids: item.variant_attribute_ids,

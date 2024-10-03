@@ -1,19 +1,33 @@
 import { openNotification } from '../openToaster';
 
-export const incrementCounter = (id, setFormValues, stock) => {
+export const incrementCounter = (
+  id,
+  setFormValues,
+  stock,
+  actionType,
+  ignoreStock
+) => {
   setFormValues((prevFormValues) => {
     const currentQty = prevFormValues.product_list.qty[id] ?? 0;
 
-    if (stock) {
+    if (actionType === 'Subtraction') {
       if (Number(currentQty) + 1 > parseInt(stock)) {
         openNotification('info', `Cannot add more than stock quantity`);
         return prevFormValues;
       }
     }
 
-    const newQty = stock
-      ? Math.min(Number(currentQty) + 1, stock)
-      : Number(currentQty) + 1;
+    if (stock && !ignoreStock) {
+      if (Number(currentQty) + 1 > parseInt(stock)) {
+        openNotification('info', `Cannot add more than stock quantity`);
+        return prevFormValues;
+      }
+    }
+
+    const newQty =
+      stock && !ignoreStock
+        ? Math.min(Number(currentQty) + 1, stock)
+        : Number(currentQty) + 1;
 
     return {
       ...prevFormValues,
@@ -46,10 +60,36 @@ export const decrementCounter = (id, setFormValues) => {
   });
 };
 
-export const onQuantityChange = (id, value, setFormValues, stock) => {
+export const onQuantityChange = (
+  id,
+  value,
+  setFormValues,
+  stock,
+  actionType,
+  ignoreStock
+) => {
   const numericValue = Number(value);
 
-  if (stock) {
+  if (actionType === 'Subtraction') {
+    if (Number(numericValue) + 1 > parseInt(stock)) {
+      openNotification('info', `Cannot add more than stock quantity`);
+
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        product_list: {
+          ...prevFormValues.product_list,
+          qty: {
+            ...prevFormValues.product_list.qty,
+            [id]: stock,
+          },
+        },
+      }));
+
+      return;
+    }
+  }
+
+  if (stock && !ignoreStock) {
     if (numericValue > Number(stock)) {
       openNotification(
         'info',
@@ -71,9 +111,10 @@ export const onQuantityChange = (id, value, setFormValues, stock) => {
     }
   }
 
-  const newQty = stock
-    ? Math.min(Math.max(parseInt(value, 10) || 0, 0), stock)
-    : Math.max(parseInt(value, 10) || 0, 0);
+  const newQty =
+    stock && !ignoreStock
+      ? Math.min(Math.max(parseInt(value, 10) || 0, 0), stock)
+      : Math.max(parseInt(value, 10) || 0, 0);
 
   setFormValues((prevFormValues) => ({
     ...prevFormValues,
@@ -87,17 +128,27 @@ export const onQuantityChange = (id, value, setFormValues, stock) => {
   }));
 };
 
-export const onActionChange = (id, value, setFormValues) => {
-  setFormValues((prevFormValues) => ({
-    ...prevFormValues,
-    product_list: {
+export const onActionChange = (id, value, setFormValues, stock) => {
+  setFormValues((prevFormValues) => {
+    // Create a new product_list object
+    const newProductList = {
       ...prevFormValues.product_list,
       action: {
         ...prevFormValues.product_list.action,
         [id]: value,
       },
-    },
-  }));
+      qty: {
+        ...prevFormValues.product_list.qty,
+        // Reset quantity to 0 when action changes to 'Subtraction'
+        ...(value === 'Subtraction' ? { [id]: stock } : {}),
+      },
+    };
+
+    return {
+      ...prevFormValues,
+      product_list: newProductList,
+    };
+  });
 };
 
 export const onDelete = (id, setProducts, setFormValues) => {

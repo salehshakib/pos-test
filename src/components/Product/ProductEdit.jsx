@@ -18,7 +18,10 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { getUniqueAttributeIds } from '../../utilities/lib/product/variant';
+import {
+  getIdsNotInSelectedRowData,
+  getUniqueAttributeIds,
+} from '../../utilities/lib/product/variant';
 import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
@@ -115,9 +118,14 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
         has_stock,
         has_variant,
         has_different_price,
+        product_price,
+        profit_margin,
       } = data;
 
       const fieldData = fieldsToUpdate({
+        product_price,
+        profit_margin,
+
         name,
         sku,
         type,
@@ -195,6 +203,12 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+      qty,
+
       name,
       type,
       sku,
@@ -224,6 +238,11 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     } = values ?? {};
 
     const postObj = {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       sku,
       type,
@@ -245,8 +264,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           calculateById(units, sale_unit_id, selling_price) -
             calculateById(units, purchase_unit_id, buying_price)
         ),
-
-      // qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_id: tax_id ? parseInt(tax_id) : undefined,
@@ -258,10 +275,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       has_expired_date: has_expired_date ? '1' : '0',
       details,
       _method: 'PUT',
-      // attachments:
-      //   values.attachments?.length > 0
-      //     ? values.attachments?.map((file) => file.originFileObj)
-      //     : [],
     };
 
     if (
@@ -309,8 +322,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
 
     if (has_variant) {
-      console.log(variantData.selectedRowData);
-
       // console.log(first)
       const variantListArray = variantData?.selectedRowData.map((item) => {
         return {
@@ -325,6 +336,8 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       });
 
       postObj.variant_list = JSON.stringify(variantListArray);
+    } else {
+      postObj.qty = qty.toString();
     }
 
     if (values.attach_file?.[0].originFileObj) {
@@ -337,39 +350,50 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    // appendToFormData(postObj, formData);
+    const deletedVariants = getIdsNotInSelectedRowData(
+      variantData?.selectedRowData,
+      data?.variants
+    );
 
-    // const { data, error } = await updateProduct({ id, formData });
+    console.log(deletedVariants);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeEditDrawer());
-    //   setCurrent(0);
-    // }
+    if (deletedVariants.length) {
+      postObj.deletedVariantIds = deletedVariants;
+    }
 
-    // if (error) {
-    //   const errorFields = errorFieldsUpdate(fields, error);
+    appendToFormData(postObj, formData);
 
-    //   setFields(errorFields);
-    // }
+    const { data, error } = await updateProduct({ id, formData });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+      setCurrent(0);
+    }
+
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
+
+      setFields(errorFields);
+    }
   };
 
   const handleStockUpdate = async (values, { formValues }) => {
-    const stockListArray = formValues?.stock_list?.qty
-      ? Object.keys(formValues.stock_list.qty)
-          .filter(
-            (product_id) => formValues.stock_list.qty[product_id] !== undefined
-          )
-          .map((product_id) => {
-            const [id, warehouse_id] = product_id.split('-');
+    // const stockListArray = formValues?.stock_list?.qty
+    //   ? Object.keys(formValues.stock_list.qty)
+    //       .filter(
+    //         (product_id) => formValues.stock_list.qty[product_id] !== undefined
+    //       )
+    //       .map((product_id) => {
+    //         const [id, warehouse_id] = product_id.split('-');
 
-            return {
-              product_variant_id: parseInt(id),
-              qty: formValues.stock_list.qty[product_id],
-              warehouse_id,
-            };
-          })
-      : [];
+    //         return {
+    //           product_variant_id: parseInt(id),
+    //           qty: formValues.stock_list.qty[product_id],
+    //           warehouse_id,
+    //         };
+    //       })
+    //   : [];
 
     const priceListArray = formValues?.price_list?.price
       ? Object.keys(formValues.price_list.price)
@@ -388,9 +412,18 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           })
       : [];
 
-    if (stockListArray.length === 0 && priceListArray.length === 0) {
+    // if (stockListArray.length === 0 && priceListArray.length === 0) {
+    //   dispatch(closeEditDrawer());
+    //   form.resetFields();
+    // setCurrent(0);
+
+    //   return;
+    // }
+
+    if (priceListArray.length === 0) {
       dispatch(closeEditDrawer());
       form.resetFields();
+      setCurrent(0);
       return;
     }
 
@@ -400,9 +433,9 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       _method: 'PUT',
     };
 
-    if (stockListArray.length) {
-      postObj.stock_list = JSON.stringify(stockListArray);
-    }
+    // if (stockListArray.length) {
+    //   postObj.stock_list = JSON.stringify(stockListArray);
+    // }
 
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);

@@ -20,7 +20,7 @@ const PosSetting = () => {
             </div>
           ),
           subTitle: (
-            <div className="py-1 text-2xl lg:text-3xl">Pos Settings</div>
+            <div className="py-1 text-2xl lg:text-3xl">POS Settings</div>
           ),
         }}
         loading={isLoading}

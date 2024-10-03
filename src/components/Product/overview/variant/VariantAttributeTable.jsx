@@ -10,10 +10,53 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Button, Table } from 'antd';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
 
 import { updateVariantOptions } from '../../../../utilities/lib/product/variant';
 import CustomModal from '../../../Shared/Modal/CustomModal';
-import CustomSelect from '../../../Shared/Select/CustomSelect';
+import { CustomSelectButton } from '../../../Shared/Select/CustomSelectButton';
+import { VariantEdit } from '../../../Variant/VariantEdit';
+
+const AttributeOptions = ({
+  options,
+  onSelect,
+  record,
+  setDataSource,
+  variantOptions,
+}) => {
+  const [isSubDrawerOpen, setIsSubDrawerOpen] = useState(false);
+
+  const handleOpenSubDrawer = () => {
+    setIsSubDrawerOpen(true);
+  };
+
+  const handleCloseSubDrawer = () => {
+    setIsSubDrawerOpen(false);
+  };
+
+  return (
+    <>
+      <CustomSelectButton
+        mode="multiple"
+        options={options}
+        placeholder="Attributes Options"
+        icon={<FaEdit className="text-xl" />}
+        customStyle={true}
+        onClick={handleOpenSubDrawer}
+        onChange={(value, option) => onSelect(value, option, record.id)}
+        value={variantOptions[record.id] ?? []}
+      />
+
+      <VariantEdit
+        id={record.id}
+        subDrawer={true}
+        isSubDrawerOpen={isSubDrawerOpen}
+        handleCloseSubDrawer={handleCloseSubDrawer}
+        setDataSource={setDataSource}
+      />
+    </>
+  );
+};
 
 export const VariantAttributeTable = ({
   dataSource,
@@ -24,6 +67,7 @@ export const VariantAttributeTable = ({
   setVariantAttributesName,
 }) => {
   const RowContext = React.createContext({});
+
   const onSelect = (value, option, id) => {
     setVariantOptions((prev) => ({
       ...prev,
@@ -68,13 +112,12 @@ export const VariantAttributeTable = ({
         });
 
         return (
-          <CustomSelect
-            mode="multiple"
+          <AttributeOptions
+            record={record}
             options={attribute_options}
-            placeholder="Attributes Options"
-            customStyle={true}
-            onChange={(value, option) => onSelect(value, option, record.id)}
-            value={variantOptions[record.id] ?? []}
+            onSelect={onSelect}
+            setDataSource={setDataSource}
+            variantOptions={variantOptions}
           />
         );
       },

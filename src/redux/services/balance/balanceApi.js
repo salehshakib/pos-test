@@ -2,6 +2,7 @@ import {
   BALANCE,
   BALANCE_DEPOSIT,
   BALANCE_WITHDRAWAL,
+  PETTY_CASH,
 } from '../../../utilities/apiEndpoints/account.api';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -21,9 +22,12 @@ const balanceApi = baseApi.injectEndpoints({
         { type: BALANCE, ...params },
         { type: BALANCE_WITHDRAWAL, ...params },
         { type: BALANCE_DEPOSIT, ...params },
+        { type: PETTY_CASH, ...params },
+        { type: PETTY_CASH, ...params },
         BALANCE,
         BALANCE_WITHDRAWAL,
         BALANCE_DEPOSIT,
+        PETTY_CASH,
       ],
     }),
   }),

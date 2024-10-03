@@ -65,7 +65,7 @@ const CustomForm = (props) => {
         autoComplete="on"
         onFinishFailed={onFinishFailed}
         onChange={onChange}
-        scrollToFirstError
+        scrollToFirstError={true}
       >
         {children}
 

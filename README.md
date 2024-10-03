@@ -1,6 +1,5 @@
 # POS Inventory - Vistock Main update
 
-
 ## Description
 
 This repo contains the code for the POS-Inventory.
@@ -14,3 +13,7 @@ git clone <repo-url>
 cd <project-name>
 yarn
 ```
+
+## Usage
+
+install the dependencies

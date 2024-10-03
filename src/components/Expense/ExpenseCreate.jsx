@@ -10,6 +10,8 @@ import { ExpenseForm } from './ExpenseForm';
 export const ExpenseCreate = () => {
   const dispatch = useDispatch();
 
+  const { pettyCashId } = useSelector((state) => state.pettyCash);
+
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
 
@@ -18,7 +20,11 @@ export const ExpenseCreate = () => {
   const [createExpense, { isLoading }] = useCreateExpenseMutation();
 
   const handleSubmit = async (values) => {
-    const { data, error } = await createExpense({ data: values });
+    const submittedData = {
+      ...values,
+      petty_cash_id: pettyCashId,
+    };
+    const { data, error } = await createExpense({ data: submittedData });
 
     if (data?.success) {
       dispatch(closeCreateDrawer());

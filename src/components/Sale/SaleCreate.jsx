@@ -99,7 +99,9 @@ export const SaleCreate = ({ setId }) => {
 
     const postObj = {
       ...values,
+      gift_card_id: values?.gift_card_id?.split('-')[0],
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
+      discount_type,
       discount:
         discount_type === 'Percentage'
           ? decimalConverter(

@@ -1,4 +1,4 @@
-import { Button, Descriptions, Modal, Table } from 'antd';
+import { Button, Descriptions, Modal, Table, Tag } from 'antd';
 import dayjs from 'dayjs';
 
 import { useGetAllBalanceDepositQuery } from '../../redux/services/balanceDeposit/balanceDepositApi';
@@ -44,6 +44,20 @@ const columns = [
     render: (transaction_at) => (
       <span className="text-dark text-xs font-medium md:text-sm">
         {dayjs(transaction_at).format('DD-MM-YYYY')}
+      </span>
+    ),
+  },
+  {
+    title: 'Payment Type',
+    dataIndex: 'payment_type',
+    key: 'payment_type',
+    render: (payment_type) => (
+      <span className="text-dark text-xs font-medium md:text-sm">
+        {payment_type === 'Withdraw' ? (
+          <Tag color="red">Withdraw</Tag>
+        ) : (
+          <Tag color="green">Deposit</Tag>
+        )}
       </span>
     ),
   },

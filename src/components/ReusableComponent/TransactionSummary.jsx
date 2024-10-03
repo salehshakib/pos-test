@@ -16,6 +16,7 @@ export const TransactionSummary = ({ formValues }) => {
   const shipping_cost = Form.useWatch('shipping_cost', form);
   const tax_rate = Form.useWatch('tax_rate', form);
   const paid_amount = Form.useWatch('paid_amount', form);
+  const giftCard = Form.useWatch('gift_card_id', form);
 
   const { totalItems, totalQty, totalPrice, taxRate, grandTotal } =
     calculateSummary(
@@ -23,7 +24,8 @@ export const TransactionSummary = ({ formValues }) => {
       tax_rate ?? 0,
       discount,
       shipping_cost,
-      discountType
+      discountType,
+      giftCard
     );
 
   useEffect(() => {

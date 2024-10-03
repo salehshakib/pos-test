@@ -111,7 +111,7 @@ const CustomTable = ({
           icon: <MdEditDocument size={20} />,
           label: (
             <div className="flex items-center justify-start gap-3">
-              Edit Stock & Price
+              Edit Price
             </div>
           ),
           onClick: () => record?.handleEditStockAndPrice(record?.id),
@@ -285,7 +285,7 @@ const CustomTable = ({
     key: 'action',
     align: 'center',
     width: '80px',
-    fixed: 'right',
+    // fixed: 'right',
     render: (props, record) => {
       if (record?.handleDetailsModal && isDetailsPermitted) {
         // if (record?.handleDetailsModal) {

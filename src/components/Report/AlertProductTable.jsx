@@ -53,7 +53,7 @@ export const AlertProductTable = ({
       } = item ?? {};
 
       return product_qties.map((qty, i) => ({
-        id: `${index}-${i}`, // Ensure unique IDs for each entry
+        id: `${index}-${i}`,
         name,
         sku,
         minQty: alert_qty,

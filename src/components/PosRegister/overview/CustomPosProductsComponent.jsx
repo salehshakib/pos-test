@@ -249,19 +249,6 @@ const CouponComponent = ({ setUpdatedFormValues }) => {
 
   const onSelect = (value, option) => {
     setUpdatedFormValues((prevValues) => {
-      //   return {
-      //     ...prevValues,
-      //     order: {
-      //       ...prevValues.order,
-      //       coupon: {
-      //         ...prevValues.order.coupon,
-      //         type: option.type,
-      //         rate: option.rate,
-      //         minimum_amount: option.minimum_amount,
-      //       },
-      //     },
-      //   };
-
       return {
         ...prevValues,
         coupon_id: value,
@@ -379,6 +366,7 @@ const ModalComponent = ({
                 ...prev.order,
                 coupon: {
                   ...prev.order.coupon,
+                  coupon_id: updatedFormValues.coupon_id,
                   type: updatedFormValues.coupon_type,
                   rate: updatedFormValues.coupon_rate,
                   minimum_amount: updatedFormValues.minimum_amount,
@@ -397,6 +385,7 @@ const ModalComponent = ({
                 ...prev.order,
                 coupon: {
                   ...prev.order.coupon,
+                  coupon_id: undefined,
                   type: undefined,
                   rate: undefined,
                   minimum_amount: undefined,
@@ -558,12 +547,15 @@ export const CustomPosProductsComponent = forwardRef(
         discount: undefined,
         shipping_cost: undefined,
         coupon: {
+          coupon_id: undefined,
           type: undefined,
           rate: undefined,
           minimum_amount: undefined,
         },
       },
     });
+
+    console.log(formValues);
 
     const resetFields = () => {
       setFormValues({
@@ -587,6 +579,7 @@ export const CustomPosProductsComponent = forwardRef(
           discount: undefined,
           shipping_cost: undefined,
           coupon: {
+            coupon_id: undefined,
             type: undefined,
             rate: undefined,
             minimum_amount: undefined,

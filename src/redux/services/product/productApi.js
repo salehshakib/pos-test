@@ -54,7 +54,7 @@ const productApi = baseApi.injectEndpoints({
     getProductVariantDetails: build.query({
       query: ({ id, params }) => {
         return {
-          url: `${PRODUCT}/variants/show/${id}`,
+          url: `${PRODUCT_VARIANTS}/show/${id}`,
           method: 'GET',
           params,
         };

@@ -93,9 +93,6 @@ const expandColumns = [
 ];
 
 export const expandedRowRender = (record, data, currency) => {
-  if (record.hasVariant !== 'Yes') return null;
-
-  // Handle variant data source here if needed
   const expandedData =
     data?.results?.product
       ?.find((product) => product.id === record.id)

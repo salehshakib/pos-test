@@ -109,7 +109,6 @@ export const CustomPurchaseProductComponent = forwardRef(
 
     const [products, setProducts] = useState([]);
 
-    // Define a function to reset form values and products
     const resetFormAndProducts = useCallback(() => {
       setFormValues({
         product_list: {
@@ -152,7 +151,6 @@ export const CustomPurchaseProductComponent = forwardRef(
           taxes: product?.product_variants?.products?.taxes,
           product_qties: product?.product_variants?.products?.product_qties,
         }));
-
         setProducts(purchaseProducts);
       } else {
         resetFormAndProducts();

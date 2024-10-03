@@ -1,9 +1,8 @@
-import { Col, Form, Row } from 'antd';
+import { Button, Col, Divider, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
-import { barcodeOptions } from '../../assets/data/barcode';
 import { taxTypeOptions } from '../../assets/data/taxType';
 import {
   colLayout,
@@ -11,6 +10,8 @@ import {
   mdColLayout,
   rowLayout,
 } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { useGetPosSettingsQuery } from '../../redux/services/settings/generalSettings/generalSettingsApi';
 import { disabledDate } from '../../utilities/lib/currentDate';
 import { generateRandomCode } from '../../utilities/lib/generateCode';
 import CustomCheckbox from '../Shared/Checkbox/CustomCheckbox';
@@ -32,18 +33,27 @@ const ProductTypeComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
 
-  const options = [
-    { value: 'Standard', label: 'Standard' },
-    { value: 'Combo', label: 'Combo' },
-    { value: 'Digital', label: 'Digital' },
-    { value: 'Service', label: 'Service' },
-  ];
+  const params = {
+    child: 1,
+  };
+
+  const { data } = useGetPosSettingsQuery(params);
+
+  const options = data?.product_type
+    ? JSON.parse(data?.product_type)?.map((item) => {
+        return {
+          value: item,
+          label: item,
+        };
+      })
+    : [];
 
   useEffect(() => {
     if (!productType) {
-      form.setFieldValue('type', 'Standard');
+      form.setFieldValue('type', options?.[0]?.value);
     }
-  }, [form, productType]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, productType, data]);
 
   return (
     <CustomSelect
@@ -79,19 +89,28 @@ const ProductCodeComponent = () => {
 
 const BarCodeComponent = () => {
   const form = Form.useFormInstance();
-  const productType = Form.useWatch('type', form);
+
+  const params = {
+    child: 1,
+  };
+
+  const { data } = useGetPosSettingsQuery(params);
+
+  const options = data?.symbology
+    ? [{ value: data?.symbology, label: data?.symbology }]
+    : [];
 
   useEffect(() => {
-    if (!productType) {
-      form.setFieldValue('symbology', barcodeOptions[0].value);
+    if (data) {
+      form.setFieldValue('symbology', data?.symbology);
     }
-  }, [form, productType]);
+  }, [form, data]);
 
   return (
     <CustomSelect
       label="Barcode Symbology"
-      options={barcodeOptions}
       required={true}
+      options={options}
       name={'symbology'}
     />
   );
@@ -115,37 +134,72 @@ const AttachmentComponent = () => {
   return null;
 };
 
-const ProductCostComponent = () => {
+const ProductVariantComponent = ({ data, handleVariantProduct }) => {
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
   const productType = Form.useWatch('type', form);
 
-  if (productType === 'Standard')
+  if (productType === 'Standard') {
     return (
-      <Col {...colLayout}>
-        <CustomInput
-          label="Product Buying Cost"
-          type={'number'}
-          required={true}
-          name={'buying_price'}
-        />
-      </Col>
+      <>
+        <Row {...rowLayout}>
+          <Divider orientation="left" orientationMargin={10}>
+            Variant
+          </Divider>
+        </Row>
+
+        {isEditDrawerOpen ? (
+          <>
+            {data?.has_variant.toString() === '1' ? (
+              <VariantComponent
+                onCustomSubmit={handleVariantProduct}
+                data={data}
+              />
+            ) : null}
+          </>
+        ) : (
+          <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
+        )}
+      </>
     );
+  } else return null;
 };
 
 const AlertComponent = () => {
   const form = Form.useFormInstance();
   const productType = Form.useWatch('type', form);
+  const hasVariant = Form.useWatch('has_variant', form);
 
   if (productType === 'Standard') {
     return (
-      <Col {...colLayout}>
-        <CustomInput
-          label="Alert Quantity"
-          type={'number'}
-          required={true}
-          name={'alert_qty'}
-        />
-      </Col>
+      <>
+        {!hasVariant && (
+          <Col {...colLayout}>
+            <CustomInput
+              label="Quantity"
+              type={'number'}
+              required={true}
+              name={'qty'}
+            />
+          </Col>
+        )}
+        <Col {...colLayout}>
+          <CustomInput
+            label="Daily Sale Objectives"
+            type={'number'}
+            tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
+            name={'daily_sale_qty'}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Alert Quantity"
+            type={'number'}
+            required={true}
+            name={'alert_qty'}
+          />
+        </Col>
+      </>
     );
   }
 };
@@ -170,7 +224,10 @@ const ExpireComponent = () => {
 
   if (productType === 'Standard') {
     return (
-      <>
+      <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product Expire
+        </Divider>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label="This product has batch and expired date"
@@ -178,7 +235,7 @@ const ExpireComponent = () => {
           />
         </Col>
         {hasExpiredDate && (
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <CustomDatepicker
               label={'Expired Date'}
               name={['product_expire', 'expired_date']}
@@ -186,7 +243,7 @@ const ExpireComponent = () => {
             />
           </Col>
         )}
-      </>
+      </Row>
     );
   } else return null;
 };
@@ -203,6 +260,9 @@ const PromotionalPriceComponent = () => {
 
   return (
     <Row {...rowLayout}>
+      <Divider orientation="left" orientationMargin={10}>
+        Promotional Price
+      </Divider>
       <Col {...fullColLayout}>
         <CustomCheckbox label="Add Promotional Price" name="has_promotion" />
       </Col>
@@ -253,6 +313,9 @@ const IMEIComponent = () => {
   if (productType === 'Standard')
     return (
       <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product IEMI
+        </Divider>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label=" This product has IMEI or Serial numbers"
@@ -275,7 +338,107 @@ const IMEIComponent = () => {
   else return null;
 };
 
-const ProductForm = ({ data, ...props }) => {
+const ProductPurchaseAmount = () => {
+  const currency = useSelector(useCurrency);
+
+  return (
+    <Col {...colLayout}>
+      <CustomInput
+        label="Product Purchase Amount"
+        type={'number_with_money'}
+        suffix={currency?.name}
+        disabled={true}
+        name={'buying_price'}
+      />
+    </Col>
+  );
+};
+const ProductSellingAmount = () => {
+  const currency = useSelector(useCurrency);
+  const form = Form.useFormInstance();
+
+  const profit_margin = Form.useWatch('profit_margin', form);
+  const productPrice = Form.useWatch('product_price', form);
+
+  useEffect(() => {
+    if (profit_margin > 0) {
+      const sale_amount = productPrice + (productPrice * profit_margin) / 100;
+      form.setFieldValue('sale_amount', sale_amount);
+
+      const profitAmount = sale_amount - productPrice;
+      form.setFieldValue('profit_amount', profitAmount);
+    } else {
+      form.setFieldValue('sale_amount', productPrice);
+
+      const profitAmount = 0;
+      form.setFieldValue('profit_amount', profitAmount);
+    }
+  }, [profit_margin, form, productPrice]);
+
+  const onChange = (value) => {
+    const sale_amount = parseFloat(value);
+
+    if (!isNaN(sale_amount) && sale_amount > 0) {
+      const new_profit_margin =
+        ((sale_amount - productPrice) / productPrice) * 100;
+
+      form.setFieldValue('profit_margin', new_profit_margin.toFixed(2));
+    }
+
+    const profitAmount = sale_amount - productPrice;
+    form.setFieldValue('profit_amount', profitAmount);
+  };
+
+  return (
+    <>
+      <Col {...colLayout}>
+        <CustomInput
+          label="Profit Margin"
+          type={'number_with_percent'}
+          required={true}
+          name={'profit_margin'}
+          suffix={'%'}
+          max={9000}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Profit Amount"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          name={'profit_amount'}
+          disabled={true}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Product Sell Amount"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          required={true}
+          name={'sale_amount'}
+          onChange={onChange}
+        />
+      </Col>
+
+      <Col {...colLayout}>
+        <CustomInput
+          label="Final Price"
+          type={'number_with_money'}
+          suffix={currency?.name}
+          name={'selling_price'}
+          disabled={true}
+        />
+      </Col>
+    </>
+  );
+};
+
+const ProductForm = ({ data, setIsPrice, ...props }) => {
+  const currency = useSelector(useCurrency);
+
   const comboProductSubmitRef = useRef(null);
 
   const variantProductRef = useRef(null);
@@ -307,11 +470,28 @@ const ProductForm = ({ data, ...props }) => {
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
   return (
-    <CustomForm {...props} handleSubmit={handleSubmit}>
-      <Row {...rowLayout}>
+    <CustomForm {...props} handleSubmit={handleSubmit} submitBtn={false}>
+      <Row {...rowLayout} className="-mt-6">
+        <Divider orientation="left" orientationMargin={10}>
+          Product Type
+        </Divider>
+
         <Col {...colLayout}>
           <ProductTypeComponent />
         </Col>
+
+        <Col {...colLayout}>
+          <BarCodeComponent />
+        </Col>
+
+        <Col {...colLayout}>
+          <ProductCodeComponent />
+        </Col>
+
+        <Divider orientation="left" orientationMargin={10}>
+          Name
+        </Divider>
+
         <Col {...colLayout}>
           <CustomInput
             label="Product Name"
@@ -320,11 +500,13 @@ const ProductForm = ({ data, ...props }) => {
             name={'name'}
           />
         </Col>
+
         <Col {...colLayout}>
-          <ProductCodeComponent />
+          <BrandComponent />
         </Col>
+
         <Col {...colLayout}>
-          <BarCodeComponent />
+          <CategoryComponent />
         </Col>
 
         <CustomProductComponent
@@ -334,75 +516,87 @@ const ProductForm = ({ data, ...props }) => {
 
         <AttachmentComponent />
 
-        <Col {...colLayout}>
-          <BrandComponent />
-        </Col>
-        <Col {...colLayout}>
-          <CategoryComponent />
-        </Col>
-        <UnitComponent />
-        <ProductCostComponent />
+        <Divider orientation="left" orientationMargin={10}>
+          Pricing
+        </Divider>
+
         <Col {...colLayout}>
           <CustomInput
-            label="Product Selling Price"
-            type={'number'}
+            label="Product Buying Cost"
+            type={'number_with_money'}
+            suffix={currency?.name}
             required={true}
-            name={'selling_price'}
+            name={'product_price'}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Daily Sale Objectives"
-            type={'number'}
-            tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
-            name={'daily_sale_qty'}
-          />
-        </Col>
-        <AlertComponent />
         <Col {...colLayout}>
           <TaxComponent />
         </Col>
         <Col {...colLayout}>
           <TaxTypeComponent />
         </Col>
+
+        <ProductPurchaseAmount />
+
+        <ProductSellingAmount />
+
+        <UnitComponent />
+
+        <AlertComponent />
       </Row>
 
-      <Row {...rowLayout} justify={'center'} align={'middle'}>
-        <Col xs={24}>
-          <CustomUploader
-            label={'Attachment'}
-            name={'attachments'}
-            multiple={true}
-            type="img"
-          />
-        </Col>
-      </Row>
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <RichTextEditor label="Product Details" name="details" />
-        </Col>
-      </Row>
-
-      {isEditDrawerOpen ? (
-        <>
-          {data?.has_variant.toString() === '1' ? (
-            <VariantComponent
-              onCustomSubmit={handleVariantProduct}
-              data={data}
-            />
-          ) : null}
-        </>
-      ) : (
-        <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
-      )}
+      <ProductVariantComponent
+        data={data}
+        handleVariantProduct={handleVariantProduct}
+      />
 
       <IMEIComponent />
 
-      <Row {...rowLayout}>
-        <ExpireComponent />
-      </Row>
+      <ExpireComponent />
 
       <PromotionalPriceComponent />
+
+      <Row {...rowLayout} justify={'center'} align={'middle'}>
+        <Divider orientation="left" orientationMargin={10}>
+          Attachment
+        </Divider>
+        <Col xs={24} className="-mt-6">
+          <CustomUploader name={'attachments'} multiple={true} type="img" />
+        </Col>
+      </Row>
+
+      <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product Details
+        </Divider>
+        <Col {...fullColLayout}>
+          <RichTextEditor name="details" />
+        </Col>
+      </Row>
+
+      <div className={`flex w-full items-center justify-end gap-3 pt-5 pb-20`}>
+        <Button type="default" onClick={props.handleDrawerClose}>
+          Cancel
+        </Button>
+        {!isEditDrawerOpen && (
+          <Button
+            htmlType="submit"
+            onClick={() => setIsPrice(true)}
+            type="primary"
+            loading={props.isLoading}
+          >
+            Save & Add Price
+          </Button>
+        )}
+        <Button
+          htmlType="submit"
+          onClick={() => setIsPrice(false)}
+          type="primary"
+          loading={props.isLoading}
+        >
+          Save
+        </Button>
+      </div>
     </CustomForm>
   );
 };

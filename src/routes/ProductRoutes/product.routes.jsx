@@ -1,8 +1,13 @@
 import { BiCategoryAlt } from 'react-icons/bi';
 import { FaBarcode } from 'react-icons/fa6';
-import { MdAddShoppingCart, MdOutlineMergeType } from 'react-icons/md';
+import {
+  MdAddShoppingCart,
+  MdOutlineAcUnit,
+  MdOutlineMergeType,
+} from 'react-icons/md';
 import { TbBrandAirtable } from 'react-icons/tb';
 
+import AttributeOption from '../../pages/Dashboard/AttributeOption/AttributeOption';
 import Brand from '../../pages/Dashboard/Brand/Brand';
 import Category from '../../pages/Dashboard/Category/Category';
 import PrintBarcode from '../../pages/Dashboard/PrintBarcode/PrintBarcode';
@@ -11,10 +16,10 @@ import { Variant } from '../../pages/Dashboard/Variant/Variant';
 
 export const productPaths = [
   {
-    name: 'Product',
-    path: 'product',
-    icon: MdAddShoppingCart,
-    element: <ProductList />,
+    name: 'Attribute Option',
+    path: 'attribute-option',
+    icon: MdOutlineAcUnit,
+    element: <AttributeOption />,
   },
   {
     name: 'Attribute',
@@ -22,6 +27,13 @@ export const productPaths = [
     icon: MdOutlineMergeType,
     element: <Variant />,
   },
+  {
+    name: 'Product',
+    path: 'product',
+    icon: MdAddShoppingCart,
+    element: <ProductList />,
+  },
+
   {
     name: 'Brand',
     path: 'brand',

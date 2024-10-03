@@ -57,7 +57,7 @@ export const QuotationProductTable = ({
     const unit_cost =
       type === 'invoice'
         ? getWarehousePrice(product.product_prices, warehouse_id)
-        : product?.buying_price;
+        : product?.selling_price;
 
     const price = calculateUnitCost(
       sale_units,

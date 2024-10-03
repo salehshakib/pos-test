@@ -21,6 +21,7 @@ export const CustomSelectButton = (props) => {
     size = 'large',
     customStyle,
     onChange,
+    value,
   } = props;
 
   const filterOption = (input, option) =>
@@ -75,6 +76,8 @@ export const CustomSelectButton = (props) => {
                   ...styleProps,
                 }}
                 allowClear={true}
+                value={value}
+                onChange={onChange}
               />
             ) : (
               <Select
@@ -99,6 +102,7 @@ export const CustomSelectButton = (props) => {
                   ...styleProps,
                 }}
                 allowClear={true}
+                value={value}
               />
             )}
           </Form.Item>

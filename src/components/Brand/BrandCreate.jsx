@@ -71,7 +71,6 @@ const BrandCreate = ({
         fields={errorFields}
         form={subDrawer ? subForm : form}
         onClose={subDrawer && handleCloseSubDrawer}
-        // type={subDrawer && 'Brand'}
       />
     </CustomDrawer>
   );

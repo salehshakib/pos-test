@@ -11,7 +11,6 @@ const BalanceDepositDetails = ({ id, ...props }) => {
       id,
       params: {
         parent: 1,
-        child: 1,
       },
     },
     { skip: !id }

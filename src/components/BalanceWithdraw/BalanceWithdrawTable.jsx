@@ -36,7 +36,7 @@ export const BalanceWithdrawTable = ({
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: { ...pagination, ...searchParams },
+    params: { ...pagination, ...searchParams, parent: 1 },
     keyword,
   });
 
@@ -77,14 +77,22 @@ export const BalanceWithdrawTable = ({
 
   const dataSource =
     data?.results?.balancewithdrawal?.map((item) => {
-      const { id, withdrawal_by, amount, withdrawal_at, withdrawal_type } =
-        item ?? {};
+      const {
+        id,
+        withdrawal_by,
+        amount,
+        withdrawal_at,
+        withdrawal_type,
+        withdrawal_account,
+      } = item ?? {};
 
       return {
         id,
         withdrawal_by,
         amount,
         withdrawal_at,
+        account: withdrawal_account?.name,
+        account_type: withdrawal_account?.type,
         withdrawal_type,
         handleEdit,
         handleDeleteModal,

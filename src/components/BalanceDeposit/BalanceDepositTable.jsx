@@ -36,7 +36,7 @@ export const BalanceDepositTable = ({
 
   const params = useGlobalParams({
     isDefaultParams: false,
-    params: { ...pagination, ...searchParams },
+    params: { ...pagination, ...searchParams, parent: 1 },
     keyword,
   });
 
@@ -77,13 +77,21 @@ export const BalanceDepositTable = ({
 
   const dataSource =
     data?.results?.balancedeposit?.map((item) => {
-      const { id, deposited_by, amount, deposited_at, deposited_type } =
-        item ?? {};
+      const {
+        id,
+        deposited_by,
+        amount,
+        deposited_at,
+        deposited_type,
+        deposit_account,
+      } = item ?? {};
 
       return {
         id,
         deposited_by,
         amount,
+        account: deposit_account?.name,
+        account_type: deposit_account?.type,
         deposited_at,
         deposited_type,
         handleEdit,

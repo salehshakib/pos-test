@@ -195,6 +195,12 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     const formData = new FormData();
 
     const {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+      qty,
+
       name,
       type,
       sku,
@@ -224,6 +230,11 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     } = values ?? {};
 
     const postObj = {
+      product_price,
+      profit_margin,
+      profit_amount,
+      sale_amount,
+
       name,
       sku,
       type,
@@ -245,8 +256,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           calculateById(units, sale_unit_id, selling_price) -
             calculateById(units, purchase_unit_id, buying_price)
         ),
-
-      // qty: qty.toString(),
       alert_qty,
       daily_sale_qty,
       tax_id: tax_id ? parseInt(tax_id) : undefined,
@@ -258,10 +267,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       has_expired_date: has_expired_date ? '1' : '0',
       details,
       _method: 'PUT',
-      // attachments:
-      //   values.attachments?.length > 0
-      //     ? values.attachments?.map((file) => file.originFileObj)
-      //     : [],
     };
 
     if (
@@ -309,8 +314,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
 
     if (has_variant) {
-      console.log(variantData.selectedRowData);
-
       // console.log(first)
       const variantListArray = variantData?.selectedRowData.map((item) => {
         return {
@@ -325,6 +328,8 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       });
 
       postObj.variant_list = JSON.stringify(variantListArray);
+    } else {
+      postObj.qty = qty.toString();
     }
 
     if (values.attach_file?.[0].originFileObj) {

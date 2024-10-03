@@ -45,13 +45,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
     baseParams.need_qty = 1;
   }
 
-  // if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
-  //   baseParams.warehouse_id =
-  //     pathname.includes('transfer') || pathname.includes('stock-request')
-  //       ? warehouseIdFrom
-  //       : (warehouseId ?? user.warehouse_id);
-  // }
-
   if (!keyword) {
     baseParams.page = 1;
     baseParams.perPage = 20;

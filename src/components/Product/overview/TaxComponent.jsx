@@ -26,7 +26,7 @@ export const TaxComponent = () => {
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
-    if (taxMethod && productPrice) {
+    if (productPrice) {
       if (taxMethod === 'Exclusive') {
         const purchaseAmount =
           parseFloat(productPrice) +

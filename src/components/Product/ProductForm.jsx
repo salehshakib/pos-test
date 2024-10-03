@@ -358,34 +358,34 @@ const ProductSellingAmount = () => {
   const form = Form.useFormInstance();
 
   const profit_margin = Form.useWatch('profit_margin', form);
-  const buyingPrice = Form.useWatch('product_price', form);
+  const productPrice = Form.useWatch('product_price', form);
 
   useEffect(() => {
     if (profit_margin > 0) {
-      const sale_amount = buyingPrice + (buyingPrice * profit_margin) / 100;
+      const sale_amount = productPrice + (productPrice * profit_margin) / 100;
       form.setFieldValue('sale_amount', sale_amount);
 
-      const profitAmount = sale_amount - buyingPrice;
+      const profitAmount = sale_amount - productPrice;
       form.setFieldValue('profit_amount', profitAmount);
     } else {
-      form.setFieldValue('sale_amount', buyingPrice);
+      form.setFieldValue('sale_amount', productPrice);
 
       const profitAmount = 0;
       form.setFieldValue('profit_amount', profitAmount);
     }
-  }, [profit_margin, form, buyingPrice]);
+  }, [profit_margin, form, productPrice]);
 
   const onChange = (value) => {
     const sale_amount = parseFloat(value);
 
     if (!isNaN(sale_amount) && sale_amount > 0) {
       const new_profit_margin =
-        ((sale_amount - buyingPrice) / buyingPrice) * 100;
+        ((sale_amount - productPrice) / productPrice) * 100;
 
       form.setFieldValue('profit_margin', new_profit_margin.toFixed(2));
     }
 
-    const profitAmount = sale_amount - buyingPrice;
+    const profitAmount = sale_amount - productPrice;
     form.setFieldValue('profit_amount', profitAmount);
   };
 
@@ -398,6 +398,7 @@ const ProductSellingAmount = () => {
           required={true}
           name={'profit_margin'}
           suffix={'%'}
+          max={9000}
         />
       </Col>
 
@@ -429,6 +430,7 @@ const ProductSellingAmount = () => {
           suffix={currency?.name}
           required={true}
           name={'selling_price'}
+          disabled={true}
         />
       </Col>
     </>

@@ -47,7 +47,7 @@ const columns = [
     ),
   },
   {
-    title: 'Minimum Qunatity',
+    title: 'Minimum Quantity',
     dataIndex: 'minQty',
     key: 'minQty',
     align: 'center',

@@ -1,8 +1,8 @@
 // Import necessary dependencies
 import {
-  PRODUCT,
   PRODUCT_VARIANTS,
   PURCHASE,
+  STOCK_COUNT,
 } from '../../../utilities/apiEndpoints/inventory.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
@@ -57,7 +57,11 @@ const purchaseApi = baseApi.injectEndpoints({
       },
       invalidatesTags: (result) => {
         return result
-          ? [{ type: PURCHASE }, { type: PRODUCT }, { type: PRODUCT_VARIANTS }]
+          ? [
+              { type: PURCHASE },
+              { type: PRODUCT_VARIANTS },
+              { type: STOCK_COUNT },
+            ]
           : [];
       },
     }),
@@ -84,7 +88,11 @@ const purchaseApi = baseApi.injectEndpoints({
       },
       invalidatesTags: (result) => {
         return result
-          ? [{ type: PURCHASE }, { type: PRODUCT }, { type: PRODUCT_VARIANTS }]
+          ? [
+              { type: PURCHASE },
+              { type: PRODUCT_VARIANTS },
+              { type: STOCK_COUNT },
+            ]
           : [];
       },
     }),

@@ -45,6 +45,7 @@ export const BrandTable = ({
     keyword,
   });
 
+
   const { data, isLoading } = useGetBrandsQuery(
     { params },
     {

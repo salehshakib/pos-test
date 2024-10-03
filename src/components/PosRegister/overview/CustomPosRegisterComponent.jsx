@@ -80,6 +80,7 @@ const CouponComponent = ({ setFormValues }) => {
           ...prevValues.order,
           coupon: {
             ...prevValues.order.coupon,
+            coupon_id: value,
             type: option.type,
             rate: option.rate,
             minimum_amount: option.minimum_amount,
@@ -213,6 +214,7 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
       discount: {},
       shipping_cost: {},
       coupon: {
+        coupon_id: {},
         type: {},
         rate: {},
         minimum_amount: {},
@@ -242,6 +244,7 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
         discount: {},
         shipping_cost: {},
         coupon: {
+          coupon_id: {},
           type: {},
           rate: {},
           minimum_amount: {},
@@ -261,13 +264,6 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
     );
 
   return (
-    // <ProductTableComponent
-    //   products={products}
-    //   setProducts={setProducts}
-    //   formValues={formValues}
-    //   setFormValues={setFormValues}
-    // />
-
     <>
       <div className="flex-grow overflow-y-auto bg-white">
         <ProductTableComponent
@@ -275,9 +271,6 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
           setProducts={setProducts}
           formValues={formValues}
           setFormValues={setFormValues}
-          // productUnits={productUnits}
-          // setProductUnits={setProductUnits}
-          // tableStyleProps={item && tableStyleProps}
         />
       </div>
 
@@ -285,49 +278,27 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
         <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
           <div className="grid grid-cols-2">
             <span>Items</span>
-            <span className="font-semibold">
-              {/* {Object.keys(formValues.product_list.qty).length} */}
-              {totalItems}
-            </span>
+            <span className="font-semibold">{totalItems}</span>
           </div>
           <div className="grid grid-cols-2">
             <span>Total</span>
             <span className="font-semibold">{totalPrice}</span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-                  className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-                  onClick={() => showModal('Discount')}
-                >
-                  Discount
-                  <FaRegEdit className="primary-text" />
-                </span> */}
             <ModalComponent
               title={'Discount'}
               modalType={'discount'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
             />
 
-            {/* <Form.Item name="Discount" noStyle></Form.Item> */}
             <span className="font-semibold">
               {showCurrency(formValues.order.discount ?? 0)}
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Coupon')}
-            >
-              Coupon
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Coupon" noStyle></Form.Item>
-            <span className="font-semibold">{coupon ?? 0}</span> */}
             <ModalComponent
               title={'Coupon'}
               modalType={'coupon'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
             />
             <span className="font-semibold">
@@ -335,35 +306,17 @@ export const CustomPosRegisterComponent = ({ products, setProducts }) => {
             </span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Tax')}
-            >
-              Vat
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Tax" noStyle></Form.Item> */}
             <ModalComponent
               title={'Vat'}
               modalType={'tax'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
             />
             <span className="font-semibold">{taxRate ?? 0}</span>
           </div>
           <div className="grid grid-cols-2">
-            {/* <span
-              className="flex items-center justify-start gap-2 hover:cursor-pointer hover:underline"
-              onClick={() => showModal('Shipping Cost')}
-            >
-              Shipping
-              <FaRegEdit className="primary-text" />
-            </span>
-            <Form.Item name="Shipping" noStyle></Form.Item> */}
             <ModalComponent
               title={'Shipping Cost'}
               modalType={'shipping_cost'}
-              // handleSubmit={onCustomSubmit}
               setFormValues={setFormValues}
             />
             <span className="font-semibold">

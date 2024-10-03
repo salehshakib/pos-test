@@ -1,14 +1,10 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Col, Form, Row, Tooltip } from 'antd';
-import { currencies } from 'currencies.json';
+import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { useGetAllCustomerQuery } from '../../redux/services/customer/customerApi';
-import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
   DEFAULT_SELECT_VALUES,
   useGlobalParams,
@@ -19,7 +15,6 @@ import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
 import CustomDatepicker from '../Shared/DatePicker/CustomDatepicker';
 import CustomInput from '../Shared/Input/CustomInput';
 import { SearchProduct } from '../Shared/ProductControllerComponent/SearchProduct';
-import CustomSelect from '../Shared/Select/CustomSelect';
 import { CustomSelectButton } from '../Shared/Select/CustomSelectButton';
 import { CustomPosProductsComponent } from './overview/CustomPosProductsComponent';
 
@@ -78,61 +73,61 @@ const CustomerComponent = ({ size }) => {
   );
 };
 
-const CurrencyComponent = ({ size }) => {
-  const form = Form.useFormInstance();
-  const currency = useSelector(useCurrency);
+// const CurrencyComponent = ({ size }) => {
+//   const form = Form.useFormInstance();
+//   const currency = useSelector(useCurrency);
 
-  const options = currencies.map(({ name, symbol, code }) => {
-    return { label: `${name} (${symbol})`, value: code };
-  });
+//   const options = currencies.map(({ name, symbol, code }) => {
+//     return { label: `${name} (${symbol})`, value: code };
+//   });
 
-  useEffect(() => {
-    if (options?.length) {
-      form.setFieldValue('currency', currency?.name);
-    }
-  }, [currency?.name, form, options]);
+//   useEffect(() => {
+//     if (options?.length) {
+//       form.setFieldValue('currency', currency?.name);
+//     }
+//   }, [currency?.name, form, options]);
 
-  return (
-    <CustomSelect
-      placeholder={'currency'}
-      showSearch={true}
-      options={options}
-      required={true}
-      name="currency"
-      customStyle={true}
-      size={size}
-    />
-  );
-};
+//   return (
+//     <CustomSelect
+//       placeholder={'currency'}
+//       showSearch={true}
+//       options={options}
+//       required={true}
+//       name="currency"
+//       customStyle={true}
+//       size={size}
+//     />
+//   );
+// };
 
-const CurrencyExchangeComponent = (size) => {
-  const form = Form.useFormInstance();
+// const CurrencyExchangeComponent = (size) => {
+//   const form = Form.useFormInstance();
 
-  useEffect(() => {
-    form.setFieldValue('exchange_rate', 1);
-  }, [form]);
+//   useEffect(() => {
+//     form.setFieldValue('exchange_rate', 1);
+//   }, [form]);
 
-  const content = (
-    <Tooltip title="Cuurency Exchange Rate">
-      <InfoCircleOutlined
-        style={{
-          color: 'rgba(0,0,0,.45)',
-        }}
-      />
-    </Tooltip>
-  );
+//   const content = (
+//     <Tooltip title="Cuurency Exchange Rate">
+//       <InfoCircleOutlined
+//         style={{
+//           color: 'rgba(0,0,0,.45)',
+//         }}
+//       />
+//     </Tooltip>
+//   );
 
-  return (
-    <CustomInput
-      type={'number'}
-      name={'exchange_rate'}
-      placeholder={'Exchange Rate'}
-      suffix={content}
-      customStyle={true}
-      size={size}
-    />
-  );
-};
+//   return (
+//     <CustomInput
+//       type={'number'}
+//       name={'exchange_rate'}
+//       placeholder={'Exchange Rate'}
+//       suffix={content}
+//       customStyle={true}
+//       size={size}
+//     />
+//   );
+// };
 
 const RegisterForm = ({ products, setProducts }) => {
   const form = Form.useFormInstance();

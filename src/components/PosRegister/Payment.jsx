@@ -78,7 +78,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
     if (!data) return;
 
-    const { discount, shipping_cost, tax_rate } = formValues.order ?? {};
+    const { discount, shipping_cost, tax_rate, coupon } =
+      formValues.order ?? {};
     const { paid_amount } = values ?? {};
     const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
       data ?? {};
@@ -146,7 +147,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         shipping_cost
       ),
       product_list: JSON.stringify(productListArray),
-      petty_cash_id: pettyCashId,
+      coupon_id: coupon?.coupon_id,
       warehouse_id,
       cashier_id,
       customer_id,
@@ -154,6 +155,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
       payment_status: 'Paid',
       currency: currency?.name,
       exchange_rate: 1,
+      petty_cash_id: pettyCashId,
     };
 
     if (paid_amount) {

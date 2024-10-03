@@ -24,14 +24,9 @@ export const calculateSummary = (
 
   const taxRate = calculateTotalTax(totalPrice, tax_rate, discount);
 
-  const grandTotal = calculateGrandTotal(
-    totalPrice,
-    tax_rate,
-    discount,
-    shipping_cost
-  );
-
   let totalCoupon = 0;
+
+  console.log(formValues);
 
   if (
     formValues?.order?.coupon?.minimum_amount &&
@@ -43,6 +38,15 @@ export const calculateSummary = (
       totalCoupon = decimalConverter(formValues?.order?.coupon.rate);
     }
   }
+
+  const grandTotal = calculateGrandTotal(
+    totalPrice,
+    tax_rate,
+    discount,
+    shipping_cost,
+    'Fixed',
+    totalCoupon
+  );
 
   return { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon };
 };
@@ -69,7 +73,8 @@ export const calculateGrandTotal = (
   taxRate,
   discount,
   shipping_cost,
-  discountType = 'Fixed'
+  discountType = 'Fixed',
+  coupon = 0
   // orderTaxRate
 ) => {
   const parsedTotalPrice = parseFloat(totalPrice) || 0;
@@ -82,6 +87,8 @@ export const calculateGrandTotal = (
       ? parseFloat((discount * parsedTotalPrice) / 100)
       : parseFloat(discount) || 0;
 
+  const parsedCoupon = parseFloat(coupon) || 0;
+
   const parsedShippingCost = parseFloat(shipping_cost) || 0;
 
   let grandTotal = parsedTotalPrice + parsedTax;
@@ -93,6 +100,10 @@ export const calculateGrandTotal = (
 
   if (parsedShippingCost) {
     grandTotal = grandTotal + parsedShippingCost;
+  }
+
+  if (parsedCoupon) {
+    grandTotal = grandTotal - parsedCoupon;
   }
 
   return grandTotal ? Number(grandTotal).toFixed(2) : '0.00';

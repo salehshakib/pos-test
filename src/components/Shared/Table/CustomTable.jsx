@@ -285,7 +285,7 @@ const CustomTable = ({
     key: 'action',
     align: 'center',
     width: '80px',
-    fixed: 'right',
+    // fixed: 'right',
     render: (props, record) => {
       if (record?.handleDetailsModal && isDetailsPermitted) {
         // if (record?.handleDetailsModal) {

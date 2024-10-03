@@ -45,6 +45,7 @@ const Brand = () => {
   const { searchParams, setParams } = useFilterParams();
   const { keyword, debounce } = useCustomDebounce();
 
+
   return (
     <GlobalContainer
       pageTitle="Brand"

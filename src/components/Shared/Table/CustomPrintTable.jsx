@@ -41,7 +41,7 @@ const CustomPrintTable = forwardRef(({ data = [[]] }, ref) => {
 
   return (
     <div className="p-4">
-      <div ref={ref} className="">
+      <div ref={ref} className="px-10">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Report</h2>
           <img src={logo} alt="Logo" className="size-32" />

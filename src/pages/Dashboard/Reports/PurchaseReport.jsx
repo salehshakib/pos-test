@@ -179,7 +179,7 @@ export const PurchaseReport = () => {
           footer={null}
           width={1100}
         >
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <CustomPrintTable data={dataSource} />
           </div>
         </Modal>

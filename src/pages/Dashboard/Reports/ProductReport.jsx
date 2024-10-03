@@ -188,7 +188,7 @@ export const ProductReport = () => {
       setOpenSalePrint(true);
     } else if (key === 'purchase') {
       setOpenPurchasePrint(true);
-    } else if (key === 'quotaion') {
+    } else if (key === 'quotation') {
       setOpenQuotaionPrint(true);
     } else if (key === 'purchasereturn') {
       setOpenPurchaseReturnPrint(true);
@@ -448,7 +448,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <SalePrintTable
               {...props}
               showPaging={false}
@@ -464,7 +464,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <PurchasePrintTable
               {...props}
               showPaging={false}
@@ -480,7 +480,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <QuotaionPrintTable
               {...props}
               summary={'product-variant,quotation'}
@@ -496,7 +496,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <PurchaseReturnPrintTable
               {...props}
               summary={'product-variant,purchase-return'}
@@ -512,7 +512,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <SaleReturnPrintTable
               {...props}
               summary={'product-variant,sale-return'}
@@ -528,7 +528,7 @@ export const ProductReport = () => {
           width={1000}
         >
           <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef} className="px-10">
+          <div ref={printRef}>
             <ExpensePrintTable
               {...props}
               summary={'product-variant,expense'}

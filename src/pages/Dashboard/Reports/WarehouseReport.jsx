@@ -18,6 +18,12 @@ import { PurchaseTable } from './components/PurchaseTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
 import { SaleTable } from './components/SaleTable';
+import ExpensePrintTable from './data/ExpensePrintTable';
+import PurchasePrintTable from './data/PurchasePrintTable';
+import PurchaseReturnPrintTable from './data/PurchaseReturnPrintTable';
+import QuotaionPrintTable from './data/QuotaionPrintTable';
+import SalePrintTable from './data/SalePrintTable';
+import SaleReturnPrintTable from './data/SaleReturnPrintTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -112,6 +118,30 @@ export const WarehouseReport = () => {
   });
 
   const [openPrint, setOpenPrint] = useState(false);
+  const [key, setKey] = useState('sale');
+
+  const [openSalePrint, setOpenSalePrint] = useState(false);
+  const [openPurchasePrint, setOpenPurchasePrint] = useState(false);
+  const [openQuotationPrint, setOpenQuotaionPrint] = useState(false);
+  const [openPurchaseReturnPrint, setOpenPurchaseReturnPrint] = useState(false);
+  const [openSaleReturnPrint, setOpenSaleReturnPrint] = useState(false);
+  const [openExpensePrint, setOpenExpensePrint] = useState(false);
+
+  const handlePrintAction = () => {
+    if (key === 'sale') {
+      setOpenSalePrint(true);
+    } else if (key === 'purchase') {
+      setOpenPurchasePrint(true);
+    } else if (key === 'quotation') {
+      setOpenQuotaionPrint(true);
+    } else if (key === 'purchasereturn') {
+      setOpenPurchaseReturnPrint(true);
+    } else if (key === 'salereturn') {
+      setOpenSaleReturnPrint(true);
+    } else if (key === 'expense') {
+      setOpenExpensePrint(true);
+    }
+  };
 
   return (
     <GlobalContainer
@@ -147,6 +177,20 @@ export const WarehouseReport = () => {
       {data ? (
         <Tabs
           defaultActiveKey={'sale'}
+          onChange={(key) => {
+            setKey(key);
+          }}
+          tabBarExtraContent={
+            <div className="flex items-center gap-4">
+              <Button
+                type="primary"
+                className="mb-5 px-12"
+                onClick={handlePrintAction}
+              >
+                Print
+              </Button>
+            </div>
+          }
           items={[
             {
               label: 'Sale',
@@ -199,107 +243,196 @@ export const WarehouseReport = () => {
         <Empty />
       )}
 
-      {openPrint && (
-        <Modal
-          title={
-            <div className="flex items-center gap-4 mb-10">
-              <h2>Print Report</h2>
-              <Button
-                key={'print'}
-                type="primary"
-                onClick={handlePrint}
-                className="px-12 py-4"
-              >
-                Print
-              </Button>
-            </div>
-          }
-          open={openPrint}
-          onCancel={() => setOpenPrint(false)}
-          footer={null}
-          width={1100}
-        >
-          <>
-            <div ref={printRef} className="p-10">
-              <div className="mb-5 grid w-full grid-cols-1">
-                <div className="rounded-md border p-4 shadow-sm">
-                  {isFetching ? (
-                    <Spin className="flex h-full w-full items-center justify-center py-5" />
-                  ) : (
-                    <Descriptions
-                      title="Warehouse Details"
-                      layout=""
-                      items={warehouseItems}
-                    />
-                  )}
-                </div>
+      <Modal
+        title={
+          <div className="flex items-center gap-4 mb-10">
+            <h2>Print Report</h2>
+            <Button
+              key={'print'}
+              type="primary"
+              onClick={handlePrint}
+              className="px-12 py-4"
+            >
+              Print
+            </Button>
+          </div>
+        }
+        open={openPrint}
+        onCancel={() => setOpenPrint(false)}
+        footer={null}
+        width={1100}
+      >
+        <>
+          <div ref={printRef} className="p-10">
+            <div className="mb-5 grid w-full grid-cols-1">
+              <div className="rounded-md border p-4 shadow-sm">
+                {isFetching ? (
+                  <Spin className="flex h-full w-full items-center justify-center py-5" />
+                ) : (
+                  <Descriptions
+                    title="Warehouse Details"
+                    layout=""
+                    items={warehouseItems}
+                  />
+                )}
               </div>
-              {isFetching ? (
-                <Spin className="flex h-full w-full items-center justify-center py-10" />
-              ) : data ? (
-                <div className="flex flex-col justify-center items-center">
-                  <span className="text-center font-bold text-xl mt-4">
-                    Sell Table
-                  </span>
-                  <SaleTable
-                    {...props}
-                    summary={'warehouse,sale'}
-                    showPaging={false}
-                    action={false}
-                  />
-                  <span className="text-center font-bold text-xl mt-4">
-                    Purchase Table
-                  </span>
-                  <PurchaseTable
-                    {...props}
-                    showPaging={false}
-                    summary={'warehouse,purchase'}
-                    action={false}
-                  />
-                  <span className="text-center font-bold text-xl mt-4">
-                    Quotation Table
-                  </span>
-                  <QuotationTable
-                    {...props}
-                    showPaging={false}
-                    summary={'warehouse,quotation'}
-                    action={false}
-                  />
-                  <span className="text-center font-bold text-xl mt-4">
-                    Purchase Return Table
-                  </span>
-                  <PurchaseReturnTable
-                    {...props}
-                    summary={'warehouse,purchase-return'}
-                    showPaging={false}
-                    action={false}
-                  />
-                  <span className="text-center font-bold text-xl mt-4">
-                    Sell Return Table
-                  </span>
-                  <SaleReturnTable
-                    {...props}
-                    summary={'warehouse,sale-return'}
-                    showPaging={false}
-                    action={false}
-                  />
-                  <span className="text-center font-bold text-xl mt-4">
-                    Expense Table
-                  </span>
-                  <ExpenseTable
-                    {...props}
-                    summary={'warehouse,expense'}
-                    showPaging={false}
-                    action={false}
-                  />
-                </div>
-              ) : (
-                <Empty />
-              )}
             </div>
-          </>
-        </Modal>
-      )}
+            {isFetching ? (
+              <Spin className="flex h-full w-full items-center justify-center py-10" />
+            ) : data ? (
+              <div className="flex flex-col justify-center items-center">
+                <span className="text-center font-bold text-xl mt-4">
+                  Sell Details
+                </span>
+
+                <SalePrintTable
+                  {...props}
+                  showPaging={false}
+                  summary={'warehouse,sale'}
+                />
+                <span className="text-center font-bold text-xl mt-4">
+                  Purchase Details
+                </span>
+                <PurchasePrintTable
+                  {...props}
+                  showPaging={false}
+                  summary={'warehouse,purchase'}
+                />
+                <span className="text-center font-bold text-xl mt-4">
+                  Quotation Details
+                </span>
+                <QuotaionPrintTable
+                  {...props}
+                  summary={'warehouse,quotation'}
+                  showPaging={false}
+                />
+                <span className="text-center font-bold text-xl mt-4">
+                  Purchase Return Details
+                </span>
+                <PurchaseReturnPrintTable
+                  {...props}
+                  summary={'warehouse,purchase-return'}
+                  showPaging={false}
+                />
+                <span className="text-center font-bold text-xl mt-4">
+                  Sell Return Details
+                </span>
+                <SaleReturnPrintTable
+                  {...props}
+                  summary={'warehouse,sale-return'}
+                  showPaging={false}
+                />
+                <span className="text-center font-bold text-xl mt-4">
+                  Expense Details
+                </span>
+                <ExpensePrintTable
+                  {...props}
+                  summary={'warehouse,expense'}
+                  showPaging={false}
+                />
+              </div>
+            ) : (
+              <Empty />
+            )}
+          </div>
+        </>
+      </Modal>
+
+      <Modal
+        open={openSalePrint}
+        onCancel={() => setOpenSalePrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <SalePrintTable
+            {...props}
+            showPaging={false}
+            summary={'warehouse,sale'}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openPurchasePrint}
+        onCancel={() => setOpenPurchasePrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <PurchasePrintTable
+            {...props}
+            showPaging={false}
+            summary={'warehouse,purchase'}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openQuotationPrint}
+        onCancel={() => setOpenQuotaionPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <QuotaionPrintTable
+            {...props}
+            summary={'warehouse,quotation'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openPurchaseReturnPrint}
+        onCancel={() => setOpenPurchaseReturnPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <PurchaseReturnPrintTable
+            {...props}
+            summary={'warehouse,purchase-return'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openSaleReturnPrint}
+        onCancel={() => setOpenSaleReturnPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <SaleReturnPrintTable
+            {...props}
+            summary={'warehouse,sale-return'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openExpensePrint}
+        onCancel={() => setOpenExpensePrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <ExpensePrintTable
+            {...props}
+            summary={'warehouse,expense'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
     </GlobalContainer>
   );
 };

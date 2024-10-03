@@ -34,6 +34,10 @@ import { PurchaseReturnTable } from './components/PurchaseReturnTable';
 import { PurchaseTable } from './components/PurchaseTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
+import PurchasePrintTable from './data/PurchasePrintTable';
+import PurchaseReturnPrintTable from './data/PurchaseReturnPrintTable';
+import QuotaionPrintTable from './data/QuotaionPrintTable';
+import SaleReturnPrintTable from './data/SaleReturnPrintTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -200,6 +204,24 @@ export const SupplierReport = () => {
   });
 
   const [openPrint, setOpenPrint] = useState(false);
+  const [key, setKey] = useState('purchase');
+
+  const [openPurchasePrint, setOpenPurchasePrint] = useState(false);
+  const [openQuotationPrint, setOpenQuotaionPrint] = useState(false);
+  const [openPurchaseReturnPrint, setOpenPurchaseReturnPrint] = useState(false);
+  const [openSaleReturnPrint, setOpenSaleReturnPrint] = useState(false);
+
+  const handlePrintAction = () => {
+    if (key === 'purchase') {
+      setOpenPurchasePrint(true);
+    } else if (key === 'quotation') {
+      setOpenQuotaionPrint(true);
+    } else if (key === 'purchasereturn') {
+      setOpenPurchaseReturnPrint(true);
+    } else if (key === 'salereturn') {
+      setOpenSaleReturnPrint(true);
+    }
+  };
 
   return (
     <GlobalContainer
@@ -250,6 +272,20 @@ export const SupplierReport = () => {
           ) : data ? (
             <Tabs
               defaultActiveKey="purchase"
+              onChange={(key) => {
+                setKey(key);
+              }}
+              tabBarExtraContent={
+                <div className="flex items-center gap-4">
+                  <Button
+                    type="primary"
+                    className="mb-5 px-12"
+                    onClick={handlePrintAction}
+                  >
+                    Print
+                  </Button>
+                </div>
+              }
               items={[
                 {
                   label: 'Purchase',
@@ -333,39 +369,35 @@ export const SupplierReport = () => {
               ) : data ? (
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-center font-bold text-xl mt-4">
-                    Purchase Table
+                    Purchase Details
                   </span>
-                  <PurchaseTable
+                  <PurchasePrintTable
                     {...props}
-                    summary={'supplier,purchase'}
-                    action={false}
                     showPaging={false}
+                    summary={'supplier,purchase'}
                   />
                   <span className="text-center font-bold text-xl mt-4">
-                    Quoation Table
+                    Quotation Details
                   </span>
-                  <QuotationTable
+                  <QuotaionPrintTable
                     {...props}
                     summary={'supplier,quotation'}
-                    action={false}
                     showPaging={false}
                   />
                   <span className="text-center font-bold text-xl mt-4">
-                    Puchase Return Table
+                    Purchase Return Details
                   </span>
-                  <PurchaseReturnTable
+                  <PurchaseReturnPrintTable
                     {...props}
                     summary={'supplier,purchase-return'}
-                    action={false}
                     showPaging={false}
                   />
                   <span className="text-center font-bold text-xl mt-4">
-                    Sale Return Table
+                    Sell Return Details
                   </span>
-                  <SaleReturnTable
+                  <SaleReturnPrintTable
                     {...props}
                     summary={'supplier,sale-return'}
-                    action={false}
                     showPaging={false}
                   />
                 </div>
@@ -375,6 +407,70 @@ export const SupplierReport = () => {
             </div>
           </>
         )}
+      </Modal>
+
+      <Modal
+        open={openPurchasePrint}
+        onCancel={() => setOpenPurchasePrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <PurchasePrintTable
+            {...props}
+            showPaging={false}
+            summary={'supplier,purchase'}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openQuotationPrint}
+        onCancel={() => setOpenQuotaionPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <QuotaionPrintTable
+            {...props}
+            summary={'supplier,quotation'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openPurchaseReturnPrint}
+        onCancel={() => setOpenPurchaseReturnPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <PurchaseReturnPrintTable
+            {...props}
+            summary={'supplier,purchase-return'}
+            showPaging={false}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={openSaleReturnPrint}
+        onCancel={() => setOpenSaleReturnPrint(false)}
+        footer={null}
+        width={1000}
+      >
+        <Button onClick={handlePrint}>Print</Button>
+        <div ref={printRef}>
+          <SaleReturnPrintTable
+            {...props}
+            summary={'supplier,sale-return'}
+            showPaging={false}
+          />
+        </div>
       </Modal>
     </GlobalContainer>
   );

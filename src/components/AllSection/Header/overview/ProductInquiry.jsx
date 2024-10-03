@@ -1,4 +1,5 @@
-import { AutoComplete, Button, Descriptions, Spin, Table } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
+import { AutoComplete, Button, Dropdown, Menu, Spin, Table } from 'antd';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -46,6 +47,21 @@ const ProductInquiry = () => {
     setInputValue(value);
   };
 
+  const menuItems = [
+    {
+      key: '1',
+      label: (
+        <Button type="primary" className="w-full">
+          Sell
+        </Button>
+      ),
+    },
+    {
+      key: '2',
+      label: <Button className="w-full">Purchase</Button>,
+    },
+  ];
+
   const columns = [
     {
       title: 'Product Name',
@@ -74,10 +90,9 @@ const ProductInquiry = () => {
       align: 'center',
       render: (text, record) =>
         record?.warehouse_id === user?.warehouse_id ? (
-          <div className="flex gap-4 justify-center">
-            <Button type="primary">Sell</Button>
-            <Button>Purchase</Button>
-          </div>
+          <Dropdown overlay={<Menu items={menuItems} />} trigger={['click']}>
+            <EllipsisOutlined style={{ fontSize: '24px', cursor: 'pointer' }} />
+          </Dropdown>
         ) : (
           'N/A'
         ),
@@ -109,24 +124,10 @@ const ProductInquiry = () => {
 
       {selectedProduct && (
         <div className="mt-10 p-6 border rounded-lg shadow-md bg-white">
-          <h3 className="text-2xl font-semibold mb-8 text-center text-gray-800">
-            Selected Product
-          </h3>
-
-          <Descriptions bordered column={1} className="text-base">
-            <Descriptions.Item label="Name">
-              {selectedProduct.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="SKU">
-              {selectedProduct.sku}
-            </Descriptions.Item>
-          </Descriptions>
-
           <Table
             columns={columns}
             dataSource={dataSource}
             pagination={false}
-            className="mt-8"
             size="middle"
           />
         </div>

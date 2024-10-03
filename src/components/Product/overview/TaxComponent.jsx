@@ -21,22 +21,22 @@ export const TaxComponent = () => {
   const { data, isFetching } = useGetAllTaxQuery({ params });
 
   const taxMethod = Form.useWatch('tax_method', form);
-  const buyingPrice = Form.useWatch('buying_price', form);
+  const productPrice = Form.useWatch('product_price', form);
 
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
-    if (taxMethod && buyingPrice) {
-      if (taxMethod === 'Inclusive') {
-        form.setFieldValue('purchase_amount', buyingPrice);
-      } else {
+    if (taxMethod && productPrice) {
+      if (taxMethod === 'Exclusive') {
         const purchaseAmount =
-          parseFloat(buyingPrice) +
-          parseFloat(buyingPrice) * (parseFloat(rate) / 100);
-        form.setFieldValue('purchase_amount', purchaseAmount);
+          parseFloat(productPrice) +
+          parseFloat(productPrice) * (parseFloat(rate) / 100);
+        form.setFieldValue('buying_price', purchaseAmount);
+      } else {
+        form.setFieldValue('buying_price', productPrice);
       }
     }
-  }, [buyingPrice, form, rate, taxMethod]);
+  }, [productPrice, form, rate, taxMethod]);
 
   const options = useMemo(() => {
     if (data?.results?.tax) {
@@ -48,6 +48,17 @@ export const TaxComponent = () => {
     }
     return [];
   }, [data]);
+
+  const sale_amount = Form.useWatch('sale_amount', form);
+
+  useEffect(() => {
+    if (sale_amount) {
+      const finalPrice =
+        parseFloat(sale_amount) +
+        parseFloat(sale_amount) * (parseFloat(rate) / 100);
+      form.setFieldValue('selling_price', finalPrice);
+    }
+  }, [sale_amount, form, rate]);
 
   const [fetchData, setFetchData] = useState(false);
 

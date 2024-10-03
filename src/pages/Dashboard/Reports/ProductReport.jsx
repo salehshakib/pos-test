@@ -31,13 +31,11 @@ import {
   useGlobalParams,
 } from '../../../utilities/hooks/useParams';
 import { getDateRange } from '../../../utilities/lib/getDateRange';
-import { ExpenseTable } from './components/ExpenseTable';
 import { PurchaseReturnTable } from './components/PurchaseReturnTable';
 import { PurchaseTable } from './components/PurchaseTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
 import { SaleTable } from './components/SaleTable';
-import ExpensePrintTable from './data/ExpensePrintTable';
 import PurchasePrintTable from './data/PurchasePrintTable';
 import PurchaseReturnPrintTable from './data/PurchaseReturnPrintTable';
 import QuotaionPrintTable from './data/QuotaionPrintTable';
@@ -181,7 +179,6 @@ export const ProductReport = () => {
   const [openQuotationPrint, setOpenQuotaionPrint] = useState(false);
   const [openPurchaseReturnPrint, setOpenPurchaseReturnPrint] = useState(false);
   const [openSaleReturnPrint, setOpenSaleReturnPrint] = useState(false);
-  const [openExpensePrint, setOpenExpensePrint] = useState(false);
 
   const handlePrintAction = () => {
     if (key === 'sale') {
@@ -194,8 +191,6 @@ export const ProductReport = () => {
       setOpenPurchaseReturnPrint(true);
     } else if (key === 'salereturn') {
       setOpenSaleReturnPrint(true);
-    } else if (key === 'expense') {
-      setOpenExpensePrint(true);
     }
   };
 
@@ -320,13 +315,6 @@ export const ProductReport = () => {
                       />
                     ),
                   },
-                  {
-                    label: 'Expense',
-                    key: 'expense',
-                    children: (
-                      <ExpenseTable {...props} summary={'product,expense'} />
-                    ),
-                  },
                 ]}
               />
             ) : (
@@ -424,14 +412,6 @@ export const ProductReport = () => {
                       summary={'product-variant,sale-return'}
                       showPaging={false}
                     />
-                    <span className="text-center font-bold text-xl mt-4">
-                      Expense Details
-                    </span>
-                    <ExpensePrintTable
-                      {...props}
-                      summary={'product-variant,expense'}
-                      showPaging={false}
-                    />
                   </div>
                 ) : (
                   <Empty />
@@ -516,22 +496,6 @@ export const ProductReport = () => {
             <SaleReturnPrintTable
               {...props}
               summary={'product-variant,sale-return'}
-              showPaging={false}
-            />
-          </div>
-        </Modal>
-
-        <Modal
-          open={openExpensePrint}
-          onCancel={() => setOpenExpensePrint(false)}
-          footer={null}
-          width={1000}
-        >
-          <Button onClick={handlePrint}>Print</Button>
-          <div ref={printRef}>
-            <ExpensePrintTable
-              {...props}
-              summary={'product-variant,expense'}
               showPaging={false}
             />
           </div>

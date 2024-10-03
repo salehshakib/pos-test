@@ -42,7 +42,7 @@ const GeneralSettingForm = ({ data }) => {
       ];
       setFields(newFieldData);
     }
-  }, [data]);
+  }, [data, logo]);
 
   const handleSubmit = async (values) => {
     const { logo, primary_color, secendary_color, ...rest } = values;

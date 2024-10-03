@@ -52,7 +52,7 @@ const PaymentType = () => {
   ].filter(Boolean);
 
   useEffect(() => {
-    form.setFieldValue('payment_type', options?.[0].value);
+    form.setFieldValue('payment_type', options?.[0]?.value);
   }, [form, options]);
 
   return (

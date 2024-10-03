@@ -37,6 +37,12 @@ import { PurchaseTable } from './components/PurchaseTable';
 import { QuotationTable } from './components/QutationTable';
 import { SaleReturnTable } from './components/SaleReturnTable';
 import { SaleTable } from './components/SaleTable';
+import ExpensePrintTable from './data/ExpensePrintTable';
+import PurchasePrintTable from './data/PurchasePrintTable';
+import PurchaseReturnPrintTable from './data/PurchaseReturnPrintTable';
+import QuotaionPrintTable from './data/QuotaionPrintTable';
+import SalePrintTable from './data/SalePrintTable';
+import SaleReturnPrintTable from './data/SaleReturnPrintTable';
 
 const SearchFilterComponent = () => {
   return (
@@ -168,6 +174,30 @@ export const ProductReport = () => {
   });
 
   const [openPrint, setOpenPrint] = useState(false);
+  const [key, setKey] = useState('sale');
+
+  const [openSalePrint, setOpenSalePrint] = useState(false);
+  const [openPurchasePrint, setOpenPurchasePrint] = useState(false);
+  const [openQuotationPrint, setOpenQuotaionPrint] = useState(false);
+  const [openPurchaseReturnPrint, setOpenPurchaseReturnPrint] = useState(false);
+  const [openSaleReturnPrint, setOpenSaleReturnPrint] = useState(false);
+  const [openExpensePrint, setOpenExpensePrint] = useState(false);
+
+  const handlePrintAction = () => {
+    if (key === 'sale') {
+      setOpenSalePrint(true);
+    } else if (key === 'purchase') {
+      setOpenPurchasePrint(true);
+    } else if (key === 'quotaion') {
+      setOpenQuotaionPrint(true);
+    } else if (key === 'purchasereturn') {
+      setOpenPurchaseReturnPrint(true);
+    } else if (key === 'salereturn') {
+      setOpenSaleReturnPrint(true);
+    } else if (key === 'expense') {
+      setOpenExpensePrint(true);
+    }
+  };
 
   return (
     <>
@@ -228,6 +258,20 @@ export const ProductReport = () => {
             ) : data ? (
               <Tabs
                 defaultActiveKey="sale"
+                onChange={(key) => {
+                  setKey(key);
+                }}
+                tabBarExtraContent={
+                  <div className="flex items-center gap-4">
+                    <Button
+                      type="primary"
+                      className="mb-5 px-12"
+                      onClick={handlePrintAction}
+                    >
+                      Print
+                    </Button>
+                  </div>
+                }
                 items={[
                   {
                     label: 'Sale',
@@ -293,7 +337,7 @@ export const ProductReport = () => {
 
         <Modal
           title={
-            <div className="flex items-center gap-4 mb-10">
+            <div className="flex items-center gap-4">
               <h2>Print Report</h2>
               <Button
                 key={'print'}
@@ -312,8 +356,8 @@ export const ProductReport = () => {
         >
           {productId && (
             <>
-              <div ref={printRef} className="p-10">
-                <div className="mb-5 grid w-full grid-cols-1">
+              <div ref={printRef}>
+                <div className="mb-5 grid grid-cols-1 mt-10 w-5/6 mx-auto">
                   <div className="rounded-md border p-4 shadow-sm">
                     {isFetching ? (
                       <Spin className="flex h-full w-full items-center justify-center py-5" />
@@ -340,51 +384,52 @@ export const ProductReport = () => {
                 ) : data ? (
                   <div className="flex flex-col justify-center items-center">
                     <span className="text-center font-bold text-xl mt-4">
-                      Sell Table
+                      Sell Details
                     </span>
-                    <SaleTable
+
+                    <SalePrintTable
                       {...props}
                       showPaging={false}
-                      summary={'product,sale'}
+                      summary={'product-variant,sale'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
-                      Purchase Table
+                      Purchase Details
                     </span>
-                    <PurchaseTable
+                    <PurchasePrintTable
                       {...props}
                       showPaging={false}
-                      summary={'product,purchase'}
+                      summary={'product-variant,purchase'}
                     />
                     <span className="text-center font-bold text-xl mt-4">
-                      Quotation Table
+                      Quotation Details
                     </span>
-                    <QuotationTable
+                    <QuotaionPrintTable
                       {...props}
-                      summary={'product,quotation'}
-                      showPaging={false}
-                    />
-                    <span className="text-center font-bold text-xl mt-4">
-                      Purchase Return Table
-                    </span>
-                    <PurchaseReturnTable
-                      {...props}
-                      summary={'product,purchase-return'}
+                      summary={'product-variant,quotation'}
                       showPaging={false}
                     />
                     <span className="text-center font-bold text-xl mt-4">
-                      Sell Return Table
+                      Purchase Return Details
                     </span>
-                    <SaleReturnTable
+                    <PurchaseReturnPrintTable
                       {...props}
-                      summary={'product,sale-return'}
+                      summary={'product-variant,purchase-return'}
                       showPaging={false}
                     />
                     <span className="text-center font-bold text-xl mt-4">
-                      Expense Table
+                      Sell Return Details
                     </span>
-                    <ExpenseTable
+                    <SaleReturnPrintTable
                       {...props}
-                      summary={'product,expense'}
+                      summary={'product-variant,sale-return'}
+                      showPaging={false}
+                    />
+                    <span className="text-center font-bold text-xl mt-4">
+                      Expense Details
+                    </span>
+                    <ExpensePrintTable
+                      {...props}
+                      summary={'product-variant,expense'}
                       showPaging={false}
                     />
                   </div>
@@ -394,6 +439,102 @@ export const ProductReport = () => {
               </div>
             </>
           )}
+        </Modal>
+
+        <Modal
+          open={openSalePrint}
+          onCancel={() => setOpenSalePrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <SalePrintTable
+              {...props}
+              showPaging={false}
+              summary={'product-variant,sale'}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          open={openPurchasePrint}
+          onCancel={() => setOpenPurchasePrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <PurchasePrintTable
+              {...props}
+              showPaging={false}
+              summary={'product-variant,purchase'}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          open={openQuotationPrint}
+          onCancel={() => setOpenQuotaionPrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <QuotaionPrintTable
+              {...props}
+              summary={'product-variant,quotation'}
+              showPaging={false}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          open={openPurchaseReturnPrint}
+          onCancel={() => setOpenPurchaseReturnPrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <PurchaseReturnPrintTable
+              {...props}
+              summary={'product-variant,purchase-return'}
+              showPaging={false}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          open={openSaleReturnPrint}
+          onCancel={() => setOpenSaleReturnPrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <SaleReturnPrintTable
+              {...props}
+              summary={'product-variant,sale-return'}
+              showPaging={false}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          open={openExpensePrint}
+          onCancel={() => setOpenExpensePrint(false)}
+          footer={null}
+          width={1000}
+        >
+          <Button onClick={handlePrint}>Print</Button>
+          <div ref={printRef} className="px-10">
+            <ExpensePrintTable
+              {...props}
+              summary={'product-variant,expense'}
+              showPaging={false}
+            />
+          </div>
         </Modal>
       </GlobalContainer>
     </>

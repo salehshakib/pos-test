@@ -355,21 +355,21 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
   };
 
   const handleStockUpdate = async (values, { formValues }) => {
-    const stockListArray = formValues?.stock_list?.qty
-      ? Object.keys(formValues.stock_list.qty)
-          .filter(
-            (product_id) => formValues.stock_list.qty[product_id] !== undefined
-          )
-          .map((product_id) => {
-            const [id, warehouse_id] = product_id.split('-');
+    // const stockListArray = formValues?.stock_list?.qty
+    //   ? Object.keys(formValues.stock_list.qty)
+    //       .filter(
+    //         (product_id) => formValues.stock_list.qty[product_id] !== undefined
+    //       )
+    //       .map((product_id) => {
+    //         const [id, warehouse_id] = product_id.split('-');
 
-            return {
-              product_variant_id: parseInt(id),
-              qty: formValues.stock_list.qty[product_id],
-              warehouse_id,
-            };
-          })
-      : [];
+    //         return {
+    //           product_variant_id: parseInt(id),
+    //           qty: formValues.stock_list.qty[product_id],
+    //           warehouse_id,
+    //         };
+    //       })
+    //   : [];
 
     const priceListArray = formValues?.price_list?.price
       ? Object.keys(formValues.price_list.price)
@@ -388,9 +388,18 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           })
       : [];
 
-    if (stockListArray.length === 0 && priceListArray.length === 0) {
+    // if (stockListArray.length === 0 && priceListArray.length === 0) {
+    //   dispatch(closeEditDrawer());
+    //   form.resetFields();
+    // setCurrent(0);
+
+    //   return;
+    // }
+
+    if (priceListArray.length === 0) {
       dispatch(closeEditDrawer());
       form.resetFields();
+      setCurrent(0);
       return;
     }
 
@@ -400,9 +409,9 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       _method: 'PUT',
     };
 
-    if (stockListArray.length) {
-      postObj.stock_list = JSON.stringify(stockListArray);
-    }
+    // if (stockListArray.length) {
+    //   postObj.stock_list = JSON.stringify(stockListArray);
+    // }
 
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);

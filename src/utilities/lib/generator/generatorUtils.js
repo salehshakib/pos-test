@@ -5,7 +5,8 @@ export const calculateSummary = (
   tax_rate = 0,
   discount = 0,
   shipping_cost = 0,
-  discountType = 'Fixed'
+  discountType = 'Fixed',
+  giftCard
 ) => {
   const productList = formValues.product_list || {};
 
@@ -26,8 +27,6 @@ export const calculateSummary = (
 
   let totalCoupon = 0;
 
-  console.log(formValues);
-
   if (
     formValues?.order?.coupon?.minimum_amount &&
     Number(formValues?.order?.coupon.minimum_amount) < Number(totalPrice)
@@ -39,13 +38,16 @@ export const calculateSummary = (
     }
   }
 
+  const giftCardAmount = giftCard?.split('-')[1] || 0;
+
   const grandTotal = calculateGrandTotal(
     totalPrice,
     tax_rate,
     discount,
     shipping_cost,
     'Fixed',
-    totalCoupon
+    totalCoupon,
+    giftCardAmount
   );
 
   return { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon };
@@ -74,7 +76,8 @@ export const calculateGrandTotal = (
   discount,
   shipping_cost,
   discountType = 'Fixed',
-  coupon = 0
+  coupon = 0,
+  giftCard
   // orderTaxRate
 ) => {
   const parsedTotalPrice = parseFloat(totalPrice) || 0;
@@ -87,9 +90,11 @@ export const calculateGrandTotal = (
       ? parseFloat((discount * parsedTotalPrice) / 100)
       : parseFloat(discount) || 0;
 
+  const parsedShippingCost = parseFloat(shipping_cost) || 0;
+
   const parsedCoupon = parseFloat(coupon) || 0;
 
-  const parsedShippingCost = parseFloat(shipping_cost) || 0;
+  const parsedGiftCard = parseFloat(giftCard) || 0;
 
   let grandTotal = parsedTotalPrice + parsedTax;
   // + parsedOrderTaxRate;
@@ -104,6 +109,10 @@ export const calculateGrandTotal = (
 
   if (parsedCoupon) {
     grandTotal = grandTotal - parsedCoupon;
+  }
+
+  if (parsedGiftCard) {
+    grandTotal = grandTotal - parsedGiftCard;
   }
 
   return grandTotal ? Number(grandTotal).toFixed(2) : '0.00';

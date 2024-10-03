@@ -1,4 +1,4 @@
-import { Col, Form, Row } from 'antd';
+import { Col, Divider, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
@@ -35,7 +35,6 @@ const ProductTypeComponent = () => {
   const options = [
     { value: 'Standard', label: 'Standard' },
     { value: 'Combo', label: 'Combo' },
-    { value: 'Digital', label: 'Digital' },
     { value: 'Service', label: 'Service' },
   ];
 
@@ -115,21 +114,35 @@ const AttachmentComponent = () => {
   return null;
 };
 
-const ProductCostComponent = () => {
+const ProductVariantComponent = ({ data, handleVariantProduct }) => {
   const form = Form.useFormInstance();
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
   const productType = Form.useWatch('type', form);
 
-  if (productType === 'Standard')
+  if (productType === 'Standard') {
     return (
-      <Col {...colLayout}>
-        <CustomInput
-          label="Product Buying Cost"
-          type={'number'}
-          required={true}
-          name={'buying_price'}
-        />
-      </Col>
+      <>
+        <Row {...rowLayout}>
+          <Divider orientation="left" orientationMargin={10}>
+            Variant
+          </Divider>
+        </Row>
+
+        {isEditDrawerOpen ? (
+          <>
+            {data?.has_variant.toString() === '1' ? (
+              <VariantComponent
+                onCustomSubmit={handleVariantProduct}
+                data={data}
+              />
+            ) : null}
+          </>
+        ) : (
+          <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
+        )}
+      </>
     );
+  } else return null;
 };
 
 const AlertComponent = () => {
@@ -138,14 +151,24 @@ const AlertComponent = () => {
 
   if (productType === 'Standard') {
     return (
-      <Col {...colLayout}>
-        <CustomInput
-          label="Alert Quantity"
-          type={'number'}
-          required={true}
-          name={'alert_qty'}
-        />
-      </Col>
+      <>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Daily Sale Objectives"
+            type={'number'}
+            tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
+            name={'daily_sale_qty'}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Alert Quantity"
+            type={'number'}
+            required={true}
+            name={'alert_qty'}
+          />
+        </Col>
+      </>
     );
   }
 };
@@ -170,7 +193,10 @@ const ExpireComponent = () => {
 
   if (productType === 'Standard') {
     return (
-      <>
+      <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product Expire
+        </Divider>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label="This product has batch and expired date"
@@ -178,7 +204,7 @@ const ExpireComponent = () => {
           />
         </Col>
         {hasExpiredDate && (
-          <Col {...mdColLayout}>
+          <Col {...fullColLayout}>
             <CustomDatepicker
               label={'Expired Date'}
               name={['product_expire', 'expired_date']}
@@ -186,7 +212,7 @@ const ExpireComponent = () => {
             />
           </Col>
         )}
-      </>
+      </Row>
     );
   } else return null;
 };
@@ -203,6 +229,9 @@ const PromotionalPriceComponent = () => {
 
   return (
     <Row {...rowLayout}>
+      <Divider orientation="left" orientationMargin={10}>
+        Promotional Price
+      </Divider>
       <Col {...fullColLayout}>
         <CustomCheckbox label="Add Promotional Price" name="has_promotion" />
       </Col>
@@ -253,6 +282,9 @@ const IMEIComponent = () => {
   if (productType === 'Standard')
     return (
       <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product IEMI
+        </Divider>
         <Col {...fullColLayout}>
           <CustomCheckbox
             label=" This product has IMEI or Serial numbers"
@@ -304,14 +336,29 @@ const ProductForm = ({ data, ...props }) => {
     props.handleSubmit(values, { variantData, formValues });
   };
 
-  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
-
   return (
     <CustomForm {...props} handleSubmit={handleSubmit}>
-      <Row {...rowLayout}>
+      <Row {...rowLayout} className="-mt-6">
+        <Divider orientation="left" orientationMargin={10}>
+          Product Type
+        </Divider>
+
         <Col {...colLayout}>
           <ProductTypeComponent />
         </Col>
+
+        <Col {...colLayout}>
+          <BarCodeComponent />
+        </Col>
+
+        <Col {...colLayout}>
+          <ProductCodeComponent />
+        </Col>
+
+        <Divider orientation="left" orientationMargin={10}>
+          Name
+        </Divider>
+
         <Col {...colLayout}>
           <CustomInput
             label="Product Name"
@@ -320,11 +367,13 @@ const ProductForm = ({ data, ...props }) => {
             name={'name'}
           />
         </Col>
+
         <Col {...colLayout}>
-          <ProductCodeComponent />
+          <BrandComponent />
         </Col>
+
         <Col {...colLayout}>
-          <BarCodeComponent />
+          <CategoryComponent />
         </Col>
 
         <CustomProductComponent
@@ -334,75 +383,108 @@ const ProductForm = ({ data, ...props }) => {
 
         <AttachmentComponent />
 
-        <Col {...colLayout}>
-          <BrandComponent />
-        </Col>
-        <Col {...colLayout}>
-          <CategoryComponent />
-        </Col>
-        <UnitComponent />
-        <ProductCostComponent />
+        <Divider orientation="left" orientationMargin={10}>
+          Pricing
+        </Divider>
+
+        {/* <ProductCostComponent /> */}
+
         <Col {...colLayout}>
           <CustomInput
-            label="Product Selling Price"
+            label="Product Buying Cost"
             type={'number'}
             required={true}
-            name={'selling_price'}
+            name={'buying_price'}
           />
         </Col>
-        <Col {...colLayout}>
-          <CustomInput
-            label="Daily Sale Objectives"
-            type={'number'}
-            tooltip="Minimum qty which must be sold in a day. If not you will not be notified on dashboard. But you have to set up cron job property for that. Follow the documentation in this regard."
-            name={'daily_sale_qty'}
-          />
-        </Col>
-        <AlertComponent />
         <Col {...colLayout}>
           <TaxComponent />
         </Col>
         <Col {...colLayout}>
           <TaxTypeComponent />
         </Col>
-      </Row>
 
-      <Row {...rowLayout} justify={'center'} align={'middle'}>
-        <Col xs={24}>
-          <CustomUploader
-            label={'Attachment'}
-            name={'attachments'}
-            multiple={true}
-            type="img"
+        <Col {...colLayout}>
+          <CustomInput
+            label="Product Purchase Amount"
+            type={'number'}
+            name={'purchase_amount'}
           />
         </Col>
-      </Row>
-      <Row {...rowLayout}>
-        <Col {...fullColLayout}>
-          <RichTextEditor label="Product Details" name="details" />
+
+        <Col {...colLayout}>
+          <CustomInput
+            label="Profit Margin"
+            type={'number_with_percent'}
+            required={true}
+            name={'profit_margin'}
+            suffix={'%'}
+          />
         </Col>
+
+        <Col {...colLayout}>
+          <CustomInput
+            label="Profit Amount"
+            type={'number'}
+            name={'profit_amount'}
+          />
+        </Col>
+
+        <Col {...colLayout}>
+          <CustomInput
+            label="Product Sell Amount"
+            type={'number'}
+            required={true}
+            name={'sale_amount'}
+          />
+        </Col>
+        <Col {...colLayout}>
+          <CustomInput
+            label="Final Price"
+            type={'number'}
+            required={true}
+            name={'selling_price'}
+          />
+        </Col>
+
+        <UnitComponent />
+
+        <AlertComponent />
       </Row>
 
-      {isEditDrawerOpen ? (
-        <>
-          {data?.has_variant.toString() === '1' ? (
-            <VariantComponent
-              onCustomSubmit={handleVariantProduct}
-              data={data}
-            />
-          ) : null}
-        </>
-      ) : (
-        <VariantComponent onCustomSubmit={handleVariantProduct} data={data} />
-      )}
+      <ProductVariantComponent
+        data={data}
+        handleVariantProduct={handleVariantProduct}
+      />
 
       <IMEIComponent />
 
-      <Row {...rowLayout}>
-        <ExpireComponent />
-      </Row>
+      {/* <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product Expire
+        </Divider>
+        </Row> */}
+      <ExpireComponent />
 
       <PromotionalPriceComponent />
+
+      <Row {...rowLayout} justify={'center'} align={'middle'}>
+        <Divider orientation="left" orientationMargin={10}>
+          Attachment
+        </Divider>
+        <Col xs={24} className="-mt-6">
+          <CustomUploader name={'attachments'} multiple={true} type="img" />
+        </Col>
+      </Row>
+
+      <Row {...rowLayout}>
+        <Divider orientation="left" orientationMargin={10}>
+          Product Details
+        </Divider>
+        <Col {...fullColLayout}>
+          <RichTextEditor name="details" />
+        </Col>
+      </Row>
     </CustomForm>
   );
 };

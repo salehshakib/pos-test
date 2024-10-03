@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Divider, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -77,12 +77,17 @@ export const CustomProductComponent = ({ onCustomSubmit, data }) => {
 
   if (productType === 'Combo')
     return (
-      <ComboProductsComponent
-        formValues={formValues}
-        setFormValues={setFormValues}
-        products={products}
-        setProducts={setProducts}
-      />
+      <>
+        <Divider orientation="left" orientationMargin={10}>
+          Combo Products
+        </Divider>
+        <ComboProductsComponent
+          formValues={formValues}
+          setFormValues={setFormValues}
+          products={products}
+          setProducts={setProducts}
+        />
+      </>
     );
 
   return null;

@@ -18,7 +18,10 @@ import { appendToFormData } from '../../utilities/lib/appendFormData';
 import { getMissingUids } from '../../utilities/lib/deletedImageIds';
 import { errorFieldsUpdate } from '../../utilities/lib/errorFieldsUpdate';
 import { fieldsToUpdate } from '../../utilities/lib/fieldsToUpdate';
-import { getUniqueAttributeIds } from '../../utilities/lib/product/variant';
+import {
+  getIdsNotInSelectedRowData,
+  getUniqueAttributeIds,
+} from '../../utilities/lib/product/variant';
 import { calculateById } from '../../utilities/lib/updateFormValues/calculateById';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
@@ -115,9 +118,14 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
         has_stock,
         has_variant,
         has_different_price,
+        product_price,
+        profit_margin,
       } = data;
 
       const fieldData = fieldsToUpdate({
+        product_price,
+        profit_margin,
+
         name,
         sku,
         type,
@@ -342,21 +350,32 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }
 
-    // appendToFormData(postObj, formData);
+    const deletedVariants = getIdsNotInSelectedRowData(
+      variantData?.selectedRowData,
+      data?.variants
+    );
 
-    // const { data, error } = await updateProduct({ id, formData });
+    console.log(deletedVariants);
 
-    // if (data?.success) {
-    //   setId(undefined);
-    //   dispatch(closeEditDrawer());
-    //   setCurrent(0);
-    // }
+    if (deletedVariants.length) {
+      postObj.deletedVariantIds = deletedVariants;
+    }
 
-    // if (error) {
-    //   const errorFields = errorFieldsUpdate(fields, error);
+    appendToFormData(postObj, formData);
 
-    //   setFields(errorFields);
-    // }
+    const { data, error } = await updateProduct({ id, formData });
+
+    if (data?.success) {
+      setId(undefined);
+      dispatch(closeEditDrawer());
+      setCurrent(0);
+    }
+
+    if (error) {
+      const errorFields = errorFieldsUpdate(fields, error);
+
+      setFields(errorFields);
+    }
   };
 
   const handleStockUpdate = async (values, { formValues }) => {

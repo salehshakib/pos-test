@@ -1,4 +1,4 @@
-import { Col, Divider, Form, Row } from 'antd';
+import { Button, Col, Divider, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
@@ -428,7 +428,6 @@ const ProductSellingAmount = () => {
           label="Final Price"
           type={'number_with_money'}
           suffix={currency?.name}
-          required={true}
           name={'selling_price'}
           disabled={true}
         />
@@ -437,7 +436,7 @@ const ProductSellingAmount = () => {
   );
 };
 
-const ProductForm = ({ data, ...props }) => {
+const ProductForm = ({ data, setIsPrice, ...props }) => {
   const currency = useSelector(useCurrency);
 
   const comboProductSubmitRef = useRef(null);
@@ -468,8 +467,10 @@ const ProductForm = ({ data, ...props }) => {
     props.handleSubmit(values, { variantData, formValues });
   };
 
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
   return (
-    <CustomForm {...props} handleSubmit={handleSubmit}>
+    <CustomForm {...props} handleSubmit={handleSubmit} submitBtn={false}>
       <Row {...rowLayout} className="-mt-6">
         <Divider orientation="left" orientationMargin={10}>
           Product Type
@@ -572,6 +573,30 @@ const ProductForm = ({ data, ...props }) => {
           <RichTextEditor name="details" />
         </Col>
       </Row>
+
+      <div className={`flex w-full items-center justify-end gap-3 pt-5 pb-20`}>
+        <Button type="default" onClick={props.handleDrawerClose}>
+          Cancel
+        </Button>
+        {!isEditDrawerOpen && (
+          <Button
+            htmlType="submit"
+            onClick={() => setIsPrice(true)}
+            type="primary"
+            loading={props.isLoading}
+          >
+            Save & Add Price
+          </Button>
+        )}
+        <Button
+          htmlType="submit"
+          onClick={() => setIsPrice(false)}
+          type="primary"
+          loading={props.isLoading}
+        >
+          Save
+        </Button>
+      </div>
     </CustomForm>
   );
 };

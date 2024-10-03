@@ -49,7 +49,7 @@ export function formatVariantsData(variants, attributes) {
     });
   });
 
-  return Object.values(attributesMap);
+  return Object.values(attributesMap).reverse();
 }
 
 export function extractAttributeValues(attributeData) {
@@ -190,3 +190,10 @@ export function findNonMatchingItems(data, combination) {
     (combinationItem) => !dataNames.has(combinationItem.name)
   );
 }
+
+export const getIdsNotInSelectedRowData = (selectedRowData, data) => {
+  const selectedIds = new Set(selectedRowData.map((item) => item.id));
+  return data
+    .filter((item) => !selectedIds.has(item.id))
+    .map((item) => item.id);
+};

@@ -18,8 +18,6 @@ const FormButton = ({ loading, children, onClose, btnStyle }) => {
     dispatch(closeEditDrawer());
   };
 
-  // console.log(first)
-
   return (
     <div
       className={`flex w-full items-center justify-end gap-3 pt-5 ${btnStyle ? 'pb-20' : 'pb-2'}`}

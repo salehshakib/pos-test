@@ -184,7 +184,6 @@ const ProductVariantOption = ({
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
         combination?.map((item) => {
-          console.log(item);
           return {
             key: item.key,
             name: item.name,

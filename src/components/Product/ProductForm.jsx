@@ -467,6 +467,8 @@ const ProductForm = ({ data, setIsPrice, ...props }) => {
     props.handleSubmit(values, { variantData, formValues });
   };
 
+  const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+
   return (
     <CustomForm {...props} handleSubmit={handleSubmit} submitBtn={false}>
       <Row {...rowLayout} className="-mt-6">
@@ -576,14 +578,16 @@ const ProductForm = ({ data, setIsPrice, ...props }) => {
         <Button type="default" onClick={props.handleDrawerClose}>
           Cancel
         </Button>
-        <Button
-          htmlType="submit"
-          onClick={() => setIsPrice(true)}
-          type="primary"
-          loading={props.isLoading}
-        >
-          Save & Add Price
-        </Button>
+        {!isEditDrawerOpen && (
+          <Button
+            htmlType="submit"
+            onClick={() => setIsPrice(true)}
+            type="primary"
+            loading={props.isLoading}
+          >
+            Save & Add Price
+          </Button>
+        )}
         <Button
           htmlType="submit"
           onClick={() => setIsPrice(false)}

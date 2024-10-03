@@ -85,8 +85,6 @@ export const VariantAttributeTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource]);
 
-  console.log(dataSource);
-
   const variantAttributeColumns = [
     {
       key: 'sort',

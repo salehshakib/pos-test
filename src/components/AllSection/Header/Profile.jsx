@@ -138,7 +138,6 @@ const Profile = () => {
         width={1200}
         centered
         title="Product Inquiry"
-        maskStyle={{ backdropFilter: 'blur(4px)' }}
       >
         <ProductInquiry />
       </Modal>

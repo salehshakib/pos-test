@@ -36,6 +36,37 @@ const columns = [
       <span className="text-dark text-xs font-medium md:text-sm">{amount}</span>
     ),
   },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    width: '100px',
+    align: 'center',
+    render: (status, record) => {
+      return record?.handleStatusModal ? (
+        <button
+          className={`p-0 ${
+            status?.toString() === 'Requested'
+              ? 'bg-[#2ea5d8] text-[#ebebeb]'
+              : 'bg-[#DCFCE7] text-[#16A34A]'
+          } w-[80px] rounded shadow-md`}
+          onClick={() => record?.handleStatusModal(record.id)}
+        >
+          <span className="w-full px-2 text-xs font-medium">{status}</span>
+        </button>
+      ) : (
+        <div
+          className={`p-0 ${
+            status?.toString() === 'Accepted'
+              ? 'bg-[#FEF2F2] text-[#EF4444]'
+              : 'bg-[#DCFCE7] text-[#16A34A]'
+          } w-[80px] rounded shadow-md`}
+        >
+          <span className="w-full px-2 text-xs font-medium">{status}</span>
+        </div>
+      );
+    },
+  },
 ];
 
 const PettyCashRequest = () => {

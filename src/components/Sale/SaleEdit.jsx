@@ -48,7 +48,9 @@ export const SaleEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const newFieldData = [...fieldData];
+
+      setFields(newFieldData);
     } else {
       setFields([]);
     }

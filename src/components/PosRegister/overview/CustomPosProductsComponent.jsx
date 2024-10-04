@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Table, Typography } from 'antd';
 import {
   forwardRef,
@@ -555,8 +556,6 @@ export const CustomPosProductsComponent = forwardRef(
       },
     });
 
-    console.log(formValues);
-
     const resetFields = () => {
       setFormValues({
         product_list: {
@@ -627,7 +626,7 @@ export const CustomPosProductsComponent = forwardRef(
 
     useEffect(() => {
       resetFields();
-    }, [warehouseId]);
+    }, []);
 
     const [productEditModal, setProductEditModal] = useState(false);
     const [productId, setProductId] = useState(undefined);

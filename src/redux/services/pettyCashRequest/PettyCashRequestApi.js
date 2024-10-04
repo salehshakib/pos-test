@@ -1,43 +1,45 @@
 import {
-  EXPENSE,
+  BALANCE,
   PETTY_CASH,
+  PETTYCASH_REQUEST,
 } from '../../../utilities/apiEndpoints/account.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
 
-const expenseApi = baseApi.injectEndpoints({
+const pettyCashRequestApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllExpense: build.query({
+    getAllPettyCashRequest: build.query({
       query: ({ params }) => {
         return {
-          url: `/${EXPENSE}`,
+          url: `/${PETTYCASH_REQUEST}`,
           method: 'GET',
           params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
       providesTags: (result, error, { params }) => [
-        { type: EXPENSE, ...params },
-        EXPENSE,
+        { type: PETTYCASH_REQUEST, ...params },
+        PETTYCASH_REQUEST,
       ],
     }),
 
-    getExpenseDetails: build.query({
-      query: ({ id }) => {
+    getPettyCashRequestDetails: build.query({
+      query: ({ id, params }) => {
         return {
-          url: `${EXPENSE}/show/${id}`,
+          url: `${PETTYCASH_REQUEST}/show/${id}`,
           method: 'GET',
+          params,
         };
       },
       transformResponse: (response) => verifyToken(response.data),
-      providesTags: (result, error, { id }) => [{ type: EXPENSE, id }],
+      providesTags: [PETTYCASH_REQUEST],
     }),
 
-    createExpense: build.mutation({
+    createPettyCashRequest: build.mutation({
       query: ({ data }) => {
         return {
-          url: `/${EXPENSE}/store`,
+          url: `/${PETTYCASH_REQUEST}/store`,
           method: 'POST',
           body: data,
         };
@@ -55,16 +57,16 @@ const expenseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }, { type: PETTY_CASH }] : [];
+        return result ? [{ type: PETTYCASH_REQUEST }] : [];
       },
     }),
 
-    updateExpense: build.mutation({
-      query: ({ id, data }) => {
+    updatePettyCashRequestStatus: build.mutation({
+      query: (payload) => {
         return {
-          url: `/${EXPENSE}/update/${id}`,
+          url: `/${PETTYCASH_REQUEST}/response/${payload.id}`,
           method: 'POST',
-          body: data,
+          body: payload,
         };
       },
       transformResponse: (response) => {
@@ -80,38 +82,20 @@ const expenseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }, { type: PETTY_CASH }] : [];
+        return result
+          ? [
+              { type: PETTYCASH_REQUEST },
+              { type: BALANCE },
+              { type: PETTY_CASH },
+            ]
+          : [];
       },
     }),
 
-    updateExpenseStatus: build.mutation({
+    deletePettyCashRequest: build.mutation({
       query: (id) => {
         return {
-          url: `/${EXPENSE}/status/${id}`,
-          method: 'POST',
-        };
-      },
-      transformResponse: (response) => {
-        if (response?.success) {
-          openNotification('success', response?.message);
-          return response;
-        }
-      },
-      transformErrorResponse: (response) => {
-        if (response?.data?.success === false) {
-          openNotification('error', response?.data?.message);
-          return response;
-        }
-      },
-      invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }] : [];
-      },
-    }),
-
-    deleteExpense: build.mutation({
-      query: (id) => {
-        return {
-          url: `/${EXPENSE}/delete/${id}`,
+          url: `/${PETTYCASH_REQUEST}/delete/${id}`,
           method: 'DELETE',
         };
       },
@@ -128,17 +112,16 @@ const expenseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }] : [];
+        return result ? [{ type: PETTYCASH_REQUEST }] : [];
       },
     }),
   }),
 });
 
 export const {
-  useGetAllExpenseQuery,
-  useGetExpenseDetailsQuery,
-  useCreateExpenseMutation,
-  useUpdateExpenseMutation,
-  useUpdateExpenseStatusMutation,
-  useDeleteExpenseMutation,
-} = expenseApi;
+  useGetAllPettyCashRequestQuery,
+  useGetPettyCashRequestDetailsQuery,
+  useCreatePettyCashRequestMutation,
+  useUpdatePettyCashRequestStatusMutation,
+  useDeletePettyCashRequestMutation,
+} = pettyCashRequestApi;

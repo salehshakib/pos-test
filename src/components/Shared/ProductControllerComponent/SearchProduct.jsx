@@ -68,18 +68,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
     params.product_id = productId;
   }
 
-  const { data, isFetching } = useGetAllProductVariantsQuery(
-    {
-      params,
-    }
-    // {
-    // skip: !(warehouseId || warehouseIdFrom),
-    // &&!pathname.includes('stock-request'),
-    // }
-    // {
-    //   skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
-    // }
-  );
+  const { data, isFetching } = useGetAllProductVariantsQuery({
+    params,
+  });
 
   const loadingContent = (
     <div className="flex items-center justify-center">
@@ -104,7 +95,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
 
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {
-      // message.error("Please select warehouse");
       openNotification('warning', 'Please select warehouse');
 
       return;

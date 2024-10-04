@@ -54,50 +54,52 @@ const CustomModal = (props) => {
             {children}
           </div>
           {notification &&
-            (transferStatus === 'Pending' && requestStatus === 'Pending' ? (
-              <div className="mt-5 flex w-full items-center justify-end gap-3 shadow-sm">
-                <Button
-                  type=""
-                  onClick={props.onReject}
-                  loading={props.rejectLoading}
-                  disabled={
-                    props.rejectLoading ||
-                    props.acceptLoading ||
-                    props.acceptAndTransferLoading
-                  }
-                >
-                  Reject
-                </Button>
-                <Button
-                  type="primary"
-                  onClick={props.onAccept}
-                  loading={props.acceptLoading}
-                  disabled={
-                    props.rejectLoading ||
-                    props.acceptLoading ||
-                    props.acceptAndTransferLoading
-                  }
-                >
-                  Accept
-                </Button>
-                <Button
-                  type="primary"
-                  onClick={props.onAcceptAndTransfer}
-                  loading={props.acceptAndTransferLoading}
-                  disabled={
-                    props.rejectLoading ||
-                    props.acceptLoading ||
-                    props.acceptAndTransferLoading
-                  }
-                >
-                  Accept & Transfer
-                </Button>
-              </div>
-            ) : transferStatus === 'Pending' && requestStatus === 'Accepted' ? (
-              <div className="mt-5 flex w-full items-center justify-end gap-3">
-                <Button type="primary" onClick={hideModal}>
-                  Close
-                </Button>
+          transferStatus === 'Pending' &&
+          requestStatus === 'Pending' ? (
+            <div className="mt-5 flex w-full items-center justify-end gap-3 shadow-sm">
+              <Button
+                type=""
+                onClick={props.onReject}
+                loading={props.rejectLoading}
+                disabled={
+                  props.rejectLoading ||
+                  props.acceptLoading ||
+                  props.acceptAndTransferLoading
+                }
+              >
+                Reject
+              </Button>
+              <Button
+                type="primary"
+                onClick={props.onAccept}
+                loading={props.acceptLoading}
+                disabled={
+                  props.rejectLoading ||
+                  props.acceptLoading ||
+                  props.acceptAndTransferLoading
+                }
+              >
+                Accept
+              </Button>
+              <Button
+                type="primary"
+                onClick={props.onAcceptAndTransfer}
+                loading={props.acceptAndTransferLoading}
+                disabled={
+                  props.rejectLoading ||
+                  props.acceptLoading ||
+                  props.acceptAndTransferLoading
+                }
+              >
+                Accept & Transfer
+              </Button>
+            </div>
+          ) : transferStatus === 'Pending' && requestStatus === 'Accepted' ? (
+            <div className="mt-5 flex w-full items-center justify-end gap-3">
+              <Button type="primary" onClick={hideModal}>
+                Close
+              </Button>
+              {transferStatus !== 'Transferred' && (
                 <Button
                   type="primary"
                   onClick={props.onTransfer}
@@ -111,14 +113,16 @@ const CustomModal = (props) => {
                 >
                   Transfer
                 </Button>
-              </div>
-            ) : (
-              <div className="mt-5 flex w-full items-center justify-end gap-3">
-                <Button type="primary" onClick={hideModal}>
-                  Close
-                </Button>
-              </div>
-            ))}
+              )}
+            </div>
+          ) : (
+            <div className="mt-5 flex w-full items-center justify-end gap-3">
+              <Button type="primary" onClick={hideModal}>
+                Close
+              </Button>
+            </div>
+          )}
+
           {showCloseButton && (
             <div className="mt-5 flex w-full items-center justify-end gap-3">
               {handlePrint && (

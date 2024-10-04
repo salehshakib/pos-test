@@ -167,9 +167,9 @@ const ProductCreate = () => {
           name: name + ' ' + item.name,
           sku: sku + '-' + item.sku,
           iemi_number: item.iemi,
-          qty: item.qty.toString(),
-          selling_price: item.price.toString(),
-          buying_price: item.cost.toString(),
+          qty: item?.qty?.toString(),
+          selling_price: item?.price?.toString(),
+          buying_price: item?.cost?.toString(),
           attribute_option_ids: item.variant_attribute_ids,
         };
       });
@@ -179,7 +179,7 @@ const ProductCreate = () => {
         postObj.has_variant = '0';
       }
     } else {
-      postObj.qty = qty.toString();
+      postObj.qty = qty?.toString();
     }
 
     if (values.attach_file?.[0].originFileObj) {

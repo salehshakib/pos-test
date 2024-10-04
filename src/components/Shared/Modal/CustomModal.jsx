@@ -116,11 +116,7 @@ const CustomModal = (props) => {
               )}
             </div>
           ) : (
-            <div className="mt-5 flex w-full items-center justify-end gap-3">
-              <Button type="primary" onClick={hideModal}>
-                Close
-              </Button>
-            </div>
+            <></>
           )}
 
           {showCloseButton && (

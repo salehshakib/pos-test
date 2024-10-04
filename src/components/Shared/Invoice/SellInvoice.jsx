@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import ReactToPrint from 'react-to-print';
 
+import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetGeneralSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
 
 const SellInvoice = ({ invoice }) => {
   const printRef = useRef(null);
   const { data } = useGetGeneralSettingsQuery();
   const reactToPrintRef = useRef(null);
+
+  const currency = useSelector(useCurrency);
 
   useEffect(() => {
     if (invoice && reactToPrintRef.current) {
@@ -23,11 +27,11 @@ const SellInvoice = ({ invoice }) => {
     grand_total,
     shipping_cost,
     total_tax,
-    total_discount,
     payment_type,
     payment_status,
     coupon_discount,
     warehouses,
+    discount: discountAmount,
   } = invoice || {};
 
   const customer_name = customers?.name || 'N/A';
@@ -36,7 +40,7 @@ const SellInvoice = ({ invoice }) => {
   const warehouse_name = warehouses?.name ?? 'N/A';
   const paymentType = payment_type || 'N/A';
   const paymentStatus = payment_status || 'N/A';
-  const discount = coupon_discount + total_discount || 0;
+  const discount = coupon_discount + discountAmount || 0;
 
   return (
     <>
@@ -53,12 +57,10 @@ const SellInvoice = ({ invoice }) => {
               ref={printRef}
               className="max-w-4xl mx-auto p-8 border border-gray-300 rounded-lg"
             >
-              {/* Invoice Header */}
               <div className="text-center mb-8">
                 <h1 className="text-2xl font-bold">Invoice</h1>
               </div>
 
-              {/* Company, Warehouse Info, Customer Info */}
               <div className="flex justify-between mb-8">
                 <div className="text-left">
                   <p className="font-bold">
@@ -97,11 +99,15 @@ const SellInvoice = ({ invoice }) => {
                           {variant.name || 'N/A'}
                         </td>
                         <td className="px-4 py-2 border">
-                          ${product.net_unit_price}
+                          {currency?.name} {product.net_unit_price}
                         </td>
                         <td className="px-4 py-2 border">{product.qty}</td>
-                        <td className="px-4 py-2 border">${discount}</td>
-                        <td className="px-4 py-2 border">${product.total}</td>
+                        <td className="px-4 py-2 border">
+                          {currency?.name} {discount}
+                        </td>
+                        <td className="px-4 py-2 border">
+                          {currency?.name} {product.total}
+                        </td>
                       </tr>
                     );
                   })}
@@ -114,7 +120,7 @@ const SellInvoice = ({ invoice }) => {
                     <tr>
                       <td className="px-4 py-2">Before Tax:</td>
                       <td className="px-4 py-2">
-                        $
+                        {currency?.name}{' '}
                         {sale_products.reduce(
                           (acc, item) => acc + item.total,
                           0
@@ -123,19 +129,27 @@ const SellInvoice = ({ invoice }) => {
                     </tr>
                     <tr>
                       <td className="px-4 py-2">Tax Amount:</td>
-                      <td className="px-4 py-2">${total_tax || 0}</td>
+                      <td className="px-4 py-2">
+                        {currency?.name} {total_tax || 0}
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2">Shipping Cost:</td>
-                      <td className="px-4 py-2">${shipping_cost || 0}</td>
+                      <td className="px-4 py-2">
+                        {currency?.name} {shipping_cost || 0}
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2">Total Discount:</td>
-                      <td className="px-4 py-2">${discount || 0}</td>
+                      <td className="px-4 py-2">
+                        {currency?.name} {discount || 0}
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2 font-bold">Grand Total:</td>
-                      <td className="px-4 py-2 font-bold">${grand_total}</td>
+                      <td className="px-4 py-2 font-bold">
+                        {currency?.name} {grand_total}
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2">Payment Type:</td>
@@ -201,8 +215,12 @@ const SellInvoice = ({ invoice }) => {
                         <td className="px-2 py-1">{index + 1}</td>
                         <td className="px-2 py-1">{variant.name || 'N/A'}</td>
                         <td className="px-2 py-1">{product.qty}</td>
-                        <td className="px-2 py-1">${product.net_unit_price}</td>
-                        <td className="px-2 py-1">${product.total}</td>
+                        <td className="px-2 py-1">
+                          {currency?.name} {product.net_unit_price}
+                        </td>
+                        <td className="px-2 py-1">
+                          {currency?.name} {product.total}
+                        </td>
                       </tr>
                     );
                   })}
@@ -211,14 +229,22 @@ const SellInvoice = ({ invoice }) => {
 
               <div className="text-right">
                 <p>
-                  Before Tax: $
+                  Before Tax: {currency?.name}{' '}
                   {sale_products.reduce((acc, item) => acc + item.total, 0) -
                     total_tax}
                 </p>
-                <p>Tax: ${total_tax || 0}</p>
-                <p>Shipping: ${shipping_cost || 0}</p>
-                <p>Discount: ${discount || 0}</p>
-                <p className="font-bold">Grand Total: ${grand_total}</p>
+                <p>
+                  Tax: {currency?.name} {total_tax || 0}
+                </p>
+                <p>
+                  Shipping: {currency?.name} {shipping_cost || 0}
+                </p>
+                <p>
+                  Discount: {currency?.name} {discount || 0}
+                </p>
+                <p className="font-bold">
+                  Grand Total: {currency?.name} {grand_total}
+                </p>
                 <p>Payment: {paymentType}</p>
                 <p>Status: {paymentStatus}</p>
               </div>

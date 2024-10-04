@@ -13,8 +13,6 @@ export function formatProductData(data, productName, sku) {
       (option) => option.attribute_option.id
     );
 
-    console.log(item);
-
     return {
       key,
       id: item.id,

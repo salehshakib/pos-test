@@ -26,6 +26,7 @@ const SellInvoice = ({ invoice }) => {
     total_discount,
     payment_type,
     payment_status,
+    coupon_discount,
     warehouses,
   } = invoice || {};
 
@@ -35,6 +36,7 @@ const SellInvoice = ({ invoice }) => {
   const warehouse_name = warehouses?.name ?? 'N/A';
   const paymentType = payment_type || 'N/A';
   const paymentStatus = payment_status || 'N/A';
+  const discount = coupon_discount + total_discount || 0;
 
   return (
     <>
@@ -98,9 +100,7 @@ const SellInvoice = ({ invoice }) => {
                           ${product.net_unit_price}
                         </td>
                         <td className="px-4 py-2 border">{product.qty}</td>
-                        <td className="px-4 py-2 border">
-                          ${product.discount}
-                        </td>
+                        <td className="px-4 py-2 border">${discount}</td>
                         <td className="px-4 py-2 border">${product.total}</td>
                       </tr>
                     );
@@ -131,7 +131,7 @@ const SellInvoice = ({ invoice }) => {
                     </tr>
                     <tr>
                       <td className="px-4 py-2">Total Discount:</td>
-                      <td className="px-4 py-2">${total_discount || 0}</td>
+                      <td className="px-4 py-2">${discount || 0}</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2 font-bold">Grand Total:</td>
@@ -141,6 +141,7 @@ const SellInvoice = ({ invoice }) => {
                       <td className="px-4 py-2">Payment Type:</td>
                       <td className="px-4 py-2">{paymentType}</td>
                     </tr>
+
                     <tr>
                       <td className="px-4 py-2">Payment Status:</td>
                       <td className="px-4 py-2">{paymentStatus}</td>
@@ -216,7 +217,7 @@ const SellInvoice = ({ invoice }) => {
                 </p>
                 <p>Tax: ${total_tax || 0}</p>
                 <p>Shipping: ${shipping_cost || 0}</p>
-                <p>Discount: ${total_discount || 0}</p>
+                <p>Discount: ${discount || 0}</p>
                 <p className="font-bold">Grand Total: ${grand_total}</p>
                 <p>Payment: {paymentType}</p>
                 <p>Status: {paymentStatus}</p>

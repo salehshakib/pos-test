@@ -44,18 +44,7 @@ export const PurchaseEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      const newFieldData = [
-        ...fieldData,
-        // data?.attachments?.length > 0 && {
-        //   name: 'attachment',
-        //   value: [
-        //     {
-        //       url: data?.attachments?.[0]?.url,
-        //     },
-        //   ],
-        //   erros: '',
-        // },
-      ];
+      const newFieldData = [...fieldData];
 
       setFields(newFieldData);
     } else {

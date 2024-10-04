@@ -24,7 +24,7 @@ const PettyCashRequestCreate = () => {
     const postData = {
       ...values,
       petty_cash_id: pettyCashId,
-      warehouse_id: user?.warehouse_id,
+      from_warehouse_id: user?.warehouse_id,
     };
 
     const { data, error } = await createPettyCashRequest({

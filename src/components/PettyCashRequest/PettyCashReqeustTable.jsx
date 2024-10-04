@@ -27,8 +27,6 @@ const PettyCashRequestTable = ({
 }) => {
   const currency = useSelector(useCurrency);
 
-  const user = useSelector((state) => state.auth.user);
-
   const [detailsId, setDetailsId] = useState(undefined);
   const [detailsModal, setDetailsModal] = useState(false);
 
@@ -89,7 +87,6 @@ const PettyCashRequestTable = ({
     const statusData = {
       id: statusId,
       status: 'Rejected',
-      warehouse_id: user?.warehouse_id,
     };
 
     const { data } = await updatePettyCashRequestStatus(statusData);
@@ -104,7 +101,6 @@ const PettyCashRequestTable = ({
     const statusData = {
       id: statusId,
       status: 'Accepted',
-      warehouse_id: user?.warehouse_id,
     };
 
     const { data } = await updatePettyCashRequestStatus(statusData);
@@ -117,19 +113,12 @@ const PettyCashRequestTable = ({
 
   const dataSource =
     data?.results?.cashrequest?.map((item) => {
-      const {
-        id,
-        requested_by,
-        created_at,
-        amount,
-        reason,
-        warehouse,
-        status,
-      } = item ?? {};
+      const { id, requested_by, created_at, amount, reason, status } =
+        item ?? {};
 
       return {
         id,
-        warehouse,
+        warehouse: item?.to_warehouses?.name,
         amount: showCurrency(amount, currency),
         reason,
         requested_by,
@@ -143,6 +132,7 @@ const PettyCashRequestTable = ({
 
   const hideModal = () => {
     setDeleteModal(false);
+    setStatusModal(false);
     setDetailsModal(false);
   };
 
@@ -189,11 +179,15 @@ const PettyCashRequestTable = ({
           <span>
             Are you sure you want to update petty cash request status?
           </span>
-          <div className="my-10 flex items-center justify-end gap-3">
+          <div className="mt-5 flex items-center justify-end gap-3">
             <Button loading={isStatusUpdating} onClick={handleRejectStatus}>
               Reject
             </Button>
-            <Button loading={isStatusUpdating} onClick={handleAcceptedStatus}>
+            <Button
+              loading={isStatusUpdating}
+              onClick={handleAcceptedStatus}
+              type="primary"
+            >
               Accept
             </Button>
           </div>

@@ -1,4 +1,7 @@
-import { EXPENSE } from '../../../utilities/apiEndpoints/account.api';
+import {
+  EXPENSE,
+  PETTY_CASH,
+} from '../../../utilities/apiEndpoints/account.api';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import { verifyToken } from '../../../utilities/lib/verifyToken';
 import { baseApi } from '../../api/baseApi';
@@ -52,7 +55,7 @@ const expenseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }] : [];
+        return result ? [{ type: EXPENSE }, { type: PETTY_CASH }] : [];
       },
     }),
 
@@ -77,7 +80,7 @@ const expenseApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: EXPENSE }] : [];
+        return result ? [{ type: EXPENSE }, { type: PETTY_CASH }] : [];
       },
     }),
 

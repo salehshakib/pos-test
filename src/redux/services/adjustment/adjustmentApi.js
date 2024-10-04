@@ -63,6 +63,7 @@ const adjustmentApi = baseApi.injectEndpoints({
               { type: ADJUSTMENT },
               { type: STOCK_COUNT },
               { type: PRODUCT_VARIANTS },
+              { type: PRODUCT },
             ]
           : [];
       },
@@ -89,7 +90,14 @@ const adjustmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: ADJUSTMENT }, { type: PRODUCT }] : [];
+        return result
+          ? [
+              { type: ADJUSTMENT },
+              { type: PRODUCT },
+              { type: PRODUCT_VARIANTS },
+              { type: STOCK_COUNT },
+            ]
+          : [];
       },
     }),
 
@@ -113,13 +121,7 @@ const adjustmentApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result
-          ? [
-              { type: ADJUSTMENT },
-              { type: STOCK_COUNT },
-              { type: PRODUCT_VARIANTS },
-            ]
-          : [];
+        return result ? [{ type: ADJUSTMENT }] : [];
       },
     }),
 

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../../redux/services/product/productApi';
+import { openNotification } from '../../../../utilities/lib/openToaster';
 
 const ProductInquiry = ({ setOpenInquiry }) => {
   const user = useSelector(useCurrentUser);
@@ -50,9 +51,67 @@ const ProductInquiry = ({ setOpenInquiry }) => {
 
   const navigate = useNavigate();
 
-  const handleSell = () => {
+  const handlePosSell = () => {
+    const hasStock = selectedProduct?.product_qties?.some(
+      (item) => item?.warehouse_id === user?.warehouse_id && item?.qty > 0
+    );
+
+    if (!hasStock) {
+      openNotification('info', 'No stock available in this warehouse.');
+      return;
+    }
+
     setOpenInquiry(false);
     navigate('pos', {
+      state: {
+        selectedProduct,
+      },
+      replace: true,
+    });
+  };
+
+  const handlePurchase = () => {
+    setOpenInquiry(false);
+    navigate('purchase', {
+      state: {
+        selectedProduct,
+      },
+      replace: true,
+    });
+  };
+
+  const handleInventorySell = () => {
+    const hasStock = selectedProduct?.product_qties?.some(
+      (item) => item?.warehouse_id === user?.warehouse_id && item?.qty > 0
+    );
+
+    if (!hasStock) {
+      openNotification('info', 'No stock available in this warehouse.');
+      return;
+    }
+
+    setOpenInquiry(false);
+    navigate('sales/sale', {
+      state: {
+        selectedProduct,
+      },
+      replace: true,
+    });
+  };
+  const handleTransfer = () => {
+    setOpenInquiry(false);
+    navigate('transfer', {
+      state: {
+        selectedProduct,
+      },
+      replace: true,
+    });
+  };
+
+  const handleStockRequest = () => {
+    setOpenInquiry(false);
+
+    navigate('inventory/stock-request', {
       state: {
         selectedProduct,
       },
@@ -64,14 +123,42 @@ const ProductInquiry = ({ setOpenInquiry }) => {
     {
       key: '1',
       label: (
-        <Button type="primary" className="w-full" onClick={handleSell}>
-          Sell
+        <Button className="w-full" onClick={handlePosSell}>
+          POS Sell
         </Button>
       ),
     },
     {
       key: '2',
-      label: <Button className="w-full">Purchase</Button>,
+      label: (
+        <Button className="w-full" onClick={handlePurchase}>
+          Purchase
+        </Button>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <Button className="w-full" onClick={handleInventorySell}>
+          Inventory Sell
+        </Button>
+      ),
+    },
+    {
+      key: '4',
+      label: (
+        <Button className="w-full" onClick={handleTransfer}>
+          Tranfer
+        </Button>
+      ),
+    },
+    {
+      key: '5',
+      label: (
+        <Button className="w-full" onClick={handleStockRequest}>
+          Stock Request
+        </Button>
+      ),
     },
   ];
 

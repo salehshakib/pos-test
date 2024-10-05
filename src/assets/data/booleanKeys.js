@@ -10,6 +10,7 @@ export const BOOLEAN_KEYS = [
   'is_announcement',
   'is_send_email',
   'all_departments',
+  'is_send_message',
 ];
 
 export const TIME_KEYS = ['leave_start_time', 'leave_end_time'];

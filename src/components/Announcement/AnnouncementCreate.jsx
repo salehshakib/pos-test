@@ -23,6 +23,7 @@ export const AnnoucementCreate = () => {
     const postData = {
       ...values,
       is_send_email: values?.is_send_email ? '1' : '0',
+      is_send_message: values?.is_send_message ? '1' : '0',
     };
 
     appendToFormData(postData, formData);

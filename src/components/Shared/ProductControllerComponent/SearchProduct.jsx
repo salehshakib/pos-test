@@ -109,8 +109,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchAll, data, warehouseId]);
 
-  // console.log();
-
   const loadingContent = (
     <div className="flex items-center justify-center">
       <div className="text-center text-lg">
@@ -169,8 +167,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword, data]);
-
-  // console.log(p)
 
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {

@@ -28,6 +28,7 @@ export const LeaveCreate = () => {
           ? values?.leave_start_date
           : values?.leave_end_date,
       is_send_email: values?.is_send_email == true ? '1' : '0',
+      is_send_message: values?.is_send_message == true ? '1' : '0',
     };
 
     if (values?.attachment?.length > 0) {

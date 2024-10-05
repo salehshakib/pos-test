@@ -50,7 +50,37 @@ export function formatProductData(data, productName, sku) {
 //   return Object.values(attributesMap);
 // }
 
-export function formatVariantsData(variants, attributes) {
+// export function formatVariantsData(variants, attributes) {
+//   const attributesMap = {};
+
+//   variants?.forEach((variant) => {
+//     variant?.product_variant_attribute_options?.forEach((option) => {
+//       const { attribute_id, attribute } = option.attribute_option;
+
+//       // If the attribute is not in the attributesMap, add it
+//       if (!attributesMap?.[attribute_id]) {
+//         const matchingAttribute = attributes.find(
+//           (item) => item.id.toString() === attribute_id.toString()
+//         );
+
+//         if (matchingAttribute) {
+//           attributesMap[attribute_id] = {
+//             key: attribute_id.toString(),
+//             id: attribute_id.toString(),
+//             name: matchingAttribute?.name, // Set the name of the attribute
+//             options: matchingAttribute?.attribute_options.map((opt) => ({
+//               ...opt,
+//             })),
+//           };
+//         }
+//       }
+//     });
+//   });
+
+//   return Object.values(attributesMap);
+// }
+
+export function formatVariantsData(variants, attributes, productName) {
   const attributesMap = {};
 
   variants?.forEach((variant) => {
@@ -77,7 +107,49 @@ export function formatVariantsData(variants, attributes) {
     });
   });
 
+  // Custom sorting logic based on variant names
+  variants?.forEach((variant) => {
+    const variantName = variant.name.split(productName)[1];
+
+    // Example: "RED M" or "M RED"
+
+    // Determine the order based on the variant name
+    if (variantName.includes('RED') && variantName.includes('M')) {
+      if (variantName.startsWith('RED')) {
+        // Sort by color first, then size
+        attributesMap = sortAttributes(attributesMap, ['Color', 'Size']);
+      } else if (variantName.startsWith('M')) {
+        // Sort by size first, then color
+        attributesMap = sortAttributes(attributesMap, ['Size', 'Color']);
+      }
+    }
+  });
+
   return Object.values(attributesMap);
+}
+
+function sortAttributes(attributesMap, sortOrder) {
+  return Object.keys(attributesMap)
+    .sort((a, b) => {
+      const aIndex = sortOrder.indexOf(attributesMap[a].name);
+      const bIndex = sortOrder.indexOf(attributesMap[b].name);
+
+      // If both attributes are found in sortOrder, compare by index
+      if (aIndex !== -1 && bIndex !== -1) {
+        return aIndex - bIndex;
+      }
+
+      // If only one is found, prioritize the found one
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+
+      // If neither is found, sort by default
+      return 0;
+    })
+    .reduce((sortedMap, key) => {
+      sortedMap[key] = attributesMap[key];
+      return sortedMap;
+    }, {});
 }
 
 export function extractAttributeValues(attributeData) {

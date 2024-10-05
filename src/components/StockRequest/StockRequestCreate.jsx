@@ -1,8 +1,12 @@
 import { Form } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import {
+  closeCreateDrawer,
+  openCreateDrawer,
+} from '../../redux/services/drawer/drawerSlice';
 import { useCreateStockRequestMutation } from '../../redux/services/stockRequest/stockRequestApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import CustomDrawer from '../Shared/Drawer/CustomDrawer';
@@ -22,35 +26,19 @@ const StockRequestCreate = () => {
     product_list: { qty: {}, min_qty: {} },
   });
 
-  // const warehouseId = Form.useWatch('from_warehouse_id', form);
-
-  // const params = useGlobalParams({
-  //   params: {
-  //     warehouse_ids: [warehouseId],
-  //     parent: 1,
-  //     child: 1,
-  //     need_alert_qty: 1,
-  //   },
-  // });
-
-  // const { data, isLoading: isLoadingProducts } = useGetAllProductVariantsQuery(
-  //   { params },
-  //   { skip: !warehouseId }
-  // );
-
-  // useEffect(() => {
-  //   dispatch(setLoading(isLoadingProducts));
-  // }, [dispatch, isLoadingProducts]);
-
   const [products, setProducts] = useState([]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     const list = data?.results?.productvariant;
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-  //     setProducts(list);
-  //   }
-  // }, [data, warehouseId]);
+  useEffect(() => {
+    if (state?.selectedProduct) {
+      dispatch(openCreateDrawer());
+      const { selectedProduct } = state;
+      setProducts([selectedProduct]);
+      navigate(window.location.pathname, { replace: true });
+    }
+  }, [state, navigate, dispatch]);
 
   const handleSubmit = async (values) => {
     const { from_warehouse_id, to_warehouse_id, note } = values;

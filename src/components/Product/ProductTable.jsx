@@ -137,8 +137,6 @@ const ProductTable = ({
   };
   const user = useSelector(useCurrentUser);
 
-  console.log(user);
-
   const dataSource =
     data?.results?.product?.map((item) => {
       const {

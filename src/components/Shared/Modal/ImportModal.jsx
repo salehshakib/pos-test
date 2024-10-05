@@ -21,7 +21,7 @@ const normFile = (e) => {
 const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
   const [importForm] = Form.useForm();
 
-  const handleSubmit = async (_values) => {};
+  const handleSubmit = async (values) => {};
 
   const { token } = theme.useToken();
   return (
@@ -77,7 +77,7 @@ const ImportModal = ({ importModal, hideModal, handleImport, isLoading }) => {
           </CustomForm>
           <Button
             type="primary"
-            onClick={handleImport}
+            // onClick={handleDownload}
             loading={isLoading}
             className="mb-5 flex w-full items-center justify-center"
             icon={<FaDownload />}

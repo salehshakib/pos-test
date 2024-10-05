@@ -95,8 +95,6 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, 'delete');
   const isStatusPermitted = usePermission(route, 'status');
 
-  console.log(route);
-
   const getMenuItems = (record) =>
     [
       route === 'purchase' &&

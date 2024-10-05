@@ -20,32 +20,37 @@ export const PosSettingForm = ({ data }) => {
         ...fieldData,
         {
           name: 'is_send_email',
-          value: data?.is_send_email.toString() === '1' ? true : false,
+          value: data?.is_send_email?.toString() === '1' ? true : false,
+          errors: '',
+        },
+        {
+          name: 'is_send_message',
+          value: data?.is_send_message?.toString() === '1' ? true : false,
           errors: '',
         },
         {
           name: 'need_keyboard',
-          value: data?.need_keyboard.toString() === '1' ? true : false,
+          value: data?.need_keyboard?.toString() === '1' ? true : false,
           errors: '',
         },
         {
           name: 'cash_payment',
-          value: data?.cash_payment.toString() === '1' ? true : false,
+          value: data?.cash_payment?.toString() === '1' ? true : false,
           errors: '',
         },
         {
           name: 'card_payment',
-          value: data?.card_payment.toString() === '1' ? true : false,
+          value: data?.card_payment?.toString() === '1' ? true : false,
           errors: '',
         },
         {
           name: 'cheque_payment',
-          value: data?.cheque_payment.toString() === '1' ? true : false,
+          value: data?.cheque_payment?.toString() === '1' ? true : false,
           errors: '',
         },
         {
           name: 'gift_card_payment',
-          value: data?.gift_card_payment.toString() === '1' ? true : false,
+          value: data?.gift_card_payment?.toString() === '1' ? true : false,
           errors: '',
         },
         {
@@ -79,6 +84,7 @@ export const PosSettingForm = ({ data }) => {
       gift_card_payment,
       is_send_email,
       need_keyboard,
+      is_send_message,
       product_type,
       symbology,
     } = values;
@@ -93,6 +99,7 @@ export const PosSettingForm = ({ data }) => {
       cheque_payment: cheque_payment ? '1' : '0',
       gift_card_payment: gift_card_payment ? '1' : '0',
       is_send_email: is_send_email ? '1' : '0',
+      is_send_message: is_send_message ? '1' : '0',
       need_keyboard: need_keyboard ? '1' : '0',
       product_type,
       symbology,

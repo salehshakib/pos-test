@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TransactionSummary } from '../../ReusableComponent/TransactionSummary';
 import { SaleProductTable } from './SaleProductTable';
@@ -47,7 +48,7 @@ const updateStateWithProductData = (saleProducts, setFormValues) => {
 
   // Populate the updated fields from saleProducts
   saleProducts.forEach((item) => {
-    const productId = item.product_variants.id.toString();
+    const productId = item?.product_variants?.id.toString();
 
     fieldsToUpdate.forEach(({ key, value }) => {
       updatedFields[key][productId] = value
@@ -112,6 +113,10 @@ export const CustomSaleProductComponent = forwardRef(
 
     const [products, setProducts] = useState([]);
 
+    const { state } = useLocation();
+    const navigate = useNavigate();
+    const { selectedProduct } = state ?? {};
+
     const resetFormAndProducts = useCallback(() => {
       setFormValues({
         product_list: {
@@ -130,8 +135,11 @@ export const CustomSaleProductComponent = forwardRef(
           operation_value: {},
         },
       });
-      setProducts([]);
-    }, []);
+      if (selectedProduct) {
+        setProducts([selectedProduct]);
+        navigate(window.location.pathname, { replace: true });
+      }
+    }, [navigate, selectedProduct]);
 
     const handleCustomSubmit = useCallback(() => formValues, [formValues]);
 

@@ -176,7 +176,7 @@ const ChequeComponent = () => {
   );
 };
 
-export const PaymentTypeComponent = () => {
+export const PaymentTypeComponent = ({ total }) => {
   const form = Form.useFormInstance();
   const currency = useSelector(useCurrency);
   const paymentStatus = Form.useWatch('payment_status', form);
@@ -260,11 +260,15 @@ export const PaymentTypeComponent = () => {
                 Change: {showCurrency(change, currency)}
               </div>
             </Col>
-            {/* <Col {...mdColLayout}>
-            <div className="py-9 text-lg font-semibold">
-              Due: {Number(receivedAmount - paidAmount || 0).toFixed(2)}
-            </div>
-          </Col> */}
+            <Col {...mdColLayout}>
+              <div className="py-9 text-lg font-semibold">
+                Due:{' '}
+                {showCurrency(
+                  parseFloat(total) - parseFloat(paidAmount),
+                  currency
+                )}
+              </div>
+            </Col>
           </>
         )}
 

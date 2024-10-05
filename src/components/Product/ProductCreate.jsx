@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -41,6 +42,8 @@ const ProductCreate = () => {
   });
 
   const units = data?.results?.unit;
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (values, { variantData, formValues }) => {
     const formData = new FormData();
@@ -196,6 +199,9 @@ const ProductCreate = () => {
 
       if (isPrice) {
         setCurrent(1);
+        navigate(`${window.location.pathname}?fetch-all=true`, {
+          replace: true,
+        });
       } else {
         setCurrent(0);
         dispatch(closeCreateDrawer());
@@ -328,6 +334,10 @@ const ProductCreate = () => {
     <CustomDrawer
       title={'Product Create'}
       open={isCreateDrawerOpen}
+      onClose={() => {
+        dispatch(closeCreateDrawer());
+        setCurrent(0);
+      }}
       width={1400}
     >
       <div>{steps?.[current]?.content}</div>

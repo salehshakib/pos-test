@@ -29,8 +29,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     }
   }, [state, navigate]);
 
-  console.log(products);
-
   const formValuesRef = useRef(null);
 
   const handleSubmit = useCallback((submitFunction) => {

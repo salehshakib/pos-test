@@ -60,7 +60,7 @@ const CustomInput = (props) => {
         return (
           <InputNumber
             {...commonProps}
-            type="number"
+            // type="number"
             className="mt-1 w-full border-2"
             min={0}
             max={max ?? 100}
@@ -73,11 +73,11 @@ const CustomInput = (props) => {
         return (
           <InputNumber
             {...commonProps}
-            type="number"
             className="mt-1 w-full border-2"
             min={0}
             onChange={onChange}
             onWheel={(e) => e.target.blur()}
+            changeOnWheel={false}
             suffix={suffix}
             // addonAfter={suffix}
           />

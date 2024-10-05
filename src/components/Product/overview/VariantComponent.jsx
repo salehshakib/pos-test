@@ -95,8 +95,6 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     selling_price
   );
 
-  console.log(combination);
-
   return (
     <>
       <CreateVariantAttribute

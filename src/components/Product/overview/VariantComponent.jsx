@@ -59,6 +59,8 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   const attributes = data?.results?.attribute;
 
+  console.log(dataSource);
+
   useEffect(() => {
     if (editData && attributes) {
       const options = formatVariantsData(editData?.variants, attributes);

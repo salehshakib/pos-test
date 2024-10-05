@@ -208,13 +208,16 @@ const ProductVariantOption = ({
         editData?.sku
       );
 
-      const qty = getWarehouseQuantity(
-        editData?.variants?.product_qties,
-        WAREHOUSE_HEAD_OFFICE
-      );
+      console.log(editData.variants);
 
       const variantDatasource =
         combination?.map((item) => {
+          const qty = getWarehouseQuantity(
+            item.product_qties,
+            WAREHOUSE_HEAD_OFFICE
+          );
+
+          console.log(qty);
           return {
             key: item.key,
             name: item.name,

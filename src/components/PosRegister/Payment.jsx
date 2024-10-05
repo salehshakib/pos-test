@@ -19,6 +19,7 @@ import {
   calculateTotalPrice,
   calculateTotalTax,
 } from '../../utilities/lib/generator/generatorUtils';
+import { openNotification } from '../../utilities/lib/openToaster';
 import { decimalConverter } from '../../utilities/lib/return/decimalComverter';
 import { sanitizeObj } from '../../utilities/lib/sanitizeObj';
 import CustomForm from '../Shared/Form/CustomForm';
@@ -92,6 +93,14 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
     const { paid_amount } = values ?? {};
     const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
       data ?? {};
+
+    if (parseFloat(values?.recieved_amount) < parseFloat(values.paid_amount)) {
+      openNotification(
+        'error',
+        'Recievable Amount should be greater than Paid Amount'
+      );
+      return;
+    }
 
     const { product_list } = formValues;
 

@@ -208,8 +208,6 @@ const ProductVariantOption = ({
         editData?.sku
       );
 
-      console.log(editData.variants);
-
       const variantDatasource =
         combination?.map((item) => {
           const qty = getWarehouseQuantity(
@@ -217,7 +215,6 @@ const ProductVariantOption = ({
             WAREHOUSE_HEAD_OFFICE
           );
 
-          console.log(qty);
           return {
             key: item.key,
             name: item.name,
@@ -244,52 +241,7 @@ const ProductVariantOption = ({
       setSelectedRowData(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [combination, editData, isEditDrawerOpen]);
-
-  // useEffect(() => {
-  //   if (editData) {
-  //     // variant_options: [
-  //     //   [
-  //     //     {
-  //     //       id: 3,
-  //     //       attribute_id: 2,
-  //     //       name: 'ARO 3',
-  //     //       created_at: '2024-09-28T19:50:34.000000Z',
-  //     //       updated_at: '2024-09-28T19:50:34.000000Z',
-  //     //       deleted_at: null
-  //     //     },
-  //     //     {
-  //     //       id: 4,
-  //     //       attribute_id: 2,
-  //     //       name: 'ARO 4',
-  //     //       created_at: '2024-09-28T19:50:34.000000Z',
-  //     //       updated_at: '2024-09-28T19:50:34.000000Z',
-  //     //       deleted_at: null
-  //     //     }
-  //     //   ],
-  //     //   [
-  //     //     {
-  //     //       id: 1,
-  //     //       attribute_id: 1,
-  //     //       name: 'ARO 1',
-  //     //       created_at: '2024-09-28T19:50:04.000000Z',
-  //     //       updated_at: '2024-09-28T19:50:04.000000Z',
-  //     //       deleted_at: null
-  //     //     },
-  //     //     {
-  //     //       id: 2,
-  //     //       attribute_id: 1,
-  //     //       name: 'ARO 2',
-  //     //       created_at: '2024-09-28T19:50:04.000000Z',
-  //     //       updated_at: '2024-09-28T19:50:04.000000Z',
-  //     //       deleted_at: null
-  //     //     }
-  //     //   ]
-  //     // ]
-
-  //     // const variantDatasource =
-  //   }
-  // }, [editData]);
+  }, [editData, isEditDrawerOpen, combination]);
 
   // Editing handlers
   const edit = (record) => {

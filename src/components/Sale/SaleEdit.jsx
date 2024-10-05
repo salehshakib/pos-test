@@ -69,6 +69,7 @@ export const SaleEdit = ({ id, setId }) => {
       sale_at,
       paid_amount,
       discount_type,
+      payment_status,
     } = values ?? {};
 
     const productListArray = product_list?.qty
@@ -147,6 +148,11 @@ export const SaleEdit = ({ id, setId }) => {
       petty_cash_id: pettyCashId,
       _method: 'PUT',
     };
+
+    if (payment_status === 'Partial') {
+      // postObj.paid_amount = decimalConverter(paid_amount);
+      postObj.due = decimalConverter(grandTotal - paid_amount);
+    }
 
     if (paid_amount) {
       postObj.paid_amount = decimalConverter(paid_amount);

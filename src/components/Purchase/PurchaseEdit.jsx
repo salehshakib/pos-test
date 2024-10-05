@@ -154,6 +154,11 @@ export const PurchaseEdit = ({ id, setId }) => {
       _method: 'put',
     };
 
+    if (payment_status === 'Partial') {
+      // postObj.paid_amount = decimalConverter(paid_amount);
+      postData.due = decimalConverter(grandTotal - paid_amount);
+    }
+
     if (attachment?.length > 0) {
       postData.attachment = attachment?.[0]?.originFileObj;
     }

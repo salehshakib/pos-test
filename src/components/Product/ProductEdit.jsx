@@ -62,6 +62,8 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+  const [isPrice, setIsPrice] = useState(false);
+
   const { data, isFetching } = useGetProductDetailsQuery(
     {
       id,
@@ -359,9 +361,9 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await updateProduct({ id, formData });
+    const { data: responseData, error } = await updateProduct({ id, formData });
 
-    if (data?.success) {
+    if (responseData?.success) {
       setId(undefined);
       dispatch(closeEditDrawer());
       setCurrent(0);
@@ -429,10 +431,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       _method: 'PUT',
     };
 
-    // if (stockListArray.length) {
-    //   postObj.stock_list = JSON.stringify(stockListArray);
-    // }
-
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);
     }
@@ -467,6 +465,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           fields={fields}
           form={form}
           data={data}
+          setIsPrice={setIsPrice}
         />
       ),
     },

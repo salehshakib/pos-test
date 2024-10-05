@@ -92,18 +92,20 @@ export const SearchProduct = ({ setProducts, productId }) => {
   });
 
   useEffect(() => {
-    if (fetchAll === 'true' && data) {
+    if (fetchAll === 'true' && data && warehouseId) {
       const allProducts =
         data?.results?.productvariant?.map((product) => ({
           ...product,
           warehouse_id: warehouseId,
         })) ?? [];
 
-      setProducts(allProducts);
-      removeQueryParam(); // Uncomment if needed
+      setProducts((prev) => {
+        return [...prev, ...allProducts];
+      });
+      // removeQueryParam(); // Uncomment if needed
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchAll, data]);
+  }, [fetchAll, data, warehouseId]);
 
   // console.log();
 

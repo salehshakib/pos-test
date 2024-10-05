@@ -3,11 +3,12 @@ import { AutoComplete, Button, Dropdown, Menu, Spin, Table } from 'antd';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { useCurrentUser } from '../../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../../redux/services/product/productApi';
 
-const ProductInquiry = () => {
+const ProductInquiry = ({ setOpenInquiry }) => {
   const user = useSelector(useCurrentUser);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [inputValue, setInputValue] = useState('');
@@ -46,11 +47,23 @@ const ProductInquiry = () => {
     setInputValue(value);
   };
 
+  const navigate = useNavigate();
+
+  const handleSell = () => {
+    setOpenInquiry(false);
+    navigate('pos', {
+      state: {
+        selectedProduct,
+      },
+      replace: true,
+    });
+  };
+
   const menuItems = [
     {
       key: '1',
       label: (
-        <Button type="primary" className="w-full">
+        <Button type="primary" className="w-full" onClick={handleSell}>
           Sell
         </Button>
       ),

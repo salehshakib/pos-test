@@ -280,7 +280,11 @@ export const PaymentTypeComponent = ({
           suffix={currency?.name}
           name="recieved_amount"
           label="Recieved Amount"
-          required={parseFloat(giftCardAmount) === parseFloat(paidAmount)}
+          required={
+            giftCardAmount
+              ? parseFloat(giftCardAmount) === parseFloat(paidAmount)
+              : true
+          }
         />
       </Col>
       <Col {...mdColLayout}>

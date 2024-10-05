@@ -23,27 +23,6 @@ const QuotationCreate = () => {
 
   const [createQuotation, { isLoading }] = useCreateQuotationMutation();
 
-  // const [formValues, setFormValues] = useState({
-  //   product_list: {
-  //     qty: {},
-  //     sale_unit_id: {},
-  //     net_unit_price: {},
-  //     discount: {},
-  //     tax_rate: {},
-  //     tax: {},
-  //     total: {},
-  //     tax_id: {},
-  //   },
-  // });
-
-  // const [productUnits, setProductUnits] = useState({
-  //   sale_units: {},
-  //   tax_rate: {},
-  //   inclusive_tax_rate: {},
-  // });
-
-  // const [products, setProducts] = useState([]);
-
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();
 

@@ -1,10 +1,11 @@
 import { Col, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 
+import { discountTypeOptions } from '../../../assets/data/discountTypes';
 import {
   colLayout,
   fullColLayout,
-  largeLayout,
+  mdColLayout,
   rowLayout,
 } from '../../../layout/FormLayout';
 import { CashierComponent } from '../../ReusableComponent/CashierComponent';
@@ -27,6 +28,28 @@ const options = [
     label: 'Sent',
   },
 ];
+
+const DiscountTypeComponent = () => {
+  const form = Form.useFormInstance();
+  const discount = Form.useWatch('discount', form);
+  const required = !!discount;
+
+  useEffect(() => {
+    if (!form.getFieldValue('discount_type'))
+      form.setFieldValue('discount_type', 'Fixed');
+  }, [form]);
+
+  return (
+    <Col {...colLayout}>
+      <CustomSelect
+        options={discountTypeOptions}
+        label="Discount Type"
+        name={'discount_type'}
+        required={required}
+      />
+    </Col>
+  );
+};
 
 const StatusComponent = () => {
   const form = Form.useFormInstance();
@@ -76,20 +99,22 @@ export const QuotationForm = ({ data, ...props }) => {
             data={data}
             ref={quotationRef}
           >
-            <Col {...largeLayout}>
+            <Col {...colLayout}>
               <OrderTaxComponent />
             </Col>
-            <Col {...largeLayout}>
+            <Col {...colLayout}>
               <CustomInput label="Discount" type={'number'} name={'discount'} />
             </Col>
-            <Col {...largeLayout}>
+
+            <DiscountTypeComponent />
+            <Col {...mdColLayout}>
               <CustomInput
                 label="Shipping Cost"
                 type={'number'}
                 name={'shipping_cost'}
               />
             </Col>
-            <Col {...largeLayout}>
+            <Col {...mdColLayout}>
               <StatusComponent />
             </Col>
 

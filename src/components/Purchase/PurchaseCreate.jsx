@@ -94,6 +94,7 @@ export const PurchaseCreate = () => {
       payment_status,
       paid_amount,
       payment_type,
+      discount_type,
     } = values;
 
     const grandTotal = calculateGrandTotal(
@@ -116,6 +117,7 @@ export const PurchaseCreate = () => {
       due_amount: paid_amount ? decimalConverter(grandTotal - paid_amount) : 0,
       purchase_at: dayjs(values?.purchase_at).format('YYYY-MM-DD'),
       discount: decimalConverter(values?.discount),
+      discount_type,
       shipping_cost: decimalConverter(values?.shipping_cost),
       tax_rate: decimalConverter(values?.tax_rate),
       item: productListArray.length,

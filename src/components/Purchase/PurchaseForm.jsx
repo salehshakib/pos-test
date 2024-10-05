@@ -59,6 +59,11 @@ const DiscountTypeComponent = () => {
   const discount = Form.useWatch('discount', form);
   const required = !!discount;
 
+  useEffect(() => {
+    if (!form.getFieldValue('discount_type'))
+      form.setFieldValue('discount_type', 'Fixed');
+  }, [form]);
+
   return (
     <Col {...colLayout}>
       <CustomSelect

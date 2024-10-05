@@ -48,7 +48,11 @@ const updateStateWithProductData = (
 
     // Handle max quantity if purchase is true
     if (purchase) {
-      updatedQty[productId] = item?.qty;
+      updatedQty[productId] = parseInt(
+        purchase.purchase_products.find(
+          (item) => item.product_variant_id.toString() === productId.toString()
+        ).qty
+      );
 
       updatedMaxQty[productId] = parseInt(
         purchase.purchase_products.find(

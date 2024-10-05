@@ -21,7 +21,7 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
   purchaseProducts.forEach((item) => {
     const productId = item?.product_variants.id.toString();
 
-    updatedQty[productId] = item?.qty - item.returned_qty;
+    updatedQty[productId] = item?.qty;
     updatedSaleUnitId[productId] = item?.product_variants?.sale_unit_id;
     updatedProductPrice[productId] = item?.product_variants?.net_unit_price;
     updatedDiscount[productId] = item?.product_variants?.discount;
@@ -54,19 +54,18 @@ const updateStateWithProductData = (purchaseProducts, setFormValues, sale) => {
       //   ).returned_qty
       // );
 
-      updatedMaxQty[productId] =
-        parseInt(
-          sale.sale_products.find(
-            (item) =>
-              item.product_variant_id.toString() === productId.toString()
-          ).qty
-        ) -
-        parseInt(
-          sale.sale_products.find(
-            (item) =>
-              item.product_variant_id.toString() === productId.toString()
-          ).returned_qty
-        );
+      updatedMaxQty[productId] = parseInt(
+        sale.sale_products.find(
+          (item) => item.product_variant_id.toString() === productId.toString()
+        ).qty
+      );
+      //  -
+      // parseInt(
+      //   sale.sale_products.find(
+      //     (item) =>
+      //       item.product_variant_id.toString() === productId.toString()
+      //   ).returned_qty
+      // );
     }
   });
 

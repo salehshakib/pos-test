@@ -115,7 +115,6 @@ export const CustomSaleProductComponent = forwardRef(
 
     const { state } = useLocation();
     const navigate = useNavigate();
-    const { selectedProduct } = state ?? {};
 
     const resetFormAndProducts = useCallback(() => {
       setFormValues({
@@ -135,11 +134,11 @@ export const CustomSaleProductComponent = forwardRef(
           operation_value: {},
         },
       });
-      if (selectedProduct) {
-        setProducts([selectedProduct]);
+      if (state?.selectedProduct) {
+        setProducts([state?.selectedProduct]);
         navigate(window.location.pathname, { replace: true });
       }
-    }, [navigate, selectedProduct]);
+    }, [navigate, state]);
 
     const handleCustomSubmit = useCallback(() => formValues, [formValues]);
 

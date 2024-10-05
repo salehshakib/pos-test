@@ -322,9 +322,9 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     }
 
     if (has_variant) {
-      // console.log(first)
       const variantListArray = variantData?.selectedRowData.map((item) => {
         return {
+          product_variant_id: item?.id,
           name: name + ' ' + item.name,
           sku: sku + '-' + item.sku,
           iemi_number: item.iemi,

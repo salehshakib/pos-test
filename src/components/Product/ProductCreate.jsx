@@ -302,7 +302,8 @@ const ProductCreate = () => {
     }
   };
 
-  const [setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const removeQueryParam = () => {
     setSearchParams((params) => {
       params.delete('fetch-all');

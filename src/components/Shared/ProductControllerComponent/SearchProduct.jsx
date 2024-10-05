@@ -89,8 +89,21 @@ export const SearchProduct = ({ setProducts, productId }) => {
         })) ?? [];
 
       setProducts((prev) => {
-        return [...prev, ...allProducts];
+        // Check if products with the current warehouse_id already exist
+        const hasWarehouse = prev.some(
+          (product) =>
+            product.warehouse_id.toString() === warehouseId.toString()
+        );
+
+        // If warehouse_id is not found, add the products
+        if (!hasWarehouse) {
+          return [...prev, ...allProducts];
+        }
+
+        // If warehouse_id is found, return the previous state
+        return prev;
       });
+
       // removeQueryParam(); // Uncomment if needed
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,5 @@
 import { Col, Form } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -24,32 +24,61 @@ const PaymentType = () => {
   };
   const { data } = useGetPosSettingsQuery(params);
 
-  const options = [
-    data?.cash_payment
-      ? {
-          value: 'Cash',
-          label: 'Cash',
-        }
-      : null,
-    data?.card_payment
-      ? {
-          value: 'Card',
-          label: 'Card',
-        }
-      : null,
-    data?.cheque_payment
-      ? {
-          value: 'Cheque',
-          label: 'Cheque',
-        }
-      : null,
-    data?.gift_card_payment
-      ? {
-          value: 'Gift Card',
-          label: 'Gift Card',
-        }
-      : null,
-  ].filter(Boolean);
+  // const options = [
+  //   data?.cash_payment
+  //     ? {
+  //         value: 'Cash',
+  //         label: 'Cash',
+  //       }
+  //     : null,
+  //   data?.card_payment
+  //     ? {
+  //         value: 'Card',
+  //         label: 'Card',
+  //       }
+  //     : null,
+  //   data?.cheque_payment
+  //     ? {
+  //         value: 'Cheque',
+  //         label: 'Cheque',
+  //       }
+  //     : null,
+  //   data?.gift_card_payment
+  //     ? {
+  //         value: 'Gift Card',
+  //         label: 'Gift Card',
+  //       }
+  //     : null,
+  // ].filter(Boolean);
+
+  const options = useMemo(() => {
+    return [
+      data?.cash_payment
+        ? {
+            value: 'Cash',
+            label: 'Cash',
+          }
+        : null,
+      data?.card_payment
+        ? {
+            value: 'Card',
+            label: 'Card',
+          }
+        : null,
+      data?.cheque_payment
+        ? {
+            value: 'Cheque',
+            label: 'Cheque',
+          }
+        : null,
+      data?.gift_card_payment
+        ? {
+            value: 'Gift Card',
+            label: 'Gift Card',
+          }
+        : null,
+    ].filter(Boolean);
+  }, [data]);
 
   useEffect(() => {
     form.setFieldValue('payment_type', options?.[0]?.value);
@@ -200,7 +229,11 @@ export const PaymentTypeComponent = () => {
     if (paymentType !== 'Gift Card') {
       form.resetFields(['gift_card_id']);
     }
+
+    console.log('first');
   }, [paymentType, form]);
+
+  console.log(paymentType);
 
   const [giftCard, setGiftCard] = useState(undefined);
 

@@ -16,6 +16,8 @@ const SearchWarehouse = ({ setWarehouses }) => {
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== '') {
       setKeyword(value);
+    } else {
+      setKeyword(null);
     }
   }, 1000);
 

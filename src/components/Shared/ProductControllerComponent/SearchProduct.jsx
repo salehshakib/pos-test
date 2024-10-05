@@ -1,10 +1,12 @@
 import { AutoComplete, Col, Form, Spin } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
@@ -33,6 +35,8 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== '') {
       setKeyword(value);
+    } else {
+      setKeyword(null);
     }
   }, 1000);
 
@@ -64,6 +68,8 @@ export const SearchProduct = ({ setProducts, productId }) => {
     isRelationalParams: !isIgnore,
   });
 
+  console.log(params);
+
   if (productId) {
     params.product_id = productId;
   }
@@ -92,6 +98,43 @@ export const SearchProduct = ({ setProducts, productId }) => {
         label: `${product.name} (SKU: ${product.sku})`,
         product: { ...product, warehouse_id: warehouseId },
       })) ?? []);
+
+  const user = useSelector(useCurrentUser);
+
+  useEffect(() => {
+    if (keyword) {
+      if (data.results.productvariant?.length === 1) {
+        const option = data.results.productvariant?.[0];
+
+        setProducts((prevProducts) => {
+          const productExists = prevProducts.some((product) => {
+            if (pathname.includes('/pos')) {
+              return product?.id.toString() === option?.id?.toString();
+            }
+
+            const selectedWarehouse =
+              warehouseIdFrom ?? warehouseId ?? user.warehouse_id;
+
+            return (
+              product?.id.toString() === option?.id?.toString() &&
+              product?.warehouse_id?.toString() === selectedWarehouse.toString()
+              // option?.product?.warehouse_id?.toString()
+            );
+          });
+
+          if (!productExists) {
+            return [...prevProducts, { ...option, warehouse_id: warehouseId }];
+          }
+
+          openNotification('warning', 'Product already exists in the list');
+          return prevProducts;
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyword, data]);
+
+  // console.log(p)
 
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {

@@ -555,8 +555,6 @@ export const CustomPosProductsComponent = forwardRef(
       },
     });
 
-    console.log(formValues);
-
     const resetFields = () => {
       setFormValues({
         product_list: {

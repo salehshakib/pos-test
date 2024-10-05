@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux';
 import { fullColLayout, mdColLayout } from '../../../layout/FormLayout';
 import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcard/giftCardApi';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
+import { useGlobalParams } from '../../../utilities/hooks/useParams';
+import { showCurrency } from '../../../utilities/lib/currency';
+import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
@@ -57,14 +60,32 @@ const PaymentType = ({ paymentType }) => {
 };
 
 const GiftCardComponent = () => {
-  const { data, isFetching } = useGetAllGiftCardQuery({});
+  const params = useGlobalParams({});
+
+  const { data, isFetching } = useGetAllGiftCardQuery({ params });
 
   const options = data?.results?.giftcard?.map((item) => {
     return {
-      value: item.id.toString(),
+      value: item.id.toString() + '-' + item.amount,
       label: item.card_no,
+      amount: item.amount,
     };
   });
+
+  const form = Form.useFormInstance();
+
+  const onSelect = (value, option) => {
+    const paidAmount = form.getFieldValue('paid_amount');
+    const payableAmount = parseFloat(paidAmount);
+
+    if (payableAmount < option.amount) {
+      openNotification(
+        'error',
+        'Can not use giftcard. Sell amount is less than giftcard amount'
+      );
+      form.resetFields(['gift_card_id']);
+    }
+  };
 
   return (
     <Col {...fullColLayout}>
@@ -75,6 +96,7 @@ const GiftCardComponent = () => {
         label="Gift Card Number"
         required={true}
         showSearch={true}
+        onChange={(value, option) => onSelect(value, option)}
       />
     </Col>
   );
@@ -164,9 +186,17 @@ export const PaymentTypeComponent = ({
   const paidAmount = Form.useWatch('paid_amount', form);
   const paymentType = Form.useWatch('payment_type', form);
 
+  const giftCardAmount = Form.useWatch('gift_card_id', form)?.split('-')?.[1];
+
   useEffect(() => {
-    form.setFieldValue('paid_amount', grandTotal ?? 0);
-  }, [paidAmount, receivedAmount, grandTotal, form]);
+    if (giftCardAmount) {
+      const amount = parseFloat(grandTotal) - parseFloat(giftCardAmount);
+
+      form.setFieldValue('paid_amount', amount);
+    } else {
+      form.setFieldValue('paid_amount', grandTotal ?? 0);
+    }
+  }, [paidAmount, receivedAmount, grandTotal, form, giftCardAmount]);
 
   const change = Number(
     parseFloat(receivedAmount ?? 0) - parseFloat(paidAmount ?? 0)
@@ -278,11 +308,27 @@ export const PaymentTypeComponent = ({
         />
       </Col>
 
-      <Col {...fullColLayout}>
+      <Col {...mdColLayout}>
         <div className="py-2 pb-8 text-lg font-semibold">
-          {`${parseFloat(change) < 0 ? 'Due' : 'Change'}`}: {change}
+          {`${parseFloat(change) < 0 ? 'Due' : 'Change'}`}:{' '}
+          {showCurrency(change, currency)}
         </div>
       </Col>
+
+      {paymentType === 'Gift Card' &&
+        (giftCardAmount ? (
+          <Col {...mdColLayout}>
+            <div className="py-2 pb-8 text-lg font-semibold">
+              Gift Card Amount: {showCurrency(giftCardAmount, currency)}
+            </div>
+          </Col>
+        ) : (
+          <Col {...mdColLayout}>
+            <div className="py-2 pb-8 text-lg font-semibold">
+              Gift Card Not Applied
+            </div>
+          </Col>
+        ))}
 
       {paymentType === 'Gift Card' && <GiftCardComponent />}
       {paymentType === 'Card' && <CardComponent />}

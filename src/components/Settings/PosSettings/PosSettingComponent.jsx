@@ -118,6 +118,9 @@ const PosSettingComponent = ({ a4_invoice, thermal_invoice }) => {
         <CustomCheckbox name="is_send_email" label={'Send Email'} />
       </Col>
       <Col {...largeLayout}>
+        <CustomCheckbox name="is_send_message" label={'Send SMS'} />
+      </Col>
+      <Col {...largeLayout}>
         <CustomCheckbox name="need_keyboard" label={'On Screen Keyboard'} />
       </Col>
 

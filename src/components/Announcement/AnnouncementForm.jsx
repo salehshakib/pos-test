@@ -134,6 +134,9 @@ export const AnnouncementForm = (props) => {
         <Col {...fullColLayout}>
           <CustomCheckbox label="Send Email" name={'is_send_email'} />
         </Col>
+        <Col {...fullColLayout}>
+          <CustomCheckbox label="Send SMS" name={'is_send_message'} />
+        </Col>
       </Row>
     </CustomForm>
   );

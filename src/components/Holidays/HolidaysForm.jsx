@@ -145,6 +145,9 @@ export const HolidaysForm = (props) => {
         <Col {...fullColLayout}>
           <CustomCheckbox name="is_send_email" label="Send Email" />
         </Col>
+        <Col {...fullColLayout}>
+          <CustomCheckbox name="is_send_message" label="Send SMS" />
+        </Col>
       </Row>
     </CustomForm>
   );

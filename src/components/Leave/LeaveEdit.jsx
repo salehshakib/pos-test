@@ -31,20 +31,6 @@ export const LeaveEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      // const newFieldData = [
-      //   ...fieldData,
-      //   {
-      //     name: 'leave_start_time',
-      //     value: dayjs(data?.leave_start_date, 'hh:mm:ss'),
-      //     errors: '',
-      //   },
-      //   {
-      //     name: 'leave_end_time',
-      //     value: dayjs(data?.leave_end_time, 'hh:mm:ss'),
-      //     errors: '',
-      //   },
-      // ];
-
       setFields(fieldData);
     } else {
       setFields([]);
@@ -62,6 +48,7 @@ export const LeaveEdit = ({ id, setId }) => {
           ? values?.leave_start_date
           : values?.leave_end_date,
       is_send_email: values?.is_send_email == true ? '1' : '0',
+      is_send_message: values?.is_send_message == true ? '1' : '0',
       _method: 'PUT',
     };
 

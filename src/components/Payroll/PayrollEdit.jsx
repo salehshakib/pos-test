@@ -58,6 +58,7 @@ export const PayrollEdit = ({ id, setId }) => {
     const postData = {
       ...values,
       is_send_email: values?.is_send_email === true ? '1' : '0',
+      is_send_message: values?.is_send_message === true ? '1' : '0',
       bonus: values?.bonus ? Number(values?.bonus).toFixed(2) : '0',
       loan: values?.loan ? Number(values?.loan).toFixed(2) : '0',
       salary: Number(values?.salary).toFixed(2),

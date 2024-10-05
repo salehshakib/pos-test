@@ -196,9 +196,15 @@ export const PaymentTypeComponent = () => {
     }
   }, [paymentType, form]);
 
-  const [giftCard, setGiftCard] = useState(undefined);
+  useEffect(() => {
+    if (paymentStatus === 'Partial') {
+      if (parseFloat(receivedAmount) < parseFloat(paidAmount)) {
+        form.setFieldValue('recieved_amount', paidAmount);
+      }
+    }
+  }, [paymentStatus, paidAmount, form, receivedAmount]);
 
-  console.log(Number(paidAmount));
+  const [giftCard, setGiftCard] = useState(undefined);
 
   return (
     (paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
@@ -258,7 +264,7 @@ export const PaymentTypeComponent = () => {
         {paymentStatus === 'Partial' && (
           <Col {...fullColLayout}>
             <div className="py-9 text-lg font-semibold">
-              Due: {Number(paidAmount - receivedAmount || 0).toFixed(2)}
+              Change: {Number(receivedAmount - paidAmount || 0).toFixed(2)}
             </div>
           </Col>
         )}

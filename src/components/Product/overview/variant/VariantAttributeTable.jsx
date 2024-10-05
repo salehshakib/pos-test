@@ -65,6 +65,7 @@ export const VariantAttributeTable = ({
   variantAttributesName,
   setVariantOptions,
   setVariantAttributesName,
+  setReset,
 }) => {
   const RowContext = React.createContext({});
 
@@ -214,6 +215,8 @@ export const VariantAttributeTable = ({
         );
         return arrayMove(prevState, activeIndex, overIndex);
       });
+
+      setReset(true);
     }
   };
 

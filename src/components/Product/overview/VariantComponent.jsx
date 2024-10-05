@@ -95,6 +95,9 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     selling_price
   );
 
+  const [reset, setReset] = useState(false);
+  console.log(reset);
+
   return (
     <>
       <CreateVariantAttribute
@@ -110,12 +113,14 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
         setVariantOptions={setVariantOptions}
         variantAttributesName={variantAttributesName}
         setVariantAttributesName={setVariantAttributesName}
+        setReset={setReset}
       />
 
       <ProductVariantOption
         combination={combination}
         onCustomSubmit={onCustomSubmit}
         data={editData}
+        reset={reset}
       />
     </>
   );

@@ -46,6 +46,7 @@ const ProductVariantOption = ({
   combination,
   onCustomSubmit,
   data: editData,
+  reset,
 }) => {
   const [variantForm] = Form.useForm();
   const [data, setData] = useState([]);
@@ -178,6 +179,8 @@ const ProductVariantOption = ({
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
+  console.log(reset);
+
   useEffect(() => {
     if (!editData && !isEditDrawerOpen) {
       const variantDatasource =
@@ -225,16 +228,27 @@ const ProductVariantOption = ({
         variantDatasource
       );
 
-      const newData = [...formattedData, ...nonMatchingItems];
+      let newData = [];
+      if (reset) {
+        newData = [...variantDatasource];
+      } else newData = [...formattedData, ...nonMatchingItems];
 
       setData(newData);
 
-      const initialSelectedKeys = formattedData.map((item) => item.key);
-      setIsSelected(initialSelectedKeys);
-      setSelectedRowData(data);
+      if (reset) {
+        const initialSelectedKeys = variantDatasource.map((item) => item.key);
+
+        setIsSelected(initialSelectedKeys);
+        setSelectedRowData(newData);
+      } else {
+        const initialSelectedKeys = formattedData.map((item) => item.key);
+
+        setIsSelected(initialSelectedKeys);
+        setSelectedRowData(newData);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [combination, editData, isEditDrawerOpen]);
+  }, [combination, editData, isEditDrawerOpen, reset]);
 
   // Editing handlers
   const edit = (record) => {

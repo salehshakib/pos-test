@@ -257,7 +257,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
             className="flex min-w-fit items-center justify-center"
             onClick={() => {
               const { formValues } = handleSubmit() || {};
-              showModal('GiftCard');
+              showModal('Gift Card');
             }}
           >
             Gift Card

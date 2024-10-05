@@ -40,20 +40,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
     }
   }, 1000);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const fetchAll = searchParams.get('fetch-all');
-
-  console.log(fetchAll);
-
-  console.log(fetchAll);
-
-  const removeQueryParam = () => {
-    setSearchParams((params) => {
-      params.delete('fetch-all');
-      return params;
-    });
-  };
 
   const isIgnore =
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;

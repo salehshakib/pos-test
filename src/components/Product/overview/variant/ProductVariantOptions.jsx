@@ -241,7 +241,7 @@ const ProductVariantOption = ({
       setSelectedRowData(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editData, isEditDrawerOpen, combination]);
+  }, [combination, editData, isEditDrawerOpen]);
 
   // Editing handlers
   const edit = (record) => {

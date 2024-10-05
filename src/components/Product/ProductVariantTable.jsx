@@ -112,7 +112,7 @@ export const expandedRowRender = (record, data, currency) => {
             variant?.product_qties?.length === 0
               ? variant?.qty
               : variant?.product_qties?.reduce(
-                  (total, item) => total + item.qty,
+                  (total, item) => total + parseInt(item.qty),
                   0
                 ),
           cost: showCurrency(variant.buying_price, currency),

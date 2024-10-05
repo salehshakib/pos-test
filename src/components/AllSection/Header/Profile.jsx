@@ -139,7 +139,7 @@ const Profile = () => {
         centered
         title="Product Inquiry"
       >
-        <ProductInquiry />
+        <ProductInquiry setOpenInquiry={setOpenInquiry} />
       </Modal>
     </div>
   );

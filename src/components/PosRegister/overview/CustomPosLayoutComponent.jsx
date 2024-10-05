@@ -1,6 +1,7 @@
 import { Button, Form, Layout, Tag } from 'antd';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import { Filter } from '../../../pages/Dashboard/PosRegister/Filter';
@@ -16,6 +17,19 @@ const { Footer } = Layout;
 export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   const [products, setProducts] = useState([]);
   const [posForm] = Form.useForm();
+
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state?.selectedProduct) {
+      const { selectedProduct } = state;
+      setProducts([selectedProduct]);
+      navigate(window.location.pathname, { replace: true });
+    }
+  }, [state, navigate]);
+
+  console.log(products);
 
   const formValuesRef = useRef(null);
 

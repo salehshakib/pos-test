@@ -11,7 +11,11 @@ import { FaEdit, FaMinus, FaPlus, FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
-import { fullColLayout } from '../../../layout/FormLayout';
+import {
+  fullColLayout,
+  mdColLayout,
+  rowLayout,
+} from '../../../layout/FormLayout';
 import { useGetAllCouponQuery } from '../../../redux/services/coupon/couponApi';
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetAllTaxQuery } from '../../../redux/services/tax/taxApi';
@@ -277,9 +281,11 @@ const CouponComponent = ({ setUpdatedFormValues }) => {
 const ModalComponent = ({
   title,
   modalType,
+  formValues,
   setFormValues,
   totalPrice,
   additionalForm,
+  onDisountTypeChange,
 }) => {
   const currency = useSelector(useCurrency);
 
@@ -505,6 +511,40 @@ const ModalComponent = ({
                 <TaxComponent setUpdatedFormValues={setUpdatedFormValues} />
               ) : modalType === 'coupon' ? (
                 <CouponComponent setUpdatedFormValues={setUpdatedFormValues} />
+              ) : modalType === 'discount' ? (
+                <Row {...rowLayout}>
+                  <Col {...mdColLayout}>
+                    <CustomSelect
+                      name={'discount_type'}
+                      placeholder={'Discount Type'}
+                      options={[
+                        {
+                          value: 'Fixed',
+                          label: 'Fixed',
+                        },
+                        {
+                          value: 'Percentage',
+                          label: 'Percentage',
+                        },
+                      ]}
+                      // value={discountType}
+                      onChange={onDisountTypeChange}
+                    />
+                  </Col>
+                  <Col {...mdColLayout}>
+                    <CustomInput
+                      type="number_with_money"
+                      name={'discount'}
+                      placeholder={modalType}
+                      suffix={
+                        formValues.order.discount_type === 'Fixed'
+                          ? currency?.name
+                          : '%'
+                      }
+                      min={0}
+                    />
+                  </Col>
+                </Row>
               ) : (
                 <CustomInput
                   type="number_with_money"
@@ -548,6 +588,7 @@ export const CustomPosProductsComponent = forwardRef(
       order: {
         tax_rate: undefined,
         discount: undefined,
+        discount_type: 'Fixed',
         shipping_cost: undefined,
         coupon: {
           coupon_id: undefined,
@@ -578,6 +619,7 @@ export const CustomPosProductsComponent = forwardRef(
         order: {
           tax_rate: undefined,
           discount: undefined,
+          discount_type: 'Fixed',
           shipping_cost: undefined,
           coupon: {
             coupon_id: undefined,
@@ -600,6 +642,7 @@ export const CustomPosProductsComponent = forwardRef(
       taxRate,
       grandTotal,
       totalCoupon,
+      totalDiscount,
     } = calculateSummary(
       formValues,
       formValues.order.tax_rate ?? 0,
@@ -643,8 +686,6 @@ export const CustomPosProductsComponent = forwardRef(
     const hideModal = () => {
       setProductEditModal(false);
     };
-
-    console.log(products);
 
     const dataSource = products?.map((product) => {
       const {
@@ -753,6 +794,17 @@ export const CustomPosProductsComponent = forwardRef(
       resetFields,
     }));
 
+    const onDisountTypeChange = (value) => {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        order: {
+          ...prevFormValues.order,
+          discount_type: value,
+        },
+      }));
+      additionalForm.setFieldsValue({ discount_type: value });
+    };
+
     return (
       <>
         <div className="flex-grow overflow-y-auto bg-white">
@@ -791,12 +843,15 @@ export const CustomPosProductsComponent = forwardRef(
               <ModalComponent
                 title={'Discount'}
                 modalType={'discount'}
+                formValues={formValues}
                 setFormValues={setFormValues}
+                totalPrice={totalPrice}
                 additionalForm={additionalForm}
+                onDisountTypeChange={onDisountTypeChange}
               />
 
               <span className="font-semibold">
-                {showCurrency(formValues.order.discount ?? 0, currency)}
+                {showCurrency(totalDiscount ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">

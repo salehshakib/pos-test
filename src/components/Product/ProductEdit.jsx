@@ -356,7 +356,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
     );
 
     if (deletedVariants.length) {
-      postObj.deletedVariantIds = deletedVariants;
+      postObj.deleteVariantIds = deletedVariants;
     }
 
     appendToFormData(postObj, formData);

@@ -8,7 +8,6 @@ import { useGetAllGiftCardQuery } from '../../../redux/services/giftcard/giftcar
 import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../utilities/lib/currency';
-import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
@@ -43,11 +42,6 @@ const PaymentType = ({ paymentType }) => {
       value: 'Gift Card',
       label: 'Gift Card',
     },
-
-    {
-      value: 'Points',
-      label: 'Points',
-    },
   ];
 
   return (
@@ -72,20 +66,15 @@ const GiftCardComponent = () => {
     };
   });
 
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
 
-  const onSelect = (value, option) => {
-    const paidAmount = form.getFieldValue('paid_amount');
-    const payableAmount = parseFloat(paidAmount);
+  // const onSelect = (value, option) => {
+  // const paidAmount = form.getFieldValue('paid_amount');
+  // const payableAmount = parseFloat(paidAmount);
+  // if (payableAmount < option.amount) {
 
-    if (payableAmount < option.amount) {
-      openNotification(
-        'error',
-        'Can not use giftcard. Sell amount is less than giftcard amount'
-      );
-      form.resetFields(['gift_card_id']);
-    }
-  };
+  // }
+  // };
 
   return (
     <Col {...fullColLayout}>
@@ -96,7 +85,7 @@ const GiftCardComponent = () => {
         label="Gift Card Number"
         required={true}
         showSearch={true}
-        onChange={(value, option) => onSelect(value, option)}
+        // onChange={(value, option) => onSelect(value, option)}
       />
     </Col>
   );
@@ -192,7 +181,11 @@ export const PaymentTypeComponent = ({
     if (giftCardAmount) {
       const amount = parseFloat(grandTotal) - parseFloat(giftCardAmount);
 
-      form.setFieldValue('paid_amount', amount);
+      if (amount < 0) {
+        form.setFieldValue('paid_amount', 0);
+      } else {
+        form.setFieldValue('paid_amount', amount);
+      }
     } else {
       form.setFieldValue('paid_amount', grandTotal ?? 0);
     }

@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 
+import { discountTypeOptions } from '../../assets/data/discountTypes';
 import { paymentStatusOptions } from '../../assets/data/paymentStatus';
 import { purchaseStatusOptions } from '../../assets/data/purchaseStatus';
 import {
@@ -50,6 +51,28 @@ const PaymentStatusComponent = () => {
       options={paymentStatusOptions}
       name="payment_status"
     />
+  );
+};
+
+const DiscountTypeComponent = () => {
+  const form = Form.useFormInstance();
+  const discount = Form.useWatch('discount', form);
+  const required = !!discount;
+
+  useEffect(() => {
+    if (!form.getFieldValue('discount_type'))
+      form.setFieldValue('discount_type', 'Fixed');
+  }, [form]);
+
+  return (
+    <Col {...colLayout}>
+      <CustomSelect
+        options={discountTypeOptions}
+        label="Discount Type"
+        name={'discount_type'}
+        required={required}
+      />
+    </Col>
   );
 };
 
@@ -105,6 +128,8 @@ export const PurchaseForm = ({ data, ...props }) => {
                 min={0}
               />
             </Col>
+
+            <DiscountTypeComponent />
             <Col {...colLayout}>
               <CustomInput
                 label="Shipping Cost"

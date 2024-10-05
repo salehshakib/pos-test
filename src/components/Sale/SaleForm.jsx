@@ -61,6 +61,11 @@ const DiscountTypeComponent = () => {
   const discount = Form.useWatch('discount', form);
   const required = !!discount;
 
+  useEffect(() => {
+    if (!form.getFieldValue('discount_type'))
+      form.setFieldValue('discount_type', 'Fixed');
+  }, [form]);
+
   return (
     <Col {...largeLayout}>
       <CustomSelect
@@ -101,6 +106,8 @@ export const SaleForm = ({ data, ...props }) => {
   };
 
   const warehouseSaleRef = useRef(null);
+
+  const giftCard = Form.useWatch('gift_card_id', props.form);
 
   return (
     <>
@@ -158,7 +165,7 @@ export const SaleForm = ({ data, ...props }) => {
 
             <PaymentTypeComponent />
 
-            <Col {...colLayout}>
+            <Col {...(giftCard ? mdColLayout : colLayout)}>
               <StatusComponent />
             </Col>
 

@@ -70,8 +70,6 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const showModal = (type) => {
     setPaymentType(type);
 
-    console.log(type);
-
     const total = getGrandTotal();
 
     if (total) {
@@ -88,10 +86,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
     if (!data) return;
 
-    const { discount, shipping_cost, tax_rate, coupon } =
+    const { discount, discount_type, shipping_cost, tax_rate, coupon } =
       formValues.order ?? {};
-
-    console.log(formValues.order);
 
     const { paid_amount } = values ?? {};
     const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
@@ -137,12 +133,21 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         0
       ) ?? 0;
 
+    let totalCoupon = 0;
+
+    if (formValues?.order?.coupon.type === 'Percentage') {
+      totalCoupon = (totalPrice * formValues?.order?.coupon.rate) / 100;
+    } else if (formValues?.order?.coupon.type === 'Fixed') {
+      totalCoupon = decimalConverter(formValues?.order?.coupon.rate);
+    }
+
     const postObj = {
       ...sanitizeObj(values),
       gift_card_id: values?.gift_card_id?.split('-')?.[0],
       sale_status: 'Completed',
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
-      discount: decimalConverter(discount),
+      discount_type,
+      discount: decimalConverter(discount - totalCoupon),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
       item: productListArray.length,
@@ -239,7 +244,11 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
             type="primary"
             icon={<MdCardGiftcard />}
             className="flex min-w-fit items-center justify-center"
-            onClick={() => showModal('Gift Card')}
+            onClick={() => {
+              const { formValues } = handleSubmit() || {};
+              console.log(formValues);
+              showModal('GiftCard');
+            }}
           >
             Gift Card
           </Button>

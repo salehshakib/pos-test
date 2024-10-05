@@ -125,7 +125,9 @@ export const calculateGrandTotal = (
   }
 
   if (parsedGiftCard) {
-    grandTotal = grandTotal - parsedGiftCard;
+    if (parsedGiftCard > grandTotal) {
+      grandTotal = 0;
+    } else grandTotal = grandTotal - parsedGiftCard;
   }
 
   return grandTotal ? Number(grandTotal).toFixed(2) : '0.00';

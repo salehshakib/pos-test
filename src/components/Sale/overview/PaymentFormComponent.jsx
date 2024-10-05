@@ -83,11 +83,11 @@ const GiftCardComponent = ({ setGiftCard }) => {
     // const paidAmount = form.getFieldValue('paid_amount');
     // const payableAmount = parseFloat(paidAmount);
 
-    setGiftCard(option.amount);
+    setGiftCard(option?.amount);
   };
 
   return (
-    <Col {...fullColLayout}>
+    <Col {...mdColLayout}>
       <CustomSelect
         isLoading={isFetching}
         options={options}
@@ -196,6 +196,8 @@ export const PaymentTypeComponent = () => {
 
   const [giftCard, setGiftCard] = useState(undefined);
 
+  console.log(Number(paidAmount));
+
   return (
     (paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
       <>
@@ -207,7 +209,7 @@ export const PaymentTypeComponent = () => {
             type={'number'}
             name="recieved_amount"
             label="Recieved Amount"
-            required={true}
+            required={giftCard ? !(Number(paidAmount) === 0) : true}
           />
         </Col>
 

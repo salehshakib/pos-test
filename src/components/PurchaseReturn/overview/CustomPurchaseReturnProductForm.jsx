@@ -50,19 +50,18 @@ const updateStateWithProductData = (
     if (purchase) {
       updatedQty[productId] = item?.qty;
 
-      updatedMaxQty[productId] =
-        parseInt(
-          purchase.purchase_products.find(
-            (item) =>
-              item.product_variant_id.toString() === productId.toString()
-          ).qty
-        ) -
-        parseInt(
-          purchase.purchase_products.find(
-            (item) =>
-              item.product_variant_id.toString() === productId.toString()
-          ).returned_qty
-        );
+      updatedMaxQty[productId] = parseInt(
+        purchase.purchase_products.find(
+          (item) => item.product_variant_id.toString() === productId.toString()
+        ).qty
+      );
+      // -
+      // parseInt(
+      //   purchase.purchase_products.find(
+      //     (item) =>
+      //       item.product_variant_id.toString() === productId.toString()
+      //   ).returned_qty
+      // );
     }
   });
 

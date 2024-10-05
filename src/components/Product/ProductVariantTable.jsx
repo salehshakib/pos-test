@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import defaultUser from '../../assets/data/defaultUserImage';
 import { showCurrency } from '../../utilities/lib/currency';
 import { getWarehousePrice } from '../../utilities/lib/getWarehouseQty';

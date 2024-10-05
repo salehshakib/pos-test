@@ -9,6 +9,7 @@ const baseColumns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 300,
     render: (name, record) => (
       <div
         className={`flex items-center gap-2 ${

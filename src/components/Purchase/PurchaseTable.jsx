@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -86,6 +87,14 @@ export const PurchaseTable = ({
 
   const format = useFormatDate();
 
+  const navigate = useNavigate();
+
+  const handlePurchaseReturn = (refId) => {
+    navigate(`/return/purchase-return?ref_id=${refId}`, {
+      replace: true,
+    });
+  };
+
   const dataSource =
     data?.results?.purchase?.map((item) => {
       const {
@@ -120,6 +129,7 @@ export const PurchaseTable = ({
         handleEdit,
         handleDeleteModal,
         handleDetailsModal,
+        handlePurchaseReturn,
       };
     }) ?? [];
 

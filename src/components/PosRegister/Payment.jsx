@@ -70,6 +70,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const showModal = (type) => {
     setPaymentType(type);
 
+    console.log(type);
+
     const total = getGrandTotal();
 
     if (total) {
@@ -88,6 +90,9 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
     const { discount, shipping_cost, tax_rate, coupon } =
       formValues.order ?? {};
+
+    console.log(formValues.order);
+
     const { paid_amount } = values ?? {};
     const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
       data ?? {};

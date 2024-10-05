@@ -68,7 +68,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
     isRelationalParams: !isIgnore,
   });
 
-  console.log(params);
+  console.log(keyword);
 
   if (productId) {
     params.product_id = productId;
@@ -129,6 +129,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
           openNotification('warning', 'Product already exists in the list');
           return prevProducts;
         });
+
+        setKeyword(null);
+        setValue(null);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

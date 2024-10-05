@@ -1,9 +1,13 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import {
+  closeCreateDrawer,
+  openCreateDrawer,
+} from '../../redux/services/drawer/drawerSlice';
 import { useCreatePurchaseReturnMutation } from '../../redux/services/return/purchaseReturnApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
@@ -19,6 +23,16 @@ import { PurchaseReturnForm } from './PurchaseReturnForm';
 
 const PurchaseReturnCreate = () => {
   const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  const id = new URLSearchParams(location.search).get('ref_id');
+
+  useEffect(() => {
+    if (id) {
+      dispatch(openCreateDrawer());
+    }
+  }, [dispatch, id]);
 
   const [form] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);

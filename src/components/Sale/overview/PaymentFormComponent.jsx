@@ -202,11 +202,7 @@ export const PaymentTypeComponent = () => {
     if (paymentType !== 'Gift Card') {
       form.resetFields(['gift_card_id']);
     }
-
-    console.log('first');
   }, [paymentType, form]);
-
-  console.log(paymentType);
 
   const [giftCard, setGiftCard] = useState(undefined);
 

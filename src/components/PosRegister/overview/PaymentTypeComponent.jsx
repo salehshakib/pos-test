@@ -184,7 +184,7 @@ export const PaymentTypeComponent = ({
 
   const receivedAmount = Form.useWatch('recieved_amount', form);
   const paidAmount = Form.useWatch('paid_amount', form);
-  const paymentType = Form.useWatch('payment_type', form);
+  // const paymentType = Form.useWatch('payment_type', form);
 
   const giftCardAmount = Form.useWatch('gift_card_id', form)?.split('-')?.[1];
 
@@ -211,7 +211,7 @@ export const PaymentTypeComponent = ({
 
   return (
     <>
-      {paymentType === 'Cash' && (
+      {payment_type === 'Cash' && (
         <>
           <span className="w-full pb-5 text-center text-lg font-semibold">
             Quick Cash
@@ -287,7 +287,7 @@ export const PaymentTypeComponent = ({
           suffix={currency?.name}
           name="recieved_amount"
           label="Recieved Amount"
-          required={true}
+          required={parseFloat(giftCardAmount) === parseFloat(paidAmount)}
         />
       </Col>
       <Col {...mdColLayout}>
@@ -308,14 +308,14 @@ export const PaymentTypeComponent = ({
         />
       </Col>
 
-      <Col {...mdColLayout}>
+      <Col {...(payment_type === 'Gift Card' ? mdColLayout : fullColLayout)}>
         <div className="py-2 pb-8 text-lg font-semibold">
           {`${parseFloat(change) < 0 ? 'Due' : 'Change'}`}:{' '}
           {showCurrency(change, currency)}
         </div>
       </Col>
 
-      {paymentType === 'Gift Card' &&
+      {payment_type === 'Gift Card' &&
         (giftCardAmount ? (
           <Col {...mdColLayout}>
             <div className="py-2 pb-8 text-lg font-semibold">
@@ -330,9 +330,9 @@ export const PaymentTypeComponent = ({
           </Col>
         ))}
 
-      {paymentType === 'Gift Card' && <GiftCardComponent />}
-      {paymentType === 'Card' && <CardComponent />}
-      {paymentType === 'Cheque' && <ChequeComponent />}
+      {payment_type === 'Gift Card' && <GiftCardComponent />}
+      {payment_type === 'Card' && <CardComponent />}
+      {payment_type === 'Cheque' && <ChequeComponent />}
 
       <Col {...fullColLayout}>
         <CustomInput

@@ -1,6 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   colLayout,
@@ -72,6 +73,30 @@ export const PurchaseReturnForm = ({ data, ...props }) => {
   const [checkReference, { isLoading }] = useCheckReferenceMutation();
 
   const [refId, setRefId] = useState(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const id = searchParams.get('ref_id'); // Correctly get the ref_id from searchParams
+
+  const removeQueryParam = () => {
+    setSearchParams((params) => {
+      params.delete('ref_id');
+      return params;
+    });
+  };
+
+  useEffect(() => {
+    if (id) {
+      referenceForm.setFieldValue('reference_id', id);
+      handleSubmit({
+        reference_id: id,
+      });
+
+      // Remove the 'ref_id' query param after processing
+      removeQueryParam();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleSubmit = async (values) => {
     const { data, error } = await checkReference({ data: values });

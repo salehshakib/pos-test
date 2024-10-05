@@ -51,10 +51,18 @@ export const SaleCreate = ({ setId }) => {
       shipping_cost,
       tax_rate,
       sale_at,
+      recieved_amount,
       paid_amount,
       discount_type,
       payment_status,
     } = values ?? {};
+
+    if (parseFloat(recieved_amount) < parseFloat(paid_amount)) {
+      return openNotification(
+        'error',
+        'Recieved amount cannot be less than paid amount'
+      );
+    }
 
     const productListArray = product_list?.qty
       ? Object.keys(product_list.qty)

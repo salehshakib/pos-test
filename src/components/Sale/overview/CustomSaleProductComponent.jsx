@@ -48,7 +48,7 @@ const updateStateWithProductData = (saleProducts, setFormValues) => {
 
   // Populate the updated fields from saleProducts
   saleProducts.forEach((item) => {
-    const productId = item.product_variants.id.toString();
+    const productId = item?.product_variants?.id.toString();
 
     fieldsToUpdate.forEach(({ key, value }) => {
       updatedFields[key][productId] = value

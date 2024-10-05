@@ -24,6 +24,8 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     selectValue: DEFAULT_SELECT_VALUES,
   });
 
+  const form = Form.useFormInstance();
+
   const { data, isLoading } = useGetAllVariantsQuery({ params });
 
   const options =
@@ -37,11 +39,6 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   const [variantOptions, setVariantOptions] = useState({});
   const [variantAttributesName, setVariantAttributesName] = useState({});
-
-  console.log(dataSource);
-
-  console.log(variantOptions);
-  console.log(variantAttributesName);
 
   const onSelect = (value, option) => {
     const selected =
@@ -59,25 +56,26 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   const attributes = data?.results?.attribute;
 
-  console.log(dataSource);
-
   useEffect(() => {
     if (editData && attributes) {
       const options = formatVariantsData(editData?.variants, attributes);
 
-      console.log(editData.variants);
-      console.log(attributes);
+      const variantAttributes = form.getFieldValue('attribute_ids');
 
-      console.log(options);
+      const sortedDataSource = options.sort((a, b) => {
+        return (
+          variantAttributes.indexOf(a.id) - variantAttributes.indexOf(b.id)
+        );
+      });
 
-      setDataSource(options);
+      setDataSource(sortedDataSource);
 
       const result = extractAttributeValues(editData?.variants);
 
       setVariantOptions(result.attributeIds);
       setVariantAttributesName(result.attributeValues);
     }
-  }, [editData, attributes]);
+  }, [editData, attributes, form]);
 
   const mainForm = Form.useFormInstance();
 

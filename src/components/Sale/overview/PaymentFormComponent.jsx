@@ -197,7 +197,7 @@ export const PaymentTypeComponent = () => {
   }, [paymentType, form]);
 
   useEffect(() => {
-    if (paymentStatus === 'Partial') {
+    if (paymentStatus === 'Partial' || paymentStatus === 'Paid') {
       if (parseFloat(receivedAmount) < parseFloat(paidAmount)) {
         form.setFieldValue('recieved_amount', paidAmount);
       }

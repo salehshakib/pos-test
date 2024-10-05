@@ -58,8 +58,8 @@ const columns = [
         <div
           className={`p-0 ${
             status?.toString() === 'Accepted'
-              ? 'bg-[#FEF2F2] text-[#EF4444]'
-              : 'bg-[#DCFCE7] text-[#16A34A]'
+              ? 'bg-[#DCFCE7] text-[#16A34A]'
+              : ' bg-[#FEF2F2] text-[#EF4444]'
           } w-[80px] rounded shadow-md`}
         >
           <span className="w-full px-2 text-xs font-medium">{status}</span>

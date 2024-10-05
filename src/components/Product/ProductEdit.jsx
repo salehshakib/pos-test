@@ -27,21 +27,19 @@ import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
-const getVariantIdsByCombinedName = (itemData, name) => {
-  const ids = [];
+// const getVariantIdsByCombinedName = (itemData, name) => {
+//   const ids = [];
 
-  console.log(itemData);
+//   itemData.forEach((item) => {
+//     item.options.forEach((option) => {
+//       if (name.includes(option.name)) {
+//         ids.push(option.id);
+//       }
+//     });
+//   });
 
-  itemData.forEach((item) => {
-    item.options.forEach((option) => {
-      if (name.includes(option.name)) {
-        ids.push(option.id);
-      }
-    });
-  });
-
-  return ids;
-};
+//   return ids;
+// };
 
 // const getVariantIdsByCombinedName = (itemData, name) => {
 //   const ids = [];
@@ -354,8 +352,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       variantData?.selectedRowData,
       data?.variants
     );
-
-    console.log(deletedVariants);
 
     if (deletedVariants.length) {
       postObj.deletedVariantIds = deletedVariants;

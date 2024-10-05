@@ -124,7 +124,8 @@ const PettyCashRequestTable = ({
         requested_by,
         created_at,
         status,
-        handleStatusModal,
+        handleStatusModal:
+          status === 'Requested' ? handleStatusModal : undefined,
         handleDetailsModal,
         handleDeleteModal,
       };

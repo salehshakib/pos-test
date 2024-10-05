@@ -91,7 +91,9 @@ const ProductInquiry = () => {
       render: (text, record) =>
         record?.warehouse_id === user?.warehouse_id ? (
           <Dropdown overlay={<Menu items={menuItems} />} trigger={['click']}>
-            <EllipsisOutlined style={{ fontSize: '24px', cursor: 'pointer' }} />
+            <Button>
+              <EllipsisOutlined />
+            </Button>
           </Dropdown>
         ) : (
           'N/A'

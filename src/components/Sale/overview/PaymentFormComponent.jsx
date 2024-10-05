@@ -254,11 +254,18 @@ export const PaymentTypeComponent = () => {
           ))}
 
         {paymentStatus === 'Partial' && (
-          <Col {...fullColLayout}>
+          <>
+            <Col {...mdColLayout}>
+              <div className="py-9 text-lg font-semibold">
+                Change: {showCurrency(change, currency)}
+              </div>
+            </Col>
+            {/* <Col {...mdColLayout}>
             <div className="py-9 text-lg font-semibold">
-              Change: {Number(receivedAmount - paidAmount || 0).toFixed(2)}
+              Due: {Number(receivedAmount - paidAmount || 0).toFixed(2)}
             </div>
-          </Col>
+          </Col> */}
+          </>
         )}
 
         {paymentType === 'Gift Card' && (

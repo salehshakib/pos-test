@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
 import {
@@ -287,8 +287,10 @@ const ProductCreate = () => {
     });
 
     if (data?.success) {
+      removeQueryParam();
       dispatch(closeCreateDrawer());
       setCurrent(0);
+
       form.resetFields();
     }
     if (error) {
@@ -298,6 +300,14 @@ const ProductCreate = () => {
       }));
       setErrorFields(errorFields);
     }
+  };
+
+  const [setSearchParams] = useSearchParams();
+  const removeQueryParam = () => {
+    setSearchParams((params) => {
+      params.delete('fetch-all');
+      return params;
+    });
   };
 
   const steps = [
@@ -322,6 +332,7 @@ const ProductCreate = () => {
           handleSubmit={handleStockSubmit}
           form={form}
           onClose={() => {
+            removeQueryParam();
             dispatch(closeCreateDrawer());
             setCurrent(0);
           }}

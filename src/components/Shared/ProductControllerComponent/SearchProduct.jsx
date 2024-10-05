@@ -40,20 +40,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
     }
   }, 1000);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const fetchAll = searchParams.get('fetch-all');
-
-  console.log(fetchAll);
-
-  console.log(fetchAll);
-
-  const removeQueryParam = () => {
-    setSearchParams((params) => {
-      params.delete('fetch-all');
-      return params;
-    });
-  };
 
   const isIgnore =
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
@@ -92,18 +81,20 @@ export const SearchProduct = ({ setProducts, productId }) => {
   });
 
   useEffect(() => {
-    if (fetchAll === 'true' && data) {
+    if (fetchAll === 'true' && data && warehouseId) {
       const allProducts =
         data?.results?.productvariant?.map((product) => ({
           ...product,
           warehouse_id: warehouseId,
         })) ?? [];
 
-      setProducts(allProducts);
-      removeQueryParam(); // Uncomment if needed
+      setProducts((prev) => {
+        return [...prev, ...allProducts];
+      });
+      // removeQueryParam(); // Uncomment if needed
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchAll, data]);
+  }, [fetchAll, data, warehouseId]);
 
   // console.log();
 

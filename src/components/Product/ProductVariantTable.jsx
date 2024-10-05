@@ -1,5 +1,8 @@
+import { useSelector } from 'react-redux';
+
 import defaultUser from '../../assets/data/defaultUserImage';
 import { showCurrency } from '../../utilities/lib/currency';
+import { getWarehousePrice } from '../../utilities/lib/getWarehouseQty';
 import CustomTable from '../Shared/Table/CustomTable';
 
 const expandColumns = [
@@ -96,24 +99,33 @@ export const expandedRowRender = (record, data, currency) => {
   const expandedData =
     data?.results?.product
       ?.find((product) => product.id === record.id)
-      ?.variants?.map((variant) => ({
-        id: variant.id,
-        name: variant.name,
-        sku: variant.sku,
-        iemi: variant.imei_number,
-        qty:
-          variant?.product_qties?.length === 0
-            ? variant?.qty
-            : variant?.product_qties?.reduce(
-                (total, item) => total + item.qty,
-                0
-              ),
-        cost: showCurrency(variant.buying_price, currency),
-        price: showCurrency(variant.selling_price, currency),
-        created_at: variant.created_at,
-        status: record.status,
-        handleDeleteModal: record.handleDeleteVariantModal,
-      })) ?? [];
+      ?.variants?.map((variant) => {
+        const price = getWarehousePrice(
+          variant?.product_prices,
+          record?.warehouseId
+        );
+
+        return {
+          id: variant.id,
+          name: variant.name,
+          sku: variant.sku,
+          iemi: variant.imei_number,
+          qty:
+            variant?.product_qties?.length === 0
+              ? variant?.qty
+              : variant?.product_qties?.reduce(
+                  (total, item) => total + item.qty,
+                  0
+                ),
+          cost: showCurrency(variant.buying_price, currency),
+          price: price
+            ? showCurrency(price, currency)
+            : showCurrency(variant.selling_price, currency),
+          created_at: variant.created_at,
+          status: record.status,
+          handleDeleteModal: record.handleDeleteVariantModal,
+        };
+      }) ?? [];
 
   return (
     <CustomTable

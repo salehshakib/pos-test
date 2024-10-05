@@ -50,7 +50,7 @@ const columns = [
   {
     title: 'Amount',
     dataIndex: 'amount',
-    align: 'right',
+    align: 'center',
     key: 'amount',
     render: (amount) => (
       <span className="text-dark   text-xs font-medium md:text-sm">

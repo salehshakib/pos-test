@@ -633,6 +633,31 @@ export const CustomPosProductsComponent = forwardRef(
       additionalForm.resetFields();
     };
 
+    const [summary, setSummary] = useState({
+      totalItems: 0,
+      totalQuantity: 0,
+      totalPrice: 0,
+      taxRate: 0,
+      grandTotal: 0,
+      totalCoupon: 0,
+      totalDiscount: 0,
+    });
+
+    // const {
+    //   totalItems,
+    //   totalQuantity,
+    //   totalPrice,
+    //   taxRate,
+    //   grandTotal,
+    //   totalCoupon,
+    //   totalDiscount,
+    // } = calculateSummary(
+    //   formValues,
+    //   formValues.order.tax_rate ?? 0,
+    //   formValues.order.discount ?? 0,
+    //   formValues.order.shipping_cost ?? 0
+    // );
+
     const {
       totalItems,
       totalQuantity,
@@ -647,6 +672,28 @@ export const CustomPosProductsComponent = forwardRef(
       formValues.order.discount ?? 0,
       formValues.order.shipping_cost ?? 0
     );
+
+    useEffect(() => {
+      setSummary({
+        totalItems,
+        totalQuantity,
+        totalPrice,
+        taxRate,
+        grandTotal,
+        totalCoupon,
+        totalDiscount,
+      });
+    }, [
+      totalItems,
+      totalQuantity,
+      totalPrice,
+      taxRate,
+      grandTotal,
+      totalCoupon,
+      totalDiscount,
+    ]);
+
+    console.log(summary);
 
     const handleFormValuesSubmit = useCallback(() => {
       return formValues;
@@ -767,12 +814,12 @@ export const CustomPosProductsComponent = forwardRef(
 
               <Table.Summary.Cell index={2} align="center">
                 <Typography.Text type="" className="font-bold">
-                  {totalQuantity}
+                  {summary?.totalQuantity}
                 </Typography.Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={3} align="center">
                 <Typography.Text type="" className="font-bold">
-                  {showCurrency(totalPrice, currency)}
+                  {showCurrency(summary?.totalPrice, currency)}
                 </Typography.Text>
               </Table.Summary.Cell>
             </Table.Summary.Row>
@@ -829,12 +876,12 @@ export const CustomPosProductsComponent = forwardRef(
           <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
             <div className="grid grid-cols-2">
               <span>Items</span>
-              <span className="font-semibold">{totalItems}</span>
+              <span className="font-semibold">{summary.totalItems}</span>
             </div>
             <div className="grid grid-cols-2">
               <span>Total</span>
               <span className="font-semibold">
-                {showCurrency(totalPrice, currency)}
+                {showCurrency(summary?.totalPrice, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -843,13 +890,13 @@ export const CustomPosProductsComponent = forwardRef(
                 modalType={'discount'}
                 formValues={formValues}
                 setFormValues={setFormValues}
-                totalPrice={totalPrice}
+                totalPrice={summary?.totalPrice}
                 additionalForm={additionalForm}
                 onDisountTypeChange={onDisountTypeChange}
               />
 
               <span className="font-semibold">
-                {showCurrency(totalDiscount ?? 0, currency)}
+                {showCurrency(summary?.totalDiscount ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -857,11 +904,11 @@ export const CustomPosProductsComponent = forwardRef(
                 title={'Coupon'}
                 modalType={'coupon'}
                 setFormValues={setFormValues}
-                totalPrice={totalPrice}
+                totalPrice={summary?.totalPrice}
                 additionalForm={additionalForm}
               />
               <span className="font-semibold">
-                {showCurrency(totalCoupon ?? 0, currency)}
+                {showCurrency(summary?.totalCoupon ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -872,7 +919,7 @@ export const CustomPosProductsComponent = forwardRef(
                 additionalForm={additionalForm}
               />
               <span className="font-semibold">
-                {showCurrency(taxRate ?? 0, currency)}
+                {showCurrency(summary?.taxRate ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -889,7 +936,7 @@ export const CustomPosProductsComponent = forwardRef(
           </div>
 
           <div className="secondary-bg primary-text rounded-sm py-1 text-center text-lg font-semibold">
-            Grand Total {showCurrency(grandTotal ?? 0, currency)}
+            Grand Total {showCurrency(summary?.grandTotal ?? 0, currency)}
           </div>
 
           <Button

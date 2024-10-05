@@ -90,7 +90,8 @@ export function updateFormValues(
   unitCost,
   productUnitData,
   taxData,
-  formValues
+  formValues,
+  setFormValues
 ) {
   if (!id) return;
 
@@ -192,4 +193,107 @@ export function updateFormValues(
   }
 
   setFormValue('tax_id', formProductList.tax_id?.[id] ?? taxData?.id);
+}
+
+export function updateFormValuesUsingSetter(
+  id,
+  unitCost,
+  productUnitData,
+  taxData,
+  formValues,
+  setFormValues // Pass the setter function to update state
+) {
+  if (!id) return;
+
+  const sanitizeValue = (value, sanitizer, defaultValue = 0) =>
+    sanitizer(value ?? defaultValue);
+
+  // Create a copy of formValues to avoid direct mutation
+  const updatedFormValues = { ...formValues };
+
+  const formProductList = { ...updatedFormValues.product_list };
+  updatedFormValues.product_list = formProductList;
+
+  const getSanitizedValue = (field, defaultValue, sanitizer) =>
+    sanitizeValue(formProductList[field]?.[id], sanitizer, defaultValue);
+
+  const setFormValue = (field, value) => {
+    formProductList[field] = {
+      ...formProductList[field], // Ensure immutability
+      [id]: value,
+    };
+  };
+
+  const qty = getSanitizedValue('qty', 1, parseInt);
+  let productUnitCost = unitCost;
+
+  const calculateProductUnitCost = (field) => {
+    if (formProductList[field]) {
+      productUnitCost = getSanitizedValue(field, unitCost, parseFloat);
+      setFormValue(field, productUnitCost);
+    }
+  };
+
+  if (formProductList.net_unit_cost) {
+    calculateProductUnitCost('net_unit_cost');
+  }
+
+  if (formProductList.net_unit_price) {
+    calculateProductUnitCost('net_unit_price');
+  }
+
+  const discount = getSanitizedValue('discount', 0, parseFloat);
+  const taxRate = getSanitizedValue('tax_rate', taxData?.rate ?? 0, parseFloat);
+
+  const calculateTax = () => {
+    const baseValue = (productUnitCost - discount) * qty;
+    const taxAmount = (taxRate * baseValue) / 100;
+    return sanitizeValue(taxAmount.toFixed(2), parseFloat);
+  };
+
+  const tax = calculateTax();
+
+  const calculateTotal = (netUnitCost) => {
+    const baseValue = netUnitCost - discount;
+    if (taxData?.tax_method === 'Inclusive') {
+      return Math.round(((baseValue + tax) * qty).toFixed(2));
+    } else {
+      return parseFloat((baseValue * qty + tax).toFixed(2));
+    }
+  };
+
+  const total = calculateTotal(productUnitCost);
+
+  // Set updated form values immutably
+  setFormValue('qty', qty);
+
+  if (formProductList.purchase_unit_id) {
+    setFormValue(
+      'purchase_unit_id',
+      formProductList.purchase_unit_id[id] ?? productUnitData?.id
+    );
+  }
+
+  if (formProductList.sale_unit_id) {
+    setFormValue(
+      'sale_unit_id',
+      formProductList.sale_unit_id[id] ?? productUnitData?.id
+    );
+  }
+
+  if (formProductList.discount) {
+    setFormValue('discount', discount);
+  }
+  setFormValue('tax_rate', taxRate);
+  setFormValue('tax', tax);
+  setFormValue('total', total);
+
+  if (formProductList?.recieved) {
+    setFormValue('recieved', formProductList.recieved[id]);
+  }
+
+  setFormValue('tax_id', formProductList.tax_id?.[id] ?? taxData?.id);
+
+  // Use the setFormValues function to update the form values state immutably
+  setFormValues(updatedFormValues);
 }

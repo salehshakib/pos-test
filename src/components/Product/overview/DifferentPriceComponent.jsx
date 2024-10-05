@@ -191,6 +191,13 @@ export const DifferentPriceComponent = ({
     form.setFieldsValue(formValues);
   }, [form, formValues]);
 
+  const tableStyle = {
+    scroll: {
+      x: 1000,
+      y: 'auto',
+    },
+  };
+
   return (
     <ProductController
       productId={productId}
@@ -198,6 +205,7 @@ export const DifferentPriceComponent = ({
       dataSource={dataSource}
       products={products}
       setProducts={setProducts}
+      tableStyle={tableStyle}
     />
   );
 };

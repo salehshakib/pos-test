@@ -141,7 +141,9 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
                     warehouse
                   );
 
-                  if (stock > 1)
+                  console.log(product, stock);
+
+                  if (stock > 0)
                     return (
                       <div key={product.id} className="w-full p-1">
                         <Badge

@@ -16,16 +16,16 @@ import { Variant } from '../../pages/Dashboard/Variant/Variant';
 
 export const productPaths = [
   {
-    name: 'Attribute Option',
-    path: 'attribute-option',
-    icon: MdOutlineAcUnit,
-    element: <AttributeOption />,
-  },
-  {
     name: 'Attribute',
     path: 'attribute',
     icon: MdOutlineMergeType,
     element: <Variant />,
+  },
+  {
+    name: 'Attribute Option',
+    path: 'attribute-option',
+    icon: MdOutlineAcUnit,
+    element: <AttributeOption />,
   },
   {
     name: 'Product',

@@ -7,3 +7,5 @@ export const SALE_REPORT = 'report/sale';
 export const COUNTER = 'report/counter';
 
 export const PURCHASE_SALE_CHART = 'report/sale-purchase-chart';
+
+export const PROFIT_LOSS = 'report/profit-loss';

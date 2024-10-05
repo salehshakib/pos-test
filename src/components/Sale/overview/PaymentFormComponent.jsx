@@ -70,13 +70,15 @@ const GiftCardComponent = ({ setGiftCard }) => {
   const params = useGlobalParams({});
   const { data, isFetching } = useGetAllGiftCardQuery({ params });
 
-  const options = data?.results?.giftcard?.map((item) => {
-    return {
-      value: item.id.toString() + '-' + item.amount,
-      label: item.card_no,
-      amount: item.amount,
-    };
-  });
+  const options = data?.results?.giftcard
+    ?.filter((item) => new Date(item.expired_date) > new Date())
+    ?.map((item) => {
+      return {
+        value: item.id.toString() + '-' + item.amount,
+        label: item.card_no,
+        amount: item.amount,
+      };
+    });
 
   const form = Form.useFormInstance();
 
@@ -202,11 +204,7 @@ export const PaymentTypeComponent = () => {
     if (paymentType !== 'Gift Card') {
       form.resetFields(['gift_card_id']);
     }
-
-    console.log('first');
   }, [paymentType, form]);
-
-  console.log(paymentType);
 
   const [giftCard, setGiftCard] = useState(undefined);
 

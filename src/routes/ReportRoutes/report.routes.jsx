@@ -8,6 +8,7 @@ import {
 import { AlertProductReport } from '../../pages/Dashboard/Reports/AlertProductReport';
 import { CustomerReport } from '../../pages/Dashboard/Reports/CustomerReport';
 import { ProductReport } from '../../pages/Dashboard/Reports/ProductReport';
+import ProfitLossReport from '../../pages/Dashboard/Reports/ProfitLossReport';
 import { PurchaseCalender } from '../../pages/Dashboard/Reports/PurchaseCalender';
 import { PurchaseReport } from '../../pages/Dashboard/Reports/PurchaseReport';
 import { SaleCalender } from '../../pages/Dashboard/Reports/SaleCalender';
@@ -22,6 +23,12 @@ export const reportPaths = [
     path: 'summary',
     icon: TbBrandGoogleAnalytics,
     element: <Summary />,
+  },
+  {
+    name: 'Profit Loss Report',
+    path: 'profit-loss',
+    icon: TbReportAnalytics,
+    element: <ProfitLossReport />,
   },
   {
     name: 'Product Report',

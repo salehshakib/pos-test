@@ -1,12 +1,10 @@
 import { AutoComplete, Col, Form, Spin } from 'antd';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
-import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
@@ -16,7 +14,6 @@ const ignorePaths = [
   'stock-request',
   'print-barcode',
   'products',
-  'transfer',
   'adjustment',
   'purchase',
   'quotation',
@@ -26,7 +23,6 @@ const ignorePaths = [
 export const SearchProduct = ({ setProducts, productId }) => {
   const [keyword, setKeyword] = useState(null);
   const [value, setValue] = useState(null);
-  const user = useSelector(useCurrentUser);
 
   const form = Form.useFormInstance();
   const { pathname } = useLocation();
@@ -48,13 +44,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
   if (!pathname.includes('/products/product')) {
     baseParams.need_qty = 1;
   }
-
-  // if (warehouseId || warehouseIdFrom || user?.warehouse_id) {
-  //   baseParams.warehouse_id =
-  //     pathname.includes('transfer') || pathname.includes('stock-request')
-  //       ? warehouseIdFrom
-  //       : (warehouseId ?? user.warehouse_id);
-  // }
 
   if (!keyword) {
     baseParams.page = 1;
@@ -79,18 +68,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
     params.product_id = productId;
   }
 
-  const { data, isFetching } = useGetAllProductVariantsQuery(
-    {
-      params,
-    }
-    // {
-    // skip: !(warehouseId || warehouseIdFrom),
-    // &&!pathname.includes('stock-request'),
-    // }
-    // {
-    //   skip: !(warehouseId || warehouseIdFrom) && !isIgnore,
-    // }
-  );
+  const { data, isFetching } = useGetAllProductVariantsQuery({
+    params,
+  });
 
   const loadingContent = (
     <div className="flex items-center justify-center">
@@ -115,7 +95,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
 
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {
-      // message.error("Please select warehouse");
       openNotification('warning', 'Please select warehouse');
 
       return;

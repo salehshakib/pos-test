@@ -1,6 +1,8 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Popover, theme } from 'antd';
+import { Avatar, Button, Modal, Popover, theme } from 'antd';
+import { useState } from 'react';
 import { IoSettingsOutline } from 'react-icons/io5';
+import { LuPackageSearch } from 'react-icons/lu';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,6 +12,7 @@ import Translate from '../../Shared/Translate/Translate';
 import { CloseCashRegister } from './overview/CloseCashRegister';
 import { Notification } from './overview/Notification';
 import { PosComponent } from './overview/PosComponent';
+import ProductInquiry from './overview/ProductInquiry';
 
 const Profile = () => {
   const location = useLocation();
@@ -26,6 +29,8 @@ const Profile = () => {
 
   const { token } = theme.useToken();
   const navigate = useNavigate();
+
+  const [openInquiry, setOpenInquiry] = useState(false);
 
   const content = (
     <div>
@@ -71,6 +76,14 @@ const Profile = () => {
         </div>
       </div>
 
+      <Button
+        icon={<LuPackageSearch />}
+        onClick={() => setOpenInquiry(true)}
+        className="md:hidden w-full mt-4"
+      >
+        Inquiry
+      </Button>
+
       <div className="mt-6">
         <Translate />
       </div>
@@ -85,7 +98,14 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      {/* <CreateComponent /> */}
+      <Button
+        onClick={() => setOpenInquiry(true)}
+        className="hidden md:flex items-center gap-1"
+      >
+        <LuPackageSearch className="text-lg" />
+        Inquiry
+      </Button>
+
       {!pathname.includes('/pos') && <PosComponent />}
 
       <CloseCashRegister />
@@ -109,6 +129,18 @@ const Profile = () => {
           icon={<UserOutlined />}
         />
       </Popover>
+
+      <Modal
+        open={openInquiry}
+        onCancel={() => setOpenInquiry(false)}
+        footer={null}
+        destroyOnClose
+        width={1200}
+        centered
+        title="Product Inquiry"
+      >
+        <ProductInquiry />
+      </Modal>
     </div>
   );
 };

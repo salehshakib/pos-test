@@ -54,8 +54,6 @@ export const QuotationProductTable = ({
       return warehouse ? warehouse.price : product.selling_price;
     }
 
-    console.log(product);
-
     const unit_cost =
       type === 'invoice'
         ? getWarehousePrice(product.product_prices, warehouse_id)

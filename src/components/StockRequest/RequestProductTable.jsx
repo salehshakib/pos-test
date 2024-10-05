@@ -37,11 +37,11 @@ const columns = [
     ),
   },
   {
-    title: 'Minimum Qunatity',
+    title: 'Minimum Quantity',
     dataIndex: 'minQty',
     key: 'minQty',
     align: 'center',
-    width: 100,
+    width: 150,
     render: (minQty) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {minQty}
@@ -169,7 +169,6 @@ export const RequestProductTable = ({
 
   const dataSource =
     products?.map((product) => {
-      console.log(product);
       const {
         id,
         name,
@@ -184,8 +183,6 @@ export const RequestProductTable = ({
         formValues?.product_list?.min_qty[id] ?? product?.products?.alert_qty;
 
       const stock = getWarehouseQuantity(product_qties, warehouseId);
-
-      console.log({ product_qties, stock, warehouseId });
 
       return {
         id,

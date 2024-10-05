@@ -138,7 +138,7 @@ export const VariantComponent = ({ onCustomSubmit, data }) => {
       <Row {...rowLayout}>
         <Col {...fullColLayout}>
           <CustomCheckbox
-            label="This Product has varient"
+            label="This Product has variant"
             name="has_variant"
             onChange={onChange}
           />

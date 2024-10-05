@@ -168,8 +168,8 @@ const TransferTable = ({
       product_tax: showCurrency(total_tax, currency),
       grand_total: showCurrency(grand_total, currency),
       status,
-      // handleEdit,
-      handleStatusModal,
+      handleStatusModal:
+        status !== 'Transferred' ? handleStatusModal : undefined,
       handleDeleteModal,
       handleDetailsModal,
     };

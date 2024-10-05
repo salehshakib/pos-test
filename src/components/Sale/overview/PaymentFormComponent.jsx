@@ -78,7 +78,7 @@ const GiftCardComponent = ({ setGiftCard }) => {
 
   const form = Form.useFormInstance();
 
-  const onSelect = (value, option) => {
+  const onSelect = (option) => {
     const paidAmount = form.getFieldValue('paid_amount');
     const payableAmount = parseFloat(paidAmount);
 

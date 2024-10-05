@@ -1,5 +1,7 @@
 // Import necessary dependencies
 import {
+  PRODUCT,
+  PRODUCT_VARIANTS,
   STOCK_REQUEST,
   TRANSFER,
   WAREHOUSE,
@@ -56,7 +58,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: TRANSFER }] : [];
+        return result
+          ? [
+              { type: TRANSFER },
+              { type: PRODUCT_VARIANTS },
+              { type: PRODUCT },
+              { type: STOCK_REQUEST },
+            ]
+          : [];
       },
     }),
 
@@ -81,7 +90,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: TRANSFER }, { type: STOCK_REQUEST }] : [];
+        return result
+          ? [
+              { type: TRANSFER },
+              { type: STOCK_REQUEST },
+              { type: PRODUCT_VARIANTS },
+              { type: PRODUCT },
+            ]
+          : [];
       },
     }),
 
@@ -106,7 +122,14 @@ const transferApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: (result) => {
-        return result ? [{ type: TRANSFER }] : [];
+        return result
+          ? [
+              { type: TRANSFER },
+              { type: PRODUCT_VARIANTS },
+              { type: PRODUCT },
+              { type: STOCK_REQUEST },
+            ]
+          : [];
       },
     }),
 

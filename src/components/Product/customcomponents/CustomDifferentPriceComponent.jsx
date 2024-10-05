@@ -83,10 +83,6 @@ export const CustomDifferentPriceComponent = ({
           })
           .filter(Boolean) || [];
 
-      console.log(data.variants);
-
-      console.log(productVariants);
-
       setProducts(productVariants);
     } else {
       setFormValues({

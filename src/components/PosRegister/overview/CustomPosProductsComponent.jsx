@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Table, Typography } from 'antd';
 import {
   forwardRef,
@@ -237,15 +238,17 @@ const CouponComponent = ({ setUpdatedFormValues }) => {
 
   const { data, isFetching } = useGetAllCouponQuery({ params });
 
-  const options = data?.results?.coupon?.map((item) => {
-    return {
-      value: item.id?.toString(),
-      label: item.code,
-      type: item.type,
-      rate: item.amount,
-      minimum_amount: item.minimum_amount,
-    };
-  });
+  const options = data?.results?.coupon
+    ?.filter((item) => new Date(item.expired_date) > new Date())
+    .map((item) => {
+      return {
+        value: item.id?.toString(),
+        label: item.code,
+        type: item.type,
+        rate: item.amount,
+        minimum_amount: item.minimum_amount,
+      };
+    });
 
   const onSelect = (value, option) => {
     setUpdatedFormValues((prevValues) => {
@@ -625,7 +628,7 @@ export const CustomPosProductsComponent = forwardRef(
 
     useEffect(() => {
       resetFields();
-    }, [warehouseId]);
+    }, []);
 
     const [productEditModal, setProductEditModal] = useState(false);
     const [productId, setProductId] = useState(undefined);

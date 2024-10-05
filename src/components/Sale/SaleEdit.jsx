@@ -48,7 +48,9 @@ export const SaleEdit = ({ id, setId }) => {
     if (data && isEditDrawerOpen) {
       const fieldData = fieldsToUpdate(data);
 
-      setFields(fieldData);
+      const newFieldData = [...fieldData];
+
+      setFields(newFieldData);
     } else {
       setFields([]);
     }
@@ -121,7 +123,7 @@ export const SaleEdit = ({ id, setId }) => {
 
     const postObj = {
       ...values,
-      gift_card_id: values?.gift_card_id.split('-')[0],
+      gift_card_id: values?.gift_card_id?.split('-')[0],
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount:
         discount_type === 'Percentage'

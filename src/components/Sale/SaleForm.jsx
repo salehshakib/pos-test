@@ -1,6 +1,6 @@
 import { Col, Form, Row } from 'antd';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { discountTypeOptions } from '../../assets/data/discountTypes';
 import { paymentStatusOptions } from '../../assets/data/paymentStatus';
@@ -12,6 +12,7 @@ import {
   mdColLayout,
   rowLayout,
 } from '../../layout/FormLayout';
+import { calculateSummary } from '../../utilities/lib/generator/generatorUtils';
 import { CashierComponent } from '../ReusableComponent/CashierComponent';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
@@ -96,10 +97,10 @@ export const SaleForm = ({ data, ...props }) => {
   }, []);
 
   const handleSubmit = (values) => {
-    const productsData = productsRef.current ? productsRef.current() : null;
+    const productData = productsRef.current ? productsRef.current() : null;
 
     const formValues = {
-      product_list: productsData.product_list,
+      product_list: productData.product_list,
     };
 
     props.handleSubmit(values, { formValues });
@@ -108,6 +109,42 @@ export const SaleForm = ({ data, ...props }) => {
   const warehouseSaleRef = useRef(null);
 
   const giftCard = Form.useWatch('gift_card_id', props.form);
+
+  const [total, setTotal] = useState(0);
+
+  const paidAmount = Form.useWatch('paid_amount', props.form);
+  const paymentStatus = Form.useWatch('payment_status', props.form);
+  const discount = Form.useWatch('discount', props.form);
+  const discountType = Form.useWatch('discount_type', props.form);
+  const shipping_cost = Form.useWatch('shipping_cost', props.form);
+  const tax_rate = Form.useWatch('tax_rate', props.form);
+
+  useEffect(() => {
+    if (paidAmount && paymentStatus === 'Partial') {
+      const productData = productsRef.current ? productsRef.current() : null;
+
+      console.log(productData);
+
+      const { grandTotal } = calculateSummary(
+        productData,
+        tax_rate ?? 0,
+        discount,
+        shipping_cost,
+        discountType
+      );
+
+      console.log(grandTotal);
+
+      setTotal(grandTotal);
+    }
+  }, [
+    discount,
+    discountType,
+    paidAmount,
+    paymentStatus,
+    shipping_cost,
+    tax_rate,
+  ]);
 
   return (
     <>
@@ -163,7 +200,7 @@ export const SaleForm = ({ data, ...props }) => {
               <PaymentStatusComponent />
             </Col>
 
-            <PaymentTypeComponent />
+            <PaymentTypeComponent total={total} />
 
             <Col {...(giftCard ? mdColLayout : colLayout)}>
               <StatusComponent />

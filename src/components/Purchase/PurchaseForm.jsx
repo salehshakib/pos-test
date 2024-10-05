@@ -1,5 +1,6 @@
 import { Col, Form, Row } from 'antd';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { discountTypeOptions } from '../../assets/data/discountTypes';
 import { paymentStatusOptions } from '../../assets/data/paymentStatus';
@@ -10,6 +11,9 @@ import {
   largeLayout,
   rowLayout,
 } from '../../layout/FormLayout';
+import { useCurrency } from '../../redux/services/pos/posSlice';
+import { showCurrency } from '../../utilities/lib/currency';
+import { calculateSummary } from '../../utilities/lib/generator/generatorUtils';
 import { OrderTaxComponent } from '../ReusableComponent/OrderTaxComponent';
 import { SupplierComponent } from '../ReusableComponent/SupplierComponent';
 import { WarehouseComponent } from '../ReusableComponent/WarehouseComponent';
@@ -95,6 +99,39 @@ export const PurchaseForm = ({ data, ...props }) => {
 
   const warehousePurchaseRef = useRef(null);
 
+  const [total, setTotal] = useState(0);
+  const currency = useSelector(useCurrency);
+
+  const paidAmount = Form.useWatch('paid_amount', props.form);
+  const paymentStatus = Form.useWatch('payment_status', props.form);
+  const discount = Form.useWatch('discount', props.form);
+  const discountType = Form.useWatch('discount_type', props.form);
+  const shipping_cost = Form.useWatch('shipping_cost', props.form);
+  const tax_rate = Form.useWatch('tax_rate', props.form);
+
+  useEffect(() => {
+    if (paidAmount && paymentStatus === 'Partial') {
+      const productData = productsRef.current ? productsRef.current() : null;
+
+      const { grandTotal } = calculateSummary(
+        productData,
+        tax_rate ?? 0,
+        discount,
+        shipping_cost,
+        discountType
+      );
+
+      setTotal(grandTotal);
+    }
+  }, [
+    discount,
+    discountType,
+    paidAmount,
+    paymentStatus,
+    shipping_cost,
+    tax_rate,
+  ]);
+
   return (
     <>
       <CustomForm {...props} handleSubmit={handleSubmit}>
@@ -147,6 +184,20 @@ export const PurchaseForm = ({ data, ...props }) => {
             <Col {...colLayout}>
               <CurrencyFormComponent />
             </Col>
+
+            {paymentStatus === 'Partial' && (
+              <>
+                <Col {...fullColLayout}>
+                  <div className="py-9 text-lg font-semibold">
+                    Due:{' '}
+                    {showCurrency(
+                      parseFloat(total) - parseFloat(paidAmount),
+                      currency
+                    )}
+                  </div>
+                </Col>
+              </>
+            )}
 
             <Col {...fullColLayout}>
               <CustomUploader label="Attach Document" name="attachment" />

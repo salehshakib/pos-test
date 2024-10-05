@@ -113,6 +113,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
 
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
+        if (pathname.includes('/pos')) {
+          return product?.id.toString() === option?.product?.id?.toString();
+        }
         return (
           product?.id.toString() === option?.product?.id?.toString() &&
           product?.warehouse_id?.toString() ===

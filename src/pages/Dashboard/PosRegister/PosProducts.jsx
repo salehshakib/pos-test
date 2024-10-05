@@ -1,9 +1,11 @@
 import { Badge, Card, Divider, Form, Skeleton, Spin, Tooltip } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSelector } from 'react-redux';
 
 import { productImage } from '../../../assets/data/productImage';
 import { GlobalUtilityStyle } from '../../../container/Styled';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import {
   DEFAULT_SELECT_VALUES,
@@ -16,6 +18,7 @@ const { Meta } = Card;
 
 const PosProducts = ({ form, setProducts, searchParams }) => {
   const warehouseId = Form.useWatch('warehouse_id', form);
+  const warehouseDefault = useSelector(useCurrentUser).warehouse_id;
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -29,7 +32,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
     params: {
       ...pagination,
       attachmentable: 1,
-      warehouse_id: warehouseId,
+      // warehouse_id: warehouseId,
       ...searchParams,
     },
     selectValue: [
@@ -42,14 +45,9 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
     ],
   });
 
-  const { data, isLoading } = useGetAllProductVariantsQuery(
-    {
-      params,
-    },
-    {
-      skip: !warehouseId,
-    }
-  );
+  const { data, isLoading } = useGetAllProductVariantsQuery({
+    params,
+  });
 
   const [newData, setNewData] = useState([]);
 
@@ -72,32 +70,6 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
       setNewData([]);
     }
   }, [pagination.page, products]);
-
-  // useEffect(() => {
-  //   if (warehouseId) {
-  //     setFormValues({
-  //       product_list: {
-  //         product_id: {},
-  //         qty: {},
-  //         sale_unit_id: {},
-  //         net_unit_price: {},
-  //         discount: {},
-  //         tax_rate: {},
-  //         tax: {},
-  //         total: {},
-
-  //         tax_id: {},
-  //       },
-  //     });
-
-  //     setProducts([]);
-
-  //     setProductUnits({
-  //       sale_units: {},
-  //       tax_rate: {},
-  //     });
-  //   }
-  // }, [setFormValues, setProductUnits, setProducts, warehouseId]);
 
   const onSelect = (selectedProduct) => {
     const stock = getWarehouseQuantity(
@@ -162,9 +134,11 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
             <div className="grid grid-cols-2 overflow-hidden p-1 xl:grid-cols-3">
               {products &&
                 newData.map((product) => {
+                  const warehouse = warehouseId ?? warehouseDefault;
+
                   const stock = getWarehouseQuantity(
                     product?.product_qties,
-                    warehouseId
+                    warehouse
                   );
 
                   if (stock > 1)

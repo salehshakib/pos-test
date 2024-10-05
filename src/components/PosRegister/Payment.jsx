@@ -3,9 +3,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { BsCash } from 'react-icons/bs';
 import { FaCreditCard } from 'react-icons/fa';
-import { GoHistory } from 'react-icons/go';
 import { HiOutlineBanknotes } from 'react-icons/hi2';
-import { IoRocketOutline } from 'react-icons/io5';
 import { MdCardGiftcard } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
@@ -40,7 +38,17 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const hideModal = () => setIsModalOpen(false);
+  const hideModal = () => {
+    setIsModalOpen(false);
+
+    const paidAmount = paymentForm.getFieldValue('paid_amount');
+    const giftCardAmount = paymentForm.getFieldValue('gift_card_id');
+    if (
+      parseFloat(paidAmount) < parseFloat(giftCardAmount?.split('-')?.[1] ?? 0)
+    ) {
+      paymentForm.resetFields(['gift_card_id']);
+    }
+  };
 
   const [grandTotal, setGrandTotal] = useState(0);
 
@@ -78,8 +86,9 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
 
     if (!data) return;
 
-    const { discount, shipping_cost, tax_rate, coupon } =
+    const { discount, discount_type, shipping_cost, tax_rate, coupon } =
       formValues.order ?? {};
+
     const { paid_amount } = values ?? {};
     const { sale_at, warehouse_id, cashier_id, customer_id, reference_number } =
       data ?? {};
@@ -124,11 +133,21 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         0
       ) ?? 0;
 
+    let totalCoupon = 0;
+
+    if (formValues?.order?.coupon.type === 'Percentage') {
+      totalCoupon = (totalPrice * formValues?.order?.coupon.rate) / 100;
+    } else if (formValues?.order?.coupon.type === 'Fixed') {
+      totalCoupon = decimalConverter(formValues?.order?.coupon.rate);
+    }
+
     const postObj = {
       ...sanitizeObj(values),
+      gift_card_id: values?.gift_card_id?.split('-')?.[0],
       sale_status: 'Completed',
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
-      discount: decimalConverter(discount),
+      discount_type,
+      discount: decimalConverter(discount - totalCoupon),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
       item: productListArray.length,
@@ -190,11 +209,12 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
       paymentForm.resetFields();
     }
   };
+  const [giftCard, setGiftCard] = useState(null);
 
   return (
     <>
       <div className="bg-[#F5F5F5]">
-        <div className="mx-auto grid grid-cols-3 gap-x-3 gap-y-2 lg:grid-cols-6">
+        <div className="mx-auto grid grid-cols-2 gap-x-3 gap-y-2 md:grid-cols-4">
           <Button
             type="primary"
             icon={<BsCash />}
@@ -224,27 +244,22 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
             type="primary"
             icon={<MdCardGiftcard />}
             className="flex min-w-fit items-center justify-center"
-            onClick={() => showModal('Gift Card')}
+            onClick={() => {
+              const { formValues } = handleSubmit() || {};
+              console.log(formValues);
+              showModal('GiftCard');
+            }}
           >
             Gift Card
           </Button>
 
-          <Button
-            type="primary"
-            icon={<IoRocketOutline />}
-            className="flex min-w-fit items-center justify-center"
-            onClick={() => showModal('Points')}
-          >
-            Points
-          </Button>
-
-          <Button
+          {/* <Button
             type="primary"
             icon={<GoHistory />}
             className="flex min-w-fit items-center justify-center"
           >
             Transactions
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -272,6 +287,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
               <PaymentTypeComponent
                 paymentType={paymentType}
                 grandTotal={grandTotal}
+                setGiftCard={setGiftCard}
+                giftCard={giftCard}
               />
 
               <Col {...mdColLayout}>
@@ -300,6 +317,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
         width={1000}
         destroyOnClose
         loading={isFetching}
+        centered
       >
         <SellInvoice invoice={saleData} />
       </Modal>

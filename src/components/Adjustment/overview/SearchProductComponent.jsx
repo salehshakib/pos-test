@@ -18,6 +18,8 @@ export const SearchProductComponent = () => {
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== '') {
       setKeyword(value);
+    } else {
+      setKeyword(null);
     }
   }, 1000);
 

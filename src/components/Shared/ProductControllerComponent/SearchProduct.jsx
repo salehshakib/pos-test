@@ -1,10 +1,12 @@
 import { AutoComplete, Col, Form, Spin } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
+import { useCurrentUser } from '../../../redux/services/auth/authSlice';
 import { useGetAllProductVariantsQuery } from '../../../redux/services/product/productApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { getWarehouseQuantity } from '../../../utilities/lib/getWarehouseQty';
@@ -33,6 +35,8 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const debounce = useDebouncedCallback(async (value) => {
     if (value.trim() !== '') {
       setKeyword(value);
+    } else {
+      setKeyword(null);
     }
   }, 1000);
 
@@ -93,6 +97,46 @@ export const SearchProduct = ({ setProducts, productId }) => {
         product: { ...product, warehouse_id: warehouseId },
       })) ?? []);
 
+  const user = useSelector(useCurrentUser);
+
+  useEffect(() => {
+    if (keyword) {
+      if (data.results.productvariant?.length === 1) {
+        const option = data.results.productvariant?.[0];
+
+        setProducts((prevProducts) => {
+          const productExists = prevProducts.some((product) => {
+            if (pathname.includes('/pos')) {
+              return product?.id.toString() === option?.id?.toString();
+            }
+
+            const selectedWarehouse =
+              warehouseIdFrom ?? warehouseId ?? user.warehouse_id;
+
+            return (
+              product?.id.toString() === option?.id?.toString() &&
+              product?.warehouse_id?.toString() === selectedWarehouse.toString()
+              // option?.product?.warehouse_id?.toString()
+            );
+          });
+
+          if (!productExists) {
+            return [...prevProducts, { ...option, warehouse_id: warehouseId }];
+          }
+
+          openNotification('warning', 'Product already exists in the list');
+          return prevProducts;
+        });
+
+        setKeyword(null);
+        setValue(null);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyword, data]);
+
+  // console.log(p)
+
   const onSelect = (_, option) => {
     if (!warehouseId && !warehouseIdFrom && isIgnore) {
       openNotification('warning', 'Please select warehouse');
@@ -105,7 +149,17 @@ export const SearchProduct = ({ setProducts, productId }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    if (!stock && ignorePaths.includes(pathname)) {
+    if (
+      !stock &&
+      !pathname.includes('/purchase') &&
+      !pathname.includes('/quotation') &&
+      !pathname.includes('/invoice') &&
+      !pathname.includes('/stock-request') &&
+      !pathname.includes('/print-barcode') &&
+      !pathname.includes('/adjustment') &&
+      !pathname.includes('/stock-transfer') &&
+      !pathname.includes('/transfer')
+    ) {
       openNotification('warning', 'Product is out of stock');
       setValue(null);
       return;
@@ -113,6 +167,9 @@ export const SearchProduct = ({ setProducts, productId }) => {
 
     setProducts((prevProducts) => {
       const productExists = prevProducts.some((product) => {
+        if (pathname.includes('/pos')) {
+          return product?.id.toString() === option?.product?.id?.toString();
+        }
         return (
           product?.id.toString() === option?.product?.id?.toString() &&
           product?.warehouse_id?.toString() ===

@@ -23,30 +23,21 @@ const columns = [
     ),
   },
   {
-    title: 'Created By',
-    dataIndex: 'createdBy',
-    key: 'createdBy',
-    render: (createdBy) => (
+    title: 'Created For',
+    dataIndex: 'createdFor',
+    key: 'createdFor',
+    render: (createdFor) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
-        {createdBy}
+        {createdFor}
       </span>
     ),
   },
-  {
-    title: 'Customer',
-    dataIndex: 'customer',
-    key: 'customer',
-    render: (customer) => (
-      <span className="text-dark   text-xs font-medium md:text-sm">
-        {customer}
-      </span>
-    ),
-  },
-
   {
     title: 'Amount',
     dataIndex: 'amount',
     key: 'amount',
+    align: 'right',
+
     render: (amount) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {amount}
@@ -57,6 +48,7 @@ const columns = [
     title: 'Expense',
     dataIndex: 'expense',
     key: 'expense',
+    align: 'right',
     render: (expense) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {expense}
@@ -67,6 +59,7 @@ const columns = [
     title: 'Balance',
     dataIndex: 'balance',
     key: 'balance',
+    align: 'right',
     render: (balance) => (
       <span className="text-dark   text-xs font-medium md:text-sm">
         {balance}

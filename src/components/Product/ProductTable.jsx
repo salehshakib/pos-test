@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
+import { useCurrentUser } from '../../redux/services/auth/authSlice';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
 import { useCurrency } from '../../redux/services/pos/posSlice';
 import {
@@ -134,6 +135,9 @@ const ProductTable = ({
     setEditId(id);
     dispatch(openEditDrawer());
   };
+  const user = useSelector(useCurrentUser);
+
+  console.log(user);
 
   const dataSource =
     data?.results?.product?.map((item) => {
@@ -180,6 +184,7 @@ const ProductTable = ({
         handleEditStockAndPrice,
         handleDeleteModal,
         handleDeleteVariantModal,
+        warehouseId: user?.warehouse_id,
       };
     }) ?? [];
 

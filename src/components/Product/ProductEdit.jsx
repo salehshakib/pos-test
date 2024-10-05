@@ -27,21 +27,19 @@ import CustomDrawer from '../Shared/Drawer/CustomDrawer';
 import ProductForm from './ProductForm';
 import { ProductStockForm } from './ProductStockForm';
 
-const getVariantIdsByCombinedName = (itemData, name) => {
-  const ids = [];
+// const getVariantIdsByCombinedName = (itemData, name) => {
+//   const ids = [];
 
-  console.log(itemData);
+//   itemData.forEach((item) => {
+//     item.options.forEach((option) => {
+//       if (name.includes(option.name)) {
+//         ids.push(option.id);
+//       }
+//     });
+//   });
 
-  itemData.forEach((item) => {
-    item.options.forEach((option) => {
-      if (name.includes(option.name)) {
-        ids.push(option.id);
-      }
-    });
-  });
-
-  return ids;
-};
+//   return ids;
+// };
 
 // const getVariantIdsByCombinedName = (itemData, name) => {
 //   const ids = [];
@@ -64,6 +62,8 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
   const [fields, setFields] = useState([]);
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
+  const [isPrice, setIsPrice] = useState(false);
+
   const { data, isFetching } = useGetProductDetailsQuery(
     {
       id,
@@ -355,17 +355,15 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       data?.variants
     );
 
-    console.log(deletedVariants);
-
     if (deletedVariants.length) {
-      postObj.deletedVariantIds = deletedVariants;
+      postObj.deleteVariantIds = deletedVariants;
     }
 
     appendToFormData(postObj, formData);
 
-    const { data, error } = await updateProduct({ id, formData });
+    const { data: responseData, error } = await updateProduct({ id, formData });
 
-    if (data?.success) {
+    if (responseData?.success) {
       setId(undefined);
       dispatch(closeEditDrawer());
       setCurrent(0);
@@ -433,10 +431,6 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
       _method: 'PUT',
     };
 
-    // if (stockListArray.length) {
-    //   postObj.stock_list = JSON.stringify(stockListArray);
-    // }
-
     if (priceListArray.length) {
       postObj.price_list = JSON.stringify(priceListArray);
     }
@@ -471,6 +465,7 @@ const ProductListEdit = ({ id, setId, current, setCurrent }) => {
           fields={fields}
           form={form}
           data={data}
+          setIsPrice={setIsPrice}
         />
       ),
     },

@@ -102,6 +102,8 @@ export const SaleForm = ({ data, ...props }) => {
 
   const warehouseSaleRef = useRef(null);
 
+  const giftCard = Form.useWatch('gift_card_id', props.form);
+
   return (
     <>
       <CustomForm {...props} handleSubmit={handleSubmit}>
@@ -158,7 +160,7 @@ export const SaleForm = ({ data, ...props }) => {
 
             <PaymentTypeComponent />
 
-            <Col {...colLayout}>
+            <Col {...(giftCard ? mdColLayout : colLayout)}>
               <StatusComponent />
             </Col>
 

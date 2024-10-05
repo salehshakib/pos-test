@@ -12,7 +12,6 @@ import { useCurrency } from '../../../redux/services/pos/posSlice';
 import { useGetPosSettingsQuery } from '../../../redux/services/settings/generalSettings/generalSettingsApi';
 import { useGlobalParams } from '../../../utilities/hooks/useParams';
 import { showCurrency } from '../../../utilities/lib/currency';
-import { openNotification } from '../../../utilities/lib/openToaster';
 import CustomInput from '../../Shared/Input/CustomInput';
 import CustomSelect from '../../Shared/Select/CustomSelect';
 
@@ -78,22 +77,13 @@ const GiftCardComponent = ({ setGiftCard }) => {
     };
   });
 
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
 
   const onSelect = (option) => {
-    const paidAmount = form.getFieldValue('paid_amount');
-    const payableAmount = parseFloat(paidAmount);
+    // const paidAmount = form.getFieldValue('paid_amount');
+    // const payableAmount = parseFloat(paidAmount);
 
-    if (payableAmount < option.amount) {
-      openNotification(
-        'error',
-        'Can not use giftcard. Sell amount is less than giftcard amount'
-      );
-      form.resetFields(['gift_card_id']);
-      setGiftCard(undefined);
-    } else {
-      setGiftCard(option.amount);
-    }
+    setGiftCard(option.amount);
   };
 
   return (

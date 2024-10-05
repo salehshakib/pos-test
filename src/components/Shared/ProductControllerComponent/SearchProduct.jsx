@@ -68,8 +68,6 @@ export const SearchProduct = ({ setProducts, productId }) => {
     isRelationalParams: !isIgnore,
   });
 
-  console.log(keyword);
-
   if (productId) {
     params.product_id = productId;
   }
@@ -151,7 +149,17 @@ export const SearchProduct = ({ setProducts, productId }) => {
       warehouseId ?? warehouseIdFrom
     );
 
-    if (!stock && ignorePaths.includes(pathname)) {
+    if (
+      !stock &&
+      !pathname.includes('/purchase') &&
+      !pathname.includes('/quotation') &&
+      !pathname.includes('/invoice') &&
+      !pathname.includes('/stock-request') &&
+      !pathname.includes('/print-barcode') &&
+      !pathname.includes('/adjustment') &&
+      !pathname.includes('/stock-transfer') &&
+      !pathname.includes('/transfer')
+    ) {
       openNotification('warning', 'Product is out of stock');
       setValue(null);
       return;

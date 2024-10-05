@@ -23,6 +23,11 @@ export const calculateSummary = (
     discount = (totalPrice * discount) / 100;
   }
 
+  const posDiscount =
+    formValues?.order?.discount_type === 'Percentage'
+      ? (totalPrice * discount) / 100
+      : discount;
+
   const taxRate = calculateTotalTax(totalPrice, tax_rate, discount);
 
   let totalCoupon = 0;
@@ -45,12 +50,20 @@ export const calculateSummary = (
     tax_rate,
     discount,
     shipping_cost,
-    'Fixed',
+    formValues?.order?.discount_type ?? 'Fixed',
     totalCoupon,
     giftCardAmount
   );
 
-  return { totalItems, totalQty, totalPrice, taxRate, grandTotal, totalCoupon };
+  return {
+    totalItems,
+    totalQty,
+    totalPrice,
+    taxRate,
+    grandTotal,
+    totalCoupon,
+    totalDiscount: posDiscount,
+  };
 };
 
 export const calculateTotalPrice = (data) => {

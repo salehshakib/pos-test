@@ -106,7 +106,7 @@ const stockRequestApi = baseApi.injectEndpoints({
     updateStockRequestStatus: build.mutation({
       query: (payload) => {
         return {
-          url: `/${WAREHOUSE}/response/`,
+          url: `/${WAREHOUSE}/response`,
           method: 'POST',
           body: payload,
         };

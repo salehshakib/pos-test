@@ -59,7 +59,12 @@ const transferApi = baseApi.injectEndpoints({
       },
       invalidatesTags: (result) => {
         return result
-          ? [{ type: TRANSFER }, { type: PRODUCT_VARIANTS }, { type: PRODUCT }]
+          ? [
+              { type: TRANSFER },
+              { type: PRODUCT_VARIANTS },
+              { type: PRODUCT },
+              { type: STOCK_REQUEST },
+            ]
           : [];
       },
     }),

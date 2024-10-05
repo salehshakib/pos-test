@@ -27,6 +27,29 @@ export function formatProductData(data, productName, sku) {
   });
 }
 
+// export function formatVariantsData(variants, attributes) {
+//   const attributesMap = {};
+
+//   variants?.forEach((variant) => {
+//     variant?.product_variant_attribute_options?.forEach((option) => {
+//       const { attribute_id, attribute } = option.attribute_option;
+
+//       if (!attributesMap?.[attribute_id]) {
+//         attributesMap[attribute_id] = {
+//           key: attribute_id.toString(),
+//           id: attribute_id.toString(),
+//           name: attribute?.name,
+//           options: attributes?.find(
+//             (item) => item.id.toString() === attribute_id.toString()
+//           ).attribute_options,
+//         };
+//       }
+//     });
+//   });
+
+//   return Object.values(attributesMap);
+// }
+
 export function formatVariantsData(variants, attributes) {
   const attributesMap = {};
 
@@ -34,20 +57,27 @@ export function formatVariantsData(variants, attributes) {
     variant?.product_variant_attribute_options?.forEach((option) => {
       const { attribute_id, attribute } = option.attribute_option;
 
+      // If the attribute is not in the attributesMap, add it
       if (!attributesMap?.[attribute_id]) {
-        attributesMap[attribute_id] = {
-          key: attribute_id.toString(),
-          id: attribute_id.toString(),
-          name: attribute?.name,
-          options: attributes?.find(
-            (item) => item.id.toString() === attribute_id.toString()
-          ).attribute_options,
-        };
+        const matchingAttribute = attributes.find(
+          (item) => item.id.toString() === attribute_id.toString()
+        );
+
+        if (matchingAttribute) {
+          attributesMap[attribute_id] = {
+            key: attribute_id.toString(),
+            id: attribute_id.toString(),
+            name: matchingAttribute?.name, // Set the name of the attribute
+            options: matchingAttribute?.attribute_options.map((opt) => ({
+              ...opt,
+            })),
+          };
+        }
       }
     });
   });
 
-  return Object.values(attributesMap).reverse();
+  return Object.values(attributesMap);
 }
 
 export function extractAttributeValues(attributeData) {

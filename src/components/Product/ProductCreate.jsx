@@ -204,6 +204,9 @@ const ProductCreate = () => {
         });
       } else {
         setCurrent(0);
+        navigate(`${window.location.pathname}`, {
+          replace: true,
+        });
         dispatch(closeCreateDrawer());
       }
     }

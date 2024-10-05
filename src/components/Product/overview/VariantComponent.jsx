@@ -38,6 +38,11 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   const [variantOptions, setVariantOptions] = useState({});
   const [variantAttributesName, setVariantAttributesName] = useState({});
 
+  console.log(dataSource);
+
+  console.log(variantOptions);
+  console.log(variantAttributesName);
+
   const onSelect = (value, option) => {
     const selected =
       option.map((item) => {
@@ -58,9 +63,14 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     if (editData && attributes) {
       const options = formatVariantsData(editData?.variants, attributes);
 
-      const result = extractAttributeValues(editData?.variants);
+      console.log(editData.variants);
+      console.log(attributes);
+
+      console.log(options);
 
       setDataSource(options);
+
+      const result = extractAttributeValues(editData?.variants);
 
       setVariantOptions(result.attributeIds);
       setVariantAttributesName(result.attributeValues);

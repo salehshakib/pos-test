@@ -170,7 +170,8 @@ export const DifferentPriceComponent = ({
         (warehouse) => warehouse?.id.toString() === warehouse_id?.toString()
       )?.name;
 
-      formValues.price_list.price[uid] = formValues.price_list.price[uid] ?? 0;
+      formValues.price_list.price[uid] =
+        formValues.price_list.price[uid] ?? product?.selling_price;
 
       return {
         id: uid,

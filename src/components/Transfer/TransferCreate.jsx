@@ -1,8 +1,12 @@
 import { Form } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import {
+  closeCreateDrawer,
+  openCreateDrawer,
+} from '../../redux/services/drawer/drawerSlice';
 import { useCreateTransferMutation } from '../../redux/services/transfer/transferApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
@@ -23,6 +27,14 @@ const TransferCreate = () => {
   const { isCreateDrawerOpen } = useSelector((state) => state.drawer);
 
   const [createTransfer, { isLoading }] = useCreateTransferMutation();
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state?.selectedProduct) {
+      dispatch(openCreateDrawer());
+    }
+  }, [state, dispatch]);
 
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();

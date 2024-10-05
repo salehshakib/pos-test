@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TransactionSummary } from '../../ReusableComponent/TransactionSummary';
 import { PurchaseProductTable } from './PurchaseProductTable';
@@ -106,8 +107,11 @@ export const CustomPurchaseProductComponent = forwardRef(
         operation_value: {},
       },
     });
-
     const [products, setProducts] = useState([]);
+
+    const { state } = useLocation();
+    const navigate = useNavigate();
+    const { selectedProduct } = state ?? {};
 
     const resetFormAndProducts = useCallback(() => {
       setFormValues({
@@ -127,8 +131,11 @@ export const CustomPurchaseProductComponent = forwardRef(
           operation_value: {},
         },
       });
-      setProducts([]);
-    }, []);
+      if (selectedProduct) {
+        setProducts([selectedProduct]);
+        navigate(window.location.pathname, { replace: true });
+      }
+    }, [navigate, selectedProduct]);
 
     const handleCustomSubmit = useCallback(() => formValues, [formValues]);
 

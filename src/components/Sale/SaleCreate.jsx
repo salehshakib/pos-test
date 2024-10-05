@@ -1,9 +1,13 @@
 import { Form } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { closeCreateDrawer } from '../../redux/services/drawer/drawerSlice';
+import {
+  closeCreateDrawer,
+  openCreateDrawer,
+} from '../../redux/services/drawer/drawerSlice';
 import { useCreateSaleMutation } from '../../redux/services/sale/saleApi';
 import { appendToFormData } from '../../utilities/lib/appendFormData';
 import {
@@ -27,6 +31,14 @@ export const SaleCreate = ({ setId }) => {
   const [createSale, { isLoading }] = useCreateSaleMutation();
 
   const { pettyCashId } = useSelector((state) => state.pettyCash);
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state?.selectedProduct) {
+      dispatch(openCreateDrawer());
+    }
+  }, [state, dispatch]);
 
   const handleSubmit = async (values, { formValues }) => {
     const formData = new FormData();

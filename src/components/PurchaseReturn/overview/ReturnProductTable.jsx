@@ -292,7 +292,7 @@ export const ReturnProductTable = ({
       ),
       purchaseQty,
       returned_qty,
-      availableQty: purchaseQty - returned_qty,
+      availableQty: Number(purchaseQty) - Number(returned_qty),
       delete: true,
       discount: showCurrency(formValues.product_list.discount[id], currency),
       tax: showCurrency(formValues.product_list.tax[id], currency),

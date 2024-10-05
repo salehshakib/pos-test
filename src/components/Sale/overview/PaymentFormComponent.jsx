@@ -198,8 +198,6 @@ export const PaymentTypeComponent = () => {
 
   const [giftCard, setGiftCard] = useState(undefined);
 
-  console.log(Number(paidAmount));
-
   return (
     (paymentStatus === 'Paid' || paymentStatus === 'Partial') && (
       <>

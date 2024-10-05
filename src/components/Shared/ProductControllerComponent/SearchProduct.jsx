@@ -2,7 +2,7 @@ import { AutoComplete, Col, Form, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { fullColLayout } from '../../../layout/FormLayout';
@@ -40,6 +40,21 @@ export const SearchProduct = ({ setProducts, productId }) => {
     }
   }, 1000);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const fetchAll = searchParams.get('fetch-all');
+
+  console.log(fetchAll);
+
+  console.log(fetchAll);
+
+  const removeQueryParam = () => {
+    setSearchParams((params) => {
+      params.delete('fetch-all');
+      return params;
+    });
+  };
+
   const isIgnore =
     ignorePaths.filter((item) => pathname.includes(item)).length === 0;
 
@@ -49,7 +64,7 @@ export const SearchProduct = ({ setProducts, productId }) => {
     baseParams.need_qty = 1;
   }
 
-  if (!keyword) {
+  if (!keyword && fetchAll && !fetchAll === 'true') {
     baseParams.page = 1;
     baseParams.perPage = 20;
     baseParams.allData = 1;
@@ -75,6 +90,22 @@ export const SearchProduct = ({ setProducts, productId }) => {
   const { data, isFetching } = useGetAllProductVariantsQuery({
     params,
   });
+
+  useEffect(() => {
+    if (fetchAll === 'true' && data) {
+      const allProducts =
+        data?.results?.productvariant?.map((product) => ({
+          ...product,
+          warehouse_id: warehouseId,
+        })) ?? [];
+
+      setProducts(allProducts);
+      removeQueryParam(); // Uncomment if needed
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAll, data]);
+
+  // console.log();
 
   const loadingContent = (
     <div className="flex items-center justify-center">

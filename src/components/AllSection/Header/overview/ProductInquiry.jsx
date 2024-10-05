@@ -11,12 +11,13 @@ import { openNotification } from '../../../../utilities/lib/openToaster';
 
 const ProductInquiry = ({ setOpenInquiry }) => {
   const user = useSelector(useCurrentUser);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [inputValue, setInputValue] = useState('');
 
   const { data, isFetching } = useGetAllProductVariantsQuery({
-    params: { parent: 1, child: 1, keyword: inputValue },
+    params: { parent: 1, child: 1 },
   });
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
   const loadingContent = (
     <div className="flex items-center justify-center">

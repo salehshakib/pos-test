@@ -39,6 +39,8 @@ export const CustomDifferentPriceComponent = ({
 
   const [products, setProducts] = useState([]);
 
+  console.log(products);
+
   const handleCustomSubmit = useCallback(() => {
     return formValues;
   }, [formValues]);

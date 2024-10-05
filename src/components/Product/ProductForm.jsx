@@ -180,6 +180,7 @@ const AlertComponent = () => {
               type={'number'}
               required={true}
               name={'qty'}
+              tooltip="Ignore this field if product has variant"
             />
           </Col>
         )}

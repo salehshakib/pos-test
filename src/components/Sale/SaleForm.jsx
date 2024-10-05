@@ -123,8 +123,6 @@ export const SaleForm = ({ data, ...props }) => {
     if (paidAmount && paymentStatus === 'Partial') {
       const productData = productsRef.current ? productsRef.current() : null;
 
-      console.log(productData);
-
       const { grandTotal } = calculateSummary(
         productData,
         tax_rate ?? 0,
@@ -132,8 +130,6 @@ export const SaleForm = ({ data, ...props }) => {
         shipping_cost,
         discountType
       );
-
-      console.log(grandTotal);
 
       setTotal(grandTotal);
     }

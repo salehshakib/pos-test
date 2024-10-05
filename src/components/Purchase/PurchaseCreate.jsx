@@ -131,6 +131,11 @@ export const PurchaseCreate = () => {
       petty_cash_id: user?.petty_cash_id,
     };
 
+    if (payment_status === 'Partial') {
+      // postObj.paid_amount = decimalConverter(paid_amount);
+      postObj.due = decimalConverter(grandTotal - paid_amount);
+    }
+
     if (attachment?.[0].originFileObj) {
       postObj.attachment = attachment?.[0].originFileObj;
     }

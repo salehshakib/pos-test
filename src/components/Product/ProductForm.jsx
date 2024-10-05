@@ -363,10 +363,14 @@ const ProductSellingAmount = () => {
 
   useEffect(() => {
     if (profit_margin > 0) {
-      const sale_amount = productPrice + (productPrice * profit_margin) / 100;
+      const sale_amount =
+        parseFloat(productPrice) +
+        (parseFloat(productPrice) * parseFloat(profit_margin)) / 100;
+
       form.setFieldValue('sale_amount', sale_amount);
 
-      const profitAmount = sale_amount - productPrice;
+      const profitAmount = parseFloat(sale_amount) - parseFloat(productPrice);
+
       form.setFieldValue('profit_amount', profitAmount);
     } else {
       form.setFieldValue('sale_amount', productPrice);

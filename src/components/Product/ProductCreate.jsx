@@ -204,6 +204,9 @@ const ProductCreate = () => {
         });
       } else {
         setCurrent(0);
+        navigate(`${window.location.pathname}`, {
+          replace: true,
+        });
         dispatch(closeCreateDrawer());
       }
     }
@@ -302,7 +305,8 @@ const ProductCreate = () => {
     }
   };
 
-  const [setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const removeQueryParam = () => {
     setSearchParams((params) => {
       params.delete('fetch-all');

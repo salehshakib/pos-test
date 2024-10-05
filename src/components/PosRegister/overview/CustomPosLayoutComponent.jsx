@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import { Filter } from '../../../pages/Dashboard/PosRegister/Filter';
-import { isDev, mode } from '../../../utilities/configs/base_url';
+import { mode } from '../../../utilities/configs/base_url';
 import { openNotification } from '../../../utilities/lib/openToaster';
 import Logo from '../../AllSection/Header/Logo';
 import Profile from '../../AllSection/Header/Profile';
@@ -121,12 +121,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                     {mode.toUpperCase()} MODE
                   </Tag>
                 )}
-
-                {isDev.toLowerCase() === 'true' && (
-                  <Tag color="purple" className="font-semibold">
-                    DEV MODE
-                  </Tag>
-                )}
               </div>
               <Profile />
             </div>
@@ -158,12 +152,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                 {mode === 'local' && (
                   <Tag color="processing" className="font-semibold">
                     {mode.toUpperCase()} MODE
-                  </Tag>
-                )}
-
-                {isDev.toLowerCase() === 'true' && (
-                  <Tag color="purple" className="font-semibold">
-                    DEV MODE
                   </Tag>
                 )}
               </div>

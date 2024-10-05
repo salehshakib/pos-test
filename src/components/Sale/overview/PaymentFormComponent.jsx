@@ -24,33 +24,6 @@ const PaymentType = () => {
   };
   const { data } = useGetPosSettingsQuery(params);
 
-  // const options = [
-  //   data?.cash_payment
-  //     ? {
-  //         value: 'Cash',
-  //         label: 'Cash',
-  //       }
-  //     : null,
-  //   data?.card_payment
-  //     ? {
-  //         value: 'Card',
-  //         label: 'Card',
-  //       }
-  //     : null,
-  //   data?.cheque_payment
-  //     ? {
-  //         value: 'Cheque',
-  //         label: 'Cheque',
-  //       }
-  //     : null,
-  //   data?.gift_card_payment
-  //     ? {
-  //         value: 'Gift Card',
-  //         label: 'Gift Card',
-  //       }
-  //     : null,
-  // ].filter(Boolean);
-
   const options = useMemo(() => {
     return [
       data?.cash_payment

@@ -2,10 +2,8 @@ import { Button, Form, Input, InputNumber, Table } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { WAREHOUSE_HEAD_OFFICE } from '../../../../assets/data/headoffice';
 import { useCurrency } from '../../../../redux/services/pos/posSlice';
 import { showCurrency } from '../../../../utilities/lib/currency';
-import { getWarehouseQuantity } from '../../../../utilities/lib/getWarehouseQty';
 import {
   findNonMatchingItems,
   formatProductData,
@@ -210,17 +208,12 @@ const ProductVariantOption = ({
 
       const variantDatasource =
         combination?.map((item) => {
-          const qty = getWarehouseQuantity(
-            item.product_qties,
-            WAREHOUSE_HEAD_OFFICE
-          );
-
           return {
             key: item.key,
             name: item.name,
             sku: item.sku,
             iemi: item.iemi,
-            qty: qty,
+            qty: item.qty,
             price: item.price,
             cost: item.cost,
             variant_attribute_ids: item.variant_attribute_ids,

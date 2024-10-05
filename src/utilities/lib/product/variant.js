@@ -1,4 +1,6 @@
+import { WAREHOUSE_HEAD_OFFICE } from '../../../assets/data/headoffice';
 import { generateRandomCode } from '../generateCode';
+import { getWarehouseQuantity } from '../getWarehouseQty';
 
 export function formatProductData(data, productName, sku) {
   return data.map((item) => {
@@ -13,13 +15,15 @@ export function formatProductData(data, productName, sku) {
       (option) => option.attribute_option.id
     );
 
+    const qty = getWarehouseQuantity(item.product_qties, WAREHOUSE_HEAD_OFFICE);
+
     return {
       key,
       id: item.id,
       name,
       sku: skuValue,
       iemi: item.imei_number ?? '',
-      qty: item.qty ?? 0,
+      qty: qty ?? 0,
       price: item.selling_price,
       cost: item.buying_price,
       variant_attribute_ids,
@@ -27,28 +31,28 @@ export function formatProductData(data, productName, sku) {
   });
 }
 
-// export function formatVariantsData(variants, attributes) {
-//   const attributesMap = {};
+export function formatVariantsData(variants, attributes) {
+  const attributesMap = {};
 
-//   variants?.forEach((variant) => {
-//     variant?.product_variant_attribute_options?.forEach((option) => {
-//       const { attribute_id, attribute } = option.attribute_option;
+  variants?.forEach((variant) => {
+    variant?.product_variant_attribute_options?.forEach((option) => {
+      const { attribute_id, attribute } = option.attribute_option;
 
-//       if (!attributesMap?.[attribute_id]) {
-//         attributesMap[attribute_id] = {
-//           key: attribute_id.toString(),
-//           id: attribute_id.toString(),
-//           name: attribute?.name,
-//           options: attributes?.find(
-//             (item) => item.id.toString() === attribute_id.toString()
-//           ).attribute_options,
-//         };
-//       }
-//     });
-//   });
+      if (!attributesMap?.[attribute_id]) {
+        attributesMap[attribute_id] = {
+          key: attribute_id.toString(),
+          id: attribute_id.toString(),
+          name: attribute?.name,
+          options: attributes?.find(
+            (item) => item.id.toString() === attribute_id.toString()
+          ).attribute_options,
+        };
+      }
+    });
+  });
 
-//   return Object.values(attributesMap);
-// }
+  return Object.values(attributesMap);
+}
 
 // export function formatVariantsData(variants, attributes) {
 //   const attributesMap = {};
@@ -80,77 +84,53 @@ export function formatProductData(data, productName, sku) {
 //   return Object.values(attributesMap);
 // }
 
-export function formatVariantsData(variants, attributes, productName) {
-  const attributesMap = {};
+// export function formatVariantsData(variants, attributes, productName) {
+//   const attributesMap = {};
 
-  variants?.forEach((variant) => {
-    variant?.product_variant_attribute_options?.forEach((option) => {
-      const { attribute_id, attribute } = option.attribute_option;
+//   variants?.forEach((variant) => {
+//     variant?.product_variant_attribute_options?.forEach((option) => {
+//       const { attribute_id, attribute } = option.attribute_option;
 
-      // If the attribute is not in the attributesMap, add it
-      if (!attributesMap?.[attribute_id]) {
-        const matchingAttribute = attributes.find(
-          (item) => item.id.toString() === attribute_id.toString()
-        );
+//       // If the attribute is not in the attributesMap, add it
+//       if (!attributesMap?.[attribute_id]) {
+//         const matchingAttribute = attributes.find(
+//           (item) => item.id.toString() === attribute_id.toString()
+//         );
 
-        if (matchingAttribute) {
-          attributesMap[attribute_id] = {
-            key: attribute_id.toString(),
-            id: attribute_id.toString(),
-            name: matchingAttribute?.name, // Set the name of the attribute
-            options: matchingAttribute?.attribute_options.map((opt) => ({
-              ...opt,
-            })),
-          };
-        }
-      }
-    });
-  });
+//         if (matchingAttribute) {
+//           attributesMap[attribute_id] = {
+//             key: attribute_id.toString(),
+//             id: attribute_id.toString(),
+//             name: matchingAttribute?.name, // Set the name of the attribute
+//             options: matchingAttribute?.attribute_options.map((opt) => ({
+//               ...opt,
+//             })),
+//           };
+//         }
+//       }
+//     });
+//   });
 
-  // Custom sorting logic based on variant names
-  variants?.forEach((variant) => {
-    const variantName = variant.name.split(productName)[1];
+//   // Custom sorting logic based on variant names
+//   variants?.forEach((variant) => {
+//     const variantName = variant.name.split(productName)[1];
 
-    // Example: "RED M" or "M RED"
+//     // Example: "RED M" or "M RED"
 
-    // Determine the order based on the variant name
-    if (variantName.includes('RED') && variantName.includes('M')) {
-      if (variantName.startsWith('RED')) {
-        // Sort by color first, then size
-        attributesMap = sortAttributes(attributesMap, ['Color', 'Size']);
-      } else if (variantName.startsWith('M')) {
-        // Sort by size first, then color
-        attributesMap = sortAttributes(attributesMap, ['Size', 'Color']);
-      }
-    }
-  });
+//     // Determine the order based on the variant name
+//     if (variantName.includes('RED') && variantName.includes('M')) {
+//       if (variantName.startsWith('RED')) {
+//         // Sort by color first, then size
+//         attributesMap = sortAttributes(attributesMap, ['Color', 'Size']);
+//       } else if (variantName.startsWith('M')) {
+//         // Sort by size first, then color
+//         attributesMap = sortAttributes(attributesMap, ['Size', 'Color']);
+//       }
+//     }
+//   });
 
-  return Object.values(attributesMap);
-}
-
-function sortAttributes(attributesMap, sortOrder) {
-  return Object.keys(attributesMap)
-    .sort((a, b) => {
-      const aIndex = sortOrder.indexOf(attributesMap[a].name);
-      const bIndex = sortOrder.indexOf(attributesMap[b].name);
-
-      // If both attributes are found in sortOrder, compare by index
-      if (aIndex !== -1 && bIndex !== -1) {
-        return aIndex - bIndex;
-      }
-
-      // If only one is found, prioritize the found one
-      if (aIndex !== -1) return -1;
-      if (bIndex !== -1) return 1;
-
-      // If neither is found, sort by default
-      return 0;
-    })
-    .reduce((sortedMap, key) => {
-      sortedMap[key] = attributesMap[key];
-      return sortedMap;
-    }, {});
-}
+//   return Object.values(attributesMap);
+// }
 
 export function extractAttributeValues(attributeData) {
   const attributeValues = {};

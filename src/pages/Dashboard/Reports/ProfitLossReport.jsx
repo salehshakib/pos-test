@@ -76,7 +76,12 @@ const ProfitLossReport = () => {
         </div>
       )}
       {data?.results?.profit_loss && (
-        <Descriptions bordered className="mb-10" layout="horizontal" column={1}>
+        <Descriptions
+          bordered
+          className="my-10 mx-auto max-w-xl"
+          layout="horizontal"
+          column={1}
+        >
           {Object.entries(data?.results?.profit_loss)?.map(([key, value]) => (
             <Descriptions.Item
               key={key}

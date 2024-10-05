@@ -9,6 +9,7 @@ import {
   MdOutlineMailLock,
   MdOutlineSettings,
   MdOutlineSpaceDashboard,
+  MdSms,
 } from 'react-icons/md';
 import { PiBroomFill } from 'react-icons/pi';
 import { SlWallet } from 'react-icons/sl';
@@ -34,6 +35,7 @@ import { reportPaths } from './ReportRoutes/report.routes';
 import { returnPaths } from './ReturnRoutes/return.routes';
 import { salePaths } from './SaleRoutes/sale.routes';
 import { settingPaths } from './SettingRoutes/settings.routes';
+import { smsPaths } from './SmsManager/Sms.routes';
 
 export const adminPaths = [
   {
@@ -113,6 +115,12 @@ export const adminPaths = [
     path: 'email',
     icon: MdOutlineMailLock,
     children: emailPaths,
+  },
+  {
+    name: 'SMS Manager',
+    path: 'sms',
+    icon: MdSms,
+    children: smsPaths,
   },
   {
     name: 'Settings',

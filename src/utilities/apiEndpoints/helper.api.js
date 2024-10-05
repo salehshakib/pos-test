@@ -8,3 +8,5 @@ export const NOTIFICATION = 'helpers/notification';
 export const NOTIFICATION_READ = 'helpers/notification/read';
 
 export const EMAIL_TEMPLATE = 'helpers/email-template';
+
+export const SMS_TEMPLATE = 'helpers/message-template';

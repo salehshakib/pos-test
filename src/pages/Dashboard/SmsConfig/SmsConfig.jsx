@@ -2,9 +2,9 @@ import { PageContainer } from '@ant-design/pro-layout';
 
 import { GlobalUtilityStyle } from '../../../container/Styled';
 import { useGetAllEmailSettingsQuery } from '../../../redux/services/settings/emailSettings/emailSettingsApi';
-import { EmailConfigForm } from './EmailConfigForm';
+import SmsConfigForm from './SmsConfigForm';
 
-export const EmailConfig = () => {
+const SmsConfig = () => {
   const { data, isLoading } = useGetAllEmailSettingsQuery();
 
   return (
@@ -17,13 +17,15 @@ export const EmailConfig = () => {
             </div>
           ),
           subTitle: (
-            <div className="py-1 text-2xl lg:text-3xl">Email Settings</div>
+            <div className="py-1 text-2xl lg:text-3xl">SMS Settings</div>
           ),
         }}
         loading={isLoading}
       >
-        <EmailConfigForm data={data} />
+        <SmsConfigForm data={data} />
       </PageContainer>
     </GlobalUtilityStyle>
   );
 };
+
+export default SmsConfig;

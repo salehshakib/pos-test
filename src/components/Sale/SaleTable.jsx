@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { GlobalUtilityStyle } from '../../container/Styled';
 import { openEditDrawer } from '../../redux/services/drawer/drawerSlice';
@@ -103,6 +104,14 @@ export const SaleTable = ({
   };
   const format = useFormatDate();
 
+  const navigate = useNavigate();
+
+  const handleSaleReturn = (refId) => {
+    navigate(`/return/sale-return?ref_id=${refId}`, {
+      replace: true,
+    });
+  };
+
   const dataSource =
     data?.results?.sale?.map((item) => {
       const {
@@ -134,6 +143,7 @@ export const SaleTable = ({
         handleDeleteModal,
         handleDetailsModal,
         handlePrintModal,
+        handleSaleReturn,
       };
     }) ?? [];
 

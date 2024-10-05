@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IoIosLock } from 'react-icons/io';
+import { IoReturnUpBack } from 'react-icons/io5';
 import {
   MdDelete,
   MdEditDocument,
@@ -94,8 +95,34 @@ const CustomTable = ({
   const isDeletePermitted = usePermission(route, 'delete');
   const isStatusPermitted = usePermission(route, 'status');
 
+  console.log(route);
+
   const getMenuItems = (record) =>
     [
+      route === 'purchase' &&
+        record.handlePurchaseReturn && {
+          key: 'purchase-return',
+          icon: <IoReturnUpBack size={20} />,
+          label: (
+            <div className="flex items-center justify-start gap-3">
+              Purchase Return
+            </div>
+          ),
+          onClick: () => record?.handlePurchaseReturn(record?.reference),
+          disabled: !record.handlePurchaseReturn,
+        },
+      route === 'sales/sale' &&
+        record.handleSaleReturn && {
+          key: 'purchase-return',
+          icon: <IoReturnUpBack size={20} />,
+          label: (
+            <div className="flex items-center justify-start gap-3">
+              Sale Return
+            </div>
+          ),
+          onClick: () => record?.handleSaleReturn(record?.reference),
+          disabled: !record.handleSaleReturn,
+        },
       isEditPermitted && {
         key: 'edit',
         icon: <MdEditSquare size={20} />,

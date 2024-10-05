@@ -63,9 +63,13 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
 
   useEffect(() => {
     if (editData && attributes) {
-      const options = formatVariantsData(editData?.variants, attributes);
+      const options = formatVariantsData(
+        editData?.variants,
+        attributes,
+        editData?.name
+      );
 
-      console.log(editData.variants);
+      console.log(editData);
       console.log(attributes);
 
       console.log(options);
@@ -92,6 +96,8 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
     buying_price,
     selling_price
   );
+
+  console.log(combination);
 
   return (
     <>

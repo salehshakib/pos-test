@@ -147,7 +147,9 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
       sale_status: 'Completed',
       sale_at: dayjs(sale_at).format('YYYY-MM-DD'),
       discount_type,
-      discount: decimalConverter(discount - totalCoupon),
+      discount: decimalConverter(
+        parseFloat(discount ?? 0) - parseFloat(totalCoupon ?? 0)
+      ),
       shipping_cost: decimalConverter(shipping_cost),
       tax_rate: decimalConverter(tax_rate),
       item: productListArray.length,

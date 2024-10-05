@@ -567,8 +567,6 @@ export const CustomPosProductsComponent = forwardRef(
     const currency = useSelector(useCurrency);
     const [additionalForm] = Form.useForm();
 
-    // console.log(warehouseId)
-
     const [formValues, setFormValues] = useState({
       product_list: {
         qty: {},

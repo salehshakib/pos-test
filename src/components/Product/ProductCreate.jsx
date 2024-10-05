@@ -164,7 +164,6 @@ const ProductCreate = () => {
       }
     }
 
-    console.log(variantData.selectedRowData);
     if (has_variant) {
       const variantListArray = variantData?.selectedRowData.map((item) => {
         return {

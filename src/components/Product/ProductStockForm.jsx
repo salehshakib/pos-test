@@ -34,8 +34,6 @@ export const ProductStockForm = ({ data, ...props }) => {
     props.handleSubmit(values, { formValues });
   };
 
-  // console.log(data);
-
   return (
     <CustomForm {...props} handleSubmit={handleSubmit}>
       {/* <Tabs

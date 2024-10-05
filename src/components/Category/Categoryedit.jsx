@@ -66,11 +66,6 @@ const Categoryedit = ({ id, setId }) => {
 
     let deleteAttachmentIds = getMissingUids(fields, values, 'attachment');
 
-    console.log(fields);
-    console.log(values);
-
-    console.log(deleteAttachmentIds);
-
     if (deleteAttachmentIds.length > 0) {
       postObj.deleteAttachmentIds = deleteAttachmentIds;
     }

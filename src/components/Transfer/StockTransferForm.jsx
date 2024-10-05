@@ -171,8 +171,6 @@ export const StockTransferForm = ({
   useEffect(() => {
     if (!updatedProductList?.product_list) return;
 
-    console.log(updatedProductList);
-
     const calculatedTotalItems =
       Object.keys(updatedProductList?.product_list?.qty).length ?? 0;
 

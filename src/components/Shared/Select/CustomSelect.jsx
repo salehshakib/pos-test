@@ -132,8 +132,13 @@ const CustomSelect = ({
   customStyle = false, // for mb-0
   value,
 }) => {
-  const filterOption = (input, option) =>
-    (option?.label ?? '').toLocaleLowerCase().includes(input.toLowerCase());
+  const filterOption = (input, option) => {
+    if (typeof option.label !== 'number') {
+      return (option.label ?? '').toLowerCase().includes(input.toLowerCase());
+    } else {
+      return option.label.toString().includes(input);
+    }
+  };
 
   const filterSort = (optionA, optionB) =>
     (optionA?.label ?? '')

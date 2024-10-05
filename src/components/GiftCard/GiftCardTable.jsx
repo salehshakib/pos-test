@@ -114,8 +114,7 @@ const GiftCardTable = ({
         expired_date,
         is_active,
         created_at,
-        created_by,
-        customers,
+        customer_id,
       } = item ?? {};
 
       return {
@@ -126,8 +125,7 @@ const GiftCardTable = ({
         balance: showCurrency(amount - expense, currency),
         expiredDate: formatDate(expired_date, format),
         status: is_active,
-        customer: customers?.name ?? 'N/A',
-        createdBy: created_by ?? 'N/A',
+        createdFor: customer_id ? 'Customer' : ('User' ?? 'N/A'),
         created_at,
         handleStatusModal,
         handleEdit,

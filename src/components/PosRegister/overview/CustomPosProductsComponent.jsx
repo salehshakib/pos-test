@@ -644,6 +644,8 @@ export const CustomPosProductsComponent = forwardRef(
       setProductEditModal(false);
     };
 
+    console.log(products);
+
     const dataSource = products?.map((product) => {
       const {
         id,

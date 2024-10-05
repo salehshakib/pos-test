@@ -189,7 +189,8 @@ export const SearchProduct = ({ setProducts, productId }) => {
       !pathname.includes('/print-barcode') &&
       !pathname.includes('/adjustment') &&
       !pathname.includes('/stock-transfer') &&
-      !pathname.includes('/transfer')
+      !pathname.includes('/transfer') &&
+      !pathname.includes('/products/product')
     ) {
       openNotification('warning', 'Product is out of stock');
       setValue(null);

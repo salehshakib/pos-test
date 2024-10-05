@@ -181,9 +181,9 @@ export const updateVariantOptions = (
 export function getUniqueAttributeIds(variants) {
   const attributeIds = new Set();
 
-  variants.forEach((variant) => {
-    variant.product_variant_attribute_options.forEach((option) => {
-      attributeIds.add(option.attribute_option.attribute_id.toString());
+  variants?.forEach((variant) => {
+    variant?.product_variant_attribute_options?.forEach((option) => {
+      attributeIds.add(option?.attribute_option.attribute_id?.toString());
     });
   });
 

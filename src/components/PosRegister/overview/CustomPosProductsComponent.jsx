@@ -35,7 +35,10 @@ import {
   onQuantityChange,
 } from '../../../utilities/lib/productTable/counters';
 import { calculateUnitCost } from '../../../utilities/lib/updateFormValues/calculateById';
-import { updateFormValues } from '../../../utilities/lib/updateFormValues/updateFormValues';
+import {
+  updateFormValues,
+  updateFormValuesUsingSetter,
+} from '../../../utilities/lib/updateFormValues/updateFormValues';
 import { ProductFormComponent } from '../../ReusableComponent/ProductDetailsUpdateForm';
 import CustomForm from '../../Shared/Form/CustomForm';
 import CustomInput from '../../Shared/Input/CustomInput';
@@ -633,15 +636,15 @@ export const CustomPosProductsComponent = forwardRef(
       additionalForm.resetFields();
     };
 
-    const [summary, setSummary] = useState({
-      totalItems: 0,
-      totalQuantity: 0,
-      totalPrice: 0,
-      taxRate: 0,
-      grandTotal: 0,
-      totalCoupon: 0,
-      totalDiscount: 0,
-    });
+    // const [summary, setSummary] = useState({
+    //   totalItems: 0,
+    //   totalQuantity: 0,
+    //   totalPrice: 0,
+    //   taxRate: 0,
+    //   grandTotal: 0,
+    //   totalCoupon: 0,
+    //   totalDiscount: 0,
+    // });
 
     // const {
     //   totalItems,
@@ -673,27 +676,27 @@ export const CustomPosProductsComponent = forwardRef(
       formValues.order.shipping_cost ?? 0
     );
 
-    useEffect(() => {
-      setSummary({
-        totalItems,
-        totalQuantity,
-        totalPrice,
-        taxRate,
-        grandTotal,
-        totalCoupon,
-        totalDiscount,
-      });
-    }, [
-      totalItems,
-      totalQuantity,
-      totalPrice,
-      taxRate,
-      grandTotal,
-      totalCoupon,
-      totalDiscount,
-    ]);
+    // useEffect(() => {
+    //   setSummary({
+    //     totalItems,
+    //     totalQuantity,
+    //     totalPrice,
+    //     taxRate,
+    //     grandTotal,
+    //     totalCoupon,
+    //     totalDiscount,
+    //   });
+    // }, [
+    //   totalItems,
+    //   totalQuantity,
+    //   totalPrice,
+    //   taxRate,
+    //   grandTotal,
+    //   totalCoupon,
+    //   totalDiscount,
+    // ]);
 
-    console.log(summary);
+    // console.log(summary);
 
     const handleFormValuesSubmit = useCallback(() => {
       return formValues;
@@ -731,6 +734,92 @@ export const CustomPosProductsComponent = forwardRef(
     const hideModal = () => {
       setProductEditModal(false);
     };
+
+    // const [dataSource, setDataSource] = useState([]);
+
+    // useEffect(() => {
+    //   if (products.length) {
+    //     const history = products?.map((product) => {
+    //       const {
+    //         id,
+    //         name,
+    //         sku,
+    //         // selling_price: unit_cost,
+    //         product_prices,
+    //         sale_units,
+    //         taxes,
+    //         tax_method,
+    //         product_qties,
+    //       } = product ?? {};
+
+    //       function getWarehousePrice(product_prices, warehouse_id) {
+    //         const warehouse = product_prices?.find(
+    //           (item) =>
+    //             item?.warehouse_id?.toString() === warehouse_id?.toString()
+    //         );
+
+    //         return warehouse ? warehouse?.price : product?.selling_price;
+    //       }
+
+    //       const unit_cost = getWarehousePrice(product_prices, warehouseId);
+
+    //       const stock = getWarehouseQuantity(product_qties, warehouseId);
+
+    //       const price = calculateUnitCost(
+    //         sale_units,
+    //         unit_cost,
+    //         formValues?.units,
+    //         id
+    //       );
+
+    //       // updateFormValues(
+    //       // id,
+    //       // calculateOriginalPrice(price, taxes?.rate, tax_method),
+    //       // sale_units,
+    //       // taxes,
+    //       // formValues
+    //       // );
+
+    //       updateFormValuesUsingSetter(
+    //         id,
+    //         calculateOriginalPrice(price, taxes?.rate, tax_method),
+    //         sale_units,
+    //         taxes,
+    //         formValues,
+    //         setFormValues
+    //       );
+
+    //       return {
+    //         id,
+    //         name,
+    //         sku,
+    //         unitCost: showCurrency(
+    //           formValues.product_list.net_unit_price[id],
+    //           currency
+    //         ),
+    //         delete: true,
+    //         discount: showCurrency(
+    //           formValues.product_list.discount[id],
+    //           currency
+    //         ),
+    //         tax: showCurrency(formValues.product_list.tax[id], currency),
+    //         subTotal: showCurrency(formValues.product_list.total[id], currency),
+    //         stock,
+    //         incrementCounter,
+    //         decrementCounter,
+    //         onQuantityChange,
+    //         onDelete,
+    //         handleProductEdit,
+    //         products,
+    //         setProducts,
+    //         formValues,
+    //         setFormValues,
+    //       };
+    //     });
+
+    //     setDataSource(history);
+    //   }
+    // }, [products]);
 
     const dataSource = products?.map((product) => {
       const {
@@ -772,6 +861,15 @@ export const CustomPosProductsComponent = forwardRef(
         formValues
       );
 
+      // updateFormValuesUsingSetter(
+      //   id,
+      //   calculateOriginalPrice(price, taxes?.rate, tax_method),
+      //   sale_units,
+      //   taxes,
+      //   formValues,
+      //   setFormValues
+      // );
+
       return {
         id,
         name,
@@ -797,6 +895,8 @@ export const CustomPosProductsComponent = forwardRef(
       };
     });
 
+    console.log(formValues);
+
     useEffect(() => {
       form.setFieldsValue(formValues);
     }, [formValues, products, form]);
@@ -814,12 +914,12 @@ export const CustomPosProductsComponent = forwardRef(
 
               <Table.Summary.Cell index={2} align="center">
                 <Typography.Text type="" className="font-bold">
-                  {summary?.totalQuantity}
+                  {totalQuantity}
                 </Typography.Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={3} align="center">
                 <Typography.Text type="" className="font-bold">
-                  {showCurrency(summary?.totalPrice, currency)}
+                  {showCurrency(totalPrice, currency)}
                 </Typography.Text>
               </Table.Summary.Cell>
             </Table.Summary.Row>
@@ -876,12 +976,12 @@ export const CustomPosProductsComponent = forwardRef(
           <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
             <div className="grid grid-cols-2">
               <span>Items</span>
-              <span className="font-semibold">{summary.totalItems}</span>
+              <span className="font-semibold">{totalItems}</span>
             </div>
             <div className="grid grid-cols-2">
               <span>Total</span>
               <span className="font-semibold">
-                {showCurrency(summary?.totalPrice, currency)}
+                {showCurrency(totalPrice, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -890,13 +990,13 @@ export const CustomPosProductsComponent = forwardRef(
                 modalType={'discount'}
                 formValues={formValues}
                 setFormValues={setFormValues}
-                totalPrice={summary?.totalPrice}
+                totalPrice={totalPrice}
                 additionalForm={additionalForm}
                 onDisountTypeChange={onDisountTypeChange}
               />
 
               <span className="font-semibold">
-                {showCurrency(summary?.totalDiscount ?? 0, currency)}
+                {showCurrency(totalDiscount ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -904,11 +1004,11 @@ export const CustomPosProductsComponent = forwardRef(
                 title={'Coupon'}
                 modalType={'coupon'}
                 setFormValues={setFormValues}
-                totalPrice={summary?.totalPrice}
+                totalPrice={totalPrice}
                 additionalForm={additionalForm}
               />
               <span className="font-semibold">
-                {showCurrency(summary?.totalCoupon ?? 0, currency)}
+                {showCurrency(totalCoupon ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -919,7 +1019,7 @@ export const CustomPosProductsComponent = forwardRef(
                 additionalForm={additionalForm}
               />
               <span className="font-semibold">
-                {showCurrency(summary?.taxRate ?? 0, currency)}
+                {showCurrency(taxRate ?? 0, currency)}
               </span>
             </div>
             <div className="grid grid-cols-2">
@@ -936,7 +1036,7 @@ export const CustomPosProductsComponent = forwardRef(
           </div>
 
           <div className="secondary-bg primary-text rounded-sm py-1 text-center text-lg font-semibold">
-            Grand Total {showCurrency(summary?.grandTotal ?? 0, currency)}
+            Grand Total {showCurrency(grandTotal ?? 0, currency)}
           </div>
 
           <Button

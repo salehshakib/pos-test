@@ -1,4 +1,5 @@
 import { Button, Col, Form, Layout, Row, Table, Tag, Typography } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus, FaRegEdit } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -812,40 +813,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   useEffect(() => {
     posForm.setFieldsValue(formValues);
 
-    // const {
-    //   totalItems,
-    //   totalQuantity,
-    //   totalPrice,
-    //   taxRate,
-    //   grandTotal,
-    //   totalCoupon,
-    //   totalDiscount,
-    // } = calculateSummary(
-    //   formValues,
-    //   formValues.order.tax_rate ?? 0,
-    //   formValues.order.discount ?? 0,
-    //   formValues.order.shipping_cost ?? 0
-    // );
-
-    // console.log(
-    //   calculateSummary(
-    //     formValues,
-    //     formValues.order.tax_rate ?? 0,
-    //     formValues.order.discount ?? 0,
-    //     formValues.order.shipping_cost ?? 0
-    //   )
-    // );
-
-    // setSummary({
-    //   totalItems,
-    //   totalQuantity,
-    //   totalPrice,
-    //   taxRate,
-    //   grandTotal,
-    //   totalCoupon,
-    //   totalDiscount,
-    // });
-
     const data = calculateSummary(
       formValues,
       formValues.order.tax_rate ?? 0,
@@ -855,10 +822,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
 
     setSummary(data);
   }, [formValues, products, posForm]);
-
-  // console.log({ products });
-  // console.log({ formValues });
-  // console.log(summary);
 
   const tableStyleProps = {
     summary: () => {
@@ -905,78 +868,11 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     additionalForm.setFieldsValue({ discount_type: value });
   };
 
-  // const formValuesRef = useRef(null);
-
-  // const handleSubmit = useCallback((submitFunction) => {
-  //   formValuesRef.current = submitFunction;
-  // }, []);
-
-  // const handleFormValues = () => {
-  //   if (formValuesRef.current) {
-  // const data = posForm.getFieldsValue([
-  //   'sale_at',
-  //   'warehouse_id',
-  //   'cashier_id',
-  //   'customer_id',
-  //   'reference_number',
-  // ]);
-
-  // const fieldNames = {
-  //   sale_at: 'Sale Date',
-  //   warehouse_id: 'Warehouse',
-  //   cashier_id: 'Cashier',
-  //   customer_id: 'Customer',
-  //   currency: 'Currency',
-  //   exchange_rate: 'Exchange Rate',
-  // };
-
-  // const missingFields = Object.keys(data).filter(
-  //   (key) =>
-  //     key !== 'reference_number' &&
-  //     (data[key] === undefined || data[key] === null)
-  // );
-
-  // if (missingFields.length > 0) {
-  //   const missingFieldsNames = missingFields
-  //     .map((key) => fieldNames[key])
-  //     .join(', ');
-
-  //   openNotification('error', `Missing: ${missingFieldsNames}.`);
-  //   return;
-  // }
-
-  //     const formValues = formValuesRef.current();
-
-  //     return { data, formValues };
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
-  // //payment
-  // const paymentRef = useRef(null);
-
-  // const handleGrandTotal = useCallback((submitFunction) => {
-  //   paymentRef.current = submitFunction;
-  // }, []);
-
-  // const updateGrandTotal = () => {
-  //   if (products.length === 0) {
-  //     openNotification('error', 'Please add at least one products.');
-  //     return null;
-  //   }
-
-  //   return paymentRef.current ? parseFloat(paymentRef.current()) : 0;
-  // };
-
-  // const resetRef = useRef(null);
-
-  // const triggerReset = () => {
-  //   return resetRef.current ? resetRef.current.resetFields() : null;
-  // };
-
-  // console.log(formValues);
-  // console.log(products);
+  useEffect(() => {
+    if (!posForm.getFieldValue('sale_at')) {
+      posForm.setFieldsValue({ sale_at: dayjs(new Date()) });
+    }
+  }, [posForm]);
 
   return (
     <GlobalUtilityStyle className="lg:relative h-full">

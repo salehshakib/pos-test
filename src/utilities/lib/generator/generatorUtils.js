@@ -8,7 +8,6 @@ export const calculateSummary = (
   discountType = 'Fixed',
   giftCard
 ) => {
-  console.log(formValues);
   const productList = formValues.product_list || {};
 
   const totalItems = Object.keys(productList?.qty || {}).length;

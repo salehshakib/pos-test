@@ -808,7 +808,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     };
   });
 
-  // const [summary, setSummary] = useState({});
+  const [summary, setSummary] = useState({});
 
   useEffect(() => {
     posForm.setFieldsValue(formValues);
@@ -846,14 +846,15 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     //   totalCoupon,
     //   totalDiscount,
     // });
-    const summary = calculateSummary(
+
+    const data = calculateSummary(
       formValues,
       formValues.order.tax_rate ?? 0,
       formValues.order.discount ?? 0,
       formValues.order.shipping_cost ?? 0
     );
 
-    console.log(summary);
+    setSummary(data);
   }, [formValues, products, posForm]);
 
   // console.log({ products });
@@ -873,12 +874,12 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
 
             <Table.Summary.Cell index={2} align="center">
               <Typography.Text type="" className="font-bold">
-                {totalQuantity}
+                {summary?.totalQuantity}
               </Typography.Text>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={3} align="center">
               <Typography.Text type="" className="font-bold">
-                {showCurrency(totalPrice, currency)}
+                {showCurrency(summary?.totalPrice, currency)}
               </Typography.Text>
             </Table.Summary.Cell>
           </Table.Summary.Row>
@@ -1093,7 +1094,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                       <div className="grid grid-cols-2">
                         <span>Total</span>
                         <span className="font-semibold">
-                          {showCurrency(totalPrice, currency)}
+                          {showCurrency(summary?.totalPrice, currency)}
                         </span>
                       </div>
                       <div className="grid grid-cols-2">
@@ -1108,7 +1109,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                         />
 
                         <span className="font-semibold">
-                          {showCurrency(totalDiscount ?? 0, currency)}
+                          {showCurrency(summary?.totalDiscount ?? 0, currency)}
                         </span>
                       </div>
                       <div className="grid grid-cols-2">
@@ -1120,7 +1121,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                           additionalForm={additionalForm}
                         />
                         <span className="font-semibold">
-                          {showCurrency(totalCoupon ?? 0, currency)}
+                          {showCurrency(summary?.totalCoupon ?? 0, currency)}
                         </span>
                       </div>
                       <div className="grid grid-cols-2">
@@ -1131,7 +1132,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                           additionalForm={additionalForm}
                         />
                         <span className="font-semibold">
-                          {showCurrency(taxRate ?? 0, currency)}
+                          {showCurrency(summary?.taxRate ?? 0, currency)}
                         </span>
                       </div>
                       <div className="grid grid-cols-2">
@@ -1151,7 +1152,8 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                     </div>
 
                     <div className="secondary-bg primary-text rounded-sm py-1 text-center text-lg font-semibold">
-                      Grand Total {showCurrency(grandTotal ?? 0, currency)}
+                      Grand Total{' '}
+                      {showCurrency(summary?.grandTotal ?? 0, currency)}
                     </div>
 
                     <Button

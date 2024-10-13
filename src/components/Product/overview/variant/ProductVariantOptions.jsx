@@ -179,7 +179,7 @@ const ProductVariantOption = ({
 
   const { isEditDrawerOpen } = useSelector((state) => state.drawer);
 
-  console.log(reset);
+  // console.log(reset);
 
   useEffect(() => {
     if (!editData && !isEditDrawerOpen) {

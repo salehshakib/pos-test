@@ -23,7 +23,7 @@ export const TaxComponent = () => {
   const taxMethod = Form.useWatch('tax_method', form);
   const productPrice = Form.useWatch('product_price', form);
 
-  console.log(taxMethod);
+  // console.log(taxMethod);
 
   const [rate, setRate] = useState(0);
 
@@ -34,7 +34,7 @@ export const TaxComponent = () => {
           parseFloat(productPrice) +
           parseFloat(productPrice) * (parseFloat(rate) / 100);
 
-        console.log(purchaseAmount);
+        // console.log(purchaseAmount);
         form.setFieldValue('buying_price', purchaseAmount);
       } else {
         form.setFieldValue('buying_price', productPrice);

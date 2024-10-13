@@ -354,6 +354,7 @@ const ProductPurchaseAmount = () => {
     </Col>
   );
 };
+
 const ProductSellingAmount = () => {
   const currency = useSelector(useCurrency);
   const form = Form.useFormInstance();
@@ -361,9 +362,9 @@ const ProductSellingAmount = () => {
   const profit_margin = Form.useWatch('profit_margin', form);
   const productPrice = Form.useWatch('product_price', form);
 
-  const taxMethod = Form.useWatch('tax_method', form);
+  // const taxMethod = Form.useWatch('tax_method', form);
 
-  console.log(taxMethod);
+  // console.log(taxMethod);
 
   useEffect(() => {
     if (profit_margin > 0) {

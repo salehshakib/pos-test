@@ -691,12 +691,12 @@ export const CustomPosProductsComponent = forwardRef(
       },
     });
 
-    useEffect(() => {
-      setUpdatedFormValues(formValues);
-    }, [formValues]);
+    // useEffect(() => {
+    //   setUpdatedFormValues(formValues);
+    // }, [formValues]);
 
-    console.log({ formValues });
-    console.log({ updatedFormValues });
+    // console.log({ formValues });
+    // console.log({ updatedFormValues });
 
     const {
       totalItems,
@@ -707,10 +707,10 @@ export const CustomPosProductsComponent = forwardRef(
       totalCoupon,
       totalDiscount,
     } = calculateSummary(
-      updatedFormValues,
-      updatedFormValues.order.tax_rate ?? 0,
-      updatedFormValues.order.discount ?? 0,
-      updatedFormValues.order.shipping_cost ?? 0
+      formValues,
+      formValues.order.tax_rate ?? 0,
+      formValues.order.discount ?? 0,
+      formValues.order.shipping_cost ?? 0
     );
 
     // useEffect(() => {

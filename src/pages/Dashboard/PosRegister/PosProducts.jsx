@@ -141,7 +141,7 @@ const PosProducts = ({ form, setProducts, searchParams }) => {
                     warehouse
                   );
 
-                  console.log(product, stock);
+                  // console.log(product, stock);
 
                   if (stock > 0)
                     return (

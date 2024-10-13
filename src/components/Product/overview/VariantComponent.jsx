@@ -96,7 +96,7 @@ const VariantAttributes = ({ onCustomSubmit, data: editData }) => {
   );
 
   const [reset, setReset] = useState(false);
-  console.log(reset);
+  // console.log(reset);
 
   return (
     <>

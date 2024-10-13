@@ -661,6 +661,40 @@ export const CustomPosProductsComponent = forwardRef(
     //   formValues.order.shipping_cost ?? 0
     // );
 
+    const [updatedFormVales, setUpdatedFormValues] = useState({
+      product_list: {
+        qty: {},
+        sale_unit_id: {},
+        net_unit_price: {},
+        discount: {},
+        tax_rate: {},
+        tax: {},
+        total: {},
+
+        tax_id: {},
+      },
+      units: {
+        operator: {},
+        operation_value: {},
+      },
+      order: {
+        tax_rate: undefined,
+        discount: undefined,
+        discount_type: 'Fixed',
+        shipping_cost: undefined,
+        coupon: {
+          coupon_id: undefined,
+          type: undefined,
+          rate: undefined,
+          minimum_amount: undefined,
+        },
+      },
+    });
+
+    useEffect(() => {
+      setUpdatedFormValues(formValues);
+    }, [formValues]);
+
     const {
       totalItems,
       totalQuantity,
@@ -670,10 +704,10 @@ export const CustomPosProductsComponent = forwardRef(
       totalCoupon,
       totalDiscount,
     } = calculateSummary(
-      formValues,
-      formValues.order.tax_rate ?? 0,
-      formValues.order.discount ?? 0,
-      formValues.order.shipping_cost ?? 0
+      updatedFormVales,
+      updatedFormVales.order.tax_rate ?? 0,
+      updatedFormVales.order.discount ?? 0,
+      updatedFormVales.order.shipping_cost ?? 0
     );
 
     // useEffect(() => {
@@ -894,8 +928,6 @@ export const CustomPosProductsComponent = forwardRef(
         setFormValues,
       };
     });
-
-    console.log(formValues);
 
     useEffect(() => {
       form.setFieldsValue(formValues);

@@ -661,7 +661,7 @@ export const CustomPosProductsComponent = forwardRef(
     //   formValues.order.shipping_cost ?? 0
     // );
 
-    const [updatedFormVales, setUpdatedFormValues] = useState({
+    const [updatedFormValues, setUpdatedFormValues] = useState({
       product_list: {
         qty: {},
         sale_unit_id: {},
@@ -695,6 +695,9 @@ export const CustomPosProductsComponent = forwardRef(
       setUpdatedFormValues(formValues);
     }, [formValues]);
 
+    console.log({ formValues });
+    console.log({ updatedFormValues });
+
     const {
       totalItems,
       totalQuantity,
@@ -704,10 +707,10 @@ export const CustomPosProductsComponent = forwardRef(
       totalCoupon,
       totalDiscount,
     } = calculateSummary(
-      updatedFormVales,
-      updatedFormVales.order.tax_rate ?? 0,
-      updatedFormVales.order.discount ?? 0,
-      updatedFormVales.order.shipping_cost ?? 0
+      updatedFormValues,
+      updatedFormValues.order.tax_rate ?? 0,
+      updatedFormValues.order.discount ?? 0,
+      updatedFormValues.order.shipping_cost ?? 0
     );
 
     // useEffect(() => {

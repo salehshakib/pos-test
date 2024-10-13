@@ -28,7 +28,13 @@ import SellInvoice from '../Shared/Invoice/SellInvoice';
 import CustomModal from '../Shared/Modal/CustomModal';
 import { PaymentTypeComponent } from './overview/PaymentTypeComponent';
 
-const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
+const Payment = ({
+  form,
+  formValues,
+  summary,
+  // handleSubmit, getGrandTotal,
+  handleReset,
+}) => {
   const [paymentForm] = Form.useForm();
   const [errorFields, setErrorFields] = useState([]);
   const { pettyCashId } = useSelector((state) => state.pettyCash);
@@ -71,10 +77,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   const showModal = (type) => {
     setPaymentType(type);
 
-    const total = getGrandTotal();
-
-    if (total) {
-      setGrandTotal(total);
+    if (summary?.grandTotal) {
+      setGrandTotal(summary?.grandTotal);
     } else {
       return;
     }
@@ -83,7 +87,39 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
   };
 
   const onSubmit = async (values) => {
-    const { data, formValues } = handleSubmit() || {};
+    // const { data, formValues } = handleSubmit() || {};
+
+    const data = form.getFieldsValue([
+      'sale_at',
+      'warehouse_id',
+      'cashier_id',
+      'customer_id',
+      'reference_number',
+    ]);
+
+    const fieldNames = {
+      sale_at: 'Sale Date',
+      warehouse_id: 'Warehouse',
+      cashier_id: 'Cashier',
+      customer_id: 'Customer',
+      currency: 'Currency',
+      exchange_rate: 'Exchange Rate',
+    };
+
+    const missingFields = Object.keys(data).filter(
+      (key) =>
+        key !== 'reference_number' &&
+        (data[key] === undefined || data[key] === null)
+    );
+
+    if (missingFields.length > 0) {
+      const missingFieldsNames = missingFields
+        .map((key) => fieldNames[key])
+        .join(', ');
+
+      openNotification('error', `Missing: ${missingFieldsNames}.`);
+      return;
+    }
 
     if (!data) return;
 
@@ -101,6 +137,8 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
       );
       return;
     }
+
+    if (!data) return;
 
     const { product_list } = formValues;
 
@@ -256,7 +294,7 @@ const Payment = ({ handleSubmit, getGrandTotal, handleReset }) => {
             icon={<MdCardGiftcard />}
             className="flex min-w-fit items-center justify-center"
             onClick={() => {
-              const { formValues } = handleSubmit() || {};
+              // const { formValues } = handleSubmit() || {};
               showModal('Gift Card');
             }}
           >

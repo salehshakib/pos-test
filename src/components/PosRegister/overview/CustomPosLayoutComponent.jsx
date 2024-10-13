@@ -1,5 +1,5 @@
 import { Button, Col, Form, Layout, Row, Table, Tag, Typography } from 'antd';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEdit, FaMinus, FaPlus, FaRegEdit } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdDelete } from 'react-icons/md';
@@ -51,7 +51,6 @@ import CustomSelect from '../../Shared/Select/CustomSelect';
 import { CustomSelectButton } from '../../Shared/Select/CustomSelectButton';
 import CustomProductTable from '../../Shared/Table/CustomProductTable';
 import Payment from '../Payment';
-import { CustomPosProductsComponent } from './CustomPosProductsComponent';
 
 const { Footer } = Layout;
 
@@ -712,20 +711,20 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     additionalForm.resetFields();
   };
 
-  const {
-    totalItems,
-    totalQuantity,
-    totalPrice,
-    taxRate,
-    grandTotal,
-    totalCoupon,
-    totalDiscount,
-  } = calculateSummary(
-    formValues,
-    formValues.order.tax_rate ?? 0,
-    formValues.order.discount ?? 0,
-    formValues.order.shipping_cost ?? 0
-  );
+  // const {
+  //   totalItems,
+  //   totalQuantity,
+  //   totalPrice,
+  //   taxRate,
+  //   grandTotal,
+  //   totalCoupon,
+  //   totalDiscount,
+  // } = calculateSummary(
+  //   formValues,
+  //   formValues.order.tax_rate ?? 0,
+  //   formValues.order.discount ?? 0,
+  //   formValues.order.shipping_cost ?? 0
+  // );
 
   const warehouseId = Form.useWatch('warehouse_id', posForm);
 
@@ -914,37 +913,37 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
 
   // const handleFormValues = () => {
   //   if (formValuesRef.current) {
-  //     const data = posForm.getFieldsValue([
-  //       'sale_at',
-  //       'warehouse_id',
-  //       'cashier_id',
-  //       'customer_id',
-  //       'reference_number',
-  //     ]);
+  // const data = posForm.getFieldsValue([
+  //   'sale_at',
+  //   'warehouse_id',
+  //   'cashier_id',
+  //   'customer_id',
+  //   'reference_number',
+  // ]);
 
-  //     const fieldNames = {
-  //       sale_at: 'Sale Date',
-  //       warehouse_id: 'Warehouse',
-  //       cashier_id: 'Cashier',
-  //       customer_id: 'Customer',
-  //       currency: 'Currency',
-  //       exchange_rate: 'Exchange Rate',
-  //     };
+  // const fieldNames = {
+  //   sale_at: 'Sale Date',
+  //   warehouse_id: 'Warehouse',
+  //   cashier_id: 'Cashier',
+  //   customer_id: 'Customer',
+  //   currency: 'Currency',
+  //   exchange_rate: 'Exchange Rate',
+  // };
 
-  //     const missingFields = Object.keys(data).filter(
-  //       (key) =>
-  //         key !== 'reference_number' &&
-  //         (data[key] === undefined || data[key] === null)
-  //     );
+  // const missingFields = Object.keys(data).filter(
+  //   (key) =>
+  //     key !== 'reference_number' &&
+  //     (data[key] === undefined || data[key] === null)
+  // );
 
-  //     if (missingFields.length > 0) {
-  //       const missingFieldsNames = missingFields
-  //         .map((key) => fieldNames[key])
-  //         .join(', ');
+  // if (missingFields.length > 0) {
+  //   const missingFieldsNames = missingFields
+  //     .map((key) => fieldNames[key])
+  //     .join(', ');
 
-  //       openNotification('error', `Missing: ${missingFieldsNames}.`);
-  //       return;
-  //     }
+  //   openNotification('error', `Missing: ${missingFieldsNames}.`);
+  //   return;
+  // }
 
   //     const formValues = formValuesRef.current();
 
@@ -1089,7 +1088,9 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                     <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
                       <div className="grid grid-cols-2">
                         <span>Items</span>
-                        <span className="font-semibold">{totalItems}</span>
+                        <span className="font-semibold">
+                          {summary?.totalItems ?? 0}
+                        </span>
                       </div>
                       <div className="grid grid-cols-2">
                         <span>Total</span>
@@ -1103,7 +1104,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                           modalType={'discount'}
                           formValues={formValues}
                           setFormValues={setFormValues}
-                          totalPrice={totalPrice}
+                          totalPrice={summary?.totalPrice ?? 0}
                           additionalForm={additionalForm}
                           onDisountTypeChange={onDisountTypeChange}
                         />
@@ -1117,7 +1118,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                           title={'Coupon'}
                           modalType={'coupon'}
                           setFormValues={setFormValues}
-                          totalPrice={totalPrice}
+                          totalPrice={summary?.totalPrice ?? 0}
                           additionalForm={additionalForm}
                         />
                         <span className="font-semibold">
@@ -1202,11 +1203,14 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
         }}
         className="absolute bottom-0 z-40 w-full py-2 bg-white"
       >
-        {/* <Payment
-          handleSubmit={handleFormValues}
-          getGrandTotal={updateGrandTotal}
-          handleReset={triggerReset}
-        /> */}
+        <Payment
+          // handleSubmit={handleFormValues}
+          // getGrandTotal={updateGrandTotal}
+          form={posForm}
+          summary={summary}
+          formValues={formValues}
+          handleReset={resetFields}
+        />
       </Footer>
     </GlobalUtilityStyle>
   );

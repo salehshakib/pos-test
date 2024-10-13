@@ -1,7 +1,8 @@
 import { Button, Col, Form, Layout, Row, Table, Tag, Typography } from 'antd';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { FaMinus, FaPlus, FaRegEdit } from 'react-icons/fa';
+import { FaEdit, FaMinus, FaPlus, FaRegEdit } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -727,8 +728,6 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   );
 
   const warehouseId = Form.useWatch('warehouse_id', posForm);
-
-  console.log(warehouseId);
 
   const [productEditModal, setProductEditModal] = useState(false);
   const [productId, setProductId] = useState(undefined);

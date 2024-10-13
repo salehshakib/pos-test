@@ -712,44 +712,20 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     additionalForm.resetFields();
   };
 
-  // const {
-  //   totalItems,
-  //   totalQuantity,
-  //   totalPrice,
-  //   taxRate,
-  //   grandTotal,
-  //   totalCoupon,
-  //   totalDiscount,
-  // } = calculateSummary(
-  //   formValues,
-  //   formValues.order.tax_rate ?? 0,
-  //   formValues.order.discount ?? 0,
-  //   formValues.order.shipping_cost ?? 0
-  // );
-
-  const [summary, setSummary] = useState({
-    totalItems: 0,
-    totalQuantity: 0,
-    totalPrice: 0,
-    taxRate: 0,
-    grandTotal: 0,
-    totalCoupon: 0,
-    totalDiscount: 0,
-  });
-
-  useEffect(() => {
-    const data = calculateSummary(
-      formValues,
-      formValues.order.tax_rate ?? 0,
-      formValues.order.discount ?? 0,
-      formValues.order.shipping_cost ?? 0
-    );
-    setSummary({
-      data,
-    });
-  }, [formValues]);
-
-  console.log(summary);
+  const {
+    totalItems,
+    totalQuantity,
+    totalPrice,
+    taxRate,
+    grandTotal,
+    totalCoupon,
+    totalDiscount,
+  } = calculateSummary(
+    formValues,
+    formValues.order.tax_rate ?? 0,
+    formValues.order.discount ?? 0,
+    formValues.order.shipping_cost ?? 0
+  );
 
   const warehouseId = Form.useWatch('warehouse_id', posForm);
 
@@ -870,6 +846,14 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     //   totalCoupon,
     //   totalDiscount,
     // });
+    const summary = calculateSummary(
+      formValues,
+      formValues.order.tax_rate ?? 0,
+      formValues.order.discount ?? 0,
+      formValues.order.shipping_cost ?? 0
+    );
+
+    console.log(summary);
   }, [formValues, products, posForm]);
 
   // console.log({ products });
@@ -889,12 +873,12 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
 
             <Table.Summary.Cell index={2} align="center">
               <Typography.Text type="" className="font-bold">
-                {/* {totalQuantity} */}
+                {totalQuantity}
               </Typography.Text>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={3} align="center">
               <Typography.Text type="" className="font-bold">
-                {/* {showCurrency(totalPrice, currency)} */}
+                {showCurrency(totalPrice, currency)}
               </Typography.Text>
             </Table.Summary.Cell>
           </Table.Summary.Row>
@@ -991,8 +975,8 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
   //   return resetRef.current ? resetRef.current.resetFields() : null;
   // };
 
-  console.log(formValues);
-  console.log(products);
+  // console.log(formValues);
+  // console.log(products);
 
   return (
     <GlobalUtilityStyle className="lg:relative h-full">
@@ -1100,7 +1084,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
+                  <div className="flex flex-none flex-col gap-2 rounded-md bg-white px-2 pb-3 shadow-md">
                     <div className="grid grid-cols-2 gap-1 px-2 xl:grid-cols-3 xl:gap-2">
                       <div className="grid grid-cols-2">
                         <span>Items</span>
@@ -1177,7 +1161,7 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
                     >
                       Reset
                     </Button>
-                  </div> */}
+                  </div>
                 </div>
               </Form>
             </div>

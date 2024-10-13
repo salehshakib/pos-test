@@ -8,6 +8,7 @@ export const calculateSummary = (
   discountType = 'Fixed',
   giftCard
 ) => {
+  console.log(formValues);
   const productList = formValues.product_list || {};
 
   const totalItems = Object.keys(productList?.qty || {}).length;
@@ -54,6 +55,16 @@ export const calculateSummary = (
     totalCoupon,
     giftCardAmount
   );
+
+  console.log({
+    totalItems,
+    totalQty,
+    totalPrice,
+    taxRate,
+    grandTotal,
+    totalCoupon,
+    totalDiscount: posDiscount,
+  });
 
   return {
     totalItems,

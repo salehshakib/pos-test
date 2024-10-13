@@ -808,9 +808,49 @@ export const CustomPosLayoutComponent = ({ setCollapsed }) => {
     };
   });
 
+  // const [summary, setSummary] = useState({});
+
   useEffect(() => {
     posForm.setFieldsValue(formValues);
+
+    // const {
+    //   totalItems,
+    //   totalQuantity,
+    //   totalPrice,
+    //   taxRate,
+    //   grandTotal,
+    //   totalCoupon,
+    //   totalDiscount,
+    // } = calculateSummary(
+    //   formValues,
+    //   formValues.order.tax_rate ?? 0,
+    //   formValues.order.discount ?? 0,
+    //   formValues.order.shipping_cost ?? 0
+    // );
+
+    // console.log(
+    //   calculateSummary(
+    //     formValues,
+    //     formValues.order.tax_rate ?? 0,
+    //     formValues.order.discount ?? 0,
+    //     formValues.order.shipping_cost ?? 0
+    //   )
+    // );
+
+    // setSummary({
+    //   totalItems,
+    //   totalQuantity,
+    //   totalPrice,
+    //   taxRate,
+    //   grandTotal,
+    //   totalCoupon,
+    //   totalDiscount,
+    // });
   }, [formValues, products, posForm]);
+
+  console.log({ products });
+  console.log({ formValues });
+  // console.log(summary);
 
   const tableStyleProps = {
     summary: () => {

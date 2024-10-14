@@ -362,10 +362,6 @@ const ProductSellingAmount = () => {
   const profit_margin = Form.useWatch('profit_margin', form);
   const productPrice = Form.useWatch('product_price', form);
 
-  // const taxMethod = Form.useWatch('tax_method', form);
-
-  // console.log(taxMethod);
-
   useEffect(() => {
     if (profit_margin > 0) {
       const sale_amount =

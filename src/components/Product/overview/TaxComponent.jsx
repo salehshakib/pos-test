@@ -28,13 +28,15 @@ export const TaxComponent = () => {
   const sale_amount = Form.useWatch('sale_amount', form);
 
   useEffect(() => {
-    if (sale_amount) {
+    if (sale_amount && taxMethod === 'Exclusive') {
       const finalPrice =
         parseFloat(sale_amount) +
         parseFloat(sale_amount) * (parseFloat(tax.rate) / 100);
       form.setFieldValue('selling_price', finalPrice);
+    } else {
+      form.setFieldValue('selling_price', sale_amount);
     }
-  }, [sale_amount, form, tax]);
+  }, [sale_amount, form, tax, taxMethod]);
 
   // console.log(taxMethod);
 

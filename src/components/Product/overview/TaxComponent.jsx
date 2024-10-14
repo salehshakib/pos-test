@@ -20,19 +20,30 @@ export const TaxComponent = () => {
 
   const { data, isFetching } = useGetAllTaxQuery({ params });
 
+  const [tax, setTax] = useState({});
+
   const taxMethod = Form.useWatch('tax_method', form);
   const productPrice = Form.useWatch('product_price', form);
 
-  // console.log(taxMethod);
+  const sale_amount = Form.useWatch('sale_amount', form);
 
-  const [rate, setRate] = useState(0);
+  useEffect(() => {
+    if (sale_amount) {
+      const finalPrice =
+        parseFloat(sale_amount) +
+        parseFloat(sale_amount) * (parseFloat(tax.rate) / 100);
+      form.setFieldValue('selling_price', finalPrice);
+    }
+  }, [sale_amount, form, tax]);
+
+  // console.log(taxMethod);
 
   useEffect(() => {
     if (productPrice) {
       if (taxMethod === 'Exclusive') {
         const purchaseAmount =
           parseFloat(productPrice) +
-          parseFloat(productPrice) * (parseFloat(rate) / 100);
+          parseFloat(productPrice) * (parseFloat(tax.rate) / 100);
 
         // console.log(purchaseAmount);
         form.setFieldValue('buying_price', purchaseAmount);
@@ -40,7 +51,7 @@ export const TaxComponent = () => {
         form.setFieldValue('buying_price', productPrice);
       }
     }
-  }, [productPrice, form, rate, taxMethod]);
+  }, [productPrice, form, tax, taxMethod]);
 
   const options = useMemo(() => {
     if (data?.results?.tax) {
@@ -53,17 +64,6 @@ export const TaxComponent = () => {
     return [];
   }, [data]);
 
-  const sale_amount = Form.useWatch('sale_amount', form);
-
-  useEffect(() => {
-    if (sale_amount) {
-      const finalPrice =
-        parseFloat(sale_amount) +
-        parseFloat(sale_amount) * (parseFloat(rate) / 100);
-      form.setFieldValue('selling_price', finalPrice);
-    }
-  }, [sale_amount, form, rate]);
-
   const [fetchData, setFetchData] = useState(false);
 
   useEffect(() => {
@@ -73,16 +73,19 @@ export const TaxComponent = () => {
     }
   }, [form, fetchData, options, isFetching]);
 
+  const onSelect = (value, option) => {
+    setTax({
+      id: value,
+      rate: option.rate,
+    });
+  };
+
   const handleOpenSubDrawer = () => {
     setIsSubDrawerOpen(true);
   };
 
   const handleCloseSubDrawer = () => {
     setIsSubDrawerOpen(false);
-  };
-
-  const onSelect = (value, option) => {
-    setRate(option.rate);
   };
 
   return (

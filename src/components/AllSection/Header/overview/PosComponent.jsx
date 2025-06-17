@@ -35,52 +35,53 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   const handleSubmit = async (values) => {
     if (pettyCashId) {
-      const { data, error } = await updatePettyCash({
-        id: pettyCashId,
-        data: {
-          warehouse_id: user?.warehouse_id,
-          status: 'Open',
-          _method: 'PUT',
-        },
-      });
+      // const { data, error } = await updatePettyCash({
+      //   id: pettyCashId,
+      //   data: {
+      //     warehouse_id: user?.warehouse_id,
+      //     status: 'Open',
+      //     _method: 'PUT',
+      //   },
+      // });
 
-      if (data?.success) {
-        dispatch(setPettyCash({ status: 'Open', id: data?.data?.id }));
-        hideModal();
-        form.resetFields();
-        navigate('/pos');
-      }
+      // if (data?.success) {
+      dispatch(setPettyCash({ status: 'Open', id: '2' }));
+      hideModal();
+      form.resetFields();
+      navigate('/pos');
+      // }
 
-      if (error) {
-        const errorFields = Object.keys(error?.data?.errors).map(
-          (fieldName) => ({
-            name: fieldName,
-            errors: error?.data?.errors[fieldName],
-          })
-        );
-        setErrorFields(errorFields);
-      }
+      // if (error) {
+      //   const errorFields = Object.keys(error?.data?.errors).map(
+      //     (fieldName) => ({
+      //       name: fieldName,
+      //       errors: error?.data?.errors[fieldName],
+      //     })
+      //   );
+      //   setErrorFields(errorFields);
+      // }
     } else {
-      const { data, error } = await createPettyCash({
-        data: { ...values, warehouse_id: user?.warehouse_id, status: 'Open' },
-      });
+      // const { data, error } = await createPettyCash({
+      //   data: { ...values, warehouse_id: user?.warehouse_id, status: 'Open' },
+      // });
 
-      if (data?.success) {
-        dispatch(setPettyCash({ status: 'Open', id: data?.data?.id }));
-        hideModal();
-        form.resetFields();
-        navigate('/pos');
-      }
+      // if (data?.success) {
+      // dispatch(setPettyCash({ status: 'Open', id: data?.data?.id }));
+      dispatch(setPettyCash({ status: 'Open', id: '2' }));
+      hideModal();
+      form.resetFields();
+      navigate('/pos');
+      // }
 
-      if (error) {
-        const errorFields = Object.keys(error?.data?.errors).map(
-          (fieldName) => ({
-            name: fieldName,
-            errors: error?.data?.errors[fieldName],
-          })
-        );
-        setErrorFields(errorFields);
-      }
+      // if (error) {
+      //   const errorFields = Object.keys(error?.data?.errors).map(
+      //     (fieldName) => ({
+      //       name: fieldName,
+      //       errors: error?.data?.errors[fieldName],
+      //     })
+      //   );
+      //   setErrorFields(errorFields);
+      // }
     }
   };
 
@@ -95,7 +96,7 @@ const PettyCashOpenComponent = ({ navigate, open, setOpen }) => {
 
   return (
     <Modal
-      width={600}
+      width={500}
       centered
       title={'Cash Register Open'}
       open={open}

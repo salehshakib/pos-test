@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: null,
+  user: {
+    warehouse_id: 2,
+  },
   token: null,
 };
 

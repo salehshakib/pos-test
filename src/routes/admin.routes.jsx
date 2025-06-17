@@ -128,16 +128,16 @@ export const adminPaths = [
     icon: MdOutlineSettings,
     children: settingPaths,
   },
-  {
-    name: 'Backup & Restore',
-    path: 'backup-restore',
-    icon: LuDatabaseBackup,
-    element: <></>,
-  },
-  {
-    name: 'Clear Cache',
-    path: 'clear-cache',
-    icon: PiBroomFill,
-    element: <></>,
-  },
+  // {
+  //   name: 'Backup & Restore',
+  //   path: 'backup-restore',
+  //   icon: LuDatabaseBackup,
+  //   element: <></>,
+  // },
+  // {
+  //   name: 'Clear Cache',
+  //   path: 'clear-cache',
+  //   icon: PiBroomFill,
+  //   element: <></>,
+  // },
 ];

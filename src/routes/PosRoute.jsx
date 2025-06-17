@@ -15,10 +15,10 @@ function PosRoute({ children }) {
     return <Navigate to={'/dashboard'} replace={true} />;
   }
 
-  if (!token) {
-    dispatch(logout());
-    return <Navigate to={'/login'} replace={true} />;
-  }
+  // if (!token) {
+  //   dispatch(logout());
+  //   return <Navigate to={'/login'} replace={true} />;
+  // }
 
   return children;
 }

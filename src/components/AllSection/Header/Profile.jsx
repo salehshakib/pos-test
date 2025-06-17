@@ -46,7 +46,7 @@ const Profile = () => {
               <span className="font-bold">
                 {user?.name ?? user?.username ?? 'User'} (
                 <span className="font-medium">
-                  {user?.roles[0]?.name ?? 'User'}
+                  {user?.roles?.[0]?.name ?? 'User'}
                 </span>
                 )
               </span>

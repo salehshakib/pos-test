@@ -32,6 +32,7 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const logo = useSiteLogo();
 
   const menuItems = useMenuItems(adminPaths);
+  // const menuItems = adminPaths;
 
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -95,11 +96,11 @@ const SideBar = ({ collapsed, setCollapsed }) => {
   const isAdmin = userData?.roles?.[0]?.name === 'Admin';
 
   //permission
-  const sidebarItems = sidebarItemsGenerator(
-    isAdmin ? adminPaths : filteredPaths
-  );
+  // const sidebarItems = sidebarItemsGenerator(
+  //   isAdmin ? adminPaths : filteredPaths
+  // );
 
-  // const sidebarItems = sidebarItemsGenerator(adminPaths);
+  const sidebarItems = sidebarItemsGenerator(adminPaths);
 
   const levelKeys = getLevelKeys(sidebarItems);
 

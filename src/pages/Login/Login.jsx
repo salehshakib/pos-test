@@ -3,18 +3,16 @@ import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { IoMdMail } from 'react-icons/io';
 import { MdLockPerson } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import CustomForm from '../../components/Shared/Form/CustomForm';
 import CustomInput from '../../components/Shared/Input/CustomInput';
 import { useLoginMutation } from '../../redux/services/auth/authApi';
-import { setUser } from '../../redux/services/auth/authSlice';
 import { isDev } from '../../utilities/configs/base_url';
 import { openNotification } from '../../utilities/lib/openToaster';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
@@ -29,14 +27,15 @@ const Login = () => {
     }
   }, [form]);
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = (data) => {
     try {
-      const res = await login(data).unwrap();
+      console.log(data);
+      // const res = await login(data).unwrap();
 
-      const userData = res?.data?.user;
-      const token = res?.data.token;
+      // const userData = res?.data?.user;
+      // const token = res?.data.token;
 
-      dispatch(setUser({ user: userData, token }));
+      // dispatch(setUser({ user: userData, token }));
       openNotification('success', 'Logged in successfully!');
       navigate(`/dashboard`);
     } catch (error) {

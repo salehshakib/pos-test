@@ -23,6 +23,7 @@ const Profile = () => {
   const handleLogout = () => {
     openNotification('success', 'Logged out successfully!');
     dispatch(logout());
+    navigate('/login');
   };
 
   const user = useSelector(useCurrentUser);
